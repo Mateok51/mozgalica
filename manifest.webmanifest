@@ -1,6 +1,6 @@
 {
-  "name": "Mozgalica",
-  "short_name": "Mozgalica",
+  "name": "Trivia Tavern",
+  "short_name": "Trivia Tavern",
   "description": "Party kviz za TV i mobitele",
   "lang": "hr",
   "start_url": "./",
