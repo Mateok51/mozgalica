@@ -465,6 +465,23 @@
   @keyframes castTick { 50% { transform: scale(1.08); } }
   .p-cast-me { width: 140px; }
   @media (prefers-reduced-motion: reduce) { .cast.shake, .cact .cfig { animation: none !important; } }
+  /* grickalice: pojedena slova */
+  .otxt { position: relative; }
+  .bite { color: transparent !important; text-shadow: none !important; position: relative; animation: biteIn 0.25s both; }
+  .bite::after { content: ''; position: absolute; left: 8%; right: 8%; top: 30%; bottom: 20%; border-radius: 45%; background: radial-gradient(circle at 50% 40%, rgba(0,0,0,.35), rgba(0,0,0,.12) 60%, transparent 70%); }
+  @keyframes biteIn { from { color: inherit; transform: scale(1.3); } }
+  .eater { display: inline-block; width: 1.3em; height: 1.3em; vertical-align: middle; margin-left: 0.3em; animation: wiggle 0.25s ease-in-out infinite alternate; }
+  .eater svg { width: 100%; height: 100%; }
+  /* bombe koje lete preko odgovora */
+  .bomb-layer { position: absolute; inset: 0; pointer-events: none; z-index: 6; }
+  .fly-bomb { position: absolute; width: 58px; height: 58px; margin: -29px 0 0 -29px; padding: 0; border: 0; background: none; pointer-events: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,.5)); animation: pulse 0.45s infinite alternate; touch-action: none; }
+  .fly-bomb svg { width: 100%; height: 100%; }
+  .boom-cover { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; pointer-events: auto;
+    background: radial-gradient(circle at 50% 50%, #fff 0%, #ffe066 18%, #ff7a1f 38%, #c4162b 58%, #2a0610 85%); animation: boomIn 2s ease-out forwards; }
+  .boom-cover b { font-family: var(--font-display); font-weight: 700; font-size: 5rem; color: #fff; text-shadow: 0 0 30px #ff7a1f, 0 6px 0 #7a0e1b; animation: shake 0.12s 6; }
+  @keyframes boomIn { 0% { opacity: 0; transform: scale(0.6); } 8% { opacity: 1; transform: scale(1.05); } 15% { transform: none; } 80% { opacity: 1; } 100% { opacity: 0.2; } }
+  #music { position: fixed; z-index: 60; right: calc(max(14px, env(safe-area-inset-right, 0px)) + 56px); bottom: max(14px, env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: rgba(10, 8, 30, 0.7); border: 1px solid var(--edge); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); }
+  #music .ic { width: 22px; height: 22px; }
 </style>
 
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -472,6 +489,7 @@
 <body>
 <div id="app" class="screen center"></div>
 <button id="mute" type="button" aria-label="Isključi zvuk"></button>
+<button id="music" type="button" aria-label="Isključi glazbu"></button>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3c2"/><stop offset="1" stop-color="#ff9d2e"/></linearGradient></defs></svg>
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
@@ -485,8 +503,8 @@ const DATA = {"cats": {"Geografija": [{"q": "Koji je glavni grad Australije?", "
 const POWERS = {
   led:   { n: 'Led',          atk: true,  d: 'Zaledi protivniku odgovore. Mora razbiti led tapkanjem.' },
   sluz:  { n: 'Sluz',         atk: true,  d: 'Zalij protivniku ekran sluzi. Mora je obrisati prstom.' },
-  grick: { n: 'Grickalice',   atk: true,  d: 'Pošalji gladne bubice na odgovore. Mora ih zgnječiti.' },
-  bomba: { n: 'Bomba',        atk: true,  d: 'Bomba blokira odgovore dok ne eksplodira ili je ne odbaci.' },
+  grick: { n: 'Grickalice',   atk: true,  d: 'Gladne bubice pojedu dio slova u protivnikovim odgovorima.' },
+  bomba: { n: 'Bomba',        atk: true,  d: 'Bombe lete preko odgovora. Tko dotakne bombu, nakratko ne vidi ništa.' },
   dupli: { n: 'Dupli bodovi', atk: false, d: 'Točan odgovor vrijedi dvostruko.' },
   pola:  { n: 'Pola-pola',    atk: false, d: 'Uklanja dva netočna odgovora s tvog ekrana.' },
   stit:  { n: 'Štit',         atk: false, d: 'Odbija sve napade na tebe u ovom pitanju.' },
@@ -496,7 +514,7 @@ const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
 const AV_COUNT = 10;
 
 const CFG = {
-  intro: 3.5, vote: 10, voteShow: 3, power: 12, cast: 1.25, q: 20, reveal: 7,
+  intro: 3.5, vote: 10, voteShow: 3, power: 12, cast: 1.25, fpower: 7, fstart: 5, startCap: 3, q: 20, reveal: 7,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
 };
@@ -512,7 +530,7 @@ const PLAN = [
 ];
 
 const INPUT_PHASES = { vote: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1 };
-const SKIPPABLE = { intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1 };
+const SKIPPABLE = { fstart: 1, intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1 };
 
 function shuffle(a) {
   a = a.slice();
@@ -576,7 +594,7 @@ function createGame(o) {
       pid, name: uniqueName(nm, pid), av: avFree(av, pid) ? av : firstFreeAv(pid), local: !!local,
       score: 0, gained: 0, on: true, bot: !!bot, done: false, lastIn: '',
       vote: -1, offers: [], pw: null, fx: [], dbl: false, pola: false, sh: false, hide: null,
-      ans: -1, ansMs: 0, ch: -1, sortA: null, linkA: null, cnt: 0, fstep: 0, mv: 0,
+      ans: -1, ansMs: 0, ch: -1, sortA: null, linkA: null, cnt: 0, fstep: 0, mv: 0, fst: 0, lastPw: '',
     };
     R.set(pid, p);
     return p;
@@ -680,7 +698,8 @@ function createGame(o) {
       case 'vote': return resolveVote();
       case 'voteResult': return startPower();
       case 'power': return resolvePower();
-      case 'cast': return startQuestion();
+      case 'cast': return afterPower();
+      case 'fstart': return startFinaleQ();
       case 'question': return scoreQuestion();
       case 'reveal': return next();
       case 'sort': return scoreSort();
@@ -729,18 +748,60 @@ function createGame(o) {
     setPhase('voteResult', cfg.voteShow);
   }
 
+  // Pravedna podjela moći: tko zaostaje češće dobiva štit, dupli i pola-pola, a vodeći ih dobiva rijetko.
+  // Ista moć se ne nudi dvaput zaredom, a u finalu dupli ne dobiva vodeći ni tko je blizu vrha.
+  function powerWeight(k, t, p) {
+    if (POWERS[k].atk) return 1;
+    if (k === 'stit') return 0.3 + 0.9 * t;
+    if (k === 'pola') return 0.4 + 1.0 * t;
+    if (k === 'dupli') {
+      if (G.inFinale && (t === 0 || p.fstep >= cfg.steps - 2)) return 0;
+      return 0.3 + 1.4 * t;
+    }
+    return 1;
+  }
+  function weightedPick(keys, wf) {
+    const ws = keys.map(wf), sum = ws.reduce((a, b) => a + b, 0);
+    if (sum <= 0) return null;
+    let r = Math.random() * sum;
+    for (let i = 0; i < keys.length; i++) { r -= ws[i]; if (r <= 0 && ws[i] > 0) return keys[i]; }
+    return keys[keys.length - 1];
+  }
+  function offersFor(p, t, multi) {
+    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && k === 'pola'));
+    const wf = (k) => powerWeight(k, t, p) * (k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1);
+    const out = [];
+    if (multi) { const a = weightedPick(pool.filter((k) => POWERS[k].atk), wf); if (a) out.push(a); }
+    while (out.length < 3) {
+      const k = weightedPick(pool.filter((x) => !out.includes(x)), wf);
+      if (!k) break;
+      out.push(k);
+    }
+    return shuffle(out);
+  }
+  // 0 = vodeći, 1 = zadnji (prema bodovima, u finalu prema stepenici pa bodovima)
+  function standing() {
+    const ps = active();
+    const val = (p) => (G.inFinale ? p.fstep * 1e6 : 0) + p.score;
+    const vs = ps.map(val), hi = Math.max(...vs), lo = Math.min(...vs);
+    const m = new Map();
+    for (const p of ps) m.set(p.pid, hi === lo ? 0.5 : (hi - val(p)) / (hi - lo));
+    if (G.inFinale) { const top = Math.max(...ps.map((p) => p.fstep)); for (const p of ps) if (p.fstep === top) m.set(p.pid, 0); }
+    return m;
+  }
   function startPower() {
-    const keys = active().length > 1 ? POWER_KEYS : BUFF_KEYS;
+    const multi = active().length > 1, st = standing();
     for (const p of list()) {
       p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null;
-      p.offers = shuffle(keys).slice(0, 3);
+      p.offers = offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);
     }
-    setPhase('power', cfg.power);
+    setPhase('power', G.inFinale ? cfg.fpower : cfg.power);
   }
   function resolvePower() {
     G.ev = [];
     for (const p of list()) if (p.pw && p.pw.k === 'stit') p.sh = true;
     for (const p of list()) {
+      p.lastPw = p.pw ? p.pw.k : '';
       if (!p.pw) continue;
       const k = p.pw.k;
       if (POWERS[k].atk) {
@@ -757,10 +818,11 @@ function createGame(o) {
     // prikaz bacanja: prvo štitovi, zatim ostale pomoći, zatim napadi
     const rank = (e) => (e.p === 'stit' ? 0 : e.t ? 2 : 1);
     G.ev.sort((a, b) => rank(a) - rank(b));
-    if (!G.ev.length || cfg.cast <= 0) return startQuestion();
+    if (!G.ev.length || cfg.cast <= 0) return afterPower();
     setPhase('cast', Math.min(10, 1.3 + G.ev.length * cfg.cast));
   }
 
+  function afterPower() { return G.inFinale ? beginFinaleQ() : startQuestion(); }
   function startQuestion() {
     const cat = G.cats[G.cw];
     const pool = D.cats[cat].map((q, i) => i).filter((i) => !G.used.q.has(cat + '|' + i));
@@ -831,13 +893,22 @@ function createGame(o) {
 
   function startFinale() {
     G.inFinale = true; G.fqn = 0;
-    const ranked = list().slice().sort((a, b) => b.score - a.score);
-    ranked.forEach((p, i) => { p.fstep = Math.max(0, 3 - i); p.mv = 0; });
-    startFinaleQ();
+    // početna stepenica prema bodovima u odnosu na vodećeg, najviše cfg.startCap
+    const top = Math.max(0, ...list().map((p) => p.score));
+    for (const p of list()) {
+      p.fstep = top > 0 ? Math.max(0, Math.min(cfg.startCap, Math.round(cfg.startCap * p.score / top))) : 0;
+      p.fst = p.fstep; p.mv = 0; p.lastPw = '';
+    }
+    setPhase('fstart', cfg.fstart);
   }
   function startFinaleQ() {
     const pool = D.tf.map((_, i) => i).filter((i) => !G.used.tf.has(i));
     if (!pool.length || G.fqn >= cfg.finaleMax) return finish();
+    startPower();
+  }
+  function beginFinaleQ() {
+    const pool = D.tf.map((_, i) => i).filter((i) => !G.used.tf.has(i));
+    if (!pool.length) return finish();
     const i = pick(pool);
     G.used.tf.add(i);
     G.q = { c: 'Točno ili netočno?', t: D.tf[i][0], o: ['Točno', 'Netočno'], a: D.tf[i][1] ? 0 : 1 };
@@ -851,7 +922,9 @@ function createGame(o) {
     for (const p of list()) {
       p.ch = p.ans;
       p.mv = 0;
-      if (p.ans === G.q.a) p.mv = 1 + (p === fastest ? 1 : 0);
+      if (p.ans === G.q.a) p.mv = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);
+      // dupli nikoga ne vodi do vrha: bez njega se stiže najviše do predzadnje stepenice
+      if (p.dbl && p.mv > 0 && p.fstep + p.mv >= cfg.steps && p.fstep + p.mv - 1 < cfg.steps) p.mv -= 1;
       p.fstep = Math.min(cfg.steps, p.fstep + p.mv);
     }
     setPhase('fr', cfg.fr);
@@ -919,7 +992,7 @@ function createGame(o) {
     for (const b of list().filter((p) => p.bot && p.on)) {
       const s = G.s;
       // botovi pogođeni moćima odgovaraju sporije
-      const extra = G.ph === 'question' ? b.fx.length * 2500 : 0;
+      const extra = G.ph === 'question' ? b.fx.length * 2500 : G.ph === 'fq' ? b.fx.length * 1500 : 0;
       later(() => {
         if (G.s !== s || b.done) return;
         if (accept(b, botInput(b))) { if (allDone()) endPhase(); else onChange(); }
@@ -939,7 +1012,7 @@ function createGame(o) {
       const e = { id: p.pid, n: p.name, a: p.av, sc: p.score, c: p.on ? 1 : 0, ok: p.done ? 1 : 0 };
       if ((ph === 'vote' && p.done) || (ph === 'voteResult' && p.vote >= 0)) e.vt = p.vote;
       if (ph === 'power') e.of = p.offers;
-      if (ph === 'question') {
+      if (ph === 'question' || ph === 'fq') {
         if (p.fx.length) e.fx = p.fx;
         if (p.dbl) e.d = 1;
         if (p.sh) e.sh = 1;
@@ -948,6 +1021,7 @@ function createGame(o) {
       if (ph === 'reveal') { e.ch = p.ch; e.g = p.gained; if (p.dbl) e.d = 1; }
       if (ph === 'sortReveal' || ph === 'linkReveal') { e.g = p.gained; e.k = p.cnt; }
       if (G.inFinale) e.st = p.fstep;
+      if (ph === 'fstart') e.fs = p.fst;
       if (ph === 'fr') { e.ch = p.ch; e.mv = p.mv; }
       return e;
     });
@@ -957,7 +1031,8 @@ function createGame(o) {
     if (ph === 'question' || ph === 'reveal' || ph === 'fq' || ph === 'fr') {
       v.q = { c: G.q.c, t: G.q.t, o: G.q.o, n: G.qn };
     }
-    if (ph === 'cast' || ph === 'question' || ph === 'reveal') v.ev = G.ev;
+    if (ph === 'cast' || ph === 'question' || ph === 'reveal' || ph === 'fq') v.ev = G.ev;
+    if (G.inFinale) v.fin = 1;
     if (ph === 'reveal' || ph === 'fr') { v.cor = G.q.a; if (G.q.cnt) v.cnt = G.q.cnt; }
     if (ph === 'sort' || ph === 'sortReveal') v.so = { a: G.so.a, b: G.so.b, it: G.so.items };
     if (ph === 'sortReveal') v.so.key = G.so.key;
@@ -967,7 +1042,9 @@ function createGame(o) {
     return v;
   }
 
-  return { addPlayer, addBot, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear };
+  // samo za testove
+  function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
+  return { addPlayer, addBot, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score };
 }
 //#engine-end
 
@@ -1117,6 +1194,8 @@ function createGame(o) {
     const P = {
       tap: () => tone(700, 0, 0.06, 'triangle', 0.12),
       tick: () => tone(1250, 0, 0.05, 'square', 0.05),
+      beep: (n) => { const f = [0, 1568, 1319, 1175, 988, 880][n] || 880; tone(f, 0, 0.16, 'square', 0.09); tone(f / 2, 0, 0.16, 'triangle', 0.08); },
+      timeup: () => { tone(220, 0, 0.5, 'sawtooth', 0.12, 150); tone(233, 0, 0.5, 'square', 0.06, 160); noise(0, 0.3, 0.1, 600, 'lowpass'); },
       pop: () => { tone(420, 0, 0.14, 'sine', 0.22, 900); tone(880, 0.05, 0.1, 'triangle', 0.08); },
       whoosh: () => { noise(0, 0.6, 0.22, 400, 'bandpass'); tone(180, 0, 0.6, 'sawtooth', 0.04, 1200); tone(523, 0.35, 0.3, 'triangle', 0.12); tone(784, 0.45, 0.4, 'triangle', 0.12); },
       correct: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.075, 0.3, 'triangle', 0.17)),
@@ -1131,11 +1210,67 @@ function createGame(o) {
       fanfare: () => [[523, 0], [659, 0.12], [784, 0.24], [1047, 0.4], [784, 0.62], [1047, 0.76]].forEach(([f, t]) => { tone(f, t, 0.36, 'triangle', 0.18); tone(f / 2, t, 0.36, 'sine', 0.08); }),
     };
     return {
-      play(n) { try { if (P[n]) P[n](); } catch (e) {} },
+      play(n, a) { try { if (P[n]) P[n](a); } catch (e) {} },
+      ctx() { return ac(); },
       unlock() { ac(); },
       get muted() { return muted; },
       toggle() { muted = !muted; store.set('mz_mute', muted ? '1' : '0'); },
     };
+  })();
+  // ---------- glazba u pozadini (sintetizirana petlja, A-mol: Am F C G) ----------
+  const MUSIC = (() => {
+    let on = store.get('mz_music') !== '0', gain = null, timer = null, next = 0, step = 0, playing = false;
+    const BPM = 108, S16 = 60 / BPM / 4;
+    const mf = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    const CH = [[57, 60, 64], [57, 60, 65], [55, 60, 64], [55, 59, 62]], BASS = [45, 41, 48, 43];
+    const ARP = [0, 1, 2, 1, 0, 2, 1, 2];
+    function out(c) {
+      if (!gain) {
+        gain = c.createGain(); gain.gain.value = 0;
+        const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
+        gain.connect(lp); lp.connect(c.destination);
+      }
+      return gain;
+    }
+    function note(c, f, t, dur, type, vol, f2) {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(out(c)); o.start(t); o.stop(t + dur + 0.05);
+    }
+    let nbuf = null;
+    function hat(c, t, vol, dur) {
+      if (!nbuf) { const len = Math.floor(c.sampleRate * 0.3); nbuf = c.createBuffer(1, len, c.sampleRate); const d = nbuf.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1; }
+      const src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      src.buffer = nbuf; f.type = dur > 0.08 ? 'bandpass' : 'highpass'; f.frequency.value = dur > 0.08 ? 1800 : 7000;
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      src.connect(f); f.connect(g); g.connect(out(c)); src.start(t); src.stop(t + dur);
+    }
+    function schedule() {
+      const c = SFX.ctx(); if (!c) return;
+      while (next < c.currentTime + 0.25) {
+        const bar = Math.floor(step / 16) % 4, st = step % 16, t = next, ch = CH[bar];
+        if (st === 0) ch.forEach((m) => note(c, mf(m), t, S16 * 15, 'triangle', 0.035));
+        if (st === 0 || st === 6 || st === 8 || st === 14) note(c, mf(BASS[bar]), t, S16 * 1.8, 'sine', 0.16);
+        if (st % 2 === 0) note(c, mf(ch[ARP[(st / 2) % 8]] + 12), t, S16 * 1.6, 'square', 0.018);
+        if (st === 0 || st === 8) note(c, 120, t, 0.18, 'sine', 0.22, 42);
+        if (st === 4 || st === 12) hat(c, t, 0.06, 0.12);
+        if (st % 4 === 2) hat(c, t, 0.035, 0.04);
+        next += S16; step++;
+      }
+    }
+    function want(play) {
+      const c = play ? SFX.ctx() : null;
+      if (play && c && c.state === 'running' && !playing) {
+        playing = true; out(c); next = c.currentTime + 0.05; step = 0;
+        gain.gain.cancelScheduledValues(c.currentTime); gain.gain.setTargetAtTime(0.5, c.currentTime, 0.4);
+        timer = setInterval(schedule, 90); schedule();
+      } else if (!play && playing) {
+        playing = false; clearInterval(timer); timer = null;
+        const cc = SFX.ctx(); if (cc && gain) gain.gain.setTargetAtTime(0, cc.currentTime, 0.15);
+      }
+    }
+    return { want, get on() { return on; }, toggle() { on = !on; store.set('mz_music', on ? '1' : '0'); } };
   })();
   document.addEventListener('pointerdown', (e) => {
     SFX.unlock();
@@ -1240,7 +1375,7 @@ function createGame(o) {
   let tvStep = -1, phoneStep = -1, lastTickSec = -1;
   function tvSound(d) {
     switch (d.ph) {
-      case 'intro': return SFX.play('whoosh');
+      case 'intro': case 'fstart': return SFX.play('whoosh');
       case 'vote': case 'sort': case 'link': case 'fq': return SFX.play('pop');
       case 'voteResult': case 'fr': return SFX.play('step');
       case 'power': return SFX.play('zap');
@@ -1254,7 +1389,7 @@ function createGame(o) {
     if (!me) return;
     switch (d.ph) {
       case 'intro': return SFX.play('whoosh');
-      case 'question': if (L.fx) SFX.play(FX_SOUND[L.fx.k] || 'zap'); return;
+      case 'question': case 'fq': if (L.fx) SFX.play(FX_SOUND[L.fx.k] || 'zap'); else if (L.bombs && L.bombs.length) SFX.play('zap'); else if (L.eat) SFX.play('squish'); return;
       case 'reveal': if (me.ch === d.cor) { SFX.play('correct'); confetti(70); } else SFX.play('wrong'); return;
       case 'sortReveal': case 'linkReveal': return SFX.play(me.k ? 'correct' : 'wrong');
       case 'fr': return SFX.play(me.mv ? 'step' : 'wrong');
@@ -1270,6 +1405,15 @@ function createGame(o) {
     b.setAttribute('aria-label', SFX.muted ? 'Uključi zvuk' : 'Isključi zvuk');
   }
   (function () { const b = document.getElementById('mute'); if (b) { b.onclick = () => { SFX.toggle(); updMute(); }; updMute(); } })();
+  const NOTE_ON = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17V5l11-2v12" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/><circle cx="6.5" cy="17.5" r="2.8" fill="#fff"/><circle cx="17.5" cy="15.5" r="2.8" fill="#fff"/></svg>';
+  const NOTE_OFF = NOTE_ON.replace('</svg>', '<path d="M3 3l18 18" stroke="#ff3d81" stroke-width="2.4" stroke-linecap="round"/></svg>');
+  function updMusic() {
+    const b = document.getElementById('music'); if (!b) return;
+    b.innerHTML = MUSIC.on ? NOTE_ON : NOTE_OFF;
+    b.setAttribute('aria-label', MUSIC.on ? 'Isključi glazbu' : 'Uključi glazbu');
+    b.classList.toggle('off', !MUSIC.on);
+  }
+  (function () { const b = document.getElementById('music'); if (b) { b.onclick = () => { MUSIC.toggle(); updMusic(); }; updMusic(); } })();
 
   // ---------- stanje stranice ----------
   // Povezivanje: TV (domaćin) otvara "sobu" s imenom mozgalica-kip-v1-<kod>, a mobiteli
@@ -1518,6 +1662,8 @@ function createGame(o) {
   }
 
   const meOf = (d) => d && d.P.find((p) => p.id === PID);
+  const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? 'Točan odgovor u finalu vrijedi stepenicu više.' : POWERS[k].d);
+  const stepTxt = (n) => (n ? n + '. stepenice' : 'dna piramide');
   const isLocalHost = () => mode === 'demo' || mode === 'hostp';
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
   function miniBoard(d, gain) {
@@ -1539,7 +1685,12 @@ function createGame(o) {
       clockEnds = t + d.ms; clockDur = d.dur;
       L.start = t - (d.dur - d.ms);
       const me = meOf(d);
-      if (d.ph === 'question' && me && me.fx) { L.fxq = me.fx.slice(); L.fx = makeFx(L.fxq[0]); }
+      if ((d.ph === 'question' || d.ph === 'fq') && me && me.fx) {
+        L.fxq = me.fx.filter((k) => k === 'led' || k === 'sluz'); L.fx = makeFx(L.fxq[0]);
+        L.eat = me.fx.filter((k) => k === 'grick').length;
+        const nb = me.fx.filter((k) => k === 'bomba').length * 3;
+        L.bombs = Array.from({ length: nb }, (_, i) => ({ x: 12 + Math.random() * 76, y: 15 + Math.random() * 70, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 14), vy: (Math.random() < 0.5 ? -1 : 1) * (10 + Math.random() * 12), on: true }));
+      }
     }
     S = d;
     if (phoneShown()) {
@@ -1575,7 +1726,56 @@ function createGame(o) {
     setTimeout(() => { if (L.s === s0) phoneRender(true); }, 920);
     phoneRender(true);
   }
-  const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom', grick: 'Grickalice! Zgnječi sve bubice', bomba: 'Bomba! Tapni je da je odbaciš' };
+  const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom' };
+  // grickalice: dio slova u odgovorima je pojeden (isti za cijelo pitanje)
+  function optText(o, i) {
+    if (!L.eat) return esc(o);
+    let seed = (L.s * 97 + i * 131 + 7) >>> 0;
+    const rnd = () => { seed = (seed * 1103515245 + 12345) >>> 0; return (seed >>> 8) / 16777216; };
+    const chars = Array.from(o), idx = chars.map((c, j) => (/\S/.test(c) ? j : -1)).filter((j) => j >= 0);
+    const frac = Math.min(0.7, 0.4 + 0.15 * (L.eat - 1));
+    const n = Math.max(1, Math.round(idx.length * frac));
+    const gone = new Set();
+    while (gone.size < Math.min(n, idx.length)) gone.add(idx[Math.floor(rnd() * idx.length)]);
+    let k = 0;
+    return chars.map((c, j) => (gone.has(j) ? '<span class="bite" style="animation-delay:' + (0.15 + (k++) * 0.06).toFixed(2) + 's">' + esc(c) + '</span>' : esc(c))).join('') +
+      '<span class="eater" aria-hidden="true">' + bugSvg + '</span>';
+  }
+  function bombLayer() {
+    if (!L.bombs || !L.bombs.some((b) => b.on) || L.fx) return '';
+    return '<div class="bomb-layer" id="bombs">' + L.bombs.map((b, i) => (b.on ? '<button class="fly-bomb" data-bi="' + i + '" style="left:' + b.x + '%;top:' + b.y + '%" aria-label="Bomba, ne diraj!">' + bombSvg + '</button>' : '')).join('') + '</div>';
+  }
+  function boomCover() { return Date.now() < (L.boomUntil || 0) ? '<div class="boom-cover"><b>BUM!</b></div>' : ''; }
+  function bindBombs() {
+    const layer = document.getElementById('bombs');
+    if (!layer) return;
+    layer.querySelectorAll('[data-bi]').forEach((b) => {
+      b.onpointerdown = (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const bomb = L.bombs[+b.dataset.bi]; if (!bomb || !bomb.on) return;
+        bomb.on = false; L.boomUntil = Date.now() + 2000;
+        SFX.play('boom'); if (navigator.vibrate) { try { navigator.vibrate([80, 40, 120]); } catch (er) {} }
+        const s0 = L.s; setTimeout(() => { if (L.s === s0) phoneRender(true); }, 2050);
+        phoneRender(true);
+      };
+    });
+    if (L.bombRaf) return;
+    let last = performance.now();
+    const step = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      const lay = document.getElementById('bombs');
+      if (!lay || !L.bombs) { L.bombRaf = 0; return; }
+      for (const el of lay.querySelectorAll('[data-bi]')) {
+        const b = L.bombs[+el.dataset.bi];
+        b.x += b.vx * dt; b.y += b.vy * dt;
+        if (b.x < 8 || b.x > 92) { b.vx *= -1; b.x = Math.max(8, Math.min(92, b.x)); }
+        if (b.y < 10 || b.y > 90) { b.vy *= -1; b.y = Math.max(10, Math.min(90, b.y)); }
+        el.style.left = b.x + '%'; el.style.top = b.y + '%';
+      }
+      L.bombRaf = requestAnimationFrame(step);
+    };
+    L.bombRaf = requestAnimationFrame(step);
+  }
   function fxHtml(fx) {
     if (!fx) return '';
     const label = '<div class="fx-label">' + FX_LABEL[fx.k] + '</div>';
@@ -1993,7 +2193,7 @@ function createGame(o) {
       ? '<button class="btn ghost" id="install">📲 Instaliraj kao aplikaciju</button>'
       : '<div class="note">Za ikonu na početnom zaslonu: u Chromeu otvori izbornik ⋮ i odaberi „Dodaj na početni zaslon“.</div>';
     $app.innerHTML =
-      '<div class="logo">MOZGALICA<small>Kviz za cijelo društvo</small><span class="ver" style="display:block;font-size:.8rem;opacity:.45;letter-spacing:.1em">v5</span></div>' +
+      '<div class="logo">MOZGALICA<small>Kviz za cijelo društvo</small><span class="ver" style="display:block;font-size:.8rem;opacity:.45;letter-spacing:.1em">v7</span></div>' +
       '<div class="lineup" style="gap:10px">' + faces + '</div>' +
       '<div class="stack">' + hint +
       '<button class="btn" id="host">Otvori igru na TV-u</button>' +
@@ -2085,7 +2285,12 @@ function createGame(o) {
         h = tvTop(d, 'Bacanje moći!') + '<div class="tv-mid cast-mid">' + castHtml(d) + '</div>';
         break;
       case 'power': {
-        const legend = Object.keys(POWERS).map((k) => '<div class="pw-mini"><span class="pw-ico">' + ICON[k] + '</span><div><b>' + POWERS[k].n + '</b><span>' + POWERS[k].d + '</span></div></div>').join('');
+        const legend = Object.keys(POWERS).filter((k) => !(d.fin && k === 'pola')).map((k) => '<div class="pw-mini"><span class="pw-ico">' + ICON[k] + '</span><div><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + '</span></div></div>').join('');
+        if (d.fin) {
+          h = tvTop(d, 'Finale · odaberite moć na mobitelu') + timerHtml() +
+            '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Moći prije pitanja!</div><div class="powers-legend">' + legend + '</div>' + lineup(d, { check: true }) + '</div>' + pyramidHtml(d, false) + '</div>';
+          break;
+        }
         h = tvTop(d, 'Odaberite moć na mobitelu') + timerHtml() +
           '<div class="tv-mid"><div class="tv-title">Vrijeme je za moći!</div><div class="powers-legend">' + legend + '</div></div>' + lineup(d, { check: true });
         break;
@@ -2121,11 +2326,19 @@ function createGame(o) {
         if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
         break;
       }
+      case 'fstart': {
+        const rows = d.P.slice().sort((a, b) => b.fs - a.fs || b.sc - a.sc).map((p) => '<div class="rank-row"><span class="mini">' + avSvg(p.a, p.fs ? 'happy' : 'idle') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + ' b → ' + (p.fs ? p.fs + '. stepenica' : 'dno') + '</span></div>').join('');
+        h = tvTop(d, 'Početne stepenice prema bodovima') +
+          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Tko kreće odakle?</div><div style="display:flex;flex-direction:column;gap:10px">' + rows + '</div>' +
+          '<div class="tie-note">Što više bodova, to viša početna stepenica, ali najviše ' + Math.min(3, d.steps) + '. Do vrha ih je ' + d.steps + '.</div>' +
+          '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div></div>' + pyramidHtml(d, false) + '</div>';
+        break;
+      }
       case 'fq': case 'fr': {
         const rev = d.ph === 'fr';
         const tf = d.q.o.map((o, i) => '<div class="opt o' + (i === 0 ? 3 : 0) + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '" style="justify-content:center"><span class="txt" style="text-align:center">' + esc(o) + '</span></div>').join('');
         h = tvTop(d, 'Točno ili netočno? Točan odgovor = stepenica više, najbrži = dvije!') + (rev ? '' : timerHtml(3000)) +
-          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="q-text">' + esc(d.q.t) + '</div><div class="tf-row">' + tf + '</div></div>' +
+          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="q-text">' + esc(d.q.t) + '</div><div class="tf-row">' + tf + '</div>' + (rev ? '' : evHtml(d)) + '</div>' +
           pyramidHtml(d, rev) + '</div>';
         break;
       }
@@ -2263,6 +2476,14 @@ function createGame(o) {
         if (!d.ntv) h = center(h);
         break;
       }
+      case 'fstart': {
+        const ahead = d.P.filter((p) => p.fs > me.fs).length;
+        h = center(head + '<div style="width:130px" class="bob">' + avSvg(me.a, me.fs ? 'happy' : 'idle') + '</div>' +
+          '<div class="p-title">Krećeš s ' + stepTxt(me.fs) + '</div>' +
+          '<div class="p-sub">' + (ahead ? 'Ispred tebe ' + (ahead === 1 ? 'je 1 igrač' : 'su ' + ahead + ' igrača') + '. Moći i brzi odgovori mogu sve promijeniti!' : 'Najviše si na piramidi. Pazi na napade!') + '</div>' +
+          (d.ntv ? '<div class="phone-pyr">' + pyramidHtml(d, false) + '</div>' : ''));
+        break;
+      }
       case 'fq': h = head + finalePhone(d, me); break;
       case 'fr': {
         const ok = me.ch === d.cor;
@@ -2315,7 +2536,7 @@ function createGame(o) {
     }
     const offers = me.of || [];
     return '<div class="p-title">Odaberi moć</div><div class="pw-cards">' +
-      offers.map((k) => '<button class="pw-card ' + (POWERS[k].atk ? 'atk' : 'buff') + '" data-p="' + k + '"><span class="pw-ico">' + ICON[k] + '</span><span><b>' + POWERS[k].n + '</b><span>' + POWERS[k].d + '</span></span></button>').join('') +
+      offers.map((k) => '<button class="pw-card ' + (POWERS[k].atk ? 'atk' : 'buff') + '" data-p="' + k + '"><span class="pw-ico">' + ICON[k] + '</span><span><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + '</span></span></button>').join('') +
       '</div><button class="btn ghost" id="nopw">Preskoči</button>';
   }
 
@@ -2329,13 +2550,13 @@ function createGame(o) {
       const gone = hide.includes(i);
       let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
       if (answered && !gone) cls += mine === i ? ' picked' : ' dim';
-      return '<button class="' + cls + '" data-c="' + i + '"' + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span>' + esc(o) + '</span></button>';
+      return '<button class="' + cls + '" data-c="' + i + '"' + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span></button>';
     }).join('');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
       '<div class="p-q">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx)) + '</div>' +
+      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       '<div class="waiting">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + '</div>';
   }
 
@@ -2367,9 +2588,15 @@ function createGame(o) {
   function finalePhone(d, me) {
     const answered = L.sent || me.ok;
     const mine = L.sent ? L.sent.c : -1;
-    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (i === 0 ? 3 : 0) + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '>' + esc(o) + '</button>').join('');
+    const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
+    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (i === 0 ? 3 : 0) + (locked ? ' locked' : '') + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '><span class="otxt">' + optText(o, i) + '</span></button>').join('');
+    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Stepenica više</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
+    const attackers = (d.ev || []).filter((e) => e.t === PID);
+    const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
     return timerHtml(3000) + '<div class="p-top"><span class="pill">Finale · stepenica ' + (me.st || 0) + '/' + d.steps + '</span><span id="tnum"></span></div>' +
-      '<div class="p-q" style="font-size:1.6rem;text-align:center">' + esc(d.q.t) + '</div><div class="p-opts two">' + opts + '</div>' +
+      '<div class="p-q" style="font-size:1.6rem;text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
+      '<div class="q-area"><div class="p-opts two">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
+      (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : '') +
       (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '') + (d.ntv ? '<div class="phone-pyr">' + pyramidHtml(d, false) + '</div>' : '');
   }
 
@@ -2395,7 +2622,7 @@ function createGame(o) {
       b.onpointerdown = () => { b.dataset.ok = (!L.fx && Date.now() >= (L.lockUntil || 0)) ? '1' : ''; };
       b.onclick = (e) => {
         if (L.sent || L.fx) return;
-        if (Date.now() < (L.lockUntil || 0)) return;
+        if (Date.now() < (L.lockUntil || 0) || Date.now() < (L.boomUntil || 0)) return;
         if (e && e.detail !== 0 && b.dataset.ok !== '1') return;
         if (navigator.vibrate) { try { navigator.vibrate(25); } catch (e) {} }
         sendInput({ c: +b.dataset.c, t: Math.max(0, Math.round(Date.now() - L.start)) });
@@ -2413,7 +2640,8 @@ function createGame(o) {
         if (L.linkI >= d.li.L.length) sendInput({ r: L.linkR.slice() }); else phoneRender(true);
       };
     });
-    if (d.ph === 'question' && L.fx && !(L.sent || (me && me.ok))) bindFx();
+    if ((d.ph === 'question' || d.ph === 'fq') && L.fx && !(L.sent || (me && me.ok))) bindFx();
+    if ((d.ph === 'question' || d.ph === 'fq') && !(L.sent || (me && me.ok))) bindBombs();
   }
 
   // ---------- odbrojavanje ----------
@@ -2425,12 +2653,18 @@ function createGame(o) {
     if (num) num.textContent = (wrap || ring) && clockDur ? Math.ceil(ms / 1000) : '';
     if (wrap) wrap.classList.toggle('urgent', ms <= +(wrap.dataset.u || 5000));
     if (arc && clockDur) arc.style.strokeDashoffset = (263.9 * (1 - ms / clockDur)).toFixed(1);
-    if (ring) {
-      ring.classList.toggle('urgent', ms <= 5000);
-      const tvShown = mode === 'host' || (mode === 'demo' && demoView === 'tv');
+    if (ring) ring.classList.toggle('urgent', ms <= 5000);
+    const tvShown = mode === 'host' || (mode === 'demo' && demoView === 'tv');
+    const ph = tvShown ? (game && game.view().ph) : (S && S.ph);
+    const me = !tvShown && S ? meOf(S) : null;
+    const waiting = INPUT_PHASES[ph] && (tvShown ? !!ring : !!(wrap && me && !me.ok && !(L && L.sent)));
+    const key = (tvShown ? 't' : 'p') + (tvShown ? tvStep : (L && L.s));
+    if (waiting && clockDur) {
       const sec = Math.ceil(ms / 1000);
-      if (tvShown && ms > 0 && sec <= 5 && sec !== lastTickSec) { lastTickSec = sec; SFX.play('tick'); }
+      if (ms > 0 && sec <= 5 && key + ':' + sec !== lastTickSec) { lastTickSec = key + ':' + sec; SFX.play(sec <= 3 ? 'beep' : 'tick', sec); }
+      if (ms <= 0 && lastTickSec !== key + ':end') { lastTickSec = key + ':end'; SFX.play('timeup'); }
     }
+    MUSIC.want(MUSIC.on && !SFX.muted && (mode === 'host' || mode === 'hostp' || mode === 'demo'));
   }
   setInterval(tick, 100);
 
