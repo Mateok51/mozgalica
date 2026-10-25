@@ -103,6 +103,21 @@
   .o2 { --c1: #ffe066; --c2: #f0a400; --c3: #8f5d00; }
   .o3 { --c1: #4ff0a0; --c2: #10a35c; --c3: #075c33; }
   .av { display: block; width: 100%; height: auto; overflow: visible; }
+  .av.spr { aspect-ratio: 1; object-fit: contain; transform-origin: 50% 100%; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35)); -webkit-user-drag: none; user-select: none; }
+  .spr-vila.m-idle { animation: sprHover 2.8s ease-in-out infinite; }
+  .spr-ovan.m-idle { animation: sprBreath 2.4s ease-in-out infinite; }
+  .spr.m-happy { animation: sprJump 1.1s cubic-bezier(0.3, 0, 0.4, 1) infinite; }
+  .spr.m-sad { animation: sprDroop 3.6s ease-in-out infinite; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35)) saturate(0.8) brightness(0.92); }
+  .spr.m-shocked { animation: sprJolt 2.2s ease-out infinite; }
+  .spr.m-attack { animation: sprLunge 1.6s cubic-bezier(0.5, 0, 0.2, 1) infinite; }
+  .spr.m-victory { animation: sprCheer 1s ease-in-out infinite; }
+  @keyframes sprHover { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-8%) rotate(1.5deg); } }
+  @keyframes sprBreath { 0%, 100% { transform: scale(1, 1); } 50% { transform: translateY(-2%) scale(0.98, 1.03); } }
+  @keyframes sprJump { 0% { transform: translateY(0) scale(1.06, 0.92); } 18% { transform: translateY(0) scale(0.95, 1.06); } 48% { transform: translateY(-14%) scale(1); } 78% { transform: translateY(0) scale(1); } 88% { transform: translateY(0) scale(1.08, 0.9); } 100% { transform: translateY(0) scale(1.06, 0.92); } }
+  @keyframes sprDroop { 0%, 100% { transform: translateY(1%) rotate(-1deg) scale(1, 0.99); } 50% { transform: translateY(2%) rotate(1deg) scale(1.01, 0.97); } }
+  @keyframes sprJolt { 0%, 60%, 100% { transform: translate(0, 0) rotate(0); } 4% { transform: translate(-3%, -4%) rotate(-5deg) scale(1.04); } 8% { transform: translate(2%, -2%) rotate(4deg); } 12% { transform: translate(-2%, 0) rotate(-3deg); } 16% { transform: translate(1%, 0) rotate(2deg); } 22% { transform: rotate(-1deg); } }
+  @keyframes sprLunge { 0%, 100% { transform: translateX(0) rotate(0); } 35% { transform: translateX(-4%) rotate(-3deg) scale(0.98); } 50% { transform: translateX(6%) rotate(3deg) scale(1.03); } 70% { transform: translateX(2%) rotate(0); } }
+  @keyframes sprCheer { 0%, 100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-6%) rotate(0) scale(1.02); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-6%) rotate(0) scale(1.02); } }
   .av .lid { transform-box: fill-box; transform-origin: center top; transform: scaleY(0); animation: blink 5.2s infinite; }
   .who:nth-child(2) .av .lid, .av-pick:nth-child(2n) .av .lid { animation-delay: -1.7s; }
   .who:nth-child(3) .av .lid, .av-pick:nth-child(3n) .av .lid { animation-delay: -3.1s; }
@@ -419,7 +434,7 @@ const POWERS = {
 };
 const POWER_KEYS = Object.keys(POWERS);
 const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
-const AV_COUNT = 8;
+const AV_COUNT = 10;
 
 const CFG = {
   intro: 3.5, vote: 10, voteShow: 3, power: 12, q: 20, reveal: 7,
@@ -915,7 +930,14 @@ function createGame(o) {
     { n: 'Mrki',   c: '#4fd97a', s: 'square', e: 2, x: 'rogovi' },
     { n: 'Pipi',   c: '#ff6fb0', s: 'tall',   e: 2, x: 'naocale' },
     { n: 'Ćiro',   c: '#2fd6c4', s: 'pear',   e: 1, x: 'kruna' },
+    { n: 'Vila',   spr: 'vila' },
+    { n: 'Ovan',   spr: 'ovan' },
   ];
+  // naslikani likovi: jedna slika po pozi; prvi se nude pri odabiru
+  const PICK_ORDER = [8, 9, 0, 1, 2, 3, 4, 5, 6, 7];
+  const SPR_POSES = ['idle', 'happy', 'sad', 'shocked', 'attack', 'victory'];
+  AV.forEach((a) => { if (a.spr) SPR_POSES.forEach((p) => { const im = new Image(); im.src = 'chars/' + a.spr + '/' + p + '.webp'; }); });
+  const OLD_MOOD = { sad: 'dizzy', shocked: 'dizzy', victory: 'happy', attack: '' };
   const TOP = { round: 22, square: 26, tall: 14, pear: 20 };
   function shade(hex, amt) {
     const n = parseInt(hex.slice(1), 16);
@@ -924,6 +946,12 @@ function createGame(o) {
   }
   const avCache = {};
   function avSvg(i, mood) {
+    const A = AV[i] || AV[0];
+    if (A.spr) {
+      const pose = SPR_POSES.includes(mood) ? mood : mood === 'dizzy' ? 'sad' : 'idle';
+      return '<img class="av spr spr-' + A.spr + ' m-' + pose + '" src="chars/' + A.spr + '/' + pose + '.webp" alt="" draggable="false">';
+    }
+    if (mood in OLD_MOOD) mood = OLD_MOOD[mood];
     const k = i + ':' + (mood || '');
     if (avCache[k]) return avCache[k];
     const a = AV[i] || AV[0];
@@ -1199,7 +1227,7 @@ function createGame(o) {
   let PID = store.get('mz_pid');
   if (!PID) { PID = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('mz_pid', PID); }
   let myAv = parseInt(store.get('mz_av'), 10);
-  if (!(myAv >= 0 && myAv < 8)) myAv = Math.floor(Math.random() * 8);
+  if (!(myAv >= 0 && myAv < 10)) myAv = 8 + Math.floor(Math.random() * 2);
 
   function freshLocal(s) {
     return { s, sent: null, pw: null, fxq: [], fx: null, fxTimer: null, sortI: 0, sortR: [], linkI: 0, linkR: [] };
@@ -1346,7 +1374,7 @@ function createGame(o) {
     game = createGame({ code: 'DEMO', noTv: true, onChange: () => { applyState(game.view()); if (demoView === 'tv') render(); } });
     const name = store.get('mz_name') || 'Ti';
     game.addPlayer(PID, name, myAv, false);
-    const botAvs = [0, 1, 2, 3, 4, 5, 6, 7].filter((i) => i !== game.view().P[0].a);
+    const botAvs = [8, 9, 0, 1, 2, 3, 4, 5, 6, 7].filter((i) => i !== game.view().P[0].a);
     ['Ana', 'Marko', 'Iva'].forEach((n, i) => game.addBot(n, botAvs[i]));
     render();
   }
@@ -1603,7 +1631,7 @@ function createGame(o) {
       if (opts.gain && p.g) badge = '<span class="badge gain">+' + p.g + '</span>';
       const fx = opts.fx && p.fx ? p.fx.map((k) => ICON[k]).join('') : '';
       const extra = (opts.fx && p.sh ? '🛡️' : '') + (opts.fx && p.d ? '✖️2' : '');
-      const mood = opts.mood ? opts.mood(p) : (p.fx && opts.fx ? 'dizzy' : '');
+      const mood = opts.mood ? opts.mood(p) : (p.fx && opts.fx ? 'shocked' : '');
       return '<div class="who' + (p.c ? '' : ' off') + '">' + badge +
         '<div class="fxrow">' + fx + extra + '</div><div class="bob" style="width:100%">' + avSvg(p.a, mood) + '</div>' +
         '<div class="nm">' + esc(p.n) + '</div><div class="sc">' + p.sc + '</div></div>';
@@ -1612,7 +1640,7 @@ function createGame(o) {
   function evHtml(d) {
     if (!d.ev || !d.ev.length) return '';
     return '<div class="events">' + d.ev.map((e) => {
-      if (e.t) return '<span class="ev' + (e.b ? ' blocked' : '') + '"><span class="mini">' + avSvg(avOf(d, e.f)) + '</span>' + esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + ' ' + esc(nameOf(d, e.t)) + (e.b ? ' 🛡️' : '') + '</span>';
+      if (e.t) return '<span class="ev' + (e.b ? ' blocked' : '') + '"><span class="mini">' + avSvg(avOf(d, e.f), 'attack') + '</span>' + esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + ' ' + esc(nameOf(d, e.t)) + (e.b ? ' 🛡️' : '') + '</span>';
       return '<span class="ev buff"><span class="mini">' + avSvg(avOf(d, e.f)) + '</span>' + esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + '</span>';
     }).join('') + '</div>';
   }
@@ -1743,7 +1771,7 @@ function createGame(o) {
         const opts = d.q.o.map((o, i) => '<div class="opt o' + i + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '"><span class="shape">' + SHAPES[i] + '</span><span class="txt">' + esc(o) + '</span>' + (rev && d.cnt ? '<span class="cnt">' + d.cnt[i] + '</span>' : '') + '</div>').join('');
         h = tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + (rev ? '' : timerHtml()) +
           '<div class="tv-mid"><div class="q-text">' + esc(d.q.t) + '</div><div class="opts">' + opts + '</div>' + evHtml(d) + '</div>' +
-          lineup(d, rev ? { gain: true, mood: (p) => (p.ch === d.cor ? 'happy' : 'dizzy') } : { check: true, fx: true });
+          lineup(d, rev ? { gain: true, mood: (p) => (p.ch === d.cor ? 'happy' : 'sad') } : { check: true, fx: true });
         if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
         break;
       }
@@ -1781,7 +1809,7 @@ function createGame(o) {
         const w = d.P.find((p) => p.id === d.win) || d.P[0];
         const ranked = d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
         h = '<div class="winner"><div class="champ-wrap">' +
-          '<div class="logo" style="font-size:clamp(2.2rem,5.5vw,4.8rem)">Pobjednik!</div><div class="champ">' + avSvg(w.a, 'happy') + '</div>' +
+          '<div class="logo" style="font-size:clamp(2.2rem,5.5vw,4.8rem)">Pobjednik!</div><div class="champ">' + avSvg(w.a, 'victory') + '</div>' +
           '<div class="tv-title">' + esc(w.n) + '</div></div>' +
           '<div style="display:flex;flex-direction:column;gap:10px">' +
           ranked.map((p, i) => '<div class="rank-row"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a) + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + ' b · ' + (p.st || 0) + '/' + d.steps + '</span></div>').join('') +
@@ -1802,7 +1830,7 @@ function createGame(o) {
     let rows = '';
     for (let s = d.steps; s >= 0; s--) {
       const w = 34 + (d.steps - s) * (62 / d.steps);
-      const here = d.P.filter((p) => (p.st || 0) === s).map((p) => '<span class="climber">' + (rev && p.mv ? '<span class="up">+' + p.mv + '</span>' : '') + avSvg(p.a, rev ? (p.mv ? 'happy' : 'dizzy') : '') + '</span>').join('');
+      const here = d.P.filter((p) => (p.st || 0) === s).map((p) => '<span class="climber">' + (rev && p.mv ? '<span class="up">+' + p.mv + '</span>' : '') + avSvg(p.a, rev ? (p.mv ? 'happy' : 'sad') : '') + '</span>').join('');
       rows += '<div class="pstep' + (s === d.steps ? ' top' : '') + '" style="width:' + w + '%"><span class="lv">' + (s === d.steps ? '★' : s) + '</span>' + here + '</div>';
     }
     return '<div class="pyramid">' + rows + '</div>';
@@ -1845,7 +1873,7 @@ function createGame(o) {
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">📺 Pogledaj TV</button></div>' : '') +
       (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a) + '</span><span>' + esc(me.n) + '</span></span><span>' + esc(d.rl || '') + '</span><span>' + me.sc + ' b</span></div>' : '';
+    const head = me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>' + esc(me.n) + '</span></span><span>' + esc(d.rl || '') + '</span><span>' + me.sc + ' b</span></div>' : '';
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -1853,7 +1881,7 @@ function createGame(o) {
     } else switch (d.ph) {
       case 'lobby': {
         const taken = {}; d.P.forEach((p) => { if (p.id !== PID) taken[p.a] = p.n; });
-        const grid = AV.map((a, i) => '<button class="av-pick' + (me.a === i ? ' me' : '') + '" data-av="' + i + '"' + (taken[i] !== undefined ? ' disabled' : '') + '>' + avSvg(i, me.a === i ? 'happy' : '') + '<span>' + esc(taken[i] !== undefined ? taken[i] : a.n) + '</span></button>').join('');
+        const grid = PICK_ORDER.map((i) => { const a = AV[i]; return '<button class="av-pick' + (me.a === i ? ' me' : '') + '" data-av="' + i + '"' + (taken[i] !== undefined ? ' disabled' : '') + '>' + avSvg(i, me.a === i ? 'happy' : '') + '<span>' + esc(taken[i] !== undefined ? taken[i] : a.n) + '</span></button>'; }).join('');
         h = '<div class="p-title">Bok, ' + esc(me.n) + '!</div><div class="p-sub">Odaberi svog lika</div><div class="av-grid">' + grid + '</div>' +
           (mode === 'hostp'
             ? '<div class="card join-card" style="width:100%"><div class="p-sub">Neka ostali skeniraju QR ili otvore ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upišu kod</div>' +
@@ -1913,7 +1941,7 @@ function createGame(o) {
         const won = d.win === PID;
         const ranked = d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
         const pos = ranked.findIndex((p) => p.id === PID) + 1;
-        h = center('<div style="width:150px">' + avSvg(me.a, won ? 'happy' : '') + '</div><div class="p-title" style="font-size:2.4rem;color:var(--gold)">' + (won ? 'Pobijedio si!' : pos + '. mjesto') + '</div>' +
+        h = center('<div style="width:150px">' + avSvg(me.a, won ? 'victory' : 'sad') + '</div><div class="p-title" style="font-size:2.4rem;color:var(--gold)">' + (won ? 'Pobijedio si!' : pos + '. mjesto') + '</div>' +
           (won ? '<div class="scroll"><b>Tvoja nagrada: zanimljivost</b>' + esc(d.fact) + '</div>' : '<div class="p-sub">Pobjednik je ' + esc(nameOf(d, d.win)) + '.</div>') +
           '<div class="statline"><div class="stat"><b>' + me.sc + '</b><span>bodova</span></div><div class="stat"><b>' + (me.st || 0) + '/' + d.steps + '</b><span>piramida</span></div></div>' +
           (d.ntv ? '<div class="p-sub">Konačni poredak</div><div class="mboard">' + ranked.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, p.id === d.win ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + ' b · ' + (p.st || 0) + '/' + d.steps + '</span></div>').join('') + '</div>' +
@@ -1942,7 +1970,7 @@ function createGame(o) {
   function powerPhone(d, me) {
     if (L.sent || me.ok) {
       const k = L.sent && L.sent.p;
-      return '<div class="result none"><div class="p-title">' + (k ? ICON[k] + ' ' + POWERS[k].n : 'Bez moći') + '</div>' +
+      return '<div class="result none"><div style="width:120px">' + avSvg(me.a, k && POWERS[k].atk ? 'attack' : 'idle') + '</div><div class="p-title">' + (k ? ICON[k] + ' ' + POWERS[k].n : 'Bez moći') + '</div>' +
         (k && L.sent.t ? '<div class="p-sub">Meta: <b>' + esc(nameOf(d, L.sent.t)) + '</b></div>' : '') + '<div class="waiting">Čekamo ostale…</div></div>';
     }
     if (L.pw) {
@@ -1981,7 +2009,7 @@ function createGame(o) {
     const ok = me.ch === d.cor;
     const cls = ok ? 'ok' : me.ch >= 0 ? 'bad' : 'none';
     const title = ok ? 'Točno!' : me.ch >= 0 ? 'Netočno' : 'Vrijeme je isteklo';
-    return '<div class="result ' + cls + '"><div style="width:110px">' + avSvg(me.a, ok ? 'happy' : 'dizzy') + '</div><div class="p-title">' + title + '</div>' +
+    return '<div class="result ' + cls + '"><div style="width:110px">' + avSvg(me.a, ok ? 'happy' : 'sad') + '</div><div class="p-title">' + title + '</div>' +
       (ok ? '<div class="pts">+' + me.g + (me.d ? ' (×2)' : '') + '</div>' : '<div class="p-sub">Točan odgovor: <b>' + SHAPES[d.cor] + ' ' + esc(d.q.o[d.cor]) + '</b></div>') + '</div>' +
       (d.ntv ? phoneEvents(d) + miniBoard(d, true) : rankStat(d, me));
   }
