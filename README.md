@@ -10,7 +10,7 @@ Party kviz za 2–6 igrača. TV prikazuje igru, a svi igraju s mobitela: biraju 
 2. Igrači skeniraju QR kod mobitelom (ili otvore adresu i upišu kod sobe). Prijava ni instalacija nisu potrebne.
 3. Domaćin pritisne **Započni igru**.
 
-Nema TV preglednika? Otvori **Otvori igru na TV-u** na jednom mobitelu i zrcali ga na TV.
+**Bez TV-a:** jedan mobitel odabere **Igraj bez TV-a**, upiše ime i otvori sobu. On igra kao i ostali, a svi na svojim mobitelima vide glasove, moći, poredak, rješenja izazova i piramidu u finalu.
 
 ## Instalacija na mobitel
 Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj kao aplikaciju* na početnom ekranu igre).

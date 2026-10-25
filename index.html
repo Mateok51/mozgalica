@@ -299,6 +299,20 @@
   .p-opt:disabled { cursor: default; }
   .p-opt.dim { opacity: 0.22; filter: grayscale(0.7); }
   .p-opt.gone { opacity: 0.1; filter: grayscale(1); }
+  .mboard { display: grid; gap: 6px; width: 100%; }
+  .mboard .rank-row { font-size: 1rem; padding: 4px 10px; }
+  .mboard .rank-row .mini { width: 30px; }
+  .mboard .rank-row.me { border-color: var(--cyan); box-shadow: 0 0 18px rgba(94, 231, 255, 0.3); }
+  .mboard .gain { color: var(--good); font-weight: 900; }
+  .phone-pyr { width: 100%; height: 230px; display: flex; }
+  .phone-pyr .pyramid { width: 100%; }
+  .phone-pyr .pstep { height: 24px; }
+  .phone-pyr .pstep .climber { width: 26px; }
+  .phone-pyr .pstep .lv { font-size: 0.8rem; }
+  .phone .events .ev { font-size: 0.85rem; }
+  .phone .sort-cols { flex: none; }
+  .mboard .rank-row { text-align: left; }
+  .phone { padding-bottom: 64px; }
   .p-opt.locked { filter: saturate(0.4) brightness(0.8); transform: scale(0.98); }
   .p-opt.picked { box-shadow: 0 0 0 4px #fff, 0 0 34px rgba(255, 255, 255, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.45), 0 7px 0 var(--c3); }
   .p-opts.two .p-opt { justify-content: center; min-height: 130px; font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; }
@@ -479,13 +493,13 @@ function createGame(o) {
   function avFree(av, pid) { return isInt(av) && av >= 0 && av < AV_COUNT && !list().some((p) => p.pid !== pid && p.av === av); }
   function firstFreeAv(pid) { for (let i = 0; i < AV_COUNT; i++) if (avFree(i, pid)) return i; return 0; }
 
-  function makePlayer(pid, name, av, bot) {
+  function makePlayer(pid, name, av, bot, local) {
     if (R.has(pid)) return R.get(pid);
     if (G.ph !== 'lobby' || R.size >= cfg.maxPlayers) return null;
     const nm = cleanName(name);
     if (!nm) return null;
     const p = {
-      pid, name: uniqueName(nm, pid), av: avFree(av, pid) ? av : firstFreeAv(pid),
+      pid, name: uniqueName(nm, pid), av: avFree(av, pid) ? av : firstFreeAv(pid), local: !!local,
       score: 0, gained: 0, on: true, bot: !!bot, done: false, lastIn: '',
       vote: -1, offers: [], pw: null, fx: [], dbl: false, pola: false, sh: false, hide: null,
       ans: -1, ansMs: 0, ch: -1, sortA: null, linkA: null, cnt: 0, fstep: 0, mv: 0,
@@ -493,7 +507,7 @@ function createGame(o) {
     R.set(pid, p);
     return p;
   }
-  function addPlayer(pid, name, av, bot) { const p = makePlayer(pid, name, av, bot); if (p) onChange(); return p; }
+  function addPlayer(pid, name, av, bot, local) { const p = makePlayer(pid, name, av, bot, local); if (p) onChange(); return p; }
   function addBot(name, av) { return addPlayer('bot-' + name, name, av, true); }
   function setAvatar(pid, av) {
     const p = R.get(pid);
@@ -567,7 +581,7 @@ function createGame(o) {
         if (k !== p.lastIn) { p.lastIn = k; if (accept(p, x.in)) changed = true; }
       }
     }
-    for (const p of list()) if (!p.bot && p.on && !seen.has(p.pid)) { p.on = false; changed = true; }
+    for (const p of list()) if (!p.bot && !p.local && p.on && !seen.has(p.pid)) { p.on = false; changed = true; }
     if (G.ph === 'lobby') for (const [id, p] of R) if (!p.on) { R.delete(id); changed = true; }
     if (INPUT_PHASES[G.ph] && allDone()) return endPhase();
     if (changed) onChange();
@@ -841,6 +855,7 @@ function createGame(o) {
       v: 3, code: G.code, ph, s: G.s, ms: Math.max(0, G.endsAt - now()), dur: G.dur,
       rl: G.rl, max: cfg.maxPlayers, steps: cfg.steps,
     };
+    if (o.noTv) v.ntv = 1;
     v.P = list().map((p) => {
       const e = { id: p.pid, n: p.name, a: p.av, sc: p.score, c: p.on ? 1 : 0, ok: p.done ? 1 : 0 };
       if ((ph === 'vote' && p.done) || (ph === 'voteResult' && p.vote >= 0)) e.vt = p.vote;
@@ -1258,14 +1273,21 @@ function createGame(o) {
     if (!hasPeer()) { hostErr = 'Modul za povezivanje se nije učitao. Provjeri internet i osvježi stranicu.'; return render(); }
     openHostPeer(0);
   }
-  function openHostPeer(tries) {
+  function openHostPeer(tries, opts) {
     const code = makeCode();
     const peer = new Peer(PEER_PREFIX + code.toLowerCase(), { debug: 0 });
     let opened = false;
     peer.on('open', () => {
-      if (mode !== 'host' || hostPeer) { try { peer.destroy(); } catch (e) {} return; }
+      if ((mode !== 'host' && mode !== 'hostp') || hostPeer) { try { peer.destroy(); } catch (e) {} return; }
       opened = true; hostPeer = peer;
-      game = createGame({ code, onChange: () => { publishSoon(); render(); } });
+      if (opts && opts.noTv) {
+        // domaćin igra s ovog mobitela; ostali se spajaju kao i inače
+        pcode = code;
+        game = createGame({ code, noTv: true, onChange: () => { publishSoon(); applyState(game.view()); } });
+        game.addPlayer(PID, opts.me, myAv, false, true);
+      } else {
+        game = createGame({ code, onChange: () => { publishSoon(); render(); } });
+      }
       pubTimer = setInterval(publish, 1000);
       render();
     });
@@ -1280,16 +1302,48 @@ function createGame(o) {
     peer.on('error', (e) => {
       if (opened) return; // gubitak veze jednog igrača ne ruši sobu
       try { peer.destroy(); } catch (er) {}
-      if (e && e.type === 'unavailable-id' && tries < 5) return openHostPeer(tries + 1);
-      if (mode === 'host') { hostErr = 'Ne mogu otvoriti sobu (' + ((e && e.type) || 'greška') + '). Provjeri internet i pokušaj ponovno.'; render(); }
+      if (e && e.type === 'unavailable-id' && tries < 5) return openHostPeer(tries + 1, opts);
+      if (mode === 'host' || mode === 'hostp') {
+        hostErr = 'Ne mogu otvoriti sobu (' + ((e && e.type) || 'greška') + '). Provjeri internet i pokušaj ponovno.';
+        if (mode === 'hostp') mode = 'hostform';
+        render();
+      }
     });
+  }
+
+  // ---------- igra bez TV-a: domaćin igra s mobitela ----------
+  function hostFormV() {
+    $app.className = 'screen phone';
+    const name = store.get('mz_name') || '';
+    $app.innerHTML = '<div class="logo" style="font-size:2.6rem;text-align:center">MOZGALICA</div>' +
+      '<form class="form" id="hform" autocomplete="off">' + (hostErr ? '<div class="err">' + esc(hostErr) + '</div>' : '') +
+      '<div class="p-title" style="font-size:1.5rem">Igra bez TV-a</div>' +
+      '<div class="p-sub">Ti otvaraš sobu i igraš kao i ostali. Svatko na svom mobitelu vidi pitanja, glasove, moći, poredak i piramidu.</div>' +
+      '<div><label for="hname">Tvoje ime</label><input id="hname" maxlength="12" value="' + esc(name) + '" placeholder="npr. Mateo" autocomplete="off"></div>' +
+      '<button class="btn" type="submit">Otvori sobu</button><button class="btn ghost" type="button" id="back">Natrag</button></form>';
+    document.getElementById('hform').onsubmit = (e) => {
+      e.preventDefault();
+      const n = document.getElementById('hname').value.trim();
+      if (!n) { hostErr = 'Upiši svoje ime.'; return hostFormV(); }
+      startHostPhone(n);
+    };
+    bind('back', reset);
+  }
+  function startHostPhone(name) {
+    store.set('mz_name', name);
+    hostErr = ''; S = null; lastSig = ''; L = freshLocal(-1); pcode = '';
+    if (!hasPeer()) { hostErr = 'Modul za povezivanje se nije učitao. Provjeri internet i osvježi stranicu.'; mode = 'hostform'; return render(); }
+    mode = 'hostp';
+    keepAwake();
+    render();
+    openHostPeer(0, { noTv: true, me: name });
   }
 
   // ---------- demo: ti + botovi na jednom uređaju ----------
   function startDemo() {
     mode = 'demo'; demoView = 'phone'; S = null; lastSig = ''; L = freshLocal(-1);
     keepAwake();
-    game = createGame({ code: 'DEMO', onChange: () => { applyState(game.view()); if (demoView === 'tv') render(); } });
+    game = createGame({ code: 'DEMO', noTv: true, onChange: () => { applyState(game.view()); if (demoView === 'tv') render(); } });
     const name = store.get('mz_name') || 'Ti';
     game.addPlayer(PID, name, myAv, false);
     const botAvs = [0, 1, 2, 3, 4, 5, 6, 7].filter((i) => i !== game.view().P[0].a);
@@ -1361,17 +1415,28 @@ function createGame(o) {
   function sendInput(inp) {
     inp.s = L.s;
     L.sent = inp;
-    if (mode === 'demo') game.setInput(PID, inp);
+    if (isLocalHost()) game.setInput(PID, inp);
     else if (pconn && pconn.open) { try { pconn.send({ t: 'in', in: inp }); } catch (e) {} }
     phoneRender(true);
   }
   function chooseAvatar(i) {
     myAv = i; store.set('mz_av', String(i));
-    if (mode === 'demo') game.setAvatar(PID, i);
+    if (isLocalHost()) game.setAvatar(PID, i);
     else if (pconn && pconn.open) { try { pconn.send({ t: 'av', av: i }); } catch (e) {} }
   }
 
   const meOf = (d) => d && d.P.find((p) => p.id === PID);
+  const isLocalHost = () => mode === 'demo' || mode === 'hostp';
+  const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
+  function miniBoard(d, gain) {
+    const r = d.P.slice().sort((a, b) => b.sc - a.sc);
+    return '<div class="mboard">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + '</span>' +
+      (gain && p.g ? '<span class="gain">+' + p.g + '</span>' : '') + '<span class="sc">' + p.sc + '</span></div>').join('') + '</div>';
+  }
+  function phoneEvents(d) {
+    if (!d.ev || !d.ev.length) return '';
+    return '<div class="p-sub" style="margin-top:4px">Moći u ovom pitanju</div>' + evHtml(d);
+  }
 
   function applyState(d) {
     clearTimeout(waitTimer);
@@ -1385,7 +1450,7 @@ function createGame(o) {
       if (d.ph === 'question' && me && me.fx) { L.fxq = me.fx.slice(); L.fx = makeFx(L.fxq[0]); }
     }
     S = d;
-    if (mode === 'player' || (mode === 'demo' && demoView === 'phone')) {
+    if (phoneShown()) {
       const sig = phoneSig(d);
       if (sig !== lastSig) { lastSig = sig; phoneRender(false); }
     }
@@ -1559,6 +1624,8 @@ function createGame(o) {
       if (mode === 'join') return joinV();
       if (mode === 'player') return phoneRender(true);
       if (mode === 'demo') return demoView === 'tv' ? tvV(game.view()) : phoneRender(true);
+      if (mode === 'hostp') return phoneRender(true);
+      if (mode === 'hostform') return hostFormV();
       return hostV();
     } catch (e) { crash(e); }
   }
@@ -1583,9 +1650,11 @@ function createGame(o) {
       '<div class="stack">' + hint +
       '<button class="btn" id="host">Otvori igru na TV-u</button>' +
       '<button class="btn" id="join">Pridruži se s mobitela</button>' +
+      '<button class="btn" id="hostp">Igraj bez TV-a</button>' +
       '<button class="btn ghost" id="demo">Probaj sam protiv botova</button>' + install + '</div>' +
-      '<div class="note">2 do 6 igrača. Na TV-u u pregledniku otvori <b>' + addr + '</b> i odaberi „Otvori igru na TV-u“. Ostali skeniraju QR kod mobitelom, bez prijave i instalacije.</div>';
+      '<div class="note">2 do 6 igrača. S TV-om: na TV-u otvori <b>' + addr + '</b> i odaberi „Otvori igru na TV-u“. Bez TV-a: jedan mobitel odabere „Igraj bez TV-a“. Ostali skeniraju QR kod, bez prijave i instalacije.</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
+    bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
     bind('install', async () => {
       if (!installEvt) return;
       installEvt.prompt();
@@ -1763,7 +1832,7 @@ function createGame(o) {
   // ---------- mobitel ----------
   function phoneRender(force) {
     try {
-      if (!(mode === 'player' || (mode === 'demo' && demoView === 'phone'))) return;
+      if (!phoneShown()) return;
       if (force && S) lastSig = phoneSig(S);
       phoneV();
     } catch (e) { crash(e); }
@@ -1786,7 +1855,12 @@ function createGame(o) {
         const taken = {}; d.P.forEach((p) => { if (p.id !== PID) taken[p.a] = p.n; });
         const grid = AV.map((a, i) => '<button class="av-pick' + (me.a === i ? ' me' : '') + '" data-av="' + i + '"' + (taken[i] !== undefined ? ' disabled' : '') + '>' + avSvg(i, me.a === i ? 'happy' : '') + '<span>' + esc(taken[i] !== undefined ? taken[i] : a.n) + '</span></button>').join('');
         h = '<div class="p-title">Bok, ' + esc(me.n) + '!</div><div class="p-sub">Odaberi svog lika</div><div class="av-grid">' + grid + '</div>' +
-          (mode === 'demo'
+          (mode === 'hostp'
+            ? '<div class="card join-card" style="width:100%"><div class="p-sub">Neka ostali skeniraju QR ili otvore ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upišu kod</div>' +
+              (qrSvg(appUrl() + '#' + d.code) ? '<div class="qr" style="width:min(70%,240px)">' + qrSvg(appUrl() + '#' + d.code) + '</div>' : '') +
+              '<div class="room-code" style="font-size:3.4rem">' + esc(d.code) + '</div><div class="p-sub">' + d.P.length + ' od ' + d.max + ' igrača u sobi</div></div>' +
+              '<button class="btn" id="dstart"' + (d.P.length < 2 ? ' disabled' : '') + '>Započni igru</button>' + (d.P.length < 2 ? '<div class="p-sub">Čekamo barem još jednog igrača.</div>' : '')
+            : mode === 'demo'
             ? '<button class="btn" id="dstart">Započni igru</button><div class="p-sub">Igraš protiv tri bota. Bacat će moći i na tebe!</div>'
             : '<div class="waiting">U sobi ' + esc(d.code) + ' · ' + d.P.length + ' igrača. Igra počinje kad domaćin pritisne „Započni“.</div>') +
           '<button class="btn ghost" id="leave">Izađi</button>';
@@ -1820,14 +1894,19 @@ function createGame(o) {
       case 'link': h = head + timerHtml(8000) + linkPhone(d, me); break;
       case 'sortReveal': case 'linkReveal': {
         const tot = d.ph === 'sortReveal' ? d.so.it.length : d.li.L.length;
-        h = center(head + '<div class="result ' + (me.k ? 'ok' : 'none') + '"><div class="p-title">Točno ' + me.k + ' od ' + tot + '</div><div class="pts">+' + (me.g || 0) + '</div></div>' + rankStat(d, me));
+        let sol = '';
+        if (d.ntv && d.ph === 'sortReveal') sol = '<div class="sort-cols" style="width:100%">' + [0, 1].map((k) => '<div class="sort-col ' + (k ? 'b' : 'a') + '" style="padding:10px"><h3 style="font-size:1.1rem">' + esc(k ? d.so.b : d.so.a) + '</h3><div class="chips">' + d.so.it.filter((_, i) => d.so.key[i] === k).map((x) => '<span class="chip" style="font-size:.9rem">' + esc(x) + '</span>').join('') + '</div></div>').join('') + '</div>';
+        if (d.ntv && d.ph === 'linkReveal') sol = '<div class="pairs" style="width:100%">' + d.li.L.map((l, i) => '<div class="pair" style="font-size:1rem"><span>' + esc(l) + '</span><span class="arrow">→</span><span>' + esc(d.li.R[d.li.key[i]]) + '</span></div>').join('') + '</div>';
+        h = (d.ntv ? '' : '') + head + '<div class="result ' + (me.k ? 'ok' : 'none') + '"><div class="p-title">Točno ' + me.k + ' od ' + tot + '</div><div class="pts">+' + (me.g || 0) + '</div></div>' +
+          (d.ntv ? sol + miniBoard(d, true) : rankStat(d, me));
+        if (!d.ntv) h = center(h);
         break;
       }
       case 'fq': h = head + finalePhone(d, me); break;
       case 'fr': {
         const ok = me.ch === d.cor;
         h = center(head + '<div class="result ' + (ok ? 'ok' : me.ch >= 0 ? 'bad' : 'none') + '"><div class="p-title">' + (ok ? (me.mv === 2 ? 'Najbrži! +2 stepenice' : 'Točno! +1 stepenica') : me.ch >= 0 ? 'Netočno, ostaješ' : 'Prespor!') + '</div>' +
-          '<div class="p-sub">Bilo je: <b>' + esc(d.q.o[d.cor]) + '</b></div></div>' + stepMeter(d, me));
+          '<div class="p-sub">Bilo je: <b>' + esc(d.q.o[d.cor]) + '</b></div></div>' + (d.ntv ? '<div class="phone-pyr">' + pyramidHtml(d, true) + '</div>' : stepMeter(d, me)));
         break;
       }
       case 'final': {
@@ -1837,7 +1916,9 @@ function createGame(o) {
         h = center('<div style="width:150px">' + avSvg(me.a, won ? 'happy' : '') + '</div><div class="p-title" style="font-size:2.4rem;color:var(--gold)">' + (won ? 'Pobijedio si!' : pos + '. mjesto') + '</div>' +
           (won ? '<div class="scroll"><b>Tvoja nagrada: zanimljivost</b>' + esc(d.fact) + '</div>' : '<div class="p-sub">Pobjednik je ' + esc(nameOf(d, d.win)) + '.</div>') +
           '<div class="statline"><div class="stat"><b>' + me.sc + '</b><span>bodova</span></div><div class="stat"><b>' + (me.st || 0) + '/' + d.steps + '</b><span>piramida</span></div></div>' +
-          (mode === 'demo' ? '<button class="btn" id="dagain">Igraj opet</button>' : '<div class="p-sub">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Izađi</button>');
+          (d.ntv ? '<div class="p-sub">Konačni poredak</div><div class="mboard">' + ranked.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, p.id === d.win ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + ' b · ' + (p.st || 0) + '/' + d.steps + '</span></div>').join('') + '</div>' +
+            (won ? '' : '<div class="scroll"><b>Nagrada za pobjednika: zanimljivost</b>' + esc(d.fact) + '</div>') : '') +
+          (isLocalHost() ? '<button class="btn" id="dagain">Igraj opet</button>' : '<div class="p-sub">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Izađi</button>');
         break;
       }
     }
@@ -1901,7 +1982,8 @@ function createGame(o) {
     const cls = ok ? 'ok' : me.ch >= 0 ? 'bad' : 'none';
     const title = ok ? 'Točno!' : me.ch >= 0 ? 'Netočno' : 'Vrijeme je isteklo';
     return '<div class="result ' + cls + '"><div style="width:110px">' + avSvg(me.a, ok ? 'happy' : 'dizzy') + '</div><div class="p-title">' + title + '</div>' +
-      (ok ? '<div class="pts">+' + me.g + (me.d ? ' (×2)' : '') + '</div>' : '<div class="p-sub">Točan odgovor: <b>' + SHAPES[d.cor] + ' ' + esc(d.q.o[d.cor]) + '</b></div>') + '</div>' + rankStat(d, me);
+      (ok ? '<div class="pts">+' + me.g + (me.d ? ' (×2)' : '') + '</div>' : '<div class="p-sub">Točan odgovor: <b>' + SHAPES[d.cor] + ' ' + esc(d.q.o[d.cor]) + '</b></div>') + '</div>' +
+      (d.ntv ? phoneEvents(d) + miniBoard(d, true) : rankStat(d, me));
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
@@ -1926,7 +2008,7 @@ function createGame(o) {
     const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (i === 0 ? 3 : 0) + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '>' + esc(o) + '</button>').join('');
     return timerHtml(3000) + '<div class="p-top"><span class="pill">Finale · stepenica ' + (me.st || 0) + '/' + d.steps + '</span><span id="tnum"></span></div>' +
       '<div class="p-q" style="font-size:1.6rem;text-align:center">' + esc(d.q.t) + '</div><div class="p-opts two">' + opts + '</div>' +
-      (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '');
+      (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '') + (d.ntv ? '<div class="phone-pyr">' + pyramidHtml(d, false) + '</div>' : '');
   }
 
   function bindPhone(d, me) {
