@@ -286,6 +286,7 @@
   .p-opt:disabled { cursor: default; }
   .p-opt.dim { opacity: 0.22; filter: grayscale(0.7); }
   .p-opt.gone { opacity: 0.1; filter: grayscale(1); }
+  .p-opt.locked { filter: saturate(0.4) brightness(0.8); transform: scale(0.98); }
   .p-opt.picked { box-shadow: 0 0 0 4px #fff, 0 0 34px rgba(255, 255, 255, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.45), 0 7px 0 var(--c3); }
   .p-opts.two .p-opt { justify-content: center; min-height: 130px; font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; }
   .waiting { text-align: center; color: var(--ink-2); font-weight: 900; padding: 6px; }
@@ -1395,6 +1396,10 @@ function createGame(o) {
     L.fxq.shift();
     L.fx = makeFx(L.fxq[0]);
     if (navigator.vibrate) { try { navigator.vibrate(60); } catch (e) {} }
+    // odgovori ostaju zaključani kratko vrijeme da se zadnji dodir ne pretvori u odgovor
+    L.lockUntil = Date.now() + 900;
+    const s0 = L.s;
+    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 920);
     phoneRender(true);
   }
   const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom', grick: 'Grickalice! Zgnječi sve bubice', bomba: 'Bomba! Tapni je da je odbaciš' };
@@ -1843,10 +1848,11 @@ function createGame(o) {
     const answered = L.sent || me.ok;
     const mine = L.sent ? L.sent.c : -1;
     const hide = me.h || [];
+    const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
     const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '');
     const opts = d.q.o.map((o, i) => {
       const gone = hide.includes(i);
-      let cls = 'p-opt o' + i + (gone ? ' gone' : '');
+      let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
       if (answered && !gone) cls += mine === i ? ' picked' : ' dim';
       return '<button class="' + cls + '" data-c="' + i + '"' + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span>' + esc(o) + '</span></button>';
     }).join('');
@@ -1855,7 +1861,7 @@ function createGame(o) {
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
       '<div class="p-q">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx)) + '</div>' +
-      '<div class="waiting">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : 'Brže = više bodova!') + '</div>';
+      '<div class="waiting">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + '</div>';
   }
 
   function revealPhone(d, me) {
@@ -1909,8 +1915,12 @@ function createGame(o) {
     bind('pwback', () => { L.pw = null; phoneRender(true); });
     bind('nopw', () => sendInput({ p: '' }));
     $app.querySelectorAll('[data-c]').forEach((b) => {
-      b.onclick = () => {
+      // odgovor vrijedi samo ako je dodir i počeo na tom gumbu, nakon što je efekt uklonjen
+      b.onpointerdown = () => { b.dataset.ok = (!L.fx && Date.now() >= (L.lockUntil || 0)) ? '1' : ''; };
+      b.onclick = (e) => {
         if (L.sent || L.fx) return;
+        if (Date.now() < (L.lockUntil || 0)) return;
+        if (e && e.detail !== 0 && b.dataset.ok !== '1') return;
         if (navigator.vibrate) { try { navigator.vibrate(25); } catch (e) {} }
         sendInput({ c: +b.dataset.c, t: Math.max(0, Math.round(Date.now() - L.start)) });
       };
