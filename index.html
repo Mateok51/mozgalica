@@ -160,8 +160,8 @@
   @keyframes rise { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
   @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-  .doors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2.4vw, 32px); flex: 1; align-items: end; perspective: 900px; }
-  .door { position: relative; min-height: clamp(190px, 40vh, 440px); border-radius: 999px 999px 22px 22px; padding: 22px 12px 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  .doors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2.4vw, 32px); flex: 1; align-items: end; perspective: 900px; padding-top: 26px; }
+  .door { position: relative; min-height: clamp(170px, 33vh, 400px); border-radius: 999px 999px 22px 22px; padding: 22px 12px 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
     background: radial-gradient(120% 70% at 50% 20%, color-mix(in srgb, var(--c1) 90%, #fff 10%), var(--c2) 60%, var(--c3));
     box-shadow: 0 0 0 5px var(--gold-deep), 0 0 0 9px var(--gold), 0 0 0 12px rgba(0, 0, 0, 0.35), inset 0 0 40px rgba(0, 0, 0, 0.35), inset 0 6px 0 rgba(255, 255, 255, 0.25), 0 26px 50px rgba(0, 0, 0, 0.55);
     transition: transform 0.45s cubic-bezier(0.2, 1.4, 0.4, 1), opacity 0.4s, filter 0.4s; }
@@ -170,7 +170,20 @@
   .door.o2 .dn { color: #3a2400; text-shadow: 0 2px 0 rgba(255, 255, 255, 0.35); }
   .door .knob { position: absolute; right: 13%; top: 60%; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff6c8, var(--gold) 50%, var(--gold-deep)); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
   .door .voters { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; min-height: 46px; }
-  .door .voters span { width: clamp(30px, 3.4vw, 48px); animation: pop 0.35s cubic-bezier(0.2, 1.8, 0.4, 1) both; }
+  .door .voters { gap: 8px; min-height: 70px; align-items: flex-end; }
+  .voter { width: clamp(46px, 4.8vw, 70px); display: flex; flex-direction: column; align-items: center; gap: 2px; animation: flyIn 0.55s cubic-bezier(0.2, 1.5, 0.4, 1) both; }
+  .voter .vnm { max-width: 120%; font-size: clamp(0.7rem, 0.95vw, 0.95rem); font-weight: 900; color: #fff; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 99px; padding: 0 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: none; }
+  .door .vcount { position: absolute; top: -22px; z-index: 2; left: 50%; transform: translateX(-50%); min-width: 2.2em; padding: 0.05em 0.5em; border-radius: 99px; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 2.6vw, 2.6rem); color: #3a2100; background: linear-gradient(180deg, #fff3c2, var(--gold)); box-shadow: inset 0 2px 0 #fff, 0 4px 0 var(--gold-deep), 0 10px 20px rgba(0, 0, 0, 0.4); animation: pop 0.35s cubic-bezier(0.2, 1.8, 0.4, 1) both; }
+  .door .vcount.zero { display: none; }
+  .door.lead { filter: brightness(1.12); box-shadow: 0 0 0 5px var(--gold-deep), 0 0 0 9px var(--gold-hi), 0 0 0 12px rgba(0, 0, 0, 0.35), 0 0 60px rgba(255, 207, 74, 0.6), inset 0 6px 0 rgba(255, 255, 255, 0.3); }
+  .tie-note { text-align: center; font-weight: 900; color: var(--gold-hi); font-size: clamp(1rem, 1.8vw, 1.6rem); animation: rise 0.4s 0.2s both; }
+  @keyframes flyIn { from { transform: translateY(-120px) scale(0.4) rotate(-20deg); opacity: 0; } 70% { transform: translateY(6px) scale(1.08); opacity: 1; } to { transform: none; opacity: 1; } }
+  .dvoters { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; margin-top: 8px; min-height: 30px; }
+  .dvoters span { width: 30px; animation: flyIn 0.5s cubic-bezier(0.2, 1.5, 0.4, 1) both; }
+  .door-btn .dcount { display: block; font-size: 0.85rem; font-family: var(--font-body); font-weight: 900; opacity: 0.9; }
+  .door-btn.win { box-shadow: 0 0 0 3px var(--gold-deep), 0 0 0 6px var(--gold-hi), 0 0 40px rgba(255, 207, 74, 0.7); transform: scale(1.04); }
+  .door-btn.lose { opacity: 0.25; filter: grayscale(0.7); }
+  .door-btn.win:disabled:not(.picked) { opacity: 1; filter: none; }
   .door.win { transform: translateY(-14px) scale(1.07); filter: brightness(1.15); box-shadow: 0 0 0 5px var(--gold-deep), 0 0 0 9px var(--gold-hi), 0 0 0 12px rgba(0, 0, 0, 0.35), 0 0 90px rgba(255, 207, 74, 0.8), inset 0 6px 0 rgba(255, 255, 255, 0.3); }
   .door.lose { opacity: 0.25; transform: scale(0.92); filter: grayscale(0.7); }
 
@@ -319,11 +332,12 @@
   #mute { position: fixed; z-index: 60; right: max(14px, env(safe-area-inset-right, 0px)); bottom: max(14px, env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: rgba(10, 8, 30, 0.7); border: 1px solid var(--edge); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); font-size: 1.2rem; }
 
   /* ulazi pri novoj fazi (samo kad se faza promijeni) */
-  .fresh .q-text, .fresh .p-q { animation: qIn 0.6s cubic-bezier(0.2, 1.2, 0.4, 1) both; }
-  .fresh .opt, .fresh .p-opt, .fresh .door, .fresh .door-btn { animation: optIn 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+  .fresh .q-text, .fresh .p-q { animation: qIn 0.6s cubic-bezier(0.2, 1.2, 0.4, 1) backwards; }
+  .fresh .opt, .fresh .p-opt, .fresh .door, .fresh .door-btn { animation: optIn 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) backwards; }
   .fresh .opt:nth-child(2), .fresh .p-opt:nth-child(2), .fresh .door:nth-child(2), .fresh .door-btn:nth-child(2) { animation-delay: 0.08s; }
   .fresh .opt:nth-child(3), .fresh .p-opt:nth-child(3), .fresh .door:nth-child(3), .fresh .door-btn:nth-child(3) { animation-delay: 0.16s; }
   .fresh .opt:nth-child(4), .fresh .p-opt:nth-child(4), .fresh .door:nth-child(4), .fresh .door-btn:nth-child(4) { animation-delay: 0.24s; }
+  .fresh .opt.correct { animation: glowPulse 1.2s ease-in-out infinite alternate; }
   @keyframes qIn { from { transform: translateY(-20px) scale(0.94); opacity: 0; filter: blur(6px); } to { transform: none; opacity: 1; filter: none; } }
   @keyframes optIn { from { transform: translateY(40px) scale(0.85); opacity: 0; } to { transform: none; opacity: 1; } }
 
@@ -622,6 +636,7 @@ function createGame(o) {
     const max = Math.max(...counts);
     const best = counts.map((c, i) => (c === max ? i : -1)).filter((i) => i >= 0);
     G.cw = pick(best);
+    G.tie = best.length > 1 ? 1 : 0;
     setPhase('voteResult', cfg.voteShow);
   }
 
@@ -828,7 +843,7 @@ function createGame(o) {
     };
     v.P = list().map((p) => {
       const e = { id: p.pid, n: p.name, a: p.av, sc: p.score, c: p.on ? 1 : 0, ok: p.done ? 1 : 0 };
-      if (ph === 'vote' && p.done) e.vt = p.vote;
+      if ((ph === 'vote' && p.done) || (ph === 'voteResult' && p.vote >= 0)) e.vt = p.vote;
       if (ph === 'power') e.of = p.offers;
       if (ph === 'question') {
         if (p.fx.length) e.fx = p.fx;
@@ -844,7 +859,7 @@ function createGame(o) {
     });
     if (ph === 'intro') v.it = G.intro;
     if (ph === 'vote' || ph === 'voteResult') v.cats = G.cats;
-    if (ph === 'voteResult') v.cw = G.cw;
+    if (ph === 'voteResult') { v.cw = G.cw; v.tie = G.tie; }
     if (ph === 'question' || ph === 'reveal' || ph === 'fq' || ph === 'fr') {
       v.q = { c: G.q.c, t: G.q.t, o: G.q.o, n: G.qn };
     }
@@ -1377,7 +1392,8 @@ function createGame(o) {
   }
   function phoneSig(d) {
     const me = meOf(d) || null;
-    const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c]) : null;
+    const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
+      : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : null;
     return JSON.stringify([d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster]);
   }
 
@@ -1630,13 +1646,21 @@ function createGame(o) {
         h = '<div class="intro-card"><div class="big">' + esc(d.it.t) + '</div><div class="sub">' + esc(d.it.sub) + '</div></div>' + lineup(d);
         break;
       case 'vote': case 'voteResult': {
+        const counts = d.cats.map((_, i) => d.P.filter((p) => p.vt === i).length);
+        const max = Math.max(0, ...counts);
         const doors = d.cats.map((c, i) => {
-          const voters = d.P.filter((p) => p.vt === i).map((p) => '<span>' + avSvg(p.a) + '</span>').join('');
-          const cls = d.ph === 'voteResult' ? (i === d.cw ? ' win' : ' lose') : '';
-          return '<div class="door o' + i + cls + '"><div class="dn">' + esc(c) + '</div><div class="voters">' + voters + '</div><span class="knob"></span></div>';
+          const voters = d.P.filter((p) => p.vt === i).map((p) => '<span class="voter"><span style="width:100%">' + avSvg(p.a, 'happy') + '</span><span class="vnm">' + esc(p.n) + '</span></span>').join('');
+          const cls = d.ph === 'voteResult' ? (i === d.cw ? ' win' : ' lose') : (max > 0 && counts[i] === max ? ' lead' : '');
+          return '<div class="door o' + i + cls + '"><span class="vcount' + (counts[i] ? '' : ' zero') + '">' + counts[i] + '</span><div class="dn">' + esc(c) + '</div><div class="voters">' + voters + '</div><span class="knob"></span></div>';
         }).join('');
-        h = tvTop(d, d.ph === 'vote' ? 'Glasajte za kategoriju!' : 'Kategorija: ' + esc(d.cats[d.cw])) +
-          (d.ph === 'vote' ? timerHtml() : '') + '<div class="tv-mid"><div class="doors">' + doors + '</div></div>' + lineup(d, { check: d.ph === 'vote' });
+        const voted = d.P.filter((p) => p.vt !== undefined).length;
+        const label = d.ph === 'vote' ? 'Glasajte za kategoriju! Glasalo ' + voted + ' od ' + d.P.filter((p) => p.c).length
+          : 'Kategorija: ' + esc(d.cats[d.cw]);
+        h = tvTop(d, label) + (d.ph === 'vote' ? timerHtml() : '') +
+          '<div class="tv-mid"><div class="doors">' + doors + '</div>' +
+          (d.ph === 'voteResult' && d.tie ? '<div class="tie-note">Neriješeno! Kategoriju je odabrao ždrijeb.</div>' : '') +
+          (d.ph === 'voteResult' && !voted ? '<div class="tie-note">Nitko nije glasao, kategoriju je odabrao ždrijeb.</div>' : '') +
+          '</div>' + lineup(d, { check: d.ph === 'vote' });
         break;
       }
       case 'power': {
@@ -1771,16 +1795,24 @@ function createGame(o) {
       case 'intro':
         h = center('<div class="p-title" style="font-size:3rem;color:var(--gold)">' + esc(d.it.t) + '</div><div class="p-sub">' + esc(d.it.sub) + '</div><div style="width:130px" class="bob">' + avSvg(me.a, 'happy') + '</div>');
         break;
-      case 'vote': {
-        const mine = L.sent ? L.sent.v : (me.ok ? -2 : -1);
-        h = head + timerHtml() + '<div class="p-title">Glasaj za kategoriju</div><div class="door-btns">' +
-          d.cats.map((c, i) => '<button class="door-btn o' + i + (mine === i ? ' picked' : '') + '" data-v="' + i + '"' + (mine !== -1 ? ' disabled' : '') + '>' + esc(c) + '</button>').join('') + '</div>' +
-          (mine !== -1 ? '<div class="waiting">Glas zaprimljen ✔</div>' : '');
+      case 'vote': case 'voteResult': {
+        const res = d.ph === 'voteResult';
+        const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
+        const doorBtns = d.cats.map((c, i) => {
+          const who = d.P.filter((p) => p.vt === i);
+          const faces = who.map((p) => '<span title="' + esc(p.n) + '">' + avSvg(p.a, 'happy') + '</span>').join('');
+          const cls = res ? (i === d.cw ? ' win' : ' lose') : (mine === i ? ' picked' : '');
+          return '<button class="door-btn o' + i + cls + '" data-v="' + i + '"' + (res || mine !== -1 ? ' disabled' : '') + '>' + esc(c) +
+            (who.length ? '<span class="dcount">' + who.length + (who.length === 1 ? ' glas' : who.length < 5 ? ' glasa' : ' glasova') + '</span>' : '') +
+            '<span class="dvoters">' + faces + '</span></button>';
+        }).join('');
+        h = head + (res ? '' : timerHtml()) +
+          '<div class="p-title">' + (res ? 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>' : 'Glasaj za kategoriju') + '</div>' +
+          '<div class="door-btns">' + doorBtns + '</div>' +
+          (res && d.tie ? '<div class="waiting">Neriješeno! Odlučio je ždrijeb.</div>' : '') +
+          (!res && mine !== -1 ? '<div class="waiting">Glas zaprimljen ✔ Gledaj kako glasaju ostali</div>' : '');
         break;
       }
-      case 'voteResult':
-        h = center(head + '<div class="p-sub">Kategorija je</div><div class="p-title" style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</div>');
-        break;
       case 'power': h = head + timerHtml() + powerPhone(d, me); break;
       case 'question': h = head + questionPhone(d, me); break;
       case 'reveal': h = head + revealPhone(d, me); break;
