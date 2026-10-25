@@ -1,0 +1,1642 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a1433">
+<meta name="description" content="Party kviz za TV i mobitele: likovi, moći, izazovi i utrka do vrha piramide.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Mozgalica</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@500;700;900&display=swap">
+<style>
+  /* Raspored: TV je pozornica (naslov gore, sadržaj u sredini, likovi dolje u redu);
+     mobitel je kontroler s jednim zadatkom po ekranu. Jedan namjerno tamni izgled. */
+  :root {
+    --night: #0a1433;
+    --stage: #1b2f78;
+    --glow: #3b5bdb;
+    --surface: rgba(255, 255, 255, 0.10);
+    --surface-2: rgba(255, 255, 255, 0.16);
+    --line: rgba(255, 255, 255, 0.22);
+    --ink: #ffffff;
+    --ink-2: #c8d3ff;
+    --gold: #ffc93c;
+    --gold-deep: #c98a12;
+    --red: #e8384f;
+    --blue: #2f80ff;
+    --yellow: #f7b500;
+    --green: #22b573;
+    --good: #7dffb4;
+    --bad: #ff8a99;
+    --ice: #bfe9ff;
+    --slime: #79d93b;
+    --slime-deep: #3f9a17;
+    --font-display: "Luckiest Guy", "Arial Black", "Trebuchet MS", system-ui, sans-serif;
+    --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--ink);
+    background-color: var(--night);
+    background-image:
+      radial-gradient(60% 50% at 50% -10%, rgba(255, 201, 60, 0.28), transparent 70%),
+      radial-gradient(40% 60% at 0% 100%, rgba(59, 91, 219, 0.55), transparent 70%),
+      radial-gradient(40% 60% at 100% 100%, rgba(232, 56, 79, 0.30), transparent 70%),
+      linear-gradient(180deg, var(--night), var(--stage));
+    background-attachment: fixed;
+    padding-block: 14px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    overflow-x: hidden;
+  }
+  button { font: inherit; color: inherit; border: 0; cursor: pointer; background: none; }
+  input { font: inherit; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  .screen { min-height: 100%; display: flex; flex-direction: column; gap: 16px; max-width: 1600px; margin: 0 auto; }
+  .center { align-items: center; justify-content: center; text-align: center; }
+  .logo { font-family: var(--font-display); color: var(--gold); letter-spacing: 0.04em; line-height: 0.95; text-shadow: 0 5px 0 var(--gold-deep), 0 10px 24px rgba(0,0,0,.45); font-size: clamp(2.6rem, 7vw, 5.6rem); }
+  .logo small { display: block; margin-top: 12px; font-family: var(--font-body); font-weight: 900; font-size: 0.22em; letter-spacing: 0.3em; color: var(--ink-2); text-shadow: none; }
+  .h { font-family: var(--font-display); font-weight: 400; letter-spacing: .03em; line-height: 1.05; margin: 0; text-wrap: balance; }
+
+  .btn { background: var(--gold); color: #2b1a00; font-family: var(--font-display); font-size: 1.3rem; letter-spacing: .04em; padding: .7em 1.5em .6em; border-radius: 18px; box-shadow: 0 6px 0 var(--gold-deep); transition: transform .08s, box-shadow .08s; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--gold-deep); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+  .btn.ghost { background: var(--surface); color: var(--ink); box-shadow: none; border: 2px solid var(--line); font-family: var(--font-body); font-weight: 700; font-size: 1rem; padding: .6em 1.2em; }
+  .stack { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 420px; }
+  .note { color: var(--ink-2); font-size: .98rem; max-width: 48ch; }
+  .err { background: rgba(232,56,79,.22); border: 1px solid var(--red); border-radius: 12px; padding: 10px 14px; font-weight: 700; text-align: left; }
+  .pill { display: inline-block; background: var(--surface); border: 1px solid var(--line); padding: .25em .9em; border-radius: 999px; font-weight: 900; color: var(--gold); letter-spacing: .04em; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: clamp(14px, 2.4vw, 28px); }
+  .timer { height: 12px; background: rgba(255,255,255,.14); border-radius: 99px; overflow: hidden; }
+  .timer > div { height: 100%; width: 100%; background: var(--gold); border-radius: 99px; transition: width .12s linear; }
+  .timer.urgent > div { background: var(--red); }
+  .o0 { --c: var(--red); } .o1 { --c: var(--blue); } .o2 { --c: var(--yellow); } .o3 { --c: var(--green); }
+  .av { display: block; width: 100%; height: auto; }
+  .tag { font-size: .8rem; font-weight: 900; letter-spacing: .05em; padding: .15em .55em; border-radius: 99px; background: var(--surface-2); }
+
+  /* ---------- TV ---------- */
+  .tv { gap: clamp(10px, 2vh, 22px); }
+  .tv-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .tv-top .rl { font-family: var(--font-display); font-size: clamp(1.2rem, 2.2vw, 2rem); color: var(--gold); letter-spacing: .05em; }
+  .tv-num { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.6rem); color: var(--gold); min-width: 2ch; text-align: right; }
+  .tv-mid { flex: 1; display: flex; flex-direction: column; gap: clamp(10px, 2vh, 22px); min-height: 0; }
+  .tv-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4.2vw, 4rem); text-align: center; text-wrap: balance; line-height: 1.1; }
+  .tv-sub { text-align: center; color: var(--ink-2); font-size: clamp(1rem, 1.8vw, 1.6rem); font-weight: 700; }
+
+  .lineup { display: flex; justify-content: center; align-items: flex-end; gap: clamp(8px, 2vw, 28px); flex-wrap: wrap; padding-top: 6px; }
+  .who { width: clamp(70px, 9vw, 130px); display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; }
+  .who.off { opacity: .35; }
+  .who .nm { font-weight: 900; font-size: clamp(.85rem, 1.3vw, 1.2rem); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .who .sc { font-family: var(--font-display); font-size: clamp(.9rem, 1.4vw, 1.3rem); color: var(--gold); font-variant-numeric: tabular-nums; }
+  .who .badge { position: absolute; top: -6px; right: -4px; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 99px; background: var(--green); color: #fff; font-weight: 900; display: grid; place-items: center; font-size: .95rem; box-shadow: 0 3px 0 rgba(0,0,0,.3); }
+  .who .badge.gain { background: var(--gold); color: #2b1a00; }
+  .who .fxrow { display: flex; gap: 2px; justify-content: center; min-height: 1.4em; font-size: clamp(.9rem, 1.4vw, 1.3rem); }
+  .bob { animation: bob 2.4s ease-in-out infinite; }
+  .who:nth-child(2n) .bob { animation-delay: -1.2s; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  .lobby-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(14px, 3vw, 36px); flex: 1; }
+  .join-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; }
+  .qr { width: min(100%, 320px, 40vh); aspect-ratio: 1; border-radius: 18px; overflow: hidden; background: #fff; }
+  .qr svg { display: block; width: 100%; height: 100%; }
+  .room-code { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6.4rem); letter-spacing: .2em; padding-left: .2em; line-height: 1; }
+  .lobby-cast { display: flex; flex-direction: column; gap: 16px; justify-content: space-between; min-width: 0; }
+  .actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .field-row { display: flex; gap: 8px; width: 100%; }
+  .field-row input { flex: 1; min-width: 0; }
+
+  .intro-card { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+  .intro-card .big { font-family: var(--font-display); font-size: clamp(3.2rem, 11vw, 9rem); color: var(--gold); text-shadow: 0 6px 0 var(--gold-deep), 0 14px 30px rgba(0,0,0,.5); animation: zoom .6s cubic-bezier(.2,1.6,.4,1) both; line-height: 1; }
+  .intro-card .sub { font-size: clamp(1.1rem, 2.4vw, 2.2rem); font-weight: 900; color: var(--ink-2); animation: rise .5s .25s both; }
+  @keyframes zoom { from { transform: scale(.3) rotate(-6deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes rise { from { transform: translateY(20px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  .doors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 2vw, 26px); flex: 1; align-items: end; }
+  .door { --c: var(--blue); position: relative; min-height: clamp(180px, 38vh, 420px); border-radius: 999px 999px 18px 18px; background: linear-gradient(180deg, color-mix(in srgb, var(--c) 85%, #fff 15%), var(--c)); border: 6px solid rgba(255,255,255,.25); box-shadow: inset 0 -14px 0 rgba(0,0,0,.18), 0 10px 0 rgba(0,0,0,.25); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 10px; gap: 10px; transition: transform .35s, opacity .35s; }
+  .door .dn { font-family: var(--font-display); font-size: clamp(1.1rem, 2.3vw, 2.2rem); text-align: center; text-wrap: balance; color: #fff; text-shadow: 0 3px 0 rgba(0,0,0,.25); }
+  .door.o2 .dn { color: #2b1a00; text-shadow: none; }
+  .door .knob { position: absolute; right: 14%; top: 58%; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); box-shadow: 0 2px 0 var(--gold-deep); }
+  .door .voters { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; min-height: 40px; }
+  .door .voters span { width: clamp(28px, 3.2vw, 44px); }
+  .door.win { transform: scale(1.06); border-color: #fff; }
+  .door.lose { opacity: .25; transform: scale(.94); }
+
+  .powers-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+  .pw-mini { display: flex; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px; }
+  .pw-ico { width: 46px; height: 46px; flex: none; border-radius: 14px; display: grid; place-items: center; font-size: 1.6rem; background: var(--surface-2); }
+  .pw-mini b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; letter-spacing: .03em; }
+  .pw-mini span { color: var(--ink-2); font-size: .85rem; }
+
+  .q-text { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 3.6vw, 3.6rem); line-height: 1.15; text-align: center; text-wrap: balance; letter-spacing: .02em; }
+  .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(8px, 1.4vw, 16px); }
+  .opt { position: relative; display: flex; align-items: center; gap: 12px; background: var(--c); border-radius: 20px; padding: 14px 18px; font-size: clamp(1.05rem, 2.2vw, 2.2rem); font-weight: 900; color: #fff; box-shadow: 0 7px 0 rgba(0,0,0,.28); min-height: clamp(64px, 11vh, 120px); transition: opacity .3s, transform .3s; overflow-wrap: anywhere; }
+  .opt.o2 { color: #2b1a00; }
+  .opt .shape { font-size: 1.2em; opacity: .85; width: 1.2em; text-align: center; flex: none; }
+  .opt .txt { flex: 1; min-width: 0; }
+  .opt .cnt { background: rgba(0,0,0,.32); color: #fff; border-radius: 999px; min-width: 1.8em; text-align: center; padding: .1em .5em; font-size: .75em; }
+  .opt.dim { opacity: .22; transform: scale(.97); }
+  .opt.correct { outline: 6px solid #fff; transform: scale(1.02); }
+  .events { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .ev { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 5px 12px 5px 6px; font-weight: 700; font-size: clamp(.85rem, 1.3vw, 1.2rem); }
+  .ev .mini { width: 30px; }
+  .ev.blocked { text-decoration: line-through; opacity: .7; }
+
+  .sort-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(10px, 2vw, 24px); flex: 1; }
+  .sort-col { border-radius: 24px; padding: clamp(12px, 2vw, 24px); display: flex; flex-direction: column; gap: 10px; }
+  .sort-col.a { background: color-mix(in srgb, var(--blue) 35%, transparent); border: 3px solid var(--blue); }
+  .sort-col.b { background: color-mix(in srgb, var(--red) 35%, transparent); border: 3px solid var(--red); }
+  .sort-col h3 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.4rem, 3vw, 2.8rem); text-align: center; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .chip { background: rgba(255,255,255,.16); border-radius: 999px; padding: .35em 1em; font-size: clamp(1rem, 1.8vw, 1.7rem); font-weight: 900; animation: rise .35s both; }
+  .pairs { display: grid; gap: 10px; }
+  .pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; font-size: clamp(1.05rem, 2vw, 1.9rem); font-weight: 900; }
+  .pair > span { background: var(--surface-2); border-radius: 16px; padding: 10px 16px; text-align: center; overflow-wrap: anywhere; }
+  .pair .arrow { color: var(--gold); font-family: var(--font-display); background: none; padding: 0; }
+
+  .pyramid { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; }
+  .pstep { position: relative; height: clamp(34px, 6.6vh, 70px); border-radius: 10px 10px 4px 4px; background: linear-gradient(180deg, #e7b45a, #b77b25); box-shadow: inset 0 -6px 0 rgba(0,0,0,.18); display: flex; align-items: flex-end; justify-content: center; gap: 4px; padding: 0 10px; }
+  .pstep.top { background: linear-gradient(180deg, #fff3b0, var(--gold)); }
+  .pstep .lv { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-family: var(--font-display); color: rgba(60,30,0,.55); font-size: clamp(.9rem, 1.6vw, 1.4rem); }
+  .pstep .climber { width: clamp(38px, 4.8vw, 66px); margin-bottom: 2px; position: relative; transition: transform .4s; }
+  .pstep .climber .up { position: absolute; top: -10px; right: -10px; background: var(--green); color: #fff; font-weight: 900; border-radius: 99px; padding: 0 6px; font-size: .85rem; }
+  .finale-q { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(14px, 3vw, 40px); flex: 1; align-items: center; }
+  .tf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .winner { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(14px, 3vw, 40px); align-items: center; flex: 1; }
+  .winner .champ { width: min(100%, 320px); margin: 0 auto; animation: zoom .8s cubic-bezier(.2,1.6,.4,1) both; }
+  .rank-row { display: flex; align-items: center; gap: 10px; font-size: clamp(1rem, 1.6vw, 1.5rem); font-weight: 700; background: rgba(255,255,255,.08); border-radius: 14px; padding: 6px 12px; }
+  .rank-row .pos { width: 1.7em; text-align: center; color: var(--gold); font-family: var(--font-display); }
+  .rank-row .mini { width: 34px; flex: none; }
+  .rank-row .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rank-row .sc { font-variant-numeric: tabular-nums; }
+  .scroll { background: linear-gradient(180deg, #fff6d8, #f2dca0); color: #3b2500; border-radius: 18px; padding: 18px 20px; font-weight: 700; box-shadow: 0 8px 0 rgba(0,0,0,.25); }
+  .scroll b { display: block; font-family: var(--font-display); font-weight: 400; letter-spacing: .04em; margin-bottom: 6px; color: #7a4a00; }
+
+  /* ---------- mobitel ---------- */
+  .phone { max-width: 520px; margin: 0 auto; width: 100%; }
+  .p-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--ink-2); font-weight: 900; }
+  .p-me { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .p-me .mini { width: 34px; flex: none; }
+  .p-me span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .p-title { font-family: var(--font-display); font-size: 1.8rem; line-height: 1.1; text-align: center; text-wrap: balance; letter-spacing: .02em; }
+  .p-sub { color: var(--ink-2); font-size: 1.02rem; text-align: center; }
+  .p-q { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.22; letter-spacing: .02em; text-wrap: balance; }
+  .form { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+  .form label { display: block; text-align: left; font-weight: 900; color: var(--ink-2); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+  .form input, .field-row input { width: 100%; padding: 13px 16px; border-radius: 14px; border: 2px solid var(--line); background: rgba(255,255,255,.1); color: #fff; font-size: 1.25rem; font-weight: 900; outline: none; }
+  .form input:focus, .field-row input:focus { border-color: var(--gold); }
+  .form input.code { text-transform: uppercase; letter-spacing: .4em; text-align: center; }
+  .av-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .av-pick { background: var(--surface); border: 3px solid transparent; border-radius: 18px; padding: 6px 4px 4px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 900; font-size: .8rem; }
+  .av-pick.me { border-color: var(--gold); background: var(--surface-2); }
+  .av-pick:disabled { opacity: .3; cursor: not-allowed; }
+  .door-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .door-btn { --c: var(--blue); background: var(--c); border-radius: 80px 80px 16px 16px; min-height: 130px; padding: 16px 8px 12px; font-family: var(--font-display); font-size: 1.25rem; letter-spacing: .03em; text-wrap: balance; box-shadow: 0 6px 0 rgba(0,0,0,.28); overflow-wrap: anywhere; }
+  .door-btn.o2 { color: #2b1a00; }
+  .door-btn.picked { outline: 4px solid #fff; }
+  .door-btn:disabled:not(.picked) { opacity: .3; }
+  .pw-cards { display: flex; flex-direction: column; gap: 12px; }
+  .pw-card { display: flex; gap: 12px; align-items: center; text-align: left; background: var(--surface); border: 2px solid var(--line); border-radius: 20px; padding: 12px; }
+  .pw-card.atk { border-color: color-mix(in srgb, var(--red) 70%, transparent); }
+  .pw-card.buff { border-color: color-mix(in srgb, var(--green) 70%, transparent); }
+  .pw-card b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.3rem; letter-spacing: .03em; }
+  .pw-card span { color: var(--ink-2); font-size: .92rem; }
+  .pw-card .pw-ico { width: 56px; height: 56px; font-size: 2rem; }
+  .targets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .target { background: var(--surface); border: 2px solid var(--line); border-radius: 18px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 900; font-size: .9rem; overflow-wrap: anywhere; }
+  .target .mini { width: 64px; }
+  .buffs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .q-area { position: relative; }
+  .p-opts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 11px; }
+  .p-opts.two { grid-template-columns: 1fr 1fr; }
+  .p-opt { display: flex; align-items: center; gap: 12px; background: var(--c); color: #fff; border-radius: 18px; padding: 14px 16px; font-size: 1.15rem; font-weight: 900; text-align: left; box-shadow: 0 6px 0 rgba(0,0,0,.28); min-height: 64px; transition: transform .08s, opacity .2s; overflow-wrap: anywhere; }
+  .p-opt.o2 { color: #2b1a00; }
+  .p-opt .shape { font-size: 1.4em; width: 1.2em; text-align: center; opacity: .85; flex: none; }
+  .p-opt:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,.28); }
+  .p-opt:disabled { cursor: default; }
+  .p-opt.dim { opacity: .25; }
+  .p-opt.gone { opacity: .12; text-decoration: line-through; }
+  .p-opt.picked { outline: 4px solid #fff; }
+  .p-opts.two .p-opt { justify-content: center; min-height: 120px; font-family: var(--font-display); font-weight: 400; font-size: 1.6rem; letter-spacing: .03em; }
+  .waiting { text-align: center; color: var(--ink-2); font-weight: 900; padding: 6px; }
+  .result { border-radius: 24px; padding: 22px 16px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .result.ok { background: rgba(34,181,115,.28); border: 2px solid var(--green); }
+  .result.bad { background: rgba(232,56,79,.25); border: 2px solid var(--red); }
+  .result.none { background: var(--surface); border: 2px solid var(--line); }
+  .result .pts { font-family: var(--font-display); font-size: 2.4rem; color: var(--good); }
+  .statline { display: flex; gap: 12px; width: 100%; }
+  .stat { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px 8px; text-align: center; }
+  .stat b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.7rem; letter-spacing: .03em; }
+  .stat span { color: var(--ink-2); font-size: .78rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+  .sort-card { background: #fff; color: #10183a; border-radius: 22px; min-height: 140px; display: grid; place-items: center; padding: 16px; font-family: var(--font-display); font-size: 2rem; text-align: center; box-shadow: 0 8px 0 rgba(0,0,0,.3); animation: rise .25s both; overflow-wrap: anywhere; }
+  .sort-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sort-btn { border-radius: 20px; min-height: 110px; padding: 12px; font-family: var(--font-display); font-size: 1.3rem; letter-spacing: .03em; box-shadow: 0 6px 0 rgba(0,0,0,.28); overflow-wrap: anywhere; }
+  .sort-btn.a { background: var(--blue); }
+  .sort-btn.b { background: var(--red); }
+  .progress { display: flex; gap: 5px; justify-content: center; }
+  .progress i { width: 18px; height: 6px; border-radius: 9px; background: var(--surface-2); }
+  .progress i.done { background: var(--gold); }
+  .link-opts { display: grid; gap: 10px; }
+  .link-opt { background: var(--surface-2); border: 2px solid var(--line); border-radius: 16px; padding: 14px; font-weight: 900; font-size: 1.15rem; text-align: center; overflow-wrap: anywhere; }
+  .step-meter { display: flex; flex-direction: column-reverse; gap: 3px; align-items: center; }
+  .step-meter i { height: 10px; border-radius: 4px; background: rgba(231,180,90,.35); }
+  .step-meter i.on { background: var(--gold); }
+  .demo-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+
+  /* ---------- efekti moći (mobitel) ---------- */
+  .fx { position: absolute; inset: -6px; z-index: 5; border-radius: 22px; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .fx .fx-label { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); background: rgba(10,20,51,.85); color: #fff; padding: 6px 14px; border-radius: 99px; font-weight: 900; font-size: .95rem; white-space: nowrap; z-index: 3; pointer-events: none; }
+  .fx-led { background: linear-gradient(135deg, rgba(191,233,255,.95), rgba(140,200,255,.9) 50%, rgba(220,245,255,.95)); display: grid; place-items: center; border: 3px solid #fff; }
+  .fx-led .cracks { position: absolute; inset: 0; pointer-events: none; }
+  .fx-led .ice-txt { font-family: var(--font-display); font-size: 2.2rem; color: #0f4a7a; text-shadow: 0 2px 0 #fff; pointer-events: none; }
+  .fx-led.shake { animation: shake .15s; }
+  @keyframes shake { 25% { transform: translate(3px, -2px); } 75% { transform: translate(-3px, 2px); } }
+  .fx-sluz { display: grid; }
+  .fx-sluz .cell { background: radial-gradient(circle at 40% 35%, #a6f06a, var(--slime) 55%, var(--slime-deep)); transition: opacity .25s; pointer-events: none; }
+  .fx-sluz .cell.gone { opacity: 0; }
+  .fx-grick { background: rgba(10,20,51,.25); }
+  .bug { position: absolute; width: 58px; height: 58px; margin: -29px 0 0 -29px; transition: left .6s ease-in-out, top .6s ease-in-out; display: grid; place-items: center; }
+  .bug svg { width: 100%; height: 100%; }
+  .fx-bomba { background: rgba(10,20,51,.82); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .bomb-btn { width: 130px; height: 130px; display: grid; place-items: center; animation: pulse .5s infinite alternate; }
+  .bomb-btn svg { width: 100%; height: 100%; }
+  .bomb-num { font-family: var(--font-display); font-size: 2.6rem; color: var(--red); }
+  .fx-bomba.boom { background: radial-gradient(circle, #fff 0%, #ffd23c 30%, #ff5a1f 60%, rgba(10,20,51,.9) 80%); animation: shake .12s 4; }
+  @keyframes pulse { to { transform: scale(1.08); } }
+
+  @media (max-width: 820px) {
+    .lobby-grid, .finale-q, .winner { grid-template-columns: minmax(0, 1fr); }
+    .doors { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .door { min-height: 150px; }
+    .opts { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bob, .intro-card .big, .intro-card .sub, .chip, .sort-card, .bomb-btn, .winner .champ { animation: none; }
+    .door, .opt, .p-opt, .timer > div, .bug, .pstep .climber { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app" class="screen center"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+<script>
+//#engine-start
+// ---------- Mozgalica: logika igre (bez DOM-a; vodi je uređaj domaćina) ----------
+const DATA = {"cats": {"Geografija": [{"q": "Koji je glavni grad Australije?", "o": ["Sydney", "Melbourne", "Canberra", "Perth"], "a": 2}, {"q": "Koja je najduža rijeka u Europi?", "o": ["Dunav", "Volga", "Rajna", "Dnjepar"], "a": 1}, {"q": "Koji je najviši vrh Hrvatske?", "o": ["Sljeme", "Dinara (Sinjal)", "Sveti Jure", "Vojak"], "a": 1}, {"q": "Koja je država najveća po površini?", "o": ["Kanada", "Kina", "SAD", "Rusija"], "a": 3}, {"q": "Koji je najveći ocean na svijetu?", "o": ["Atlantski", "Indijski", "Tihi", "Arktički"], "a": 2}, {"q": "Koji je glavni grad Kanade?", "o": ["Toronto", "Ottawa", "Vancouver", "Montreal"], "a": 1}, {"q": "Koja je najviša planina na svijetu?", "o": ["K2", "Mont Blanc", "Mount Everest", "Kilimandžaro"], "a": 2}, {"q": "Na kojem se kontinentu nalazi pustinja Sahara?", "o": ["Azija", "Afrika", "Australija", "Južna Amerika"], "a": 1}, {"q": "S koliko država Hrvatska ima kopnenu granicu?", "o": ["3", "4", "5", "6"], "a": 2}, {"q": "Koji je glavni grad Japana?", "o": ["Kyoto", "Osaka", "Tokio", "Hirošima"], "a": 2}, {"q": "Kroz koji grad teče rijeka Seina?", "o": ["London", "Pariz", "Rim", "Bruxelles"], "a": 1}], "Povijest": [{"q": "Koje je godine Hrvatska postala članica Europske unije?", "o": ["2004.", "2009.", "2013.", "2016."], "a": 2}, {"q": "Tko je prvi čovjek koji je hodao po Mjesecu?", "o": ["Buzz Aldrin", "Neil Armstrong", "Jurij Gagarin", "John Glenn"], "a": 1}, {"q": "Koje je godine pao Berlinski zid?", "o": ["1985.", "1987.", "1989.", "1991."], "a": 2}, {"q": "Koji je vladar bio prvi hrvatski kralj?", "o": ["Zvonimir", "Tomislav", "Trpimir", "Petar Krešimir IV."], "a": 1}, {"q": "Koje je godine potonuo Titanic?", "o": ["1905.", "1912.", "1918.", "1923."], "a": 1}, {"q": "Koje je godine počeo Drugi svjetski rat?", "o": ["1936.", "1939.", "1941.", "1945."], "a": 1}, {"q": "Koje je godine Kolumbo doplovio do Amerike?", "o": ["1453.", "1492.", "1517.", "1607."], "a": 1}, {"q": "Tko je bio prvi predsjednik SAD-a?", "o": ["Abraham Lincoln", "Thomas Jefferson", "George Washington", "John Adams"], "a": 2}, {"q": "U kojem je gradu 1914. ubijen nadvojvoda Franjo Ferdinand?", "o": ["Beč", "Budimpešta", "Sarajevo", "Beograd"], "a": 2}, {"q": "Koji je rimski car dao sagraditi palaču u Splitu?", "o": ["Neron", "Dioklecijan", "Julije Cezar", "Konstantin"], "a": 1}], "Znanost": [{"q": "Koji je kemijski simbol za zlato?", "o": ["Ag", "Fe", "Au", "Zn"], "a": 2}, {"q": "Koji je planet najbliži Suncu?", "o": ["Venera", "Merkur", "Mars", "Zemlja"], "a": 1}, {"q": "Koliko kostiju ima odrasli čovjek?", "o": ["186", "206", "226", "256"], "a": 1}, {"q": "Kolika je približno brzina svjetlosti u vakuumu?", "o": ["30 000 km/s", "150 000 km/s", "300 000 km/s", "3 000 000 km/s"], "a": 2}, {"q": "U kojem je mjestu rođen Nikola Tesla?", "o": ["Gospić", "Smiljan", "Karlovac", "Otočac"], "a": 1}, {"q": "Koji plin biljke upijaju tijekom fotosinteze?", "o": ["Kisik", "Dušik", "Ugljikov dioksid", "Vodik"], "a": 2}, {"q": "Koji je najveći planet Sunčeva sustava?", "o": ["Saturn", "Jupiter", "Neptun", "Uran"], "a": 1}, {"q": "Koja je kemijska formula vode?", "o": ["CO2", "H2O", "O2", "NaCl"], "a": 1}, {"q": "Koliko planeta ima Sunčev sustav?", "o": ["7", "8", "9", "10"], "a": 1}, {"q": "Na kojoj temperaturi vrije voda na razini mora?", "o": ["90 °C", "100 °C", "110 °C", "120 °C"], "a": 1}, {"q": "Koji je najčešći plin u Zemljinoj atmosferi?", "o": ["Kisik", "Dušik", "Ugljikov dioksid", "Argon"], "a": 1}], "Sport": [{"q": "Koliko igrača jedne momčadi istodobno igra na terenu u nogometu?", "o": ["9", "10", "11", "12"], "a": 2}, {"q": "Koje je mjesto Hrvatska osvojila na Svjetskom prvenstvu u nogometu 2018.?", "o": ["Prvo", "Drugo", "Treće", "Četvrto"], "a": 1}, {"q": "Koji je grad bio domaćin Olimpijskih igara 2016.?", "o": ["London", "Peking", "Rio de Janeiro", "Tokio"], "a": 2}, {"q": "Koliko Grand Slam turnira ima u tenisu tijekom jedne godine?", "o": ["3", "4", "5", "6"], "a": 1}, {"q": "Tko je 2018. osvojio Zlatnu loptu?", "o": ["Cristiano Ronaldo", "Lionel Messi", "Luka Modrić", "Kylian Mbappé"], "a": 2}, {"q": "Koliko minuta traje regularno vrijeme nogometne utakmice?", "o": ["60", "80", "90", "120"], "a": 2}, {"q": "Koji je hrvatski tenisač 2001. osvojio Wimbledon?", "o": ["Marin Čilić", "Ivan Ljubičić", "Goran Ivanišević", "Mario Ančić"], "a": 2}, {"q": "U kojem se sportu natjecala Janica Kostelić?", "o": ["Plivanje", "Skijanje", "Atletika", "Tenis"], "a": 1}, {"q": "Koliko bodova vrijedi koš ubačen iza linije za tricu?", "o": ["1", "2", "3", "4"], "a": 2}, {"q": "Koliko krugova ima na olimpijskoj zastavi?", "o": ["4", "5", "6", "7"], "a": 1}], "Film i TV": [{"q": "Tko je režirao film Titanic iz 1997.?", "o": ["Steven Spielberg", "James Cameron", "Ridley Scott", "Christopher Nolan"], "a": 1}, {"q": "Koji je hrvatski grad u seriji Igra prijestolja glumio Kraljevu Luku?", "o": ["Split", "Šibenik", "Dubrovnik", "Pula"], "a": 2}, {"q": "Koji je zagrebački crtani film 1962. osvojio Oscara?", "o": ["Surogat", "Profesor Baltazar", "Čudesna šuma", "Lijepa naša"], "a": 0}, {"q": "Kako se zove čarobnjak iz Gospodara prstenova kojeg glumi Ian McKellen?", "o": ["Saruman", "Gandalf", "Radagast", "Elrond"], "a": 1}, {"q": "U kojem gradu živi obitelj Simpson?", "o": ["Shelbyville", "Springfield", "Quahog", "South Park"], "a": 1}, {"q": "Kako se zove glavni lik, mladi lav, u Kralju lavova?", "o": ["Mufasa", "Scar", "Simba", "Nala"], "a": 2}, {"q": "Koji glumac glumi kapetana Jacka Sparrowa?", "o": ["Orlando Bloom", "Johnny Depp", "Brad Pitt", "Tom Cruise"], "a": 1}, {"q": "U kojoj seriji glavni lik je Walter White?", "o": ["Breaking Bad", "Prijatelji", "Lost", "Sopranos"], "a": 0}, {"q": "Kako se zove kraljica s ledenim moćima u Snježnom kraljevstvu?", "o": ["Anna", "Elsa", "Moana", "Rapunzel"], "a": 1}, {"q": "Koji lik izgovara rečenicu „I'll be back“?", "o": ["Rambo", "Terminator", "Robocop", "Rocky"], "a": 1}], "Glazba": [{"q": "Koliko žica ima standardna gitara?", "o": ["4", "5", "6", "8"], "a": 2}, {"q": "Koji je bend izveo pjesmu Bohemian Rhapsody?", "o": ["The Beatles", "Queen", "Led Zeppelin", "Pink Floyd"], "a": 1}, {"q": "Koliko je članova imao bend The Beatles?", "o": ["3", "4", "5", "6"], "a": 1}, {"q": "Koji je skladatelj u kasnijem životu izgubio sluh?", "o": ["Mozart", "Beethoven", "Bach", "Vivaldi"], "a": 1}, {"q": "Tko izvodi pjesmu Thriller?", "o": ["Prince", "Michael Jackson", "Stevie Wonder", "Elton John"], "a": 1}, {"q": "Koliko tipki ima standardni klavir?", "o": ["66", "76", "88", "96"], "a": 2}, {"q": "Iz koje zemlje dolazi grupa ABBA?", "o": ["Norveška", "Danska", "Švedska", "Finska"], "a": 2}, {"q": "Koja je pjesma predstavljala Hrvatsku na Eurosongu 2024. i osvojila drugo mjesto?", "o": ["Mama ŠČ!", "Rim Tim Tagi Dim", "Guilty Pleasure", "Crno i belo"], "a": 1}, {"q": "Tko čine dvojac 2Cellos?", "o": ["Luka Šulić i Stjepan Hauser", "Petar Grašo i Tony Cetinski", "Jacques Houdek i Nina Badrić", "Gibonni i Oliver"], "a": 0}, {"q": "Kojeg pjevača zovu „Kralj rock and rolla“?", "o": ["Elvis Presley", "Chuck Berry", "Frank Sinatra", "Little Richard"], "a": 0}], "Hrana i piće": [{"q": "Od kojeg se mlijeka tradicionalno pravi paški sir?", "o": ["Kravljeg", "Kozjeg", "Ovčjeg", "Bivoljeg"], "a": 2}, {"q": "Koji je glavni sastojak guacamolea?", "o": ["Rajčica", "Avokado", "Paprika", "Krastavac"], "a": 1}, {"q": "Iz koje zemlje potječe sushi?", "o": ["Kina", "Koreja", "Tajland", "Japan"], "a": 3}, {"q": "Od kojeg se mesa tradicionalno pravi dalmatinski pršut?", "o": ["Govedine", "Janjetine", "Svinjetine", "Puretine"], "a": 2}, {"q": "Iz kojeg grada potječe pizza Margherita?", "o": ["Napulj", "Milano", "Firenca", "Venecija"], "a": 0}, {"q": "Iz koje zemlje potječe paella?", "o": ["Portugal", "Italija", "Španjolska", "Meksiko"], "a": 2}, {"q": "Što je glavni sastojak humusa?", "o": ["Grah", "Slanutak", "Leća", "Grašak"], "a": 1}, {"q": "Iz koje zemlje dolazi čokolada Toblerone?", "o": ["Belgija", "Austrija", "Švicarska", "Njemačka"], "a": 2}, {"q": "Što je kulen?", "o": ["Slavonska kobasica", "Dalmatinski kolač", "Vrsta sira", "Riblja juha"], "a": 0}, {"q": "Od čega se pravi vino?", "o": ["Od jabuka", "Od grožđa", "Od šljiva", "Od ječma"], "a": 1}], "Životinje": [{"q": "Koliko nogu ima pauk?", "o": ["6", "8", "10", "12"], "a": 1}, {"q": "Koja je životinja najveći sisavac na svijetu?", "o": ["Afrički slon", "Plavi kit", "Žirafa", "Morski pas"], "a": 1}, {"q": "Koja je najbrža kopnena životinja?", "o": ["Lav", "Gepard", "Antilopa", "Konj"], "a": 1}, {"q": "Koja od ovih ptica ne može letjeti?", "o": ["Orao", "Vrabac", "Pingvin", "Galeb"], "a": 2}, {"q": "Čime se uglavnom hrani velika panda?", "o": ["Ribom", "Bambusom", "Medom", "Kukcima"], "a": 1}, {"q": "Koliko nogu ima kukac?", "o": ["4", "6", "8", "10"], "a": 1}, {"q": "Koja je najveća živuća ptica?", "o": ["Noj", "Emu", "Kondor", "Albatros"], "a": 0}, {"q": "Koju životinju zovu „kralj džungle“?", "o": ["Tigar", "Gorila", "Lav", "Slon"], "a": 2}, {"q": "Koja je životinja prikazana na hrvatskoj kovanici od 1 eura?", "o": ["Kuna", "Lav", "Orao", "Dupin"], "a": 0}, {"q": "Koliko srca ima hobotnica?", "o": ["1", "2", "3", "4"], "a": 2}], "Hrvatska": [{"q": "Koja je službena valuta Hrvatske od 2023.?", "o": ["Kuna", "Euro", "Dolar", "Franak"], "a": 1}, {"q": "Koji je nacionalni park poznat po 16 jezera povezanih slapovima?", "o": ["Krka", "Plitvička jezera", "Risnjak", "Kornati"], "a": 1}, {"q": "U kojem se gradu nalazi rimski amfiteatar Arena?", "o": ["Zadar", "Pula", "Split", "Rijeka"], "a": 1}, {"q": "Tko je izumio mehaničku olovku?", "o": ["Faust Vrančić", "Slavoljub Penkala", "Nikola Tesla", "Ruđer Bošković"], "a": 1}, {"q": "Koji modni dodatak potječe od hrvatskih vojnika iz 17. stoljeća?", "o": ["Šešir", "Kravata", "Leptir-mašna", "Šal"], "a": 1}, {"q": "Koliko županija ima Hrvatska, ne računajući Grad Zagreb?", "o": ["18", "20", "21", "23"], "a": 1}, {"q": "Koji grad zovu „Biser Jadrana“?", "o": ["Zadar", "Split", "Dubrovnik", "Rovinj"], "a": 2}, {"q": "Kako počinje hrvatska himna?", "o": ["Lijepa naša domovino", "U boj, u boj", "Zemljo moja", "Rajska djevo"], "a": 0}, {"q": "Kako se zove najviši vrh Medvednice?", "o": ["Sljeme", "Ivančica", "Klek", "Učka"], "a": 0}, {"q": "Tko je izumio padobran, prikazan u djelu Machinae novae?", "o": ["Faust Vrančić", "Marko Marulić", "Ivan Vučetić", "Slavoljub Penkala"], "a": 0}], "Općenito": [{"q": "Koliko dana ima prijestupna godina?", "o": ["364", "365", "366", "367"], "a": 2}, {"q": "Koliko boja ima duga?", "o": ["5", "6", "7", "8"], "a": 2}, {"q": "Koliko sekundi ima jedan sat?", "o": ["600", "3600", "6000", "36 000"], "a": 1}, {"q": "Koliko dana ima veljača u prijestupnoj godini?", "o": ["28", "29", "30", "31"], "a": 1}, {"q": "Koje je boje smaragd?", "o": ["Plave", "Crvene", "Zelene", "Žute"], "a": 2}, {"q": "Koliko stranica ima šesterokut?", "o": ["5", "6", "7", "8"], "a": 1}, {"q": "Koji rimski broj označava 50?", "o": ["C", "D", "L", "X"], "a": 2}, {"q": "Koliko je 15 % od 200?", "o": ["15", "20", "30", "45"], "a": 2}, {"q": "Koliko je centimetara u jednom metru?", "o": ["10", "100", "1000", "10 000"], "a": 1}, {"q": "Koji je dan u tjednu nakon srijede?", "o": ["Utorak", "Četvrtak", "Petak", "Nedjelja"], "a": 1}]}, "sort": [{"a": "Voće", "b": "Povrće", "A": ["Jabuka", "Banana", "Kruška", "Šljiva"], "B": ["Mrkva", "Krumpir", "Luk", "Kupus"]}, {"a": "Sisavac", "b": "Ptica", "A": ["Dupin", "Šišmiš", "Kit", "Slon"], "B": ["Pingvin", "Noj", "Sova", "Galeb"]}, {"a": "Hrvatski otok", "b": "Hrvatska planina", "A": ["Krk", "Hvar", "Brač", "Vis"], "B": ["Velebit", "Biokovo", "Dinara", "Učka"]}, {"a": "Planet", "b": "Zvijezda", "A": ["Mars", "Venera", "Saturn", "Neptun"], "B": ["Sirius", "Sjevernjača", "Betelgeuse", "Vega"]}, {"a": "Europska država", "b": "Azijska država", "A": ["Portugal", "Norveška", "Poljska", "Grčka"], "B": ["Japan", "Indija", "Tajland", "Vijetnam"]}, {"a": "Skladatelj", "b": "Slikar", "A": ["Mozart", "Beethoven", "Bach", "Chopin"], "B": ["Picasso", "Van Gogh", "Monet", "Rembrandt"]}, {"a": "Kemijski element", "b": "Spoj ili smjesa", "A": ["Kisik", "Željezo", "Helij", "Natrij"], "B": ["Voda", "Kuhinjska sol", "Zrak", "Čelik"]}, {"a": "Harry Potter", "b": "Gospodar prstenova", "A": ["Hermiona", "Dumbledore", "Snape", "Hagrid"], "B": ["Frodo", "Gandalf", "Aragorn", "Legolas"]}, {"a": "Rijeka", "b": "Jezero", "A": ["Nil", "Amazona", "Dunav", "Mississippi"], "B": ["Bajkalsko", "Ženevsko", "Viktorijino", "Titicaca"]}, {"a": "Nogomet", "b": "Tenis", "A": ["Ofsajd", "Korner", "Penal", "Golman"], "B": ["As", "Servis", "Gem", "Tie-break"]}], "link": [{"t": "Država i glavni grad", "p": [["Francuska", "Pariz"], ["Španjolska", "Madrid"], ["Mađarska", "Budimpešta"], ["Poljska", "Varšava"]]}, {"t": "Pisac i djelo", "p": [["Marko Marulić", "Judita"], ["William Shakespeare", "Hamlet"], ["Miguel de Cervantes", "Don Quijote"], ["Lav Tolstoj", "Rat i mir"]]}, {"t": "Superjunak i pravo ime", "p": [["Batman", "Bruce Wayne"], ["Spider-Man", "Peter Parker"], ["Superman", "Clark Kent"], ["Iron Man", "Tony Stark"]]}, {"t": "Životinja i mladunče", "p": [["Krava", "Tele"], ["Konj", "Ždrijebe"], ["Ovca", "Janje"], ["Pas", "Štene"]]}, {"t": "Simbol i element", "p": [["Fe", "Željezo"], ["Ag", "Srebro"], ["Cu", "Bakar"], ["Pb", "Olovo"]]}, {"t": "Grad i rijeka", "p": [["Pariz", "Seina"], ["London", "Temza"], ["Rim", "Tiber"], ["Zagreb", "Sava"]]}, {"t": "Sport i broj igrača na terenu", "p": [["Nogomet", "11"], ["Košarka", "5"], ["Odbojka", "6"], ["Rukomet", "7"]]}, {"t": "Bend i pjevač", "p": [["Queen", "Freddie Mercury"], ["U2", "Bono"], ["Nirvana", "Kurt Cobain"], ["The Rolling Stones", "Mick Jagger"]]}, {"t": "Država i valuta", "p": [["Japan", "Jen"], ["Velika Britanija", "Funta"], ["Švicarska", "Franak"], ["SAD", "Dolar"]]}], "tf": [["Mjesec nema vlastitu svjetlost, nego odbija Sunčevu.", true], ["Pingvini žive na Sjevernom polu.", false], ["Venera je najtopliji planet Sunčeva sustava.", true], ["Rajčica je u botaničkom smislu voće.", true], ["Papir su izumili Kinezi.", true], ["Šišmiši su ptice.", false], ["Zagreb ima više stanovnika od Splita.", true], ["Sunce je zvijezda.", true], ["Koala je vrsta medvjeda.", false], ["Čista voda se pri normalnom tlaku smrzava na 0 °C.", true], ["Rim je glavni grad Španjolske.", false], ["Dupini su sisavci.", true], ["Rijeka Amazona teče kroz Afriku.", false], ["Mount Everest nalazi se u Alpama.", false], ["Pauk je kukac.", false], ["Leonardo da Vinci naslikao je Mona Lisu.", true], ["Nikola Tesla rođen je u Americi.", false], ["Antarktika je kontinent.", true], ["Zvuk putuje brže od svjetlosti.", false], ["Kit je riba.", false], ["Ljetne olimpijske igre održavaju se svake četiri godine.", true], ["Za gorenje je potreban kisik.", true], ["Brazil je najveća država Južne Amerike.", true], ["Hobotnica ima osam krakova.", true], ["Krk je hrvatski poluotok.", false], ["Jupiter je manji od Zemlje.", false], ["Pas je ptica.", false], ["Trokut ima tri stranice.", true]], "facts": ["Dan na Veneri traje dulje od cijele godine na Veneri.", "Banane su u botaničkom smislu bobice, a jagode nisu.", "Morski psi postoje dulje od drveća na Zemlji.", "Najkraći rat u povijesti, između Britanije i Zanzibara 1896., trajao je manje od sat vremena.", "Vombati imaju izmet u obliku kocke.", "Med se ne kvari: u egipatskim grobnicama pronađen je med star tisućama godina.", "Eiffelov toranj ljeti je viši nekoliko centimetara jer se metal širi na toplini.", "Hobotnica ima plavu krv.", "Faust Vrančić iz Šibenika opisao je padobran početkom 17. stoljeća.", "Kravata je dobila ime po hrvatskim vojnicima, „Kroatima“, u Francuskoj 17. stoljeća."]};
+
+const POWERS = {
+  led:   { n: 'Led',          atk: true,  d: 'Zaledi protivniku odgovore. Mora razbiti led tapkanjem.' },
+  sluz:  { n: 'Sluz',         atk: true,  d: 'Zalij protivniku ekran sluzi. Mora je obrisati prstom.' },
+  grick: { n: 'Grickalice',   atk: true,  d: 'Pošalji gladne bubice na odgovore. Mora ih zgnječiti.' },
+  bomba: { n: 'Bomba',        atk: true,  d: 'Bomba blokira odgovore dok ne eksplodira ili je ne odbaci.' },
+  dupli: { n: 'Dupli bodovi', atk: false, d: 'Točan odgovor vrijedi dvostruko.' },
+  pola:  { n: 'Pola-pola',    atk: false, d: 'Uklanja dva netočna odgovora s tvog ekrana.' },
+  stit:  { n: 'Štit',         atk: false, d: 'Odbija sve napade na tebe u ovom pitanju.' },
+};
+const POWER_KEYS = Object.keys(POWERS);
+const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
+const AV_COUNT = 8;
+
+const CFG = {
+  intro: 3.5, vote: 10, voteShow: 3, power: 12, q: 20, reveal: 7,
+  sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
+  steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
+};
+
+const PLAN = [
+  { t: 'intro', title: 'Runda 1', sub: 'Glasajte za kategoriju i bacajte moći!' },
+  { t: 'battle' }, { t: 'battle' }, { t: 'battle' },
+  { t: 'intro', title: 'Izazov', sub: 'Razvrstavanje' }, { t: 'sort' },
+  { t: 'intro', title: 'Runda 2', sub: 'Tri nova pitanja' }, { t: 'battle' }, { t: 'battle' }, { t: 'battle' },
+  { t: 'intro', title: 'Izazov', sub: 'Spajanje parova' }, { t: 'link' },
+  { t: 'intro', title: 'Runda 3', sub: 'Zadnja prilika za bodove prije finala' }, { t: 'battle' }, { t: 'battle' }, { t: 'battle' },
+  { t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' },
+];
+
+const INPUT_PHASES = { vote: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1 };
+const SKIPPABLE = { intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1 };
+
+function shuffle(a) {
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+const CODE_LETTERS = 'ABCDEFGHJKLMNPRSTUVZ';
+function makeCode() {
+  let s = '';
+  for (let i = 0; i < 4; i++) s += CODE_LETTERS[Math.floor(Math.random() * CODE_LETTERS.length)];
+  return s;
+}
+function rankBy(players, key) {
+  return players.slice().sort((a, b) =>
+    key === 'st' ? ((b.st || 0) - (a.st || 0) || b.sc - a.sc) : (b.sc - a.sc));
+}
+
+function createGame(o) {
+  const cfg = Object.assign({}, CFG, o.cfg || {});
+  const plan = o.plan || PLAN;
+  const D = o.data || DATA;
+  const now = o.now || (() => Date.now());
+  const onChange = o.onChange || (() => {});
+  const R = new Map();
+  let timers = [];
+  const G = {
+    code: o.code, ph: 'lobby', s: 0, endsAt: 0, dur: 0, startedAt: 0, pi: -1, rl: '',
+    intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
+    win: null, fact: '', inFinale: false, fqn: 0,
+    used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
+  };
+  const rnd = (n) => Math.floor(Math.random() * n);
+  const pick = (a) => a[rnd(a.length)];
+  const list = () => [...R.values()];
+  const active = () => list().filter((p) => p.on);
+  const later = (fn, ms) => { timers.push(setTimeout(fn, ms)); };
+  const clear = () => { timers.forEach(clearTimeout); timers = []; };
+  const isInt = (n) => Number.isInteger(n);
+  const allDone = () => { const a = active(); return a.length > 0 && a.every((p) => p.done); };
+
+  // ----- igrači -----
+  function cleanName(raw) { return String(raw || '').replace(/[\u0000-\u001f]/g, '').replace(/\s+/g, ' ').trim().slice(0, cfg.nameMax); }
+  function uniqueName(name, pid) {
+    let n = name, i = 2;
+    const taken = () => list().some((p) => p.pid !== pid && p.name.toLowerCase() === n.toLowerCase());
+    while (taken()) { const suf = ' ' + i; n = name.slice(0, cfg.nameMax - suf.length) + suf; i++; }
+    return n;
+  }
+  function avFree(av, pid) { return isInt(av) && av >= 0 && av < AV_COUNT && !list().some((p) => p.pid !== pid && p.av === av); }
+  function firstFreeAv(pid) { for (let i = 0; i < AV_COUNT; i++) if (avFree(i, pid)) return i; return 0; }
+
+  function makePlayer(pid, name, av, bot) {
+    if (R.has(pid)) return R.get(pid);
+    if (G.ph !== 'lobby' || R.size >= cfg.maxPlayers) return null;
+    const nm = cleanName(name);
+    if (!nm) return null;
+    const p = {
+      pid, name: uniqueName(nm, pid), av: avFree(av, pid) ? av : firstFreeAv(pid),
+      score: 0, gained: 0, on: true, bot: !!bot, done: false, lastIn: '',
+      vote: -1, offers: [], pw: null, fx: [], dbl: false, pola: false, sh: false, hide: null,
+      ans: -1, ansMs: 0, ch: -1, sortA: null, linkA: null, cnt: 0, fstep: 0, mv: 0,
+    };
+    R.set(pid, p);
+    return p;
+  }
+  function addPlayer(pid, name, av, bot) { const p = makePlayer(pid, name, av, bot); if (p) onChange(); return p; }
+  function addBot(name, av) { return addPlayer('bot-' + name, name, av, true); }
+  function setAvatar(pid, av) {
+    const p = R.get(pid);
+    if (!p || G.ph !== 'lobby' || !avFree(av, pid) || p.av === av) return;
+    p.av = av; onChange();
+  }
+
+  // ----- unosi -----
+  function accept(p, inp) {
+    if (!inp || typeof inp !== 'object' || inp.s !== G.s || p.done || !p.on) return false;
+    switch (G.ph) {
+      case 'vote':
+        if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
+        p.vote = inp.v; break;
+      case 'power': {
+        if (inp.p === '' || inp.p == null) { p.pw = null; break; }
+        if (!p.offers.includes(inp.p)) return false;
+        if (POWERS[inp.p].atk) {
+          const t = R.get(inp.t);
+          if (!t || t.pid === p.pid) return false;
+          p.pw = { k: inp.p, t: t.pid };
+        } else p.pw = { k: inp.p };
+        break;
+      }
+      case 'question': case 'fq': {
+        const c = inp.c;
+        if (!isInt(c) || c < 0 || c >= G.q.o.length) return false;
+        if (p.hide && p.hide.includes(c)) return false;
+        const el = now() - G.startedAt;
+        const t = Number.isFinite(inp.t) ? inp.t : el;
+        p.ans = c; p.ansMs = Math.max(0, Math.min(t, el));
+        break;
+      }
+      case 'sort': {
+        const a = inp.r;
+        if (!Array.isArray(a) || a.length !== G.so.items.length || !a.every((x) => x === 0 || x === 1)) return false;
+        p.sortA = a.slice(); break;
+      }
+      case 'link': {
+        const a = inp.r;
+        if (!Array.isArray(a) || a.length !== G.li.L.length || !a.every((x) => isInt(x) && x >= 0 && x < G.li.R.length)) return false;
+        p.linkA = a.slice(); break;
+      }
+      default: return false;
+    }
+    p.done = true;
+    return true;
+  }
+  function setInput(pid, inp) {
+    const p = R.get(pid);
+    if (!p || !accept(p, inp)) return false;
+    if (INPUT_PHASES[G.ph] && allDone()) endPhase(); else onChange();
+    return true;
+  }
+
+  // peers: [{pid, name, av, in}] — svi igrači spojeni preko sobe
+  function syncPeers(peers) {
+    const seen = new Set();
+    let changed = false;
+    for (const x of peers) {
+      if (!x || typeof x.pid !== 'string' || x.pid.length > 40) continue;
+      seen.add(x.pid);
+      let p = R.get(x.pid);
+      if (!p) { p = makePlayer(x.pid, x.name, x.av, false); if (!p) continue; changed = true; }
+      else {
+        if (!p.on) { p.on = true; changed = true; }
+        if (G.ph === 'lobby' && x.av !== p.av && avFree(x.av, p.pid)) { p.av = x.av; changed = true; }
+      }
+      if (x.in) {
+        const k = JSON.stringify(x.in);
+        if (k !== p.lastIn) { p.lastIn = k; if (accept(p, x.in)) changed = true; }
+      }
+    }
+    for (const p of list()) if (!p.bot && p.on && !seen.has(p.pid)) { p.on = false; changed = true; }
+    if (G.ph === 'lobby') for (const [id, p] of R) if (!p.on) { R.delete(id); changed = true; }
+    if (INPUT_PHASES[G.ph] && allDone()) return endPhase();
+    if (changed) onChange();
+  }
+
+  // ----- faze -----
+  function setPhase(ph, secs) {
+    clear();
+    G.ph = ph; G.s += 1;
+    G.dur = Math.round(secs * 1000);
+    G.startedAt = now(); G.endsAt = G.startedAt + G.dur;
+    for (const p of list()) p.done = false;
+    const s = G.s;
+    later(() => { if (G.s === s) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));
+    if (INPUT_PHASES[ph]) botsAct();
+    onChange();
+  }
+
+  function endPhase() {
+    switch (G.ph) {
+      case 'intro': return next();
+      case 'vote': return resolveVote();
+      case 'voteResult': return startPower();
+      case 'power': return resolvePower();
+      case 'question': return scoreQuestion();
+      case 'reveal': return next();
+      case 'sort': return scoreSort();
+      case 'link': return scoreLink();
+      case 'sortReveal': case 'linkReveal': return next();
+      case 'fq': return scoreFinale();
+      case 'fr': return afterFinaleQ();
+    }
+  }
+
+  function start() {
+    if (G.ph !== 'lobby' || active().length < 1) return;
+    for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; }
+    for (const k in G.used) G.used[k].clear();
+    G.pi = -1; G.qn = 0; G.inFinale = false; G.win = null;
+    next();
+  }
+
+  function next() {
+    G.pi += 1;
+    const it = plan[G.pi];
+    if (!it) return finish();
+    if (it.t === 'intro') { G.intro = { t: it.title, sub: it.sub }; G.rl = it.title; return setPhase('intro', cfg.intro); }
+    if (it.t === 'battle') return startVote();
+    if (it.t === 'sort') return startSort();
+    if (it.t === 'link') return startLink();
+    if (it.t === 'finale') return startFinale();
+    return next();
+  }
+
+  function startVote() {
+    const avail = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
+    if (!avail.length) return next();
+    G.cats = shuffle(avail).slice(0, 4);
+    G.cw = -1;
+    for (const p of list()) p.vote = -1;
+    setPhase('vote', cfg.vote);
+  }
+  function resolveVote() {
+    const counts = G.cats.map(() => 0);
+    for (const p of active()) if (p.vote >= 0) counts[p.vote]++;
+    const max = Math.max(...counts);
+    const best = counts.map((c, i) => (c === max ? i : -1)).filter((i) => i >= 0);
+    G.cw = pick(best);
+    setPhase('voteResult', cfg.voteShow);
+  }
+
+  function startPower() {
+    const keys = active().length > 1 ? POWER_KEYS : BUFF_KEYS;
+    for (const p of list()) {
+      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null;
+      p.offers = shuffle(keys).slice(0, 3);
+    }
+    setPhase('power', cfg.power);
+  }
+  function resolvePower() {
+    G.ev = [];
+    for (const p of list()) if (p.pw && p.pw.k === 'stit') p.sh = true;
+    for (const p of list()) {
+      if (!p.pw) continue;
+      const k = p.pw.k;
+      if (POWERS[k].atk) {
+        const t = R.get(p.pw.t);
+        if (!t) continue;
+        if (t.sh) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1 });
+        else { t.fx.push(k); G.ev.push({ f: p.pid, p: k, t: t.pid }); }
+      } else {
+        if (k === 'dupli') p.dbl = true;
+        if (k === 'pola') p.pola = true;
+        G.ev.push({ f: p.pid, p: k });
+      }
+    }
+    startQuestion();
+  }
+
+  function startQuestion() {
+    const cat = G.cats[G.cw];
+    const pool = D.cats[cat].map((q, i) => i).filter((i) => !G.used.q.has(cat + '|' + i));
+    const qi = pick(pool);
+    G.used.q.add(cat + '|' + qi);
+    const q = D.cats[cat][qi];
+    const order = shuffle([0, 1, 2, 3]);
+    G.q = { c: cat, t: q.q, o: order.map((i) => q.o[i]), a: order.indexOf(q.a) };
+    G.qn += 1;
+    for (const p of list()) {
+      p.ans = -1; p.ansMs = 0; p.gained = 0; p.ch = -1;
+      if (p.pola) p.hide = shuffle([0, 1, 2, 3].filter((i) => i !== G.q.a)).slice(0, 2);
+    }
+    setPhase('question', cfg.q);
+  }
+  function scoreQuestion() {
+    G.q.cnt = [0, 0, 0, 0];
+    for (const p of list()) {
+      p.ch = p.ans;
+      if (p.ans >= 0) G.q.cnt[p.ans]++;
+      if (p.ans === G.q.a) {
+        const ratio = Math.min(1, Math.max(0, 1 - p.ansMs / (cfg.q * 1000)));
+        p.gained = Math.round(500 + 500 * ratio) * (p.dbl ? 2 : 1);
+        p.score += p.gained;
+      } else p.gained = 0;
+    }
+    setPhase('reveal', cfg.reveal);
+  }
+
+  function unusedIndex(arr, set) {
+    const pool = arr.map((_, i) => i).filter((i) => !set.has(i));
+    const i = pool.length ? pick(pool) : rnd(arr.length);
+    set.add(i);
+    return i;
+  }
+
+  function startSort() {
+    const set = D.sort[unusedIndex(D.sort, G.used.sort)];
+    const items = shuffle(set.A.map((x) => [x, 0]).concat(set.B.map((x) => [x, 1])));
+    G.so = { a: set.a, b: set.b, items: items.map((x) => x[0]), key: items.map((x) => x[1]) };
+    for (const p of list()) { p.sortA = null; p.gained = 0; p.cnt = 0; }
+    setPhase('sort', cfg.sort);
+  }
+  function scoreSort() {
+    for (const p of list()) {
+      p.cnt = p.sortA ? p.sortA.filter((x, i) => x === G.so.key[i]).length : 0;
+      p.gained = p.cnt * 150;
+      p.score += p.gained;
+    }
+    setPhase('sortReveal', cfg.chReveal);
+  }
+
+  function startLink() {
+    const set = D.link[unusedIndex(D.link, G.used.link)];
+    const lo = shuffle([0, 1, 2, 3]), ro = shuffle([0, 1, 2, 3]);
+    G.li = { t: set.t, L: lo.map((i) => set.p[i][0]), R: ro.map((i) => set.p[i][1]), key: lo.map((i) => ro.indexOf(i)) };
+    for (const p of list()) { p.linkA = null; p.gained = 0; p.cnt = 0; }
+    setPhase('link', cfg.link);
+  }
+  function scoreLink() {
+    for (const p of list()) {
+      p.cnt = p.linkA ? p.linkA.filter((x, i) => x === G.li.key[i]).length : 0;
+      p.gained = p.cnt * 200;
+      p.score += p.gained;
+    }
+    setPhase('linkReveal', cfg.chReveal);
+  }
+
+  function startFinale() {
+    G.inFinale = true; G.fqn = 0;
+    const ranked = list().slice().sort((a, b) => b.score - a.score);
+    ranked.forEach((p, i) => { p.fstep = Math.max(0, 3 - i); p.mv = 0; });
+    startFinaleQ();
+  }
+  function startFinaleQ() {
+    const pool = D.tf.map((_, i) => i).filter((i) => !G.used.tf.has(i));
+    if (!pool.length || G.fqn >= cfg.finaleMax) return finish();
+    const i = pick(pool);
+    G.used.tf.add(i);
+    G.q = { c: 'Točno ili netočno?', t: D.tf[i][0], o: ['Točno', 'Netočno'], a: D.tf[i][1] ? 0 : 1 };
+    G.fqn += 1;
+    for (const p of list()) { p.ans = -1; p.ansMs = 0; p.mv = 0; p.ch = -1; p.hide = null; }
+    setPhase('fq', cfg.fq);
+  }
+  function scoreFinale() {
+    const right = list().filter((p) => p.ans === G.q.a);
+    const fastest = right.slice().sort((a, b) => a.ansMs - b.ansMs)[0];
+    for (const p of list()) {
+      p.ch = p.ans;
+      p.mv = 0;
+      if (p.ans === G.q.a) p.mv = 1 + (p === fastest ? 1 : 0);
+      p.fstep = Math.min(cfg.steps, p.fstep + p.mv);
+    }
+    setPhase('fr', cfg.fr);
+  }
+  function afterFinaleQ() {
+    if (list().some((p) => p.fstep >= cfg.steps)) return finish();
+    startFinaleQ();
+  }
+
+  function finish() {
+    clear();
+    const ranked = list().slice().sort((a, b) => b.fstep - a.fstep || b.score - a.score);
+    G.win = ranked.length ? ranked[0].pid : null;
+    G.fact = pick(D.facts);
+    G.ph = 'final'; G.s += 1; G.dur = 0; G.endsAt = now();
+    onChange();
+  }
+
+  function restart() {
+    if (G.ph !== 'final') return;
+    clear();
+    for (const [id, p] of R) if (!p.on) R.delete(id);
+    for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; p.done = false; }
+    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.win = null; G.rl = '';
+    onChange();
+  }
+  function skip() { if (SKIPPABLE[G.ph]) endPhase(); }
+
+  // ----- botovi -----
+  function botDelay() {
+    switch (G.ph) {
+      case 'vote': return 1200 + rnd(3500);
+      case 'power': return 1500 + rnd(5000);
+      case 'question': return 2500 + rnd(cfg.q * 550);
+      case 'sort': case 'link': return 6000 + rnd(cfg.sort * 450);
+      case 'fq': return 900 + rnd(cfg.fq * 450);
+    }
+    return 2000;
+  }
+  function botInput(b) {
+    const s = G.s;
+    switch (G.ph) {
+      case 'vote': return { s, v: rnd(G.cats.length) };
+      case 'power': {
+        if (Math.random() < 0.15) return { s, p: '' };
+        const k = pick(b.offers);
+        if (!POWERS[k].atk) return { s, p: k };
+        const others = active().filter((p) => p.pid !== b.pid);
+        if (!others.length) return { s, p: '' };
+        const leader = others.slice().sort((x, y) => y.score - x.score)[0];
+        return { s, p: k, t: (Math.random() < 0.6 ? leader : pick(others)).pid };
+      }
+      case 'question': case 'fq': {
+        const opts = G.q.o.map((_, i) => i).filter((i) => !(b.hide && b.hide.includes(i)));
+        const wrong = opts.filter((i) => i !== G.q.a);
+        const right = Math.random() < (G.ph === 'fq' ? 0.7 : 0.62) || !wrong.length;
+        return { s, c: right ? G.q.a : pick(wrong), t: now() - G.startedAt };
+      }
+      case 'sort': return { s, r: G.so.key.map((k) => (Math.random() < 0.75 ? k : 1 - k)) };
+      case 'link': return { s, r: G.li.key.map((k) => (Math.random() < 0.7 ? k : rnd(4))) };
+    }
+    return null;
+  }
+  function botsAct() {
+    for (const b of list().filter((p) => p.bot && p.on)) {
+      const s = G.s;
+      // botovi pogođeni moćima odgovaraju sporije
+      const extra = G.ph === 'question' ? b.fx.length * 2500 : 0;
+      later(() => {
+        if (G.s !== s || b.done) return;
+        if (accept(b, botInput(b))) { if (allDone()) endPhase(); else onChange(); }
+      }, Math.min(botDelay() + extra, G.dur - 200));
+    }
+  }
+
+  // ----- stanje za prikaz -----
+  function view() {
+    const ph = G.ph;
+    const v = {
+      v: 3, code: G.code, ph, s: G.s, ms: Math.max(0, G.endsAt - now()), dur: G.dur,
+      rl: G.rl, max: cfg.maxPlayers, steps: cfg.steps,
+    };
+    v.P = list().map((p) => {
+      const e = { id: p.pid, n: p.name, a: p.av, sc: p.score, c: p.on ? 1 : 0, ok: p.done ? 1 : 0 };
+      if (ph === 'vote' && p.done) e.vt = p.vote;
+      if (ph === 'power') e.of = p.offers;
+      if (ph === 'question') {
+        if (p.fx.length) e.fx = p.fx;
+        if (p.dbl) e.d = 1;
+        if (p.sh) e.sh = 1;
+        if (p.hide) e.h = p.hide;
+      }
+      if (ph === 'reveal') { e.ch = p.ch; e.g = p.gained; if (p.dbl) e.d = 1; }
+      if (ph === 'sortReveal' || ph === 'linkReveal') { e.g = p.gained; e.k = p.cnt; }
+      if (G.inFinale) e.st = p.fstep;
+      if (ph === 'fr') { e.ch = p.ch; e.mv = p.mv; }
+      return e;
+    });
+    if (ph === 'intro') v.it = G.intro;
+    if (ph === 'vote' || ph === 'voteResult') v.cats = G.cats;
+    if (ph === 'voteResult') v.cw = G.cw;
+    if (ph === 'question' || ph === 'reveal' || ph === 'fq' || ph === 'fr') {
+      v.q = { c: G.q.c, t: G.q.t, o: G.q.o, n: G.qn };
+    }
+    if (ph === 'question' || ph === 'reveal') v.ev = G.ev;
+    if (ph === 'reveal' || ph === 'fr') { v.cor = G.q.a; if (G.q.cnt) v.cnt = G.q.cnt; }
+    if (ph === 'sort' || ph === 'sortReveal') v.so = { a: G.so.a, b: G.so.b, it: G.so.items };
+    if (ph === 'sortReveal') v.so.key = G.so.key;
+    if (ph === 'link' || ph === 'linkReveal') v.li = { t: G.li.t, L: G.li.L, R: G.li.R };
+    if (ph === 'linkReveal') v.li.key = G.li.key;
+    if (ph === 'final') { v.win = G.win; v.fact = G.fact; }
+    return v;
+  }
+
+  return { addPlayer, addBot, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear };
+}
+//#engine-end
+
+</script>
+
+<script>
+(function () {
+  'use strict';
+  const $app = document.getElementById('app');
+  const SHAPES = ['▲', '◆', '●', '■'];
+  const ICON = { led: '❄️', sluz: '🟢', grick: '🐛', bomba: '💣', dupli: '✖️2', pola: '✂️', stit: '🛡️' };
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+
+  // ---------- likovi (originalni) ----------
+  const AV = [
+    { n: 'Bubi',   c: '#ff6b6b', s: 'round',  e: 2, x: 'antena' },
+    { n: 'Brko',   c: '#4dabf7', s: 'square', e: 2, x: 'brkovi' },
+    { n: 'Zvrk',   c: '#ffd43b', s: 'tall',   e: 1, x: 'sesir' },
+    { n: 'Lila',   c: '#b197fc', s: 'round',  e: 2, x: 'masna' },
+    { n: 'Tikvan', c: '#ff922b', s: 'pear',   e: 3, x: 'list' },
+    { n: 'Mrki',   c: '#69db7c', s: 'square', e: 2, x: 'rogovi' },
+    { n: 'Pipi',   c: '#f783ac', s: 'tall',   e: 2, x: 'naocale' },
+    { n: 'Ćiro',   c: '#38d9a9', s: 'pear',   e: 1, x: 'kruna' },
+  ];
+  const TOP = { round: 22, square: 26, tall: 14, pear: 20 };
+  const avCache = {};
+  function avSvg(i, mood) {
+    const k = i + ':' + (mood || '');
+    if (avCache[k]) return avCache[k];
+    const a = AV[i] || AV[0];
+    const t = TOP[a.s];
+    const dark = '#1a1a2e';
+    let body = '';
+    if (a.s === 'round') body = '<ellipse cx="50" cy="62" rx="38" ry="40" fill="' + a.c + '"/>';
+    else if (a.s === 'square') body = '<rect x="14" y="26" width="72" height="76" rx="22" fill="' + a.c + '"/>';
+    else if (a.s === 'tall') body = '<rect x="22" y="14" width="56" height="90" rx="28" fill="' + a.c + '"/>';
+    else body = '<path d="M50 20C72 20 76 44 74 54C88 66 90 102 50 104C10 102 12 66 26 54C24 44 28 20 50 20Z" fill="' + a.c + '"/>';
+    const shade = '<ellipse cx="50" cy="96" rx="26" ry="6" fill="#000" opacity=".12"/>';
+    const eyePos = a.e === 1 ? [[50, 52, 13]] : a.e === 3 ? [[32, 56, 8], [50, 46, 8], [68, 56, 8]] : [[38, 52, 9], [62, 52, 9]];
+    let eyes = '';
+    for (const [x, y, r] of eyePos) {
+      if (mood === 'dizzy') eyes += '<path d="M' + (x - r * .6) + ' ' + (y - r * .6) + 'l' + r * 1.2 + ' ' + r * 1.2 + 'M' + (x + r * .6) + ' ' + (y - r * .6) + 'l-' + r * 1.2 + ' ' + r * 1.2 + '" stroke="' + dark + '" stroke-width="3.5" stroke-linecap="round"/>';
+      else eyes += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#fff"/><circle cx="' + (x + 1.5) + '" cy="' + (y + 1) + '" r="' + (r * .45) + '" fill="' + dark + '"/>';
+    }
+    const mouth = mood === 'happy'
+      ? '<path d="M36 72Q50 90 64 72Z" fill="' + dark + '"/>'
+      : mood === 'dizzy' ? '<path d="M40 80Q50 72 60 80" stroke="' + dark + '" stroke-width="4" fill="none" stroke-linecap="round"/>'
+      : '<path d="M38 74Q50 86 62 74" stroke="' + dark + '" stroke-width="4" fill="none" stroke-linecap="round"/>';
+    let acc = '';
+    switch (a.x) {
+      case 'antena': acc = '<path d="M50 ' + t + 'V6" stroke="' + dark + '" stroke-width="3"/><circle cx="50" cy="6" r="6" fill="#ffc93c"/>'; break;
+      case 'brkovi': acc = '<path d="M32 68Q41 60 50 66Q59 60 68 68Q59 72 50 69Q41 72 32 68Z" fill="' + dark + '"/>'; break;
+      case 'sesir': acc = '<rect x="20" y="' + (t - 2) + '" width="60" height="6" rx="3" fill="' + dark + '"/><rect x="32" y="' + (t - 18) + '" width="36" height="18" rx="4" fill="' + dark + '"/><rect x="32" y="' + (t - 8) + '" width="36" height="4" fill="#e8384f"/>'; break;
+      case 'masna': acc = '<path d="M50 ' + (t + 2) + 'L34 ' + (t - 8) + 'L34 ' + (t + 12) + 'Z M50 ' + (t + 2) + 'L66 ' + (t - 8) + 'L66 ' + (t + 12) + 'Z" fill="#ff4d8d"/><circle cx="50" cy="' + (t + 2) + '" r="5" fill="#ff4d8d"/>'; break;
+      case 'list': acc = '<path d="M50 ' + (t + 2) + 'C48 ' + (t - 10) + ' 60 ' + (t - 16) + ' 70 ' + (t - 14) + 'C66 ' + (t - 4) + ' 58 ' + t + ' 50 ' + (t + 2) + 'Z" fill="#2f9e44"/><path d="M50 ' + (t + 2) + 'V' + (t - 6) + '" stroke="#5c3d1e" stroke-width="3"/>'; break;
+      case 'rogovi': acc = '<path d="M28 ' + (t + 12) + 'L22 ' + (t - 8) + 'L40 ' + (t + 4) + 'Z M72 ' + (t + 12) + 'L78 ' + (t - 8) + 'L60 ' + (t + 4) + 'Z" fill="#fff4e0"/>'; break;
+      case 'naocale': acc = '<circle cx="38" cy="52" r="12" fill="none" stroke="' + dark + '" stroke-width="3"/><circle cx="62" cy="52" r="12" fill="none" stroke="' + dark + '" stroke-width="3"/><path d="M50 52h0" stroke="' + dark + '" stroke-width="3"/><path d="M48 52h4" stroke="' + dark + '" stroke-width="3"/>'; break;
+      case 'kruna': acc = '<path d="M30 ' + (t + 4) + 'L30 ' + (t - 12) + 'L40 ' + (t - 4) + 'L50 ' + (t - 16) + 'L60 ' + (t - 4) + 'L70 ' + (t - 12) + 'L70 ' + (t + 4) + 'Z" fill="#ffc93c" stroke="#c98a12" stroke-width="2"/>'; break;
+    }
+    const svg = '<svg class="av" viewBox="0 0 100 110" aria-hidden="true">' + shade + body + acc + eyes + mouth + '</svg>';
+    avCache[k] = svg;
+    return svg;
+  }
+  const bugSvg = '<svg viewBox="0 0 60 60" aria-hidden="true"><ellipse cx="30" cy="34" rx="20" ry="16" fill="#8b5a2b"/><circle cx="30" cy="20" r="11" fill="#5c3d1e"/><circle cx="25" cy="18" r="4" fill="#fff"/><circle cx="35" cy="18" r="4" fill="#fff"/><circle cx="26" cy="19" r="2" fill="#000"/><circle cx="36" cy="19" r="2" fill="#000"/><path d="M24 26q6 5 12 0" stroke="#fff" stroke-width="2" fill="none"/><path d="M12 30l-8-4M12 38l-9 2M48 30l8-4M48 38l9 2" stroke="#5c3d1e" stroke-width="3" stroke-linecap="round"/></svg>';
+  const bombSvg = '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="46" cy="58" r="34" fill="#1d1d2b"/><circle cx="34" cy="46" r="8" fill="#fff" opacity=".25"/><rect x="58" y="16" width="16" height="16" rx="3" fill="#555" transform="rotate(35 66 24)"/><path d="M70 18q10-12 18-6" stroke="#c98a12" stroke-width="4" fill="none"/><circle cx="89" cy="11" r="6" fill="#ffc93c"/></svg>';
+
+  // ---------- stanje stranice ----------
+  // Povezivanje: TV (domaćin) otvara "sobu" s imenom mozgalica-kip-v1-<kod>, a mobiteli
+  // se na nju spajaju izravno (WebRTC preko PeerJS-a). Igru vodi uređaj domaćina.
+  const PEER_PREFIX = 'mozgalica-kip-v1-';
+  const hasPeer = () => typeof Peer === 'function';
+  const appUrl = () => location.origin + location.pathname;
+  let mode = 'home';            // home | join | player | host | demo
+  let demoView = 'phone';       // phone | tv (u demo načinu)
+  let game = null, hostPeer = null, hostErr = '', pubTimer = null, pubPending = false;
+  const hostConns = new Map();
+  let ppeer = null, pconn = null, waitTimer = null, retryTimer = null, perr = '', pcode = '', pname = '', netNote = '';
+  let S = null, lastSig = '';
+  let L = freshLocal(-1);
+  let clockEnds = 0, clockDur = 0;
+  let installEvt = null;
+  window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvt = e; if (mode === 'home') render(); });
+
+  let PID = store.get('mz_pid');
+  if (!PID) { PID = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('mz_pid', PID); }
+  let myAv = parseInt(store.get('mz_av'), 10);
+  if (!(myAv >= 0 && myAv < 8)) myAv = Math.floor(Math.random() * 8);
+
+  function freshLocal(s) {
+    return { s, sent: null, pw: null, fxq: [], fx: null, fxTimer: null, sortI: 0, sortR: [], linkI: 0, linkR: [] };
+  }
+
+  // ---------- QR ----------
+  function qrSvg(text) {
+    try {
+      if (typeof qrcode !== 'function') return '';
+      const q = qrcode(0, 'M'); q.addData(text); q.make();
+      const n = q.getModuleCount(); let d = '';
+      for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += 'M' + (c + 3) + ' ' + (r + 3) + 'h1v1h-1z';
+      const sz = n + 6;
+      return '<svg viewBox="0 0 ' + sz + ' ' + sz + '" shape-rendering="crispEdges" role="img" aria-label="QR kod za pridruživanje"><rect width="' + sz + '" height="' + sz + '" fill="#fff"/><path d="' + d + '" fill="#0a1433"/></svg>';
+    } catch (e) { return ''; }
+  }
+
+  // ---------- ekran ne smije zaspati tijekom igre ----------
+  let wake = null;
+  async function keepAwake() {
+    try {
+      if (navigator.wakeLock && !wake) {
+        wake = await navigator.wakeLock.request('screen');
+        wake.addEventListener('release', () => { wake = null; });
+      }
+    } catch (e) {}
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'player' || mode === 'demo')) keepAwake();
+  });
+
+  // ---------- navigacija ----------
+  function reset() {
+    if (game) game.stop();
+    clearInterval(pubTimer); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer();
+    for (const c of hostConns.keys()) { try { c.close(); } catch (e) {} }
+    hostConns.clear();
+    if (hostPeer) { try { hostPeer.destroy(); } catch (e) {} }
+    if (ppeer) { try { ppeer.destroy(); } catch (e) {} }
+    game = null; hostPeer = null; ppeer = null; pconn = null; S = null;
+    hostErr = ''; perr = ''; netNote = ''; lastSig = '';
+    L = freshLocal(-1);
+    try { if (location.hash) history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    mode = 'home';
+    render();
+  }
+
+  // ---------- domaćin (TV) ----------
+  function syncConns() {
+    if (game) game.syncPeers([...hostConns.values()].filter((x) => x.pid));
+  }
+  function onHostData(conn, m) {
+    const x = hostConns.get(conn);
+    if (!x || !m || typeof m !== 'object' || !game) return;
+    if (m.t === 'hello' && typeof m.pid === 'string' && typeof m.name === 'string') { x.pid = m.pid.slice(0, 40); x.name = m.name; x.av = m.av; }
+    else if (m.t === 'av') x.av = m.av;
+    else if (m.t === 'in' && m.in && typeof m.in === 'object') x.in = m.in;
+    else return;
+    syncConns();
+    if (m.t === 'hello' && conn.open) { try { conn.send(game.view()); } catch (e) {} }
+  }
+  function publish() {
+    if (!game) return;
+    const v = game.view();
+    for (const c of hostConns.keys()) if (c.open) { try { c.send(v); } catch (e) {} }
+  }
+  function publishSoon() { if (pubPending) return; pubPending = true; setTimeout(() => { pubPending = false; publish(); }, 30); }
+
+  function startHost() {
+    mode = 'host'; hostErr = ''; game = null; render(); keepAwake();
+    if (!hasPeer()) { hostErr = 'Modul za povezivanje se nije učitao. Provjeri internet i osvježi stranicu.'; return render(); }
+    openHostPeer(0);
+  }
+  function openHostPeer(tries) {
+    const code = makeCode();
+    const peer = new Peer(PEER_PREFIX + code.toLowerCase(), { debug: 0 });
+    let opened = false;
+    peer.on('open', () => {
+      if (mode !== 'host' || hostPeer) { try { peer.destroy(); } catch (e) {} return; }
+      opened = true; hostPeer = peer;
+      game = createGame({ code, onChange: () => { publishSoon(); render(); } });
+      pubTimer = setInterval(publish, 1000);
+      render();
+    });
+    peer.on('connection', (conn) => {
+      hostConns.set(conn, { pid: null, name: '', av: 0, in: null });
+      conn.on('data', (m) => onHostData(conn, m));
+      const drop = () => { if (hostConns.delete(conn)) syncConns(); };
+      conn.on('close', drop);
+      conn.on('error', drop);
+    });
+    peer.on('disconnected', () => { if (hostPeer === peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} } });
+    peer.on('error', (e) => {
+      if (opened) return; // gubitak veze jednog igrača ne ruši sobu
+      try { peer.destroy(); } catch (er) {}
+      if (e && e.type === 'unavailable-id' && tries < 5) return openHostPeer(tries + 1);
+      if (mode === 'host') { hostErr = 'Ne mogu otvoriti sobu (' + ((e && e.type) || 'greška') + '). Provjeri internet i pokušaj ponovno.'; render(); }
+    });
+  }
+
+  // ---------- demo: ti + botovi na jednom uređaju ----------
+  function startDemo() {
+    mode = 'demo'; demoView = 'phone'; S = null; lastSig = ''; L = freshLocal(-1);
+    keepAwake();
+    game = createGame({ code: 'DEMO', onChange: () => { applyState(game.view()); if (demoView === 'tv') render(); } });
+    const name = store.get('mz_name') || 'Ti';
+    game.addPlayer(PID, name, myAv, false);
+    const botAvs = [0, 1, 2, 3, 4, 5, 6, 7].filter((i) => i !== game.view().P[0].a);
+    ['Ana', 'Marko', 'Iva'].forEach((n, i) => game.addBot(n, botAvs[i]));
+    render();
+  }
+
+  // ---------- igrač (mobitel) ----------
+  function joinGame(code, name) {
+    pcode = code; pname = name; perr = ''; netNote = ''; S = null; lastSig = ''; L = freshLocal(-1);
+    store.set('mz_name', name);
+    mode = 'player'; render(); keepAwake();
+    if (!hasPeer()) return failJoin('Modul za povezivanje se nije učitao. Provjeri internet i osvježi stranicu.');
+    const peer = new Peer({ debug: 0 });
+    ppeer = peer;
+    peer.on('open', () => { if (ppeer === peer) connectHost(); });
+    peer.on('disconnected', () => { if (ppeer === peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} } });
+    peer.on('error', (e) => {
+      if (ppeer !== peer) return;
+      const t = e && e.type;
+      if (!S) {
+        if (t === 'peer-unavailable') return failJoin('Soba ' + pcode + ' nije pronađena. Provjeri kod i je li igra otvorena na TV-u.');
+        if (t === 'network' || t === 'server-error' || t === 'socket-error' || t === 'socket-closed') return failJoin('Nema veze s poslužiteljem za povezivanje. Provjeri internet.');
+        return failJoin('Spajanje nije uspjelo (' + (t || 'greška') + ').');
+      }
+      retrySoon();
+    });
+    clearTimeout(waitTimer);
+    waitTimer = setTimeout(() => { if (!S && mode === 'player') failJoin('Spajanje traje predugo. Provjeri kod sobe i internet pa pokušaj ponovno.'); }, 15000);
+  }
+  function failJoin(msg) {
+    clearTimeout(waitTimer); clearTimeout(retryTimer);
+    if (ppeer) { try { ppeer.destroy(); } catch (e) {} }
+    ppeer = null; pconn = null; perr = msg; mode = 'join';
+    render();
+  }
+  function connectHost() {
+    if (!ppeer || ppeer.destroyed) return;
+    const conn = ppeer.connect(PEER_PREFIX + pcode.toLowerCase(), { reliable: true, serialization: 'json' });
+    pconn = conn;
+    conn.on('open', () => {
+      if (pconn !== conn) return;
+      try {
+        conn.send({ t: 'hello', pid: PID, name: pname, av: myAv });
+        if (L.sent) conn.send({ t: 'in', in: L.sent });
+      } catch (e) {}
+      if (netNote) { netNote = ''; if (S) phoneRender(true); }
+    });
+    conn.on('data', (d) => { if (pconn === conn && d && d.code === pcode && Array.isArray(d.P)) applyState(d); });
+    const lost = () => { if (pconn === conn && mode === 'player') retrySoon(); };
+    conn.on('close', lost);
+    conn.on('error', lost);
+  }
+  function retrySoon() {
+    if (mode !== 'player' || !S) return;
+    if (!netNote) { netNote = 'Veza je prekinuta. Spajam ponovno…'; phoneRender(true); }
+    clearTimeout(retryTimer);
+    retryTimer = setTimeout(() => {
+      if (mode !== 'player') return;
+      if (!ppeer || ppeer.destroyed) return failJoin('Veza s igrom je izgubljena.');
+      if (ppeer.disconnected) { try { ppeer.reconnect(); } catch (e) {} retryTimer = setTimeout(connectHost, 1500); }
+      else connectHost();
+    }, 1500);
+  }
+
+  // zatvaranje kartice odmah javi domaćinu (umjesto da čeka da veza istekne)
+  window.addEventListener('pagehide', () => { try { if (pconn) pconn.close(); } catch (e) {} });
+
+  function sendInput(inp) {
+    inp.s = L.s;
+    L.sent = inp;
+    if (mode === 'demo') game.setInput(PID, inp);
+    else if (pconn && pconn.open) { try { pconn.send({ t: 'in', in: inp }); } catch (e) {} }
+    phoneRender(true);
+  }
+  function chooseAvatar(i) {
+    myAv = i; store.set('mz_av', String(i));
+    if (mode === 'demo') game.setAvatar(PID, i);
+    else if (pconn && pconn.open) { try { pconn.send({ t: 'av', av: i }); } catch (e) {} }
+  }
+
+  const meOf = (d) => d && d.P.find((p) => p.id === PID);
+
+  function applyState(d) {
+    clearTimeout(waitTimer);
+    const t = Date.now();
+    if (!S || d.s !== L.s) {
+      stopFxTimer();
+      L = freshLocal(d.s);
+      clockEnds = t + d.ms; clockDur = d.dur;
+      L.start = t - (d.dur - d.ms);
+      const me = meOf(d);
+      if (d.ph === 'question' && me && me.fx) { L.fxq = me.fx.slice(); L.fx = makeFx(L.fxq[0]); }
+    }
+    S = d;
+    if (mode === 'player' || (mode === 'demo' && demoView === 'phone')) {
+      const sig = phoneSig(d);
+      if (sig !== lastSig) { lastSig = sig; phoneRender(false); }
+    }
+  }
+  function phoneSig(d) {
+    const me = meOf(d) || null;
+    const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c]) : null;
+    return JSON.stringify([d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster]);
+  }
+
+  // ---------- efekti moći ----------
+  function makeFx(k) {
+    if (!k) return null;
+    if (k === 'led') return { k, hits: 0, need: 7 };
+    if (k === 'sluz') return { k, cells: new Array(48).fill(1), left: 48 };
+    if (k === 'grick') return { k, bugs: Array.from({ length: 5 }, () => ({ x: 10 + Math.random() * 80, y: 12 + Math.random() * 76, on: true })) };
+    if (k === 'bomba') return { k, taps: 0, need: 4, ends: Date.now() + 5000, boom: false };
+    return null;
+  }
+  function stopFxTimer() { if (L && L.fxTimer) { clearInterval(L.fxTimer); L.fxTimer = null; } }
+  function fxDone() {
+    stopFxTimer();
+    L.fxq.shift();
+    L.fx = makeFx(L.fxq[0]);
+    if (navigator.vibrate) { try { navigator.vibrate(60); } catch (e) {} }
+    phoneRender(true);
+  }
+  const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom', grick: 'Grickalice! Zgnječi sve bubice', bomba: 'Bomba! Tapni je da je odbaciš' };
+  function fxHtml(fx) {
+    if (!fx) return '';
+    const label = '<div class="fx-label">' + FX_LABEL[fx.k] + '</div>';
+    if (fx.k === 'led') {
+      const crack = Math.min(1, fx.hits / fx.need);
+      let lines = '';
+      for (let i = 0; i < fx.hits; i++) {
+        const x = 15 + ((i * 37) % 70), y = 20 + ((i * 53) % 60);
+        lines += '<path d="M' + x + ' ' + y + 'l' + (8 + i) + ' ' + (10 - i) + 'l-6 ' + (12 + i) + 'M' + x + ' ' + y + 'l-' + (10 + i) + ' 6" stroke="#fff" stroke-width="1.4" fill="none"/>';
+      }
+      return '<div class="fx fx-led" id="fx" style="opacity:' + (1 - crack * 0.35) + '">' + label +
+        '<svg class="cracks" viewBox="0 0 100 100" preserveAspectRatio="none">' + lines + '</svg><div class="ice-txt">' + (fx.need - fx.hits) + '</div></div>';
+    }
+    if (fx.k === 'sluz') {
+      let cells = '';
+      fx.cells.forEach((on) => { cells += '<div class="cell' + (on ? '' : ' gone') + '"></div>'; });
+      return '<div class="fx fx-sluz" id="fx" style="grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr)">' + label + cells + '</div>';
+    }
+    if (fx.k === 'grick') {
+      let bugs = '';
+      fx.bugs.forEach((b, i) => { if (b.on) bugs += '<button class="bug" data-b="' + i + '" style="left:' + b.x + '%;top:' + b.y + '%" aria-label="Zgnječi bubicu">' + bugSvg + '</button>'; });
+      return '<div class="fx fx-grick" id="fx">' + label + bugs + '</div>';
+    }
+    if (fx.k === 'bomba') {
+      const left = Math.max(0, Math.ceil((fx.ends - Date.now()) / 1000));
+      return '<div class="fx fx-bomba' + (fx.boom ? ' boom' : '') + '" id="fx">' + label +
+        (fx.boom ? '' : '<button class="bomb-btn" id="bomb" aria-label="Odbaci bombu">' + bombSvg + '</button><div class="bomb-num" id="bombnum">' + left + '</div>') + '</div>';
+    }
+    return '';
+  }
+  function bindFx() {
+    const el = document.getElementById('fx');
+    const fx = L.fx;
+    if (!el || !fx) return;
+    if (fx.k === 'led') {
+      el.onpointerdown = (e) => {
+        e.preventDefault();
+        fx.hits++;
+        if (navigator.vibrate) { try { navigator.vibrate(15); } catch (er) {} }
+        if (fx.hits >= fx.need) return fxDone();
+        el.outerHTML = fxHtml(fx); bindFx();
+        const n = document.getElementById('fx'); if (n) n.classList.add('shake');
+      };
+    } else if (fx.k === 'sluz') {
+      const cells = el.querySelectorAll('.cell');
+      const wipe = (e) => {
+        const r = el.getBoundingClientRect();
+        const cx = Math.floor(((e.clientX - r.left) / r.width) * 6), cy = Math.floor(((e.clientY - r.top) / r.height) * 8);
+        for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+          if (Math.abs(dx) + Math.abs(dy) > 1) continue;
+          const x = cx + dx, y = cy + dy;
+          if (x < 0 || x > 5 || y < 0 || y > 7) continue;
+          const i = y * 6 + x;
+          if (fx.cells[i]) { fx.cells[i] = 0; fx.left--; if (cells[i]) cells[i].classList.add('gone'); }
+        }
+        if (fx.left <= 5) fxDone();
+      };
+      let down = false;
+      el.onpointerdown = (e) => { e.preventDefault(); down = true; try { el.setPointerCapture(e.pointerId); } catch (er) {} wipe(e); };
+      el.onpointermove = (e) => { if (down) wipe(e); };
+      el.onpointerup = el.onpointercancel = () => { down = false; };
+    } else if (fx.k === 'grick') {
+      el.querySelectorAll('.bug').forEach((b) => {
+        b.onpointerdown = (e) => {
+          e.preventDefault(); e.stopPropagation();
+          fx.bugs[+b.dataset.b].on = false; b.remove();
+          if (navigator.vibrate) { try { navigator.vibrate(20); } catch (er) {} }
+          if (!fx.bugs.some((x) => x.on)) fxDone();
+        };
+      });
+      el.onpointerdown = (e) => e.preventDefault();
+      if (!L.fxTimer) L.fxTimer = setInterval(() => {
+        const f = L.fx; if (!f || f.k !== 'grick') return stopFxTimer();
+        document.querySelectorAll('.bug').forEach((b) => {
+          const bug = f.bugs[+b.dataset.b];
+          bug.x = Math.max(8, Math.min(92, bug.x + (Math.random() - 0.5) * 30));
+          bug.y = Math.max(10, Math.min(90, bug.y + (Math.random() - 0.5) * 30));
+          b.style.left = bug.x + '%'; b.style.top = bug.y + '%';
+        });
+      }, 700);
+    } else if (fx.k === 'bomba') {
+      el.onpointerdown = (e) => e.preventDefault();
+      const btn = document.getElementById('bomb');
+      if (btn) btn.onpointerdown = (e) => {
+        e.preventDefault(); e.stopPropagation();
+        fx.taps++;
+        if (fx.taps >= fx.need) { fx.boom = false; return fxDone(); }
+        btn.style.transform = 'scale(' + (1 - fx.taps * 0.12) + ') rotate(' + (fx.taps * 25) + 'deg)';
+      };
+      if (!L.fxTimer) L.fxTimer = setInterval(() => {
+        const f = L.fx; if (!f || f.k !== 'bomba') return stopFxTimer();
+        const left = f.ends - Date.now();
+        const n = document.getElementById('bombnum');
+        if (n) n.textContent = Math.max(0, Math.ceil(left / 1000));
+        if (left <= 0 && !f.boom) {
+          f.boom = true; stopFxTimer();
+          if (navigator.vibrate) { try { navigator.vibrate([80, 40, 120]); } catch (er) {} }
+          phoneRender(true);
+          setTimeout(() => { if (L.fx === f) fxDone(); }, 900);
+        }
+      }, 150);
+    }
+  }
+
+  // ---------- zajednički dijelovi ----------
+  const bind = (id, fn) => { const el = document.getElementById(id); if (el) el.onclick = fn; };
+  const byScore = (P) => P.slice().sort((a, b) => b.sc - a.sc);
+  const nameOf = (d, id) => { const p = d.P.find((x) => x.id === id); return p ? p.n : '?'; };
+  const avOf = (d, id) => { const p = d.P.find((x) => x.id === id); return p ? p.a : 0; };
+  function timerHtml(urgentAt) { return '<div class="timer" id="timer" data-u="' + (urgentAt || 5000) + '"><div id="tbar"></div></div>'; }
+  function lineup(d, opts) {
+    opts = opts || {};
+    return '<div class="lineup">' + d.P.map((p) => {
+      let badge = '';
+      if (opts.check && p.ok) badge = '<span class="badge">✓</span>';
+      if (opts.gain && p.g) badge = '<span class="badge gain">+' + p.g + '</span>';
+      const fx = opts.fx && p.fx ? p.fx.map((k) => ICON[k]).join('') : '';
+      const extra = (opts.fx && p.sh ? '🛡️' : '') + (opts.fx && p.d ? '✖️2' : '');
+      const mood = opts.mood ? opts.mood(p) : (p.fx && opts.fx ? 'dizzy' : '');
+      return '<div class="who' + (p.c ? '' : ' off') + '">' + badge +
+        '<div class="fxrow">' + fx + extra + '</div><div class="bob" style="width:100%">' + avSvg(p.a, mood) + '</div>' +
+        '<div class="nm">' + esc(p.n) + '</div><div class="sc">' + p.sc + '</div></div>';
+    }).join('') + '</div>';
+  }
+  function evHtml(d) {
+    if (!d.ev || !d.ev.length) return '';
+    return '<div class="events">' + d.ev.map((e) => {
+      if (e.t) return '<span class="ev' + (e.b ? ' blocked' : '') + '"><span class="mini">' + avSvg(avOf(d, e.f)) + '</span>' + esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + ' ' + esc(nameOf(d, e.t)) + (e.b ? ' 🛡️' : '') + '</span>';
+      return '<span class="ev"><span class="mini">' + avSvg(avOf(d, e.f)) + '</span>' + esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + '</span>';
+    }).join('') + '</div>';
+  }
+
+  // ---------- glavni prikaz ----------
+  function render() {
+    try {
+      if (mode === 'home') return homeV();
+      if (mode === 'join') return joinV();
+      if (mode === 'player') return phoneRender(true);
+      if (mode === 'demo') return demoView === 'tv' ? tvV(game.view()) : phoneRender(true);
+      return hostV();
+    } catch (e) { crash(e); }
+  }
+  function crash(e) {
+    $app.className = 'screen center';
+    $app.innerHTML = '<div class="err">Nešto je pošlo po krivu: ' + esc(e && e.message) + '</div><button class="btn" id="home">Početna</button>';
+    bind('home', reset);
+  }
+
+  function homeV() {
+    $app.className = 'screen center';
+    const standalone = !!(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    const hint = hasPeer() ? '' : '<div class="err">Modul za povezivanje se nije učitao (nema interneta?). Demo i dalje radi.</div>';
+    const faces = [0, 3, 6, 4].map((i) => '<span style="width:64px" class="bob">' + avSvg(i, 'happy') + '</span>').join('');
+    const addr = esc(location.host + location.pathname.replace(/index\.html$/, ''));
+    const install = standalone ? '' : installEvt
+      ? '<button class="btn ghost" id="install">📲 Instaliraj kao aplikaciju</button>'
+      : '<div class="note">Za ikonu na početnom zaslonu: u Chromeu otvori izbornik ⋮ i odaberi „Dodaj na početni zaslon“.</div>';
+    $app.innerHTML =
+      '<div class="logo">MOZGALICA<small>KVIZ · MOĆI · PIRAMIDA</small></div>' +
+      '<div class="lineup" style="gap:10px">' + faces + '</div>' +
+      '<div class="stack">' + hint +
+      '<button class="btn" id="host">Otvori igru na TV-u</button>' +
+      '<button class="btn" id="join">Pridruži se s mobitela</button>' +
+      '<button class="btn ghost" id="demo">Probaj sam protiv botova</button>' + install + '</div>' +
+      '<div class="note">2 do 6 igrača. Na TV-u u pregledniku otvori <b>' + addr + '</b> i odaberi „Otvori igru na TV-u“. Ostali skeniraju QR kod mobitelom, bez prijave i instalacije.</div>';
+    bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
+    bind('install', async () => {
+      if (!installEvt) return;
+      installEvt.prompt();
+      try { await installEvt.userChoice; } catch (e) {}
+      installEvt = null; render();
+    });
+  }
+
+  function joinV() {
+    $app.className = 'screen phone';
+    const m = (location.hash || '').match(/^#?([A-Za-z]{4})$/);
+    const code = pcode || (m ? m[1].toUpperCase() : '');
+    const name = pname || store.get('mz_name') || '';
+    $app.innerHTML =
+      '<div class="logo" style="font-size:2.4rem;text-align:center">MOZGALICA</div>' +
+      '<form class="form" id="form" autocomplete="off">' + (perr ? '<div class="err">' + esc(perr) + '</div>' : '') +
+      '<div><label for="code">Kod sobe</label><input id="code" class="code" maxlength="4" value="' + esc(code) + '" autocapitalize="characters" autocomplete="off"></div>' +
+      '<div><label for="name">Tvoje ime</label><input id="name" maxlength="12" value="' + esc(name) + '" placeholder="npr. Mateo" autocomplete="off"></div>' +
+      '<button class="btn" type="submit">Uđi u igru</button><button class="btn ghost" type="button" id="back">Natrag</button></form>';
+    document.getElementById('form').onsubmit = (e) => {
+      e.preventDefault();
+      const c = document.getElementById('code').value.trim().toUpperCase();
+      const n = document.getElementById('name').value.trim();
+      if (!/^[A-Z]{4}$/.test(c) || !n) { perr = 'Upiši četveroslovni kod sobe i svoje ime.'; pcode = c; pname = n; return joinV(); }
+      joinGame(c, n);
+    };
+    bind('back', () => { perr = ''; pcode = ''; mode = 'home'; render(); });
+    if (code && !name) { const el = document.getElementById('name'); if (el) el.focus(); }
+  }
+
+  function hostV() {
+    if (hostErr) {
+      $app.className = 'screen center';
+      $app.innerHTML = '<div class="err">' + esc(hostErr) + '</div><button class="btn" id="home">Natrag</button>';
+      return bind('home', reset);
+    }
+    if (!game) { $app.className = 'screen center'; $app.innerHTML = '<div class="logo">MOZGALICA</div><div class="note">Otvaram sobu…</div>'; return; }
+    tvV(game.view());
+  }
+
+  // ---------- TV ----------
+  function tvTop(d, label) {
+    return '<div class="tv-top"><span class="rl">' + esc(d.rl || '') + '</span><span class="tv-sub" style="flex:1">' + (label || '') + '</span><span class="tv-num" id="tnum"></span></div>';
+  }
+  function tvV(d) {
+    clockEnds = Date.now() + d.ms; clockDur = d.dur;
+    $app.className = 'screen tv';
+    let h = '';
+    const demoBar = mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO · TV prikaz</span><button class="btn ghost" id="toPhone">📱 Natrag na mobitel</button></div>' : '';
+    switch (d.ph) {
+      case 'lobby': return tvLobby(d, demoBar);
+      case 'intro':
+        h = '<div class="intro-card"><div class="big">' + esc(d.it.t) + '</div><div class="sub">' + esc(d.it.sub) + '</div></div>' + lineup(d);
+        break;
+      case 'vote': case 'voteResult': {
+        const doors = d.cats.map((c, i) => {
+          const voters = d.P.filter((p) => p.vt === i).map((p) => '<span>' + avSvg(p.a) + '</span>').join('');
+          const cls = d.ph === 'voteResult' ? (i === d.cw ? ' win' : ' lose') : '';
+          return '<div class="door o' + i + cls + '"><div class="dn">' + esc(c) + '</div><div class="voters">' + voters + '</div><span class="knob"></span></div>';
+        }).join('');
+        h = tvTop(d, d.ph === 'vote' ? 'Glasajte za kategoriju!' : 'Kategorija: ' + esc(d.cats[d.cw])) +
+          (d.ph === 'vote' ? timerHtml() : '') + '<div class="tv-mid"><div class="doors">' + doors + '</div></div>' + lineup(d, { check: d.ph === 'vote' });
+        break;
+      }
+      case 'power': {
+        const legend = Object.keys(POWERS).map((k) => '<div class="pw-mini"><span class="pw-ico">' + ICON[k] + '</span><div><b>' + POWERS[k].n + '</b><span>' + POWERS[k].d + '</span></div></div>').join('');
+        h = tvTop(d, 'Odaberite moć na mobitelu') + timerHtml() +
+          '<div class="tv-mid"><div class="tv-title">Vrijeme je za moći!</div><div class="powers-legend">' + legend + '</div></div>' + lineup(d, { check: true });
+        break;
+      }
+      case 'question': case 'reveal': {
+        const rev = d.ph === 'reveal';
+        const opts = d.q.o.map((o, i) => '<div class="opt o' + i + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '"><span class="shape">' + SHAPES[i] + '</span><span class="txt">' + esc(o) + '</span>' + (rev && d.cnt ? '<span class="cnt">' + d.cnt[i] + '</span>' : '') + '</div>').join('');
+        h = tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + (rev ? '' : timerHtml()) +
+          '<div class="tv-mid"><div class="q-text">' + esc(d.q.t) + '</div><div class="opts">' + opts + '</div>' + evHtml(d) + '</div>' +
+          lineup(d, rev ? { gain: true, mood: (p) => (p.ch === d.cor ? 'happy' : 'dizzy') } : { check: true, fx: true });
+        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
+        break;
+      }
+      case 'sort': case 'sortReveal': {
+        const rev = d.ph === 'sortReveal';
+        const col = (side) => d.so.it.map((x, i) => (rev ? (d.so.key[i] === side ? '<span class="chip">' + esc(x) + '</span>' : '') : '')).join('');
+        h = tvTop(d, rev ? 'Rješenje' : 'Razvrstajte pojmove na mobitelu!') + (rev ? '' : timerHtml(8000)) +
+          '<div class="tv-mid"><div class="tv-title">Izazov: razvrstavanje</div><div class="sort-cols">' +
+          '<div class="sort-col a"><h3>' + esc(d.so.a) + '</h3><div class="chips">' + col(0) + '</div></div>' +
+          '<div class="sort-col b"><h3>' + esc(d.so.b) + '</h3><div class="chips">' + col(1) + '</div></div></div>' +
+          (rev ? '' : '<div class="chips">' + d.so.it.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div>') + '</div>' +
+          lineup(d, rev ? { gain: true } : { check: true });
+        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
+        break;
+      }
+      case 'link': case 'linkReveal': {
+        const rev = d.ph === 'linkReveal';
+        const pairs = d.li.L.map((l, i) => '<div class="pair"><span>' + esc(l) + '</span><span class="arrow">→</span><span>' + (rev ? esc(d.li.R[d.li.key[i]]) : '?') + '</span></div>').join('');
+        h = tvTop(d, rev ? 'Rješenje' : 'Spojite parove na mobitelu!') + (rev ? '' : timerHtml(8000)) +
+          '<div class="tv-mid"><div class="tv-title">Izazov: ' + esc(d.li.t) + '</div><div class="pairs card">' + pairs + '</div>' +
+          (rev ? '' : '<div class="chips">' + d.li.R.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div>') + '</div>' +
+          lineup(d, rev ? { gain: true } : { check: true });
+        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
+        break;
+      }
+      case 'fq': case 'fr': {
+        const rev = d.ph === 'fr';
+        const tf = d.q.o.map((o, i) => '<div class="opt o' + (i === 0 ? 3 : 0) + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '" style="justify-content:center"><span class="txt" style="text-align:center">' + esc(o) + '</span></div>').join('');
+        h = tvTop(d, 'Točno ili netočno? Točan odgovor = stepenica više, najbrži = dvije!') + (rev ? '' : timerHtml(3000)) +
+          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="q-text">' + esc(d.q.t) + '</div><div class="tf-row">' + tf + '</div></div>' +
+          pyramidHtml(d, rev) + '</div>';
+        break;
+      }
+      case 'final': {
+        const w = d.P.find((p) => p.id === d.win) || d.P[0];
+        const ranked = d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
+        h = '<div class="winner"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">' +
+          '<div class="logo" style="font-size:clamp(2rem,5vw,4.4rem)">POBJEDNIK!</div><div class="champ">' + avSvg(w.a, 'happy') + '</div>' +
+          '<div class="tv-title">' + esc(w.n) + '</div></div>' +
+          '<div style="display:flex;flex-direction:column;gap:10px">' +
+          ranked.map((p, i) => '<div class="rank-row"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a) + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + ' b · ' + (p.st || 0) + '/' + d.steps + '</span></div>').join('') +
+          '<div class="scroll"><b>Nagrada za pobjednika: zanimljivost</b>' + esc(d.fact) + '</div>' +
+          '<div class="actions">' + (mode === 'demo' ? '<button class="btn" id="again">Igraj opet</button>' : '<button class="btn" id="again">Nova igra</button>') + '<button class="btn ghost" id="quit">Izlaz</button></div></div></div>';
+        break;
+      }
+    }
+    $app.innerHTML = demoBar + h;
+    bind('skip', () => game.skip());
+    bind('again', () => { game.restart(); });
+    bind('quit', reset);
+    bind('toPhone', () => { demoView = 'phone'; lastSig = ''; render(); });
+    tick();
+  }
+
+  function pyramidHtml(d, rev) {
+    let rows = '';
+    for (let s = d.steps; s >= 0; s--) {
+      const w = 34 + (d.steps - s) * (62 / d.steps);
+      const here = d.P.filter((p) => (p.st || 0) === s).map((p) => '<span class="climber">' + (rev && p.mv ? '<span class="up">+' + p.mv + '</span>' : '') + avSvg(p.a, rev ? (p.mv ? 'happy' : 'dizzy') : '') + '</span>').join('');
+      rows += '<div class="pstep' + (s === d.steps ? ' top' : '') + '" style="width:' + w + '%"><span class="lv">' + (s === d.steps ? '★' : s) + '</span>' + here + '</div>';
+    }
+    return '<div class="pyramid">' + rows + '</div>';
+  }
+
+  function tvLobby(d, demoBar) {
+    let join;
+    if (mode === 'demo') join = '<div class="card join-card"><div class="tv-title">Demo</div><div class="tv-sub">Botovi igraju s tobom. Na pravoj igri ovdje je QR kod.</div></div>';
+    else {
+      const svg = qrSvg(appUrl() + '#' + d.code);
+      join = '<div class="card join-card">' + (svg ? '<div class="qr">' + svg + '</div>' : '') +
+        '<div class="tv-sub">Skeniraj QR kod ili otvori <b>' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + '</b> i upiši kod</div><div class="room-code">' + esc(d.code) + '</div></div>';
+    }
+    const on = d.P.filter((p) => p.c).length;
+    const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
+    $app.innerHTML = demoBar +
+      '<div class="logo" style="text-align:center">MOZGALICA<small>ODABERITE LIKOVE NA MOBITELIMA</small></div>' +
+      '<div class="lobby-grid">' + join + '<div class="card lobby-cast"><h2 class="h" style="font-size:clamp(1.4rem,2.6vw,2.4rem)">Igrači ' + d.P.length + '/' + d.max + '</h2>' +
+      (d.P.length ? lineup(d) : '<div class="tv-sub">Čekamo prve igrače…</div>') +
+      '<div class="actions"><button class="btn" id="start"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="btn ghost" id="quit">Odustani</button></div></div></div>';
+    bind('start', () => game.start());
+    bind('quit', reset);
+    bind('toPhone', () => { demoView = 'phone'; lastSig = ''; render(); });
+    bind('fs', () => { try { const p = document.documentElement.requestFullscreen(); if (p && p.then) p.then(render, () => {}); } catch (e) {} });
+  }
+
+  // ---------- mobitel ----------
+  function phoneRender(force) {
+    try {
+      if (!(mode === 'player' || (mode === 'demo' && demoView === 'phone'))) return;
+      if (force && S) lastSig = phoneSig(S);
+      phoneV();
+    } catch (e) { crash(e); }
+  }
+  function phoneV() {
+    $app.className = 'screen phone';
+    const d = S;
+    if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem">MOZGALICA</div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
+    const me = meOf(d);
+    const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">📺 Pogledaj TV</button></div>' : '') +
+      (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
+    const head = me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a) + '</span><span>' + esc(me.n) + '</span></span><span>' + esc(d.rl || '') + '</span><span>' + me.sc + ' b</span></div>' : '';
+    const center = (inner) => { $app.className = 'screen phone center'; return inner; };
+    let h = '';
+    if (!me) {
+      h = center(d.ph === 'lobby' ? '<div class="p-title">Prijavljujem te…</div>' : '<div class="p-title">Igra je u tijeku</div><div class="p-sub">Pričekaj kraj pa uđi u sljedeću igru.</div>');
+    } else switch (d.ph) {
+      case 'lobby': {
+        const taken = {}; d.P.forEach((p) => { if (p.id !== PID) taken[p.a] = p.n; });
+        const grid = AV.map((a, i) => '<button class="av-pick' + (me.a === i ? ' me' : '') + '" data-av="' + i + '"' + (taken[i] !== undefined ? ' disabled' : '') + '>' + avSvg(i, me.a === i ? 'happy' : '') + '<span>' + esc(taken[i] !== undefined ? taken[i] : a.n) + '</span></button>').join('');
+        h = '<div class="p-title">Bok, ' + esc(me.n) + '!</div><div class="p-sub">Odaberi svog lika</div><div class="av-grid">' + grid + '</div>' +
+          (mode === 'demo'
+            ? '<button class="btn" id="dstart">Započni igru</button><div class="p-sub">Igraš protiv tri bota. Bacat će moći i na tebe!</div>'
+            : '<div class="waiting">U sobi ' + esc(d.code) + ' · ' + d.P.length + ' igrača. Igra počinje kad domaćin pritisne „Započni“.</div>') +
+          '<button class="btn ghost" id="leave">Izađi</button>';
+        break;
+      }
+      case 'intro':
+        h = center('<div class="p-title" style="font-size:3rem;color:var(--gold)">' + esc(d.it.t) + '</div><div class="p-sub">' + esc(d.it.sub) + '</div><div style="width:130px" class="bob">' + avSvg(me.a, 'happy') + '</div>');
+        break;
+      case 'vote': {
+        const mine = L.sent ? L.sent.v : (me.ok ? -2 : -1);
+        h = head + timerHtml() + '<div class="p-title">Glasaj za kategoriju</div><div class="door-btns">' +
+          d.cats.map((c, i) => '<button class="door-btn o' + i + (mine === i ? ' picked' : '') + '" data-v="' + i + '"' + (mine !== -1 ? ' disabled' : '') + '>' + esc(c) + '</button>').join('') + '</div>' +
+          (mine !== -1 ? '<div class="waiting">Glas zaprimljen ✔</div>' : '');
+        break;
+      }
+      case 'voteResult':
+        h = center(head + '<div class="p-sub">Kategorija je</div><div class="p-title" style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</div>');
+        break;
+      case 'power': h = head + timerHtml() + powerPhone(d, me); break;
+      case 'question': h = head + questionPhone(d, me); break;
+      case 'reveal': h = head + revealPhone(d, me); break;
+      case 'sort': h = head + timerHtml(8000) + sortPhone(d, me); break;
+      case 'link': h = head + timerHtml(8000) + linkPhone(d, me); break;
+      case 'sortReveal': case 'linkReveal': {
+        const tot = d.ph === 'sortReveal' ? d.so.it.length : d.li.L.length;
+        h = center(head + '<div class="result ' + (me.k ? 'ok' : 'none') + '"><div class="p-title">Točno ' + me.k + ' od ' + tot + '</div><div class="pts">+' + (me.g || 0) + '</div></div>' + rankStat(d, me));
+        break;
+      }
+      case 'fq': h = head + finalePhone(d, me); break;
+      case 'fr': {
+        const ok = me.ch === d.cor;
+        h = center(head + '<div class="result ' + (ok ? 'ok' : me.ch >= 0 ? 'bad' : 'none') + '"><div class="p-title">' + (ok ? (me.mv === 2 ? 'Najbrži! +2 stepenice' : 'Točno! +1 stepenica') : me.ch >= 0 ? 'Netočno, ostaješ' : 'Prespor!') + '</div>' +
+          '<div class="p-sub">Bilo je: <b>' + esc(d.q.o[d.cor]) + '</b></div></div>' + stepMeter(d, me));
+        break;
+      }
+      case 'final': {
+        const won = d.win === PID;
+        const ranked = d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
+        const pos = ranked.findIndex((p) => p.id === PID) + 1;
+        h = center('<div style="width:150px">' + avSvg(me.a, won ? 'happy' : '') + '</div><div class="p-title" style="font-size:2.4rem;color:var(--gold)">' + (won ? 'Pobijedio si!' : pos + '. mjesto') + '</div>' +
+          (won ? '<div class="scroll"><b>Tvoja nagrada: zanimljivost</b>' + esc(d.fact) + '</div>' : '<div class="p-sub">Pobjednik je ' + esc(nameOf(d, d.win)) + '.</div>') +
+          '<div class="statline"><div class="stat"><b>' + me.sc + '</b><span>bodova</span></div><div class="stat"><b>' + (me.st || 0) + '/' + d.steps + '</b><span>piramida</span></div></div>' +
+          (mode === 'demo' ? '<button class="btn" id="dagain">Igraj opet</button>' : '<div class="p-sub">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Izađi</button>');
+        break;
+      }
+    }
+    $app.innerHTML = demoBar + h;
+    bindPhone(d, me);
+    tick();
+  }
+
+  function rankStat(d, me) {
+    const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
+    return '<div class="statline"><div class="stat"><b>' + pos + '.</b><span>mjesto</span></div><div class="stat"><b>' + me.sc + '</b><span>bodova</span></div></div>';
+  }
+  function stepMeter(d, me) {
+    let bars = '';
+    for (let s = 1; s <= d.steps; s++) bars += '<i class="' + ((me.st || 0) >= s ? 'on' : '') + '" style="width:' + (40 + (d.steps - s) * 18) + 'px"></i>';
+    return '<div class="step-meter" aria-label="Stepenica ' + (me.st || 0) + ' od ' + d.steps + '">' + bars + '</div><div class="p-sub">Stepenica ' + (me.st || 0) + ' od ' + d.steps + '</div>';
+  }
+
+  function powerPhone(d, me) {
+    if (L.sent || me.ok) {
+      const k = L.sent && L.sent.p;
+      return '<div class="result none"><div class="p-title">' + (k ? ICON[k] + ' ' + POWERS[k].n : 'Bez moći') + '</div>' +
+        (k && L.sent.t ? '<div class="p-sub">Meta: <b>' + esc(nameOf(d, L.sent.t)) + '</b></div>' : '') + '<div class="waiting">Čekamo ostale…</div></div>';
+    }
+    if (L.pw) {
+      const others = d.P.filter((p) => p.id !== PID && p.c);
+      return '<div class="p-title">' + ICON[L.pw] + ' ' + POWERS[L.pw].n + ': na koga?</div><div class="targets">' +
+        others.map((p) => '<button class="target" data-t="' + esc(p.id) + '"><span class="mini">' + avSvg(p.a) + '</span>' + esc(p.n) + '<span class="tag">' + p.sc + ' b</span></button>').join('') +
+        '</div><button class="btn ghost" id="pwback">Natrag</button>';
+    }
+    const offers = me.of || [];
+    return '<div class="p-title">Odaberi moć</div><div class="pw-cards">' +
+      offers.map((k) => '<button class="pw-card ' + (POWERS[k].atk ? 'atk' : 'buff') + '" data-p="' + k + '"><span class="pw-ico">' + ICON[k] + '</span><span><b>' + POWERS[k].n + '</b><span>' + POWERS[k].d + '</span></span></button>').join('') +
+      '</div><button class="btn ghost" id="nopw">Preskoči</button>';
+  }
+
+  function questionPhone(d, me) {
+    const answered = L.sent || me.ok;
+    const mine = L.sent ? L.sent.c : -1;
+    const hide = me.h || [];
+    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '');
+    const opts = d.q.o.map((o, i) => {
+      const gone = hide.includes(i);
+      let cls = 'p-opt o' + i + (gone ? ' gone' : '');
+      if (answered && !gone) cls += mine === i ? ' picked' : ' dim';
+      return '<button class="' + cls + '" data-c="' + i + '"' + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span>' + esc(o) + '</span></button>';
+    }).join('');
+    const attackers = (d.ev || []).filter((e) => e.t === PID);
+    const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
+    return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
+      '<div class="p-q">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
+      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx)) + '</div>' +
+      '<div class="waiting">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : 'Brže = više bodova!') + '</div>';
+  }
+
+  function revealPhone(d, me) {
+    const ok = me.ch === d.cor;
+    const cls = ok ? 'ok' : me.ch >= 0 ? 'bad' : 'none';
+    const title = ok ? 'Točno!' : me.ch >= 0 ? 'Netočno' : 'Vrijeme je isteklo';
+    return '<div class="result ' + cls + '"><div style="width:110px">' + avSvg(me.a, ok ? 'happy' : 'dizzy') + '</div><div class="p-title">' + title + '</div>' +
+      (ok ? '<div class="pts">+' + me.g + (me.d ? ' (×2)' : '') + '</div>' : '<div class="p-sub">Točan odgovor: <b>' + SHAPES[d.cor] + ' ' + esc(d.q.o[d.cor]) + '</b></div>') + '</div>' + rankStat(d, me);
+  }
+
+  function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
+
+  function sortPhone(d, me) {
+    const n = d.so.it.length;
+    if (L.sent || me.ok || L.sortI >= n) return '<div class="result none"><div class="p-title">Poslano ✔</div><div class="waiting">Čekamo ostale…</div></div>';
+    return '<div class="p-title" style="font-size:1.4rem">Gdje pripada?</div>' + progress(n, L.sortI) +
+      '<div class="sort-card">' + esc(d.so.it[L.sortI]) + '</div>' +
+      '<div class="sort-btns"><button class="sort-btn a" data-s="0">' + esc(d.so.a) + '</button><button class="sort-btn b" data-s="1">' + esc(d.so.b) + '</button></div>';
+  }
+  function linkPhone(d, me) {
+    const n = d.li.L.length;
+    if (L.sent || me.ok || L.linkI >= n) return '<div class="result none"><div class="p-title">Poslano ✔</div><div class="waiting">Čekamo ostale…</div></div>';
+    return '<div class="p-title" style="font-size:1.4rem">' + esc(d.li.t) + '</div>' + progress(n, L.linkI) +
+      '<div class="sort-card">' + esc(d.li.L[L.linkI]) + '</div><div class="link-opts">' +
+      d.li.R.map((r, i) => '<button class="link-opt" data-l="' + i + '">' + esc(r) + '</button>').join('') + '</div>';
+  }
+  function finalePhone(d, me) {
+    const answered = L.sent || me.ok;
+    const mine = L.sent ? L.sent.c : -1;
+    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (i === 0 ? 3 : 0) + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '>' + esc(o) + '</button>').join('');
+    return timerHtml(3000) + '<div class="p-top"><span class="pill">Finale · stepenica ' + (me.st || 0) + '/' + d.steps + '</span><span id="tnum"></span></div>' +
+      '<div class="p-q" style="font-size:1.6rem;text-align:center">' + esc(d.q.t) + '</div><div class="p-opts two">' + opts + '</div>' +
+      (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '');
+  }
+
+  function bindPhone(d, me) {
+    bind('toTv', () => { demoView = 'tv'; render(); });
+    bind('leave', reset);
+    bind('leave2', reset);
+    bind('dstart', () => game.start());
+    bind('dagain', () => { game.restart(); });
+    $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => chooseAvatar(+b.dataset.av); });
+    $app.querySelectorAll('[data-v]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ v: +b.dataset.v }); }; });
+    $app.querySelectorAll('[data-p]').forEach((b) => {
+      b.onclick = () => {
+        const k = b.dataset.p;
+        if (POWERS[k].atk) { L.pw = k; phoneRender(true); } else sendInput({ p: k });
+      };
+    });
+    $app.querySelectorAll('[data-t]').forEach((b) => { b.onclick = () => sendInput({ p: L.pw, t: b.dataset.t }); });
+    bind('pwback', () => { L.pw = null; phoneRender(true); });
+    bind('nopw', () => sendInput({ p: '' }));
+    $app.querySelectorAll('[data-c]').forEach((b) => {
+      b.onclick = () => {
+        if (L.sent || L.fx) return;
+        if (navigator.vibrate) { try { navigator.vibrate(25); } catch (e) {} }
+        sendInput({ c: +b.dataset.c, t: Math.max(0, Math.round(Date.now() - L.start)) });
+      };
+    });
+    $app.querySelectorAll('[data-s]').forEach((b) => {
+      b.onclick = () => {
+        L.sortR.push(+b.dataset.s); L.sortI++;
+        if (L.sortI >= d.so.it.length) sendInput({ r: L.sortR.slice() }); else phoneRender(true);
+      };
+    });
+    $app.querySelectorAll('[data-l]').forEach((b) => {
+      b.onclick = () => {
+        L.linkR.push(+b.dataset.l); L.linkI++;
+        if (L.linkI >= d.li.L.length) sendInput({ r: L.linkR.slice() }); else phoneRender(true);
+      };
+    });
+    if (d.ph === 'question' && L.fx && !(L.sent || (me && me.ok))) bindFx();
+  }
+
+  // ---------- odbrojavanje ----------
+  function tick() {
+    const ms = Math.max(0, clockEnds - Date.now());
+    const bar = document.getElementById('tbar'), num = document.getElementById('tnum'), wrap = document.getElementById('timer');
+    if (bar && clockDur) bar.style.width = (ms / clockDur * 100) + '%';
+    if (num) num.textContent = wrap && clockDur ? Math.ceil(ms / 1000) : '';
+    if (wrap) wrap.classList.toggle('urgent', ms <= +(wrap.dataset.u || 5000));
+  }
+  setInterval(tick, 100);
+
+  if (/^#?[A-Za-z]{4}$/.test(location.hash || '')) mode = 'join';
+  render();
+})();
+</script>
+
+<script>
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
+  }
+</script>
+</body>
+</html>
