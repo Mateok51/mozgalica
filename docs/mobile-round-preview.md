@@ -1,26 +1,27 @@
-# Mobilna runda — probna verzija
+# Mobilna runda — dorade uz izvorni vizualni identitet
 
-Ova grana sadrži prijedlog mobilnog izgleda jedne runde. Nije spojena u `main` niti objavljena na postojećoj adresi igre.
+Ova grana zadržava izvornu paletu, drvene ploče, pergament, tipografiju, likove i raspored igre. Raniji prijedlog redizajna uklonjen je. CSS u `index.html` jednak je onome iz početne verzije `e330708`.
+
+Grana nije spojena u `main` niti objavljena na postojećoj adresi igre.
 
 ## Pitanje
 
-![Mobilni ekran pitanja](previews/mobile-round-question.png)
+![Mobilni ekran pitanja u izvornom stilu](previews/mobile-round-question.png)
 
 ## Rezultat
 
-![Mobilni ekran rezultata](previews/mobile-round-result.png)
+![Mobilni ekran rezultata u izvornom stilu](previews/mobile-round-result.png)
 
 Snimke su izrađene u Chromiumu na prikazu širine 390 px, s kontroliranim testnim stanjem igre.
 
-## Što se promijenilo
+## Zadržane dorade
 
-- Mobilno zaglavlje s likom, bodovima, poretkom i koracima pitanja.
-- Čitljivije kartice pitanja i odgovora, potvrda izbora i zvuk dodira.
-- Prikaz napadača i spremnosti ostalih igrača.
-- Osobni rezultat s reakcijom lika, osvojenim bodovima, promjenom mjesta i razlikom do suparnika.
-- Predmemoriranje novog CSS-a za offline korištenje.
+- Zvuk potvrde odgovora i pristupačna oznaka odabranog odgovora.
+- Reakcija vlastitog lika nakon odgovora i ispravan prikaz likova koji nisu pod napadom.
+- Imena uz likove i pravovremeno osvježavanje oznaka spremnosti ostalih igrača.
+- Kratak tekst ispod rezultata: pomak na ljestvici i bodovna razlika do suparnika.
 
-Pravila bodovanja i mrežni protokol ostali su nepromijenjeni.
+Izvorni prikaz pitanja, odgovora, moći i rezultata ostao je sačuvan. Pravila bodovanja i mrežni protokol ostali su nepromijenjeni.
 
 ## Isprobaj lokalno
 
@@ -32,13 +33,12 @@ python3 -m http.server 8000
 
 Otvori lokalni poslužitelj u pregledniku i odaberi **Igraj protiv botova**. Grana sama po sebi ne stvara javnu adresu za igranje.
 
-## Provjere
+## Provjere ispravka
 
-- Demo: glasanje, izbor moći, pitanje, slanje odgovora i rezultat; bez JavaScript pogrešaka.
-- Led, sluz i zaštita od slučajnog slanja odgovora nakon uklanjanja efekta.
-- Točan/pogrešan odgovor, istek vremena, ulog i bonus saveza.
-- Pravovremeno otkrivanje rezultata, uključujući reduced-motion postavku.
-- Širine 320–430 px, vodoravni prikaz i dugački tekstovi.
-- Spremanje novog CSS-a u service worker predmemoriju i otvaranje demo predvorja offline.
+- Potvrđeno da je izvorni CSS sačuvan bez promjena.
+- Prikaz širine 320–430 px i osvježavanje statusa ostalih igrača.
+- Razbijanje leda, zaštita od slučajnog odgovora nakon čišćenja i potvrda izbora.
+- Rezultat ostaje skriven do završetka otkrivanja; točan/pogrešan odgovor i istek vremena.
+- JavaScript sintaksa i provjera pogrešaka u Chromiumu.
 
 Mrežna igra između uređaja nije potvrđena u ovom okruženju zbog ograničenja pristupa vanjskim servisima.

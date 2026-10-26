@@ -1990,7 +1990,6 @@
   .step-meter i.crown.on { opacity: 1; }
   .finale-q.crownq .opts { width: min(100%, 1100px); }
 </style>
-<link rel="stylesheet" href="mobile-round.css">
 </head>
 <body>
 <div id="app" class="screen center"></div>
@@ -5550,13 +5549,12 @@ function createGame(o) {
     const d = S;
     const freshP = !!d && L.s !== phoneStep;
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
-    $app.className = 'screen phone' + (['vote', 'voteResult', 'power', 'cast', 'question', 'reveal'].includes(d && d.ph) ? ' phone-round' : '') + (freshP ? ' fresh' : '');
+    $app.className = 'screen phone' + (freshP ? ' fresh' : '');
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem"><span class="lt">Trivia</span><span class="lt">Tavern</span></div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
       (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const roundPhone = ['vote', 'voteResult', 'power', 'cast', 'question', 'reveal'].includes(d.ph);
-    const head = pactHead(d, me, roundPhone && me ? mobileRoundHead(d, me) : me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' ? (L.sent || me.ok ? 'happy' : L.fx ? 'shocked' : '') : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -5692,21 +5690,10 @@ function createGame(o) {
     tick();
   }
 
-  // The phone carries the whole round, including progress and other players' reactions.
-  function mobileRoundHead(d, me) {
-    const place = byScore(d.P).findIndex((p) => p.id === me.id) + 1;
-    const mood = d.ph === 'question' ? (L.sent || me.ok ? 'happy' : L.fx ? 'shocked' : 'idle') : d.ph === 'reveal' ? 'idle' : 'happy';
-    const step = ['vote', 'voteResult'].includes(d.ph) ? 0 : ['power', 'cast'].includes(d.ph) ? 1 : d.ph === 'question' ? 2 : 3;
-    const scoreAttrs = d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '';
-    return '<div class="round-brand"><span>TRIVIA TAVERN</span><span>' + esc(hudRound(d.rl)) + '</span></div>' +
-      '<div class="p-top round-hud"><span class="p-me"><span class="mini">' + avSvg(me.a, mood) + '</span><span class="round-identity"><b>' + esc(me.n) + '</b><small>' + place + '. mjesto · ' + d.P.length + ' igrača</small></span></span><span class="round-score" data-bk="hud"' + scoreAttrs + '>' + me.sc + ' b</span></div>' +
-      '<nav class="round-steps" aria-label="Tijek pitanja">' + ['Kategorija', 'Moći', 'Pitanje', 'Rezultat'].map((label, i) => '<span class="' + (i === step ? 'current' : i < step ? 'done' : '') + '"' + (i === step ? ' aria-current="step"' : '') + '><i>' + (i < step ? '✓' : i + 1) + '</i>' + label + '</span>').join('') + '</nav>';
-  }
   function barRow(d) {
     const mood = (p) => (d.ph === 'question' || d.ph === 'fq') && p.fx && p.fx.length ? 'shocked' : p.ok ? 'happy' : 'idle';
-    return '<div class="bar-row" aria-label="Igrači">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + (p.ok ? ' · spreman' : '') + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + '<span class="nm">' + esc(p.id === PID ? 'Ti' : p.n) + '</span>' + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1" aria-label="Spreman">✓</span>' : '') + '</div>').join('') + '</div>';
+    return '<div class="bar-row">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" aria-label="' + esc(p.n) + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + '<span class="nm">' + esc(p.id === PID ? 'Ti' : p.n) + '</span>' + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1">✓</span>' : '') + '</div>').join('') + '</div>';
   }
-
   function hudRound(rl) { const m = /^Runda (\d+)$/.exec(rl || ''); return m ? 'Runda ' + m[1] + '/3' : (rl || ''); }
   const ANN_SUB = { 'Runda 1': 'Avantura počinje.', 'Runda 2': 'Vrijeme je za novu rundu.', 'Runda 3': 'Još samo jedna runda.', 'Veliko finale': 'Sve se odlučuje sada.' };
   function annHtml(d) {
@@ -6030,13 +6017,11 @@ function createGame(o) {
       return '<button class="' + cls + '" data-c="' + i + '" data-bk="op' + i + '" data-bv="' + st + '"' + (st ? ' data-ba="' + (st === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + ' aria-pressed="' + (mine === i) + '"' + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span></button>';
     }).join('');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
-    const hit = attackers.length ? '<div class="round-attacks">' + attackers.map((e) => '<span class="round-attack' + (e.b ? ' blocked' : '') + '"><span class="mini">' + avSvg(avOf(d, e.f), 'attack') + '</span><span><b>' + esc(nameOf(d, e.f)) + '</b> ' + (e.b ? '· štit odbija napad' : 'šalje ' + esc(POWERS[e.p].n)) + '</span>' + ICON[e.p] + '</span>').join('') + '</div>' : '';
-    const status = answered ? '<span class="answer-seal">✓</span><span><b>Odgovor zaprimljen</b><small>Prati ostale. Uskoro otkrivamo odgovor.</small></span>' : '<span class="answer-spark">✦</span><span><b>' + (L.fx ? 'Oslobodi svoje odgovore' : locked ? 'Očišćeno! Još trenutak…' : 'Tvoj potez') + '</b><small>' + (L.fx ? FX_LABEL[L.fx.k] : 'Brži točan odgovor donosi više bodova.') + '</small></span>';
-    return '<section class="round-question' + (answered ? ' is-answered' : '') + '" aria-label="Pitanje">' +
-      '<div class="round-question-meta"><span>' + esc(d.q.c) + '</span><span class="round-clock" aria-label="Preostalo vrijeme"><b id="tnum"></b><small>sek</small></span></div>' + timerHtml() +
-      qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + '</section>' + hit +
-      '<div class="q-area round-answers"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
-      '<div class="waiting answer-status' + (answered ? ' confirmed' : '') + '" role="status" data-bk="qwait" data-ba="subIn">' + status + '</div>';
+    const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
+    return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
+      qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
+      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
+      '<div class="waiting" role="status" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + '</div>';
   }
 
   function revOpts(d, mine, tv) {
@@ -6076,14 +6061,15 @@ function createGame(o) {
       ], { duration: 700, easing: 'cubic-bezier(0.5, 0, 0.75, 0)' }).onfinish = done;
     }, 1500 + WH.end);
   }
-  function mobileRoundResult(d, me, ok, none) {
+  function roundRecap(d, me) {
     const ranked = byScore(d.P), place = ranked.findIndex((p) => p.id === me.id);
     const before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0)));
     const moved = before.findIndex((p) => p.id === me.id) - place;
+    const movement = moved > 0 ? '↑ Napreduješ za ' + moved + (moved === 1 ? ' mjesto.' : ' mjesta.') : moved < 0 ? '↓ Padaš za ' + Math.abs(moved) + (moved === -1 ? ' mjesto.' : ' mjesta.') : place === 0 ? 'Držiš vrh ljestvice.' : (place + 1) + '. mjesto.';
     const rival = place > 0 ? ranked[place - 1] : ranked[1];
     const gap = rival ? Math.abs(rival.sc - me.sc) : 0;
-    const chase = !rival ? 'Pozornica je tvoja.' : gap === 0 ? 'Dijeliš bodove s ' + rival.n + '.' : place === 0 ? 'Imaš ' + gap + ' bodova prednosti pred ' + rival.n + '.' : 'Još ' + gap + ' bodova do igrača ' + rival.n + '.';
-    return '<section class="round-result' + (ok ? ' success' : '') + '" aria-label="Tvoj rezultat"><span class="round-result-avatar">' + avSvg(me.a, ok ? 'victory' : 'sad') + '</span><div class="round-result-copy"><span class="round-eyebrow">' + (none ? 'VRIJEME JE ISTEKLO' : ok ? 'TO JE TAJ ODGOVOR!' : 'SLJEDEĆE JE TVOJE') + '</span><strong>+' + (me.g || 0) + '<small> bodova</small></strong><span class="round-movement">' + (moved > 0 ? '↑ ' + moved + ' ' + (moved === 1 ? 'mjesto' : 'mjesta') : moved < 0 ? '↓ ' + Math.abs(moved) + ' ' + (moved === -1 ? 'mjesto' : 'mjesta') : place === 0 ? 'Držiš vrh ljestvice' : (place + 1) + '. mjesto') + '</span>' + (me.br ? '<span class="round-movement">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</span>' : '') + (me.xb ? '<span class="round-movement">Bonus saveza: +' + me.xb + '</span>' : '') + '</div></section><p class="round-rival">' + esc(chase) + '</p>';
+    const chase = !rival ? '' : gap === 0 ? ' Dijeliš bodove s ' + rival.n + '.' : place === 0 ? ' Prednost pred ' + rival.n + ': ' + gap + ' bodova.' : ' Do igrača ' + rival.n + ': ' + gap + ' bodova.';
+    return '<div class="p-sub" data-round-recap="1">' + esc(movement + chase) + '</div>';
   }
   function revealPhone(d, me) {
     const el = Math.max(0, d.dur - d.ms), ok = me.ch === d.cor, none = me.ch < 0;
@@ -6093,7 +6079,7 @@ function createGame(o) {
     const wh = wheel(d);
     return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
-      '<div class="rv-b">' + mobileRoundResult(d, me, ok, none) + '<div class="rv-sum">' + sum + '</div><div class="round-board-title"><span>Poredak nakon pitanja</span><span>' + d.P.length + ' igrača</span></div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
+      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + roundRecap(d, me) + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
