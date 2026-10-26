@@ -174,6 +174,33 @@ with sync_playwright() as p:
     assert 'štit odbija' in page.locator('.round-hit').inner_text()
     assert page.locator('.round-hit .mini img').count() == 1
     capture('mobile-round-attack.png')
+    # All support powers keep their gameplay semantics and use the original assets.
+    d = show('question')
+    me = next(x for x in d['P'] if x['id'] == pid)
+    me.update(d=1, sh=1, h=[1, 3])
+    d['ev'] = [{'f': d['P'][1]['id'], 't': pid, 'p': 'led', 'b': True}]
+    page.evaluate('(d)=>window.__dbg.setState(d)', d)
+    assert page.locator('[data-power="dupli"]').count() == 1
+    assert 'odbio' in page.locator('[data-power="stit"]').inner_text()
+    assert page.locator('[data-c].gone:disabled').count() == 2
+    assert not page.locator('#fx').count()
+    capture('powers-support.png')
+    show('question', fx='grick')
+    assert page.locator('.bite').count() > 0
+    assert page.locator('[data-power="grick"]').count() == 1
+    capture('powers-grick.png')
+    show('question', fx='bomba')
+    assert page.locator('.fly-bomb').count() == 3
+    assert page.locator('[data-power="bomba"]').count() == 1
+    page.locator('.fly-bomb').first.dispatch_event('pointerdown', {'button': 0})
+    assert page.locator('.boom-cover').count() == 1
+    page.locator('[data-c]').first.dispatch_event('click', {'detail': 0})
+    assert not page.evaluate('Boolean(window.__dbg.L.sent)')
+    page.wait_for_timeout(2100)
+    assert not page.locator('.boom-cover').count()
+    page.locator('[data-c]').first.dispatch_event('click', {'detail': 0})
+    assert page.evaluate('Boolean(window.__dbg.L.sent)')
+    print('PASS shield, double points, half-half, eaten letters and bomb input lock', flush=True)
     show('reveal')
     assert page.locator('.rv-b').evaluate('(e)=>Number(getComputedStyle(e).opacity)') == 0
     page.wait_for_timeout(6600)

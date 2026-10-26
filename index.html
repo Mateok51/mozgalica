@@ -2031,6 +2031,30 @@
     .ice-release::after { animation: iceClear .15s linear both; animation-delay: calc(-1 * var(--age)); }
   }
 </style>
+<style id="power-polish-style">
+  .phone .power-cues { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+  .power-cue { display: inline-flex; align-items: center; gap: 6px; font-size: .76rem; font-weight: 800; }
+  .power-cue img { width: 28px; height: 28px; object-fit: contain; }
+  .power-cue img { animation: powerCue .45s ease-out both; animation-delay: calc(-1 * var(--pel, 0ms)); }
+  .power-cue[data-power="stit"] img { animation-name: shieldCatch; }
+  .power-cue[data-power="dupli"] img { animation-name: doubleRise; }
+  .power-cue[data-power="pola"] img { animation-name: halfCut; }
+  @keyframes shieldCatch { 0% { transform: scale(.7); } 55% { transform: scale(1.16); filter: brightness(1.35); } 100% { transform: none; filter: none; } }
+  @keyframes doubleRise { from { opacity: 0; transform: translateY(10px) rotate(-10deg); } to { opacity: 1; transform: none; } }
+  @keyframes halfCut { from { transform: rotate(-30deg) scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes powerCue { from { transform: scale(.65) rotate(-12deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  .phone .p-opt.gone { transition: opacity .3s, filter .3s; }
+  .phone .fly-bomb::after { content: ''; position: absolute; width: 6px; height: 6px; right: 9%; top: 8%; background: #ffd88a; border-radius: 50%; box-shadow: 0 0 8px #e0782a; animation: fuseGlow .35s ease-in-out infinite alternate; pointer-events: none; }
+  .phone .eater::after { content: ''; position: absolute; left: 35%; top: 65%; width: 3px; height: 3px; background: #e0b07a; box-shadow: 7px 2px #f0c66a, -5px 6px #a87740; pointer-events: none; animation: crumbsFall .7s ease-out both; animation-delay: calc(150ms - var(--pel, 0ms)); }
+  @keyframes crumbsFall { from { opacity: 1; transform: translateY(-4px); } to { opacity: 0; transform: translateY(22px) rotate(35deg); } }
+  @keyframes fuseGlow { to { transform: scale(.55); opacity: .5; } }
+  .phone .fx-sluz .cell { transition: opacity .15s, transform .18s; }
+  .phone .fx-sluz .cell.gone { transform: scale(.15) rotate(15deg); opacity: 0; }
+  .slime-splash { position: absolute; inset: 0; z-index: 7; overflow: hidden; pointer-events: none; }
+  .slime-splash i { position: absolute; left: var(--x); top: var(--y); width: 10px; height: 15px; border-radius: 45% 55% 60% 40%; background: #9cc455; animation: slimeDrop .45s ease-out both; animation-delay: calc(-1 * var(--age)); }
+  @keyframes slimeDrop { from { transform: scale(1); opacity: .9; } to { transform: translateY(45px) scale(.3); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .power-cue img, .phone .fly-bomb::after { animation: none; } .slime-splash, .phone .eater::after { display: none; } .phone .fx-sluz .cell { transition: none; } }
+</style>
 </head>
 <body>
 <div id="app" class="screen center"></div>
@@ -4605,6 +4629,11 @@ function createGame(o) {
       const step = L.s;
       setTimeout(() => { if (L.s === step) { L.iceBurst = null; document.querySelector('#app .ice-release')?.remove(); } }, 660);
     }
+    if (L.fx && L.fx.k === 'sluz') {
+      L.slimeBurst = Date.now();
+      const step = L.s;
+      setTimeout(() => { if (L.s === step) { L.slimeBurst = 0; document.querySelector('#app .slime-splash')?.remove(); } }, 500);
+    }
     L.fxq.shift();
     L.fx = makeFx(L.fxq[0]);
     L.fxCleared = !L.fx;
@@ -4635,7 +4664,7 @@ function createGame(o) {
     if (!L.bombs || !L.bombs.some((b) => b.on) || L.fx) return '';
     return '<div class="bomb-layer" id="bombs">' + L.bombs.map((b, i) => (b.on ? '<button class="fly-bomb" data-bi="' + i + '" style="transform:translate(' + b.x + 'cqw,' + b.y + 'cqh)" aria-label="Bomba, ne diraj!">' + bombSvg + '</button>' : '')).join('') + '</div>';
   }
-  function boomCover() { const left = (L.boomUntil || 0) - Date.now(); return left > 0 ? '<div class="boom-cover" style="--bel:' + Math.round(2000 - left) + 'ms"><b>BUM!</b></div>' : ''; }
+  function boomCover() { const left = (L.boomUntil || 0) - Date.now(); return left > 0 ? '<div class="boom-cover" role="status" aria-label="Eksplozija! Odgovori su kratko zaključani." style="--bel:' + Math.round(2000 - left) + 'ms"><b>BUM!</b></div>' : ''; }
   function bindBombs() {
     const layer = document.getElementById('bombs');
     if (!layer) return;
@@ -4665,6 +4694,19 @@ function createGame(o) {
       L.bombRaf = requestAnimationFrame(step);
     };
     L.bombRaf = requestAnimationFrame(step);
+  }
+  function slimeBurstHtml() {
+    if (!L.slimeBurst || Date.now() - L.slimeBurst > 480) return '';
+    return '<div class="slime-splash" aria-hidden="true" style="--age:' + (Date.now() - L.slimeBurst) + 'ms">' + Array.from({ length: 8 }, (_, i) => '<i style="--x:' + (8 + i * 12) + '%;--y:' + (10 + i % 3 * 25) + '%"></i>').join('') + '</div>';
+  }
+  function powerCues(d, me) {
+    const items = [];
+    if (me.sh) items.push(['stit', (d.ev || []).some((e) => e.t === me.id && e.b) ? 'Štit je odbio napad' : 'Štit te čuva']);
+    if (me.d) items.push(['dupli', d.fin ? 'Točan odgovor: dodatni napredak' : 'Točan odgovor vrijedi dvostruko']);
+    if (me.h && me.h.length) items.push(['pola', 'Dva netočna odgovora uklonjena']);
+    if (L.eat) items.push(['grick', 'Bube su pojele slova. Prepoznaj odgovor!']);
+    if (L.bombs && L.bombs.some((b) => b.on)) items.push(['bomba', 'Izbjegni bombe — dodir izaziva eksploziju!']);
+    return items.length ? '<div class="p-sub power-cues">' + items.map(([k, t]) => '<span class="power-cue" data-power="' + k + '">' + ICON[k] + '<span>' + esc(t) + '</span></span>').join('') + '</div>' : '';
   }
   function iceBurstHtml() {
     if (!L.iceBurst || Date.now() - L.iceBurst.at >= 650) return '';
@@ -4738,7 +4780,7 @@ function createGame(o) {
       el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') hit(e, true); };
     } else if (fx.k === 'sluz') {
       const cells = el.querySelectorAll('.cell');
-      const wipe = (e) => {
+      const wipePoint = (e) => {
         const r = el.getBoundingClientRect();
         const cx = Math.floor(((e.clientX - r.left) / r.width) * 6), cy = Math.floor(((e.clientY - r.top) / r.height) * 8);
         for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
@@ -4746,16 +4788,28 @@ function createGame(o) {
           const x = cx + dx, y = cy + dy;
           if (x < 0 || x > 5 || y < 0 || y > 7) continue;
           const i = y * 6 + x;
-          if (fx.cells[i]) { fx.cells[i] = 0; fx.left--; if (cells[i]) cells[i].classList.add('gone'); if (fx.left % 7 === 0) SFX.play('splat'); }
+          if (fx.cells[i]) { fx.cells[i] = 0; fx.left--; if (cells[i]) cells[i].classList.add('gone'); if (Date.now() - (fx.lastSound || 0) > 100) { SFX.play('splat'); fx.lastSound = Date.now(); } }
         }
         const progress = el.querySelector('.fx-clear-progress');
         if (progress) progress.textContent = Math.round((48 - fx.left) / 48 * 100) + '% očišćeno';
         if (fx.left <= 5) fxDone();
       };
+      let previous = null;
+      const wipe = (e) => {
+        if (L.fx !== fx) return;
+        const rect = el.getBoundingClientRect();
+        const end = { clientX: e.clientX, clientY: e.clientY };
+        if (previous) {
+          const dx = end.clientX - previous.clientX, dy = end.clientY - previous.clientY;
+          const steps = Math.min(80, Math.ceil(Math.hypot(dx, dy) / Math.max(4, Math.min(rect.width / 6, rect.height / 8) / 2)));
+          for (let i = 1; i <= steps && L.fx === fx; i++) wipePoint({ clientX: previous.clientX + dx * i / steps, clientY: previous.clientY + dy * i / steps });
+        } else wipePoint(end);
+        previous = end;
+      };
       let down = false;
-      el.onpointerdown = (e) => { e.preventDefault(); down = true; try { el.setPointerCapture(e.pointerId); } catch (er) {} wipe(e); };
+      el.onpointerdown = (e) => { e.preventDefault(); previous = null; down = true; try { el.setPointerCapture(e.pointerId); } catch (er) {} wipe(e); };
       el.onpointermove = (e) => { if (down) wipe(e); };
-      el.onpointerup = el.onpointercancel = () => { down = false; };
+      el.onpointerup = el.onpointercancel = el.onlostpointercapture = () => { down = false; previous = null; };
     } else if (fx.k === 'grick') {
       el.querySelectorAll('.bug').forEach((b) => {
         b.onpointerdown = (e) => {
@@ -6098,8 +6152,8 @@ function createGame(o) {
     const ready = players.filter((p) => p.ok || (p.id === PID && L.sent)).length;
     const detail = answered ? (mine >= 0 ? 'Odabir ' + SHAPES[mine] + ' · ' : '') + 'Spremno ' + ready + '/' + players.length : L.fx ? 'Ukloni moć pa odaberi odgovor.' : L.fxCleared ? 'Moć uklonjena · brži odgovor donosi više bodova.' : '';
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
-      qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + iceBurstHtml() + '</div>' + boomCover() +
+      qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + powerCues(d, me) + hit +
+      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + iceBurstHtml() + slimeBurstHtml() + '</div>' + boomCover() +
       '<div class="waiting" role="status" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + (detail ? '<span class="round-answer-detail">' + esc(detail) + '</span>' : '') + '</div>';
   }
 
@@ -6300,8 +6354,8 @@ function createGame(o) {
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
     return timerHtml(3000) + (d.ntv && !cr ? '<div class="phone-pyr compact">' + pyramidHtml(d, false, { you: true }) + '</div>' : '') +
       (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!' : '👑 Netko je na vrhu — pitanje za krunu') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
-      '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + iceBurstHtml() + '</div>' + boomCover() +
+      '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + powerCues(d, me) + hit +
+      '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + iceBurstHtml() + slimeBurstHtml() + '</div>' + boomCover() +
       (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : '') +
       (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '');
   }

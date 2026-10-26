@@ -70,3 +70,7 @@ Dodatno je provjerena cijela demo runda kroz stvarno glasanje, odabir moći, sla
 ## Dorada leda
 
 [Animirana snimka i opis dovršene moći leda](ice-preview.md)
+
+## Sve moći
+
+[Pregled dorada svih moći](powers-preview.md)
