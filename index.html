@@ -1831,6 +1831,164 @@
   @keyframes cheer { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-12px) scale(1.08); } }
   @keyframes droop { to { filter: grayscale(0.6) brightness(0.8); transform: translateY(3px); } }
   @media (prefers-reduced-motion: reduce) { .walker, .walker .wbob, .whs { animation: none !important; } }
+  /* predvorje: stalne dimenzije; samo popis igrača raste i pomiče se unutar preostalog prostora */
+  #app.lobfit { display: flex; flex-direction: column; min-height: calc(100dvh - 28px); box-sizing: border-box; padding-bottom: calc(66px + env(safe-area-inset-bottom, 0px)); }
+  @supports not (height: 100dvh) { #app.lobfit { min-height: calc(100vh - 28px); } }
+  #app.lobfit > .lob { flex: 1 1 auto; min-height: 0; padding-bottom: 0; }
+  #app.lobfit .lob-players { flex: 1 1 0; min-height: 108px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  #app.lobfit .lob-players.more { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 34px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 34px), transparent); }
+  #app.lobfit > .lob > .home-link { flex: none; }
+  .lob .av-grid, .lob .lob-bots, .lob .lob-cta, .lob .lob-toggle, .lob .lob-title, .lob > .home-link, .lob .lob-wait { flex: none; }
+  .lob-chip { margin-left: 8px; padding: 1px 8px; border-radius: 6px; font-family: var(--font-body); font-weight: 800; font-size: 0.78em; letter-spacing: 0.02em; color: #f3e3c4; background: rgba(0, 0, 0, 0.35); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.5); vertical-align: middle; }
+  .lob-chip .lob-code { font-size: 1em; letter-spacing: 0.12em; padding-left: 0.12em; color: #fff4dc; }
+  /* pozivnica: zaseban prozor iznad predvorja, ništa ispod se ne mijenja */
+  .inv-modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px)); background: rgba(10, 5, 2, 0.72); backdrop-filter: blur(3px); overflow-y: auto; animation: invIn 0.22s ease-out both; }
+  .inv-card { width: min(100%, 380px); display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 18px 16px 16px; border-radius: 14px;
+    background: linear-gradient(180deg, rgba(58, 33, 15, 0.98), rgba(28, 14, 6, 0.98)); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.7), inset 0 0 0 5px rgba(0, 0, 0, 0.28), 0 18px 40px rgba(0, 0, 0, 0.6); animation: invCard 0.28s cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+  .inv-code { font-family: var(--font-body); font-weight: 900; font-size: 2.8rem; line-height: 1; letter-spacing: 0.22em; padding-left: 0.22em; color: #fff4dc; }
+  .inv-qr { width: min(72vw, 300px, 46dvh); }
+  .inv-card .lob-cta { width: 100%; }
+  @keyframes invIn { from { opacity: 0; } }
+  @keyframes invCard { from { opacity: 0; transform: translateY(12px) scale(0.97); } }
+  /* niži mobiteli (prema visini zaslona, ne prema količini sadržaja): malo tješnji razmaci, iste veličine teksta i gumba */
+  @media (max-height: 820px) and (max-width: 640px) {
+    .screen.phone { gap: 10px; }
+    .pw-cards { gap: 6px; }
+    .whoq { gap: 6px; } .whoq ol { gap: 4px; } .whoq li { padding: 5px 10px; line-height: 1.25; }
+    .phone .waiting { margin: 0; }
+  }
+  /* ----- tajni paktovi ----- */
+  .pk-bar, .pk-inv.mini { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 6px 4px 6px; border-radius: 10px; position: relative; overflow: hidden;
+    background: linear-gradient(180deg, rgba(64, 22, 30, 0.92), rgba(34, 12, 16, 0.94)); box-shadow: inset 0 0 0 1px rgba(214, 150, 90, 0.55), 0 4px 10px rgba(0, 0, 0, 0.35); font-family: var(--font-body); }
+  .pk-bar.out { background: linear-gradient(180deg, rgba(48, 30, 14, 0.92), rgba(28, 16, 8, 0.94)); }
+  .pk-bar.armed { box-shadow: inset 0 0 0 1.5px #e0583e, 0 0 16px rgba(224, 88, 62, 0.45); }
+  .pk-bar .mini, .pk-inv .mini, .pk-cand .mini { flex: none; width: 30px; height: 30px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px rgba(214, 150, 90, 0.7); background: rgba(255, 230, 190, 0.08); }
+  .pk-bar .mini > *, .pk-inv .mini > *, .pk-cand .mini > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .pk-bar { flex-wrap: wrap; row-gap: 6px; }
+  .pk-t { flex: 1 1 auto; min-width: 96px; display: flex; flex-direction: column; line-height: 1.15; font-size: 0.86rem; color: #f3e3c4; }
+  .pk-t b { font-weight: 900; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pk-tre { font-weight: 900; color: #f0c66e; font-variant-numeric: tabular-nums; display: inline-block; }
+  .pk-b { flex: none; min-height: 34px; padding: 0 10px; border-radius: 8px; font-weight: 900; font-size: 0.86rem; color: #2a1606; background: linear-gradient(180deg, #f0c66e, #c4892f); box-shadow: 0 2px 0 #7a4f17; }
+  .pk-b.no { background: rgba(255, 255, 255, 0.12); color: #f3e3c4; box-shadow: inset 0 0 0 1px rgba(243, 227, 196, 0.4); }
+  .pk-b.bt { background: linear-gradient(180deg, #6b2a22, #3e1610); color: #ffd9c9; box-shadow: inset 0 0 0 1px rgba(224, 120, 90, 0.7); }
+  .pk-b.bt.on { background: linear-gradient(180deg, #c8442e, #8a2414); color: #fff; }
+  .pk-sent { flex: none; font-size: 0.8rem; font-weight: 800; color: rgba(243, 227, 196, 0.7); }
+  .pk-whin { flex: none; padding: 4px 8px; border-radius: 8px; font-size: 0.86rem; font-weight: 800; color: #e9d8ff; background: rgba(120, 70, 190, 0.45); box-shadow: inset 0 0 0 1px rgba(190, 150, 255, 0.7); animation: pkGlow 1.6s ease-in-out infinite; }
+  .pk-whin b { font-size: 1.05rem; color: #fff; }
+  @keyframes pkGlow { 50% { box-shadow: inset 0 0 0 1px rgba(210, 180, 255, 1), 0 0 12px rgba(170, 120, 255, 0.7); } }
+  .pk-wh-pick { display: flex; gap: 6px; flex: none; }
+  .pk-l { width: 38px; height: 34px; border-radius: 8px; font-weight: 900; color: #2a1606; background: linear-gradient(180deg, #e9d8ff, #b394e8); box-shadow: 0 2px 0 #5d3f94; }
+  .pk-l.x { width: 30px; background: rgba(255, 255, 255, 0.12); color: #f3e3c4; box-shadow: none; }
+  .pk-note, .pk-card-s { font-family: var(--font-body); font-size: 0.8rem; font-weight: 700; line-height: 1.3; color: #ffcbb8; text-align: center; padding: 0 6px; }
+  .pk-card-s { color: rgba(243, 227, 196, 0.85); } .pk-card-s b { color: #f0c66e; }
+  .pk-tm { position: absolute; left: 0; bottom: 0; height: 3px; width: var(--w); background: #f0c66e; transition: width 1s linear; }
+  .pk-inv:not(.mini) { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 12px; font-family: var(--font-body);
+    background: linear-gradient(180deg, rgba(70, 24, 32, 0.96), rgba(36, 12, 16, 0.97)); box-shadow: inset 0 0 0 1px rgba(224, 160, 96, 0.75), 0 8px 20px rgba(0, 0, 0, 0.45); animation: subIn 0.3s ease-out both; }
+  .pk-inv-h { display: flex; align-items: center; gap: 10px; color: #fff4dc; font-size: 1.02rem; }
+  .pk-inv-s { font-size: 0.82rem; line-height: 1.35; color: rgba(243, 227, 196, 0.85); }
+  .pk-row { display: flex; gap: 8px; } .pk-row .btn { flex: 1; min-height: 48px; }
+  .pk-open { align-self: flex-start; min-height: 34px; padding: 0 12px; border-radius: 999px; font-family: var(--font-body); font-weight: 900; font-size: 0.86rem; color: #f3e3c4; background: rgba(64, 22, 30, 0.85); box-shadow: inset 0 0 0 1px rgba(214, 150, 90, 0.6); }
+  .pk-pick { display: flex; flex-direction: column; gap: 8px; padding: 10px; border-radius: 12px; background: rgba(40, 14, 18, 0.95); box-shadow: inset 0 0 0 1px rgba(214, 150, 90, 0.6); animation: subIn 0.25s ease-out both; }
+  .pk-pick-h { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-body); font-weight: 900; color: #fff4dc; }
+  .pk-cands { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pk-cand { display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 4px 10px 4px 4px; border-radius: 999px; font-weight: 800; color: #f3e3c4; background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px rgba(214, 150, 90, 0.5); }
+  #ptoasts { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 65; display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; width: min(92vw, 440px); }
+  .ptoast { padding: 8px 14px; border-radius: 10px; font-family: var(--font-body); font-weight: 800; font-size: 0.92rem; text-align: center; color: #fff4dc; background: rgba(34, 16, 8, 0.94); box-shadow: inset 0 0 0 1px rgba(214, 150, 90, 0.7), 0 8px 18px rgba(0, 0, 0, 0.5); animation: toastIn 0.35s cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+  .ptoast.tre { color: #f8d98a; } .ptoast.pub { font-style: italic; }
+  .ptoast.out { animation: toastOut 0.35s ease-in both; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
+  @keyframes toastOut { to { opacity: 0; transform: translateY(8px); } }
+  .tv #ptoasts, .tv ~ #ptoasts { bottom: 40px; }
+  /* izdaja / dvostruka izdaja / odanost: isti događaj na mobitelu i TV-u */
+  .bt { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 10px 10px; text-align: center; font-family: var(--font-body); }
+  .bt::before { content: ""; position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 40%, rgba(60, 8, 8, 0.35), rgba(8, 2, 2, 0.78)); animation: btVeil 0.6s ease-out both; animation-delay: calc(-1 * var(--el)); pointer-events: none; }
+  .bt.ly::before { background: radial-gradient(ellipse at 50% 40%, rgba(80, 40, 10, 0.25), rgba(10, 4, 2, 0.7)); }
+  @keyframes btVeil { from { opacity: 0; } }
+  .bt-t { font-family: var(--font-display); font-size: clamp(1.7rem, 8vw, 2.6rem); line-height: 1.05; color: #ff9a7a; text-shadow: 0 3px 0 #4a0f08, 0 0 24px rgba(255, 80, 50, 0.6); animation: btSlam 0.55s cubic-bezier(0.2, 1.4, 0.4, 1) both; animation-delay: calc(-1 * var(--el)); }
+  .bt-t.dbl { color: #d9d2ff; text-shadow: 0 3px 0 #1d1240, 0 0 24px rgba(150, 120, 255, 0.6); }
+  .bt-t.ly { color: #ffd1d8; text-shadow: 0 3px 0 #5a1424, 0 0 24px rgba(255, 120, 150, 0.55); }
+  @keyframes btSlam { from { opacity: 0; transform: scale(1.8) rotate(-4deg); } 60% { opacity: 1; } }
+  .bt-s { font-weight: 900; font-size: 1.02rem; letter-spacing: 0.04em; color: #fff4dc; animation: rvIn 0.4s ease both; animation-delay: calc(300ms - var(--el)); }
+  .bt-stage { position: relative; width: 100%; display: grid; grid-template-columns: 1fr 1.1fr 1fr; align-items: end; min-height: 150px; }
+  .bt-fig { display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 900; color: #f3e3c4; }
+  .bt-av { display: block; width: 92px; height: 104px; }
+  .bt-av > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6)); }
+  .bt-fig.l { animation: btLunge 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; animation-delay: calc(600ms - var(--el)); }
+  .bt-fig.r.v { animation: btHit 0.5s ease-out both; animation-delay: calc(850ms - var(--el)); }
+  .bt-stage.dbl .bt-fig.r { animation: btLungeR 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; animation-delay: calc(600ms - var(--el)); }
+  @keyframes btLunge { 0% { transform: translateX(-40px); opacity: 0; } 40% { opacity: 1; } 70% { transform: translateX(18px); } 100% { transform: none; } }
+  @keyframes btLungeR { 0% { transform: translateX(40px); opacity: 0; } 40% { opacity: 1; } 70% { transform: translateX(-18px); } 100% { transform: none; } }
+  @keyframes btHit { 0%, 100% { transform: none; } 20% { transform: translateX(10px) rotate(6deg); filter: brightness(1.8) saturate(0.3); } 60% { transform: translateX(-4px); } }
+  .bt-mid { position: relative; height: 120px; }
+  .bt-knife { position: absolute; left: 50%; top: 40%; font-size: 2.4rem; transform: translate(-50%, -50%); animation: btKnife 0.6s cubic-bezier(0.5, 0, 0.75, 0) both; animation-delay: calc(500ms - var(--el)); }
+  @keyframes btKnife { from { transform: translate(-260%, -50%) rotate(-30deg); opacity: 0; } 30% { opacity: 1; } to { transform: translate(160%, -50%) rotate(20deg); opacity: 0; } }
+  .bt-knife.a { animation-name: btKnifeA; } .bt-knife.b { animation-name: btKnifeB; }
+  @keyframes btKnifeA { from { transform: translate(-260%, -50%) rotate(-30deg); opacity: 0; } 30% { opacity: 1; } to { transform: translate(-50%, -50%) rotate(40deg) scale(1.2); opacity: 0; } }
+  @keyframes btKnifeB { from { transform: translate(160%, -50%) rotate(30deg) scaleX(-1); opacity: 0; } 30% { opacity: 1; } to { transform: translate(-50%, -50%) rotate(-40deg) scaleX(-1) scale(1.2); opacity: 0; } }
+  .bt-coins { position: absolute; inset: 0; }
+  .bt-coins i { position: absolute; top: 45%; right: 0; font-style: normal; font-size: 1.4rem; opacity: 0; animation: btCoin 0.9s cubic-bezier(0.3, 0.6, 0.4, 1) both; }
+  .bt-coins i:nth-child(1) { animation-delay: calc(1100ms - var(--el)); } .bt-coins i:nth-child(2) { animation-delay: calc(1200ms - var(--el)); } .bt-coins i:nth-child(3) { animation-delay: calc(1300ms - var(--el)); }
+  .bt-coins i:nth-child(4) { animation-delay: calc(1400ms - var(--el)); } .bt-coins i:nth-child(5) { animation-delay: calc(1500ms - var(--el)); } .bt-coins i:nth-child(6) { animation-delay: calc(1600ms - var(--el)); }
+  @keyframes btCoin { 0% { opacity: 0; transform: translate(40%, 0) scale(0.6); } 15% { opacity: 1; } 50% { transform: translate(-60%, -50px) scale(1.1); } 100% { opacity: 0; transform: translate(-190%, 10px) scale(0.8); } }
+  .bt-chest { position: absolute; left: 50%; top: 45%; font-size: 3rem; transform: translate(-50%, -50%); animation: btChest 1.2s ease-in both; animation-delay: calc(700ms - var(--el)); }
+  @keyframes btChest { 0% { transform: translate(-50%, -50%); } 15%, 35%, 55% { transform: translate(-56%, -50%) rotate(-8deg); } 25%, 45% { transform: translate(-44%, -50%) rotate(8deg); } 70% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; filter: brightness(1.6); } 100% { transform: translate(-50%, 40%) scale(0.4) rotate(40deg); opacity: 0; filter: grayscale(1); } }
+  .bt-rows { width: min(100%, 420px); display: flex; flex-direction: column; gap: 6px; }
+  .bt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; font-weight: 800; font-size: 0.98rem; color: #f3e3c4; background: rgba(30, 15, 6, 0.75); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.4); opacity: 0; animation: rvIn 0.35s ease both; }
+  .bt-row:nth-child(1) { animation-delay: calc(1400ms - var(--el)); } .bt-row:nth-child(2) { animation-delay: calc(1700ms - var(--el)); } .bt-row:nth-child(3) { animation-delay: calc(2100ms - var(--el)); } .bt-row:nth-child(4) { animation-delay: calc(2200ms - var(--el)); }
+  .bt-row span { font-weight: 900; color: #f0c66e; font-variant-numeric: tabular-nums; }
+  .bt-row.tot { background: linear-gradient(90deg, rgba(120, 80, 20, 0.6), rgba(30, 15, 6, 0.75)); box-shadow: inset 0 0 0 1px rgba(240, 198, 110, 0.8), 0 0 16px rgba(240, 190, 90, 0.3); }
+  .bt-row.neg span { color: #ff8f78; } .bt-row.lost { color: #cfc6ff; }
+  .bt-line { display: flex; align-items: center; gap: 8px; max-width: 440px; padding: 6px 12px; border-radius: 10px; font-weight: 800; font-style: italic; font-size: 0.92rem; color: rgba(243, 227, 196, 0.92); background: rgba(20, 10, 4, 0.7); opacity: 0; animation: rvIn 0.4s ease both; animation-delay: calc(2700ms - var(--el)); }
+  .bt-line .krc { font-style: normal; font-size: 1.3rem; }
+  .ly-pair { display: flex; align-items: center; gap: 6px; width: min(100%, 420px); padding: 8px 10px; border-radius: 12px; background: rgba(60, 20, 28, 0.7); box-shadow: inset 0 0 0 1px rgba(255, 170, 180, 0.45); opacity: 0; animation: rvIn 0.45s ease both; animation-delay: calc(500ms + var(--i) * 500ms - var(--el)); }
+  .ly-pair .bt-av { width: 52px; height: 58px; }
+  .ly-heart { font-size: 1.4rem; animation: lyBeat 0.9s ease-in-out infinite; }
+  @keyframes lyBeat { 50% { transform: scale(1.25); } }
+  .ly-tx { flex: 1; display: flex; flex-direction: column; text-align: left; font-weight: 800; font-size: 0.86rem; color: rgba(243, 227, 196, 0.85); } .ly-tx b { color: #fff4dc; font-size: 0.98rem; }
+  .ly-each { color: #f0c66e; font-weight: 900; font-size: 1.05rem; }
+  .tv-bt .bt-t { font-size: clamp(2.6rem, 5vw, 4.4rem); } .tv-bt .bt-s { font-size: 1.6rem; }
+  .tv-bt { gap: 6px; padding-top: 4px; } .tv-bt .bt-av { width: 130px; height: 140px; } .tv-bt .bt-stage { width: min(100%, 900px); min-height: 160px; } .tv-bt .bt-knife { font-size: 4rem; } .tv-bt .bt-chest { font-size: 5rem; }
+  .tv-bt .bt-rows { width: min(100%, 640px); } .tv-bt .bt-row { font-size: 1.15rem; padding: 6px 16px; } .tv-bt .bt-rows { gap: 4px; } .tv-bt .bt-line { font-size: 1.3rem; max-width: 760px; }
+  .tv-bt .ly-pair { width: min(100%, 700px); } .tv-bt .ly-pair .bt-av { width: 90px; height: 100px; } .tv-bt .ly-tx { font-size: 1.2rem; }
+  @media (prefers-reduced-motion: reduce) { .bt *, .bt::before { animation-duration: 0.01ms !important; animation-delay: 0ms !important; } }
+  /* predvorje: prekidač tajnih paktova */
+  .lob-opt { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; border-radius: 10px; background: rgba(30, 15, 6, 0.6); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.35); font-family: var(--font-body); flex: none; }
+  .lob-opt-l { display: flex; flex-direction: column; font-weight: 800; color: #f3e3c4; } .lob-opt-l small { font-weight: 600; font-size: 0.72rem; color: rgba(243, 227, 196, 0.6); }
+  .tgl { flex: none; min-width: 66px; min-height: 36px; padding: 0 12px; border-radius: 999px; font-weight: 900; font-size: 0.82rem; color: #2a1606; background: linear-gradient(180deg, #f0c66e, #c4892f); box-shadow: 0 2px 0 #7a4f17; }
+  .tgl.off { color: #f3e3c4; background: rgba(255, 255, 255, 0.1); box-shadow: inset 0 0 0 1px rgba(243, 227, 196, 0.35); }
+  .lob-info { font-family: var(--font-body); font-size: 0.8rem; font-weight: 700; color: rgba(243, 227, 196, 0.7); text-align: center; flex: none; }
+  .bt-who { padding: 0 6px; border-radius: 6px; } .bt-who.t { color: #ff9a7a; } .bt-who.v { color: #fff4dc; } .bt-arrow { display: inline-block; animation: lyBeat 0.8s ease-in-out 2; }
+  /* piramida: uvod, napredak, kruna */
+  .fs-rows { display: flex; flex-direction: column; gap: 4px; width: min(100%, 460px); margin: 0 auto; }
+  .fs-row { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto auto; align-items: center; gap: 8px; padding: 4px 10px; border-radius: 10px; font-family: var(--font-body); font-weight: 800; color: #f3e3c4;
+    background: rgba(30, 15, 6, 0.7); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.35); animation: fsDone 0.6s ease-out both; animation-delay: calc(var(--fe) - var(--el, 0ms)); }
+  .fs-row.me { box-shadow: inset 0 0 0 1.5px rgba(240, 198, 110, 0.85); }
+  .fs-row .mini { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px rgba(196, 146, 66, 0.6); }
+  .fs-row .mini > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .fs-row .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fs-sc { font-variant-numeric: tabular-nums; color: #f0c66e; font-weight: 900; min-width: 4ch; text-align: right; }
+  .fs-go { font-size: 0.8rem; color: #b8e08e; white-space: nowrap; opacity: 0; animation: rvIn 0.35s ease both; animation-delay: calc(var(--fe) + 150ms - var(--el, 0ms)); }
+  @keyframes fsDone { 0% { background: rgba(30, 15, 6, 0.7); } 30% { background: rgba(120, 84, 24, 0.8); box-shadow: inset 0 0 0 1.5px #f0c66e, 0 0 16px rgba(240, 190, 90, 0.4); } 100% { background: rgba(30, 15, 6, 0.7); } }
+  .fs { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .fs-me { text-align: center; font-family: var(--font-body); font-weight: 800; color: #f3e3c4; opacity: 0; animation: rvIn 0.35s ease both; animation-delay: calc(var(--fe) + 300ms - var(--el, 0ms)); } .fs-me b { color: #f0c66e; }
+  .tv .fs-rows { width: min(100%, 640px); } .tv .fs-row { font-size: 1.25rem; grid-template-columns: 44px minmax(0, 1fr) auto auto; padding: 6px 14px; } .tv .fs-row .mini { width: 44px; height: 44px; } .tv .fs-go { font-size: 1rem; }
+  /* penjanje u uvodu: korak po korak (lagano gibanje), ne teleport */
+  .pyramid .climber.walk { animation: climbWalk calc(0.35s + var(--mv) * 0.28s) steps(1) both, climb calc(0.35s + var(--mv) * 0.28s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)), calc(var(--cd) - var(--el)); }
+  @keyframes climbWalk { 0%, 100% { filter: none; } }
+  .pyramid .climber.walk > img, .pyramid .climber.walk > svg { animation: wstep 0.28s ease-in-out calc(var(--mv) + 1) alternate both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes wstep { from { transform: rotate(-6deg) translateY(0); } to { transform: rotate(6deg) translateY(-4px); } }
+  .pyramid .climber .prg { position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%); padding: 0 3px; border-radius: 4px; font-family: var(--font-body); font-weight: 900; font-size: calc(var(--H) * 0.26); line-height: 1.2; color: #2a1606; background: #f0c66e; z-index: 3; }
+  .pyramid .pstep.crown { background: linear-gradient(180deg, #fff6cf, #f2c35b 50%, #d59a1c); box-shadow: 0 0 40px rgba(255, 207, 74, 0.7); }
+  .pyramid .pstep.crown .lv { font-size: calc(var(--H) * 0.5); }
+  .pyramid .climber.ontop > img, .pyramid .climber.ontop > svg { filter: drop-shadow(0 0 4px #ffd36a) drop-shadow(0 0 8px rgba(255, 200, 90, 0.8)); animation: topGlow 1.4s ease-in-out infinite; }
+  @keyframes topGlow { 50% { transform: translateY(-3px); } }
+  .crown-k { text-align: center; font-family: var(--font-display); font-size: clamp(1.1rem, 5vw, 1.5rem); color: #ffe08a; text-shadow: 0 2px 0 #6b4310, 0 0 18px rgba(255, 210, 100, 0.6); animation: btSlam 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+  .tv .crown-k { font-size: 2rem; }
+  .fin-prog { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.9rem; color: #f0c66e; }
+  .step-meter i.half { background: linear-gradient(90deg, #e2ac54 50%, rgba(255, 255, 255, 0.12) 50%) !important; }
+  .step-meter i.crown { width: auto !important; height: auto !important; background: none !important; box-shadow: none !important; font-style: normal; font-size: 1.1rem; opacity: 0.45; }
+  .step-meter i.crown.on { opacity: 1; }
+  .finale-q.crownq .opts { width: min(100%, 1100px); }
 </style>
 </head>
 <body>
@@ -1861,12 +2019,16 @@ const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
 const AV_COUNT = 8;
 
 const CFG = {
-  intro: 3.5, vote: 10, voteShow: 3, roul: 2.6, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 5, startCap: 3, q: 20, reveal: 10.5,
+  intro: 3.5, vote: 10, voteShow: 3, roul: 2.6, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 9.5, startCap: 3, fqCrown: 15,
+  // piramida: napredak po stepenicama (gore je teže), početak = 30 % poredak + 70 % omjer bodova, najviše 4 jedinice; vrh = pitanje za krunu
+  pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: 10.5,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
   howto: 7, howtoShort: 3.5, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, hiloN: 8, blitzN: 24,
   chal: null, chalN: 2, varMax: 2,
+  // tajni paktovi (balans na jednom mjestu)
+  pactMin: 3, pactAfter: 3, pactBonus: 75, pactSteal: 0.25, pactDouble: 0.2, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
   moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 8, secret2: 7, secretBonus: 200, helpBonus: 150,
 };
 
@@ -1905,7 +2067,7 @@ const HOWTO = {
 };
 const CHALLENGES = ['sort', 'link', 'order', 'hilo', 'blitz', 'maj'];
 const DATA_KEY = { who: 'who', emoji: 'emoji', order: 'order', hilo: 'hilo', blitz: 'tf', maj: 'maj', sort: 'sort', link: 'link' };
-const SKIPPABLE = { fstart: 1, intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1, moment: 1, duelIntro: 1, duelResult: 1, howto: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1 };
+const SKIPPABLE = { betray: 1, loyal: 1, fstart: 1, intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1, moment: 1, duelIntro: 1, duelResult: 1, howto: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1 };
 
 function shuffle(a) {
   a = a.slice();
@@ -1928,6 +2090,7 @@ function rankBy(players, key) {
 
 function createGame(o) {
   const cfg = Object.assign({}, CFG, o.cfg || {});
+  cfg.steps = cfg.pyrReq.length + 1;   // zadnji red piramide je kruna (pobjeda)
   const F = Object.assign({}, FLAGS, o.flags || {});
   const plan = o.plan || PLAN;
   const D = o.data || DATA;
@@ -1940,6 +2103,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true }, pacts: [], offers: [], btq: [],
   };
   const rnd = (n) => Math.floor(Math.random() * n);
   const pick = (a) => a[rnd(a.length)];
@@ -2183,6 +2347,8 @@ function createGame(o) {
       case 'secret2': return startPower();
       case 'fq': return scoreFinale();
       case 'fr': return afterFinaleQ();
+      case 'betray': return afterBetray();
+      case 'loyal': return setPhase('fstart', cfg.fstart);
     }
   }
 
@@ -2207,6 +2373,7 @@ function createGame(o) {
     for (const [k, n] of wantV) for (let j = 0; j < n && slots.length; j++) if ((D[DATA_KEY[k]] || []).length) G.qvAt.set(slots.shift(), k);
     G.seenHow = new Set();
     TD.reset();
+    pactReset();
     next();
   }
 
@@ -2282,11 +2449,11 @@ function createGame(o) {
   // 0 = vodeći, 1 = zadnji (prema bodovima, u finalu prema stepenici pa bodovima)
   function standing() {
     const ps = active();
-    const val = (p) => (G.inFinale ? p.fstep * 1e6 : 0) + p.score;
+    const val = (p) => (G.inFinale ? (p.fu || 0) * 1e6 : 0) + p.score;
     const vs = ps.map(val), hi = Math.max(...vs), lo = Math.min(...vs);
     const m = new Map();
     for (const p of ps) m.set(p.pid, hi === lo ? 0.5 : (hi - val(p)) / (hi - lo));
-    if (G.inFinale) { const top = Math.max(...ps.map((p) => p.fstep)); for (const p of ps) if (p.fstep === top) m.set(p.pid, 0); }
+    if (G.inFinale) { const top = Math.max(...ps.map((p) => p.fu || 0)); for (const p of ps) if ((p.fu || 0) === top) m.set(p.pid, 0); }
     return m;
   }
   const BET_OPTS = [0, 100, 300, 500, -1];
@@ -2314,6 +2481,7 @@ function createGame(o) {
         const t = R.get(p.pw.t);
         if (!t) continue;
         if (t.sh) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1 });
+        else if (G.inFinale && t.fx.length >= cfg.pyrFxCap) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1, cap: 1 });   // nitko ne može biti beskonačno blokiran
         else { t.fx.push(k); G.ev.push({ f: p.pid, p: k, t: t.pid }); }
       } else {
         if (k === 'dupli') p.dbl = true;
@@ -2361,6 +2529,7 @@ function createGame(o) {
       p.bet = 0;
     }
     resolveSecret();
+    pactAfterQuestion();
     TD.afterQuestion();
     // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje sekundu dulje
     setPhase('reveal', cfg.reveal + (G.pend && G.pend.mo ? 1 : 0));
@@ -2523,14 +2692,26 @@ function createGame(o) {
     setPhase('linkReveal', cfg.chReveal);
   }
 
+  // ----- piramida -----
+  const pyrTop = () => cfg.pyrReq.reduce((a, b) => a + b, 0);
+  // jedinice napretka → stepenica, napredak unutar nje i koliko treba za sljedeću
+  function stepOf(u) { let st = 0, acc = 0; while (st < cfg.pyrReq.length && acc + cfg.pyrReq[st] <= u) { acc += cfg.pyrReq[st]; st++; } return { s: st, p: u - acc, r: st < cfg.pyrReq.length ? cfg.pyrReq[st] : 0 }; }
+  // početni napredak: poredak (izjednačeni dijele isti) + stvarna bodovna razlika; sve unaprijed izračunato, bez slučajnosti
+  function pyrStart() {
+    const ps = list(), n = ps.length, top = Math.max(0, ...ps.map((p) => p.score)), sc = ps.map((p) => p.score);
+    for (const p of ps) {
+      const better = sc.filter((x) => x > p.score).length, same = sc.filter((x) => x === p.score).length;
+      const rn = n > 1 ? 1 - (better + (same - 1) / 2) / (n - 1) : 1, gn = top > 0 ? p.score / top : 0;
+      p.fu = top > 0 ? Math.max(0, Math.min(cfg.pyrMaxStart, Math.round((cfg.pyrRankW * rn + (1 - cfg.pyrRankW) * gn) * cfg.pyrMaxStart))) : 0;
+      p.fstep = stepOf(p.fu).s; p.fst = p.fstep; p.fsc = p.score; p.fstr = 0; p.ug = 0; p.sk = 0; p.cf = 0;
+    }
+  }
   function startFinale() {
     G.inFinale = true; G.fqn = 0;
-    // početna stepenica prema bodovima u odnosu na vodećeg, najviše cfg.startCap
-    const top = Math.max(0, ...list().map((p) => p.score));
-    for (const p of list()) {
-      p.fstep = top > 0 ? Math.max(0, Math.min(cfg.startCap, Math.round(cfg.startCap * p.score / top))) : 0;
-      p.fst = p.fstep; p.mv = 0; p.lastPw = '';
-    }
+    const ly = payLoyalty(); G.ly = ly.length ? { id: G.s + 1, evs: ly } : null;
+    pyrStart();
+    for (const p of list()) { p.mv = 0; p.lastPw = ''; }
+    if (G.ly && G.ly.evs.length) return setPhase('loyal', cfg.loyalShow);
     setPhase('fstart', cfg.fstart);
   }
   function startFinaleQ() {
@@ -2539,6 +2720,19 @@ function createGame(o) {
     startPower();
   }
   function beginFinaleQ() {
+    G.crown = list().filter((p) => p.fu >= pyrTop()).map((p) => p.pid);
+    if (G.crown.length) {
+      const cats = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
+      if (cats.length) {
+        const cat = pick(cats), qi = pick(D.cats[cat].map((_, i) => i).filter((i) => !G.used.q.has(cat + '|' + i)));
+        G.used.q.add(cat + '|' + qi);
+        const q = D.cats[cat][qi], order = shuffle([0, 1, 2, 3]);
+        G.q = { c: '👑 Pitanje za krunu · ' + cat, t: q.q, o: order.map((i) => q.o[i]), a: order.indexOf(q.a), crown: 1 };
+        G.fqn += 1;
+        for (const p of list()) { p.ans = -1; p.ansMs = 0; p.mv = 0; p.ch = -1; p.hide = null; }
+        return setPhase('fq', cfg.fqCrown);
+      }
+    }
     const pool = D.tf.map((_, i) => i).filter((i) => !G.used.tf.has(i));
     if (!pool.length) return finish();
     const i = pick(pool);
@@ -2549,17 +2743,30 @@ function createGame(o) {
     setPhase('fq', cfg.fq);
   }
   function scoreFinale() {
-    const right = list().filter((p) => p.ans === G.q.a);
-    const fastest = right.slice().sort((a, b) => a.ansMs - b.ansMs)[0];
+    const TOP = pyrTop(), crown = new Set(G.crown || []);
+    // penjači: točan +1, najbrži točan +1 (ne u pitanju za krunu), dupli +1, svaki 3. točan zaredom +1; netočno = ostaje
+    const right = list().filter((p) => !crown.has(p.pid) && p.ans === G.q.a);
+    const fastest = G.q.crown ? null : right.slice().sort((a, b) => a.ansMs - b.ansMs)[0];
     for (const p of list()) {
-      p.ch = p.ans;
-      p.mv = 0;
-      if (p.ans === G.q.a) p.mv = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);
-      // dupli nikoga ne vodi do vrha: bez njega se stiže najviše do predzadnje stepenice
-      if (p.dbl && p.mv > 0 && p.fstep + p.mv >= cfg.steps && p.fstep + p.mv - 1 < cfg.steps) p.mv -= 1;
-      p.fstep = Math.min(cfg.steps, p.fstep + p.mv);
+      p.ch = p.ans; p.mv = 0; p.ug = 0; p.sk = 0;
+      if (crown.has(p.pid)) { if (p.ans !== G.q.a) { p.cf++; p.fstr = 0; } continue; }
+      if (p.ans !== G.q.a) { p.fstr = 0; continue; }
+      p.fstr++;
+      let g = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);
+      if (p.fstr % cfg.pyrStreak === 0) { g++; p.sk = 1; }
+      const before = p.fstep;
+      p.fu = Math.min(TOP, p.fu + g); p.ug = g;
+      p.fstep = stepOf(p.fu).s; p.mv = p.fstep - before;
     }
-    if (!list().some((p) => p.fstep >= cfg.steps)) TD.afterFinale(); else G.pend = null;
+    // kruna: tko je bio na vrhu i točno odgovori, pobjeđuje; ako ih je više, brži (vlastito vrijeme odgovora), pa više bodova
+    const win = list().filter((p) => crown.has(p.pid) && p.ans === G.q.a).sort((a, b) => a.ansMs - b.ansMs || b.score - a.score || (a.name < b.name ? -1 : 1))[0];
+    if (win) { win.mv = cfg.steps - win.fstep; win.fstep = cfg.steps; }
+    if (!list().some((p) => p.fstep >= cfg.steps)) {
+      TD.afterFinale();
+      // novi na vrhu: krčma to javlja svima
+      const up = list().filter((p) => p.fu >= TOP && p.ug > 0);
+      if (up.length && !(G.pend && G.pend.mo)) { G.pend = G.pend || {}; G.pend.mo = { t: '👑 Na vrhu piramide!', s: up.map((p) => p.name).join(' i ') + ' — još jedno pitanje dijeli od krune!', a: up.map((p) => p.pid), pose: up.map(() => 'victory'), snd: 'stingUp' }; }
+    } else G.pend = null;
     setPhase('fr', cfg.fr + (G.pend && G.pend.mo ? 1 : 0));
   }
   function afterFinaleQ() {
@@ -2570,7 +2777,8 @@ function createGame(o) {
 
   function finish() {
     clear();
-    const ranked = list().slice().sort((a, b) => b.fstep - a.fstep || b.score - a.score);
+    payLoyalty();
+    const ranked = list().slice().sort((a, b) => b.fstep - a.fstep || (b.fu || 0) - (a.fu || 0) || b.score - a.score);
     G.win = ranked.length ? ranked[0].pid : null;
     G.fact = pick(D.facts);
     G.ph = 'final'; G.s += 1; G.dur = 0; G.endsAt = now();
@@ -2582,7 +2790,7 @@ function createGame(o) {
     clear();
     for (const [id, p] of R) if (!p.on) R.delete(id);
     for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; p.done = false; }
-    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.win = null; G.rl = ''; TD.reset();
+    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.win = null; G.rl = ''; TD.reset(); pactReset();
     onChange();
   }
   function skip() { if (SKIPPABLE[G.ph]) endPhase(); }
@@ -2824,6 +3032,15 @@ function createGame(o) {
   function afterReveal() {
     const pd = G.pend;
     G.pend = null;
+    if (G.btq && G.btq.length) {
+      const evs = runBetrayals();
+      if (evs.length) { G.bt = { id: G.s + 1, evs }; G.afterBt = pd; return setPhase('betray', cfg.betrayShow + (evs.length - 1) * 3); }
+    }
+    if (pd && pd.duel) return startDuelIntro(pd.duel);
+    next();
+  }
+  function afterBetray() {
+    const pd = G.afterBt; G.afterBt = null; G.bt = null;
     if (pd && pd.duel) return startDuelIntro(pd.duel);
     next();
   }
@@ -2905,6 +3122,174 @@ function createGame(o) {
     }
     G.sxDone = se; G.se = null;
   }
+
+  // ===================== TAJNI PAKTOVI (Blood & Gold) =====================
+  // Dva čovjeka sklope tajni savez: šapću odgovore, pune zajedničku riznicu i mogu se izdati.
+  // Sve se obračunava ovdje (domaćin); klijenti šalju samo akcije, privatno stanje dobiva samo vlasnik (priv).
+  const PACT_LINES = {
+    rumor: ['🍻 Krčmom kruže glasine o tajnom savezu...', '🍻 Netko u krčmi kuje tajni plan...', '🍻 Dvije se krigle kucnule ispod stola...', '🍻 Šapuće se da netko više ne igra sam...'],
+    rich: ['💰 Čujem da se negdje skriva pravo malo bogatstvo!', '💰 Nečija riznica zvecka sve glasnije...', '💰 Krčmar je primijetio sumnjivo težak kesu zlata...'],
+    betray: ['Prijateljstvo je lijepo, ali zlato je ipak zlato!', 'Upravo smo saznali koliko košta prijateljstvo.', 'Nož u leđa, zlato u džep. Živjeli!', 'Krčmar briše šank i šuti. Viđao je on i gore.', 'Tko vjeruje, plaća. Danas je cijena bila visoka.', 'Krigla se diže izdajniku — iz straha, ne iz poštovanja.'],
+    double: ['Dva noža, dvije laži i nijedan pobjednik!', 'Dvoje pohlepnih, a nitko bogatiji!', 'Riznica je pala, a s njom i svako povjerenje.', 'Krčmar se smije: kuća uvijek dobiva.'],
+    loyal: ['Izgleda da u ovoj krčmi još postoji čast!', 'Vjernost do kraja! Krčmar časti ovu rundu.', 'Neki savezi traju duže od krigle piva.'],
+  };
+  const pickLine = (k, map) => { const arr = PACT_LINES[k], l = arr[rnd(arr.length)]; return l.replace(/\{(\w)\}/g, (_, x) => (map && map[x]) || ''); };
+  let pactSeq = 0;
+  function pactsOn() { return !!G.opt.pacts; }
+  const humansIn = () => list().filter((p) => !p.bot);
+  const pactOf = (p) => (p && p.pact ? G.pacts.find((x) => x.id === p.pact && x.on) : null);
+  const partnerOf = (p) => { const k = pactOf(p); return k ? R.get(k.a === p.pid ? k.b : k.a) : null; };
+  // može li igrač sudjelovati u novom paktu
+  function pactFree(p) { return !!p && !p.bot && !p.pactUsed && !p.pact; }
+  function pactWindow() {
+    return pactsOn() && !G.inFinale && G.ph !== 'lobby' && G.ph !== 'final' && G.qn >= cfg.pactAfter && humansIn().length >= cfg.pactMin;
+  }
+  function pactReset() {
+    G.pacts = []; G.offers = []; G.btq = []; G.bt = null; G.ly = null; G.news = null; G.newsSeq = 0; G.pactPaid = false;
+    for (const p of list()) { p.pact = null; p.pactUsed = false; p.betray = false; p.wh = null; p.whS = -1; p.offersMade = 0; p.px = 0; p.note = null; }
+  }
+  function news(t) { G.news = { id: ++G.newsSeq, t, at: now() }; }
+  function note(p, t, k) { if (p) p.note = { id: ++G.newsSeq, t, k: k || '' }; }
+  // istekla ponuda: ponuditelj dobiva istu poruku bez obzira je li odbijena, ignorirana ili je druga strana već zauzeta (ništa ne otkriva)
+  function cleanOffers() {
+    const t = now();
+    G.offers = G.offers.filter((o) => {
+      const live = o.until > t && pactFree(R.get(o.from)) && (o.ghost || pactFree(R.get(o.to)));
+      if (!live && o.until <= t && pactFree(R.get(o.from))) note(R.get(o.from), '🍻 Ponuda nije prihvaćena.', 'no');
+      return live;
+    });
+  }
+  // jedina ulazna točka za akcije paktova; sve se provjerava
+  function pactAction(pid, a) {
+    const p = R.get(pid);
+    if (!p || p.bot || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
+    cleanOffers();
+    let ok = false;
+    switch (a.k) {
+      case 'offer': {
+        const t = R.get(a.to);
+        if (!pactWindow() || !pactFree(p) || !t || t === p || t.bot) break;
+        if (p.offersMade >= cfg.pactOffersMax || G.offers.some((o) => o.from === pid)) break;
+        // zauzet igrač (u paktu, već imao pakt ili ima drugu ponudu): ponuda tiho istekne, ponuditelj ne saznaje zašto
+        const ghost = !pactFree(t) || G.offers.some((o) => o.to === t.pid && !o.ghost);
+        G.offers.push({ from: pid, to: t.pid, until: now() + cfg.pactOffer * 1000, ghost });
+        p.offersMade++; ok = true; break;
+      }
+      case 'cancel': { const n = G.offers.length; G.offers = G.offers.filter((o) => o.from !== pid); ok = G.offers.length !== n; break; }
+      case 'accept': {
+        const o = G.offers.find((x) => x.to === pid && x.from === a.from && !x.ghost);
+        const f = o && R.get(o.from);
+        if (!o || !pactWindow() || !pactFree(p) || !pactFree(f)) break;
+        G.offers = G.offers.filter((x) => x !== o && x.from !== pid && x.to !== o.from && x.from !== o.from && x.to !== pid);
+        const k = { id: 'k' + (++pactSeq), a: f.pid, b: pid, tre: 0, on: true, since: G.qn, rich: false };
+        G.pacts.push(k);
+        for (const q of [f, p]) { q.pact = k.id; q.pactUsed = true; q.betray = false; q.wh = null; }
+        note(f, '🍻 ' + p.name + ' je prihvatio tvoj pakt!', 'pact'); note(p, '🍻 Pakt s ' + f.name + ' je sklopljen!', 'pact');
+        news(pickLine('rumor'));
+        ok = true; break;
+      }
+      case 'decline': {
+        const o = G.offers.find((x) => x.to === pid && x.from === a.from && !x.ghost);
+        if (!o) break;
+        G.offers = G.offers.filter((x) => x !== o);
+        note(R.get(o.from), '🍻 Ponuda nije prihvaćena.', 'no');   // privatno; ista poruka kao kad ponuda istekne
+        ok = true; break;
+      }
+      case 'whisper': {
+        const mate = partnerOf(p);
+        if (!mate || G.ph !== 'question' || p.whS === G.s || !isInt(a.c) || !G.q || a.c < 0 || a.c >= G.q.o.length) break;
+        p.whS = G.s; mate.wh = { from: pid, c: a.c, s: G.s }; ok = true; break;
+      }
+      case 'betray': {
+        if (!pactOf(p) || G.ph !== 'question') break;
+        p.betray = !!a.on; ok = true; break;
+      }
+    }
+    if (ok) onChange();
+    return ok;
+  }
+  // nakon redovnog bodovanja pitanja: riznica raste, odluke o izdaji se zaključavaju (izvršavaju se nakon otkrivanja)
+  function pactAfterQuestion() {
+    for (const p of list()) { p.px = 0; p.wh = null; }
+    for (const k of G.pacts) {
+      if (!k.on) continue;
+      const a = R.get(k.a), b = R.get(k.b);
+      if (!a || !b) { k.on = false; continue; }
+      const both = a.ans === G.q.a && b.ans === G.q.a;
+      if (both) { k.tre += cfg.pactBonus; k.grew = G.s; note(a, '💰 +' + cfg.pactBonus + ' u riznicu!', 'tre'); note(b, '💰 +' + cfg.pactBonus + ' u riznicu!', 'tre'); }
+      if (!k.rich && k.tre >= cfg.pactRich) { k.rich = true; news(pickLine('rich')); }
+      const ta = a.betray, tb = b.betray;
+      a.betray = false; b.betray = false;
+      if (ta || tb) G.btq.push({ pact: k.id, a: ta, b: tb, at: G.qn });   // zaključano: nakon ovoga se ne može reagirati
+    }
+  }
+  // izvršenje izdaja (jednom; pakt se odmah zatvara pa se ne može ponoviti)
+  function runBetrayals() {
+    const evs = [];
+    for (const q of G.btq.splice(0)) {
+      const k = G.pacts.find((x) => x.id === q.pact);
+      if (!k || !k.on) continue;
+      const A = R.get(k.a), B = R.get(k.b);
+      k.on = false; k.end = q.a && q.b ? 'double' : 'betray';
+      for (const p of [A, B]) if (p) { p.pact = null; p.betray = false; }
+      if (!A || !B) continue;
+      if (q.a && q.b) {
+        const la = Math.round(A.score * cfg.pactDouble), lb = Math.round(B.score * cfg.pactDouble);
+        A.score = Math.max(0, A.score - la); B.score = Math.max(0, B.score - lb);
+        A.px = -la; B.px = -lb;
+        evs.push({ k: 'double', a: A.pid, b: B.pid, tre: k.tre, la, lb, line: pickLine('double') });
+      } else {
+        const T = q.a ? A : B, V = q.a ? B : A;
+        const st = Math.max(0, Math.round(V.score * cfg.pactSteal));
+        V.score = Math.max(0, V.score - st); T.score += k.tre + st;
+        T.px = k.tre + st; V.px = -st;
+        evs.push({ k: 'betray', t: T.pid, v: V.pid, tre: k.tre, st, gain: k.tre + st, line: pickLine('betray', { T: T.name, V: V.name }) });
+        // krčma pamti: izdaja rađa rivalstvo
+        const TS = TD.state; if (TS && TS.rival) { const key = T.pid < V.pid ? T.pid + '|' + V.pid : V.pid + '|' + T.pid; TS.rival[key] = (TS.rival[key] || 0) + 12; }
+      }
+      k.tre = 0;
+    }
+    return evs;
+  }
+  // odanost do kraja: prije finala riznica + bonus dijeli se saveznicima (utječe na početnu stepenicu finala)
+  function payLoyalty() {
+    if (G.pactPaid) return [];
+    G.pactPaid = true;
+    const out = [];
+    for (const k of G.pacts) {
+      if (!k.on) continue;
+      k.on = false; k.end = 'loyal';
+      const A = R.get(k.a), B = R.get(k.b);
+      const tot = Math.round(k.tre * (1 + cfg.pactLoyal)), half = Math.floor(tot / 2);
+      if (A) { A.score += tot - half; A.pact = null; } if (B) { B.score += half; B.pact = null; }
+      out.push({ a: k.a, b: k.b, tre: k.tre, bonus: tot - k.tre, each: half, ea: tot - half });
+    }
+    G.offers = [];
+    return out;
+  }
+  // privatno stanje: samo za tog igrača
+  function priv(pid) {
+    const p = R.get(pid);
+    if (!p || p.bot || !pactsOn()) return null;
+    cleanOffers();
+    const k = pactOf(p), mate = partnerOf(p);
+    const o = {
+      can: pactWindow() && pactFree(p) && p.offersMade < cfg.pactOffersMax,
+      used: !!p.pactUsed,
+      inv: G.offers.filter((x) => x.to === pid && !x.ghost).map((x) => ({ f: x.from, ms: Math.max(0, x.until - now()), dur: cfg.pactOffer * 1000 })),
+      out: (G.offers.find((x) => x.from === pid) || null) && (() => { const x = G.offers.find((y) => y.from === pid); return { t: x.to, ms: Math.max(0, x.until - now()) }; })(),
+      note: p.note,
+    };
+    // svi ostali spojeni ljudi (ne otkriva tko je već u paktu)
+    if (o.can) o.cand = humansIn().filter((q) => q !== p && q.on).map((q) => q.pid);
+    if (k && mate) {
+      o.k = { m: mate.pid, tre: k.tre, grew: k.grew === G.s ? 1 : 0, since: k.since };
+      if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; }
+      if (p.wh && p.wh.s === G.s) o.k.wh = p.wh.c;
+    }
+    return o;
+  }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -2994,6 +3379,7 @@ function createGame(o) {
     v.P = list().map((p) => {
       const e = { id: p.pid, n: p.name, a: p.av, sc: p.score, c: p.on ? 1 : 0, ok: p.done ? 1 : 0 };
       if (p.bot) e.b = 1;
+      if (p.px && (ph === 'betray' || ph === 'loyal')) e.px = p.px;
       if ((ph === 'vote' && p.done) || (ph === 'voteResult' && p.vote >= 0)) e.vt = p.vote;
       if (ph === 'power') e.of = p.offers;
       if (ph === 'question' || ph === 'fq') {
@@ -3006,7 +3392,7 @@ function createGame(o) {
       if (ph === 'sortReveal' || ph === 'linkReveal' || ph === 'orderReveal' || ph === 'hiloReveal' || ph === 'blitzReveal') { e.g = p.gained; e.k = p.cnt; }
       if (ph === 'blitzReveal') e.x = p.bad;
       if (ph === 'majReveal') { e.mv = p.mjV; e.g = p.gained; }
-      if (G.inFinale) e.st = p.fstep;
+      if (G.inFinale) { e.st = p.fstep; const so = stepOf(p.fu || 0); e.fu = p.fu || 0; e.fp = so.p; e.fr = so.r; if ((p.fu || 0) >= pyrTop() && p.fstep < cfg.steps) e.top = 1; if (ph === 'fr') { e.ug = p.ug; if (p.sk) e.sk = 1; if (p.cf) e.cf = p.cf; } if (ph === 'fstart') e.fsc = p.fsc; }
       if (ph === 'bet') { e.bm = p.betMul; if (p.done) e.bt = p.bet; }
       if ((ph === 'power' || ph === 'cast' || ph === 'question') && p.bet > 0) e.bt = p.bet;
       if (ph === 'reveal' && p.betRes) e.br = p.betRes;
@@ -3032,7 +3418,7 @@ function createGame(o) {
     if (ph === 'maj' || ph === 'majReveal') v.mj = { q: G.mj.q, i: G.mj.i, n: G.mj.qs.length };
     if (ph === 'majReveal') { v.mj.cnt = G.mj.cnt; v.mj.win = G.mj.win; v.mj.last = G.mj.last ? 1 : 0; }
     if (ph === 'cast' || ph === 'question' || ph === 'reveal' || ph === 'fq') v.ev = G.ev;
-    if (G.inFinale) v.fin = 1;
+    if (G.inFinale) { v.fin = 1; v.ftop = pyrTop(); v.req = cfg.pyrReq; if ((ph === 'fq' || ph === 'fr') ? (G.q && G.q.crown) : (ph === 'power' || ph === 'cast') && list().some((p) => (p.fu || 0) >= pyrTop())) v.crown = 1; }
     if (ph === 'reveal' || ph === 'fr') { v.cor = G.q.a; if (G.q.cnt) v.cnt = G.q.cnt; }
     if (ph === 'sort' || ph === 'sortReveal') v.so = { a: G.so.a, b: G.so.b, it: G.so.items };
     if (ph === 'sortReveal') v.so.key = G.so.key;
@@ -3040,6 +3426,11 @@ function createGame(o) {
     if (ph === 'linkReveal') v.li.key = G.li.key;
     if (ph === 'final') { v.win = G.win; v.fact = G.fact; }
     if (ph === 'moment' && G.mo) v.mo = G.mo;
+    if (ph === 'betray' && G.bt) v.bt = G.bt;
+    if (ph === 'loyal' && G.ly) v.ly = G.ly;
+    if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0 };
+    if (pactsOn() && G.ph !== 'lobby') v.pk = 1;
     if ((ph === 'reveal' || ph === 'sortReveal' || ph === 'linkReveal' || ph === 'fr') && G.pend && G.pend.mo) v.mo = G.pend.mo;
     if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {
       v.du = { a: G.du.a, b: G.du.b, bonus: cfg.duelBonus };
@@ -3054,7 +3445,7 @@ function createGame(o) {
 
   // samo za testove
   function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
-  return { addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _G: G };
+  return { pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _G: G };
 }
 //#engine-end
 
@@ -3582,12 +3973,14 @@ function createGame(o) {
   function tvSound(d) {
     if (d.mo && d.ph !== 'moment') tdSting(d);
     switch (d.ph) {
-      case 'intro': case 'fstart': return SFX.play('whoosh');
+      case 'intro': return SFX.play('whoosh');
+      case 'fstart': return fstartSound(d);
       case 'vote': case 'sort': case 'link': case 'fq': return SFX.play('pop');
       case 'voteResult': if (d.tb) return rouletteSound(d); return SFX.play('step');
       case 'fr': return SFX.play('step');
       case 'power': return SFX.play('zap');
       case 'bet': return SFX.play('whoosh');
+      case 'betray': case 'loyal': return betraySound(d);
       case 'moment': return AUDIO.play((d.mo && d.mo.snd) || 'stingSmall');
       case 'howto': return AUDIO.play('whoosh');
       case 'order': case 'hilo': case 'blitz': case 'maj': return AUDIO.play('pop');
@@ -3608,7 +4001,9 @@ function createGame(o) {
     switch (d.ph) {
       case 'intro': return SFX.play('whoosh');
       case 'bet': return SFX.play('pop');
+      case 'fstart': if (d.ntv) fstartSound(d); return;
       case 'voteResult': if (d.ntv && d.tb) rouletteSound(d); return;
+      case 'betray': case 'loyal': return betraySound(d);
       case 'moment': return AUDIO.play((d.mo && d.mo.snd) || 'stingSmall');
       case 'howto': return AUDIO.play('whoosh');
       case 'order': case 'hilo': case 'blitz': case 'maj': return AUDIO.play('pop');
@@ -3712,7 +4107,7 @@ function createGame(o) {
     if (hostPeer) { try { hostPeer.destroy(); } catch (e) {} }
     if (ppeer) { try { ppeer.destroy(); } catch (e) {} }
     stopHostRelay(); stopPlayerRelay();
-    game = null; hostPeer = null; ppeer = null; pconn = null; S = null;
+    game = null; hostPeer = null; ppeer = null; pconn = null; S = null; PV = null;
     hostErr = ''; perr = ''; netNote = ''; lastSig = '';
     L = freshLocal(-1);
     try { if (location.hash) history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
@@ -3836,6 +4231,7 @@ function createGame(o) {
       const c = mqttClient(u, (topic, d) => {
         if (prelay !== c) return;
         if (d && d.t === 'who') { c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, name: pname, av: myAv }); return; }
+        if (d && d.t === 'pv' && d.code === pcode) { if (pconn && pconn.open) return; const ch = JSON.stringify(d.pv) !== JSON.stringify(PV); PV = d.pv; if (ch && S) phoneRender(); return; }
         if (d && d.code === pcode && Array.isArray(d.P)) {
           if (pconn && pconn.open) return;           // izravna veza ima prednost
           clearTimeout(waitTimer);
@@ -3876,14 +4272,20 @@ function createGame(o) {
     if (m.t === 'hello' && typeof m.pid === 'string' && typeof m.name === 'string') { x.pid = m.pid.slice(0, 40); x.name = m.name; x.av = m.av; }
     else if (m.t === 'av') x.av = m.av;
     else if (m.t === 'in' && m.in && typeof m.in === 'object') x.in = m.in;
+    else if (m.t === 'pa') { if (x.pid && m.a && typeof m.a === 'object') game.pactAction(x.pid, m.a); return; }   // pakt: domaćin sve provjerava
     else return;
     syncConns();
-    if (m.t === 'hello' && conn.open) { try { conn.send(game.view()); } catch (e) {} }
+    if (m.t === 'hello' && conn.open) { try { conn.send(Object.assign(game.view(), { pv: game.priv(x.pid) })); } catch (e) {} }
   }
   function publish() {
     if (!game) return;
     const v = game.view(), rel = new Set();
-    for (const c of hostConns.keys()) { if (c.relay) { if (c.open) rel.add(c.client); continue; } if (c.open) { try { c.send(v); } catch (e) {} } }
+    // javno stanje je isto za sve; privatno (paktovi) ide samo vlasniku, nikad svima
+    for (const [c, x] of hostConns) {
+      if (!c.open) continue;
+      if (c.relay) { rel.add(c.client); if (x.pid) { try { c.send({ t: 'pv', code: v.code, s: v.s, pv: game.priv(x.pid) }); } catch (e) {} } continue; }
+      try { c.send(x.pid ? Object.assign({}, v, { pv: game.priv(x.pid) }) : v); } catch (e) {}
+    }
     if (rel.size) { const js = JSON.stringify(v); rel.forEach((cl) => cl.publish(rTopic(v.code, 'all'), js)); }
   }
   function publishSoon() { if (pubPending) return; pubPending = true; setTimeout(() => { pubPending = false; publish(); }, 30); }
@@ -3942,10 +4344,10 @@ function createGame(o) {
     if (opts && opts.noTv) {
       // domaćin igra s ovog mobitela; ostali se spajaju kao i inače
       pcode = code;
-      game = createGame({ code, noTv: true, onChange: () => { publishSoon(); applyState(game.view()); } });
+      game = createGame({ code, noTv: true, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } });
       game.addPlayer(PID, opts.me, myAv, false, true);
     } else {
-      game = createGame({ code, onChange: () => { publishSoon(); render(); } });
+      game = createGame({ code, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } });
     }
     clearInterval(pubTimer); pubTimer = setInterval(publish, 1000);
     startHostRelay(code);
@@ -4002,7 +4404,7 @@ function createGame(o) {
   function startDemo() {
     mode = 'demo'; demoView = 'phone'; S = null; lastSig = ''; L = freshLocal(-1);
     keepAwake();
-    game = createGame({ code: 'DEMO', noTv: true, onChange: () => { applyState(game.view()); if (demoView === 'tv') render(); } });
+    game = createGame({ code: 'DEMO', noTv: true, onChange: () => { applyState(Object.assign(game.view(), { pv: game.priv(PID) })); if (demoView === 'tv') render(); } });
     const name = store.get('mz_name') || 'Ti';
     game.addPlayer(PID, name, myAv, false);
     game.setBots(3);
@@ -4088,6 +4490,10 @@ function createGame(o) {
     else netSend({ t: 'in', in: inp });
     phoneRender(true);
   }
+  function pactSend(a) {
+    if (isLocalHost()) { if (game) game.pactAction(PID, a); }
+    else netSend({ t: 'pa', a });
+  }
   function chooseAvatar(i) {
     myAv = i; store.set('mz_av', String(i));
     if (isLocalHost()) game.setAvatar(PID, i);
@@ -4112,6 +4518,7 @@ function createGame(o) {
   }
 
   function applyState(d) {
+    if (d && 'pv' in d) PV = d.pv || null;
     clearTimeout(waitTimer);
     const t = Date.now();
     if (!S || d.s !== L.s) {
@@ -4137,7 +4544,7 @@ function createGame(o) {
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
       : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : d.ph === 'duel' ? d.P.map((p) => [p.id, p.ok]) : null;
-    return JSON.stringify([d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj]);
+    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj]);
   }
 
   // ---------- efekti moći ----------
@@ -4666,7 +5073,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v18</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v19</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -4757,6 +5164,157 @@ function createGame(o) {
     }
     return { after };
   })();
+  let PV = null;
+  // ===================== TAJNI PAKTOVI: sučelje =====================
+  // PV = privatno stanje ovog igrača (šalje ga samo domaćin, samo njemu). Javno stanje (d) nikad ne sadrži tuđe paktove.
+  const fmtN = (n) => String(Math.round(n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const LET = ['A', 'B', 'C', 'D'];
+  const PACT_PH = { vote: 1, voteResult: 1, power: 1, cast: 1, question: 1, reveal: 1, bet: 1, howto: 1, order: 1, hilo: 1, blitz: 1, maj: 1, majReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, sortReveal: 1, linkReveal: 1, sort: 1, link: 1, duelIntro: 1, duel: 1, duelResult: 1, secret: 1, secret2: 1, moment: 1, intro: 1 };
+  // traka pakta ide odmah ispod gornje trake (HUD); ne prekriva pitanje, odgovore ni sat
+  function pactHead(d, me, head) {
+    if (!me || !PV || !PACT_PH[d.ph]) return head;
+    const q = d.ph === 'question';
+    let h = '';
+    // dolazna ponuda: kratka u pitanju, kartica između pitanja
+    for (const o of PV.inv || []) {
+      const f = pById(d, o.f); if (!f) continue;
+      const pct = Math.max(0, Math.min(100, (o.ms / o.dur) * 100));
+      h += q
+        ? '<div class="pk-inv mini"><span class="mini">' + avSvg(f.a, 'happy') + '</span><span class="pk-t"><b>🍻 ' + esc(f.n) + '</b> nudi pakt</span><button class="pk-b ok" data-pk="accept" data-f="' + esc(o.f) + '">Prihvati</button><button class="pk-b no" data-pk="decline" data-f="' + esc(o.f) + '">✕</button><i class="pk-tm" style="--w:' + pct + '%"></i></div>'
+        : '<div class="pk-inv"><div class="pk-inv-h"><span class="mini">' + avSvg(f.a, 'happy') + '</span><b>🍻 ' + esc(f.n) + ' ti nudi tajni pakt!</b></div>' +
+          '<div class="pk-inv-s">„Udružite znanje, šapćite odgovore i zajedno punite riznicu. Ali pripazi — tvoj saveznik može te izdati i ukrasti tvoje bodove!”</div>' +
+          '<div class="pk-row"><button class="btn pk-acc" data-pk="accept" data-f="' + esc(o.f) + '">Prihvati pakt</button><button class="btn ghost pk-dec" data-pk="decline" data-f="' + esc(o.f) + '">Odbij</button></div><i class="pk-tm" style="--w:' + pct + '%"></i></div>';
+    }
+    if (PV.k) {
+      const m = pById(d, PV.k.m), k = PV.k;
+      let act = '';
+      if (q && k.can) {
+        if (L.whOpen && !k.wsent) act = '<span class="pk-wh-pick">' + d.q.o.map((_, i) => '<button class="pk-l" data-wh="' + i + '">' + LET[i] + '</button>').join('') + '<button class="pk-l x" data-whx="1" aria-label="Zatvori">✕</button></span>';
+        else act = (k.wsent ? '<span class="pk-sent">🔮 Šapnuto</span>' : '<button class="pk-b" data-whopen="1">🔮 Šapni</button>') +
+          (k.bt ? '<button class="pk-b bt on" data-bt="0">🗡️ Odustani</button>' : '<button class="pk-b bt" data-bt="1" aria-label="Pripremi izdaju">🗡️</button>');
+      }
+      h += '<div class="pk-bar' + (k.bt && q ? ' armed' : '') + '"><span class="mini">' + (m ? avSvg(m.a, 'idle') : '') + '</span><span class="pk-t"><b>🍻 ' + esc(m ? m.n : '?') + '</b><span class="pk-tre" data-bk="pktre" data-bv="' + k.tre + '">💰 ' + fmtN(k.tre) + '</span></span>' +
+        (k.wh !== undefined && q ? '<span class="pk-whin" data-bk="pkwh" data-bv="' + k.wh + '">🔮 ' + esc(m ? m.n : '') + ': <b>' + LET[k.wh] + '</b></span>' : '') + act + '</div>';
+      if (q && k.bt) h += '<div class="pk-note">🗡️ Izdaja je pripremljena. Ako ne odustaneš, na kraju pitanja pokušat ćeš ukrasti zajedničku riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</div>';
+      else if (!q && (d.ph === 'reveal' || d.ph === 'vote' || d.ph === 'power')) h += '<div class="pk-card-s">Zajednička riznica: <b>' + fmtN(k.tre) + ' bodova</b></div>';
+    } else if (PV.out && !q) {
+      const t = pById(d, PV.out.t);
+      h += '<div class="pk-bar out"><span class="pk-t">🍻 Ponuda poslana: <b>' + esc(t ? t.n : '') + '</b> · ' + Math.ceil(PV.out.ms / 1000) + ' s</span><button class="pk-b" data-pk="cancel">Povuci</button></div>';
+    } else if (PV.can && !q && PV.cand && PV.cand.length && !(PV.inv || []).length) {
+      h += L.pkOpen
+        ? '<div class="pk-pick"><div class="pk-pick-h">🍻 Kome nudiš tajni pakt?<button class="pk-l x" data-pkx="1" aria-label="Zatvori">✕</button></div><div class="pk-cands">' + PV.cand.map((id) => { const p = pById(d, id); return p ? '<button class="pk-cand" data-pk="offer" data-to="' + esc(id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span>' + esc(p.n) + '</button>' : ''; }).join('') + '</div><div class="pk-inv-s">Ostali neće saznati. Svatko može imati samo jedan pakt po partiji.</div></div>'
+        : '<button class="pk-open" data-pkopen="1">🍻 Tajni pakt</button>';
+    }
+    return head + h;
+  }
+  const PACT_STEAL = 0.25;
+  function bindPact(d) {
+    const q = (s) => document.querySelectorAll('#app ' + s);
+    q('[data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); L.pkOpen = false; pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
+    q('[data-pkopen]').forEach((b) => { b.onclick = () => { L.pkOpen = true; phoneRender(true); }; });
+    q('[data-pkx]').forEach((b) => { b.onclick = () => { L.pkOpen = false; phoneRender(true); }; });
+    q('[data-whopen]').forEach((b) => { b.onclick = () => { L.whOpen = true; phoneRender(true); }; });
+    q('[data-whx]').forEach((b) => { b.onclick = () => { L.whOpen = false; phoneRender(true); }; });
+    q('[data-wh]').forEach((b) => { b.onclick = () => { L.whOpen = false; AUDIO.play('whoosh'); pactSend({ k: 'whisper', c: +b.dataset.wh }); }; });
+    q('[data-bt]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); pactSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
+  }
+  // obavijesti: javne glasine (svi) i privatne poruke (samo ja); ne blokiraju ništa
+  const toastSeen = new Set(); let toastHold = [];
+  function pactToasts(d) {
+    const out = [];
+    // tijekom pitanja ništa ne smije prekriti odgovore: obavijesti čekaju kraj pitanja
+    const busy = d.ph === 'question' || d.ph === 'fq' || d.ph === 'duel' || d.ph === 'order' || d.ph === 'hilo' || d.ph === 'blitz' || d.ph === 'sort' || d.ph === 'link' || d.ph === 'maj';
+    if (d.news && !toastSeen.has('n' + d.news.id)) { toastSeen.add('n' + d.news.id); out.push([d.news.t, 'pub']); }
+    if (PV && PV.note && !toastSeen.has('p' + PV.note.id)) { toastSeen.add('p' + PV.note.id); out.push([PV.note.t, PV.note.k || '']); }
+    if (busy) { toastHold.push(...out); return; }
+    out.unshift(...toastHold.splice(0));
+    for (const [t, k] of out) {
+      let box = document.getElementById('ptoasts');
+      if (!box) { box = document.createElement('div'); box.id = 'ptoasts'; box.setAttribute('aria-live', 'polite'); document.body.appendChild(box); }
+      const e = document.createElement('div'); e.className = 'ptoast ' + k; e.textContent = t; box.appendChild(e);
+      if (k === 'tre') AUDIO.play('score'); else if (k === 'pub') AUDIO.play('stingSmall'); else if (k === 'pact') AUDIO.play('correct');
+      setTimeout(() => { e.classList.add('out'); setTimeout(() => e.remove(), 400); }, 3600);
+    }
+  }
+  // ----- veliki javni događaji: izdaja, dvostruka izdaja, odanost (isti na mobitelu i TV-u) -----
+  const KRCMAR = '<span class="krc">🍺</span>';
+  function betrayHtml(d, tv) {
+    const B = d.bt; if (!B) return '';
+    const el = Math.max(0, d.dur - d.ms), per = 3000, i = Math.min(B.evs.length - 1, B.evs.length > 1 ? Math.floor(el / per) : 0), e = B.evs[i];
+    const off = B.evs.length > 1 ? i * per : 0;
+    const fig = (id, pose, cls) => { const p = pById(d, id); return '<div class="bt-fig ' + cls + '"><span class="bt-av">' + (p ? avSvg(p.a, pose) : '') + '</span><b>' + esc(p ? p.n : '?') + '</b></div>'; };
+    const num = (k, v, sgn, cud) => '<span data-ck="' + k + '" data-cu="0" data-to="' + v + '" data-pre="' + sgn + '" data-cud="' + cud + '" data-cdur="900">' + sgn + v + '</span>';
+    let h;
+    if (e.k === 'double') {
+      h = '<div class="bt-t dbl">💀 DVOSTRUKA IZDAJA!</div><div class="bt-s"><span class="bt-who">' + esc(nameOf(d, e.a)).toUpperCase() + '</span> <span class="bt-arrow">⚔️</span> <span class="bt-who">' + esc(nameOf(d, e.b)).toUpperCase() + '</span></div>' +
+        '<div class="bt-stage dbl">' + fig(e.a, 'attack', 'l') + '<div class="bt-mid"><span class="bt-knife a">🗡️</span><span class="bt-knife b">🗡️</span><span class="bt-chest broken">💰</span></div>' + fig(e.b, 'attack', 'r') + '</div>' +
+        '<div class="bt-rows"><div class="bt-row lost">💰 Riznica <b>' + fmtN(e.tre) + '</b> propada</div>' +
+        '<div class="bt-row neg">' + esc(nameOf(d, e.a)) + ' ' + num('bta' + i, e.la, '−', 1700) + '</div><div class="bt-row neg">' + esc(nameOf(d, e.b)) + ' ' + num('btb' + i, e.lb, '−', 1900) + '</div></div>';
+    } else {
+      h = '<div class="bt-t">🗡️ IZDAJA U KRČMI!</div><div class="bt-s"><span class="bt-who t">' + esc(nameOf(d, e.t)).toUpperCase() + '</span> <span class="bt-arrow">🗡️</span> <span class="bt-who v">' + esc(nameOf(d, e.v)).toUpperCase() + '</span></div>' +
+        '<div class="bt-stage">' + fig(e.t, 'attack', 'l') + '<div class="bt-mid"><span class="bt-knife">🗡️</span><span class="bt-coins">' + '<i>🪙</i>'.repeat(6) + '</span></div>' + fig(e.v, 'shocked', 'r v') + '</div>' +
+        '<div class="bt-rows"><div class="bt-row">💰 Ukradena riznica ' + num('btt' + i, e.tre, '+', 1500) + '</div>' +
+        '<div class="bt-row">🗡️ Ukradeni bodovi (' + Math.round(PACT_STEAL * 100) + ' %) ' + num('bts' + i, e.st, '+', 1800) + '</div>' +
+        '<div class="bt-row tot">Izdajnik ' + esc(nameOf(d, e.t)) + ' ' + num('btg' + i, e.gain, '+', 2300) + '</div>' +
+        '<div class="bt-row neg">Izdan: ' + esc(nameOf(d, e.v)) + ' ' + num('btv' + i, e.st, '−', 2300) + '</div></div>';
+    }
+    h += '<div class="bt-line">' + KRCMAR + '<span>„' + esc(e.line) + '”</span></div>';
+    return '<div class="bt' + (tv ? ' tv-bt' : '') + '" style="--el:' + Math.max(0, el - off) + 'ms" data-bk="bt' + B.id + 'x' + i + '" data-bv="' + i + '">' + h + '</div>';
+  }
+  function loyalHtml(d, tv) {
+    const Y = d.ly; if (!Y) return '';
+    const el = Math.max(0, d.dur - d.ms);
+    const rows = Y.evs.map((e, i) => {
+      const A = pById(d, e.a), Bp = pById(d, e.b);
+      return '<div class="ly-pair" style="--i:' + i + '"><span class="bt-av">' + (A ? avSvg(A.a, 'happy') : '') + '</span><span class="ly-heart">❤️</span><span class="bt-av">' + (Bp ? avSvg(Bp.a, 'happy') : '') + '</span>' +
+        '<div class="ly-tx"><b>' + esc(A ? A.n : '?') + ' & ' + esc(Bp ? Bp.n : '?') + '</b><span>Riznica ' + fmtN(e.tre) + ' + bonus ' + fmtN(e.bonus) + '</span><span class="ly-each">+' + fmtN(e.each) + ' svakome</span></div></div>';
+    }).join('');
+    return '<div class="bt ly' + (tv ? ' tv-bt' : '') + '" style="--el:' + el + 'ms"><div class="bt-t ly">❤️ ODANOST DO KRAJA</div><div class="bt-s">Tajni savezi preživjeli su do finala</div>' + rows +
+      '<div class="bt-line">' + KRCMAR + '<span>„' + esc(['Izgleda da u ovoj krčmi još postoji čast!', 'Vjernost do kraja! Krčmar časti ovu rundu.', 'Neki savezi traju duže od krigle piva.'][Y.id % 3]) + '”</span></div></div>';
+  }
+  let btSoundKey = '';
+  function betraySound(d) {
+    const B = d.ph === 'betray' ? d.bt : d.ly; if (!B) return;
+    const key = d.ph + B.id; if (btSoundKey === key) return; btSoundKey = key;
+    const el = Math.max(0, d.dur - d.ms), at = (ms, n) => { if (ms - el >= -50) setTimeout(() => { if (btSoundKey === key) AUDIO.play(n); }, Math.max(0, ms - el)); };
+    if (d.ph === 'loyal') { at(0, 'stingRise'); at(1400, 'score'); return; }
+    B.evs.forEach((e, i) => { const o = B.evs.length > 1 ? i * 3000 : 0; if (e.k === 'double') { at(o, 'stingDuel'); at(o + 900, 'crack'); at(o + 1500, 'wrong'); } else { at(o, 'stingTension'); at(o + 850, 'boom'); at(o + 1500, 'score'); } });
+  }
+  // ===================== PIRAMIDA: prikaz =====================
+  // početni raspored je izračunat na domaćinu; ovdje se samo otkriva: bodovi rastu od nule, završavaju redom (najmanje prvi), lik se zatim penje
+  function fsEnd(d, p) {
+    const order = d.P.slice().sort((a, b) => (a.fsc || 0) - (b.fsc || 0) || (a.n < b.n ? -1 : 1));
+    return 1100 + order.findIndex((x) => x.id === p.id) * 650;
+  }
+  const fsLabel = (p) => (p.st ? p.st + '. stepenica' : 'podnožje') + (p.fr > 1 && p.fp ? ' · ' + p.fp + '/' + p.fr : '');
+  function fsRows(d) {
+    const el = Math.max(0, d.dur - d.ms);
+    return '<div class="fs-rows" style="--el:' + el + 'ms">' + d.P.slice().sort((a, b) => (b.fsc || 0) - (a.fsc || 0) || (a.n < b.n ? -1 : 1)).map((p) => {
+      const end = fsEnd(d, p);
+      return '<div class="fs-row' + (p.id === PID ? ' me' : '') + '" style="--fe:' + end + 'ms"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + '</span>' +
+        '<span class="fs-sc" data-ck="fs' + esc(p.id) + '" data-cu="0" data-to="' + (p.fsc || 0) + '" data-cud="' + Math.round(150 - el) + '" data-cdur="' + (end - 150) + '">' + (p.fsc || 0) + '</span><span class="fs-go">→ ' + esc(fsLabel(p)) + '</span></div>';
+    }).join('') + '</div>';
+  }
+  let fsSoundKey = '';
+  function fstartSound(d) {
+    if (fsSoundKey === d.s) return; fsSoundKey = d.s;
+    const el = Math.max(0, d.dur - d.ms), ends = d.P.map((p) => fsEnd(d, p)), last = Math.max(...ends);
+    for (let t = 200; t < last; t += 170) if (t > el) setTimeout(() => { if (fsSoundKey === d.s) AUDIO.play('tick'); }, t - el);
+    ends.forEach((t) => { if (t > el) setTimeout(() => { if (fsSoundKey === d.s) AUDIO.play('step'); }, t - el); });
+    if (last + 900 > el) setTimeout(() => { if (fsSoundKey === d.s) AUDIO.play('stingUp'); }, last + 900 - el);
+  }
+  // napredak za igrača: jasna jedna rečenica
+  function progTxt(d, me) {
+    if (me.st >= d.steps) return '👑 Kruna je tvoja!';
+    if (me.top) return '👑 Na vrhu si! Točan odgovor na pitanje za krunu = pobjeda.';
+    const need = (me.fr || 1) - (me.fp || 0);
+    return 'Napredak ' + (me.fp || 0) + '/' + (me.fr || 1) + ' · još ' + need + (need === 1 ? ' točan' : ' točna') + ' do ' + ((me.st || 0) + 1 === d.steps - 1 ? 'vrha' : ((me.st || 0) + 1) + '. stepenice');
+  }
+  function progMeter(d, me) {
+    const steps = d.steps - 1; let bars = '';
+    for (let s = 1; s <= steps; s++) bars += '<i class="' + ((me.st || 0) >= s ? 'on' : (me.st || 0) + 1 === s && me.fp ? 'half' : '') + '" style="width:' + (40 + (steps - s) * 18) + 'px"></i>';
+    return '<div class="step-meter" aria-label="Stepenica ' + (me.st || 0) + ' od ' + steps + '"><i class="crown' + (me.st >= d.steps ? ' on' : '') + '">👑</i>' + bars + '</div><div class="p-sub">' + esc(progTxt(d, me)) + '</div>';
+  }
   const CONT = { 't:vote>t:voteResult': 1, 'p:vote>p:voteResult': 1 };
   const SCENE = (() => {
     let ph0 = null, t0 = 0, tIn = -1e9, cls0 = '';
@@ -4829,6 +5387,8 @@ function createGame(o) {
         break;
       }
       case 'moment': h = tvTop(d, 'Krčma pamti') + momentHtml(d, d.mo); break;
+      case 'betray': h = tvTop(d, 'Krčma je vidjela sve') + betrayHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'loyal': h = tvTop(d, 'Prije finala') + loyalHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'howto': h = tvTop(d, 'Kako se igra') + timerHtml() + howtoHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'order': h = tvTop(d, 'Poredajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">' + esc(d.or.t) + '</div><div class="mg-s">od <b>' + esc(d.or.lo) + '</b> do <b>' + esc(d.or.hi) + '</b></div><div class="chips">' + d.or.it.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
       case 'orderReveal': h = tvTop(d, 'Točan poredak') + '<div class="tv-mid"><div class="mg"><div class="mg-t">' + esc(d.or.t) + '</div>' + orderSolution(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
@@ -4902,18 +5462,19 @@ function createGame(o) {
         break;
       }
       case 'fstart': {
-        const rows = d.P.slice().sort((a, b) => b.fs - a.fs || b.sc - a.sc).map((p) => '<div class="rank-row"><span class="mini">' + avSvg(p.a, p.fs ? 'happy' : 'idle') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + ' b → ' + (p.fs ? p.fs + '. stepenica' : 'dno') + '</span></div>').join('');
-        h = tvTop(d, 'Početne stepenice prema bodovima') +
-          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Tko kreće odakle?</div><div class="mboard nopos">' + rows + '</div>' +
-          '<div class="tie-note">Što više bodova, to viša početna stepenica, ali najviše ' + Math.min(3, d.steps) + '. Do vrha ih je ' + d.steps + '.</div>' +
+        h = tvTop(d, 'Bodovi iz kviza određuju početak') +
+          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Tko kreće odakle?</div>' + fsRows(d) +
+          '<div class="tie-note">Start: poredak + razlika u bodovima (najviše 4 koraka napretka). Gore je teže: od 4. stepenice svaka traži 2 točna. Na vrhu čeka pitanje za krunu.</div>' +
           '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div></div>' + pyramidHtml(d, false) + '</div>';
         break;
       }
       case 'fq': case 'fr': {
         const rev = d.ph === 'fr';
-        const tf = d.q.o.map((o, i) => '<div class="opt o' + (i === 0 ? 3 : 0) + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '" style="justify-content:center"><span class="txt" style="text-align:center">' + esc(o) + '</span></div>').join('');
-        h = tvTop(d, 'Točno ili netočno? Točan odgovor = stepenica više, najbrži = dvije!') + (rev ? '' : timerHtml(3000)) +
-          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="q-text">' + esc(d.q.t) + '</div><div class="tf-row">' + tf + '</div>' + (rev ? tdLine(d) : evHtml(d)) + '</div>' +
+        const cr = !!d.crown;
+        const tf = d.q.o.map((o, i) => '<div class="opt o' + (cr ? i : i === 0 ? 3 : 0) + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '"' + (cr ? '' : ' style="justify-content:center"') + '>' + (cr ? '<span class="shape">' + SHAPES[i] + '</span>' : '') + '<span class="txt"' + (cr ? '' : ' style="text-align:center"') + '>' + esc(o) + '</span></div>').join('');
+        const tops = d.P.filter((p) => p.top).map((p) => p.n);
+        h = tvTop(d, cr ? '👑 Pitanje za krunu! ' + esc(tops.join(' i ')) + (tops.length > 1 ? ' — točan i brži pobjeđuje' : ' — točan odgovor = pobjeda') : 'Točno ili netočno? Točan = napredak, najbrži +1, svaki 3. zaredom +1') + (rev ? '' : timerHtml(3000)) +
+          '<div class="finale-q' + (cr ? ' crownq' : '') + '"><div class="tv-mid" style="justify-content:center">' + (cr ? '<div class="crown-k">' + esc(d.q.c) + '</div>' : '') + '<div class="q-text">' + esc(d.q.t) + '</div><div class="' + (cr ? 'opts' : 'tf-row') + '">' + tf + '</div>' + (rev ? tdLine(d) : evHtml(d)) + '</div>' +
           pyramidHtml(d, rev, { delay: 1000 }) + '</div>';
         break;
       }
@@ -4923,6 +5484,7 @@ function createGame(o) {
     }
     SCENE.swap(demoBar + h, fresh, 't:' + d.ph);
     fitScreen();
+    pactToasts(d);
     MOTION.after('t:' + d.ph + ':' + d.s);
     if (d.ph === 'cast') CAST.start(document.getElementById('castStage'), d, true);
     bind('skip', () => game.skip());
@@ -4934,19 +5496,23 @@ function createGame(o) {
 
   function pyramidHtml(d, rev, o) {
     o = o || {};
-    const el = Math.max(0, d.dur - d.ms), enter = d.ph === 'fstart' && el < 1500, base = o.delay || 0;
-    let rows = '', k = 0, mvIdx = 0;
+    const el = Math.max(0, d.dur - d.ms), base = o.delay || 0, intro = d.ph === 'fstart';
+    let rows = '', mvIdx = 0;
     for (let s = d.steps; s >= 0; s--) {
       const w = s === 0 ? 100 : 100 - (s - 1) * (59 / Math.max(1, d.steps - 1));
       const here = d.P.filter((p) => (p.st || 0) === s).map((p) => {
-        const go = rev && p.mv, cd = go ? base + (mvIdx++) * 90 : enter ? 150 + (k++) * 90 : 0;
-        return '<span class="climber' + (go ? ' go' : '') + (enter ? ' enter' : '') + (p.id === PID ? ' me' : '') + '" style="' + (go ? '--mv:' + p.mv + ';' : '') + '--cd:' + cd + 'ms;--el:' + (go ? el : 0) + 'ms">' +
-          (go ? '<span class="up">+' + p.mv + '</span>' : '') + (o.you && p.id === PID && !go ? '<span class="tag-you">Ti</span>' : '') +
-          avSvg(p.a, rev ? (p.mv ? 'happy' : 'sad') : '') + '<span class="cn">' + esc(p.n) + '</span></span>';
+        // uvod: svi kreću iz podnožja i penju se stepenicu po stepenicu kad im završi brojanje bodova
+        const mv = intro ? (p.st || 0) : p.mv, go = (rev || intro) && mv;
+        const cd = intro ? fsEnd(d, p) : go ? base + (mvIdx++) * 90 : 0;
+        const mood = intro ? (el > fsEnd(d, p) + 300 && p.st ? 'happy' : 'idle') : rev ? (p.mv ? (s >= d.steps ? 'victory' : 'happy') : 'sad') : p.top ? 'victory' : '';
+        const prg = p.fr > 1 && p.fp > 0 && !p.top ? '<span class="prg">' + p.fp + '/' + p.fr + '</span>' : '';
+        return '<span class="climber' + (go ? ' go' + (intro ? ' walk' : '') : '') + (p.top ? ' ontop' : '') + (p.id === PID ? ' me' : '') + '" style="--mv:' + (mv || 0) + ';--cd:' + cd + 'ms;--el:' + (go ? el : 0) + 'ms">' +
+          (go && !intro ? '<span class="up">' + (s >= d.steps ? '👑' : '+' + p.mv) + '</span>' : '') + (o.you && p.id === PID && !go ? '<span class="tag-you">Ti</span>' : '') +
+          avSvg(p.a, mood) + prg + '<span class="cn">' + esc(p.n) + '</span></span>';
       }).join('');
-      rows += '<div class="pstep' + (s === 0 ? ' base' : '') + (s === d.steps ? ' top' : '') + '" style="width:' + w.toFixed(1) + '%"><span class="lv">' + s + '</span><span class="here">' + here + '</span></div>';
+      rows += '<div class="pstep' + (s === 0 ? ' base' : '') + (s === d.steps ? ' top crown' : '') + (s === d.steps - 1 ? ' summit' : '') + '" style="width:' + w.toFixed(1) + '%"><span class="lv">' + (s === d.steps ? '👑' : s) + '</span><span class="here">' + here + '</span></div>';
     }
-    return '<div class="pyramid">' + rows + '</div>';
+    return '<div class="pyramid' + (intro ? ' intro' : '') + '">' + rows + '</div>';
   }
 
   function tvLobby(d, demoBar) {
@@ -4961,11 +5527,11 @@ function createGame(o) {
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
     const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
     $app.innerHTML = demoBar +
-      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? botStepper(d) : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
+      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? botStepper(d) + pactToggle(d) : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
       '<div class="tvlob-grid">' + slots + '</div>' +
       '<div class="tvlob-act"><button class="btn lob-cta" id="start"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="home-link" id="quit">Odustani</button></div></div></div>';
     bind('start', () => game.start());
-    if (game) bindBots(d);
+    if (game) { bindBots(d); bindOpt(); }
     bind('quit', reset);
     bind('toPhone', () => { demoView = 'phone'; lastSig = ''; render(); });
     bind('fs', () => { try { const p = document.documentElement.requestFullscreen(); if (p && p.then) p.then(render, () => {}); } catch (e) {} });
@@ -4988,7 +5554,7 @@ function createGame(o) {
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
       (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '') + '>' + (d.fin ? 'Korak ' + (me.st || 0) + '/' + d.steps : me.sc + ' b') + '</span></div>' : '';
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -5005,16 +5571,16 @@ function createGame(o) {
           (p.b ? '<span class="st bot">🤖 Bot</span></div>' : '<span class="st' + (p.c ? '' : ' off') + '">' + (p.c ? '✓ U sobi' : 'Nije povezan') + '</span></div>')).join('');
         let invite = '', cta = '';
         if (mode === 'hostp') {
-          const open = L.inv !== undefined ? L.inv : d.P.length < 2, qr = qrSvg(appUrl() + '#' + d.code);
-          invite = '<button class="btn ghost lob-toggle" id="lobInv" aria-expanded="' + open + '">' + (open ? 'Sakrij pozivnicu' : 'Pozovi igrače') + '</button>' +
-            (open ? '<div class="lob-invite"><span class="lob-code-l">Kod sobe</span><span class="lob-code">' + esc(d.code) + '</span>' + (qr ? '<div class="lob-qr">' + qr + '</div>' : '') +
-              '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span></div>' : '');
-          cta = botStepper(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 ? ' disabled' : '') + '>Započni igru</button>' + (d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
+          const open = !!L.inv, qr = open ? qrSvg(appUrl() + '#' + d.code) : '';
+          invite = '<button class="btn ghost lob-toggle" id="lobInv" aria-haspopup="dialog" aria-expanded="' + open + '">Pozovi igrače <span class="lob-chip">Kod <b class="lob-code">' + esc(d.code) + '</b></span></button>' +
+            (open ? '<div class="inv-modal" id="invModal" role="dialog" aria-modal="true" aria-label="Pozivnica"><div class="inv-card"><span class="lob-code-l">Kod sobe</span><span class="inv-code">' + esc(d.code) + '</span>' + (qr ? '<div class="lob-qr inv-qr">' + qr + '</div>' : '') +
+              '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span><button class="btn lob-cta" id="invClose">Zatvori</button></div></div>' : '');
+          cta = botStepper(d) + pactToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 ? ' disabled' : '') + '>Započni igru</button>' + (d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
         } else if (mode === 'demo') {
           const nb = d.P.filter((p) => p.b).length;
           cta = botStepper(d) + '<button class="btn lob-cta" id="dstart"' + (nb < 1 ? ' disabled' : '') + '>Započni igru</button><div class="lob-wait">' + (nb < 1 ? 'Dodaj barem jednog bota.' : 'Igraš protiv ' + botWord(nb) + '. Bacat će moći i na tebe!') + '</div>';
         } else {
-          cta = '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
+          cta = pactToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
         }
         h = '<div class="lob"><div class="p-title lob-title">Odaberi lika</div><div class="av-grid">' + grid + '</div>' +
           invite + cta + '<button class="home-link" id="leave">Izađi</button><div class="lob-players">' + rows + '</div></div>';
@@ -5051,6 +5617,8 @@ function createGame(o) {
       }
       case 'bet': h = head + betPhone(d, me); break;
       case 'moment': h = center(head + momentHtml(d, d.mo)); break;
+      case 'betray': h = head + betrayHtml(d, false); break;
+      case 'loyal': h = head + loyalHtml(d, false); break;
       case 'howto': h = center(head + timerHtml() + howtoHtml(d)); break;
       case 'order': h = head + timerHtml() + orderPhone(d, me); break;
       case 'hilo': h = head + timerHtml() + hiloPhone(d, me); break;
@@ -5088,21 +5656,21 @@ function createGame(o) {
         break;
       }
       case 'fstart': {
-        const ahead = d.P.filter((p) => p.fs > me.fs).length;
-        h = center(head + '<div style="width:130px" class="bob">' + avSvg(me.a, me.fs ? 'happy' : 'idle') + '</div>' +
-          '<div class="p-title">Krećeš s ' + stepTxt(me.fs) + '</div>' +
-          '<div class="p-sub">' + (ahead ? 'Ispred tebe ' + (ahead === 1 ? 'je 1 igrač' : 'su ' + ahead + ' igrača') + '. Moći i brzi odgovori mogu sve promijeniti!' : 'Najviše si na piramidi. Pazi na napade!') + '</div>' +
-          (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div>' : ''));
+        const el = Math.max(0, d.dur - d.ms);
+        h = head + '<div class="fs" style="--el:' + el + 'ms;--fe:' + fsEnd(d, me) + 'ms"><div class="p-title">Tko kreće odakle?</div>' + fsRows(d) +
+          '<div class="fs-me">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div></div>';
         break;
       }
       case 'fq': h = head + finalePhone(d, me); break;
       case 'fr': {
         const ok = me.ch === d.cor;
         const el = Math.max(0, d.dur - d.ms), mine = me.ch;
-        const tf = '<div class="rv-opts two">' + d.q.o.map((o, i) => '<div class="p-opt o' + (i === 0 ? 3 : 0) + (i === d.cor ? ' rv-ok' + (mine === i ? ' mine' : '') : mine === i ? ' rv-bad' : ' rv-dim') + '"><span class="otxt">' + esc(o) + '</span></div>').join('') + '</div>';
-        const note = ok ? (me.mv > 1 ? 'Točno! +' + me.mv + ' stepenice' : 'Točno! +1 stepenica') : mine >= 0 ? 'Netočno · ostaješ na mjestu' : 'Vrijeme je isteklo';
+        const tf = '<div class="rv-opts' + (d.crown ? '' : ' two') + '">' + d.q.o.map((o, i) => '<div class="p-opt o' + (d.crown ? i : i === 0 ? 3 : 0) + (i === d.cor ? ' rv-ok' + (mine === i ? ' mine' : '') : mine === i ? ' rv-bad' : ' rv-dim') + '"><span class="otxt">' + esc(o) + '</span></div>').join('') + '</div>';
+        const wasTop = d.crown && (me.top || me.st >= d.steps);
+        const note = me.st >= d.steps ? '👑 KRUNA JE TVOJA!' : wasTop ? (mine >= 0 ? 'Kruna izmiče! Ostaješ na vrhu — nova prilika u sljedećem pitanju.' : 'Vrijeme je isteklo · ostaješ na vrhu') :
+          ok ? 'Točno! +' + (me.ug || 1) + ' napretka' + (me.sk ? ' (niz od 3!)' : '') + (me.mv ? ' · stepenica ' + me.st : '') + (me.top ? ' · 👑 na vrhu!' : '') : mine >= 0 ? 'Netočno · napredak ostaje' : 'Vrijeme je isteklo';
         h = head + '<div class="rv" style="--el:' + el + 'ms"><div class="rv-a"><div class="p-q">' + esc(d.q.t) + '</div>' + tf + '<div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div></div>' +
-          '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' : stepMeter(d, me)) + tdLine(d) + '</div></div>';
+          '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' + '<div class="p-sub">' + esc(progTxt(d, me)) + '</div>' : progMeter(d, me)) + tdLine(d) + '</div></div>';
         break;
       }
       case 'final':
@@ -5112,6 +5680,7 @@ function createGame(o) {
     if (freshP && me) { phoneStep = L.s; phoneSound(d, me); }
     if (me && (!d.ntv || d.ph !== 'fq') && (d.ph === 'power' || d.ph === 'question' || d.ph === 'fq')) h += barRow(d);
     SCENE.swap(demoBar + h, freshP, 'p:' + d.ph);
+    $app.classList.toggle('lobfit', !!d && d.ph === 'lobby');
     fitScreen();
     MOTION.after('p:' + d.ph + ':' + d.s);
     if (freshP) $app.classList.add('fresh');
@@ -5302,6 +5871,12 @@ function createGame(o) {
   }
   function botWord(n) { return n + (n < 5 ? ' bota' : ' botova'); }
   // samo domaćin (igra je lokalna): − broj +
+  function pactToggle(d) {
+    if (!d.opt) return '';
+    if (!game) return d.opt.pacts ? '<div class="lob-info">🍻 Tajni paktovi su uključeni (od 3 prava igrača)</div>' : '';
+    return '<div class="lob-opt"><span class="lob-opt-l">🍻 Tajni paktovi<small>Savezi, šaputanje i izdaje (od 3 prava igrača)</small></span><button class="tgl' + (d.opt.pacts ? '' : ' off') + '" data-popt="' + (d.opt.pacts ? 0 : 1) + '">' + (d.opt.pacts ? 'Uključeno' : 'Isključeno') + '</button></div>';
+  }
+  function bindOpt() { document.querySelectorAll('#app [data-popt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('pacts', b.dataset.popt === '1'); } }; }); }
   function botStepper(d) {
     const nb = d.P.filter((p) => p.b).length, room = d.max - d.P.length;
     return '<div class="lob-bots"><span class="lob-bots-l">🤖 Botovi<small>Pravi igrači imaju prednost pri odabiru likova</small></span>' +
@@ -5348,6 +5923,7 @@ function createGame(o) {
     if (!A || !A.firstElementChild) return;
     const ih = innerHeight;
     A.style.zoom = '';
+    return; // namjerno: više sadržaja = pomicanje, ne smanjivanje cijelog sučelja
     let sh = se.scrollHeight;
     if (sh <= ih + 1) return;
     let f = Math.max(0.6, ih / sh);
@@ -5628,26 +6204,34 @@ function createGame(o) {
     const answered = L.sent || me.ok;
     const mine = L.sent ? L.sent.c : -1;
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
-    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (i === 0 ? 3 : 0) + (locked ? ' locked' : '') + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '><span class="otxt">' + optText(o, i) + '</span></button>').join('');
-    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Stepenica više</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
+    const cr = !!d.crown;
+    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (cr ? i : i === 0 ? 3 : 0) + (locked ? ' locked' : '') + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '>' + (cr ? '<span class="shape">' + SHAPES[i] + '</span>' : '') + '<span class="otxt">' + optText(o, i) + '</span></button>').join('');
+    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dodatni napredak</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
-    return timerHtml(3000) + (d.ntv ? '<div class="phone-pyr compact">' + pyramidHtml(d, false, { you: true }) + '</div>' : '') +
-      '<div class="p-q" style="font-size:1.6rem;text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts two">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
+    return timerHtml(3000) + (d.ntv && !cr ? '<div class="phone-pyr compact">' + pyramidHtml(d, false, { you: true }) + '</div>' : '') +
+      (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!' : '👑 Netko je na vrhu — pitanje za krunu') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
+      '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
+      '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : '') +
       (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '');
   }
 
   function bindPhone(d, me) {
+    if (d) { bindPact(d); pactToasts(d); }
     bind('toTv', () => { demoView = 'tv'; render(); });
     bind('leave', reset);
     bind('leave2', reset);
     bind('dstart', () => game.start());
-    if (d && d.ph === 'lobby' && game) bindBots(d);
+    if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });
-    bind('lobInv', () => { L.inv = !(L.inv !== undefined ? L.inv : d.P.length < 2); phoneRender(true); });
+    bind('lobInv', () => { L.inv = true; phoneRender(true); });
+    bind('invClose', () => { L.inv = false; phoneRender(true); });
+    { const m = document.getElementById('invModal'); if (m) m.onclick = (e) => { if (e.target === m) { L.inv = false; phoneRender(true); } }; }
+    // predvorje: popis igrača se pomiče sam za sebe; pamti položaj i pokaži da ima još redova
+    { const lp = $app.querySelector('.lob-players');
+      if (lp) { const upd = () => lp.classList.toggle('more', lp.scrollTop + lp.clientHeight < lp.scrollHeight - 4); lp.scrollTop = L.lobSc || 0; lp.onscroll = () => { L.lobSc = lp.scrollTop; upd(); }; upd(); } }
     $app.querySelectorAll('[data-v]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ v: +b.dataset.v }); }; });
     $app.querySelectorAll('[data-p]').forEach((b) => {
       b.onclick = () => {
