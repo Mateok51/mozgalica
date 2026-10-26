@@ -66,3 +66,7 @@ python3 tests/test_mobile_feedback.py
 Test sam pokreće privremeni HTTP poslužitelj i provjerava UI s kontroliranim stanjima. Ne dodaje testna sučelja u aplikaciju. `CHROMIUM_EXECUTABLE` može zadati putanju preglednika, a `MOZGALICA_SCREENSHOTS` mapu za snimke.
 
 Dodatno je provjerena cijela demo runda kroz stvarno glasanje, odabir moći, slanje odgovora i prikaz rezultata, bez ubrizgavanja stanja.
+
+## Dorada leda
+
+[Animirana snimka i opis dovršene moći leda](ice-preview.md)

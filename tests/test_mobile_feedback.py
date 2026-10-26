@@ -37,6 +37,16 @@ with sync_playwright() as p:
     errors = []
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.route(url, lambda r: r.fulfill(status=200, content_type='text/html', body=html))
+    page.add_init_script("""(() => {
+      window.__playedRates = [];
+      const proto = (window.AudioContext || window.webkitAudioContext).prototype;
+      const create = proto.createBufferSource;
+      proto.createBufferSource = function(...args) {
+        const source = create.apply(this, args), start = source.start;
+        source.start = function(...values) { window.__playedRates.push(this.playbackRate.value); return start.apply(this, values); };
+        return source;
+      };
+    })();""")
     page.goto(url, wait_until='load')
     page.locator('#demo').tap()
     pid = page.evaluate('window.__dbg.pid')
@@ -92,6 +102,59 @@ with sync_playwright() as p:
     assert not page.locator('[data-c]:not(:disabled)').count()
     assert 'happy' in page.locator('.bar-row .bw.me img').get_attribute('src')
     print('PASS ice, input lock and answer confirmation', flush=True)
+    # Fractures follow touches and survive roster redraws. Right-click is not a hit.
+    d = show('question', fx='led')
+    capture('ice-intact.png')
+    page.locator('#fx').click(button='right', position={'x': 30, 'y': 90})
+    assert page.evaluate('window.__dbg.L.fx.hits') == 0
+    positions = [(30, 90), (180, 150), (90, 200), (230, 100), (120, 70), (260, 210)]
+    for i, (x, y) in enumerate(positions):
+        page.locator('#fx').tap(position={'x': x, 'y': y})
+        assert page.evaluate('window.__dbg.L.fx.impacts.length') == i + 1
+        if i == 2:
+            capture('ice-cracked.png')
+    assert page.locator('#fx .cracks path').count() == 6
+    impacts = page.evaluate('window.__dbg.L.fx.impacts')
+    assert impacts[0]['x'] != impacts[1]['x']
+    d['P'][1]['ok'] = True
+    page.evaluate('(d)=>window.__dbg.setState(d)', d)
+    assert page.evaluate('window.__dbg.L.fx.impacts') == impacts
+    page.locator('#fx').tap(position={'x': 170, 'y': 170})
+    assert page.locator('.ice-release i').count() == 12
+    assert page.locator('.ice-release').evaluate('(e)=>getComputedStyle(e).pointerEvents') == 'none'
+    page.locator('[data-c]').first.tap()
+    assert not page.evaluate('Boolean(window.__dbg.L.sent)')
+    capture('ice-breaking.png')
+    page.wait_for_timeout(700)
+    assert not page.locator('.ice-release').count()
+    assert page.evaluate('window.__playedRates.some(r=>Math.abs(r-.72)<.01)')
+    print('PASS touch-local cracks, redraw persistence, bounded shatter and cleanup', flush=True)
+    # Finishing ice must preserve the next queued power, including keyboard input.
+    show('question', fx='led')
+    page.evaluate("window.__dbg.L.fxq.push('sluz')")
+    for _ in range(7):
+        page.locator('#fx').press('Enter')
+    assert page.evaluate('window.__dbg.L.fx.k') == 'sluz'
+    assert not page.evaluate('window.__dbg.L.fxCleared')
+    assert not page.evaluate('Boolean(window.__dbg.L.sent)')
+    show('question')
+    page.wait_for_timeout(700)
+    assert not page.locator('.ice-release').count()
+    page.emulate_media(reduced_motion='reduce')
+    show('question', fx='led')
+    for _ in range(7):
+        page.locator('#fx').press('Space')
+    assert page.locator('.ice-release i').evaluate_all("els=>els.every(e=>getComputedStyle(e).display==='none')")
+    assert not page.evaluate('Boolean(window.__dbg.L.sent)')
+    page.emulate_media(reduced_motion='no-preference')
+    print('PASS stacked powers, keyboard input, phase changes and reduced motion', flush=True)
+    show('question', fx='led')
+    page.locator('#mute').click()
+    count = page.evaluate('window.__playedRates.length')
+    page.locator('#fx').tap(position={'x': 30, 'y': 90})
+    assert page.evaluate('window.__playedRates.length') == count
+    page.locator('#mute').click()
+    print('PASS crack playback variation and mute', flush=True)
     show('question', fx='sluz')
     assert page.locator('.fx-clear-progress').inner_text() == '0% očišćeno'
     r = page.locator('#fx').bounding_box()

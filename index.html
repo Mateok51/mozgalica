@@ -2008,6 +2008,29 @@
   @keyframes reactionArrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .phone .round-reaction { animation: none; } }
 </style>
+
+<style id="ice-polish-style">
+  /* Ice stays inside the original answer boards and uses the existing frost colours. */
+  .fx-led.ice-shell { isolation: isolate; cursor: pointer; }
+  .ice-shell .ice-facets { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .38; pointer-events: none; }
+  .ice-shell .cracks { width: 100%; height: 100%; overflow: hidden; }
+  .ice-shell .cracks path { stroke-linejoin: round; stroke-linecap: round; }
+  .ice-shell .ice-txt { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+  .ice-shell .ice-txt small { font: 800 .8rem var(--font-body); margin-top: 8px; }
+  .ice-shell:focus-visible { outline: 3px solid var(--gold-hi); outline-offset: 3px; }
+  .ice-impact { position: absolute; left: var(--ix); top: var(--iy); width: 40px; height: 40px; border: 2px solid #fff; border-radius: 50%; pointer-events: none; animation: iceImpact .23s ease-out both; animation-delay: calc(-1 * var(--age)); }
+  @keyframes iceImpact { from { opacity: .9; transform: translate(-50%, -50%) scale(.3); } to { opacity: 0; transform: translate(-50%, -50%) scale(1.8); } }
+  .ice-release { position: absolute; inset: -6px; z-index: 8; pointer-events: none; overflow: hidden; border-radius: 26px; }
+  .ice-release i { position: absolute; left: var(--sx); top: var(--sy); width: var(--size); height: calc(var(--size) * 1.6); background: linear-gradient(130deg, #f4fbff, #bcdbe6 55%, #789eaf); clip-path: polygon(45% 0, 100% 35%, 65% 100%, 0 65%); animation: iceShard .62s cubic-bezier(.2,.65,.4,1) both; animation-delay: calc(-1 * var(--age)); }
+  .ice-release::after { content: ''; position: absolute; inset: 0; border: 3px solid #e6f2f6; border-radius: inherit; animation: iceClear .4s ease-out both; animation-delay: calc(-1 * var(--age)); }
+  @keyframes iceShard { from { opacity: .95; transform: translate(-50%, -50%) rotate(0); } to { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--rot)); } }
+  @keyframes iceClear { from { opacity: .8; } to { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .ice-shell.in, .ice-shell.shake, .ice-impact { animation: none !important; }
+    .ice-impact, .ice-release i { display: none; }
+    .ice-release::after { animation: iceClear .15s linear both; animation-delay: calc(-1 * var(--age)); }
+  }
+</style>
 </head>
 <body>
 <div id="app" class="screen center"></div>
@@ -3664,7 +3687,7 @@ function createGame(o) {
       wrong: () => { tone(260, 0, 0.18, 'sawtooth', 0.1, 200); tone(196, 0.16, 0.35, 'sawtooth', 0.1, 120); },
       zap: () => { tone(1600, 0, 0.28, 'sawtooth', 0.07, 180); noise(0, 0.22, 0.08, 2500); },
       freeze: () => { noise(0, 0.5, 0.14, 5000); tone(2600, 0, 0.4, 'sine', 0.06, 1300); },
-      crack: () => { noise(0, 0.07, 0.3, 1800); tone(3000, 0, 0.05, 'square', 0.03, 1500); },
+      crack: (a) => { const rate = a && a.rate || 1; noise(0, 0.07 / rate, 0.3, 1800 * rate); tone(3000 * rate, 0, 0.05 / rate, 'square', 0.03, 1500 * rate); },
       splat: () => { noise(0, 0.25, 0.25, 300, 'lowpass'); tone(160, 0, 0.2, 'sine', 0.2, 60); },
       squish: () => { tone(300, 0, 0.1, 'square', 0.08, 90); noise(0, 0.08, 0.12, 900); },
       boom: () => { noise(0, 0.9, 0.55, 140, 'lowpass'); tone(110, 0, 0.7, 'sine', 0.45, 32); },
@@ -3688,9 +3711,9 @@ function createGame(o) {
       fetch('audio/' + n + '.mp3').then((r) => (r.ok ? r.arrayBuffer() : Promise.reject())).then((ab) => new Promise((ok, no) => c.decodeAudioData(ab, ok, no)))
         .then((b) => { bufs[n] = b; }).catch(() => { bufs[n] = null; });
     }
-    function playBuf(n) {
+    function playBuf(n, a) {
       const c = ac(), b = bufs[n]; if (!c || !b || muted) return false;
-      const src = c.createBufferSource(), g = c.createGain(); src.buffer = b; g.gain.value = VOL[n] != null ? VOL[n] : 0.8;
+      const src = c.createBufferSource(), g = c.createGain(); src.buffer = b; if (n === 'crack' && a && a.rate) src.playbackRate.value = Math.max(.7, Math.min(1.3, a.rate)); g.gain.value = VOL[n] != null ? VOL[n] : 0.8;
       src.connect(g); g.connect(c.destination); src.start(); return true;
     }
     return {
@@ -3698,7 +3721,7 @@ function createGame(o) {
         try {
           if (muted) return;
           const f = fileOf(n);
-          if (f && bufs[f] && playBuf(f)) return;
+          if (f && bufs[f] && playBuf(f, a)) return;
           if (f) load(f);
           const k = P[n] ? n : ALIAS[n];
           if (k && P[k]) P[k](a);
@@ -4568,7 +4591,7 @@ function createGame(o) {
   // ---------- efekti moći ----------
   function makeFx(k) {
     if (!k) return null;
-    if (k === 'led') return { k, hits: 0, need: 7 };
+    if (k === 'led') return { k, hits: 0, need: 7, impacts: [], entered: Date.now() };
     if (k === 'sluz') return { k, cells: new Array(48).fill(1), left: 48 };
     if (k === 'grick') return { k, bugs: Array.from({ length: 5 }, () => ({ x: 10 + Math.random() * 80, y: 12 + Math.random() * 76, on: true })) };
     if (k === 'bomba') return { k, taps: 0, need: 4, ends: Date.now() + 5000, boom: false };
@@ -4577,6 +4600,11 @@ function createGame(o) {
   function stopFxTimer() { if (L && L.fxTimer) { clearInterval(L.fxTimer); L.fxTimer = null; } }
   function fxDone() {
     stopFxTimer();
+    if (L.fx && L.fx.k === 'led') {
+      L.iceBurst = { at: Date.now() };
+      const step = L.s;
+      setTimeout(() => { if (L.s === step) { L.iceBurst = null; document.querySelector('#app .ice-release')?.remove(); } }, 660);
+    }
     L.fxq.shift();
     L.fx = makeFx(L.fxq[0]);
     L.fxCleared = !L.fx;
@@ -4638,19 +4666,37 @@ function createGame(o) {
     };
     L.bombRaf = requestAnimationFrame(step);
   }
+  function iceBurstHtml() {
+    if (!L.iceBurst || Date.now() - L.iceBurst.at >= 650) return '';
+    const age = Date.now() - L.iceBurst.at;
+    return '<div class="ice-release" aria-hidden="true" style="--age:' + age + 'ms">' + Array.from({ length: 12 }, (_, i) => {
+      const col = i % 4, row = Math.floor(i / 4);
+      return '<i style="--sx:' + (12 + col * 25) + '%;--sy:' + (15 + row * 32) + '%;--size:' + (16 + i % 3 * 7) + 'px;--dx:' + ((col - 1.5) * 70) + 'px;--dy:' + ((row - 1) * 80 + 65) + 'px;--rot:' + ((i % 2 ? 1 : -1) * (65 + i * 12)) + 'deg"></i>';
+    }).join('') + '</div>';
+  }
   function fxHtml(fx) {
     if (!fx) return '';
     const progress = fx.k === 'led' ? fx.hits + ' / ' + fx.need + ' dodira' : fx.k === 'sluz' ? Math.round((48 - fx.left) / 48 * 100) + '% očišćeno' : '';
     const label = '<div class="fx-label">' + (FX_LABEL[fx.k] || '') + (progress ? '<span class="fx-clear-progress">' + progress + '</span>' : '') + '</div>';
     if (fx.k === 'led') {
-      const crack = Math.min(1, fx.hits / fx.need);
-      let lines = '';
-      for (let i = 0; i < fx.hits; i++) {
-        const x = 15 + ((i * 37) % 70), y = 20 + ((i * 53) % 60);
-        lines += '<path' + (i === fx.hits - 1 ? ' class="new"' : '') + ' d="M' + x + ' ' + y + 'l' + (8 + i) + ' ' + (10 - i) + 'l-6 ' + (12 + i) + 'M' + x + ' ' + y + 'l-' + (10 + i) + ' 6" stroke="#fff" stroke-width="1.4" fill="none"/>';
-      }
-      return '<div class="fx fx-led' + (fx.hits ? '' : ' in') + '" id="fx" style="opacity:' + (1 - crack * 0.35) + '">' + label +
-        '<svg class="cracks" viewBox="0 0 100 100" preserveAspectRatio="none">' + lines + '</svg><div class="ice-txt">' + (fx.need - fx.hits) + '</div></div>';
+      const age = fx.lastHit ? Date.now() - fx.lastHit : 1000;
+      const impacts = fx.impacts || [];
+      const lines = impacts.map((hit, i) => {
+        const x = hit.x, y = hit.y, reach = 12 + i * 2;
+        let path = '';
+        for (let ray = 0; ray < 5; ray++) {
+          const a = ray * Math.PI * 2 / 5 + i * .7;
+          const mx = x + Math.cos(a) * reach * .45, my = y + Math.sin(a) * reach * .45;
+          const ex = x + Math.cos(a + .15) * reach, ey = y + Math.sin(a + .15) * reach;
+          path += 'M' + x + ' ' + y + 'L' + mx + ' ' + my + 'L' + ex + ' ' + ey + 'M' + mx + ' ' + my + 'l' + Math.cos(a - .8) * 6 + ' ' + Math.sin(a - .8) * 6;
+        }
+        return '<path' + (i === impacts.length - 1 && age < 180 ? ' class="new" style="animation-delay:-' + age + 'ms"' : '') + ' d="' + path + '" stroke-width=".65" fill="none"/>';
+      }).join('');
+      const last = impacts[impacts.length - 1];
+      return '<div class="fx fx-led ice-shell' + (Date.now() - fx.entered < 280 ? ' in' : '') + '" id="fx" role="button" tabindex="0" aria-label="Razbij led. Preostalo ' + (fx.need - fx.hits) + ' dodira." style="opacity:' + (1 - fx.hits / fx.need * .35) + '">' + label +
+        '<svg class="ice-facets" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L45 18 12 52ZM100 0L45 18 85 56ZM0 100L12 52 52 77ZM100 100L52 77 85 56Z" fill="#fff"/><path d="M45 18L12 52 52 77 85 56Z" fill="none" stroke="#f4fbff" stroke-width=".5"/></svg>' +
+        '<svg class="cracks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' + lines + '</svg><div class="ice-txt" aria-hidden="true">' + (fx.need - fx.hits) + '<small>' + (fx.need - fx.hits === 1 ? 'Još jedan udarac!' : 'Razbij led') + '</small></div>' +
+        (last && age < 230 ? '<i class="ice-impact" style="--ix:' + last.x + '%;--iy:' + last.y + '%;--age:' + age + 'ms" aria-hidden="true"></i>' : '') + '</div>';
     }
     if (fx.k === 'sluz') {
       let cells = '';
@@ -4674,15 +4720,22 @@ function createGame(o) {
     const fx = L.fx;
     if (!el || !fx) return;
     if (fx.k === 'led') {
-      el.onpointerdown = (e) => {
+      const hit = (e, keyboard) => {
         e.preventDefault();
-        fx.hits++;
-        SFX.play('crack');
+        if (L.fx !== fx || fx.hits >= fx.need || e.repeat || (!keyboard && e.button !== 0)) return;
+        const rect = el.getBoundingClientRect();
+        const x = keyboard ? 50 : Math.max(2, Math.min(98, (e.clientX - rect.left) / rect.width * 100));
+        const y = keyboard ? 50 : Math.max(2, Math.min(98, (e.clientY - rect.top) / rect.height * 100));
+        fx.impacts.push({ x, y }); fx.lastHit = Date.now(); fx.hits++;
+        SFX.play('crack', { rate: fx.hits === fx.need ? .72 : 1.15 - fx.hits * .055 });
         HAPTIC.tap();
         if (fx.hits >= fx.need) return fxDone();
         el.outerHTML = fxHtml(fx); bindFx();
-        const n = document.getElementById('fx'); if (n) n.classList.add('shake');
+        const n = document.getElementById('fx');
+        if (n) { n.classList.add('shake'); if (keyboard) n.focus({ preventScroll: true }); }
       };
+      el.onpointerdown = (e) => hit(e, false);
+      el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') hit(e, true); };
     } else if (fx.k === 'sluz') {
       const cells = el.querySelectorAll('.cell');
       const wipe = (e) => {
@@ -6046,7 +6099,7 @@ function createGame(o) {
     const detail = answered ? (mine >= 0 ? 'Odabir ' + SHAPES[mine] + ' · ' : '') + 'Spremno ' + ready + '/' + players.length : L.fx ? 'Ukloni moć pa odaberi odgovor.' : L.fxCleared ? 'Moć uklonjena · brži odgovor donosi više bodova.' : '';
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
       qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
+      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + iceBurstHtml() + '</div>' + boomCover() +
       '<div class="waiting" role="status" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + (detail ? '<span class="round-answer-detail">' + esc(detail) + '</span>' : '') + '</div>';
   }
 
@@ -6248,7 +6301,7 @@ function createGame(o) {
     return timerHtml(3000) + (d.ntv && !cr ? '<div class="phone-pyr compact">' + pyramidHtml(d, false, { you: true }) + '</div>' : '') +
       (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!' : '👑 Netko je na vrhu — pitanje za krunu') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
       '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
+      '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + iceBurstHtml() + '</div>' + boomCover() +
       (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : '') +
       (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '');
   }
