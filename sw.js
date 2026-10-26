@@ -1,6 +1,6 @@
 // Mozgalica: uvijek pokušaj mrežu, a bez interneta posluži zadnju spremljenu verziju.
-const CACHE = 'mozgalica-v19';
-const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg'];
+const CACHE = 'mozgalica-v20';
+const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
 });

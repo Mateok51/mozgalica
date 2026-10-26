@@ -2,6 +2,8 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-DghvBhBDes2EGmXBaL5ofUNY+pcS98doX0rryjTNtCg=' 'sha256-eIh/hYlTZb+/PWT2WR/PevMD5aA5jH8/Lx5nWxl8Gxc=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
 <meta name="description" content="Party kviz za TV i mobitele: likovi, moći, izazovi i utrka do vrha piramide.">
@@ -1997,8 +1999,8 @@
 <button id="music" type="button" aria-label="Isključi glazbu"></button>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3c2"/><stop offset="1" stop-color="#ff9d2e"/></linearGradient></defs></svg>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
 //#engine-start
@@ -4065,6 +4067,14 @@ function createGame(o) {
 
   let PID = store.get('mz_pid');
   if (!PID) { PID = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('mz_pid', PID); }
+  let SK = store.get('mz_sk');
+  if (!SK || !/^[0-9a-f]{32}$/.test(SK)) {
+    const a = new Uint8Array(16);
+    try { crypto.getRandomValues(a); } catch (e) { for (let i = 0; i < 16; i++) a[i] = Math.floor(Math.random() * 256); }
+    SK = Array.from(a, (b) => b.toString(16).padStart(2, '0')).join(''); store.set('mz_sk', SK);
+  }
+  const hostKeys = new Map();   // domaćin: pid → ključ (prvi koji se javio s tim pid-om)
+  const okKey = (k) => typeof k === 'string' && /^[0-9a-f]{32}$/.test(k);
   let myAv = parseInt(store.get('mz_av'), 10);
   if (!(myAv >= 0 && myAv < 10)) myAv = 8 + Math.floor(Math.random() * 2);
 
@@ -4150,7 +4160,7 @@ function createGame(o) {
         } else if (type === 3) {
           const tl = (body[0] << 8) | body[1], topic = dec.decode(body.subarray(2, 2 + tl));
           let off = 2 + tl; if ((flags >> 1) & 3) off += 2;
-          try { onMsg(topic, JSON.parse(dec.decode(body.subarray(off)))); } catch (e) {}
+          if (n - off <= 300000) { try { onMsg(topic, JSON.parse(dec.decode(body.subarray(off)))); } catch (e) {} }
         }
       }
     }
@@ -4206,13 +4216,16 @@ function createGame(o) {
     relayConns.clear();
   }
   function onRelayHost(client, code, m) {
-    if (!m || typeof m !== 'object' || typeof m.pid !== 'string' || !game) return;
+    if (!m || typeof m !== 'object' || typeof m.pid !== 'string' || !game || !okKey(m.sk)) return;
     const pid = m.pid.slice(0, 40);
+    const key = hostKeys.get(pid);
+    if (key && key !== m.sk) return;                                   // lažno predstavljanje
+    if (!key) { if (m.t !== 'hello') return; hostKeys.set(pid, m.sk); }
     let conn = relayConns.get(pid);
     if (!conn || conn.client !== client) {
       if (conn) hostConns.delete(conn);
       conn = { relay: true, open: true, client, pid, last: Date.now(),
-        send(v) { client.publish(rTopic(code, 'p/' + pid), v); }, close() { this.open = false; } };
+        send(v) { client.publish(rTopic(code, 'p/' + pid + '/' + m.sk.slice(0, 16)), v); }, close() { this.open = false; } };
       relayConns.set(pid, conn); hostConns.set(conn, { pid: null, name: '', av: 0, in: null });
     }
     conn.last = Date.now();
@@ -4230,22 +4243,22 @@ function createGame(o) {
       if (mode !== 'player' || pcode !== code || (pconn && pconn.open)) return;
       const c = mqttClient(u, (topic, d) => {
         if (prelay !== c) return;
-        if (d && d.t === 'who') { c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, name: pname, av: myAv }); return; }
+        if (d && d.t === 'who') { c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv }); return; }
         if (d && d.t === 'pv' && d.code === pcode) { if (pconn && pconn.open) return; const ch = JSON.stringify(d.pv) !== JSON.stringify(PV); PV = d.pv; if (ch && S) phoneRender(); return; }
-        if (d && d.code === pcode && Array.isArray(d.P)) {
+        if (d && d.code === pcode && Array.isArray(d.P) && d.P.length <= 12 && typeof d.ph === 'string') {
           if (pconn && pconn.open) return;           // izravna veza ima prednost
           clearTimeout(waitTimer);
           if (netNote) { netNote = ''; if (S) phoneRender(true); }
           applyState(d);
         }
       }, () => { if (prelay === c) { prelay = null; clearInterval(prelayPing); clearInterval(prelayHello); if (mode === 'player' && !(pconn && pconn.open)) setTimeout(startPlayerRelay, 1500); } });
-      c.subscribe(rTopic(code, 'all')); c.subscribe(rTopic(code, 'p/' + PID));
+      c.subscribe(rTopic(code, 'all')); c.subscribe(rTopic(code, 'p/' + PID + '/' + SK.slice(0, 16)));
       prelay = c;
       if (await c.whenReady(5000)) {
-        const hello = () => c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, name: pname, av: myAv });
-        hello(); if (L.sent) c.publish(rTopic(code, 'h'), { t: 'in', pid: PID, in: L.sent });
+        const hello = () => c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
+        hello(); if (L.sent) c.publish(rTopic(code, 'h'), { t: 'in', pid: PID, sk: SK, in: L.sent });
         clearInterval(prelayHello); prelayHello = setInterval(() => { if (!S) hello(); else clearInterval(prelayHello); }, 2000);
-        clearInterval(prelayPing); prelayPing = setInterval(() => c.publish(rTopic(code, 'h'), { t: 'ping', pid: PID }), 3000);
+        clearInterval(prelayPing); prelayPing = setInterval(() => c.publish(rTopic(code, 'h'), { t: 'ping', pid: PID, sk: SK }), 3000);
         return;
       }
       if (prelay === c) prelay = null;
@@ -4254,12 +4267,12 @@ function createGame(o) {
   }
   function stopPlayerRelay() {
     clearInterval(prelayPing); clearInterval(prelayHello);
-    if (prelay) { try { prelay.publish(rTopic(pcode, 'h'), { t: 'bye', pid: PID }); } catch (e) {} const c = prelay; prelay = null; setTimeout(() => c.close(), 200); }
+    if (prelay) { try { prelay.publish(rTopic(pcode, 'h'), { t: 'bye', pid: PID, sk: SK }); } catch (e) {} const c = prelay; prelay = null; setTimeout(() => c.close(), 200); }
   }
   // jedno mjesto za slanje domaćinu: izravna veza ako je otvorena, inače relej
   function netSend(m) {
     if (pconn && pconn.open) { try { pconn.send(m); return; } catch (e) {} }
-    if (prelay) prelay.publish(rTopic(pcode, 'h'), Object.assign({ pid: PID }, m));
+    if (prelay) prelay.publish(rTopic(pcode, 'h'), Object.assign({}, m, { pid: PID, sk: SK }));
   }
 
   // ---------- domaćin (TV) ----------
@@ -4269,7 +4282,13 @@ function createGame(o) {
   function onHostData(conn, m) {
     const x = hostConns.get(conn);
     if (!x || !m || typeof m !== 'object' || !game) return;
-    if (m.t === 'hello' && typeof m.pid === 'string' && typeof m.name === 'string') { x.pid = m.pid.slice(0, 40); x.name = m.name; x.av = m.av; }
+    if (m.t === 'hello' && typeof m.pid === 'string' && typeof m.name === 'string') {
+      const pid = m.pid.slice(0, 40);
+      if (!okKey(m.sk) || (x.pid && x.pid !== pid)) return;           // bez ključa ili zamjena identiteta na istoj vezi
+      const k = hostKeys.get(pid); if (k && k !== m.sk) return;        // netko drugi već je taj igrač
+      hostKeys.set(pid, m.sk); x.pid = pid; x.name = m.name.slice(0, 40); x.av = m.av;
+    }
+    else if (!x.pid) return;
     else if (m.t === 'av') x.av = m.av;
     else if (m.t === 'in' && m.in && typeof m.in === 'object') x.in = m.in;
     else if (m.t === 'pa') { if (x.pid && m.a && typeof m.a === 'object') game.pactAction(x.pid, m.a); return; }   // pakt: domaćin sve provjerava
@@ -4344,9 +4363,11 @@ function createGame(o) {
     if (opts && opts.noTv) {
       // domaćin igra s ovog mobitela; ostali se spajaju kao i inače
       pcode = code;
+      hostKeys.clear(); hostKeys.set(PID, SK);
       game = createGame({ code, noTv: true, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } });
       game.addPlayer(PID, opts.me, myAv, false, true);
     } else {
+      hostKeys.clear();
       game = createGame({ code, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } });
     }
     clearInterval(pubTimer); pubTimer = setInterval(publish, 1000);
@@ -4454,7 +4475,7 @@ function createGame(o) {
       clearTimeout(stuck);
       if (pconn !== conn) return;
       try {
-        conn.send({ t: 'hello', pid: PID, name: pname, av: myAv });
+        conn.send({ t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
         if (L.sent) conn.send({ t: 'in', in: L.sent });
       } catch (e) {}
       if (netNote) { netNote = ''; if (S) phoneRender(true); }
@@ -5073,7 +5094,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v19</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v20</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -5803,7 +5824,7 @@ function createGame(o) {
   }
   function howtoHtml(d) {
     const h = d.ht;
-    return '<div class="ht"><div class="ht-i">' + h.i + '</div><div class="ht-k">' + (h.chal ? 'Izazov' : 'Posebna bitka') + '</div><div class="ht-t">' + esc(h.n) + '</div>' +
+    return '<div class="ht"><div class="ht-i">' + esc(h.i) + '</div><div class="ht-k">' + (h.chal ? 'Izazov' : 'Posebna bitka') + '</div><div class="ht-t">' + esc(h.n) + '</div>' +
       (h.first ? '<ol>' + h.r.map((r, i) => '<li style="--cd:' + (350 + i * 500) + 'ms"><b>' + (i + 1) + '</b>' + esc(r) + '</li>').join('') + '</ol>' : '<div class="mg-s">' + esc(h.r[0]) + '</div>') +
       '<div class="ht-go">Kreće za nekoliko sekundi…</div></div>';
   }
