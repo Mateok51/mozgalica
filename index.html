@@ -1321,8 +1321,8 @@
   /* otkrivanje: ODGOVOR -> BODOVI -> POREDAK (vremena prate --el, tako da ponovni prikaz ne pokreće ispočetka) */
   .rv { --el: 0ms; display: grid; width: 100%; flex: 1; align-content: start; }
   .rv > .rv-a, .rv > .rv-b { grid-area: 1 / 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
-  .rv-a { animation: rvOut 0.35s ease forwards; animation-delay: calc(1650ms - var(--el)); }
-  .rv-b { opacity: 0; animation: rvIn 0.4s ease forwards; animation-delay: calc(1800ms - var(--el)); align-items: stretch; }
+  .rv-a { animation: rvOut 0.35s ease forwards; animation-delay: calc(1650ms + var(--rvo, 0ms) - var(--el)); }
+  .rv-b { opacity: 0; animation: rvIn 0.4s ease forwards; animation-delay: calc(1800ms + var(--rvo, 0ms) - var(--el)); align-items: stretch; }
   @keyframes rvOut { to { opacity: 0; visibility: hidden; transform: translateY(-6px); } }
   @keyframes rvIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .rv .p-q { animation: none; }
@@ -1335,12 +1335,12 @@
   .rv-opts .rv-ok::after, .rv-opts .rv-bad::after { content: "✓"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 1.5em; height: 1.5em; border-radius: 50%;
     display: grid; place-items: center; font-family: var(--font-body); font-weight: 900; font-size: 0.85rem; color: #fff; background: #3f8a3a; box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.8); text-shadow: none; }
   .rv-opts .rv-bad::after { content: "✕"; background: #9a3b2c; }
-  .rv-opts .rv-ok.mine { animation: rvPop 0.45s ease-out both; animation-delay: calc(250ms - var(--el)); }
+  .rv-opts .rv-ok.mine { animation: rvPop 0.45s ease-out both; animation-delay: calc(250ms + var(--rvo, 0ms) - var(--el)); }
   @keyframes rvPop { 50% { transform: scale(1.03); } }
   .rv-opts .cnt { margin-left: auto; margin-right: 2em; }
   .rv .rv-pts { display: flex; align-items: baseline; justify-content: center; gap: 8px; padding: 0; border: 0; border-image: none; background: none; box-shadow: none; filter: none;
     font-family: var(--font-body); font-weight: 900; font-size: 1.35rem; color: #e2b764; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-    opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(700ms - var(--el)); }
+    opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(700ms + var(--rvo, 0ms) - var(--el)); }
   .rv .rv-pts.zero { color: rgba(243, 227, 196, 0.7); }
   .rv .rv-pts small { font-size: 0.72em; color: rgba(243, 227, 196, 0.75); font-weight: 800; }
   .rv .rv-pts .x2 { font-size: 0.7em; padding: 0 6px; border-radius: 5px; color: #2a1606; background: #e2ac54; }
@@ -1348,14 +1348,14 @@
   .rv-sum { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.95rem; color: rgba(243, 227, 196, 0.85); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
   .rv-sum b { color: #e2b764; }
   .rv-lead { align-self: center; padding: 2px 10px; border-radius: 6px; font-family: var(--font-body); font-weight: 900; font-size: 0.82rem; color: #2a1606; background: #e2ac54;
-    animation: rvIn 0.3s ease both; animation-delay: calc(2500ms - var(--el)); }
+    animation: rvIn 0.3s ease both; animation-delay: calc(2500ms + var(--rvo, 0ms) - var(--el)); }
   .rv-title { text-align: center; font-family: var(--font-display); font-weight: 400; font-size: 1.4rem; color: #f3e3c4; text-shadow: 0 2px 3px rgba(0, 0, 0, 0.7); }
   .tv .rv-b { max-width: 900px; width: 100%; justify-self: center; gap: 16px; }
   .tv .rv-title { font-size: clamp(1.8rem, 3vw, 3rem); }
   .tv .rv { align-content: center; }
   @media (prefers-reduced-motion: reduce) { .rv-a, .rv-b, .rv .rv-pts, .rv-opts .rv-ok.mine, .rv-lead { animation-duration: 0.01ms; } }
   .fresh .rv-opts .p-opt, .fresh .rv-opts .opt { animation: none; }
-  .fresh .rv-opts .rv-ok.mine { animation: rvPop 0.45s ease-out both; animation-delay: calc(250ms - var(--el)); }
+  .fresh .rv-opts .rv-ok.mine { animation: rvPop 0.45s ease-out both; animation-delay: calc(250ms + var(--rvo, 0ms) - var(--el)); }
   .rv-opts .rv-ok::after, .rv-opts .rv-bad::after { opacity: 1; inset: auto; right: 8px; top: 50%; left: auto; bottom: auto; mix-blend-mode: normal; z-index: 2; }
   .rv-opts .rv-ok, .rv-opts .rv-bad { filter: none; }
   .rv-opts .rv-ok { filter: drop-shadow(0 0 2px rgba(150, 210, 120, 0.95)); }
@@ -1455,7 +1455,7 @@
   .tv .bet-mid { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2vh; }
   /* ulog u pitanju, otkrivanju i poretku */
   .tag.betag { color: #2a1606; background: #e2ac54; border-image: none; box-shadow: none; border: 0; padding: 0.15em 0.6em; border-radius: 6px; filter: none; }
-  .rv-bet { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: #e2b764; opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(950ms - var(--el)); }
+  .rv-bet { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: #e2b764; opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(950ms + var(--rvo, 0ms) - var(--el)); }
   .rv-bet.neg { color: rgba(225, 140, 120, 0.9); }
   .mboard .rank-row .betb { margin-left: 6px; padding: 0 5px; border-radius: 4px; font-size: 0.66rem; font-weight: 900; color: #e2b764; box-shadow: inset 0 0 0 1px rgba(226, 172, 84, 0.55); vertical-align: 1px; }
   .mboard .rank-row .betb.neg { color: rgba(225, 140, 120, 0.95); box-shadow: inset 0 0 0 1px rgba(225, 140, 120, 0.5); }
@@ -1665,7 +1665,7 @@
   .se-wait { min-height: 50dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
   .se-wait .tm-t { font-size: clamp(1.4rem, 7vw, 2.4rem); animation: none; }
   .tv .se-wait .tm-t { font-size: clamp(2.4rem, 5vw, 4.4rem); }
-  .rv-sx { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber); opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(1100ms - var(--el)); }
+  .rv-sx { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber); opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(1100ms + var(--rvo, 0ms) - var(--el)); }
   .rv-sx.none { color: var(--text-muted); }
   @media (prefers-reduced-motion: reduce) { .tm-t, .tm-figs { animation-name: tmSub; } }
   /* trenutak iz krčme na ekranu s poretkom: kratka kartica ispod liste, pojavi se nakon što se poredak složi */
@@ -1803,6 +1803,34 @@
   @keyframes subIn { from { opacity: 0; transform: translateY(8px); } }
   @media (prefers-reduced-motion: reduce) { .dimIn, .pickIn, .subIn { animation: none !important; } }
   .timer.spent > div { width: 0 !important; }
+  /* kolo sreće: do kraja okretanja odgovori izgledaju neutralno, tek onda točno / netočno */
+  .rv.wheel .rv-opts .rv-ok, .rv.wheel .rv-opts .rv-bad, .rv.wheel .rv-opts .rv-dim { animation: rvHold var(--rvo) linear both; animation-delay: calc(-1 * var(--el)); animation-fill-mode: none; }
+  .rv.wheel .rv-opts .rv-ok.mine { animation: rvHold var(--rvo) linear, rvPop 0.45s ease-out both; animation-delay: calc(-1 * var(--el)), calc(250ms + var(--rvo) - var(--el)); animation-fill-mode: none, both; }
+  @keyframes rvHold { 0%, 100% { filter: none; opacity: 1; box-shadow: none; transform: none; } }
+  .rv.wheel .rv-opts .rv-ok::after, .rv.wheel .rv-opts .rv-bad::after { animation: rvBadge 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) both; animation-delay: calc(var(--rvo) - var(--el)); }
+  @keyframes rvBadge { from { opacity: 0; transform: translateY(-50%) scale(0.2); } }
+  .rv.wheel .rv-opts .cnt { animation: rvIn 0.3s ease both; animation-delay: calc(var(--rvo) - var(--el)); }
+  .rv-opts .opt, .rv-opts .p-opt { position: relative; overflow: visible !important; contain: none; }
+  .rv-opts .whs { inset: -4px; border-radius: 10px; z-index: 3; mix-blend-mode: normal;
+    background: linear-gradient(90deg, rgba(255, 240, 190, 0.05), rgba(255, 236, 170, 0.42) 50%, rgba(255, 240, 190, 0.05));
+    box-shadow: 0 0 0 3px #ffe7a0, 0 0 22px 6px rgba(255, 200, 90, 0.85), inset 0 0 24px rgba(255, 230, 160, 0.6); }
+  /* likovi koji su odabrali odgovor stoje na njemu */
+  .rv-opts .rv-who, .rv-opts > * > .rv-who:last-child { position: absolute; right: 38px; bottom: 6px; display: flex; align-items: flex-end; z-index: 4; pointer-events: none; font-size: 16px; }
+  .walker { position: relative; width: 40px; height: 46px; margin-left: -10px; display: block;
+    animation: walkIn 1.05s cubic-bezier(0.25, 0.7, 0.3, 1) both; animation-delay: calc(var(--wd) - var(--el, 0ms)); }
+  .walker .wbob { display: block; width: 100%; height: 100%; animation: waddle 0.26s ease-in-out 4 alternate both; animation-delay: calc(var(--wd) - var(--el, 0ms)); }
+  .walker .wbob > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)); }
+  .walker.me .wbob > * { filter: drop-shadow(0 0 2px #f2c35b) drop-shadow(0 0 3px #f2c35b) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)); }
+  @keyframes walkIn { from { transform: translate(var(--wx), 70vh); opacity: 0; } 12% { opacity: 1; } }
+  @keyframes waddle { from { transform: translateY(0) rotate(-7deg); } to { transform: translateY(-5px) rotate(7deg); } }
+  .tv .walker { width: 58px; height: 66px; margin-left: -14px; }
+  .tv .rv-opts .rv-who, .tv .rv-opts > * > .rv-who:last-child { right: 120px; bottom: 8px; }
+  /* nakon otkrivanja: točni skaču od sreće, ostali pokunjeno */
+  .rv.wheel .rv-ok .walker .wbob { animation: waddle 0.26s ease-in-out 4 alternate both, cheer 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 2 both; animation-delay: calc(var(--wd) - var(--el, 0ms)), calc(var(--rvo) + 100ms - var(--el, 0ms)); }
+  .rv.wheel .rv-bad .walker, .rv.wheel .rv-dim .walker { animation: walkIn 1.05s cubic-bezier(0.25, 0.7, 0.3, 1) both, droop 0.5s ease both; animation-delay: calc(var(--wd) - var(--el, 0ms)), calc(var(--rvo) - var(--el, 0ms)); }
+  @keyframes cheer { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-12px) scale(1.08); } }
+  @keyframes droop { to { filter: grayscale(0.6) brightness(0.8); transform: translateY(3px); } }
+  @media (prefers-reduced-motion: reduce) { .walker, .walker .wbob, .whs { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -1833,7 +1861,7 @@ const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
 const AV_COUNT = 8;
 
 const CFG = {
-  intro: 3.5, vote: 10, voteShow: 3, roul: 2.6, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 5, startCap: 3, q: 20, reveal: 7,
+  intro: 3.5, vote: 10, voteShow: 3, roul: 2.6, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 5, startCap: 3, q: 20, reveal: 10.5,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
@@ -3247,7 +3275,7 @@ function createGame(o) {
     function load(n) {
       if (loading[n] || AUDIO_FILES.indexOf(n) < 0) return;
       loading[n] = 1;
-      const c = ac(); if (!c || !window.fetch) return;
+      const c = ac(); if (!c || !window.fetch || location.protocol === 'file:') return;
       fetch('audio/' + n + '.mp3').then((r) => (r.ok ? r.arrayBuffer() : Promise.reject())).then((ab) => new Promise((ok, no) => c.decodeAudioData(ab, ok, no)))
         .then((b) => { bufs[n] = b; }).catch(() => { bufs[n] = null; });
     }
@@ -3568,7 +3596,8 @@ function createGame(o) {
       case 'duelResult': return AUDIO.play(d.du && d.du.w ? 'correct' : 'wrong');
       case 'secret': return AUDIO.play('pop');
       case 'question': return SFX.play(d.ev && d.ev.some((e) => e.t) ? 'zap' : 'pop');
-      case 'reveal': case 'sortReveal': case 'linkReveal': return SFX.play('correct');
+      case 'reveal': return wheelSound(d, () => SFX.play('correct'));
+      case 'sortReveal': case 'linkReveal': return SFX.play('correct');
       case 'final': AUDIO.play('victory'); setTimeout(() => confetti(150), 350); return;
     }
   }
@@ -3589,7 +3618,7 @@ function createGame(o) {
       case 'duelResult': if (d.du && d.du.w === me.id) { AUDIO.play('correct'); HAPTIC.confirm(); } else if (d.du && (d.du.a === me.id || d.du.b === me.id)) AUDIO.play('wrong'); return;
       case 'secret': case 'secret2': if (d.se && (d.se.p === me.id || d.se.x === me.id)) { AUDIO.play('pop'); HAPTIC.tap(); } return;
       case 'question': case 'fq': if (L.fx || (L.bombs && L.bombs.length) || L.eat) HAPTIC.impact(); if (L.fx) AUDIO.play(FX_SOUND[L.fx.k] || 'powerZap'); else if (L.bombs && L.bombs.length) AUDIO.play('powerZap'); else if (L.eat) AUDIO.play('powerBug'); return;
-      case 'reveal': if (me.ch === d.cor) { AUDIO.play('correct'); HAPTIC.confirm(); } else { AUDIO.play('wrong'); HAPTIC.error(); } return;
+      case 'reveal': return wheelSound(d, () => { if (me.ch === d.cor) { AUDIO.play('correct'); HAPTIC.confirm(); } else { AUDIO.play('wrong'); HAPTIC.error(); } });
       case 'sortReveal': case 'linkReveal': return AUDIO.play(me.k ? 'correct' : 'wrong');
       case 'fr': if (me.mv) { AUDIO.play('step'); HAPTIC.step(); } else AUDIO.play('wrong'); return;
       case 'final': AUDIO.play('victory'); if (d.win === PID) HAPTIC.victory(); setTimeout(() => confetti(110), 350); return;
@@ -4637,7 +4666,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v17</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v18</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -4838,7 +4867,7 @@ function createGame(o) {
         const opts = d.q.o.map((o, i) => '<div class="opt o' + i + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '"><span class="shape">' + SHAPES[i] + '</span><span class="txt">' + esc(o) + '</span>' + (rev && d.cnt ? '<span class="cnt">' + d.cnt[i] + '</span>' : '') + '</div>').join('');
         if (rev) {
           const el = Math.max(0, d.dur - d.ms), b = revBoard(d, el);
-          h = tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv" style="--el:' + el + 'ms">' +
+          h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms">' +
             '<div class="rv-a">' + qTextHtml(d, true) + revOpts(d, -1, true) + '</div>' +
             '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
           h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
@@ -4959,7 +4988,7 @@ function createGame(o) {
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
       (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="2150" data-cdur="500"' : '') + '>' + (d.fin ? 'Korak ' + (me.st || 0) + '/' + d.steps : me.sc + ' b') + '</span></div>' : '';
+    const head = me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '') + '>' + (d.fin ? 'Korak ' + (me.st || 0) + '/' + d.steps : me.sc + ' b') + '</span></div>' : '';
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -5330,6 +5359,43 @@ function createGame(o) {
     }
   }
   let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitScreen, 120); });
+  // kolo sreće za otkrivanje odgovora: vrijeme šetnje, okretanja i otkrivanja (ms od početka faze)
+  const WH = { walk: 1300, spin: 2300 };
+  WH.end = WH.walk + WH.spin;
+  function wheel(d) {
+    const n = d.q.o.length, R = WH.spin, D = R + 600, steps = [];
+    for (let t = 60, gap = 70; t < R - 100; t += gap, gap = Math.min(420, gap * 1.13)) steps.push(t);
+    const k0 = steps.length, at = (k) => ((((d.cor - (k0 - 1 - k)) % n) + n) % n);
+    const pc = (ms) => (Math.max(0, Math.min(D, ms)) / D * 100).toFixed(2) + '%';
+    let css = '';
+    for (let j = 0; j < n; j++) {
+      let kf = '0%{opacity:0}';
+      steps.forEach((st, k) => {
+        if (at(k) !== j) return;
+        const e = k + 1 < k0 ? steps[k + 1] : R;
+        kf += pc(st - 25) + '{opacity:0}' + pc(st) + '{opacity:1}' + (k + 1 < k0 ? pc(e + 80) + '{opacity:0}' : pc(R + 350) + '{opacity:1}100%{opacity:0}');
+      });
+      if (!/100%/.test(kf)) kf += '100%{opacity:0}';
+      css += '@keyframes wh' + d.s + 'x' + j + '{' + kf + '}';
+    }
+    return { css, steps, D, spot: (i) => '<i class="spot whs" style="animation:wh' + d.s + 'x' + i + ' ' + D + 'ms linear both;animation-delay:calc(' + WH.walk + 'ms - var(--el, 0ms))"></i>' };
+  }
+  function walkers(d, i, tv) {
+    const who = d.P.filter((p) => p.ch === i);
+    if (!who.length) return '';
+    return '<span class="rv-who">' + who.map((p) => {
+      const k = d.P.indexOf(p), wx = Math.round((k - (d.P.length - 1) / 2) * (tv ? 140 : 60));
+      return '<span class="walker' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" style="--wx:' + wx + 'px;--wd:' + (k * 90) + 'ms"><span class="wbob">' + avSvg(p.a, 'idle') + '</span></span>';
+    }).join('') + '</span>';
+  }
+  let wheelStep = -1;
+  function wheelSound(d, fin) {
+    if (wheelStep === d.s) return; wheelStep = d.s;
+    const el = Math.max(0, d.dur - d.ms), w = wheel(d);
+    if (el < 300) AUDIO.play('whoosh');
+    w.steps.forEach((t) => { const at = WH.walk + t - el; if (at > 0) setTimeout(() => { if (wheelStep === d.s) AUDIO.play('tap'); }, at); });
+    const end = WH.end - el; setTimeout(() => { if (wheelStep === d.s) fin(); }, Math.max(0, end + 40));
+  }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
     const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0);
@@ -5385,14 +5451,15 @@ function createGame(o) {
   function revOpts(d, mine, tv) {
     return '<div class="rv-opts' + (tv ? ' opts' : '') + '">' + d.q.o.map((o, i) => {
       const c = i === d.cor ? ' rv-ok' + (mine === i ? ' mine' : '') : mine === i ? ' rv-bad' : ' rv-dim';
-      return '<div class="' + (tv ? 'opt' : 'p-opt') + ' o' + i + c + '"><span class="shape">' + SHAPES[i] + '</span><span class="' + (tv ? 'txt' : 'otxt') + '">' + esc(o) + '</span>' + (tv && d.cnt ? '<span class="cnt">' + d.cnt[i] + '</span>' : '') + '</div>';
+      const wh = d.ph === 'reveal';
+      return '<div class="' + (tv ? 'opt' : 'p-opt') + ' o' + i + c + '">' + (wh ? wheel(d).spot(i) : '') + '<span class="shape">' + SHAPES[i] + '</span><span class="' + (tv ? 'txt' : 'otxt') + '">' + esc(o) + '</span>' + (wh ? walkers(d, i, tv) : '') + (tv && d.cnt ? '<span class="cnt">' + d.cnt[i] + '</span>' : '') + '</div>';
     }).join('') + '</div>';
   }
   function revBoard(d, el) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0)));
     const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
-    const delay = el > 2400 ? -1 : Math.max(0, 1950 - el);
-    return { html: miniBoard(d, delay < 0 ? true : 2000).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
+    const off = d.ph === 'reveal' ? WH.end : 0, delay = el > 2400 + off ? -1 : Math.max(0, 1950 + off - el);
+    return { html: miniBoard(d, delay < 0 ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
   }
   // nakon otkrivanja: "+N" se odvoji od broja bodova i odleti u HUD, HUD se kratko "primi"
   // za automatske testove (ne utječe na igru)
@@ -5416,14 +5483,15 @@ function createGame(o) {
         { transform: 'translate(-50%, calc(-50% - 10px))', opacity: 1, offset: 0.25 },
         { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(0.45)', opacity: 0.2 },
       ], { duration: 700, easing: 'cubic-bezier(0.5, 0, 0.75, 0)' }).onfinish = done;
-    }, 1500);
+    }, 1500 + WH.end);
   }
   function revealPhone(d, me) {
     const el = Math.max(0, d.dur - d.ms), ok = me.ch === d.cor, none = me.ch < 0;
     const pts = '<div class="rv-pts' + (me.g ? '' : ' zero') + '">+' + (me.g || 0) + ' <small>bodova</small>' + (me.d && me.g ? '<span class="x2">×2</span>' : '') + '</div>';
     const b = revBoard(d, el);
     const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
-    return '<div class="rv" style="--el:' + el + 'ms">' +
+    const wh = wheel(d);
+    return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
       '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
   }
