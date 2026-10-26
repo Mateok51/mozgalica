@@ -1667,6 +1667,25 @@
   .rv-sx { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber); opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(1100ms - var(--el)); }
   .rv-sx.none { color: var(--text-muted); }
   @media (prefers-reduced-motion: reduce) { .tm-t, .tm-figs { animation-name: tmSub; } }
+  /* trenutak iz krčme na ekranu s poretkom: kratka kartica ispod liste, pojavi se nakon što se poredak složi */
+  .tdl { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 560px; margin: 10px auto 0; padding: 8px 12px; border-radius: var(--radius-medium); text-align: left;
+    background: rgba(42, 23, 11, 0.88); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.75), inset 0 0 0 3px rgba(42, 23, 11, 0.9), inset 0 0 0 4px rgba(232, 170, 80, 0.35), var(--shadow-soft);
+    opacity: 0; animation: tdlIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) forwards; animation-delay: calc(2700ms - var(--el, 0ms)); }
+  .tdl .figs { display: flex; flex-shrink: 0; }
+  .tdl .figs .mini { width: 42px; height: 42px; display: inline-flex; }
+  .tdl .figs .mini + .mini { margin-left: -8px; }
+  .tdl .figs .mini > * { width: 100%; height: 100%; object-fit: contain; }
+  .tdl .tx { display: flex; flex-direction: column; min-width: 0; }
+  .tdl .tx b { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; line-height: 1.1; text-transform: uppercase; color: var(--amber-hi); text-shadow: 0 1px 0 rgba(120, 76, 28, 0.9); }
+  .tdl .tx span { font-weight: 800; font-size: 0.9rem; color: var(--text-main); }
+  .tdl.mem .tx b { font-family: var(--font-body); font-weight: 900; font-size: 0.72rem; letter-spacing: 0.14em; color: var(--amber); text-shadow: none; }
+  .tdl.mem .tx span { font-size: 1rem; }
+  .tv .tdl { max-width: 760px; padding: 12px 18px; }
+  .tv .tdl .figs .mini { width: 64px; height: 64px; }
+  .tv .tdl .tx b { font-size: 1.7rem; }
+  .tv .tdl .tx span { font-size: 1.25rem; }
+  @keyframes tdlIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .tdl { animation-duration: 0.01ms; } }
 </style>
 </head>
 <body>
@@ -1694,10 +1713,10 @@ const POWERS = {
 };
 const POWER_KEYS = Object.keys(POWERS);
 const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
-const AV_COUNT = 10;
+const AV_COUNT = 8;
 
 const CFG = {
-  intro: 3.5, vote: 10, voteShow: 3, power: 12, bet: 9, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 5, startCap: 3, q: 20, reveal: 7,
+  intro: 3.5, vote: 10, voteShow: 3, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 5, startCap: 3, q: 20, reveal: 7,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
@@ -2098,7 +2117,8 @@ function createGame(o) {
     }
     resolveSecret();
     TD.afterQuestion();
-    setPhase('reveal', cfg.reveal);
+    // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje sekundu dulje
+    setPhase('reveal', cfg.reveal + (G.pend && G.pend.mo ? 1 : 0));
   }
 
   function unusedIndex(arr, set) {
@@ -2178,12 +2198,12 @@ function createGame(o) {
       if (p.dbl && p.mv > 0 && p.fstep + p.mv >= cfg.steps && p.fstep + p.mv - 1 < cfg.steps) p.mv -= 1;
       p.fstep = Math.min(cfg.steps, p.fstep + p.mv);
     }
-    setPhase('fr', cfg.fr);
+    if (!list().some((p) => p.fstep >= cfg.steps)) TD.afterFinale(); else G.pend = null;
+    setPhase('fr', cfg.fr + (G.pend && G.pend.mo ? 1 : 0));
   }
   function afterFinaleQ() {
     if (list().some((p) => p.fstep >= cfg.steps)) return finish();
-    TD.afterFinale();
-    if (G.pend) return showMoment();
+    G.pend = null;
     startFinaleQ();
   }
 
@@ -2278,10 +2298,11 @@ function createGame(o) {
         if (T.lowRank[k] == null || now > T.lowRank[k]) T.lowRank[k] = now;
         if (T.highRank[k] == null || now < T.highRank[k]) T.highRank[k] = now;
         const low = T.lowRank[k], was = T.prevRank[k];
+        if ((T.cbN || 0) >= 2) continue;
         if (n >= 3 && low === n && now === 1 && was !== 1 && !T.shown['cb2:' + k])
-          cands.push({ type: 'COMEBACK_BIG', score: 10, key: 'cb2:' + k, t: 'Povratak večeri!', s: nm(k) + ': ' + low + '. → 1.', a: [k], pose: ['happy'], snd: 'stingComeback' });
+          cands.push({ type: 'COMEBACK_BIG', score: 10, key: 'cb2:' + k, t: 'Povratak večeri!', s: nm(k) + ': ' + low + '. → 1.', a: [k], pose: ['happy'], snd: 'stingComeback', onShow: () => { T.cbN = (T.cbN || 0) + 1; } });
         else if (n >= 3 && low >= n - 1 && now <= 2 && was > 2 && !T.shown['cb:' + k])
-          cands.push({ type: 'COMEBACK', score: 9, key: 'cb:' + k, t: 'Povratak u igru!', s: nm(k) + ': ' + low + '. → ' + now + '.', a: [k], pose: ['happy'], snd: 'stingComeback' });
+          cands.push({ type: 'COMEBACK', score: 8, key: 'cb:' + k, t: 'Povratak u igru!', s: nm(k) + ': ' + low + '. → ' + now + '.', a: [k], pose: ['happy'], snd: 'stingComeback', onShow: () => { T.cbN = (T.cbN || 0) + 1; } });
       }
       if (F.ENABLE_RIVALRIES) for (let i = 0; i + 1 < n; i++) {
         const a = ps[i], b = ps[i + 1];
@@ -2340,7 +2361,7 @@ function createGame(o) {
         const gap = turn - T.lastAny;
         if (G.inFinale) return ['CLOSE_RACE', 'RIVAL_LEAD', 'RIVALRY', 'COMEBACK', 'COMEBACK_BIG'].includes(c.type) && gap >= 2;
         if (c.score >= 9) return gap >= 1;
-        if (c.score >= 7) return gap >= 2 && turn - T.lastMajor >= 2;
+        if (c.score >= 7) return gap >= 2;
         if (c.score >= 5) return gap >= 2;
         return gap >= 3;
       });
@@ -2438,10 +2459,11 @@ function createGame(o) {
     G.mo = G.pend.mo; G.pend = null;
     setPhase('moment', cfg.moment);
   }
+  // trenutci se prikazuju na ekranu s poretkom (v.mo); poseban ekran ima samo dvoboj
   function afterReveal() {
     const pd = G.pend;
-    if (pd && pd.duel) { G.pend = null; return startDuelIntro(pd.duel); }
-    if (pd && pd.mo) return showMoment();
+    G.pend = null;
+    if (pd && pd.duel) return startDuelIntro(pd.duel);
     next();
   }
   function afterMoment() {
@@ -2638,6 +2660,7 @@ function createGame(o) {
     if (ph === 'linkReveal') v.li.key = G.li.key;
     if (ph === 'final') { v.win = G.win; v.fact = G.fact; }
     if (ph === 'moment' && G.mo) v.mo = G.mo;
+    if ((ph === 'reveal' || ph === 'sortReveal' || ph === 'linkReveal' || ph === 'fr') && G.pend && G.pend.mo) v.mo = G.pend.mo;
     if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {
       v.du = { a: G.du.a, b: G.du.b, bonus: cfg.duelBonus };
       if (ph === 'duelResult') { v.du.w = G.du.w; v.du.ms = G.du.ms; }
@@ -2670,19 +2693,17 @@ function createGame(o) {
 
   // ---------- likovi (originalni, sjenčani) ----------
   const AV = [
-    { n: 'Bubi',   c: '#ff5e6e', s: 'round',  e: 2, x: 'antena' },
-    { n: 'Brko',   c: '#4aa3ff', s: 'square', e: 2, x: 'brkovi' },
-    { n: 'Zvrk',   c: '#ffd23f', s: 'tall',   e: 1, x: 'sesir' },
-    { n: 'Lila',   c: '#a98bff', s: 'round',  e: 2, x: 'masna' },
-    { n: 'Tikvan', c: '#ff8f2e', s: 'pear',   e: 3, x: 'list' },
-    { n: 'Mrki',   c: '#4fd97a', s: 'square', e: 2, x: 'rogovi' },
-    { n: 'Pipi',   c: '#ff6fb0', s: 'tall',   e: 2, x: 'naocale' },
-    { n: 'Ćiro',   c: '#2fd6c4', s: 'pear',   e: 1, x: 'kruna' },
     { n: 'Vila',   spr: 'vila' },
     { n: 'Ovan',   spr: 'ovan' },
+    { n: 'Zlata',  spr: 'zlata' },
+    { n: 'Kovač',  spr: 'kovac' },
+    { n: 'Žar',    spr: 'zar' },
+    { n: 'Sova',   spr: 'sova' },
+    { n: 'Sjena',  spr: 'sjena' },
+    { n: 'Njuško', spr: 'njusko' },
   ];
   // naslikani likovi: jedna slika po pozi; prvi se nude pri odabiru
-  const PICK_ORDER = [8, 9, 0, 1, 2, 3, 4, 5, 6, 7];
+  const PICK_ORDER = [0, 1, 2, 3, 4, 5, 6, 7];
   const SPR_POSES = ['idle', 'happy', 'sad', 'shocked', 'attack', 'victory'];
   // Preload u fazama: start (odmah), predvorje (likovi), početak igre (ploče, vrata, moći), finale (stepenice).
   // Sve ide tiho u pozadini; prethodna faza uvijek daje dovoljno vremena da slike budu spremne prije svoje scene.
@@ -3156,6 +3177,7 @@ function createGame(o) {
   // ---------- zvuk faza ----------
   let tvStep = -1, phoneStep = -1, lastTickSec = -1;
   function tvSound(d) {
+    if (d.mo && d.ph !== 'moment') tdSting(d);
     switch (d.ph) {
       case 'intro': case 'fstart': return SFX.play('whoosh');
       case 'vote': case 'sort': case 'link': case 'fq': return SFX.play('pop');
@@ -3174,6 +3196,7 @@ function createGame(o) {
   const FX_SOUND = { led: 'powerIce', sluz: 'powerSlime', grick: 'powerBug', bomba: 'powerZap' };
   function phoneSound(d, me) {
     if (!me) return;
+    if (d.mo && d.ph !== 'moment') tdSting(d);
     switch (d.ph) {
       case 'intro': return SFX.play('whoosh');
       case 'bet': return SFX.play('pop');
@@ -4025,7 +4048,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v11</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v12</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -4149,7 +4172,7 @@ function createGame(o) {
       case 'duelResult': h = tvTop(d, 'Dvoboj') + '<div class="tv-mid">' + duelResultHtml(d, true) + '</div>'; break;
       case 'secret': case 'secret2': h = tvTop(d, 'Pst…') + secretWait(d); break;
       case 'bet':
-        h = tvTop(d, 'Kladionica je otvorena!') + timerHtml() + '<div class="tv-mid bet-mid"><div class="bet-t">Kladionica</div><div class="bet-sub">' + (d.cats && d.cw >= 0 ? 'Kategorija: <b>' + esc(d.cats[d.cw]) + '</b> · ' : '') + 'ulažite na sebe na mobitelima</div></div>' + lineup(d, { check: true });
+        h = tvTop(d, 'Kladionica je otvorena!') + timerHtml() + '<div class="tv-mid bet-mid"><div class="bet-t">Kladionica</div><div class="bet-sub">' + (d.cats && d.cw >= 0 ? 'Kategorija: <b>' + esc(d.cats[d.cw]) + '</b> · ' : '') + 'odaberite ulog na mobitelu</div><div class="bet-sub">Točan odgovor na sljedeće pitanje osvaja ulog, netočan ga gubi.</div></div>' + lineup(d, { check: true });
         break;
       case 'cast':
         h = tvTop(d, 'Bacanje moći!') + '<div class="tv-mid cast-mid">' + castHtml(d) + '</div>';
@@ -4172,7 +4195,7 @@ function createGame(o) {
           const el = Math.max(0, d.dur - d.ms), b = revBoard(d, el);
           h = tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv" style="--el:' + el + 'ms">' +
             '<div class="rv-a"><div class="q-text">' + esc(d.q.t) + '</div>' + revOpts(d, -1, true) + '</div>' +
-            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
+            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
           h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
           break;
         }
@@ -4190,7 +4213,7 @@ function createGame(o) {
           '<div class="sort-col a"><h3>' + esc(d.so.a) + '</h3><div class="chips">' + col(0) + '</div></div>' +
           '<div class="sort-col b"><h3>' + esc(d.so.b) + '</h3><div class="chips">' + col(1) + '</div></div></div>' +
           (rev ? '' : '<div class="chips">' + d.so.it.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div>') + '</div>' +
-          lineup(d, rev ? { gain: true } : { check: true });
+          lineup(d, rev ? { gain: true } : { check: true }) + (rev ? tdLine(d) : '');
         if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
         break;
       }
@@ -4200,7 +4223,7 @@ function createGame(o) {
         h = tvTop(d, rev ? 'Rješenje' : 'Spojite parove na mobitelu!') + (rev ? '' : timerHtml()) +
           '<div class="tv-mid"><div class="tv-title">Izazov: ' + esc(d.li.t) + '</div><div class="pairs card">' + pairs + '</div>' +
           (rev ? '' : '<div class="chips">' + d.li.R.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div>') + '</div>' +
-          lineup(d, rev ? { gain: true } : { check: true });
+          lineup(d, rev ? { gain: true } : { check: true }) + (rev ? tdLine(d) : '');
         if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
         break;
       }
@@ -4216,7 +4239,7 @@ function createGame(o) {
         const rev = d.ph === 'fr';
         const tf = d.q.o.map((o, i) => '<div class="opt o' + (i === 0 ? 3 : 0) + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '" style="justify-content:center"><span class="txt" style="text-align:center">' + esc(o) + '</span></div>').join('');
         h = tvTop(d, 'Točno ili netočno? Točan odgovor = stepenica više, najbrži = dvije!') + (rev ? '' : timerHtml(3000)) +
-          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="q-text">' + esc(d.q.t) + '</div><div class="tf-row">' + tf + '</div>' + (rev ? '' : evHtml(d)) + '</div>' +
+          '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="q-text">' + esc(d.q.t) + '</div><div class="tf-row">' + tf + '</div>' + (rev ? tdLine(d) : evHtml(d)) + '</div>' +
           pyramidHtml(d, rev, { delay: 1000 }) + '</div>';
         break;
       }
@@ -4365,7 +4388,7 @@ function createGame(o) {
         if (d.ph === 'linkReveal' && lastLink && lastLink.k === d.li.L.join('|') + '#' + d.li.R.join('|')) sol = '<div class="lnk rev pairs">' + lnkHtml(d, lastLink.p, d.li.key, true) + '</div>';
         if (!sol && d.ntv && d.ph === 'linkReveal') sol = '<div class="pairs" style="width:100%">' + d.li.L.map((l, i) => '<div class="pair" style="font-size:1rem"><span>' + esc(l) + '</span><span class="arrow">→</span><span>' + esc(d.li.R[d.li.key[i]]) + '</span></div>').join('') + '</div>';
         h = (d.ntv ? '' : '') + head + '<div class="result ' + (me.k ? 'ok' : 'none') + '"><div class="p-title">Točno ' + me.k + ' od ' + tot + '</div><div class="pts">+' + (me.g || 0) + '</div></div>' +
-          (d.ntv ? sol + miniBoard(d, true) : sol + rankStat(d, me));
+          (d.ntv ? sol + miniBoard(d, true) : sol + rankStat(d, me)) + tdLine(d);
         if (!d.ntv) h = center(h);
         break;
       }
@@ -4384,7 +4407,7 @@ function createGame(o) {
         const tf = '<div class="rv-opts two">' + d.q.o.map((o, i) => '<div class="p-opt o' + (i === 0 ? 3 : 0) + (i === d.cor ? ' rv-ok' + (mine === i ? ' mine' : '') : mine === i ? ' rv-bad' : ' rv-dim') + '"><span class="otxt">' + esc(o) + '</span></div>').join('') + '</div>';
         const note = ok ? (me.mv > 1 ? 'Točno! +' + me.mv + ' stepenice' : 'Točno! +1 stepenica') : mine >= 0 ? 'Netočno · ostaješ na mjestu' : 'Vrijeme je isteklo';
         h = head + '<div class="rv" style="--el:' + el + 'ms"><div class="rv-a"><div class="p-q">' + esc(d.q.t) + '</div>' + tf + '<div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div></div>' +
-          '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' : stepMeter(d, me)) + '</div></div>';
+          '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' : stepMeter(d, me)) + tdLine(d) + '</div></div>';
         break;
       }
       case 'final':
@@ -4443,6 +4466,14 @@ function createGame(o) {
     const mem = m.t === 'Krčma pamti';
     return '<div class="tm' + (mem ? ' mem' : '') + '" style="--dur:' + Math.max(800, d.dur) + 'ms;--el:' + Math.max(0, d.dur - d.ms) + 'ms"><div class="tm-figs">' + figs + '</div><div class="tm-t">' + esc(m.t) + '</div><div class="tm-s">' + esc(m.s || '') + '</div></div>';
   }
+  // trenutak ispod poretka (ne poseban ekran); el = ms od početka faze
+  function tdLine(d) {
+    const m = d.mo; if (!m) return '';
+    const el = Math.max(0, d.dur - d.ms), ids = m.a || [], poses = m.pose || [];
+    const figs = ids.map((id, i) => { const p = pById(d, id); return p ? '<span class="mini">' + avSvg(p.a, poses[i] || 'idle') + '</span>' : ''; }).join('');
+    return '<div class="tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + '" style="--el:' + el + 'ms"><span class="figs">' + figs + '</span><span class="tx"><b>' + esc(m.t) + '</b><span>' + esc(m.s || '') + '</span></span></div>';
+  }
+  function tdSting(d) { if (!d.mo) return; const s0 = d.s, wait = Math.max(0, 2700 - Math.max(0, d.dur - d.ms)); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo.snd || 'stingSmall'); }, wait); }
   function duelIntroMo(d) { return { t: 'Dvoboj!', s: 'Brži točan odgovor osvaja +' + d.du.bonus, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 }; }
   function duelVs(d, pose) {
     const du = d.du, st = (id) => (pById(d, id) || {}).ok ? ' ok' : '';
@@ -4495,7 +4526,7 @@ function createGame(o) {
   }
   function betPhone(d, me) {
     const cat = d.cats && d.cw >= 0 ? esc(d.cats[d.cw]) : '';
-    const top = '<div class="bet"><div class="bet-t">Kladionica</div><div class="bet-sub">' + (cat ? 'Kategorija: <b>' + cat + '</b> · ' : '') + 'Uloži na sebe!</div>' + timerHtml();
+    const top = '<div class="bet"><div class="bet-t">Kladionica</div><div class="bet-sub">Koliko bodova ulažeš da ćeš <b>točno</b> odgovoriti na sljedeće pitanje' + (cat ? ' (' + cat + ')' : '') + '?</div>' + timerHtml();
     if (L.sent || me.ok) {
       const b = me.bt !== undefined ? me.bt : L.sent && L.sent.b === -1 ? me.sc : Math.min(L.sent ? L.sent.b : 0, me.sc);
       return top + '<div class="bet-done">' + (b > 0 ? 'Uložio si <b>' + b + '</b> bodova' : 'Bez uloga ovaj put') + '</div><div class="bet-rule">Čekamo ostale…</div></div>';
@@ -4597,7 +4628,7 @@ function createGame(o) {
     const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
     return '<div class="rv" style="--el:' + el + 'ms">' +
       '<div class="rv-a"><div class="p-q">' + esc(d.q.t) + '</div>' + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
-      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + (b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
+      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
