@@ -1,11 +1,7 @@
 # Zvukovi
 
-Igra trenutno koristi sintetizirane zvukove (Web Audio). Pravi zvuk dodaješ ovako:
+Svi zvukovi i glazba su sintetizirani offline u stilu krčme (lutnja, blokflauta, bodhran, drvo, novčići, zvona).
+Izvor: `snd/gen.py` (efekti) i `snd/music.py` (glazba). Ako neka datoteka nedostaje ili se ne učita,
+igra svira jednostavniji zvuk sintetiziran u pregledniku.
 
-1. Spremi datoteku kao `audio/<ime>.mp3` (npr. `audio/correct.mp3`).
-2. U `index.html` upiši ime u popis `AUDIO_FILES` (npr. `const AUDIO_FILES = ['correct'];`).
-
-Ako datoteka nedostaje ili se ne učita, igra automatski svira sintetizirani zvuk.
-
-Imena: tap, confirm, correct, wrong, score, step, victory, tick, beep, timeup, whoosh, pop,
-powerIce, powerSlime, powerBug, powerBomb, powerZap, crack, stingLeader, stingComeback, stingRival, stingDuel, stingStreak.
+Svoju snimku dodaješ tako da zamijeniš datoteku istog imena (npr. `audio/correct.mp3`).
