@@ -3617,12 +3617,20 @@ function createGame(o) {
   // Povezivanje: TV (domaćin) otvara "sobu" s imenom mozgalica-kip-v1-<kod>, a mobiteli
   // se na nju spajaju izravno (WebRTC preko PeerJS-a). Igru vodi uređaj domaćina.
   const PEER_PREFIX = 'mozgalica-kip-v1-';
+  // više STUN/TURN poslužitelja: bez TURN-a se mobiteli na mobilnoj mreži (4G/5G, CGNAT) često ne mogu spojiti
+  const PEER_OPTS = { debug: 0, pingInterval: 4000, config: { iceServers: [
+    { urls: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] },
+    { urls: ['turn:eu-0.turn.peerjs.com:3478', 'turn:us-0.turn.peerjs.com:3478'], username: 'peerjs', credential: 'peerjsp' },
+    { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp', 'turns:openrelay.metered.ca:443'], username: 'openrelayproject', credential: 'openrelayproject' },
+  ], sdpSemantics: 'unified-plan' } };
+  let hostWatch = null;
   const hasPeer = () => typeof Peer === 'function';
   const appUrl = () => location.origin + location.pathname;
   let mode = 'home';            // home | join | player | host | demo
   let demoView = 'phone';       // phone | tv (u demo načinu)
   let game = null, hostPeer = null, hostErr = '', pubTimer = null, pubPending = false;
   const hostConns = new Map();
+  let joinTries = 0;
   let ppeer = null, pconn = null, waitTimer = null, retryTimer = null, perr = '', pcode = '', pname = '', netNote = '';
   let S = null, lastSig = '';
   let L = freshLocal(-1);
@@ -3668,7 +3676,7 @@ function createGame(o) {
   // ---------- navigacija ----------
   function reset() {
     if (game) game.stop();
-    clearInterval(pubTimer); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer();
+    clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;
     for (const c of hostConns.keys()) { try { c.close(); } catch (e) {} }
     hostConns.clear();
     if (hostPeer) { try { hostPeer.destroy(); } catch (e) {} }
@@ -3709,9 +3717,10 @@ function createGame(o) {
   }
   function openHostPeer(tries, opts) {
     const code = makeCode();
-    const peer = new Peer(PEER_PREFIX + code.toLowerCase(), { debug: 0 });
+    const peer = new Peer(PEER_PREFIX + code.toLowerCase(), PEER_OPTS);
     let opened = false;
     peer.on('open', () => {
+      if (hostPeer === peer) return; // ponovno spajanje s posrednikom: soba ostaje ista (ranije se tu greškom uništavala)
       if ((mode !== 'host' && mode !== 'hostp') || hostPeer) { try { peer.destroy(); } catch (e) {} return; }
       opened = true; hostPeer = peer;
       if (opts && opts.noTv) {
@@ -3723,6 +3732,9 @@ function createGame(o) {
         game = createGame({ code, onChange: () => { publishSoon(); render(); } });
       }
       pubTimer = setInterval(publish, 1000);
+      // čuvar: ako veza s posrednikom padne (mobitel u pozadini, promjena mreže), soba je nevidljiva novim igračima → stalno ponovno spajanje
+      clearInterval(hostWatch);
+      hostWatch = setInterval(() => hostKeepAlive(peer), 3000);
       render();
     });
     peer.on('connection', (conn) => {
@@ -3732,9 +3744,10 @@ function createGame(o) {
       conn.on('close', drop);
       conn.on('error', drop);
     });
-    peer.on('disconnected', () => { if (hostPeer === peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} } });
+    peer.on('disconnected', () => { if (hostPeer === peer) { hostOffline(true); hostKeepAlive(peer); } });
+    peer.on('open', () => { if (hostPeer === peer) hostOffline(false); });
     peer.on('error', (e) => {
-      if (opened) return; // gubitak veze jednog igrača ne ruši sobu
+      if (opened) { if (hostPeer === peer) setTimeout(() => hostKeepAlive(peer), 1500); return; } // gubitak veze jednog igrača ne ruši sobu
       try { peer.destroy(); } catch (er) {}
       if (e && e.type === 'unavailable-id' && tries < 5) return openHostPeer(tries + 1, opts);
       if (mode === 'host' || mode === 'hostp') {
@@ -3744,6 +3757,25 @@ function createGame(o) {
       }
     });
   }
+
+  let hostOff = false;
+  function hostOffline(v) {
+    if (hostOff === v) return; hostOff = v;
+    netNote = v ? 'Soba se ponovno povezuje… novi igrači se mogu spojiti za koju sekundu.' : '';
+    if (mode === 'hostp') phoneRender(true); else if (mode === 'host') render();
+  }
+  function hostKeepAlive(peer) {
+    if (hostPeer !== peer || peer.destroyed) { clearInterval(hostWatch); return; }
+    if (peer.disconnected) { try { peer.reconnect(); } catch (e) {} } else if (hostOff) hostOffline(false);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    if (hostPeer) hostKeepAlive(hostPeer);
+    if (mode === 'player' && ppeer && !ppeer.destroyed) {
+      if (ppeer.disconnected) { try { ppeer.reconnect(); } catch (e) {} }
+      if (S && (!pconn || !pconn.open)) retrySoon();
+    }
+  });
 
   // ---------- igra bez TV-a: domaćin igra s mobitela ----------
   function hostFormV() {
@@ -3790,22 +3822,25 @@ function createGame(o) {
     store.set('mz_name', name);
     mode = 'player'; render(); keepAwake();
     if (!hasPeer()) return failJoin('Modul za povezivanje se nije učitao. Provjeri internet i osvježi stranicu.');
-    const peer = new Peer({ debug: 0 });
-    ppeer = peer;
+    const peer = new Peer(PEER_OPTS);
+    ppeer = peer; joinTries = 0;
     peer.on('open', () => { if (ppeer === peer) connectHost(); });
     peer.on('disconnected', () => { if (ppeer === peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} } });
     peer.on('error', (e) => {
       if (ppeer !== peer) return;
       const t = e && e.type;
       if (!S) {
-        if (t === 'peer-unavailable') return failJoin('Soba ' + pcode + ' nije pronađena. Provjeri kod i je li igra otvorena na TV-u.');
+        // domaćin se možda upravo ponovno spaja (mobitel bio u pozadini): pokušaj još nekoliko puta prije poruke
+        if (t === 'peer-unavailable' && joinTries < 4) { joinTries++; clearTimeout(retryTimer); retryTimer = setTimeout(connectHost, 2000); return; }
+        if (t === 'peer-unavailable') return failJoin('Soba ' + pcode + ' nije pronađena. Provjeri kod i je li soba još otvorena kod domaćina.');
+        if ((t === 'network' || t === 'socket-error' || t === 'socket-closed' || t === 'disconnected') && joinTries < 3) { joinTries++; clearTimeout(retryTimer); retryTimer = setTimeout(() => { if (ppeer === peer && !peer.destroyed) { if (peer.disconnected) { try { peer.reconnect(); } catch (e) {} } else connectHost(); } }, 2000); return; }
         if (t === 'network' || t === 'server-error' || t === 'socket-error' || t === 'socket-closed') return failJoin('Nema veze s poslužiteljem za povezivanje. Provjeri internet.');
         return failJoin('Spajanje nije uspjelo (' + (t || 'greška') + ').');
       }
       retrySoon();
     });
     clearTimeout(waitTimer);
-    waitTimer = setTimeout(() => { if (!S && mode === 'player') failJoin('Spajanje traje predugo. Provjeri kod sobe i internet pa pokušaj ponovno.'); }, 15000);
+    waitTimer = setTimeout(() => { if (!S && mode === 'player') failJoin('Spajanje traje predugo. Provjeri kod sobe i internet pa pokušaj ponovno. Domaćin neka drži igru otvorenu na ekranu.'); }, 30000);
   }
   function failJoin(msg) {
     clearTimeout(waitTimer); clearTimeout(retryTimer);
@@ -3815,9 +3850,13 @@ function createGame(o) {
   }
   function connectHost() {
     if (!ppeer || ppeer.destroyed) return;
+    if (pconn && !pconn.open) { try { pconn.close(); } catch (e) {} }
     const conn = ppeer.connect(PEER_PREFIX + pcode.toLowerCase(), { reliable: true, serialization: 'json' });
     pconn = conn;
+    // WebRTC zna "zapeti" (NAT): ako se kanal ne otvori brzo, pokušaj ponovno umjesto da čekaš do isteka
+    const stuck = setTimeout(() => { if (pconn === conn && !conn.open && mode === 'player') { joinTries++; if (S) retrySoon(); else if (joinTries < 5) connectHost(); } }, 7000);
     conn.on('open', () => {
+      clearTimeout(stuck);
       if (pconn !== conn) return;
       try {
         conn.send({ t: 'hello', pid: PID, name: pname, av: myAv });
@@ -3826,7 +3865,7 @@ function createGame(o) {
       if (netNote) { netNote = ''; if (S) phoneRender(true); }
     });
     conn.on('data', (d) => { if (pconn === conn && d && d.code === pcode && Array.isArray(d.P)) applyState(d); });
-    const lost = () => { if (pconn === conn && mode === 'player') retrySoon(); };
+    const lost = () => { clearTimeout(stuck); if (pconn !== conn || mode !== 'player') return; if (S) retrySoon(); else if (joinTries < 5) { joinTries++; clearTimeout(retryTimer); retryTimer = setTimeout(connectHost, 1500); } };
     conn.on('close', lost);
     conn.on('error', lost);
   }
@@ -4431,7 +4470,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v15</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v16</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -4720,7 +4759,7 @@ function createGame(o) {
     const inv = mode === 'demo'
       ? '<div class="tvlob-inv"><span class="lob-code-l">Demo</span><span class="lob-addr">Botovi igraju s tobom. U pravoj igri ovdje su kod sobe i QR kod.</span></div>'
       : '<div class="tvlob-inv"><span class="lob-code-l">Pozovi igrače</span><span class="lob-code">' + esc(d.code) + '</span>' + (svg ? '<div class="lob-qr">' + svg + '</div>' : '') +
-        '<span class="lob-addr">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span></div>';
+        '<span class="lob-addr">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span>' + (netNote ? '<span class="lob-addr" style="color:#f0b070">' + esc(netNote) + '</span>' : '') + '</div>';
     const on = d.P.filter((p) => p.c && !p.b).length;
     let slots = d.P.map((p) => '<div class="tvlob-slot' + (p.c ? '' : ' off') + '" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="pick-img">' + avSvg(p.a, 'idle') + '</span><span class="pick-nm">' + esc(p.n) + '</span>' + (p.b ? '<span class="pick-bot">BOT</span>' : '') + '</div>').join('');
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
