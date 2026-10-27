@@ -1,6 +1,6 @@
 # Tavern Director 2.0 — nadogradnja postojećeg TD-a u v3/engine.js (primjenjuje se na engine.pretd2.js)
 import sys
-SP = '/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad'
+SP = '/root/mozgalica'
 s = open(SP + '/v3/engine.pretd2.js', encoding='utf-8').read()
 def rep(a, b, n=1):
     global s

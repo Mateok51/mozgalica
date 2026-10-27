@@ -209,7 +209,7 @@ EU = [
 ("Koji je glavni grad Estonije?", "Tallinn", "Tartu", "Riga", "Vilnius"),
 ("Koja je najveća skandinavska država po površini?", "Švedska", "Norveška", "Danska", "Finska"),
 ]
-PROG='/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/'
+PROG='/root/mozgalica/content/'
 def norm(s):
     s=unicodedata.normalize('NFKD',s.lower().replace('đ','d'))
     s=''.join(c for c in s if not unicodedata.combining(c))

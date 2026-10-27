@@ -1,6 +1,6 @@
 # Legende ove krčme — nadogradnja motora (pokreće td2.py, zatim dodaje legende na v3/engine.js)
 import subprocess, sys
-SP = '/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad'
+SP = '/root/mozgalica'
 subprocess.run([sys.executable, SP + '/v3/td2.py'], check=True)
 s = open(SP + '/v3/engine.js', encoding='utf-8').read()
 def rep(a, b, n=1):

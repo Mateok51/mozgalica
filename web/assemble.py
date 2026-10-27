@@ -1,5 +1,5 @@
 import json, os
-SP = '/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad'
+SP = '/root/mozgalica'
 OUT = SP + '/web/site'
 os.makedirs(OUT, exist_ok=True)
 
@@ -35,7 +35,7 @@ html = ('<!doctype html>\n<html lang="hr">\n<head>\n<meta charset="utf-8">\n'
         '<link rel="icon" href="icon.svg" type="image/svg+xml">\n'
         '<link rel="apple-touch-icon" href="icon-192.png">\n'
         + head_part.rstrip() + '\n</head>\n<body>\n' + rest.rstrip() + '\n' + sw + '</body>\n</html>\n')
-VERSION = 'v27'
+VERSION = 'v28'
 html = html.replace('MOZGALICA', '<span class="lt">Trivia</span><span class="lt">Tavern</span>').replace('<title>Mozgalica</title>', '<title>Trivia Tavern</title>')
 assert html.count('__VER__') == 1
 html = html.replace('__VER__', VERSION)

@@ -200,4 +200,4 @@ def build(L):
     return out
 C=C[:80]; S=S[:80]
 print(len(C),len(S))
-json.dump({"cats":{"Crtani filmovi":build(C),"Superjunaci i stripovi":build(S)}},open('/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/r2_10.json','w'),ensure_ascii=False,indent=1)
+json.dump({"cats":{"Crtani filmovi":build(C),"Superjunaci i stripovi":build(S)}},open('/root/mozgalica/content/r2_10.json','w'),ensure_ascii=False,indent=1)

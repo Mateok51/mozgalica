@@ -1,5 +1,5 @@
 import json, random, re, unicodedata
-D='/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/'
+D='/root/mozgalica/content/'
 F=[
 ("Koji glumac utjelovljuje Nea u filmu Matrix (1999.)?","Keanu Reeves","Tom Cruise","Brad Pitt","Johnny Depp"),
 ("Tko je režirao film Kum (1972.)?","Francis Ford Coppola","Martin Scorsese","Brian De Palma","Sergio Leone"),

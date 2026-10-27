@@ -198,7 +198,7 @@ def norm(s):
     s=unicodedata.normalize('NFKD',s.lower().replace('đ','d'))
     s=''.join(c for c in s if not unicodedata.combining(c))
     return re.sub(r'[^a-z0-9 ]','',s).split()
-base='/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/'
+base='/root/mozgalica/content/'
 m=json.load(open(base+'merged.json'))['cats']
 ex=[(k,x['q'],x['o'][x['a']]) for k,v in m.items() for x in v]
 exq={' '.join(norm(q)) for _,q,_ in ex}

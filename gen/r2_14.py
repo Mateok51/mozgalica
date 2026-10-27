@@ -199,7 +199,7 @@ G = [
 def norm(s):
     s=unicodedata.normalize('NFKD',s.lower()); s=''.join(c for c in s if not unicodedata.combining(c))
     s=s.replace('đ','d'); return re.sub(r'[^a-z0-9 ]','',s).strip()
-d=json.load(open('/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/merged.json'))
+d=json.load(open('/root/mozgalica/content/merged.json'))
 ex=set(norm(q['q']) for c in d['cats'].values() for q in c)
 random.seed(14)
 out={}
@@ -216,4 +216,4 @@ for name,L in [("Zastave i glavni gradovi",Z),("Geografija",G)]:
         res.append({"q":q,"o":o,"a":a})
     qs=[norm(x['q']) for x in res]; assert len(qs)==len(set(qs))
     out[name]=res; print(name,len(res))
-json.dump({"cats":out},open('/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/r2_14.json','w'),ensure_ascii=False,indent=1)
+json.dump({"cats":out},open('/root/mozgalica/content/r2_14.json','w'),ensure_ascii=False,indent=1)

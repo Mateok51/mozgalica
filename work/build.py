@@ -1,7 +1,7 @@
 import json, math, itertools, unicodedata, re
 from fractions import Fraction as F
 from sympy import isprime, divisors
-D='/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/'
+D='/root/mozgalica/content/'
 def chk(cond, msg):
     assert cond, msg
 # ---------- MATH: (q, correct, [wrong x3], check) ----------

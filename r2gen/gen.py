@@ -1,5 +1,5 @@
 import json, re, unicodedata, sys
-D='/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/'
+D='/root/mozgalica/content/'
 T=[
 ("Kako se zove najveća arterija u ljudskom tijelu?","Aorta","Plućna vena","Vratna arterija","Šuplja vena"),
 ("Kako se zovu krvne žile koje dovode krv natrag u srce?","Vene","Arterije","Kapilare","Limfne žile"),

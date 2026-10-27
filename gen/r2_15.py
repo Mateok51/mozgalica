@@ -1,5 +1,5 @@
 import json, re, unicodedata
-D="/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/"
+D="/root/mozgalica/content/"
 # format: (pitanje, točan, krivi1, krivi2, krivi3)
 MORE = [
 ("Koji je ocean drugi po veličini na svijetu?","Atlantski","Indijski","Južni","Sjeverni ledeni"),

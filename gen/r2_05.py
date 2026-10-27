@@ -189,7 +189,7 @@ M = [
 def norm(s):
     s=unicodedata.normalize('NFKD',s.lower()); s=''.join(c for c in s if not unicodedata.combining(c))
     return re.sub(r'[^a-z0-9 ]','',s.replace('đ','d')).strip()
-ex=json.load(open('/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/merged.json'))['cats']
+ex=json.load(open('/root/mozgalica/content/merged.json'))['cats']
 exq={norm(q['q']) for v in ex.values() for q in v}
 out={}
 for name,L in (("Umjetnost",U),("Mitologija",M)):
@@ -205,4 +205,4 @@ for name,L in (("Umjetnost",U),("Mitologija",M)):
             if len(x)>30: print("LONGO",x)
         res.append({"q":q,"o":o,"a":k})
     out[name]=res; print(name,len(res))
-json.dump({"cats":out},open('/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/r2_05.json','w'),ensure_ascii=False,indent=1)
+json.dump({"cats":out},open('/root/mozgalica/content/r2_05.json','w'),ensure_ascii=False,indent=1)

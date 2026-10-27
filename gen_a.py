@@ -118,4 +118,4 @@ for cat, qs in D.items():
         o = x["o"]; o[x["a"]], o[tgt] = o[tgt], o[x["a"]]; x["a"] = tgt; cnt[tgt] += 1
     for x in lst: del x["fixed"]
     out["cats"][cat] = lst
-json.dump(out, open("/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad/content/a.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+json.dump(out, open("/root/mozgalica/content/a.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)

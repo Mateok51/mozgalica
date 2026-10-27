@@ -1,6 +1,6 @@
 'use strict';
 const fs = require('fs');
-const dir = '/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad';
+const dir = '/root/mozgalica';
 const html = fs.readFileSync(dir + '/mozgalica.html', 'utf8');
 const m = html.match(/\/\/#engine-start([\s\S]*?)\/\/#engine-end/);
 const E = new Function(m[1] + '; return { createGame, rankOf, makeCode, QUESTIONS, CFG };')();

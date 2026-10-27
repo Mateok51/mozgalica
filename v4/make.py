@@ -1,4 +1,4 @@
-SP = '/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad'
+SP = '/root/mozgalica'
 s = open(SP + '/v3/page.html', encoding='utf-8').read()
 
 def rep(s, old, new, count=1):
@@ -2432,3 +2432,31 @@ s = rep(s, "    bind('htok', () => {", "    bind('htfull', () => { L.htFull = 1;
 i = s.index('</style>'); s = s[:i] + "  .ht-kick { margin: 2px 0 6px; font-weight: 800; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); text-align: center; }\n  .tv .ht-kick { font-size: 1.4rem; }\n  .ht-full { display: block; margin: 8px auto 0; }\n" + s[i:]
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('upute SGD UI OK')
+
+# ---- krčmarove tajne ponude: privatni panel u glasanju, oznaka zaključane oklade, kartica ishoda, oznaka u poretku, opcija u predvorju ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/tk.css', encoding='utf-8').read() + s[i:]
+s = rep(s, "  const PACT_STEAL = 0.25;", open(SP + '/v4/tk-ui.js', encoding='utf-8').read() + "  const PACT_STEAL = 0.25;")
+s = rep(s, "rcBar(d, me) + pjChip(d, me)", "rcBar(d, me) + tkBar(d, me) + pjChip(d, me)", 2)
+s = rep(s, "  function bindPact(d) {\n    bindRc();\n", "  function bindPact(d) {\n    bindRc();\n    bindTk();\n")
+# prije otkrivanja: oduzmi i tajnu okladu (poredak i brojači se animiraju ispravno)
+for v in ['a', 'b', 'me', 'p']:
+    a = '(' + v + '.rx || 0)'
+    assert s.count(a) >= 1, a
+    s = s.replace(a, a + ' - (' + v + '.tb || 0)')
+s = rep(s, "(gain && p.rx ? '<span class=\"betb rcb'", "(gain && p.tb ? '<span class=\"betb tkb' + (p.tb < 0 ? ' neg' : '') + '\">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class=\"betb rcb'")
+s = rep(s, "rcCard(d) + (d.mo ? tdLine(d) : !d.rcr && b.lead", "rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead", 2)
+s = rep(s, "  function tdSting(d) { if (!d.mo && !d.rcr) return;", "  function tdSting(d) { if (!d.mo && !d.rcr && !d.tkr) return;")
+s = rep(s, "AUDIO.play(d.mo ? d.mo.snd || 'stingSmall' : 'stingRival'); }, wait); }", "AUDIO.play(d.mo ? d.mo.snd || 'stingSmall' : d.rcr ? 'stingRival' : d.tkr.k === 'win' ? 'stingUp' : 'stingSmall'); }, wait); }")
+s = rep(s, "    if ((d.mo || d.rcr) && d.ph !== 'moment') tdSting(d);", "    if ((d.mo || d.rcr || d.tkr) && d.ph !== 'moment') tdSting(d);", 2)
+s = rep(s, "pactToggle(d) + rcToggle(d) +", "pactToggle(d) + rcToggle(d) + tkToggle(d) +", 2)
+s = rep(s, "game.setOpt('rc', b.dataset.rcopt === '1'); } }; }); }", "game.setOpt('rc', b.dataset.rcopt === '1'); } }; });\n    document.querySelectorAll('#app [data-tkopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('tk', b.dataset.tkopt === '1'); } }; }); }")
+s = rep(s, "d.rcr ? d.rcr.id : 0,", "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0,")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('tajne ponude UI OK')
+# TV predvorje: tajne ponude su isključene po zadanom, pa ih domaćin s TV-a mora moći uključiti (ostale opcije su ondje uključene po zadanom)
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "(d.P.length ? lineup(d) : '<div class=\"tv-sub\">Čekamo prve igrače…</div>') +\n      '<div class=\"actions\"><button class=\"btn\" id=\"start\"", "(d.P.length ? lineup(d) : '<div class=\"tv-sub\">Čekamo prve igrače…</div>') + tkToggle(d) +\n      '<div class=\"actions\"><button class=\"btn\" id=\"start\"")
+s = rep(s, "    bind('start', () => game.start());\n", "    bind('start', () => game.start());\n    if (d && d.ph === 'lobby' && game) bindOpt();\n")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('tajne ponude TV predvorje OK')

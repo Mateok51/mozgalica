@@ -1,6 +1,6 @@
 # Rivalski obračun — dobrovoljni izazov dvaju ljudi, rješava se na sljedećem običnom pitanju (lanac: howto.py → rc.py)
 import subprocess, sys
-SP = '/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad'
+SP = '/root/mozgalica'
 subprocess.run([sys.executable, SP + '/v3/howto.py'], check=True)
 s = open(SP + '/v3/engine.js', encoding='utf-8').read()
 def rep(a, b, n=1):

@@ -1,5 +1,5 @@
 import json, os
-SP = '/tmp/claude-0/-home-claude/d0049d8f-34eb-5d03-b489-fe414f5ca31b/scratchpad'
+SP = '/root/mozgalica'
 OUT = SP + '/web/site'
 os.makedirs(OUT, exist_ok=True)
 
