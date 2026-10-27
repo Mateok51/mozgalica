@@ -18,7 +18,7 @@ const AV_COUNT = 8;
 const CFG = {
   intro: 3.5, vote: 10, voteShow: 3, roul: 2.6, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 9.5, startCap: 3, fqCrown: 15,
   // piramida: napredak po stepenicama (gore je teže), početak = 30 % poredak + 70 % omjer bodova, najviše 4 jedinice; vrh = pitanje za krunu
-  pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: 10.5,
+  pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: null,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
@@ -26,6 +26,10 @@ const CFG = {
   chal: null, chalN: 2, varMax: 2,
   // tajni paktovi (balans na jednom mjestu)
   pactMin: 3, pactAfter: 3, pactBonus: 75, pactSteal: 0.25, pactDouble: 0.2, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
+  // tempo otkrivanja odgovora (jedno mjesto za podešavanje): w = šetnja likova, s = kolo, t = cijela faza (s)
+  // n = obično, t = napeto, d = dramatično; trenutak krčme dodaje paceMo sekundi
+  // reveal: ako je postavljen (npr. u testovima), otkrivanje ima to fiksno trajanje bez prilagodbe tempa
+  pace: { n: { w: 1150, s: 1700, t: 6.4 }, t: { w: 1250, s: 2700, t: 7.8 }, d: { w: 1300, s: 3500, t: 9.2 } }, paceMo: 1, paceClose: 250, paceNear: 300,
   moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 8, secret2: 7, secretBonus: 200, helpBonus: 150,
 };
 
@@ -512,6 +516,7 @@ function createGame(o) {
     setPhase('question', cfg.q);
   }
   function scoreQuestion() {
+    const before = paceSnap();
     G.q.cnt = [0, 0, 0, 0];
     for (const p of list()) {
       p.ch = p.ans;
@@ -528,8 +533,44 @@ function createGame(o) {
     resolveSecret();
     pactAfterQuestion();
     TD.afterQuestion();
-    // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje sekundu dulje
-    setPhase('reveal', cfg.reveal + (G.pend && G.pend.mo ? 1 : 0));
+    // tempo: domaćin procijeni važnost iz javnih rezultata ovog pitanja (koji se upravo otkrivaju)
+    G.pace = paceOf(before);
+    const pc = cfg.pace && cfg.pace[G.pace];
+    // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje malo dulje
+    const mo = G.pend && G.pend.mo ? (cfg.paceMo != null ? cfg.paceMo : 1) : 0;
+    setPhase('reveal', (pc ? pc.t : cfg.reveal != null ? cfg.reveal : 10.5) + mo);
+  }
+  // ----- tempo otkrivanja: jednostavna pravila, najviša razina pobjeđuje (ne zbrajaju se) -----
+  function paceSnap() { return list().filter((p) => p.on !== false).map((p) => ({ pid: p.pid, sc: p.score })); }
+  function paceOf(before) {
+    if (!cfg.pace || cfg.reveal != null) return '';
+    const cur = new Map(list().map((p) => [p.pid, p.score]));
+    const b = before.filter((x) => cur.has(x.pid));
+    if (b.length < 2) return 'n';
+    const a = b.map((x) => ({ pid: x.pid, sc: cur.get(x.pid) }));
+    const sortS = (arr) => arr.slice().sort((x, y) => y.sc - x.sc);
+    const B = sortS(b), A = sortS(a);
+    const rB = new Map(B.map((x, i) => [x.pid, i])), rA = new Map(A.map((x, i) => [x.pid, i]));
+    const changed = a.some((x) => x.sc !== b.find((y) => y.pid === x.pid).sc);
+    if (!changed) return 'n';                       // nitko nije osvojio ni izgubio bodove: brzo dalje
+    const gapB = B[0].sc - B[1].sc, gapA = A[0].sc - A[1].sc;
+    const lead = B[0].sc > 0 && A[0].pid !== B[0].pid && A[0].sc > cur.get(B[0].pid);
+    let rise = 0; for (const x of a) rise = Math.max(rise, rA.has(x.pid) ? rB.get(x.pid) - rA.get(x.pid) : 0);
+    const n = a.length;
+    const mo = G.pend && G.pend.mo ? G.pend.mo.k : '';
+    const lastQ = !plan.slice(G.pi + 1).some((it) => it.t === 'battle' || it.t === 'challenge') && !G.inFinale;
+    const close = cfg.paceClose || 250, near = cfg.paceNear || 300;
+    // DRAMATIČNO: odlučena tijesna borba za vodstvo, veliki preokret, povratak večeri, novo vodstvo uoči piramide
+    if (lead && (gapB <= close || gapA <= close)) return 'd';
+    if (mo === 'COMEBACK_BIG' || (n >= 4 && rise >= 3)) return 'd';
+    if (lastQ && lead) return 'd';
+    // NAPETO: promjena vodstva, tijesan vrh, skok u poretku, prekinut niz, rivali, zadnje pitanje prije piramide
+    if (lead) return 't';
+    if (A[0].sc > 0 && gapA <= near && gapB <= near) return 't';
+    if (rise >= 2) return 't';
+    if (['COMEBACK', 'STREAK_BROKEN', 'STREAK5', 'RIVAL_LEAD', 'RIVALRY', 'RIVAL_AGAIN'].includes(mo)) return 't';
+    if (lastQ) return 't';
+    return 'n';
   }
 
   // ----- mini-igre -----
@@ -1417,6 +1458,7 @@ function createGame(o) {
     if (ph === 'cast' || ph === 'question' || ph === 'reveal' || ph === 'fq') v.ev = G.ev;
     if (G.inFinale) { v.fin = 1; v.ftop = pyrTop(); v.req = cfg.pyrReq; if ((ph === 'fq' || ph === 'fr') ? (G.q && G.q.crown) : (ph === 'power' || ph === 'cast') && list().some((p) => (p.fu || 0) >= pyrTop())) v.crown = 1; }
     if (ph === 'reveal' || ph === 'fr') { v.cor = G.q.a; if (G.q.cnt) v.cnt = G.q.cnt; }
+    if (ph === 'reveal' && G.pace && cfg.pace && cfg.pace[G.pace]) { const pc = cfg.pace[G.pace]; v.pc = G.pace; v.tl = [pc.w, pc.s]; }
     if (ph === 'sort' || ph === 'sortReveal') v.so = { a: G.so.a, b: G.so.b, it: G.so.items };
     if (ph === 'sortReveal') v.so.key = G.so.key;
     if (ph === 'link' || ph === 'linkReveal') v.li = { t: G.li.t, L: G.li.L, R: G.li.R };

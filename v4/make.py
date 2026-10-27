@@ -2279,3 +2279,25 @@ s = open(SP + '/v4/page.html', encoding='utf-8').read()
 i = s.index('</style>'); s = s[:i] + "  /* izrazi likova */\n  .spr.m-happy, .spr.m-sad, .spr.m-shocked, .spr.m-attack, .spr.m-victory { animation-delay: 0ms; }\n" + s[i:]
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('mood delay OK')
+
+# ---- tempo otkrivanja: vremenske točke šalje domaćin (d.tl = [šetnja, kolo]); bez njih vrijedi WH ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  WH.end = WH.walk + WH.spin;\n", "  WH.end = WH.walk + WH.spin;\n  // vremenska crta otkrivanja za ovu fazu (domaćin određuje tempo: obično / napeto / dramatično)\n  function whT(d) { const t = d && d.ph === 'reveal' && d.tl; return t ? { walk: +t[0], spin: +t[1], end: +t[0] + +t[1] } : WH; }\n")
+s = rep(s, "    const n = d.q.o.length, R = WH.spin, D = R + 600, steps = [];\n    for (let t = 60, gap = 70; t < R - 100; t += gap, gap = Math.min(420, gap * 1.13)) steps.push(t);",
+           "    const T = whT(d), n = d.q.o.length, R = T.spin, D = R + 600, steps = [];\n    // dulje kolo = sporije zaustavljanje (veći zadnji razmaci), kraće kolo = brži prolaz kroz početak\n    const cap = Math.max(320, Math.min(600, R * 0.17));\n    for (let t = 60, gap = 70; t < R - 100; t += gap, gap = Math.min(cap, gap * 1.13)) steps.push(t);")
+s = rep(s, "animation-delay:calc(' + WH.walk + 'ms - var(--el, 0ms))\"></i>' };", "animation-delay:calc(' + T.walk + 'ms - var(--el, 0ms))\"></i>' };")
+s = rep(s, "    const el = Math.max(0, d.dur - d.ms), w = wheel(d);\n", "    const el = Math.max(0, d.dur - d.ms), w = wheel(d), T = whT(d);\n")
+s = rep(s, "const at = WH.walk + t - el;", "const at = T.walk + t - el;")
+s = rep(s, "    const end = WH.end - el; setTimeout(", "    const end = T.end - el; setTimeout(")
+# poredak: animacija premještanja se nastavlja (negativno kašnjenje) umjesto da krene ispočetka pri osvježavanju
+s = rep(s, "    const off = d.ph === 'reveal' ? WH.end : 0, delay = el > 2400 + off ? -1 : Math.max(0, 1950 + off - el);\n    return { html: miniBoard(d, delay < 0 ? true : 2000 + off).replace('<div class=\"mboard', '<div data-delay=\"' + delay + '\" class=\"mboard'), lead: newLead };",
+           "    const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;\n    return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class=\"mboard', '<div data-delay=\"' + delay + '\" class=\"mboard'), lead: newLead };")
+s = rep(s, "      if (dl < 0) return;\n", "      if (b.dataset.delay === 'x' || isNaN(dl)) return;\n")
+s = rep(s, "  function flyPoints(s0, g) {", "  function flyPoints(s0, g, d) {")
+s = rep(s, "    }, 1500 + WH.end);", "    }, 1500 + whT(d).end);")
+s = rep(s, "flyPoints(L.s, me.g);", "flyPoints(L.s, me.g, d);")
+s = s.replace("--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms", "--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms")
+s = rep(s, "data-cud=\"' + (2150 + WH.end) + '\"", "data-cud=\"' + (2150 + whT(d).end) + '\"")
+assert 'WH.walk + t' not in s and s.count('WH.') == 3, s.count('WH.')
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('tempo UI OK')

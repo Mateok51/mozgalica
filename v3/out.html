@@ -2013,7 +2013,7 @@ const AV_COUNT = 8;
 const CFG = {
   intro: 3.5, vote: 10, voteShow: 3, roul: 2.6, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 9.5, startCap: 3, fqCrown: 15,
   // piramida: napredak po stepenicama (gore je teže), početak = 30 % poredak + 70 % omjer bodova, najviše 4 jedinice; vrh = pitanje za krunu
-  pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: 10.5,
+  pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: null,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
@@ -2021,6 +2021,10 @@ const CFG = {
   chal: null, chalN: 2, varMax: 2,
   // tajni paktovi (balans na jednom mjestu)
   pactMin: 3, pactAfter: 3, pactBonus: 75, pactSteal: 0.25, pactDouble: 0.2, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
+  // tempo otkrivanja odgovora (jedno mjesto za podešavanje): w = šetnja likova, s = kolo, t = cijela faza (s)
+  // n = obično, t = napeto, d = dramatično; trenutak krčme dodaje paceMo sekundi
+  // reveal: ako je postavljen (npr. u testovima), otkrivanje ima to fiksno trajanje bez prilagodbe tempa
+  pace: { n: { w: 1150, s: 1700, t: 6.4 }, t: { w: 1250, s: 2700, t: 7.8 }, d: { w: 1300, s: 3500, t: 9.2 } }, paceMo: 1, paceClose: 250, paceNear: 300,
   moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 8, secret2: 7, secretBonus: 200, helpBonus: 150,
 };
 
@@ -2507,6 +2511,7 @@ function createGame(o) {
     setPhase('question', cfg.q);
   }
   function scoreQuestion() {
+    const before = paceSnap();
     G.q.cnt = [0, 0, 0, 0];
     for (const p of list()) {
       p.ch = p.ans;
@@ -2523,8 +2528,44 @@ function createGame(o) {
     resolveSecret();
     pactAfterQuestion();
     TD.afterQuestion();
-    // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje sekundu dulje
-    setPhase('reveal', cfg.reveal + (G.pend && G.pend.mo ? 1 : 0));
+    // tempo: domaćin procijeni važnost iz javnih rezultata ovog pitanja (koji se upravo otkrivaju)
+    G.pace = paceOf(before);
+    const pc = cfg.pace && cfg.pace[G.pace];
+    // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje malo dulje
+    const mo = G.pend && G.pend.mo ? (cfg.paceMo != null ? cfg.paceMo : 1) : 0;
+    setPhase('reveal', (pc ? pc.t : cfg.reveal != null ? cfg.reveal : 10.5) + mo);
+  }
+  // ----- tempo otkrivanja: jednostavna pravila, najviša razina pobjeđuje (ne zbrajaju se) -----
+  function paceSnap() { return list().filter((p) => p.on !== false).map((p) => ({ pid: p.pid, sc: p.score })); }
+  function paceOf(before) {
+    if (!cfg.pace || cfg.reveal != null) return '';
+    const cur = new Map(list().map((p) => [p.pid, p.score]));
+    const b = before.filter((x) => cur.has(x.pid));
+    if (b.length < 2) return 'n';
+    const a = b.map((x) => ({ pid: x.pid, sc: cur.get(x.pid) }));
+    const sortS = (arr) => arr.slice().sort((x, y) => y.sc - x.sc);
+    const B = sortS(b), A = sortS(a);
+    const rB = new Map(B.map((x, i) => [x.pid, i])), rA = new Map(A.map((x, i) => [x.pid, i]));
+    const changed = a.some((x) => x.sc !== b.find((y) => y.pid === x.pid).sc);
+    if (!changed) return 'n';                       // nitko nije osvojio ni izgubio bodove: brzo dalje
+    const gapB = B[0].sc - B[1].sc, gapA = A[0].sc - A[1].sc;
+    const lead = B[0].sc > 0 && A[0].pid !== B[0].pid && A[0].sc > cur.get(B[0].pid);
+    let rise = 0; for (const x of a) rise = Math.max(rise, rA.has(x.pid) ? rB.get(x.pid) - rA.get(x.pid) : 0);
+    const n = a.length;
+    const mo = G.pend && G.pend.mo ? G.pend.mo.k : '';
+    const lastQ = !plan.slice(G.pi + 1).some((it) => it.t === 'battle' || it.t === 'challenge') && !G.inFinale;
+    const close = cfg.paceClose || 250, near = cfg.paceNear || 300;
+    // DRAMATIČNO: odlučena tijesna borba za vodstvo, veliki preokret, povratak večeri, novo vodstvo uoči piramide
+    if (lead && (gapB <= close || gapA <= close)) return 'd';
+    if (mo === 'COMEBACK_BIG' || (n >= 4 && rise >= 3)) return 'd';
+    if (lastQ && lead) return 'd';
+    // NAPETO: promjena vodstva, tijesan vrh, skok u poretku, prekinut niz, rivali, zadnje pitanje prije piramide
+    if (lead) return 't';
+    if (A[0].sc > 0 && gapA <= near && gapB <= near) return 't';
+    if (rise >= 2) return 't';
+    if (['COMEBACK', 'STREAK_BROKEN', 'STREAK5', 'RIVAL_LEAD', 'RIVALRY', 'RIVAL_AGAIN'].includes(mo)) return 't';
+    if (lastQ) return 't';
+    return 'n';
   }
 
   // ----- mini-igre -----
@@ -3412,6 +3453,7 @@ function createGame(o) {
     if (ph === 'cast' || ph === 'question' || ph === 'reveal' || ph === 'fq') v.ev = G.ev;
     if (G.inFinale) { v.fin = 1; v.ftop = pyrTop(); v.req = cfg.pyrReq; if ((ph === 'fq' || ph === 'fr') ? (G.q && G.q.crown) : (ph === 'power' || ph === 'cast') && list().some((p) => (p.fu || 0) >= pyrTop())) v.crown = 1; }
     if (ph === 'reveal' || ph === 'fr') { v.cor = G.q.a; if (G.q.cnt) v.cnt = G.q.cnt; }
+    if (ph === 'reveal' && G.pace && cfg.pace && cfg.pace[G.pace]) { const pc = cfg.pace[G.pace]; v.pc = G.pace; v.tl = [pc.w, pc.s]; }
     if (ph === 'sort' || ph === 'sortReveal') v.so = { a: G.so.a, b: G.so.b, it: G.so.items };
     if (ph === 'sortReveal') v.so.key = G.so.key;
     if (ph === 'link' || ph === 'linkReveal') v.li = { t: G.li.t, L: G.li.L, R: G.li.R };
@@ -4673,7 +4715,7 @@ function createGame(o) {
       b.dataset.flipped = '1';
       const rows = [...b.querySelectorAll('.rank-row[data-prev]')]; if (!rows.length || reduceMotion) return;
       const h = rows[0].getBoundingClientRect().height, dl = b.dataset.delay !== undefined ? +b.dataset.delay : 350;
-      if (dl < 0) return;
+      if (b.dataset.delay === 'x' || isNaN(dl)) return;
       rows.forEach((r, i) => {
         const dy = (+r.dataset.prev - i) * h; if (!dy) return;
         r.animate([{ transform: 'translateY(' + dy + 'px)' }, { transform: 'none' }], { duration: 600, delay: dl, easing: 'cubic-bezier(.3,.9,.3,1)', fill: 'backwards' });
@@ -5133,7 +5175,7 @@ function createGame(o) {
         const opts = d.q.o.map((o, i) => '<div class="opt o' + i + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '"><span class="shape">' + SHAPES[i] + '</span><span class="txt">' + esc(o) + '</span>' + (rev && d.cnt ? '<span class="cnt">' + d.cnt[i] + '</span>' : '') + '</div>').join('');
         if (rev) {
           const el = Math.max(0, d.dur - d.ms), b = revBoard(d, el);
-          h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms">' +
+          h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
             '<div class="rv-a">' + qTextHtml(d, true) + revOpts(d, -1, true) + '</div>' +
             '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
           h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
@@ -5264,7 +5306,7 @@ function createGame(o) {
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem"><span class="lt">Trivia</span><span class="lt">Tavern</span></div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
     const demoBar = mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '';
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -5398,7 +5440,7 @@ function createGame(o) {
     if (freshP) $app.classList.add('fresh');
     if (d.ph === 'cast' && d.ntv) CAST.start(document.getElementById('castStage'), d, true);
     bindPhone(d, me);
-    if (freshP && me && d.ph === 'reveal' && me.g > 0) flyPoints(L.s, me.g);
+    if (freshP && me && d.ph === 'reveal' && me.g > 0) flyPoints(L.s, me.g, d);
     tick();
   }
 
@@ -5650,9 +5692,13 @@ function createGame(o) {
   // kolo sreće za otkrivanje odgovora: vrijeme šetnje, okretanja i otkrivanja (ms od početka faze)
   const WH = { walk: 1300, spin: 2300 };
   WH.end = WH.walk + WH.spin;
+  // vremenska crta otkrivanja za ovu fazu (domaćin određuje tempo: obično / napeto / dramatično)
+  function whT(d) { const t = d && d.ph === 'reveal' && d.tl; return t ? { walk: +t[0], spin: +t[1], end: +t[0] + +t[1] } : WH; }
   function wheel(d) {
-    const n = d.q.o.length, R = WH.spin, D = R + 600, steps = [];
-    for (let t = 60, gap = 70; t < R - 100; t += gap, gap = Math.min(420, gap * 1.13)) steps.push(t);
+    const T = whT(d), n = d.q.o.length, R = T.spin, D = R + 600, steps = [];
+    // dulje kolo = sporije zaustavljanje (veći zadnji razmaci), kraće kolo = brži prolaz kroz početak
+    const cap = Math.max(320, Math.min(600, R * 0.17));
+    for (let t = 60, gap = 70; t < R - 100; t += gap, gap = Math.min(cap, gap * 1.13)) steps.push(t);
     const k0 = steps.length, at = (k) => ((((d.cor - (k0 - 1 - k)) % n) + n) % n);
     const pc = (ms) => (Math.max(0, Math.min(D, ms)) / D * 100).toFixed(2) + '%';
     let css = '';
@@ -5666,7 +5712,7 @@ function createGame(o) {
       if (!/100%/.test(kf)) kf += '100%{opacity:0}';
       css += '@keyframes wh' + d.s + 'x' + j + '{' + kf + '}';
     }
-    return { css, steps, D, spot: (i) => '<i class="spot whs" style="animation:wh' + d.s + 'x' + i + ' ' + D + 'ms linear both;animation-delay:calc(' + WH.walk + 'ms - var(--el, 0ms))"></i>' };
+    return { css, steps, D, spot: (i) => '<i class="spot whs" style="animation:wh' + d.s + 'x' + i + ' ' + D + 'ms linear both;animation-delay:calc(' + T.walk + 'ms - var(--el, 0ms))"></i>' };
   }
   function walkers(d, i, tv) {
     const who = d.P.filter((p) => p.ch === i);
@@ -5679,10 +5725,10 @@ function createGame(o) {
   let wheelStep = -1;
   function wheelSound(d, fin) {
     if (wheelStep === d.s) return; wheelStep = d.s;
-    const el = Math.max(0, d.dur - d.ms), w = wheel(d);
+    const el = Math.max(0, d.dur - d.ms), w = wheel(d), T = whT(d);
     if (el < 300) AUDIO.play('whoosh');
-    w.steps.forEach((t) => { const at = WH.walk + t - el; if (at > 0) setTimeout(() => { if (wheelStep === d.s) AUDIO.play('tap'); }, at); });
-    const end = WH.end - el; setTimeout(() => { if (wheelStep === d.s) fin(); }, Math.max(0, end + 40));
+    w.steps.forEach((t) => { const at = T.walk + t - el; if (at > 0) setTimeout(() => { if (wheelStep === d.s) AUDIO.play('tap'); }, at); });
+    const end = T.end - el; setTimeout(() => { if (wheelStep === d.s) fin(); }, Math.max(0, end + 40));
   }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
@@ -5746,13 +5792,13 @@ function createGame(o) {
   function revBoard(d, el) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0)));
     const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
-    const off = d.ph === 'reveal' ? WH.end : 0, delay = el > 2400 + off ? -1 : Math.max(0, 1950 + off - el);
-    return { html: miniBoard(d, delay < 0 ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
+    const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;
+    return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
   }
   // nakon otkrivanja: "+N" se odvoji od broja bodova i odleti u HUD, HUD se kratko "primi"
   // za automatske testove (ne utječe na igru)
   window.__dbg = { get L() { return L; }, makeFx: (k) => makeFx(k), phoneRender: (f) => phoneRender(f) };
-  function flyPoints(s0, g) {
+  function flyPoints(s0, g, d) {
     setTimeout(() => {
       if (L.s !== s0) return;
       const from = document.querySelector('.rv .rv-pts'), to = document.querySelector('.p-top > span:last-child');
@@ -5771,7 +5817,7 @@ function createGame(o) {
         { transform: 'translate(-50%, calc(-50% - 10px))', opacity: 1, offset: 0.25 },
         { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(0.45)', opacity: 0.2 },
       ], { duration: 700, easing: 'cubic-bezier(0.5, 0, 0.75, 0)' }).onfinish = done;
-    }, 1500 + WH.end);
+    }, 1500 + whT(d).end);
   }
   function revealPhone(d, me) {
     const el = Math.max(0, d.dur - d.ms), ok = me.ch === d.cor, none = me.ch < 0;
@@ -5779,7 +5825,7 @@ function createGame(o) {
     const b = revBoard(d, el);
     const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
     const wh = wheel(d);
-    return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms">' +
+    return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
       '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
   }

@@ -3225,7 +3225,7 @@ __ENGINE__
       b.dataset.flipped = '1';
       const rows = [...b.querySelectorAll('.rank-row[data-prev]')]; if (!rows.length || reduceMotion) return;
       const h = rows[0].getBoundingClientRect().height, dl = b.dataset.delay !== undefined ? +b.dataset.delay : 350;
-      if (dl < 0) return;
+      if (b.dataset.delay === 'x' || isNaN(dl)) return;
       rows.forEach((r, i) => {
         const dy = (+r.dataset.prev - i) * h; if (!dy) return;
         r.animate([{ transform: 'translateY(' + dy + 'px)' }, { transform: 'none' }], { duration: 600, delay: dl, easing: 'cubic-bezier(.3,.9,.3,1)', fill: 'backwards' });
@@ -3685,7 +3685,7 @@ __ENGINE__
         const opts = d.q.o.map((o, i) => '<div class="opt o' + i + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '"><span class="shape">' + SHAPES[i] + '</span><span class="txt">' + esc(o) + '</span>' + (rev && d.cnt ? '<span class="cnt">' + d.cnt[i] + '</span>' : '') + '</div>').join('');
         if (rev) {
           const el = Math.max(0, d.dur - d.ms), b = revBoard(d, el);
-          h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms">' +
+          h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
             '<div class="rv-a">' + qTextHtml(d, true) + revOpts(d, -1, true) + '</div>' +
             '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
           h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
@@ -3816,7 +3816,7 @@ __ENGINE__
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem">MOZGALICA</div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
     const demoBar = mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '';
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + WH.end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -3950,7 +3950,7 @@ __ENGINE__
     if (freshP) $app.classList.add('fresh');
     if (d.ph === 'cast' && d.ntv) CAST.start(document.getElementById('castStage'), d, true);
     bindPhone(d, me);
-    if (freshP && me && d.ph === 'reveal' && me.g > 0) flyPoints(L.s, me.g);
+    if (freshP && me && d.ph === 'reveal' && me.g > 0) flyPoints(L.s, me.g, d);
     tick();
   }
 
@@ -4202,9 +4202,13 @@ __ENGINE__
   // kolo sreće za otkrivanje odgovora: vrijeme šetnje, okretanja i otkrivanja (ms od početka faze)
   const WH = { walk: 1300, spin: 2300 };
   WH.end = WH.walk + WH.spin;
+  // vremenska crta otkrivanja za ovu fazu (domaćin određuje tempo: obično / napeto / dramatično)
+  function whT(d) { const t = d && d.ph === 'reveal' && d.tl; return t ? { walk: +t[0], spin: +t[1], end: +t[0] + +t[1] } : WH; }
   function wheel(d) {
-    const n = d.q.o.length, R = WH.spin, D = R + 600, steps = [];
-    for (let t = 60, gap = 70; t < R - 100; t += gap, gap = Math.min(420, gap * 1.13)) steps.push(t);
+    const T = whT(d), n = d.q.o.length, R = T.spin, D = R + 600, steps = [];
+    // dulje kolo = sporije zaustavljanje (veći zadnji razmaci), kraće kolo = brži prolaz kroz početak
+    const cap = Math.max(320, Math.min(600, R * 0.17));
+    for (let t = 60, gap = 70; t < R - 100; t += gap, gap = Math.min(cap, gap * 1.13)) steps.push(t);
     const k0 = steps.length, at = (k) => ((((d.cor - (k0 - 1 - k)) % n) + n) % n);
     const pc = (ms) => (Math.max(0, Math.min(D, ms)) / D * 100).toFixed(2) + '%';
     let css = '';
@@ -4218,7 +4222,7 @@ __ENGINE__
       if (!/100%/.test(kf)) kf += '100%{opacity:0}';
       css += '@keyframes wh' + d.s + 'x' + j + '{' + kf + '}';
     }
-    return { css, steps, D, spot: (i) => '<i class="spot whs" style="animation:wh' + d.s + 'x' + i + ' ' + D + 'ms linear both;animation-delay:calc(' + WH.walk + 'ms - var(--el, 0ms))"></i>' };
+    return { css, steps, D, spot: (i) => '<i class="spot whs" style="animation:wh' + d.s + 'x' + i + ' ' + D + 'ms linear both;animation-delay:calc(' + T.walk + 'ms - var(--el, 0ms))"></i>' };
   }
   function walkers(d, i, tv) {
     const who = d.P.filter((p) => p.ch === i);
@@ -4231,10 +4235,10 @@ __ENGINE__
   let wheelStep = -1;
   function wheelSound(d, fin) {
     if (wheelStep === d.s) return; wheelStep = d.s;
-    const el = Math.max(0, d.dur - d.ms), w = wheel(d);
+    const el = Math.max(0, d.dur - d.ms), w = wheel(d), T = whT(d);
     if (el < 300) AUDIO.play('whoosh');
-    w.steps.forEach((t) => { const at = WH.walk + t - el; if (at > 0) setTimeout(() => { if (wheelStep === d.s) AUDIO.play('tap'); }, at); });
-    const end = WH.end - el; setTimeout(() => { if (wheelStep === d.s) fin(); }, Math.max(0, end + 40));
+    w.steps.forEach((t) => { const at = T.walk + t - el; if (at > 0) setTimeout(() => { if (wheelStep === d.s) AUDIO.play('tap'); }, at); });
+    const end = T.end - el; setTimeout(() => { if (wheelStep === d.s) fin(); }, Math.max(0, end + 40));
   }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
@@ -4298,13 +4302,13 @@ __ENGINE__
   function revBoard(d, el) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0)));
     const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
-    const off = d.ph === 'reveal' ? WH.end : 0, delay = el > 2400 + off ? -1 : Math.max(0, 1950 + off - el);
-    return { html: miniBoard(d, delay < 0 ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
+    const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;
+    return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
   }
   // nakon otkrivanja: "+N" se odvoji od broja bodova i odleti u HUD, HUD se kratko "primi"
   // za automatske testove (ne utječe na igru)
   window.__dbg = { get L() { return L; }, makeFx: (k) => makeFx(k), phoneRender: (f) => phoneRender(f) };
-  function flyPoints(s0, g) {
+  function flyPoints(s0, g, d) {
     setTimeout(() => {
       if (L.s !== s0) return;
       const from = document.querySelector('.rv .rv-pts'), to = document.querySelector('.p-top > span:last-child');
@@ -4323,7 +4327,7 @@ __ENGINE__
         { transform: 'translate(-50%, calc(-50% - 10px))', opacity: 1, offset: 0.25 },
         { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(0.45)', opacity: 0.2 },
       ], { duration: 700, easing: 'cubic-bezier(0.5, 0, 0.75, 0)' }).onfinish = done;
-    }, 1500 + WH.end);
+    }, 1500 + whT(d).end);
   }
   function revealPhone(d, me) {
     const el = Math.max(0, d.dur - d.ms), ok = me.ch === d.cor, none = me.ch < 0;
@@ -4331,7 +4335,7 @@ __ENGINE__
     const b = revBoard(d, el);
     const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
     const wh = wheel(d);
-    return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + WH.end + 'ms;--rvw:' + WH.walk + 'ms">' +
+    return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
       '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
   }
