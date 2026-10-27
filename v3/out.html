@@ -2231,7 +2231,7 @@ const CFG = {
   // Social Flow: Vrijeme za dogovore nakon tih odigranih pitanja (atBot u testnom načinu s botovima), trajanje (s),
   // nevidljiva sigurnosna granica kad je jedini čovjek u testnom načinu (nema odbrojavanja), najviše dolaznih ponuda za pakt po igraču
   // offerQ: koliko odigranih običnih pitanja ponuda (pakt, obračun) čeka odgovor — dovoljno mirnog vremena između pitanja
-  sf: { on: true, at: [], atBot: [3, 5, 7], dur: 20, soloMax: 600, inMax: 2, offerQ: 2,
+  sf: { on: true, at: [], atBot: [], dur: 20, soloMax: 600, inMax: 2, offerQ: 2,
     // profili botova (samo društvene odluke): prihvaćanje ponude, slanje ponude po fazi, šapat, izdaja po fazi (uz riznicu ≥ btMin)
     prof: { loyal: { acc: 0.85, off: 0.45, wh: 0.8, bt: 0.05 }, sly: { acc: 0.7, off: 0.35, wh: 0.5, bt: 0.4 }, wild: { acc: 0.5, off: 0.4, wh: 0.5, bt: 0.2 } }, btMin: 75 },
   tk: { win: 150, loss: 100, after: 5, perGame: 2, offers: 3, chance: 0.5, gap: 2 },
@@ -2242,7 +2242,7 @@ const CFG = {
 const FLAGS = {
   ENABLE_TAVERN_DIRECTOR: true,
   ENABLE_RIVALRIES: true,
-  ENABLE_DUELS: true,
+  ENABLE_DUELS: false,   // krčmar više ne nameće dvoboje rivalima; dvoboj postoji samo kao izazov vođi
   ENABLE_SECRET_EVENTS: true,
   ENABLE_SECRET_TARGET: true,
   ENABLE_SECRET_HELP: false,
@@ -2311,7 +2311,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: o.rc !== undefined ? !!o.rc : true, tk: o.tk !== undefined ? !!o.tk : false, bs: o.bs !== undefined ? !!o.bs : false }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
     tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
@@ -4184,6 +4184,7 @@ function createGame(o) {
     const p = R.get(pid);
     if (!p || (p.bot && !(botCall && bsOn())) || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
     if (sfOn() && sfBusy(p) && a.k !== 'whisper' && a.k.slice(0, 2) !== 'tk') return false;   // nitko ne odlučuje dok odgovara
+    if (a.k === 'offer' || a.k === 'accept' || a.k === 'decline' || a.k === 'cancel' || a.k.slice(0, 2) === 'rc' || a.k.slice(0, 2) === 'tk') return false;
     if (a.k === 'tkAccept' || a.k === 'tkDecline') { const r = tkAction(p, a); if (r) { if (G.ph === 'vote' && allDone()) endPhase(); else onChange(); } return r; }
     if (a.k.slice(0, 2) === 'rc') { const r = rcAction(p, a); if (r) onChange(); return r; }
     cleanOffers();
@@ -4319,7 +4320,7 @@ function createGame(o) {
       note: p.note,
     };
     // svi ostali spojeni ljudi (ne otkriva tko je već u paktu)
-    if (o.can) o.cand = sfPeople().filter((q) => q !== p && q.on).map((q) => q.pid);
+    o.can = false;   // igrači više ne šalju ponude; pakt nudi krčmar
     if (sfOn()) { o.sf = 1; if (G.ph === 'deal') o.dl = 1; if (bsOn()) o.bs = 1; }
     if (k && mate) {
       o.k = { m: mate.pid, tre: k.tre, grew: k.grew === G.s ? 1 : 0, since: k.since };
@@ -4346,7 +4347,7 @@ function createGame(o) {
     if (out) r.out = sfOn() ? { t: out.t, dl: 1 } : { t: out.t, ms: Math.max(0, out.until - now()) };
     return { rc: r };
   }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'rc') { G.opt.rc = !!v; onChange(); } if (k === 'tk') { G.opt.tk = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -4493,7 +4494,7 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0, tk: G.opt.tk ? 1 : 0, bs: G.opt.bs ? 1 : 0 };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0 };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
@@ -5988,6 +5989,7 @@ function createGame(o) {
     return '<div class="tdl lv2 rcx" data-mo="rc' + (+r.id || 0) + '" style="--el:' + el + 'ms"><span class="figs rc-figs">' + fig(A) + '<span class="rc-vs">VS</span>' + fig(B) + '</span><span class="tx"><b>' + (r.rev ? '🔥 Osveta' : '⚔️ Rivalski obračun') + '</b>' + res + '<span>' + esc(r.line || '') + '</span></span></div>';
   }
   function rcToggle(d) {
+    return '';   // rivalski obračun je uklonjen
     if (!d.opt) return '';
     if (!game) return d.opt.rc ? '<div class="lob-info">⚔️ Rivalski obračuni su uključeni</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l">⚔️ Rivalski obračuni<small>Dobrovoljni izazovi s malim ulogom (od 5. pitanja)</small></span><button class="tgl' + (d.opt.rc ? '' : ' off') + '" data-rcopt="' + (d.opt.rc ? 0 : 1) + '">' + (d.opt.rc ? 'Uključeno' : 'Isključeno') + '</button></div>';
@@ -6050,6 +6052,7 @@ function createGame(o) {
       (win ? '<span class="bt-coins tk-coins">' + '<i>🪙</i>'.repeat(3) + '</span>' : '') + '</span><span class="tx"><b class="tk-h">' + esc(r.h || '') + '</b>' + pts + '<span>' + esc(r.line || '') + '</span></span></div>';
   }
   function tkToggle(d) {
+    return '';   // krčmarove tajne oklade su uklonjene (oklada je sada moć)
     if (!d.opt) return '';
     if (!game) return d.opt.tk ? '<div class="lob-info">🍺 Krčmarove tajne ponude su uključene</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l">🍺 Krčmarove tajne ponude<small>Krčmar povremeno nudi igračima tajne oklade na uspjeh njihovih protivnika.</small></span><button class="tgl' + (d.opt.tk ? '' : ' off') + '" data-tkopt="' + (d.opt.tk ? 0 : 1) + '">' + (d.opt.tk ? 'Uključeno' : 'Isključeno') + '</button></div>';
@@ -6156,6 +6159,7 @@ function createGame(o) {
   }
   // gumb 🗝️ Tajne (mirne faze) i kartica kutka; tijekom odgovaranja se zatvara (stanje ponuda ostaje)
   function sfKey(d, me) {
+    SF.open = false; return '';   // tipka Tajni kutak je uklonjena (Krčmar 2.0: sve se događa na ploči bodova)
     if (!phoneShown() || !me || !sfOnPV() || d.ph === 'lobby' || d.ph === 'final' || d.ph === 'deal' || sfBusyMe(d, me) || d.fin) { SF.open = false; return ''; }
     const n = sfUnread(d);
     const btn = '<button class="sf-key' + (n ? ' new' : '') + '" data-sfk="1" aria-label="Tajne' + (n ? ', nepročitano ' + n : '') + '"><span class="sf-ki">🗝️</span><span class="sf-kt">Tajne</span>' + (n ? '<span class="sf-badge">' + n + '</span>' : PV.k ? '<span class="sf-ally-dot" title="Savez">🍻</span>' : '') + '</button>';

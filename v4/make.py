@@ -2503,3 +2503,9 @@ s = rep(s, "        '<div class=\"bt-row neg\">' + esc(nameOf(d, e.a)) + ' ' + n
            "        (e.la || e.lb ? '<div class=\"bt-row neg\">' + esc(nameOf(d, e.a)) + ' ' + num('bta' + i, e.la, '−', 1700) + '</div><div class=\"bt-row neg\">' + esc(nameOf(d, e.b)) + ' ' + num('btb' + i, e.lb, '−', 1900) + '</div>' : '<div class=\"bt-row\">Nitko nikome ne krade bodove</div>') + '</div>';")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('UX 5 UI OK')
+# ---- Krčmar 2.0, korak 1: bez opcija rivalskog obračuna i krčmarovih tajnih oklada u predvorju ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  function rcToggle(d) {\n", "  function rcToggle(d) {\n    return '';   // rivalski obračun je uklonjen\n")
+s = rep(s, "  function tkToggle(d) {\n", "  function tkToggle(d) {\n    return '';   // krčmarove tajne oklade su uklonjene (oklada je sada moć)\n")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR 1 UI OK')

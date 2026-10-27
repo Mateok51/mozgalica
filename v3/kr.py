@@ -1,0 +1,24 @@
+# Krčmar 2.0 (lanac: ux.py → kr.py)
+# 1) Uklanja se: ponude između igrača (pakt nudi samo krčmar), Vrijeme za dogovore, rivalski obračun, nametnuti dvoboji rivala,
+#    krčmarove tajne oklade. Kod ostaje uspavan (opcije su isključene i ne mogu se uključiti) da se ništa drugo ne poremeti.
+import subprocess, sys
+SP = '/root/mozgalica'
+subprocess.run([sys.executable, SP + '/v3/ux.py'], check=True)
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+def rep(a, b, n=1):
+    global s
+    assert s.count(a) == n, (s.count(a), a[:90])
+    s = s.replace(a, b)
+
+# ---------- 1) uklanjanje ----------
+rep("  sf: { on: true, at: [], atBot: [3, 5, 7],", "  sf: { on: true, at: [], atBot: [],")
+rep("  ENABLE_DUELS: true,", "  ENABLE_DUELS: false,   // krčmar više ne nameće dvoboje rivalima; dvoboj postoji samo kao izazov vođi")
+rep("rc: o.rc !== undefined ? !!o.rc : true, tk: o.tk !== undefined ? !!o.tk : false,", "rc: false, tk: false,")
+rep(" if (k === 'rc') { G.opt.rc = !!v; onChange(); } if (k === 'tk') { G.opt.tk = !!v; onChange(); }", "")
+rep("    if (o.can) o.cand = sfPeople().filter((q) => q !== p && q.on).map((q) => q.pid);", "    o.can = false;   // igrači više ne šalju ponude; pakt nudi krčmar")
+rep("    if (a.k === 'tkAccept' || a.k === 'tkDecline') {",
+    "    if (a.k === 'offer' || a.k === 'accept' || a.k === 'decline' || a.k === 'cancel' || a.k.slice(0, 2) === 'rc' || a.k.slice(0, 2) === 'tk') return false;\n"
+    "    if (a.k === 'tkAccept' || a.k === 'tkDecline') {")
+rep("v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0, tk: G.opt.tk ? 1 : 0, bs: G.opt.bs ? 1 : 0 };", "v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0 };")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR 1 (uklanjanje) OK')
