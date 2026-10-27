@@ -8,3 +8,15 @@
   .kr-off .up { color: #a9e07a; font-weight: 800; } .kr-off .dn { color: #f0937a; font-weight: 800; }
   .kr-tag { width: 100%; padding: 6px 10px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; color: #ffe2a6; text-align: center; background: rgba(70, 42, 14, 0.6); box-shadow: inset 0 0 0 1px rgba(232, 184, 90, 0.7); }
   .mboard .rank-row .betb.krb { color: #ffe2a0; }
+  /* nadvlačenje konopa */
+  .rope { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; width: 100%; max-width: 520px; margin: 10px auto; font-family: var(--font-body); color: #f3e3c4; }
+  .rope-p { display: flex; align-items: center; gap: 6px; font-weight: 900; }
+  .rope-p .mini { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px rgba(224, 160, 96, 0.8); }
+  .rope-p .mini > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .rope-p i { font-style: normal; font-size: 1.2rem; color: #ffe2a0; min-width: 1.4em; text-align: center; }
+  .rope-p b { font-size: 0.85rem; max-width: 5.5em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rope-t { position: relative; height: 36px; }
+  .rope-line { position: absolute; left: 0; right: 0; top: 50%; height: 8px; transform: translateY(-50%); border-radius: 4px; background: repeating-linear-gradient(60deg, #c89a5a 0 8px, #8a6232 8px 14px); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+  .rope-mid { position: absolute; left: 50%; top: 2px; bottom: 2px; width: 2px; background: rgba(255, 230, 190, 0.5); }
+  .rope-k { position: absolute; left: calc(50% + var(--x)); top: 50%; width: 22px; height: 22px; border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle at 35% 30%, #f8d17a, #b4741e); box-shadow: 0 0 0 2px #3a2008, 0 0 10px rgba(240, 198, 110, 0.7); transition: left 0.35s cubic-bezier(0.2, 0.8, 0.3, 1); }
+  .tv .rope { max-width: 900px; } .tv .rope-p .mini { width: 70px; height: 70px; } .tv .rope-p i { font-size: 2rem; } .tv .rope-p b { font-size: 1.2rem; } .tv .rope-t { height: 56px; } .tv .rope-k { width: 36px; height: 36px; }

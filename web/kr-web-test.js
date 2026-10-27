@@ -8,7 +8,8 @@ MOCK = MOCK.replace("else if (m.k === 'data') { const c = this.conns[m.cid]; if 
 MOCK = "window.__MQTT_URLS = ['ws://localhost:8767/mqtt'];\n" + MOCK;
 const server = http.createServer((req, res) => { const p = path.join(SITE, decodeURIComponent(req.url.split('?')[0].split('#')[0]).replace(/\/$/, '/index.html')); if (!p.startsWith(SITE) || !fs.existsSync(p)) { res.writeHead(404); return res.end(); } if (p.endsWith('index.html')) { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(fs.readFileSync(p, 'utf8').replace("connect-src 'self'", "connect-src 'self' ws://localhost:8767")); } res.writeHead(200, { 'content-type': { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.webp': 'image/webp', '.svg': 'image/svg+xml' }[path.extname(p)] || 'text/plain' }); fs.createReadStream(p).pipe(res); });
 let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails++; };
-const CFGX = { kr: { wait: 45, pactOffers: 2, pactFrom: 1, pactChance: 1, pactMin: 3 }, qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 0], intro: 0.4, vote: 3, voteShow: 0.5, roul: 0.3, power: 3, q: 8, reveal: 2, howto: 0.5, howtoMax: 0.5, howtoShort: 0.3, sort: 3, link: 3, chReveal: 0.5 };
+const CH = process.env.CH === '1';
+const CFGX = { kr: CH ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0, pactMin: 3, offFrom: 99, offChance: 0, offMax: 0, chFrom: 1, chGap: 0, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 12, ropeWin: 7, ropeN: 40 } : { wait: 45, pactOffers: 2, pactFrom: 1, pactChance: 1, pactMin: 3 }, duelIntro: 2, qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 0], intro: 0.4, vote: 3, voteShow: 0.5, roul: 0.3, power: 3, q: 8, reveal: 2, howto: 0.5, howtoMax: 0.5, howtoShort: 0.3, sort: 3, link: 3, chReveal: 0.5 };
 (async () => {
   const broker = require('./mini-broker').start(8767);
   await new Promise((r) => server.listen(8766, r)); const URL = 'http://localhost:8766/';
@@ -41,6 +42,29 @@ const CFGX = { kr: { wait: 45, pactOffers: 2, pactFrom: 1, pactChance: 1, pactMi
   ok((await ph(host)) === 'reveal', 'ploča čeka (animacija je gotova, nitko nije potvrdio)');
   ok(!(await has(host, '#sfbox .sf-key')), 'nema tipke Tajni kutak');
   await host.screenshot({ path: OUT + '/1-ploca-nastavi.png' });
+  if (CH) {
+    await host.waitForTimeout(800);
+    const chs = await Promise.all(P.map((p) => has(p, '#app [data-krc]')));
+    ok(chs.filter(Boolean).length === 1, 'izazov vođi: samo zadnji ima gumbe (' + P.filter((_, i) => chs[i]).map((p) => p.__n).join(', ') + ')');
+    const chal = P.find((_, i) => chs[i]);
+    const others = P.filter((p) => p !== chal);
+    ok((await Promise.all(others.map((p) => p.textContent('#app .kr-ch')))).every((t) => /odlučuje/.test(t)), 'ostali vide „… odlučuje…”');
+    await chal.screenshot({ path: OUT + '/c1-izazov.png' }); await others[0].screenshot({ path: OUT + '/c1-ostali.png' });
+    await click(chal, '#app [data-krc="1"]'); await chal.waitForTimeout(400);
+    for (const p of P) await click(p, '#app #krok');
+    const rp = await chal.waitForFunction(() => document.documentElement.dataset.ph === 'rope', null, { timeout: 15000 }).then(() => true, () => false);
+    ok(rp, 'kreće nadvlačenje konopa');
+    await chal.waitForSelector('#app [data-rpv]', { timeout: 6000 }).catch(() => {}); await click(chal, '#app [data-rpv="1"]');
+    await others[0].waitForFunction(() => { const k = document.querySelector('#app .rope-k'); return k && !/^-?0(\.0)?%$/.test(getComputedStyle(k).getPropertyValue('--x').trim()); }, null, { timeout: 4000 }).catch(() => {});
+    const x = await others[0].evaluate(() => { const k = document.querySelector('#app .rope-k'); return k ? getComputedStyle(k).getPropertyValue('--x').trim() : 'nema'; });
+    ok(x !== 'nema' && x !== '0.0%' && x !== '-0.0%', 'gledatelj vidi kako se konop pomiče (--x ' + x + ')');
+    await chal.screenshot({ path: OUT + '/c2-konop-igrac.png' }); await others[0].screenshot({ path: OUT + '/c2-konop-gledatelj.png' });
+    const res = await chal.waitForSelector('#app .du-res', { timeout: 20000 }).then(() => chal.textContent('#app .du-res'), () => '');
+    ok(/ruši vođu|brani krunu|Neriješeno/.test(res), 'rezultat: ' + res.trim());
+    await chal.screenshot({ path: OUT + '/c3-rezultat.png' });
+    ok(errors.length === 0, 'bez JS grešaka ' + errors.join(' | '));
+    await b.close(); server.close(); await broker.close(); console.log(fails ? 'NEUSPJEH ' + fails : 'SVE OK'); process.exit(fails ? 1 : 0);
+  }
   // krčmar nudi pakt dvojici (ovdje od 1. pitanja, za test): kartica umjesto Nastavi, treći ne vidi ništa
   const cards = await Promise.all(P.map((p) => has(p, '#app .kr-card')));
   ok(cards.filter(Boolean).length === 2, 'ponudu pakta vide točno dvojica (' + P.filter((_, i) => cards[i]).map((p) => p.__n).join(', ') + ')');

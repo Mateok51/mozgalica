@@ -2531,3 +2531,20 @@ for v in ['a', 'b', 'me', 'p']:
 s = rep(s, "(gain && p.tb ? '<span class=\"betb tkb'", "(gain && p.kb ? '<span class=\"betb krb' + (p.kb < 0 ? ' neg' : '') + '\">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class=\"betb tkb'")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('KR 4 UI OK')
+# ---- Krčmar 2.0, korak 5: izazov vođi na ploči, nadvlačenje konopa (mobitel, TV), rezultat ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "    return '<div class=\"kr-box\">' + ph0 + go + '</div>';", "    return '<div class=\"kr-box\">' + krChallenge(d, me) + ph0 + go + '</div>';")
+s = rep(s, "    const go = mine ? '<div class=\"kr-wait\">", "    if (d.lc && d.lc.st === 'o' && d.lc.a === me.id && !priv.block) priv = { block: 1, html: priv && typeof priv === 'object' ? priv.html || '' : priv || '' };\n    const go = mine ? '<div class=\"kr-wait\">")
+s = rep(s, "    const priv = krPriv(d, me);\n", "    let priv = krPriv(d, me);\n")
+s = rep(s, "    return n ? '<div class=\"kr-wait tv\"", "    return krChallenge(d, null) + (n ? '<div class=\"kr-wait tv\"")
+s = rep(s, "'\">Spremno <b>' + r + '/' + n + '</b></div>' : '';\n  }\n  function bindKr(d) {", "'\">Spremno <b>' + r + '/' + n + '</b></div>' : '');\n  }\n  function bindKr(d) {")
+s = rep(s, "  function duelIntroMo(d) { return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus,",
+           "  function duelIntroMo(d) { if (d.du.rope) return { t: '⚔️ Izazov vođi!', s: 'Nadvlačenje konopa: točno vuče, netočno vraća · ulog ' + d.du.sa + ' protiv ' + d.du.sb, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 };\n    return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus,")
+s = rep(s, "      case 'duelResult': h = tvTop(d, 'Dvoboj') + '<div class=\"tv-mid\">' + duelResultHtml(d, true) + '</div>'; break;",
+           "      case 'rope': h = tvTop(d, 'Izazov vođi') + timerHtml() + ropeTv(d); break;\n      case 'duelResult': h = tvTop(d, 'Dvoboj') + '<div class=\"tv-mid\">' + (d.du && d.du.rope ? ropeResult(d) : duelResultHtml(d, true)) + '</div>'; break;")
+s = rep(s, "      case 'duelResult': h = head + duelResultHtml(d, false); break;",
+           "      case 'rope': h = head + ropePhone(d, me); break;\n      case 'duelResult': h = head + (d.du && d.du.rope ? ropeResult(d) : duelResultHtml(d, false)); break;")
+s = rep(s, "    bindKr(d);\n", "    bindKr(d);\n    bindRope(d);\n")
+s = rep(s, "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0,", "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0,")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR 5 UI OK')

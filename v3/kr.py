@@ -209,3 +209,104 @@ rep("    const b = kp ? Object.assign(b0 || { can: false, used: false, inv: [], 
     "    const b = any ? Object.assign(b0 || { can: false, used: false, inv: [], out: null, note: p.note }, kp ? { kp } : {}, ko) : b0;")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR 4 (krčmarove ponude) OK')
+
+# ---------- 5) izazov vođi: javno pitanje zadnjem na ploči bodova; dvoboj = nadvlačenje konopa ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("    offFrom: 2, offChance: 0.35, offMax: 4, taskWin: 400, taskLoss: 200 },",
+    "    offFrom: 2, offChance: 0.35, offMax: 4, taskWin: 400, taskLoss: 200,\n"
+    "    // izazov vođi: od kojeg odigranog pitanja, najmanji zaostatak, vrijeme za odluku (s), ulozi, obrana krune, trajanje konopa (s), prednost za pobjedu prije kraja\n"
+    "    chFrom: 5, chGap: 800, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 20, ropeWin: 7, ropeN: 40 },")
+rep("const INPUT_PHASES = { deal: 1,", "const INPUT_PHASES = { rope: 1, deal: 1,")
+rep("    G.kp = null; G.kpN = 0; G.koN = 0;\n", "    G.kp = null; G.kpN = 0; G.koN = 0; G.lc = null; G.lcDone = false;\n")
+rep("    krOfferMaybe();\n", "    krOfferMaybe();\n    krChallengeMaybe();\n")
+rep("      case 'reveal': krPactSettle(true); krOfferEnd(); return afterReveal();",
+    "      case 'reveal': krPactSettle(true); krOfferEnd(); krChallengeEnd(); return afterReveal();")
+rep("      case 'duel': return scoreDuel();", "      case 'duel': return scoreDuel();\n      case 'rope': return scoreRope();")
+rep("  function startDuel() {\n", "  function startDuel() {\n    if (G.du && G.du.rope) return startRope();\n")
+rep("    if (a.k === 'krOff') {", "    if (a.k === 'krCh') { const r = krChallengeAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }\n    if (a.k === 'krOff') {")
+rep("  function krCanGo(p) { return !(p.ko && p.ko.st === 'o') && !(", "  function krCanGo(p) { return !(G.lc && G.lc.st === 'o' && G.lc.a === p.pid) && !(p.ko && p.ko.st === 'o') && !(")
+rep("""      case 'blitz': {
+        // munjeviti krug""", """      case 'rope': {
+        // nadvlačenje konopa: odgovori stižu usput; domaćin broji (točno vuče, netočno vraća)
+        if (!G.du || (p.pid !== G.du.a && p.pid !== G.du.b)) return false;
+        const a = inp.r;
+        if (!Array.isArray(a) || a.length > G.rp.list.length || !a.every((x) => x === 0 || x === 1)) return false;
+        if (!p.rpA || a.length >= p.rpA.length) p.rpA = a.slice();
+        ropeTally();
+        if (Math.abs(G.rp.pa - G.rp.pb) >= cfg.kr.ropeWin) { const s0 = G.s; later(() => { if (G.s === s0) endPhase(); }, 0); }
+        onChange();
+        p.lastIn = ''; return 'partial';
+      }
+      case 'blitz': {
+        // munjeviti krug""")
+rep("  const krFree = (p) =>", r"""  // ----- izazov vođi -----
+  function krChallengeMaybe() {
+    const K = cfg.kr; G.lc = null;
+    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o')) return;
+    if (!plan.slice(G.pi + 1).some((it) => it.t === 'battle')) return;   // mora postojati još pitanja nakon izazova
+    const ps = active().slice().sort((a, b) => b.score - a.score);
+    if (ps.length < 2) return;
+    const B = ps[0], A = ps[ps.length - 1];
+    const forced = G.scn && G.scn.k === 'challenge';
+    if (!A || A.bot || A === B || (!forced && B.score - A.score < K.chGap)) return;
+    if (forced) G.scn = null;
+    G.lcDone = true;
+    G.lc = { id: ++G.sfSeq, a: A.pid, b: B.pid, st: 'o', sa: K.chStakeA, sb: K.chStakeB, g: K.chGuard };
+    const s0 = G.s;
+    later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round(((G.revMin || now()) - now()) + K.chWait * 1000));
+  }
+  function krChallengeAnswer(p, yes) {
+    const o = G.lc;
+    if (!o || o.st !== 'o' || G.ph !== 'reveal' || o.a !== p.pid) return false;
+    o.st = yes ? 'y' : 'n';
+    if (yes) news('⚔️ ' + p.name + ' izaziva vođu: ' + ((R.get(o.b) || {}).name || '?') + '!');
+    return true;
+  }
+  function krChallengeEnd() {
+    const o = G.lc; if (!o) return;
+    if (o.st === 'o') o.st = 'n';
+    if (o.st === 'y') G.pend = Object.assign(G.pend || {}, { duel: [o.a, o.b], rope: 1 });
+  }
+  function startRope() {
+    const set = G.used.tf, list0 = [];
+    for (let i = 0; i < cfg.kr.ropeN && i < D.tf.length; i++) { const t = D.tf[unusedIndex(D.tf, set)]; list0.push([t[0], t[1] ? 1 : 0]); }
+    G.rp = { list: list0, pa: 0, pb: 0 };
+    for (const p of list()) p.rpA = null;
+    setPhase('rope', cfg.kr.rope);
+    for (const p of list()) if (p.pid !== G.du.a && p.pid !== G.du.b) p.done = true;
+    // bot u dvoboju: odgovara redom, ~72 % točno (isto kao u munjevitom krugu)
+    for (const id of [G.du.a, G.du.b]) {
+      const b = R.get(id); if (!b || !b.bot) continue;
+      const s0 = G.s, r = [];
+      const step = () => { if (G.s !== s0 || r.length >= G.rp.list.length) return; r.push(Math.random() < 0.72 ? G.rp.list[r.length][1] : 1 - G.rp.list[r.length][1]); accept(b, { s: s0, r: r.slice() }); later(step, 900 + rnd(700)); };
+      later(step, 1200 + rnd(600));
+    }
+  }
+  function ropeTally() {
+    const L0 = G.rp.list, f = (p) => { const a = (p && p.rpA) || []; let n = 0; a.forEach((x, i) => { n += x === L0[i][1] ? 1 : -1; }); return n; };
+    G.rp.pa = f(R.get(G.du.a)); G.rp.pb = f(R.get(G.du.b));
+  }
+  function scoreRope() {
+    ropeTally();
+    const A = R.get(G.du.a), B = R.get(G.du.b), K = cfg.kr, d = G.rp.pa - G.rp.pb;
+    G.du.w = d > 0 ? G.du.a : d < 0 ? G.du.b : null; G.du.bonus = 0; G.du.ms = null;
+    G.du.rr = { pa: G.rp.pa, pb: G.rp.pb, t: 0, g: 0 };
+    if (A && B && G.du.w === G.du.a) { const t = Math.min(K.chStakeB, Math.max(0, B.score)); B.score -= t; A.score += t; G.du.rr.t = t; }
+    else if (A && B && G.du.w === G.du.b) { const t = Math.min(K.chStakeA, Math.max(0, A.score)); A.score -= t; B.score += t + K.chGuard; G.du.rr.t = t; G.du.rr.g = K.chGuard; }
+    G.du.o = TD.duelOut(G.du.w, G.du.a, G.du.b);
+    setPhase('duelResult', cfg.duelRes + 1);
+  }
+  const krFree = (p) =>""")
+# afterReveal: dvoboj iz izazova (i nakon izdaje)
+rep("    if (pd && pd.duel) return startDuelIntro(pd.duel);\n    next();\n  }\n  function afterBetray() {",
+    "    if (pd && pd.duel) return startDuelIntro(pd.duel, pd.rope);\n    next();\n  }\n  function afterBetray() {")
+rep("    if (pd && pd.duel) return startDuelIntro(pd.duel);\n    next();\n  }\n  function afterMoment() {",
+    "    if (pd && pd.duel) return startDuelIntro(pd.duel, pd.rope);\n    next();\n  }\n  function afterMoment() {")
+rep("  function startDuelIntro(pair) {\n    G.du = { a: pair[0], b: pair[1], w: null, n: TD.duelNote(pair[0], pair[1]) };",
+    "  function startDuelIntro(pair, rope) {\n    G.du = { a: pair[0], b: pair[1], w: null, n: TD.duelNote(pair[0], pair[1]), rope: rope ? 1 : 0 };")
+# pogled: javni prijedlog izazova, konop uživo, rezultat konopa
+rep("    if (ph === 'reveal' && G.revMin) {", "    if (ph === 'reveal' && G.lc) v.lc = { a: G.lc.a, b: G.lc.b, st: G.lc.st, sa: G.lc.sa, sb: G.lc.sb, g: G.lc.g };\n    if (ph === 'rope' && G.rp) v.rp = { pa: G.rp.pa, pb: G.rp.pb, m: cfg.kr.ropeWin, list: G.rp.list };\n    if (ph === 'reveal' && G.revMin) {")
+rep("      v.du = { a: G.du.a, b: G.du.b, bonus: cfg.duelBonus };", "      v.du = { a: G.du.a, b: G.du.b, bonus: cfg.duelBonus };\n      if (G.du.rope) { v.du.rope = 1; v.du.sa = cfg.kr.chStakeA; v.du.sb = cfg.kr.chStakeB; v.du.g = cfg.kr.chGuard; if (G.du.rr) v.du.rr = G.du.rr; }")
+rep("if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {", "if ((ph === 'duelIntro' || ph === 'duel' || ph === 'rope' || ph === 'duelResult') && G.du) {")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR 5 (izazov vođi, konop) OK')

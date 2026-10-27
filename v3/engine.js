@@ -50,7 +50,9 @@ const CFG = {
   // pakt: najviše ponuda po partiji, od kojeg odigranog pitanja, vjerojatnost na pogodnoj ploči, najmanje igrača
   kr: { wait: 45, pactOffers: 2, pactFrom: 3, pactChance: 0.45, pactMin: 3,
     // ponude: od kojeg pitanja, vjerojatnost po ploči (kad nema ponude pakta), najviše po partiji; zadatak: dobitak / gubitak
-    offFrom: 2, offChance: 0.35, offMax: 4, taskWin: 400, taskLoss: 200 },
+    offFrom: 2, offChance: 0.35, offMax: 4, taskWin: 400, taskLoss: 200,
+    // izazov vođi: od kojeg odigranog pitanja, najmanji zaostatak, vrijeme za odluku (s), ulozi, obrana krune, trajanje konopa (s), prednost za pobjedu prije kraja
+    chFrom: 5, chGap: 800, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 20, ropeWin: 7, ropeN: 40 },
   sf: { on: true, at: [], atBot: [], dur: 20, soloMax: 600, inMax: 2, offerQ: 2,
     // profili botova (samo društvene odluke): prihvaćanje ponude, slanje ponude po fazi, šapat, izdaja po fazi (uz riznicu ≥ btMin)
     prof: { loyal: { acc: 0.85, off: 0.45, wh: 0.8, bt: 0.05 }, sly: { acc: 0.7, off: 0.35, wh: 0.5, bt: 0.4 }, wild: { acc: 0.5, off: 0.4, wh: 0.5, bt: 0.2 } }, btMin: 75 },
@@ -79,7 +81,7 @@ const PLAN = [
   { t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' },
 ];
 
-const INPUT_PHASES = { deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
+const INPUT_PHASES = { rope: 1, deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
 // Mini-igre: objašnjenje prije prve igre (kratak podsjetnik kad se ponovi)
 const HOWTO = {
   who: { n: 'Tko sam ja?', i: '🕵️', r: ['Tragovi se otkrivaju jedan po jedan.', 'Što prije pogodiš, to više bodova.', 'Imaš samo jedan pokušaj!'] },
@@ -285,6 +287,17 @@ function createGame(o) {
         if (!Array.isArray(a) || a.length > G.hl.list.length || !a.every((x) => x === 0 || x === 1)) return false;
         p.hlA = a.slice(); break;
       }
+      case 'rope': {
+        // nadvlačenje konopa: odgovori stižu usput; domaćin broji (točno vuče, netočno vraća)
+        if (!G.du || (p.pid !== G.du.a && p.pid !== G.du.b)) return false;
+        const a = inp.r;
+        if (!Array.isArray(a) || a.length > G.rp.list.length || !a.every((x) => x === 0 || x === 1)) return false;
+        if (!p.rpA || a.length >= p.rpA.length) p.rpA = a.slice();
+        ropeTally();
+        if (Math.abs(G.rp.pa - G.rp.pb) >= cfg.kr.ropeWin) { const s0 = G.s; later(() => { if (G.s === s0) endPhase(); }, 0); }
+        onChange();
+        p.lastIn = ''; return 'partial';
+      }
       case 'blitz': {
         // munjeviti krug: mobitel šalje odgovore usput; konačno tek kad su svi odgovoreni ili je stiglo f
         const a = inp.r;
@@ -379,13 +392,14 @@ function createGame(o) {
       case 'cast': return afterPower();
       case 'fstart': return startFinaleQ();
       case 'question': return scoreQuestion();
-      case 'reveal': krPactSettle(true); krOfferEnd(); return afterReveal();
+      case 'reveal': krPactSettle(true); krOfferEnd(); krChallengeEnd(); return afterReveal();
       case 'sort': return scoreSort();
       case 'link': return scoreLink();
       case 'sortReveal': case 'linkReveal': return afterReveal();
       case 'moment': return afterMoment();
       case 'duelIntro': return startDuel();
       case 'duel': return scoreDuel();
+      case 'rope': return scoreRope();
       case 'duelResult': return next();
       case 'secret': return afterSecret();
       case 'secret2': return startPower();
@@ -654,6 +668,7 @@ function createGame(o) {
     krTaskSettle();
     krPactMaybe();
     krOfferMaybe();
+    krChallengeMaybe();
     TD.afterQuestion();
     // tempo: domaćin procijeni važnost iz javnih rezultata ovog pitanja (koji se upravo otkrivaju)
     G.pace = paceOf(before);
@@ -1545,12 +1560,12 @@ function createGame(o) {
       const evs = runBetrayals();
       if (evs.length) { G.bt = { id: G.s + 1, evs }; G.afterBt = pd; return setPhase('betray', cfg.betrayShow + (evs.length - 1) * 3); }
     }
-    if (pd && pd.duel) return startDuelIntro(pd.duel);
+    if (pd && pd.duel) return startDuelIntro(pd.duel, pd.rope);
     next();
   }
   function afterBetray() {
     const pd = G.afterBt; G.afterBt = null; G.bt = null;
-    if (pd && pd.duel) return startDuelIntro(pd.duel);
+    if (pd && pd.duel) return startDuelIntro(pd.duel, pd.rope);
     next();
   }
   function afterMoment() {
@@ -1559,11 +1574,12 @@ function createGame(o) {
     next();
   }
   // ----- dvoboj: samo dva igrača odgovaraju, brži točan dobiva bonus, nitko ne gubi bodove -----
-  function startDuelIntro(pair) {
-    G.du = { a: pair[0], b: pair[1], w: null, n: TD.duelNote(pair[0], pair[1]) };
+  function startDuelIntro(pair, rope) {
+    G.du = { a: pair[0], b: pair[1], w: null, n: TD.duelNote(pair[0], pair[1]), rope: rope ? 1 : 0 };
     setPhase('duelIntro', cfg.duelIntro);
   }
   function startDuel() {
+    if (G.du && G.du.rope) return startRope();
     const cats = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
     if (!cats.length) { G.du = null; return next(); }
     const cat = pick(cats);
@@ -1997,7 +2013,7 @@ function createGame(o) {
     onChange();
   }
   // može li igrač potvrditi Nastavi (kasnije: tko ima otvorenu odluku krčmara, prvo odlučuje)
-  function krCanGo(p) { return !(p.ko && p.ko.st === 'o') && !(G.kp && G.kp.st === 'o' && (G.kp.a === p.pid || G.kp.b === p.pid) && G.kp.ans[p.pid] == null); }
+  function krCanGo(p) { return !(G.lc && G.lc.st === 'o' && G.lc.a === p.pid) && !(p.ko && p.ko.st === 'o') && !(G.kp && G.kp.st === 'o' && (G.kp.a === p.pid || G.kp.b === p.pid) && G.kp.ans[p.pid] == null); }
   // ----- krčmarove ponude -----
   function krOfferMaybe() {
     const K = cfg.kr;
@@ -2054,6 +2070,63 @@ function createGame(o) {
     if (p.kt) r.kt = { line: p.kt.line, n: p.kt.n, kind: p.kt.kind, win: p.kt.win };
     if (p.kf) r.kf = 1;
     return r;
+  }
+  // ----- izazov vođi -----
+  function krChallengeMaybe() {
+    const K = cfg.kr; G.lc = null;
+    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o')) return;
+    if (!plan.slice(G.pi + 1).some((it) => it.t === 'battle')) return;   // mora postojati još pitanja nakon izazova
+    const ps = active().slice().sort((a, b) => b.score - a.score);
+    if (ps.length < 2) return;
+    const B = ps[0], A = ps[ps.length - 1];
+    const forced = G.scn && G.scn.k === 'challenge';
+    if (!A || A.bot || A === B || (!forced && B.score - A.score < K.chGap)) return;
+    if (forced) G.scn = null;
+    G.lcDone = true;
+    G.lc = { id: ++G.sfSeq, a: A.pid, b: B.pid, st: 'o', sa: K.chStakeA, sb: K.chStakeB, g: K.chGuard };
+    const s0 = G.s;
+    later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round(((G.revMin || now()) - now()) + K.chWait * 1000));
+  }
+  function krChallengeAnswer(p, yes) {
+    const o = G.lc;
+    if (!o || o.st !== 'o' || G.ph !== 'reveal' || o.a !== p.pid) return false;
+    o.st = yes ? 'y' : 'n';
+    if (yes) news('⚔️ ' + p.name + ' izaziva vođu: ' + ((R.get(o.b) || {}).name || '?') + '!');
+    return true;
+  }
+  function krChallengeEnd() {
+    const o = G.lc; if (!o) return;
+    if (o.st === 'o') o.st = 'n';
+    if (o.st === 'y') G.pend = Object.assign(G.pend || {}, { duel: [o.a, o.b], rope: 1 });
+  }
+  function startRope() {
+    const set = G.used.tf, list0 = [];
+    for (let i = 0; i < cfg.kr.ropeN && i < D.tf.length; i++) { const t = D.tf[unusedIndex(D.tf, set)]; list0.push([t[0], t[1] ? 1 : 0]); }
+    G.rp = { list: list0, pa: 0, pb: 0 };
+    for (const p of list()) p.rpA = null;
+    setPhase('rope', cfg.kr.rope);
+    for (const p of list()) if (p.pid !== G.du.a && p.pid !== G.du.b) p.done = true;
+    // bot u dvoboju: odgovara redom, ~72 % točno (isto kao u munjevitom krugu)
+    for (const id of [G.du.a, G.du.b]) {
+      const b = R.get(id); if (!b || !b.bot) continue;
+      const s0 = G.s, r = [];
+      const step = () => { if (G.s !== s0 || r.length >= G.rp.list.length) return; r.push(Math.random() < 0.72 ? G.rp.list[r.length][1] : 1 - G.rp.list[r.length][1]); accept(b, { s: s0, r: r.slice() }); later(step, 900 + rnd(700)); };
+      later(step, 1200 + rnd(600));
+    }
+  }
+  function ropeTally() {
+    const L0 = G.rp.list, f = (p) => { const a = (p && p.rpA) || []; let n = 0; a.forEach((x, i) => { n += x === L0[i][1] ? 1 : -1; }); return n; };
+    G.rp.pa = f(R.get(G.du.a)); G.rp.pb = f(R.get(G.du.b));
+  }
+  function scoreRope() {
+    ropeTally();
+    const A = R.get(G.du.a), B = R.get(G.du.b), K = cfg.kr, d = G.rp.pa - G.rp.pb;
+    G.du.w = d > 0 ? G.du.a : d < 0 ? G.du.b : null; G.du.bonus = 0; G.du.ms = null;
+    G.du.rr = { pa: G.rp.pa, pb: G.rp.pb, t: 0, g: 0 };
+    if (A && B && G.du.w === G.du.a) { const t = Math.min(K.chStakeB, Math.max(0, B.score)); B.score -= t; A.score += t; G.du.rr.t = t; }
+    else if (A && B && G.du.w === G.du.b) { const t = Math.min(K.chStakeA, Math.max(0, A.score)); A.score -= t; B.score += t + K.chGuard; G.du.rr.t = t; G.du.rr.g = K.chGuard; }
+    G.du.o = TD.duelOut(G.du.w, G.du.a, G.du.b);
+    setPhase('duelResult', cfg.duelRes + 1);
   }
   const krFree = (p) => !!p && p.on && (!p.bot || bsOn()) && !p.pact && !p.pactUsed;
   // nakon obračuna pitanja: možda ponuda pakta za dvojicu (nasumično; samo podaci partije, nikad pitanje)
@@ -2113,7 +2186,7 @@ function createGame(o) {
     return pactsOn() && !G.inFinale && G.ph !== 'lobby' && G.ph !== 'final' && G.qn >= cfg.pactAfter && sfPeople().length >= cfg.pactMin && (!sfOn() || !SF_BUSY[G.ph] || G.ph === 'duel');
   }
   function pactReset() {
-    G.kp = null; G.kpN = 0; G.koN = 0;
+    G.kp = null; G.kpN = 0; G.koN = 0; G.lc = null; G.lcDone = false;
     for (const p of list()) { p.ko = null; p.kt = null; p.kf = 0; p.kb = 0; p.koGot = {}; }
     G.pacts = []; G.offers = []; G.btq = []; G.bt = null; G.ly = null; G.news = null; G.newsSeq = 0; G.pactPaid = false;
     for (const p of list()) { p.pact = null; p.pactUsed = false; p.betray = false; p.wh = null; p.whS = -1; p.offersMade = 0; p.px = 0; p.note = null; }
@@ -2134,6 +2207,7 @@ function createGame(o) {
     const p = R.get(pid);
     if (!p || (p.bot && !(botCall && bsOn())) || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
     if (sfOn() && sfBusy(p) && a.k !== 'whisper' && a.k.slice(0, 2) !== 'tk') return false;   // nitko ne odlučuje dok odgovara
+    if (a.k === 'krCh') { const r = krChallengeAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }
     if (a.k === 'krOff') { const r = krOfferAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }
     if (a.k === 'krPact') { const r = krPactAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }
     if (a.k === 'offer' || a.k === 'accept' || a.k === 'decline' || a.k === 'cancel' || a.k.slice(0, 2) === 'rc' || a.k.slice(0, 2) === 'tk') return false;
@@ -2459,12 +2533,15 @@ function createGame(o) {
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
+    if (ph === 'reveal' && G.lc) v.lc = { a: G.lc.a, b: G.lc.b, st: G.lc.st, sa: G.lc.sa, sb: G.lc.sb, g: G.lc.g };
+    if (ph === 'rope' && G.rp) v.rp = { pa: G.rp.pa, pb: G.rp.pb, m: cfg.kr.ropeWin, list: G.rp.list };
     if (ph === 'reveal' && G.revMin) { v.rw = 1; v.rmin = Math.max(0, G.revMin - now()); }
     // posljednji poziv: projekcija samo između pitanja (nikad tijekom odgovaranja)
     if (pactsOn() && G.ph !== 'lobby') v.pk = 1;
     if ((ph === 'reveal' || ph === 'sortReveal' || ph === 'linkReveal' || ph === 'fr') && G.pend && G.pend.mo) v.mo = G.pend.mo;
-    if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {
+    if ((ph === 'duelIntro' || ph === 'duel' || ph === 'rope' || ph === 'duelResult') && G.du) {
       v.du = { a: G.du.a, b: G.du.b, bonus: cfg.duelBonus };
+      if (G.du.rope) { v.du.rope = 1; v.du.sa = cfg.kr.chStakeA; v.du.sb = cfg.kr.chStakeB; v.du.g = cfg.kr.chGuard; if (G.du.rr) v.du.rr = G.du.rr; }
       if (G.du.n) v.du.n = G.du.n;
       if (ph === 'duelResult') { v.du.w = G.du.w; v.du.ms = G.du.ms; if (G.du.o) v.du.o = G.du.o; }
     }
