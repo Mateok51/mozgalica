@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-RVO03ryChwn5tn8RVwUnXfrJq4zPGhDWtjhXHWcfn9o=' 'sha256-jBtc4yB5IcmsHKHeDmzkS3Iu1ttu2lXLM9kICfvoWcM=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-fuGxQ/TiTbpxaD0fyq+w2yS2fP1uw6wGsotBCxc7Lqc=' 'sha256-C3+bIri8cVNH3au6NHQ1i6HjP45vn5mgdzrl7IBr+LE=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2108,6 +2108,23 @@
   .ht-kick { margin: 2px 0 6px; font-weight: 800; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); text-align: center; }
   .tv .ht-kick { font-size: 1.4rem; }
   .ht-full { display: block; margin: 8px auto 0; }
+  /* krčmarove tajne ponude (postojeće drvene kartice, zlatni okvir; bez novih resursa) */
+  .tk-inv { box-shadow: inset 0 0 0 2px rgba(232, 184, 90, 0.9), inset 0 0 0 4px rgba(42, 23, 11, 0.9); }
+  .tk-odds { display: flex; flex-direction: column; gap: 2px; margin: 4px 0 6px; font-weight: 800; font-size: 0.88rem; line-height: 1.25; }
+  .tk-odds .up { color: #a9e07a; } .tk-odds .dn { color: #f0937a; }
+  .tk-tag { background: rgba(70, 42, 14, 0.6); box-shadow: inset 0 0 0 1px rgba(232, 184, 90, 0.75); }
+  .tkx .tk-figs { position: relative; align-items: center; }
+  .tkx .tk-coins { inset: auto 0 0 auto; width: 100%; height: 100%; pointer-events: none; }
+  .tkx .tk-h { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; color: #ffe2a0; text-transform: uppercase; }
+  .tkx .tk-pts { display: block; font-weight: 900; font-size: 0.85rem; } .tkx .tk-pts.up { color: #a9e07a; } .tkx .tk-pts.dn { color: #f0937a; }
+  .tv .tkx .tk-h { font-size: 1.6rem; } .tv .tkx .tk-pts { font-size: 1.2rem; }
+  .mboard .rank-row .betb.tkb { color: #ffe2a0; }
+  @media (prefers-reduced-motion: reduce) { .tkx .tk-coins { display: none; } }
+  /* TV predvorje: treća opcija (tajne ponude) mora stati na 720p bez pomicanja — samo malo gušći razmaci lijevog stupca */
+  .tvlob { padding-bottom: 4vh; }
+  .tvlob-side { gap: 1.2vh; }
+  .tvlob-side .tvlob-inv { padding: 2vh 2vw; gap: 1.1vh; }
+  .tvlob-side .lob-opt { padding-top: 1vh; padding-bottom: 1vh; }
 </style>
 </head>
 <body>
@@ -2162,6 +2179,10 @@ const CFG = {
   // posljednji poziv: koliko zadnjih običnih pitanja prije piramide prikazuje projekciju početka
   fcLast: 3,
   rcStake: 200, rcAfter: 5, rcMax: 2, rcSends: 2, rcOffer: 20,
+  // krčmarove tajne ponude: dobitak / gubitak (točan odgovor vrijedi 500–1000, pa je oklada osjetna, ali ne odlučuje partiju;
+  // očekivani dobitak je ≈ 0 kad meta griješi u ~40 % pitanja), od kojeg pitanja (nakon after odigranih), najviše prihvaćenih
+  // po partiji, najviše ponuda po partiji, vjerojatnost ponude na prikladnom glasanju, najmanji razmak (pitanja) između ponuda
+  tk: { win: 150, loss: 100, after: 5, perGame: 2, offers: 3, chance: 0.5, gap: 2 },
   moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 8, secret2: 7, secretBonus: 200, helpBonus: 150,
 };
 
@@ -2238,8 +2259,9 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: o.rc !== undefined ? !!o.rc : true }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: o.rc !== undefined ? !!o.rc : true, tk: o.tk !== undefined ? !!o.tk : false }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
+    tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
   const rnd = (n) => Math.floor(Math.random() * n);
   const pick = (a) => a[rnd(a.length)];
@@ -2248,7 +2270,8 @@ function createGame(o) {
   const later = (fn, ms) => { timers.push(setTimeout(fn, ms)); };
   const clear = () => { timers.forEach(clearTimeout); timers = []; };
   const isInt = (n) => Number.isInteger(n);
-  const allDone = () => { const a = active(); return a.length > 0 && a.every((p) => p.done); };
+  const tkHold = (p) => !!(G.tk && G.tk.cur && G.tk.cur.st === 'OFFERED' && G.tk.cur.f === p.pid && G.ph === 'vote');
+  const allDone = () => { const a = active(); return a.length > 0 && a.every((p) => p.done && !tkHold(p)); };
 
   // ----- igrači -----
   function cleanName(raw) { return String(raw || '').replace(/[\u0000-\u001f]/g, '').replace(/\s+/g, ' ').trim().slice(0, cfg.nameMax); }
@@ -2438,7 +2461,7 @@ function createGame(o) {
         if (k !== p.lastIn) { p.lastIn = k; const r = accept(p, x.in); if (r === 'partial') p.lastIn = k; else if (r) changed = true; }
       }
     }
-    for (const p of list()) if (!p.bot && !p.local && p.on && !seen.has(p.pid)) { p.on = false; changed = true; }
+    for (const p of list()) if (!p.bot && !p.local && p.on && !seen.has(p.pid)) { p.on = false; changed = true; tkGone(p); }
     if (G.ph === 'lobby') for (const [id, p] of R) if (!p.on) { R.delete(id); changed = true; }
     if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) return endPhase();
     if (changed) onChange();
@@ -2502,7 +2525,8 @@ function createGame(o) {
     const nb = plan.filter((it) => it.t === 'battle').length, rounds = Math.ceil(nb / 3);
     const want = Math.min(rounds, cfg.betEvents[0] + rnd(cfg.betEvents[1] - cfg.betEvents[0] + 1));
     for (const r of shuffle(Array.from({ length: rounds }, (_, i) => i)).slice(0, want)) G.betAt.add(Math.min(nb - 1, r ? r * 3 + rnd(3) : 1 + rnd(2)));
-    for (const p of list()) { p.bet = 0; p.betRes = 0; p.xb = 0; p.rx = 0; p.rcSent = 0; p.rcWon = false; }
+    for (const p of list()) { p.bet = 0; p.betRes = 0; p.xb = 0; p.rx = 0; p.rcSent = 0; p.rcWon = false; p.tb = 0; }
+    G.tk = { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] };
     G.rc = { offers: [], act: null, res: null, n: 0, seq: 0 };
     // mini-igre: nasumično koji izazovi i koje posebne bitke, da nije svaka partija ista
     const nCh = plan.filter((it) => it.t === 'challenge').length;
@@ -2593,8 +2617,10 @@ function createGame(o) {
     G.cw = -1;
     for (const p of list()) p.vote = -1;
     setPhase('vote', cfg.vote);
+    tkOffer();
   }
   function resolveVote() {
+    tkLock();
     const counts = G.cats.map(() => 0);
     for (const p of active()) if (p.vote >= 0) counts[p.vote]++;
     const max = Math.max(...counts);
@@ -2735,6 +2761,7 @@ function createGame(o) {
     }
     resolveSecret();
     rcResolve();
+    tkResolve();
     pactAfterQuestion();
     TD.afterQuestion();
     // tempo: domaćin procijeni važnost iz javnih rezultata ovog pitanja (koji se upravo otkrivaju)
@@ -2778,6 +2805,7 @@ function createGame(o) {
     if (lastQ) return 't';
     if (lv >= 2) return 't';
     if (G.rc && G.rc.res && G.rc.res.k === 'win') return 't';
+    if (G.tk && G.tk.res && G.tk.res.k !== 'off') return 't';
     return 'n';
   }
 
@@ -3039,7 +3067,7 @@ function createGame(o) {
   // ===================== LEGENDE OVE KRČME =====================
   // Počasne nagrade iz stvarnih događaja (bez bodova). Domaćin ih sastavi jednom, pri proglašenju pobjednika.
   const LEG_T = { rc: ['⚔️', 'Pobjednik obračuna'], cb: ['🔥', 'Povratak večeri'], bt: ['🗡️', 'Najveća izdaja'], vic: ['💔', 'Najveća žrtva izdaje'], dbl: ['💀', 'Noževi pod stolom'], ly: ['❤️', 'Nerazdvojni saveznici'],
-    rv: ['⚔️', 'Rivalstvo večeri'], rev: ['🔁', 'Osveta večeri'], bet: ['💰', 'Majstor rizika'], fast: ['⚡', 'Munja večeri'], acc: ['🎯', 'Oko sokolovo'], st: ['🏹', 'Najduži niz'] };
+    rv: ['⚔️', 'Rivalstvo večeri'], rev: ['🔁', 'Osveta večeri'], tk: ['🍺', 'Krčmarov miljenik'], bet: ['💰', 'Majstor rizika'], fast: ['⚡', 'Munja večeri'], acc: ['🎯', 'Oko sokolovo'], st: ['🏹', 'Najduži niz'] };
   const LEG_ORDER = Object.keys(LEG_T);
   // hrvatska množina: 1 napad, 2 napada, 5 napada
   const plN = (n, one, few, many) => { const a = Math.abs(n) % 100, b = a % 10; return n + ' ' + (b === 1 && a !== 11 ? one : b >= 2 && b <= 4 && (a < 12 || a > 14) ? few : many); };
@@ -3086,6 +3114,9 @@ function createGame(o) {
     // rivalski obračun: pobjednik najvećeg (po prenesenim bodovima)
     { const won = S.rc.filter((x) => x.k === 'win' && R.get(x.w)).sort((x, y) => y.t - x.t || (x.w < y.w ? -1 : 1))[0];
       if (won) { const l = won.w === won.a ? won.b : won.a; add('rc', 58 + won.t / 20 + (won.rev && won.w === won.a ? 10 : 0), [won.w, l], nmL(won.w) + ' pobjeđuje u obračunu: ' + nmL(won.w) + ' vs ' + nmL(l), '+' + bodN(won.t) + ' iz protivnikova uloga', 'pair:' + [won.w, l].sort().join('|')); } }
+    // tajna ponuda: najzanimljivija uspješna (kraj velikog niza, rival)
+    { const w = (S.tk || []).filter((x) => R.get(x.f) && R.get(x.t)).map((x) => ({ x, v: 44 + (x.why === 'st' ? 6 + x.n * 2 : 0) + (x.rv ? 8 : 0) })).sort((a, b) => b.v - a.v)[0];
+      if (w) { const x = w.x; add('tk', w.v, [x.f], x.why === 'st' ? 'Predviđa kraj niza od ' + x.n + ': ' + nmL(x.t) : x.rv ? 'Predviđa pogrešku svog rivala: ' + nmL(x.t) : 'Tajna oklada protiv krčmara: ' + nmL(x.t) + ' griješi', '+' + bodN(cfg.tk.win) + ' iz tajne ponude'); } }
     // kladionica: stvarni neto rezultat (dobici − gubici)
     for (const pid in S.betNet) if (S.betNet[pid] >= 300 && R.get(pid)) add('bet', 45 + S.betNet[pid] / 40, [pid], 'Neto dobitak iz kladionice: +' + bodN(S.betNet[pid]));
     // munja: najbrži točan odgovor u običnim pitanjima
@@ -3230,7 +3261,7 @@ function createGame(o) {
         pairs: {}, worst: {}, leadTurns: {}, chase: {}, betr: [], lineAt: {}, typeAt: {}, feat: {}, moSeq: 0,
         leg: { cb: null, bt: null, rv: null, rev: null, bet: null, lead: null },
         // za legende: pitanja, točni, najbrži točan (obična pitanja), najdulji niz, neto kladionica, najbolje mjesto nakon dna, dvoboji, izdaje, odani paktovi
-        stat: { qn: 0, ans: {}, ok: {}, fast: {}, maxSt: {}, betNet: {}, rise: {}, duels: [], bt: [], loyal: [], rc: [] },
+        stat: { qn: 0, ans: {}, ok: {}, fast: {}, maxSt: {}, betNet: {}, rise: {}, duels: [], bt: [], loyal: [], rc: [], tk: [] },
       };
       G.pend = null; G.du = null; G.se = null; G.mo = null;
     }
@@ -3491,7 +3522,7 @@ function createGame(o) {
       rivalryCands(cands);
       memoryCands(cands);
       duelCand(cands);
-      if (G.rc && G.rc.res) { const c = pickMoment(cands.filter((x) => x.score >= 9)); finalizePend(c); return; }
+      if ((G.rc && G.rc.res) || (G.tk && G.tk.res)) { const c = pickMoment(cands.filter((x) => x.score >= 9)); finalizePend(c); return; }
       finalizePend(pickMoment(cands));
     }
     function afterScores() {
@@ -3573,6 +3604,21 @@ function createGame(o) {
       else r.line = 'Obračun je otkazan — netko je izgubio vezu prije odgovora.';
       if (T.stat.rc.length < 4) T.stat.rc.push({ a: r.a, b: r.b, w: r.w, t: r.t, rev: r.rev ? 1 : 0, k: r.k });
     }
+    // tajna ponuda: rečenica prema povijesti (niz, rival); isti igrač ne dobiva odmah i trenutak krčme
+    function onTk(r) {
+      if (!T) return;
+      const F0 = nm(r.f), X = nm(r.t);
+      if (r.k === 'win') {
+        r.h = '💰 ' + F0 + ' nadmudruje krčmara!';
+        r.line = r.why === 'st' && r.n >= 3 ? '🔥 ' + F0 + ' predviđa kraj velikog niza: ' + X + ' griješi!' : r.why === 'rv' ? '⚔️ ' + F0 + ' očito dobro poznaje svog rivala!'
+          : r.to ? '⏳ ' + X + ' ne stiže odgovoriti — ' + F0 + ' ipak naplaćuje!' : ['Krčmar plaća: ' + F0 + ' zna kako će ovo završiti!','Krčmar plaća, a ' + F0 + ' se smije: ' + X + ' griješi!'][T.turn % 2];
+        if (T.stat.tk.length < 4) T.stat.tk.push({ f: r.f, t: r.t, why: r.why, n: r.n, rv: r.why === 'rv' ? 1 : 0 });
+      } else if (r.k === 'lose') {
+        r.h = '🍺 Krčmar pobjeđuje!';
+        r.line = r.why === 'st' ? '🍻 ' + X + ' nastavlja niz, a ' + F0 + ' ostaje bez zlata!' : ['Ovaj put ' + X + ' ne griješi. Krčmar naplaćuje!', F0 + ' podcjenjuje protivnika — krčmar naplaćuje!'][T.turn % 2];
+      } else { r.h = '🍺 Tajna ponuda je poništena'; r.line = 'Veza je pukla prije odgovora — bodovi se ne mijenjaju.'; }
+      T.feat[r.f] = T.turn;
+    }
     function onLoyal(evs) { if (T) for (const e of evs) if (T.stat.loyal.length < 6) T.stat.loyal.push({ a: e.a, b: e.b, tre: e.tre, bonus: e.bonus }); }
     function duelOut(w, a, b) {
       if (T && T.stat.duels.length < 4) T.stat.duels.push({ a, b, w: w || null });
@@ -3600,7 +3646,7 @@ function createGame(o) {
       T.secrets[who.pid] = 1; T.secretTotal++; T.lastSecretBn = G.bn;
       return { k: kind, p: who.pid, x: null, ok: 0 };
     }
-    return { reset, onVote, onPower, afterQuestion, afterScores, afterFinale, secretPick, onBetray, onLoyal, onShowdown, duelNote, duelOut, get state() { return T; } };
+    return { reset, onTk, onVote, onPower, afterQuestion, afterScores, afterFinale, secretPick, onBetray, onLoyal, onShowdown, duelNote, duelOut, get state() { return T; } };
   })();
 
   function showMoment() {
@@ -3797,6 +3843,104 @@ function createGame(o) {
     G.rc.offers = [];
     if (G.rc.act) { const A0 = G.rc.act; G.rc.act = null; for (const id of [A0.a, A0.b]) note(R.get(id), '⚔️ Obračun je otkazan: ' + why, 'no'); }
   }
+  // ===================== KRČMAROVE TAJNE PONUDE =====================
+  // Domaćin je jedini koji odlučuje: kome, o kome, iznosi, ishod. Klijent šalje samo tkAccept/tkDecline s ID-om ponude
+  // (kroz isti provjereni kanal kao paktovi). Ponudu vidi samo primatelj (priv); javno se vidi tek ishod na otkrivanju.
+  const tkOn = () => !!G.opt.tk;
+  // dopušteni prijelazi stanja
+  const TK_NEXT = { OFFERED: { ACCEPTED: 1, DECLINED: 1, EXPIRED: 1, CANCELLED: 1 }, ACCEPTED: { SETTLED: 1, CANCELLED: 1 } };
+  function tkSet(o, st) { if (!o || !TK_NEXT[o.st] || !TK_NEXT[o.st][st]) return false; o.st = st; return true; }
+  function tkDone(o) { G.tk.cur = null; if (G.tk.log.length < 8) G.tk.log.push({ id: o.id, f: o.f, t: o.t, st: o.st, k: o.k }); }
+  const TK_LINE = {
+    st: '🔥 {X}: {K} zaredom. Misliš li da će niz napokon puknuti?',
+    rv: '⚔️ Znaš li svog rivala dovoljno dobro? Hoće li {X} pogriješiti?',
+    cb: '🍻 {X} se vraća u igru. Ali može li nastaviti ovim tempom?',
+    ld: '👑 {X} sjedi na vrhu stola. Hoće li se napokon spotaknuti?',
+    gen: '🍺 {X} djeluje nešto previše samouvjereno. Hoće li se spotaknuti na sljedećem pitanju?',
+  };
+  // jesu li dvoje vezani drugim aktivnim dogovorom (pakt ili rivalski obračun)
+  function tkTied(a, b) {
+    const k = pactOf(a); if (k && (k.a === b.pid || k.b === b.pid)) return true;
+    const r = G.rc && G.rc.act; return !!(r && ((r.a === a.pid && r.b === b.pid) || (r.a === b.pid && r.b === a.pid)));
+  }
+  // zašto je meta zanimljiva — samo iz povijesti partije (nikad iz pitanja ili odgovora koji tek dolaze)
+  function tkWhy(f, t) {
+    const T = TD.state; if (!T) return { k: 'gen', w: 1 };
+    const st = T.streak[t.pid] || 0;
+    if (st >= 3) return { k: 'st', w: 3 + st, n: st };
+    if (rcRival(f.pid, t.pid)) return { k: 'rv', w: 5 };
+    const ps = active().length, low = T.lowRank[t.pid], now = T.rank[t.pid];
+    if (ps >= 3 && low === ps && now && now <= 2) return { k: 'cb', w: 4 };
+    if (now === 1) return { k: 'ld', w: 2 };
+    return { k: 'gen', w: 1 };
+  }
+  // poziva se odmah nakon početka glasanja; ništa ne radi ako uvjeti nisu ispunjeni (bez nove faze)
+  function tkOffer() {
+    const K = cfg.tk, X = G.tk;
+    if (!tkOn() || !K || G.ph !== 'vote' || G.inFinale || G.qv || X.cur) return;
+    if ((G.bdone || 0) < K.after || X.n >= K.perGame || X.offered >= K.offers || G.bn - X.lastBn < K.gap) return;
+    const ps = active(); if (ps.length < 2) return;
+    // primatelj: čovjek, spojen, još nije dobio ponudu, može platiti gubitak
+    const fs = ps.filter((p) => !p.bot && !X.got[p.pid] && p.score >= K.loss);
+    if (!fs.length) return;
+    if (Math.random() >= K.chance) return;
+    const opts = [];
+    for (const f of fs) for (const t of ps) if (t !== f && !tkTied(f, t)) { const w = tkWhy(f, t); opts.push({ f, t, w }); }
+    if (!opts.length) return;
+    const best = Math.max(...opts.map((x) => x.w.w)), top = opts.filter((x) => x.w.w === best), c = top[rnd(top.length)];
+    const nn = c.w.n || 0, a10 = nn % 100, b10 = a10 % 10, map = { X: c.t.name, K: nn + (b10 >= 2 && b10 <= 4 && (a10 < 12 || a10 > 14) ? ' točna' : ' točnih') };
+    X.cur = { id: ++X.seq, f: c.f.pid, t: c.t.pid, s: G.s, bn: G.bn, k: c.w.k, n: c.w.n || 0, win: K.win, loss: K.loss, st: 'OFFERED',
+      line: TK_LINE[c.w.k].replace(/\{(\w)\}/g, (_, k) => (map[k] != null ? map[k] : '')) };
+    X.got[c.f.pid] = 1; X.offered++; X.lastBn = G.bn;
+    onChange();
+  }
+  // glasanje je gotovo: neodgovorena ponuda je odbijena (istekla); prihvaćena se zaključava za pitanje koje tek slijedi
+  function tkLock() {
+    const o = G.tk && G.tk.cur; if (!o) return;
+    if (o.st === 'OFFERED') { tkSet(o, 'EXPIRED'); tkDone(o); }
+  }
+  function tkAction(p, a) {
+    const o = G.tk.cur;
+    if (!tkOn() || !o || typeof a.id !== 'number' || a.id !== o.id || o.f !== p.pid || o.st !== 'OFFERED') return false;
+    if (G.ph !== 'vote' || G.s !== o.s || now() >= G.endsAt) return false;
+    if (a.k === 'tkAccept') {
+      const t = R.get(o.t);
+      if (!t || G.tk.n >= cfg.tk.perGame || p.score < o.loss || tkTied(p, t)) { tkSet(o, 'CANCELLED'); tkDone(o); return true; }
+      tkSet(o, 'ACCEPTED'); G.tk.n++; return true;
+    }
+    if (a.k === 'tkDecline') { tkSet(o, 'DECLINED'); tkDone(o); return true; }
+    return false;
+  }
+  function tkGone(p) { const o = G.tk && G.tk.cur; if (o && o.st === 'ACCEPTED' && o.t === p.pid && !(p.ans >= 0 && G.ph === 'question')) o.off = 1; }
+  // nakon redovnog bodovanja: pogrešno ili bez odgovora = dobitak; točno = gubitak; meta bez odgovora i bez veze = poništeno
+  function tkResolve() {
+    G.tk.res = null;
+    for (const p of list()) p.tb = 0;
+    const o = G.tk.cur;
+    if (!o || o.st !== 'ACCEPTED') return;
+    const F0 = R.get(o.f), T0 = R.get(o.t);
+    const res = { id: o.id, f: o.f, t: o.t, k: 'off', d: 0, why: o.k, n: o.n };
+    if (!F0 || !T0 || G.qv || (T0.ans < 0 && (o.off || !T0.on))) tkSet(o, 'CANCELLED');
+    else {
+      tkSet(o, 'SETTLED');
+      if (T0.ans === G.q.a) { const d = Math.min(o.loss, Math.max(0, F0.score)); F0.score -= d; res.k = 'lose'; res.d = -d; }
+      else { F0.score += o.win; res.k = 'win'; res.d = o.win; res.to = T0.ans < 0 ? 1 : 0; }
+      F0.tb = res.d;
+    }
+    tkDone(o);
+    G.tk.res = res;
+    TD.onTk(res);
+  }
+  // privatno: samo primatelj vidi ponudu i svoju zaključanu okladu
+  function tkPriv(p) {
+    if (!tkOn() || !p) return null;
+    const o = G.tk.cur;
+    if (!o || o.f !== p.pid) return null;
+    const t = R.get(o.t);
+    const r = { id: o.id, t: o.t, x: t ? t.name : '?', line: o.line, win: o.win, loss: o.loss, st: o.st === 'OFFERED' ? 'o' : 'a' };
+    if (o.st === 'OFFERED') { r.ms = Math.max(0, G.endsAt - now()); r.dur = G.dur; }
+    return r;
+  }
   const humansIn = () => list().filter((p) => !p.bot);
   const pactOf = (p) => (p && p.pact ? G.pacts.find((x) => x.id === p.pact && x.on) : null);
   const partnerOf = (p) => { const k = pactOf(p); return k ? R.get(k.a === p.pid ? k.b : k.a) : null; };
@@ -3824,6 +3968,7 @@ function createGame(o) {
   function pactAction(pid, a) {
     const p = R.get(pid);
     if (!p || p.bot || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
+    if (a.k === 'tkAccept' || a.k === 'tkDecline') { const r = tkAction(p, a); if (r) { if (G.ph === 'vote' && allDone()) endPhase(); else onChange(); } return r; }
     if (a.k.slice(0, 2) === 'rc') { const r = rcAction(p, a); if (r) onChange(); return r; }
     cleanOffers();
     let ok = false;
@@ -3937,6 +4082,11 @@ function createGame(o) {
   }
   // privatno stanje: samo za tog igrača
   function priv(pid) {
+    const p = R.get(pid), b = priv0(pid), t = p && !p.bot ? tkPriv(p) : null;
+    if (!t) return b;
+    return Object.assign(b || { can: false, used: false, inv: [], out: null, note: p.note }, { tk: t });
+  }
+  function priv0(pid) {
     const p = R.get(pid);
     if (!p || p.bot || (!pactsOn() && !rcOn())) return null;
     if (!pactsOn()) return Object.assign({ can: false, used: false, inv: [], out: null, note: p.note }, rcPriv(p));
@@ -3973,7 +4123,7 @@ function createGame(o) {
     if (out) r.out = { t: out.t, ms: Math.max(0, out.until - now()) };
     return { rc: r };
   }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'rc') { G.opt.rc = !!v; onChange(); } }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'rc') { G.opt.rc = !!v; onChange(); } if (k === 'tk') { G.opt.tk = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -4061,10 +4211,10 @@ function createGame(o) {
     };
     if (o.noTv) v.ntv = 1;
     v.P = list().map((p) => {
-      const e = { id: p.pid, n: p.name, a: p.av, sc: p.score, c: p.on ? 1 : 0, ok: p.done ? 1 : 0 };
+      const e = { id: p.pid, n: p.name, a: p.av, sc: p.score, c: p.on ? 1 : 0, ok: p.done && !tkHold(p) ? 1 : 0 };
       if (p.bot) e.b = 1;
       if (p.px && (ph === 'betray' || ph === 'loyal')) e.px = p.px;
-      if ((ph === 'vote' && p.done) || (ph === 'voteResult' && p.vote >= 0)) e.vt = p.vote;
+      if ((ph === 'vote' && p.done && !tkHold(p)) || (ph === 'voteResult' && p.vote >= 0)) e.vt = p.vote;
       if (ph === 'power') e.of = p.offers;
       if (ph === 'question' || ph === 'fq') {
         if (p.fx.length) e.fx = p.fx;
@@ -4084,6 +4234,7 @@ function createGame(o) {
       if (ph === 'fr') { e.ch = p.ch; e.mv = p.mv; }
       if (ph === 'reveal' && p.xb) e.xb = p.xb;
       if (ph === 'reveal' && p.rx) e.rx = p.rx;
+      if (ph === 'reveal' && p.tb) e.tb = p.tb;
       if (ph === 'duelResult' && G.du && (p.pid === G.du.a || p.pid === G.du.b)) e.ch = p.ch;
       return e;
     });
@@ -4115,9 +4266,10 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0 };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0, tk: G.opt.tk ? 1 : 0 };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
+    if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
     // posljednji poziv: projekcija samo između pitanja (nikad tijekom odgovaranja)
     if (FC_PH[ph] && fcOn()) v.pj = { P: fcProj(), left: fcLeft(), max: cfg.pyrReq.length };
     if (pactsOn() && G.ph !== 'lobby') v.pk = 1;
@@ -4662,7 +4814,7 @@ function createGame(o) {
   // ---------- zvuk faza ----------
   let tvStep = -1, phoneStep = -1, lastTickSec = -1;
   function tvSound(d) {
-    if ((d.mo || d.rcr) && d.ph !== 'moment') tdSting(d);
+    if ((d.mo || d.rcr || d.tkr) && d.ph !== 'moment') tdSting(d);
     switch (d.ph) {
       case 'intro': return SFX.play('whoosh');
       case 'fstart': return fstartSound(d);
@@ -4688,7 +4840,7 @@ function createGame(o) {
   const FX_SOUND = { led: 'powerIce', sluz: 'powerSlime', grick: 'powerBug', bomba: 'powerZap' };
   function phoneSound(d, me) {
     if (!me) return;
-    if ((d.mo || d.rcr) && d.ph !== 'moment') tdSting(d);
+    if ((d.mo || d.rcr || d.tkr) && d.ph !== 'moment') tdSting(d);
     switch (d.ph) {
       case 'intro': return SFX.play('whoosh');
       case 'bet': return SFX.play('pop');
@@ -5218,9 +5370,9 @@ function createGame(o) {
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
   function miniBoard(d, gain) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc);
-    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0))).map((p) => p.id) : [];
-    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
-      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
+    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0))).map((p) => p.id) : [];
+    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
+      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
   }
   function phoneEvents(d) {
     if (!d.ev || !d.ev.length) return '';
@@ -5254,7 +5406,7 @@ function createGame(o) {
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
       : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
-    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.opt || 0, d.pj || 0]);
+    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.opt || 0, d.pj || 0]);
   }
 
   // ---------- efekti moći ----------
@@ -5784,7 +5936,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v27</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v28</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -5884,7 +6036,7 @@ function createGame(o) {
   // traka pakta ide odmah ispod gornje trake (HUD); ne prekriva pitanje, odgovore ni sat
   function pactHead(d, me, head) {
     if (!me || !PACT_PH[d.ph]) return head;
-    if (!PV) return head + rcBar(d, me) + pjChip(d, me);
+    if (!PV) return head + rcBar(d, me) + tkBar(d, me) + pjChip(d, me);
     const q = d.ph === 'question';
     let h = '';
     // dolazna ponuda: kratka u pitanju, kartica između pitanja
@@ -5917,7 +6069,7 @@ function createGame(o) {
         ? '<div class="pk-pick"><div class="pk-pick-h">🍻 Kome nudiš tajni pakt?<button class="pk-l x" data-pkx="1" aria-label="Zatvori">✕</button></div><div class="pk-cands">' + PV.cand.map((id) => { const p = pById(d, id); return p ? '<button class="pk-cand" data-pk="offer" data-to="' + esc(id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span>' + esc(p.n) + '</button>' : ''; }).join('') + '</div><div class="pk-inv-s">Ostali neće saznati. Svatko može imati samo jedan pakt po partiji.</div></div>'
         : '<button class="pk-open" data-pkopen="1">🍻 Tajni pakt</button>';
     }
-    return head + h + rcBar(d, me) + pjChip(d, me);
+    return head + h + rcBar(d, me) + tkBar(d, me) + pjChip(d, me);
   }
   // ===================== RIVALSKI OBRAČUN: sučelje =====================
   // Ponude su privatne (PV.rc), aktivan obračun i ishod su javni (d.rc, d.rcr). Domaćin sve provjerava i računa.
@@ -5997,9 +6149,45 @@ function createGame(o) {
     document.querySelectorAll('#app [data-pjopen]').forEach((b) => { b.onclick = () => { AUDIO.play('tap'); PJV.open = true; phoneRender(true); }; });
     document.querySelectorAll('#app [data-pjx]').forEach((b) => { b.onclick = () => { AUDIO.play('tap'); PJV.open = false; phoneRender(true); }; });
   }
+  // ===================== KRČMAROVE TAJNE PONUDE: sučelje =====================
+  // Ponuda je privatna (PV.tk, šalje je domaćin samo primatelju); javno je samo ishod nakon otkrivanja (d.tkr).
+  // Mobitel šalje samo { k: 'tkAccept' | 'tkDecline', id }, sve ostalo određuje i provjerava domaćin.
+  const TK_TAG = { voteResult: 1, bet: 1, power: 1, cast: 1, question: 1 };
+  function tkBar(d, me) {
+    const o = PV && PV.tk;
+    if (!o || !me) return '';
+    const t = pById(d, o.t), X = esc(o.x);
+    if (o.st === 'o' && d.ph === 'vote') {
+      const pct = o.dur ? Math.max(0, Math.min(100, (o.ms / o.dur) * 100)) : 0;
+      return '<div class="pk-inv tk-inv" data-bk="tkinv" data-bv="' + o.id + '"><div class="pk-inv-h"><span class="mini">' + (t ? avSvg(t.a, 'idle') : '') + '</span><b>🍺 Tajna krčmarova ponuda</b></div>' +
+        '<div class="pk-inv-s">„' + esc(o.line) + '”</div>' +
+        '<div class="tk-odds"><span class="up">Ako ' + X + ' pogriješi: <b>+' + o.win + '</b></span><span class="dn">Ako ' + X + ' odgovori točno: <b>−' + o.loss + '</b></span></div>' +
+        '<div class="pk-row"><button class="btn pk-acc" data-tk="tkAccept" data-id="' + o.id + '">Prihvati</button><button class="btn ghost pk-dec" data-tk="tkDecline" data-id="' + o.id + '">Odbij</button></div><i class="pk-tm" style="--w:' + pct + '%"></i></div>';
+    }
+    if (o.st === 'a' && TK_TAG[d.ph]) return '<div class="rc-tag tk-tag" data-bk="tktag" data-bv="1">🍺 Tajna oklada: <b>' + X + '</b> griješi → +' + o.win + ' · točno → −' + o.loss + '</div>';
+    return '';
+  }
+  function bindTk() {
+    document.querySelectorAll('#app [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); pactSend({ k, id: +b.dataset.id }); }; });
+  }
+  // ishod na otkrivanju (mobitel i TV): kratka kartica u stilu trenutka krčme; isti id → ponovno spajanje ne pokreće animaciju iznova
+  function tkCard(d) {
+    const r = d.tkr; if (!r) return '';
+    const el = Math.max(0, d.dur - d.ms), F = pById(d, r.f), X = pById(d, r.t);
+    const fig = (p, pose) => p ? '<span class="mini">' + avSvg(p.a, pose) + '</span>' : '';
+    const win = r.k === 'win', pts = r.k === 'off' ? '' : '<span class="tk-pts ' + (win ? 'up' : 'dn') + '">' + (win ? '+' : '−') + Math.abs(r.d) + ' ' + esc(F ? F.n : '') + '</span>';
+    return '<div class="tdl lv2 tkx' + (win ? ' tk-win' : '') + '" data-mo="tk' + (+r.id || 0) + '" style="--el:' + el + 'ms"><span class="figs tk-figs">' + fig(F, win ? 'victory' : r.k === 'lose' ? 'sad' : 'idle') + fig(X, win ? 'shocked' : r.k === 'lose' ? 'happy' : 'idle') +
+      (win ? '<span class="bt-coins tk-coins">' + '<i>🪙</i>'.repeat(3) + '</span>' : '') + '</span><span class="tx"><b class="tk-h">' + esc(r.h || '') + '</b>' + pts + '<span>' + esc(r.line || '') + '</span></span></div>';
+  }
+  function tkToggle(d) {
+    if (!d.opt) return '';
+    if (!game) return d.opt.tk ? '<div class="lob-info">🍺 Krčmarove tajne ponude su uključene</div>' : '';
+    return '<div class="lob-opt"><span class="lob-opt-l">🍺 Krčmarove tajne ponude<small>Krčmar povremeno nudi igračima tajne oklade na uspjeh njihovih protivnika.</small></span><button class="tgl' + (d.opt.tk ? '' : ' off') + '" data-tkopt="' + (d.opt.tk ? 0 : 1) + '">' + (d.opt.tk ? 'Uključeno' : 'Isključeno') + '</button></div>';
+  }
   const PACT_STEAL = 0.25;
   function bindPact(d) {
     bindRc();
+    bindTk();
     bindPj();
     const q = (s) => document.querySelectorAll('#app ' + s);
     q('[data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); L.pkOpen = false; pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
@@ -6420,7 +6608,7 @@ function createGame(o) {
           const el = Math.max(0, d.dur - d.ms), b = revBoard(d, el);
           h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
             '<div class="rv-a">' + qTextHtml(d, true) + revOpts(d, -1, true) + '</div>' +
-            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.pj ? '<div class="pj-cap">🏆 Utrka prema piramidi · 🪜 projekcija prema trenutačnim bodovima</div>' : '') + rcCard(d) + (d.mo ? tdLine(d) : !d.rcr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
+            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.pj ? '<div class="pj-cap">🏆 Utrka prema piramidi · 🪜 projekcija prema trenutačnim bodovima</div>' : '') + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
           h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
           break;
         }
@@ -6521,7 +6709,7 @@ function createGame(o) {
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
     const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
     $app.innerHTML = demoBar +
-      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? botStepper(d) + pactToggle(d) : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
+      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? botStepper(d) + pactToggle(d) + tkToggle(d) : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
       '<div class="tvlob-grid">' + slots + '</div>' +
       '<div class="tvlob-act"><button class="btn lob-cta" id="start"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="home-link" id="quit">Odustani</button></div></div></div>';
     bind('start', () => game.start());
@@ -6548,7 +6736,7 @@ function createGame(o) {
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
       (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -6569,12 +6757,12 @@ function createGame(o) {
           invite = '<button class="btn ghost lob-toggle" id="lobInv" aria-haspopup="dialog" aria-expanded="' + open + '">Pozovi igrače <span class="lob-chip">Kod <b class="lob-code">' + esc(d.code) + '</b></span></button>' +
             (open ? '<div class="inv-modal" id="invModal" role="dialog" aria-modal="true" aria-label="Pozivnica"><div class="inv-card"><span class="lob-code-l">Kod sobe</span><span class="inv-code">' + esc(d.code) + '</span>' + (qr ? '<div class="lob-qr inv-qr">' + qr + '</div>' : '') +
               '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span><button class="btn lob-cta" id="invClose">Zatvori</button></div></div>' : '');
-          cta = botStepper(d) + pactToggle(d) + rcToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 ? ' disabled' : '') + '>Započni igru</button>' + (d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
+          cta = botStepper(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 ? ' disabled' : '') + '>Započni igru</button>' + (d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
         } else if (mode === 'demo') {
           const nb = d.P.filter((p) => p.b).length;
           cta = botStepper(d) + '<button class="btn lob-cta" id="dstart"' + (nb < 1 ? ' disabled' : '') + '>Započni igru</button><div class="lob-wait">' + (nb < 1 ? 'Dodaj barem jednog bota.' : 'Igraš protiv ' + botWord(nb) + '. Bacat će moći i na tebe!') + '</div>';
         } else {
-          cta = pactToggle(d) + rcToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
+          cta = pactToggle(d) + rcToggle(d) + tkToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
         }
         h = '<div class="lob"><div class="p-title lob-title">Odaberi lika</div><div class="av-grid">' + grid + '</div>' +
           invite + cta + '<button class="home-link" id="leave">Izađi</button><div class="lob-players">' + rows + '</div></div>';
@@ -6738,7 +6926,7 @@ function createGame(o) {
     const lv = m.lv === 3 ? ' lv3' : m.lv === 2 ? ' lv2' : '';
     return '<div class="tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + lv + '" data-mo="' + (+m.id || 0) + '" style="--el:' + el + 'ms"><span class="figs">' + figs + '</span><span class="tx"><b>' + esc(m.t) + '</b><span>' + esc(m.s || '') + '</span></span></div>';
   }
-  function tdSting(d) { if (!d.mo && !d.rcr) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo ? d.mo.snd || 'stingSmall' : 'stingRival'); }, wait); }
+  function tdSting(d) { if (!d.mo && !d.rcr && !d.tkr) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo ? d.mo.snd || 'stingSmall' : d.rcr ? 'stingRival' : d.tkr.k === 'win' ? 'stingUp' : 'stingSmall'); }, wait); }
   function duelIntroMo(d) { return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 }; }
   function duelVs(d, pose) {
     const du = d.du, st = (id) => (pById(d, id) || {}).ok ? ' ok' : '';
@@ -6887,7 +7075,8 @@ function createGame(o) {
     return '<div class="lob-opt"><span class="lob-opt-l">🍻 Tajni paktovi<small>Savezi, šaputanje i izdaje (od 3 prava igrača)</small></span><button class="tgl' + (d.opt.pacts ? '' : ' off') + '" data-popt="' + (d.opt.pacts ? 0 : 1) + '">' + (d.opt.pacts ? 'Uključeno' : 'Isključeno') + '</button></div>';
   }
   function bindOpt() { document.querySelectorAll('#app [data-popt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('pacts', b.dataset.popt === '1'); } }; });
-    document.querySelectorAll('#app [data-rcopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('rc', b.dataset.rcopt === '1'); } }; }); }
+    document.querySelectorAll('#app [data-rcopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('rc', b.dataset.rcopt === '1'); } }; });
+    document.querySelectorAll('#app [data-tkopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('tk', b.dataset.tkopt === '1'); } }; }); }
   function botStepper(d) {
     const nb = d.P.filter((p) => p.b).length, room = d.max - d.P.length;
     return '<div class="lob-bots"><span class="lob-bots-l">🤖 Botovi<small>Pravi igrači imaju prednost pri odabiru likova</small></span>' +
@@ -6989,7 +7178,7 @@ function createGame(o) {
   }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
-    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0);
+    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0);
     return '<div class="statline"><div class="stat"><b data-bk="pos" data-bv="' + pos + '">' + pos + '.</b><span>mjesto</span></div><div class="stat"><b data-ck="mysc" data-cu="' + from + '" data-to="' + me.sc + '" data-cud="500" data-cdur="900">' + me.sc + '</b><span>bodova</span></div></div>';
   }
   function stepMeter(d, me) {
@@ -7047,7 +7236,7 @@ function createGame(o) {
     }).join('') + '</div>';
   }
   function revBoard(d, el) {
-    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0)));
+    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0)));
     const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
     const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;
     return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
@@ -7084,7 +7273,7 @@ function createGame(o) {
     const wh = wheel(d);
     return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
-      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + (d.mo ? tdLine(d) : !d.rcr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
+      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
