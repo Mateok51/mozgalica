@@ -2055,6 +2055,48 @@
   .ht-ok { min-height: 56px; width: 100%; max-width: 420px; margin: 14px auto 0; display: block; }
   .ht-ready { margin-top: 8px; text-align: center; font-weight: 800; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); }
   .tv .ht-ready { font-size: 1.3rem; }
+  /* rivalski obračun */
+  .rc-tag { margin: 4px 0 2px; padding: 4px 10px; border-radius: 10px; text-align: center; font-weight: 800; font-size: 0.85rem; color: #ffe2a6;
+    background: rgba(120, 30, 20, 0.55); box-shadow: inset 0 0 0 1px rgba(232, 120, 80, 0.75); }
+  .rc-inv { box-shadow: inset 0 0 0 2px rgba(232, 120, 80, 0.85), inset 0 0 0 4px rgba(42, 23, 11, 0.9); }
+  .rc-pick em { font-style: normal; font-size: 0.8rem; color: #ffb27a; }
+  .rc-pick small { font-weight: 700; opacity: 0.8; margin-left: 6px; }
+  .rcx .rc-figs { align-items: center; }
+  .rcx .rc-vs { margin: 0 2px; font-family: var(--font-display); font-size: 0.85rem; color: #ffb27a; }
+  .rcx .figs .mini + .rc-vs, .rcx .rc-vs + .mini { margin-left: 0; }
+  .rcx .rc-w { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; color: #ffe2a0; text-transform: uppercase; }
+  .rcx .rc-pts { font-weight: 900; font-size: 0.85rem; }
+  .rcx .rc-pts .up { font-style: normal; color: #a9e07a; } .rcx .rc-pts .dn { font-style: normal; color: #f0937a; margin-left: 6px; }
+  .tv .rcx .rc-w { font-size: 1.6rem; } .tv .rcx .rc-pts { font-size: 1.2rem; }
+  .bw .rc-mk { position: absolute; top: -4px; right: -4px; font-size: 0.8rem; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.7)); }
+  .mboard .rank-row .betb.rcb { color: #ffd2a6; }
+  /* posljednji poziv: projekcija */
+  .pjb { margin-left: 6px; padding: 0 5px; border-radius: 4px; font-size: 0.7rem; font-weight: 900; color: #ffe2a6; background: rgba(232, 170, 80, 0.18); box-shadow: inset 0 0 0 1px rgba(232, 170, 80, 0.5); white-space: nowrap; }
+  .tv .pjb { font-size: 1rem; padding: 1px 8px; }
+  .pj-chip { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 4px 0 2px; padding: 4px 6px 4px 10px; border-radius: 10px;
+    background: rgba(42, 23, 11, 0.85); box-shadow: inset 0 0 0 1px rgba(232, 170, 80, 0.7); font-weight: 800; font-size: 0.85rem; color: #f6ead0; }
+  .pj-chip .pj-t { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 4px; min-width: 0; }
+  .pj-chip small { font-weight: 700; color: #e2b764; }
+  .pj-chip .pj-left { flex-basis: 100%; font-size: 0.72rem; }
+  .pj-pyr { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 12px; }
+  .pj-row { position: relative; width: var(--w); min-height: 50px; display: flex; align-items: center; gap: 6px; padding: 4px 8px 4px 34px; border-radius: 10px;
+    background: linear-gradient(180deg, rgba(110, 70, 40, 0.75), rgba(60, 36, 18, 0.9)); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.8), 0 2px 0 rgba(0, 0, 0, 0.4); }
+  .pj-row.on { box-shadow: inset 0 0 0 2px rgba(232, 170, 80, 0.95), 0 2px 0 rgba(0, 0, 0, 0.4); }
+  .pj-st { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-family: var(--font-display); font-size: 1.05rem; color: #ffcf6e; }
+  .pj-av { display: flex; flex-wrap: wrap; gap: 4px 8px; }
+  .pj-fig { display: inline-flex; align-items: center; gap: 3px; animation: pjPop 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+  .pj-fig .mini { width: 34px; height: 34px; display: inline-flex; }
+  .pj-fig .mini > * { width: 100%; height: 100%; object-fit: contain; }
+  .pj-nm { font-weight: 900; font-size: 0.8rem; color: #f6ead0; } .pj-nm i { font-style: normal; color: #e2b764; font-size: 0.7rem; }
+  .pj-fig.me .pj-nm { color: #ffe2a0; }
+  .pj-note { margin-top: 10px; text-align: center; font-weight: 800; font-size: 0.82rem; color: #e2b764; }
+  .pj-cap { margin-top: 6px; text-align: center; font-weight: 800; font-size: 0.85rem; color: #e2b764; }
+  .tv .pj-cap { font-size: 1.15rem; }
+  @keyframes pjPop { from { opacity: 0; transform: translateY(8px) scale(0.9); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pj-fig { animation: none; } }
+  .ht-kick { margin: 2px 0 6px; font-weight: 800; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); text-align: center; }
+  .tv .ht-kick { font-size: 1.4rem; }
+  .ht-full { display: block; margin: 8px auto 0; }
 </style>
 
 <div id="app" class="screen center"></div>
@@ -2588,7 +2630,7 @@ __ENGINE__
   // ---------- zvuk faza ----------
   let tvStep = -1, phoneStep = -1, lastTickSec = -1;
   function tvSound(d) {
-    if (d.mo && d.ph !== 'moment') tdSting(d);
+    if ((d.mo || d.rcr) && d.ph !== 'moment') tdSting(d);
     switch (d.ph) {
       case 'intro': return SFX.play('whoosh');
       case 'fstart': return fstartSound(d);
@@ -2614,7 +2656,7 @@ __ENGINE__
   const FX_SOUND = { led: 'powerIce', sluz: 'powerSlime', grick: 'powerBug', bomba: 'powerZap' };
   function phoneSound(d, me) {
     if (!me) return;
-    if (d.mo && d.ph !== 'moment') tdSting(d);
+    if ((d.mo || d.rcr) && d.ph !== 'moment') tdSting(d);
     switch (d.ph) {
       case 'intro': return SFX.play('whoosh');
       case 'bet': return SFX.play('pop');
@@ -3144,9 +3186,9 @@ __ENGINE__
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
   function miniBoard(d, gain) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc);
-    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0))).map((p) => p.id) : [];
-    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
-      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
+    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0))).map((p) => p.id) : [];
+    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
+      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
   }
   function phoneEvents(d) {
     if (!d.ev || !d.ev.length) return '';
@@ -3180,7 +3222,7 @@ __ENGINE__
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
       : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
-    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj]);
+    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.opt || 0, d.pj || 0]);
   }
 
   // ---------- efekti moći ----------
@@ -3809,7 +3851,8 @@ __ENGINE__
   const PACT_PH = { vote: 1, voteResult: 1, power: 1, cast: 1, question: 1, reveal: 1, bet: 1, howto: 1, order: 1, hilo: 1, blitz: 1, maj: 1, majReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, sortReveal: 1, linkReveal: 1, sort: 1, link: 1, duelIntro: 1, duel: 1, duelResult: 1, secret: 1, secret2: 1, moment: 1, intro: 1 };
   // traka pakta ide odmah ispod gornje trake (HUD); ne prekriva pitanje, odgovore ni sat
   function pactHead(d, me, head) {
-    if (!me || !PV || !PACT_PH[d.ph]) return head;
+    if (!me || !PACT_PH[d.ph]) return head;
+    if (!PV) return head + rcBar(d, me) + pjChip(d, me);
     const q = d.ph === 'question';
     let h = '';
     // dolazna ponuda: kratka u pitanju, kartica između pitanja
@@ -3842,10 +3885,90 @@ __ENGINE__
         ? '<div class="pk-pick"><div class="pk-pick-h">🍻 Kome nudiš tajni pakt?<button class="pk-l x" data-pkx="1" aria-label="Zatvori">✕</button></div><div class="pk-cands">' + PV.cand.map((id) => { const p = pById(d, id); return p ? '<button class="pk-cand" data-pk="offer" data-to="' + esc(id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span>' + esc(p.n) + '</button>' : ''; }).join('') + '</div><div class="pk-inv-s">Ostali neće saznati. Svatko može imati samo jedan pakt po partiji.</div></div>'
         : '<button class="pk-open" data-pkopen="1">🍻 Tajni pakt</button>';
     }
-    return head + h;
+    return head + h + rcBar(d, me) + pjChip(d, me);
+  }
+  // ===================== RIVALSKI OBRAČUN: sučelje =====================
+  // Ponude su privatne (PV.rc), aktivan obračun i ishod su javni (d.rc, d.rcr). Domaćin sve provjerava i računa.
+  const RC_PH = { vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1 };
+  const rcN = (d, id) => esc((pById(d, id) || {}).n || '?');
+  function rcBar(d, me) {
+    const R0 = PV && PV.rc, act = d.rc, mine = act && me && (act.a === me.id || act.b === me.id);
+    if (d.ph === 'question') return mine ? '<div class="rc-tag" data-bk="rctag" data-bv="1">⚔️ Obračun: <b>' + rcN(d, act.a) + ' vs ' + rcN(d, act.b) + '</b> · ulog ' + act.st + '</div>' : '';
+    if (!RC_PH[d.ph] || !me) return '';
+    let h = '';
+    if (mine) h += '<div class="rc-tag">⚔️ Obračun na sljedećem pitanju: <b>' + rcN(d, act.a) + ' vs ' + rcN(d, act.b) + '</b> · ulog ' + act.st + '</div>';
+    if (!R0) return h;
+    for (const o of R0.inv || []) {
+      const f = pById(d, o.f); if (!f) continue;
+      const pct = Math.max(0, Math.min(100, (o.ms / o.dur) * 100));
+      const t = o.rev ? '🔥 ' + esc(f.n) + ' traži osvetu!' : o.riv ? '⚔️ Obračun s rivalom: ' + esc(f.n) + ' te izaziva!' : '⚔️ ' + esc(f.n) + ' te izaziva na rivalski obračun!';
+      h += '<div class="pk-inv rc-inv"><div class="pk-inv-h"><span class="mini">' + avSvg(f.a, 'attack') + '</span><b>' + t + '</b></div>' +
+        '<div class="pk-inv-s">Oboje riskirate <b>' + R0.st + ' bodova</b>. Na sljedećem pitanju: tko odgovori točno, a protivnik ne, uzima protivnikov ulog. Oboje točno ili oboje krivo — neriješeno.</div>' +
+        '<div class="pk-row"><button class="btn pk-acc" data-rc="rcAccept" data-f="' + esc(o.f) + '">Prihvati izazov</button><button class="btn ghost pk-dec" data-rc="rcDecline" data-f="' + esc(o.f) + '">Odbij</button></div><i class="pk-tm" style="--w:' + pct + '%"></i></div>';
+    }
+    if (R0.out) h += '<div class="pk-bar out rc-out"><span class="pk-t">⚔️ Izazov poslan: <b>' + rcN(d, R0.out.t) + '</b> · ' + Math.ceil(R0.out.ms / 1000) + ' s</span><button class="pk-b" data-rc="rcCancel">Povuci</button></div>';
+    else if (R0.can && R0.cand && R0.cand.length && !(R0.inv || []).length && !act) {
+      const riv = R0.cand.some((c) => c.riv || c.rev);
+      h += L.rcOpen
+        ? '<div class="pk-pick rc-pick"><div class="pk-pick-h">⚔️ Koga izazivaš? <small>ulog ' + R0.st + ' · sljedeće pitanje</small><button class="pk-l x" data-rcx="1" aria-label="Zatvori">✕</button></div><div class="pk-cands">' +
+          R0.cand.slice().sort((x, y) => (y.rev + y.riv) - (x.rev + x.riv)).map((c) => { const p = pById(d, c.id); return p ? '<button class="pk-cand" data-rc="rcOffer" data-to="' + esc(c.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span>' + esc(p.n) + (c.rev ? ' <em>🔥 osveta</em>' : c.riv ? ' <em>⚔️ rival</em>' : '') + '</span></button>' : ''; }).join('') + '</div></div>'
+        : '<button class="pk-open rc-open" data-rcopen="1">' + (riv ? '⚔️ Obračun s rivalom' : '⚔️ Rivalski obračun') + '</button>';
+    }
+    return h;
+  }
+  function bindRc() {
+    const q = (s) => document.querySelectorAll('#app ' + s);
+    q('[data-rc]').forEach((b) => { b.onclick = () => { const k = b.dataset.rc; AUDIO.play(k === 'rcDecline' || k === 'rcCancel' ? 'tap' : 'confirm'); L.rcOpen = false; pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
+    q('[data-rcopen]').forEach((b) => { b.onclick = () => { L.rcOpen = true; phoneRender(true); }; });
+    q('[data-rcx]').forEach((b) => { b.onclick = () => { L.rcOpen = false; phoneRender(true); }; });
+  }
+  // ishod na otkrivanju: oba lika, rezultat i komentar krčme (isti trenutak kao kartica krčme)
+  function rcCard(d) {
+    const r = d.rcr; if (!r) return '';
+    const el = Math.max(0, d.dur - d.ms), A = pById(d, r.a), B = pById(d, r.b);
+    const pose = (id) => r.k === 'win' ? (id === r.w ? 'victory' : 'sad') : 'idle';
+    const fig = (p) => p ? '<span class="mini">' + avSvg(p.a, pose(p.id)) + '</span>' : '';
+    const W = r.w && pById(d, r.w), L0 = r.w && pById(d, r.w === r.a ? r.b : r.a);
+    const res = r.k === 'win' && W ? '<b class="rc-w">🏆 ' + esc(W.n) + ' pobjeđuje!</b><span class="rc-pts"><i class="up">+' + r.t + ' ' + esc(W.n) + '</i> <i class="dn">−' + r.t + ' ' + esc(L0 ? L0.n : '') + '</i></span>'
+      : r.k === 'tie' ? '<b class="rc-w">Neriješeno</b>' : '<b class="rc-w">Obračun otkazan</b>';
+    return '<div class="tdl lv2 rcx" data-mo="rc' + (+r.id || 0) + '" style="--el:' + el + 'ms"><span class="figs rc-figs">' + fig(A) + '<span class="rc-vs">VS</span>' + fig(B) + '</span><span class="tx"><b>' + (r.rev ? '🔥 Osveta' : '⚔️ Rivalski obračun') + '</b>' + res + '<span>' + esc(r.line || '') + '</span></span></div>';
+  }
+  function rcToggle(d) {
+    if (!d.opt) return '';
+    if (!game) return d.opt.rc ? '<div class="lob-info">⚔️ Rivalski obračuni su uključeni</div>' : '';
+    return '<div class="lob-opt"><span class="lob-opt-l">⚔️ Rivalski obračuni<small>Dobrovoljni izazovi s malim ulogom (od 5. pitanja)</small></span><button class="tgl' + (d.opt.rc ? '' : ' off') + '" data-rcopt="' + (d.opt.rc ? 0 : 1) + '">' + (d.opt.rc ? 'Uključeno' : 'Isključeno') + '</button></div>';
+  }
+  // ===================== POSLJEDNJI POZIV: projekcija početka piramide =====================
+  // Sve brojke dolaze gotove od domaćina (d.pj, isti izračun kao stvarni početak); klijent samo prikazuje.
+  const PJV = { open: false };
+  const pjWord = (n) => (n === 1 ? 'Još jedno pitanje' : n === 2 ? 'Još dva pitanja' : n === 3 ? 'Još tri pitanja' : 'Još ' + n + ' pitanja') + ' do piramide';
+  function pjOf(d, id) { const x = d.pj && d.pj.P && d.pj.P[id]; return x ? { s: +x[0] || 0, p: +x[1] || 0, r: +x[2] || 0 } : null; }
+  function pjBadge(d, id) { const x = pjOf(d, id); return x ? '<span class="pjb" data-bk="pjb' + esc(id) + '" data-bv="' + x.s + '" title="Projicirana početna stepenica">🪜' + x.s + '</span>' : ''; }
+  function pjChip(d, me) {
+    if (!d.pj || !me || d.ph === 'question' || d.ph === 'fq') { return ''; }
+    const x = pjOf(d, me.id); if (!x) return '';
+    return '<div class="pj-chip"><span class="pj-t">🪜 Tvoja projekcija: <b>' + x.s + '. stepenica</b>' + (x.r && x.p ? '<small> · napredak ' + x.p + '/' + x.r + '</small>' : '') + '<small class="pj-left">' + pjWord(+d.pj.left || 0) + '</small></span><button class="pk-b" data-pjopen="1">Piramida</button></div>' + (PJV.open ? pjModal(d) : '');
+  }
+  function pjModal(d) {
+    const max = Math.max(1, +d.pj.max || 1), rows = [];
+    for (let st = max; st >= 0; st--) {
+      const here = d.P.filter((p) => { const x = pjOf(d, p.id); return x && x.s === st; });
+      rows.push('<div class="pj-row' + (here.length ? ' on' : '') + '" style="--w:' + Math.round(46 + (max - st) / max * 54) + '%"><span class="pj-st">' + st + '</span><span class="pj-av">' +
+        here.map((p) => { const x = pjOf(d, p.id); return '<span class="pj-fig' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="pj-nm">' + esc(p.n) + (x.r && x.p ? ' <i>' + x.p + '/' + x.r + '</i>' : '') + '</span></span>'; }).join('') + '</span></div>');
+    }
+    return '<div class="lg-wrap pj-wrap lg-instant-book" id="pjWrap"><div class="lg-book pj-book"><div class="lg-head"><div class="lg-t">🏆 Put prema piramidi</div><div class="lg-sub">Ovako bi piramida izgledala da regularni dio sada završi.</div></div>' +
+      '<div class="pj-pyr">' + rows.join('') + '</div>' +
+      '<div class="pj-note">Projekcija prema trenutačnim bodovima. ' + esc(pjWord(+d.pj.left || 0)) + ' — konačne pozicije mogu se promijeniti nakon završnih obračuna.</div>' +
+      '<div class="lg-act"><button class="btn ghost" data-pjx="1">Zatvori</button></div></div></div>';
+  }
+  function bindPj() {
+    document.querySelectorAll('#app [data-pjopen]').forEach((b) => { b.onclick = () => { AUDIO.play('tap'); PJV.open = true; phoneRender(true); }; });
+    document.querySelectorAll('#app [data-pjx]').forEach((b) => { b.onclick = () => { AUDIO.play('tap'); PJV.open = false; phoneRender(true); }; });
   }
   const PACT_STEAL = 0.25;
   function bindPact(d) {
+    bindRc();
+    bindPj();
     const q = (s) => document.querySelectorAll('#app ' + s);
     q('[data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); L.pkOpen = false; pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
     q('[data-pkopen]').forEach((b) => { b.onclick = () => { L.pkOpen = true; phoneRender(true); }; });
@@ -4265,7 +4388,7 @@ __ENGINE__
           const el = Math.max(0, d.dur - d.ms), b = revBoard(d, el);
           h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
             '<div class="rv-a">' + qTextHtml(d, true) + revOpts(d, -1, true) + '</div>' +
-            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
+            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.pj ? '<div class="pj-cap">🏆 Utrka prema piramidi · 🪜 projekcija prema trenutačnim bodovima</div>' : '') + rcCard(d) + (d.mo ? tdLine(d) : !d.rcr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
           h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
           break;
         }
@@ -4393,7 +4516,7 @@ __ENGINE__
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
       (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -4414,12 +4537,12 @@ __ENGINE__
           invite = '<button class="btn ghost lob-toggle" id="lobInv" aria-haspopup="dialog" aria-expanded="' + open + '">Pozovi igrače <span class="lob-chip">Kod <b class="lob-code">' + esc(d.code) + '</b></span></button>' +
             (open ? '<div class="inv-modal" id="invModal" role="dialog" aria-modal="true" aria-label="Pozivnica"><div class="inv-card"><span class="lob-code-l">Kod sobe</span><span class="inv-code">' + esc(d.code) + '</span>' + (qr ? '<div class="lob-qr inv-qr">' + qr + '</div>' : '') +
               '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span><button class="btn lob-cta" id="invClose">Zatvori</button></div></div>' : '');
-          cta = botStepper(d) + pactToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 ? ' disabled' : '') + '>Započni igru</button>' + (d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
+          cta = botStepper(d) + pactToggle(d) + rcToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 ? ' disabled' : '') + '>Započni igru</button>' + (d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
         } else if (mode === 'demo') {
           const nb = d.P.filter((p) => p.b).length;
           cta = botStepper(d) + '<button class="btn lob-cta" id="dstart"' + (nb < 1 ? ' disabled' : '') + '>Započni igru</button><div class="lob-wait">' + (nb < 1 ? 'Dodaj barem jednog bota.' : 'Igraš protiv ' + botWord(nb) + '. Bacat će moći i na tebe!') + '</div>';
         } else {
-          cta = pactToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
+          cta = pactToggle(d) + rcToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
         }
         h = '<div class="lob"><div class="p-title lob-title">Odaberi lika</div><div class="av-grid">' + grid + '</div>' +
           invite + cta + '<button class="home-link" id="leave">Izađi</button><div class="lob-players">' + rows + '</div></div>';
@@ -4533,7 +4656,7 @@ __ENGINE__
 
   function barRow(d) {
     const mood = (p) => (d.ph === 'question' || d.ph === 'fq') && p.fx ? 'shocked' : p.ok ? 'happy' : 'idle';
-    return '<div class="bar-row">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" aria-label="' + esc(p.n) + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1">✓</span>' : '') + '</div>').join('') + '</div>';
+    return '<div class="bar-row">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" aria-label="' + esc(p.n) + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + (d.rc && (d.rc.a === p.id || d.rc.b === p.id) ? '<span class="rc-mk" title="Rivalski obračun">⚔️</span>' : '') + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1">✓</span>' : '') + '</div>').join('') + '</div>';
   }
   function hudRound(rl) { const m = /^Runda (\d+)$/.exec(rl || ''); return m ? 'Runda ' + m[1] + '/3' : (rl || ''); }
   const ANN_SUB = { 'Runda 1': 'Avantura počinje.', 'Runda 2': 'Vrijeme je za novu rundu.', 'Runda 3': 'Još samo jedna runda.', 'Veliko finale': 'Sve se odlučuje sada.' };
@@ -4583,7 +4706,7 @@ __ENGINE__
     const lv = m.lv === 3 ? ' lv3' : m.lv === 2 ? ' lv2' : '';
     return '<div class="tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + lv + '" data-mo="' + (+m.id || 0) + '" style="--el:' + el + 'ms"><span class="figs">' + figs + '</span><span class="tx"><b>' + esc(m.t) + '</b><span>' + esc(m.s || '') + '</span></span></div>';
   }
-  function tdSting(d) { if (!d.mo) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo.snd || 'stingSmall'); }, wait); }
+  function tdSting(d) { if (!d.mo && !d.rcr) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo ? d.mo.snd || 'stingSmall' : 'stingRival'); }, wait); }
   function duelIntroMo(d) { return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 }; }
   function duelVs(d, pose) {
     const du = d.du, st = (id) => (pById(d, id) || {}).ok ? ' ok' : '';
@@ -4645,10 +4768,12 @@ __ENGINE__
     if (q.k === 'emoji') return '<div class="emo">' + esc(q.t) + '</div>';
     return '<div class="' + (tv ? 'q-text' : 'p-q') + '">' + esc(q.t) + '</div>';
   }
+  const HT_KICK = { fast: '⚡ Vrijeme je da vidimo tko najbrže razmišlja!', social: '🍻 Koliko se zapravo poznajete?', logic: '🧠 Malo logike — bez žurbe, ali i bez greške!', assoc: '🔎 Tko će prvi prepoznati?' };
   function howtoHtml(d) {
     const h = d.ht;
     return '<div class="ht"><div class="ht-i">' + esc(h.i) + '</div><div class="ht-k">' + (h.chal ? 'Izazov' : 'Posebna bitka') + '</div><div class="ht-t">' + esc(h.n) + '</div>' +
-      (h.first ? '<ol>' + h.r.map((r, i) => '<li style="--cd:' + (350 + i * 500) + 'ms"><b>' + (i + 1) + '</b>' + esc(r) + '</li>').join('') + '</ol>' : '<div class="mg-s">' + esc(h.r[0]) + '</div>') +
+      (HT_KICK[h.kd] ? '<div class="ht-kick">' + HT_KICK[h.kd] + '</div>' : '') +
+      (h.first || L.htFull ? '<ol>' + h.r.map((r, i) => '<li style="--cd:' + (h.first ? 350 + i * 500 : 0) + 'ms"><b>' + (i + 1) + '</b>' + esc(r) + '</li>').join('') + '</ol>' : '<div class="mg-s">Podsjetnik: ' + esc(h.r[0]) + '</div>' + (phoneShown() ? '<button class="pk-b ht-full" id="htfull">📜 Cijele upute</button>' : '')) +
       howtoReady(d) + '</div>';
   }
   // tko je pročitao: mobitel ima tipku, TV i svi vide koliko je spremno
@@ -4729,7 +4854,8 @@ __ENGINE__
     if (!game) return d.opt.pacts ? '<div class="lob-info">🍻 Tajni paktovi su uključeni (od 3 prava igrača)</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l">🍻 Tajni paktovi<small>Savezi, šaputanje i izdaje (od 3 prava igrača)</small></span><button class="tgl' + (d.opt.pacts ? '' : ' off') + '" data-popt="' + (d.opt.pacts ? 0 : 1) + '">' + (d.opt.pacts ? 'Uključeno' : 'Isključeno') + '</button></div>';
   }
-  function bindOpt() { document.querySelectorAll('#app [data-popt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('pacts', b.dataset.popt === '1'); } }; }); }
+  function bindOpt() { document.querySelectorAll('#app [data-popt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('pacts', b.dataset.popt === '1'); } }; });
+    document.querySelectorAll('#app [data-rcopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('rc', b.dataset.rcopt === '1'); } }; }); }
   function botStepper(d) {
     const nb = d.P.filter((p) => p.b).length, room = d.max - d.P.length;
     return '<div class="lob-bots"><span class="lob-bots-l">🤖 Botovi<small>Pravi igrači imaju prednost pri odabiru likova</small></span>' +
@@ -4831,7 +4957,7 @@ __ENGINE__
   }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
-    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0);
+    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0);
     return '<div class="statline"><div class="stat"><b data-bk="pos" data-bv="' + pos + '">' + pos + '.</b><span>mjesto</span></div><div class="stat"><b data-ck="mysc" data-cu="' + from + '" data-to="' + me.sc + '" data-cud="500" data-cdur="900">' + me.sc + '</b><span>bodova</span></div></div>';
   }
   function stepMeter(d, me) {
@@ -4889,7 +5015,7 @@ __ENGINE__
     }).join('') + '</div>';
   }
   function revBoard(d, el) {
-    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0)));
+    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0)));
     const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
     const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;
     return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
@@ -4926,7 +5052,7 @@ __ENGINE__
     const wh = wheel(d);
     return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
-      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + (d.mo ? tdLine(d) : b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
+      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + (d.mo ? tdLine(d) : !d.rcr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
@@ -5082,6 +5208,7 @@ __ENGINE__
     bind('dstart', () => game.start());
     if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
+    bind('htfull', () => { L.htFull = 1; phoneRender(true); });
     bind('htok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
     bindLeg(d);
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });

@@ -44,6 +44,10 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
   const broker = require(path.join(ROOT, 'web', 'mini-broker')).start(8767);
   await new Promise((r) => server.listen(8766, r));
   const views = JSON.parse(fs.readFileSync(path.join(__dirname, 'views.json')));
+  // rivalski obračun: dodaj javna polja (aktivan obračun i ishod) u stvarna stanja, da i ona prođu kroz napad
+  for (const it of views) { const P = it.v.P || []; if (P.length < 2) continue;
+    if (['question', 'vote', 'power', 'reveal'].includes(it.v.ph)) it.v.rc = { a: P[0].id, b: P[1].id, st: 200, rev: 1 };
+    if (it.v.ph === 'reveal') { it.v.rcr = { id: 7, a: P[0].id, b: P[1].id, w: P[0].id, t: 200, k: 'win', rev: 1, line: 'Osveta je slatka!' }; P[0].rx = 200; P[1].rx = -200; } }
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 400, height: 800 } });
   await ctx.addInitScript(MOCK); await ctx.route(/unpkg\.com|jsdelivr|fonts\./, (r) => r.abort());
   const pg = await ctx.newPage(); const errs = [];

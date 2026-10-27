@@ -2377,3 +2377,58 @@ s = open(SP + '/v4/page.html', encoding='utf-8').read()
 s = rep(s, ": ['duel', 'question', 'fq'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok]) : null;", ": ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('upute osvježavanje OK')
+
+# ---- rivalski obračun: izazovi u traci ispod HUD-a, ishod na otkrivanju, oznaka u traci likova ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/rc.css', encoding='utf-8').read() + s[i:]
+s = rep(s, "    return head + h;\n  }\n  const PACT_STEAL", "    return head + h + rcBar(d, me);\n  }\n  const PACT_STEAL")
+s = rep(s, "  const PACT_STEAL = 0.25;", open(SP + '/v4/rc-ui.js', encoding='utf-8').read() + "  const PACT_STEAL = 0.25;")
+s = rep(s, "    if (!me || !PV || !PACT_PH[d.ph]) return head;", "    if (!me || !PACT_PH[d.ph]) return head;\n    if (!PV) return head + rcBar(d, me);")
+s = rep(s, "  function bindPact(d) {\n", "  function bindPact(d) {\n    bindRc();\n")
+# prije otkrivanja: u izračunu "prije" oduzmi i obračun (poredak se animira ispravno)
+for a in ["- (b.xb || 0))", "- (a.xb || 0))", "- (p.xb || 0))", "- (me.xb || 0);"]:
+    n = s.count(a); assert n >= 1, a
+    s = s.replace(a, a.replace('.xb || 0)', '.xb || 0) - (' + a[3:a.index('.')] + '.rx || 0)'))
+s = rep(s, "(gain && p.br ? '<span class=\"betb' + (p.br < 0 ? ' neg' : '')", "(gain && p.rx ? '<span class=\"betb rcb' + (p.rx < 0 ? ' neg' : '') + '\">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class=\"betb' + (p.br < 0 ? ' neg' : '')")
+s = rep(s, "data-cu=\"' + (me.sc - me.g - (me.br || 0)) + '\"", "data-cu=\"' + (me.sc - me.g - (me.br || 0) - (me.rx || 0)) + '\"")
+# otkrivanje: kartica obračuna (mobitel i TV); "novo vodstvo" samo kad nema drugih kartica
+s = rep(s, "(d.mo ? tdLine(d) : b.lead ? '<div class=\"rv-lead\">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '')", "rcCard(d) + (d.mo ? tdLine(d) : !d.rcr && b.lead ? '<div class=\"rv-lead\">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '')")
+s = rep(s, "(d.mo ? tdLine(d) : b.lead ? '<div class=\"rv-lead\">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '')", "rcCard(d) + (d.mo ? tdLine(d) : !d.rcr && b.lead ? '<div class=\"rv-lead\">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '')")
+s = rep(s, "  function tdSting(d) { if (!d.mo) return;", "  function tdSting(d) { if (!d.mo && !d.rcr) return;")
+s = rep(s, "if (s0 === d.s) AUDIO.play(d.mo.snd || 'stingSmall'); }, wait); }", "if (s0 === d.s) AUDIO.play(d.mo ? d.mo.snd || 'stingSmall' : 'stingRival'); }, wait); }")
+s = rep(s, "    if (d.mo && d.ph !== 'moment') tdSting(d);", "    if ((d.mo || d.rcr) && d.ph !== 'moment') tdSting(d);", 2)
+# oznaka sudionika obračuna u traci likova tijekom pitanja
+s = rep(s, "<span class=\"glow\"></span>' + avSvg(p.a, mood(p)) +", "<span class=\"glow\"></span>' + avSvg(p.a, mood(p)) + (d.rc && (d.rc.a === p.id || d.rc.b === p.id) ? '<span class=\"rc-mk\" title=\"Rivalski obračun\">⚔️</span>' : '') +")
+# predvorje: uključivanje/isključivanje (samo domaćin)
+s = rep(s, "botStepper(d) + pactToggle(d) +", "botStepper(d) + pactToggle(d) + rcToggle(d) +")
+s = rep(s, "          cta = pactToggle(d) + '<div class=\"lob-wait\">", "          cta = pactToggle(d) + rcToggle(d) + '<div class=\"lob-wait\">")
+s = rep(s, "  function bindOpt() { document.querySelectorAll('#app [data-popt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('pacts', b.dataset.popt === '1'); } }; }); }",
+           "  function bindOpt() { document.querySelectorAll('#app [data-popt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('pacts', b.dataset.popt === '1'); } }; });\n    document.querySelectorAll('#app [data-rcopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('rc', b.dataset.rcopt === '1'); } }; }); }")
+# osvježavanje: aktivan obračun i ishod dio su potpisa ekrana
+s = rep(s, "d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj]);", "d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.opt || 0]);")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('obračun UI OK')
+
+# ---- posljednji poziv: oznaka projekcije u poretku, osobna oznaka + pregled piramide na mobitelu, natpis na TV-u ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/fc.css', encoding='utf-8').read() + s[i:]
+s = rep(s, "  const PACT_STEAL = 0.25;", open(SP + '/v4/fc-ui.js', encoding='utf-8').read() + "  const PACT_STEAL = 0.25;")
+s = rep(s, "    return head + h + rcBar(d, me);\n  }\n", "    return head + h + rcBar(d, me) + pjChip(d, me);\n  }\n")
+s = rep(s, "    if (!PV) return head + rcBar(d, me);", "    if (!PV) return head + rcBar(d, me) + pjChip(d, me);")
+s = rep(s, "  function bindPact(d) {\n    bindRc();\n", "  function bindPact(d) {\n    bindRc();\n    bindPj();\n")
+s = rep(s, "(p.id === PID ? '<span class=\"you\">Ti</span>' : '') + (gain && p.rx ?", "(p.id === PID ? '<span class=\"you\">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.rx ?")
+s = rep(s, "'<div class=\"rv-b\"><div class=\"rv-title\">Poredak</div>' + b.html + rcCard(d)", "'<div class=\"rv-b\"><div class=\"rv-title\">Poredak</div>' + b.html + (d.pj ? '<div class=\"pj-cap\">🏆 Utrka prema piramidi · 🪜 projekcija prema trenutačnim bodovima</div>' : '') + rcCard(d)")
+s = rep(s, "d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.opt || 0]);", "d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.opt || 0, d.pj || 0]);")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('posljednji poziv UI OK')
+
+# ---- Smart Game Director: kratka najava vrste izazova; ponovljene upute kraće, s gumbom za cijele ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "      (h.first ? '<ol>' + h.r.map((r, i) => '<li style=\"--cd:' + (350 + i * 500) + 'ms\"><b>' + (i + 1) + '</b>' + esc(r) + '</li>').join('') + '</ol>' : '<div class=\"mg-s\">' + esc(h.r[0]) + '</div>') +",
+           "      (HT_KICK[h.kd] ? '<div class=\"ht-kick\">' + HT_KICK[h.kd] + '</div>' : '') +\n"
+           "      (h.first || L.htFull ? '<ol>' + h.r.map((r, i) => '<li style=\"--cd:' + (h.first ? 350 + i * 500 : 0) + 'ms\"><b>' + (i + 1) + '</b>' + esc(r) + '</li>').join('') + '</ol>' : '<div class=\"mg-s\">Podsjetnik: ' + esc(h.r[0]) + '</div>' + (phoneShown() ? '<button class=\"pk-b ht-full\" id=\"htfull\">📜 Cijele upute</button>' : '')) +")
+s = rep(s, "  function howtoHtml(d) {", "  const HT_KICK = { fast: '⚡ Vrijeme je da vidimo tko najbrže razmišlja!', social: '🍻 Koliko se zapravo poznajete?', logic: '🧠 Malo logike — bez žurbe, ali i bez greške!', assoc: '🔎 Tko će prvi prepoznati?' };\n  function howtoHtml(d) {")
+s = rep(s, "    bind('htok', () => {", "    bind('htfull', () => { L.htFull = 1; phoneRender(true); });\n    bind('htok', () => {")
+i = s.index('</style>'); s = s[:i] + "  .ht-kick { margin: 2px 0 6px; font-weight: 800; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); text-align: center; }\n  .tv .ht-kick { font-size: 1.4rem; }\n  .ht-full { display: block; margin: 8px auto 0; }\n" + s[i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('upute SGD UI OK')

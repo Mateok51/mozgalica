@@ -145,7 +145,7 @@ const pact = (g, a, b) => { g.pactAction(a, { k: 'offer', to: b }); return g.pac
 
   console.log('10) Paktovi isključeni');
   g = mk(['Ana', 'Marko', 'Iva'], { pacts: false }); g.start(); await untilQn(g, 4);
-  ok(!g.pactAction('p0', { k: 'offer', to: 'p1' }) && g.priv('p0') === null && !g.view().pk, 'isključeni paktovi: nema ponuda ni stanja');
+  { const pv = g.priv('p0') || {}; ok(!g.pactAction('p0', { k: 'offer', to: 'p1' }) && !pv.k && !pv.can && !(pv.inv || []).length && !pv.out && !g.view().pk, 'isključeni paktovi: nema ponuda ni stanja pakta'); }
   g.stop();
   g = mk(['Ana', 'Marko', 'Iva']); g.setOpt('pacts', false); ok(g.view().opt.pacts === 0, 'prekidač u predvorju'); g.setOpt('pacts', true); ok(g.view().opt.pacts === 1, 'ponovno uključeno'); g.stop();
   console.log(fails ? 'NEUSPJEH ' + fails : 'SVE PROVJERE PROŠLE ✔'); process.exit(fails ? 1 : 0);

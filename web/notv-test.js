@@ -38,6 +38,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
   const host = await mk('Mateo', 'pid-mateo');
   await host.goto(URL);
   await host.evaluate(([ch, QV]) => Object.assign(CFG, { chal: ch, qv: JSON.parse(QV), howto: 1.5, howtoMax: 1.5, howtoShort: 0.8, order: 12, hilo: 15, blitz: 10, maj: 6, majReveal: 1.5,  intro: 0.8, vote: 6, voteShow: 1.2, power: 8, q: 10, reveal: 2.5, sort: 20, link: 20, chReveal: 2.5, fq: 5, fr: 2 }), [(process.env.CHAL || 'sort,link').split(','), process.env.QV || '{"who":1,"emoji":1}']);
+  if (process.env.PACE) await host.evaluate(() => { CFG.reveal = null; });
   await host.click('#hostp');
   await host.fill('#hname', 'Mateo');
   await host.click('#hform button[type=submit]');
@@ -83,6 +84,14 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
     if (Date.now() < 0) return '';
     const click = (s) => { const e = q(s); if (e) { e.click(); return true; } return false; };
     if (click('#htok')) return 'htok';
+    { const x = q('.rcx'); if (x) { window.__rcx = window.__rcx || {}; window.__rcx[x.dataset.mo] = x.textContent; } }
+    if (q('.rcx') && getComputedStyle(q('.rcx')).opacity > 0.9 && !window.__rcxShot) { window.__rcxShot = 1; return 'rcxshot'; }
+    if (q('.rc-tag') && document.documentElement.dataset.ph === 'question' && !window.__tagShot) { window.__tagShot = 1; return 'rctagshot'; }
+    if (q('.rc-tag')) window.__rctag = 1;
+    if (q('[data-rc="rcAccept"]') && !window.__rcShot) { window.__rcShot = 1; return 'rcinv'; }
+    if (click('[data-rc="rcAccept"]')) return 'rcaccept';
+    if (!window.__rcDone && click('[data-rcopen]')) return 'rcopen';
+    if (q('[data-rc="rcOffer"]')) { window.__rcDone = 1; click('[data-rc="rcOffer"]'); return 'rcoffer'; }
     if (click('[data-v]:not([disabled])')) return 'vote';
     if (click('[data-t]')) return 'target';
     if (click('[data-bet]:not([disabled])')) return 'bet';
@@ -111,7 +120,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
       const a = await act(p);
       if (a && !seen.has(a)) {
         seen.add(a);
-        if (['board', 'sortsol', 'linksol', 'pyr', 'vote'].includes(a)) await p.screenshot({ path: SHOTS + '/m-' + a + '.png' });
+        if (['board', 'sortsol', 'linksol', 'pyr', 'vote', 'rcinv', 'rcxshot', 'rctagshot', 'rcopen'].includes(a)) await p.screenshot({ path: SHOTS + '/m-' + a + '.png' });
       }
     }
     if (await host.$('#dagain')) { done = true; break; }
@@ -128,6 +137,12 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
   if (!process.env.CHAL) { ok(seen.has('sortsol'), 'nakon razvrstavanja vidi se rješenje'); ok(seen.has('linksol'), 'nakon spajanja vide se točni parovi'); }
   ok(seen.has('pyr'), 'u finalu se na mobitelu vidi piramida sa svim igračima');
   ok(!!(await host.$('#dagain')) && !(await players[0].$('#dagain')), 'samo domaćin može pokrenuti novu igru');
+  // Rivalski obračun: izazov poslan, prihvaćen, ishod isti na svim mobitelima
+  ok(seen.has('rcoffer') && seen.has('rcaccept'), 'rivalski obračun: izazov poslan i prihvaćen na mobitelima');
+  const rcx = await Promise.all(all.map((p) => p.evaluate(() => window.__rcx || {})));
+  const ids = Object.keys(rcx[0]);
+  ok(ids.length >= 1 && rcx.every((x) => ids.every((id) => x[id] === rcx[0][id])), 'ishod obračuna isti na svim mobitelima: ' + (ids[0] ? rcx[0][ids[0]].replace(/\s+/g, ' ').slice(0, 90) : '—'));
+  ok((await Promise.all(all.map((p) => p.evaluate(() => !!window.__rctag)))).filter(Boolean).length >= 2, 'sudionici vide oznaku aktivnog obračuna');
   // Legende ove krčme: isti pregled na svim mobitelima, i nakon ponovnog spajanja
   const legOf = async (p) => { await p.click('#legOpen'); await p.waitForSelector('.lg-list', { timeout: 4000 }); return p.evaluate(() => document.querySelector('.lg-story').textContent + '||' + [...document.querySelectorAll('.lg-card')].map((c) => c.textContent).join('|')); };
   const L = [];

@@ -1,0 +1,15 @@
+  /* rivalski obračun */
+  .rc-tag { margin: 4px 0 2px; padding: 4px 10px; border-radius: 10px; text-align: center; font-weight: 800; font-size: 0.85rem; color: #ffe2a6;
+    background: rgba(120, 30, 20, 0.55); box-shadow: inset 0 0 0 1px rgba(232, 120, 80, 0.75); }
+  .rc-inv { box-shadow: inset 0 0 0 2px rgba(232, 120, 80, 0.85), inset 0 0 0 4px rgba(42, 23, 11, 0.9); }
+  .rc-pick em { font-style: normal; font-size: 0.8rem; color: #ffb27a; }
+  .rc-pick small { font-weight: 700; opacity: 0.8; margin-left: 6px; }
+  .rcx .rc-figs { align-items: center; }
+  .rcx .rc-vs { margin: 0 2px; font-family: var(--font-display); font-size: 0.85rem; color: #ffb27a; }
+  .rcx .figs .mini + .rc-vs, .rcx .rc-vs + .mini { margin-left: 0; }
+  .rcx .rc-w { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; color: #ffe2a0; text-transform: uppercase; }
+  .rcx .rc-pts { font-weight: 900; font-size: 0.85rem; }
+  .rcx .rc-pts .up { font-style: normal; color: #a9e07a; } .rcx .rc-pts .dn { font-style: normal; color: #f0937a; margin-left: 6px; }
+  .tv .rcx .rc-w { font-size: 1.6rem; } .tv .rcx .rc-pts { font-size: 1.2rem; }
+  .bw .rc-mk { position: absolute; top: -4px; right: -4px; font-size: 0.8rem; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.7)); }
+  .mboard .rank-row .betb.rcb { color: #ffd2a6; }

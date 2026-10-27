@@ -25,12 +25,21 @@ const CFG = {
   // upute: nema odbrojavanja, kreće kad svi potvrde; howtoMax je samo nevidljiva sigurnosna granica (npr. netko ode od mobitela)
   howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, hiloN: 8, blitzN: 24,
   chal: null, chalN: 2, varMax: 2,
+  // Smart Game Director (raspored, nikad ishod): udio mini-igara u regularnom dijelu, početak bez posebnih bitaka (udio),
+  // najviše posebnih u zadnjih fcLast, broj posebnih bitaka, pomak izazova unutar runde, slabije ponavljanje iste skupine/vrste, težine vrsta
+  sgd: { on: true, share: 0.3, open: 0.2, finalMax: 1, varMin: 1, varMax: 2, moveChal: 0.5, sameCat: 0.35, sameType: 0.1,
+    w: { who: 1, emoji: 1, order: 1, hilo: 1, sort: 1, link: 1, blitz: 1, maj: 1 } },
   // tajni paktovi (balans na jednom mjestu)
   pactMin: 3, pactAfter: 3, pactBonus: 75, pactSteal: 0.25, pactDouble: 0.2, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
   // tempo otkrivanja odgovora (jedno mjesto za podešavanje): w = šetnja likova, s = kolo, t = cijela faza (s)
   // n = obično, t = napeto, d = dramatično; trenutak krčme dodaje paceMo sekundi
   // reveal: ako je postavljen (npr. u testovima), otkrivanje ima to fiksno trajanje bez prilagodbe tempa
   pace: { n: { w: 1150, s: 1700, t: 6.4 }, t: { w: 1250, s: 2700, t: 7.8 }, d: { w: 1300, s: 3500, t: 9.2 } }, paceMo: 1, paceClose: 250, paceNear: 300,
+  // rivalski obračun: ulog po igraču (točno pitanje vrijedi 500–1000, pa 200 znači zamah od 400 — osjeti se, ali ne odlučuje partiju),
+  // od kojeg pitanja, koliko prihvaćenih po partiji, pokušaja po igraču, trajanje ponude (s)
+  // posljednji poziv: koliko zadnjih običnih pitanja prije piramide prikazuje projekciju početka
+  fcLast: 3,
+  rcStake: 200, rcAfter: 5, rcMax: 2, rcSends: 2, rcOffer: 20,
   moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 8, secret2: 7, secretBonus: 200, helpBonus: 150,
 };
 
@@ -68,6 +77,8 @@ const HOWTO = {
   maj: { n: 'Što misli većina?', i: '🗳️', r: ['Nema točnog odgovora – glasaj po svom.', 'Bodove dobiva tko odabere isto kao većina.', 'Pogodi što misle ostali!'] },
 };
 const CHALLENGES = ['sort', 'link', 'order', 'hilo', 'blitz', 'maj'];
+// skupine izazova po osjećaju igre (Smart Game Director izmjenjuje skupine)
+const KIND = { who: 'assoc', emoji: 'assoc', order: 'logic', hilo: 'logic', sort: 'logic', link: 'logic', blitz: 'fast', maj: 'social' };
 const DATA_KEY = { who: 'who', emoji: 'emoji', order: 'order', hilo: 'hilo', blitz: 'tf', maj: 'maj', sort: 'sort', link: 'link' };
 const SKIPPABLE = { betray: 1, loyal: 1, fstart: 1, intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1, moment: 1, duelIntro: 1, duelResult: 1, howto: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1 };
 
@@ -94,7 +105,7 @@ function createGame(o) {
   const cfg = Object.assign({}, CFG, o.cfg || {});
   cfg.steps = cfg.pyrReq.length + 1;   // zadnji red piramide je kruna (pobjeda)
   const F = Object.assign({}, FLAGS, o.flags || {});
-  const plan = o.plan || PLAN;
+  const planBase = (o.plan || PLAN).slice(), plan = planBase.slice();
   const D = o.data || DATA;
   const now = o.now || (() => Date.now());
   const onChange = o.onChange || (() => {});
@@ -105,7 +116,8 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: o.rc !== undefined ? !!o.rc : true }, pacts: [], offers: [], btq: [],
+    rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
   };
   const rnd = (n) => Math.floor(Math.random() * n);
   const pick = (a) => a[rnd(a.length)];
@@ -313,6 +325,7 @@ function createGame(o) {
   // ----- faze -----
   function setPhase(ph, secs) {
     clear();
+    if (G.rc && !RC_WIN[ph]) { for (const o of G.rc.offers) note(R.get(o.f), '⚔️ Izazov nije prihvaćen.', 'no'); G.rc.offers = []; }
     G.ph = ph; G.s += 1;
     G.dur = Math.round(secs * 1000);
     G.startedAt = now(); G.endsAt = G.startedAt + G.dur;
@@ -361,27 +374,80 @@ function createGame(o) {
     if (G.ph !== 'lobby' || active().length < 1) return;
     for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; }
     for (const k in G.used) G.used[k].clear();
-    G.pi = -1; G.qn = 0; G.inFinale = false; G.win = null; G.leg = null; G.crownWin = null;
+    G.pi = -1; G.qn = 0; G.inFinale = false; G.win = null; G.leg = null; G.crownWin = null; G.bdone = 0;
     // kladionica: nasumično 2-3 puta po igri, najviše jednom po rundi (nikad u finalu)
     G.bn = -1; G.betAt = new Set();
     const nb = plan.filter((it) => it.t === 'battle').length, rounds = Math.ceil(nb / 3);
     const want = Math.min(rounds, cfg.betEvents[0] + rnd(cfg.betEvents[1] - cfg.betEvents[0] + 1));
     for (const r of shuffle(Array.from({ length: rounds }, (_, i) => i)).slice(0, want)) G.betAt.add(Math.min(nb - 1, r ? r * 3 + rnd(3) : 1 + rnd(2)));
-    for (const p of list()) { p.bet = 0; p.betRes = 0; p.xb = 0; }
+    for (const p of list()) { p.bet = 0; p.betRes = 0; p.xb = 0; p.rx = 0; p.rcSent = 0; p.rcWon = false; }
+    G.rc = { offers: [], act: null, res: null, n: 0, seq: 0 };
     // mini-igre: nasumično koji izazovi i koje posebne bitke, da nije svaka partija ista
     const nCh = plan.filter((it) => it.t === 'challenge').length;
     const pool = CHALLENGES.filter((k) => (k !== 'maj' || active().length >= 3) && (D[DATA_KEY[k]] || []).length);
-    G.chal = (cfg.chal || shuffle(pool)).slice(0, Math.max(nCh, cfg.chal ? cfg.chal.length : 0)); G.ci = 0;
-    G.qvAt = new Map();
-    const slots = shuffle(Array.from({ length: Math.max(0, nb - 1) }, (_, i) => i + 1)).filter((i) => !G.betAt.has(i));
-    const wantV = [['who', cfg.qv ? cfg.qv.who : rnd(cfg.varMax + 1)], ['emoji', cfg.qv ? cfg.qv.emoji : rnd(cfg.varMax + 1)]];
-    for (const [k, n] of wantV) for (let j = 0; j < n && slots.length; j++) if ((D[DATA_KEY[k]] || []).length) G.qvAt.set(slots.shift(), k);
+    G.qvAt = new Map(); G.ci = 0;
+    if (cfg.sgd && cfg.sgd.on && !cfg.chal && !cfg.qv) sgdPlan(nb, pool);
+    else {
+      // stari raspored (testovi s točno zadanim izazovima, ili kad je Smart Game Director isključen)
+      G.chal = (cfg.chal || shuffle(pool)).slice(0, Math.max(nCh, cfg.chal ? cfg.chal.length : 0));
+      const slots = shuffle(Array.from({ length: Math.max(0, nb - 1) }, (_, i) => i + 1)).filter((i) => !G.betAt.has(i));
+      const wantV = [['who', cfg.qv ? cfg.qv.who : rnd(cfg.varMax + 1)], ['emoji', cfg.qv ? cfg.qv.emoji : rnd(cfg.varMax + 1)]];
+      for (const [k, n] of wantV) for (let j = 0; j < n && slots.length; j++) if ((D[DATA_KEY[k]] || []).length) G.qvAt.set(slots.shift(), k);
+    }
     G.seenHow = new Set();
     TD.reset();
     pactReset();
     next();
   }
 
+  // ===================== SMART GAME DIRECTOR =====================
+  // Na početku partije domaćin složi raspored (jednom; ponovno spajanje ga ne mijenja). Upravlja samo time KOJA vrsta
+  // izazova dolazi i GDJE — nikad bodovima, pitanjima ni težinom, i ne gleda tko vodi.
+  function sgdPlan(nb, pool) {
+    const SG = cfg.sgd, W = SG.w || {};
+    // 1) izazovi nisu uvijek nakon istih pitanja: unutar runde mogu doći pitanje ranije (nikad na početku runde)
+    plan.splice(0, plan.length, ...planBase);
+    for (let i = 2; i < plan.length; i++) if (plan[i].t === 'challenge' && plan[i - 1].t === 'battle' && plan[i - 2].t === 'battle' && Math.random() < SG.moveChal) { const t = plan[i]; plan[i] = plan[i - 1]; plan[i - 1] = t; }
+    // redoslijed mjesta regularnog dijela: B = obično pitanje (bitka), C = izazov
+    const slots = []; let bn = 0;
+    for (const it of plan) { if (it.t === 'battle') slots.push({ k: 'B', bn: bn++ }); else if (it.t === 'challenge') slots.push({ k: 'C' }); }
+    const nC = slots.filter((x) => x.k === 'C').length;
+    const vars = ['who', 'emoji'].filter((k) => (D[DATA_KEY[k]] || []).length);
+    // 2) koliko posebnih bitaka: ciljani udio mini-igara ± 1, u granicama
+    let nV = Math.round(slots.length * SG.share) - nC + rnd(3) - 1;
+    nV = vars.length ? Math.max(SG.varMin, Math.min(SG.varMax, nV)) : 0;
+    // 3) gdje: ne u uvodnom dijelu, ne do drugog izazova, najviše finalMax u zadnjih fcLast; ako nema mjesta, pravila se blaže
+    const openN = Math.max(1, Math.ceil(nb * SG.open)), finFrom = Math.max(0, nb - (cfg.fcLast || 3));
+    const si = (b) => slots.findIndex((x) => x.k === 'B' && x.bn === b);
+    const nearMini = (b, chosen) => { const i = si(b); return [i - 1, i + 1].some((j) => slots[j] && (slots[j].k === 'C' || chosen.includes(slots[j].bn))); };
+    const chosen = [];
+    for (const strict of [2, 1, 0]) {
+      while (chosen.length < nV) {
+        const ok = Array.from({ length: nb }, (_, b) => b).filter((b) => !chosen.includes(b) && !G.betAt.has(b) && b >= (strict ? openN : 1) &&
+          (!strict || !nearMini(b, chosen)) && (strict < 2 || b < finFrom || chosen.filter((x) => x >= finFrom).length + slots.slice(si(finFrom)).filter((x) => x.k === 'C').length < SG.finalMax));
+        if (!ok.length) break;
+        chosen.push(ok[rnd(ok.length)]);
+      }
+    }
+    chosen.sort((a, b) => a - b);
+    // 4) vrste: ponderirani izbor, slabije ista skupina kao prethodna mini-igra i ista vrsta; bez potpunih zabrana
+    const used = {}; let last = null;
+    const pick = (cands) => {
+      const wt = cands.map((k) => (W[k] != null ? W[k] : 1) * (last && KIND[last] === KIND[k] ? SG.sameCat : 1) * (used[k] ? SG.sameType : 1));
+      let r = Math.random() * wt.reduce((a, b) => a + b, 0);
+      for (let i = 0; i < cands.length; i++) { r -= wt[i]; if (r <= 0) return cands[i]; }
+      return cands[cands.length - 1];
+    };
+    G.chal = [];
+    for (const sl of slots) {
+      if (sl.k === 'C') {
+        const c = pool.filter((k) => !G.chal.includes(k)); const k = pick(c.length ? c : pool.length ? pool : ['sort']);
+        G.chal.push(k); used[k] = (used[k] || 0) + 1; last = k;
+      } else if (chosen.includes(sl.bn) && vars.length) {
+        const k = pick(vars); G.qvAt.set(sl.bn, k); used[k] = (used[k] || 0) + 1; last = k;
+      }
+    }
+  }
   function next() {
     G.pi += 1;
     const it = plan[G.pi];
@@ -519,7 +585,18 @@ function createGame(o) {
     }
     setPhase('question', cfg.q);
   }
+  // koliko običnih pitanja (bitaka) još nije odigrano; projekcija samo ako partija ima piramidu
+  const fcTotal = () => plan.filter((it) => it.t === 'battle').length;
+  const fcLeft = () => Math.max(0, fcTotal() - (G.bdone || 0));
+  const fcOn = () => plan.some((it) => it.t === 'finale') && !G.inFinale && G.ph !== 'lobby' && G.ph !== 'final' && (G.bdone || 0) >= 1 && fcLeft() <= cfg.fcLast && fcLeft() >= 1;   // nakon zadnjeg pitanja nema projekcije: stvarni raspored ostaje iznenađenje piramide
+  // projekcija: trenutni javni (već obračunati) bodovi kroz isti izračun kao stvarni početak; bez skrivenih riznica
+  function fcProj() {
+    const ps = list(), U = pyrUnitsOf(ps.map((p) => p.score)), o = {};
+    ps.forEach((p, i) => { const so = stepOf(U[i]); o[p.pid] = [so.s, so.p, so.r, U[i]]; });
+    return o;
+  }
   function scoreQuestion() {
+    G.bdone = (G.bdone || 0) + 1;
     const before = paceSnap();
     G.q.cnt = [0, 0, 0, 0];
     for (const p of list()) {
@@ -535,6 +612,7 @@ function createGame(o) {
       p.bet = 0;
     }
     resolveSecret();
+    rcResolve();
     pactAfterQuestion();
     TD.afterQuestion();
     // tempo: domaćin procijeni važnost iz javnih rezultata ovog pitanja (koji se upravo otkrivaju)
@@ -568,7 +646,7 @@ function createGame(o) {
     if (lead && (gapB <= close || gapA <= close)) return 'd';
     if (mo === 'COMEBACK_BIG' || (n >= 4 && rise >= 3)) return 'd';
     if (lastQ && lead) return 'd';
-    const lv = G.pend && G.pend.mo ? G.pend.mo.lv || 0 : 0;
+    const lv = G.pend && G.pend.mo && G.pend.mo.k !== 'FINAL_CALL' ? G.pend.mo.lv || 0 : 0;
     if (lv >= 3) return 'd';
     // NAPETO: promjena vodstva, tijesan vrh, skok u poretku, prekinut niz, rivali, zadnje pitanje prije piramide
     if (lead) return 't';
@@ -577,6 +655,7 @@ function createGame(o) {
     if (['COMEBACK', 'CB_RISE', 'STREAK_BROKEN', 'STREAK5', 'RIVAL_LEAD', 'RIVALRY', 'RIVAL_AGAIN', 'RIVAL_SWAP', 'REVENGE', 'POWER_REVENGE', 'BETRAY_REVENGE', 'THRONE'].includes(mo)) return 't';
     if (lastQ) return 't';
     if (lv >= 2) return 't';
+    if (G.rc && G.rc.res && G.rc.res.k === 'win') return 't';
     return 'n';
   }
 
@@ -749,16 +828,24 @@ function createGame(o) {
   // jedinice napretka → stepenica, napredak unutar nje i koliko treba za sljedeću
   function stepOf(u) { let st = 0, acc = 0; while (st < cfg.pyrReq.length && acc + cfg.pyrReq[st] <= u) { acc += cfg.pyrReq[st]; st++; } return { s: st, p: u - acc, r: st < cfg.pyrReq.length ? cfg.pyrReq[st] : 0 }; }
   // početni napredak: poredak (izjednačeni dijele isti) + stvarna bodovna razlika; sve unaprijed izračunato, bez slučajnosti
+  // bodovi svih igrača → početne jedinice napretka (isti redoslijed); koristi je i projekcija "Posljednjeg poziva"
+  function pyrUnitsOf(sc) {
+    const n = sc.length, top = Math.max(0, ...sc);
+    return sc.map((x) => {
+      const better = sc.filter((y) => y > x).length, same = sc.filter((y) => y === x).length;
+      const rn = n > 1 ? 1 - (better + (same - 1) / 2) / (n - 1) : 1, gn = top > 0 ? x / top : 0;
+      return top > 0 ? Math.max(0, Math.min(cfg.pyrMaxStart, Math.round((cfg.pyrRankW * rn + (1 - cfg.pyrRankW) * gn) * cfg.pyrMaxStart))) : 0;
+    });
+  }
   function pyrStart() {
-    const ps = list(), n = ps.length, top = Math.max(0, ...ps.map((p) => p.score)), sc = ps.map((p) => p.score);
-    for (const p of ps) {
-      const better = sc.filter((x) => x > p.score).length, same = sc.filter((x) => x === p.score).length;
-      const rn = n > 1 ? 1 - (better + (same - 1) / 2) / (n - 1) : 1, gn = top > 0 ? p.score / top : 0;
-      p.fu = top > 0 ? Math.max(0, Math.min(cfg.pyrMaxStart, Math.round((cfg.pyrRankW * rn + (1 - cfg.pyrRankW) * gn) * cfg.pyrMaxStart))) : 0;
+    const ps = list(), U = pyrUnitsOf(ps.map((p) => p.score));
+    for (const [i, p] of ps.entries()) {
+      p.fu = U[i];
       p.fstep = stepOf(p.fu).s; p.fst = p.fstep; p.fsc = p.score; p.fstr = 0; p.ug = 0; p.sk = 0; p.cf = 0;
     }
   }
   function startFinale() {
+    rcCancelAll('počinje veliko finale.');
     G.inFinale = true; G.fqn = 0;
     const ly = payLoyalty(); G.ly = ly.length ? { id: G.s + 1, evs: ly } : null;
     pyrStart();
@@ -829,7 +916,7 @@ function createGame(o) {
 
   // ===================== LEGENDE OVE KRČME =====================
   // Počasne nagrade iz stvarnih događaja (bez bodova). Domaćin ih sastavi jednom, pri proglašenju pobjednika.
-  const LEG_T = { cb: ['🔥', 'Povratak večeri'], bt: ['🗡️', 'Najveća izdaja'], vic: ['💔', 'Najveća žrtva izdaje'], dbl: ['💀', 'Noževi pod stolom'], ly: ['❤️', 'Nerazdvojni saveznici'],
+  const LEG_T = { rc: ['⚔️', 'Pobjednik obračuna'], cb: ['🔥', 'Povratak večeri'], bt: ['🗡️', 'Najveća izdaja'], vic: ['💔', 'Najveća žrtva izdaje'], dbl: ['💀', 'Noževi pod stolom'], ly: ['❤️', 'Nerazdvojni saveznici'],
     rv: ['⚔️', 'Rivalstvo večeri'], rev: ['🔁', 'Osveta večeri'], bet: ['💰', 'Majstor rizika'], fast: ['⚡', 'Munja večeri'], acc: ['🎯', 'Oko sokolovo'], st: ['🏹', 'Najduži niz'] };
   const LEG_ORDER = Object.keys(LEG_T);
   // hrvatska množina: 1 napad, 2 napada, 5 napada
@@ -874,6 +961,9 @@ function createGame(o) {
     // osveta (krčma ju je zapamtila tijekom igre)
     const rv = T.leg.rev;
     if (rv && rv.av && rv.at && R.get(rv.av) && R.get(rv.at)) add('rev', 62 + Math.min(20, rv.v * 2), [rv.av, rv.at], nmL(rv.av) + ' vraća udarac: ' + nmL(rv.at), rv.bt ? 'Osveta za izdaju' : rv.du ? 'Osveta u dvoboju' : 'Nakon ' + plN(rv.v, 'napada', 'napada', 'napada'), 'pair:' + [rv.av, rv.at].sort().join('|'));
+    // rivalski obračun: pobjednik najvećeg (po prenesenim bodovima)
+    { const won = S.rc.filter((x) => x.k === 'win' && R.get(x.w)).sort((x, y) => y.t - x.t || (x.w < y.w ? -1 : 1))[0];
+      if (won) { const l = won.w === won.a ? won.b : won.a; add('rc', 58 + won.t / 20 + (won.rev && won.w === won.a ? 10 : 0), [won.w, l], nmL(won.w) + ' pobjeđuje u obračunu: ' + nmL(won.w) + ' vs ' + nmL(l), '+' + bodN(won.t) + ' iz protivnikova uloga', 'pair:' + [won.w, l].sort().join('|')); } }
     // kladionica: stvarni neto rezultat (dobici − gubici)
     for (const pid in S.betNet) if (S.betNet[pid] >= 300 && R.get(pid)) add('bet', 45 + S.betNet[pid] / 40, [pid], 'Neto dobitak iz kladionice: +' + bodN(S.betNet[pid]));
     // munja: najbrži točan odgovor u običnim pitanjima
@@ -983,6 +1073,11 @@ function createGame(o) {
       BET_WIN: [['🎲 Rizik se isplatio!', '{X} uzima +{K} iz uloga'], ['🎲 Hrabri piju besplatno', '{X}: ulog donosi +{K}']],
       RIVALRY: [['⚔️ Rivalstvo se zakuhava', '{A} vs {B}'], ['⚔️ Krčma ima novi par za gledati', '{A} vs {B}']],
       RIVAL_AGAIN: [['⚔️ Opet njih dvoje', '{A} → {B}'], ['⚔️ Stari računi', '{A} opet cilja: {B}']],
+      FINAL_CALL: [['🏆 Posljednji poziv!', 'Još {K} do piramide! Svaki bod može promijeniti početni položaj!']],
+      PJ_LEAD: [['🏆 {X} preuzima prednost!', 'Prema trenutačnim bodovima: najbolji početak na piramidi'], ['🏆 Nova prednost za piramidu', 'Najbolja projicirana početna pozicija: {X}']],
+      PJ_UP: [['🔥 {X} se penje!', 'Prema trenutačnim bodovima: {K}. stepenica na piramidi'], ['🔥 Važan korak prema vrhu', '{X} sada kreće s {K}. stepenice — zasad']],
+      PJ_TIE: [['⚔️ Borba za prednost!', '{A} i {B} krenuli bi s iste stepenice'], ['⚔️ {A} i {B} su izjednačeni!', 'Ista projicirana početna pozicija na piramidi']],
+      PJ_LAST: [['⚔️ Posljednja prilika!', 'Još jedno pitanje prije završnog uspona!']],
     };
     // rečenica koja se nije čula nedavno; izbor je determinističan (ne troši generator slučajnih brojeva igre,
     // pa krčma ni posredno ne mijenja pitanja, ponude moći ni odgovore botova)
@@ -1009,10 +1104,11 @@ function createGame(o) {
         threat: {}, rival: {}, activeRival: null, lastMajor: -99, lastAny: -99, shown: {}, history: [],
         duels: 0, secrets: {}, secretTotal: 0, lastSecretBn: -9,
         // TD 2.0: parovi (zamjene mjesta, osvete), povratci, vladavina, izdaje, ponavljanje rečenica, legende
+        pjPrev: null, fcAnn: 0,
         pairs: {}, worst: {}, leadTurns: {}, chase: {}, betr: [], lineAt: {}, typeAt: {}, feat: {}, moSeq: 0,
         leg: { cb: null, bt: null, rv: null, rev: null, bet: null, lead: null },
         // za legende: pitanja, točni, najbrži točan (obična pitanja), najdulji niz, neto kladionica, najbolje mjesto nakon dna, dvoboji, izdaje, odani paktovi
-        stat: { qn: 0, ans: {}, ok: {}, fast: {}, maxSt: {}, betNet: {}, rise: {}, duels: [], bt: [], loyal: [] },
+        stat: { qn: 0, ans: {}, ok: {}, fast: {}, maxSt: {}, betNet: {}, rise: {}, duels: [], bt: [], loyal: [], rc: [] },
       };
       G.pend = null; G.du = null; G.se = null; G.mo = null;
     }
@@ -1268,10 +1364,12 @@ function createGame(o) {
       }
       powerCands(cands);
       updateRanks(cands);
+      fcCands(cands);
       if (G.sx) cands.push(G.sx);
       rivalryCands(cands);
       memoryCands(cands);
       duelCand(cands);
+      if (G.rc && G.rc.res) { const c = pickMoment(cands.filter((x) => x.score >= 9)); finalizePend(c); return; }
       finalizePend(pickMoment(cands));
     }
     function afterScores() {
@@ -1280,6 +1378,7 @@ function createGame(o) {
       const cands = [];
       updateRanks(cands);
       rivalryCands(cands);
+      if (T.fcAnn) fcCands(cands);
       finalizePend(pickMoment(cands.filter((c) => c.type !== 'DUEL')));
     }
     function afterFinale() {
@@ -1296,6 +1395,31 @@ function createGame(o) {
       finalizePend(pickMoment(cands));
     }
     // tajni događaji: najviše 2 po partiji, 1 po igraču, nikad dvije bitke zaredom
+    // posljednji poziv: najava pri aktivaciji, zatim samo stvarne promjene projicirane stepenice
+    const numW = (n) => (n === 1 ? 'jedno pitanje' : n === 2 ? 'dva pitanja' : n === 3 ? 'tri pitanja' : n + ' pitanja');
+    function fcCands(cands) {
+      if (!fcOn()) { T.pjPrev = null; return; }
+      const pj = fcProj(), prev = T.pjPrev, left = fcLeft();
+      T.pjPrev = pj;
+      if (!T.fcAnn) {
+        // najava se ponavlja dok se stvarno ne prikaže (može je nadjačati samo veći događaj)
+        const c = cand('FINAL_CALL', 9.2, 'fc', { K: numW(left) }, list().slice().sort((a, b) => b.score - a.score).slice(0, 2).map((p) => p.pid), ['idle', 'idle'], { snd: 'stingLeader', vs: 0, onShow: () => { T.fcAnn = 1; } });
+        if (c) cands.push(c);
+        return;
+      }
+      if (!prev) return;
+      const ids = Object.keys(pj).filter((id) => prev[id]);
+      const top = (m) => { const mx = Math.max(...ids.map((id) => m[id][3])); const t = ids.filter((id) => m[id][3] === mx); return t.length === 1 ? t[0] : null; };
+      const t0 = top(prev), t1 = top(pj);
+      if (t1 && t1 !== t0) { const c = cand('PJ_LEAD', 7, 'pjl:' + t1 + ':' + T.turn, { X: nm(t1) }, [t1], ['happy'], { snd: 'stingLeader' }); if (c) cands.push(c); }
+      // najveći stvarni skok stepenice (ne napredak unutar iste stepenice)
+      const up = ids.filter((id) => pj[id][0] > prev[id][0] && id !== t1).sort((a, b) => (pj[b][0] - prev[b][0]) - (pj[a][0] - prev[a][0]) || (a < b ? -1 : 1))[0];
+      if (up) { const c = cand('PJ_UP', 6, 'pju:' + up + ':' + T.turn, { X: nm(up), K: pj[up][0] }, [up], ['happy'], { snd: 'stingUp' }); if (c) cands.push(c); }
+      // dvoje na vrhu projekcije postaju izjednačeni
+      const mx = Math.max(...ids.map((id) => pj[id][3])), tied = ids.filter((id) => pj[id][3] === mx);
+      if (mx > 0 && tied.length === 2 && !(prev[tied[0]][3] === prev[tied[1]][3])) { const c = cand('PJ_TIE', 5, 'pjt:' + tied.join('|') + ':' + T.turn, { A: nm(tied[0]), B: nm(tied[1]) }, tied, ['idle', 'idle'], { vs: 1, snd: 'stingRival' }); if (c) cands.push(c); }
+      if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], [], { snd: 'stingSmall' }); if (c) cands.push(c); }
+    }
     // javna izdaja (podaci postaju javni tek s izdajom): pamti za kasniji "vraća se po svoje"
     function onBetray(e) {
       if (!T) return;
@@ -1313,6 +1437,19 @@ function createGame(o) {
       if (T.activeRival === key || (T.rival[key] || 0) >= 8) return 'Rivali se napokon sukobljavaju licem u lice!';
       if (ab + ba >= 3) return 'Ovo dvoje imaju neraščišćenih računa.';
       return '';
+    }
+    // rivalski obračun: rečenica za ishod (osveta je samo kontekst), pamćenje za legende
+    function onShowdown(r) {
+      if (!T) return;
+      const A = nm(r.a), B = nm(r.b);
+      if (r.k === 'win') {
+        const W = nm(r.w), L = nm(r.w === r.a ? r.b : r.a);
+        r.line = r.rev && r.w === r.a ? '🔥 Osveta je slatka! ' + W + ' naplaćuje stare račune!' : r.rev ? '🍻 ' + W + ' opet nadmudruje izazivača!' : [W + ' pobjeđuje, a ' + L + ' plaća skupu lekciju!', 'Krčma nazdravlja: ' + W + ' uzima ulog!'][T.turn % 2];
+        if (r.rev && r.w === r.a) legend('rev', 12, { av: r.a, at: r.b, rc: 1 });
+        pairOf(r.a, r.b).ev++;
+      } else if (r.k === 'tie') r.line = '🍻 Izgleda da će ovaj račun ipak ostati otvoren!';
+      else r.line = 'Obračun je otkazan — netko je izgubio vezu prije odgovora.';
+      if (T.stat.rc.length < 4) T.stat.rc.push({ a: r.a, b: r.b, w: r.w, t: r.t, rev: r.rev ? 1 : 0, k: r.k });
     }
     function onLoyal(evs) { if (T) for (const e of evs) if (T.stat.loyal.length < 6) T.stat.loyal.push({ a: e.a, b: e.b, tre: e.tre, bonus: e.bonus }); }
     function duelOut(w, a, b) {
@@ -1341,7 +1478,7 @@ function createGame(o) {
       T.secrets[who.pid] = 1; T.secretTotal++; T.lastSecretBn = G.bn;
       return { k: kind, p: who.pid, x: null, ok: 0 };
     }
-    return { reset, onVote, onPower, afterQuestion, afterScores, afterFinale, secretPick, onBetray, onLoyal, duelNote, duelOut, get state() { return T; } };
+    return { reset, onVote, onPower, afterQuestion, afterScores, afterFinale, secretPick, onBetray, onLoyal, onShowdown, duelNote, duelOut, get state() { return T; } };
   })();
 
   function showMoment() {
@@ -1461,7 +1598,83 @@ function createGame(o) {
   };
   const pickLine = (k, map) => { const arr = PACT_LINES[k], l = arr[rnd(arr.length)]; return l.replace(/\{(\w)\}/g, (_, x) => (map && map[x] != null ? map[x] : '')); };
   let pactSeq = 0;
+  const FC_PH = { vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1, betray: 1, intro: 1, howto: 1, sortReveal: 1, linkReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1, duelResult: 1, moment: 1 };
   function pactsOn() { return !!G.opt.pacts; }
+  // ===================== RIVALSKI OBRAČUN =====================
+  // Dobrovoljno, samo ljudi, najviše rcMax prihvaćenih po partiji; ponude samo između pitanja; ishod na sljedećem običnom pitanju.
+  const RC_WIN = { vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1 };
+  const rcOn = () => !!G.opt.rc;
+  function rcClean() {
+    const t = now();
+    G.rc.offers = G.rc.offers.filter((o) => {
+      const f = R.get(o.f), to = R.get(o.t);
+      const live = o.until > t && f && to && f.on && to.on && RC_WIN[G.ph] && !G.rc.act;
+      if (!live && f) note(f, '⚔️ Izazov nije prihvaćen.', 'no');   // ista poruka za odbijanje, istek i prekid (nikoga ne posramljuje)
+      return live;
+    });
+  }
+  function rcCanSend(p) {
+    return rcOn() && !!p && !p.bot && p.on && !G.inFinale && RC_WIN[G.ph] && G.qn >= cfg.rcAfter && !G.rc.act && G.rc.n < cfg.rcMax &&
+      !p.rcWon && (p.rcSent || 0) < cfg.rcSends && p.score >= cfg.rcStake && !G.rc.offers.some((o) => o.f === p.pid || o.t === p.pid);
+  }
+  function rcOk(t, p) { return !!t && t !== p && !t.bot && t.on && t.score >= cfg.rcStake && !G.rc.offers.some((o) => o.t === t.pid || o.f === t.pid); }
+  // osveta: onaj koji izaziva bio je meta barem dva napada izazvanoga (samo kontekst, bez bonusa)
+  function rcRev(a, b) { const T = TD.state; return !!(T && T.attacks[b] && (T.attacks[b][a] || 0) >= 2); }
+  function rcRival(a, b) { const T = TD.state; if (!T) return false; const k = a < b ? a + '|' + b : b + '|' + a; const P = T.pairs && T.pairs[k]; return T.activeRival === k || (T.rival[k] || 0) >= 8 || !!(P && (P.all || 0) >= 2); }
+  function rcAction(p, a) {
+    rcClean();
+    switch (a.k) {
+      case 'rcOffer': {
+        const t = R.get(a.to);
+        if (!rcCanSend(p) || !rcOk(t, p)) return false;
+        G.rc.offers.push({ id: ++G.rc.seq, f: p.pid, t: t.pid, until: now() + cfg.rcOffer * 1000, rev: rcRev(p.pid, t.pid) ? 1 : 0, riv: rcRival(p.pid, t.pid) ? 1 : 0 });
+        p.rcSent = (p.rcSent || 0) + 1; return true;
+      }
+      case 'rcCancel': { const n = G.rc.offers.length; G.rc.offers = G.rc.offers.filter((o) => o.f !== p.pid); return G.rc.offers.length !== n; }
+      case 'rcDecline': {
+        const o = G.rc.offers.find((x) => x.t === p.pid && x.f === a.from); if (!o) return false;
+        G.rc.offers = G.rc.offers.filter((x) => x !== o); note(R.get(o.f), '⚔️ Izazov nije prihvaćen.', 'no'); return true;
+      }
+      case 'rcAccept': {
+        const o = G.rc.offers.find((x) => x.t === p.pid && x.f === a.from), f = o && R.get(o.f);
+        if (!o || !f || !RC_WIN[G.ph] || G.inFinale || G.rc.act || G.rc.n >= cfg.rcMax || f.score < cfg.rcStake || p.score < cfg.rcStake || !f.on) return false;
+        G.rc.offers = [];
+        G.rc.act = { id: o.id, a: f.pid, b: p.pid, stake: cfg.rcStake, rev: o.rev, riv: o.riv, at: G.qn };
+        G.rc.n++; f.rcWon = true;
+        note(f, '⚔️ ' + p.name + ' prihvaća izazov! Obračun je na sljedećem pitanju.', 'pact'); note(p, '⚔️ Izazov prihvaćen. Obračun je na sljedećem pitanju.', 'pact');
+        news(o.rev ? '🔥 ' + f.name + ' traži osvetu: ' + f.name + ' vs ' + p.name + '!' : '⚔️ Rivalski obračun: ' + f.name + ' vs ' + p.name + '!');
+        return true;
+      }
+    }
+    return false;
+  }
+  // ishod na običnom pitanju (posebne bitke i mini-igre se preskaču); domaćin sve računa, klijent ništa ne šalje
+  function rcResolve() {
+    const A0 = G.rc.act; G.rc.res = null;
+    for (const p of list()) p.rx = 0;
+    if (!A0 || G.qv) return;
+    G.rc.act = null;
+    const A = R.get(A0.a), B = R.get(A0.b);
+    const res = { id: A0.id, a: A0.a, b: A0.b, rev: A0.rev, riv: A0.riv, w: null, t: 0, k: 'tie' };
+    if (!A || !B || (!A.on && A.ans < 0) || (!B.on && B.ans < 0)) res.k = 'off';   // izgubljena veza bez odgovora: otkazano, nitko ne gubi
+    else {
+      const ra = A.ans === G.q.a, rb = B.ans === G.q.a;
+      // oboje točno = neriješeno: vrijeme odgovora šalje mobitel i ovisi o mreži, pa nije pošten sudac
+      if (ra !== rb) {
+        const W = ra ? A : B, L = ra ? B : A, t = Math.min(A0.stake, Math.max(0, L.score));
+        L.score -= t; W.score += t; W.rx = t; L.rx = -t;
+        res.w = W.pid; res.t = t; res.k = 'win';
+      }
+    }
+    G.rc.res = res;
+    TD.onShowdown(res);
+  }
+  function rcCancelAll(why) {
+    rcClean();
+    for (const o of G.rc.offers) note(R.get(o.f), '⚔️ Izazov nije prihvaćen.', 'no');
+    G.rc.offers = [];
+    if (G.rc.act) { const A0 = G.rc.act; G.rc.act = null; for (const id of [A0.a, A0.b]) note(R.get(id), '⚔️ Obračun je otkazan: ' + why, 'no'); }
+  }
   const humansIn = () => list().filter((p) => !p.bot);
   const pactOf = (p) => (p && p.pact ? G.pacts.find((x) => x.id === p.pact && x.on) : null);
   const partnerOf = (p) => { const k = pactOf(p); return k ? R.get(k.a === p.pid ? k.b : k.a) : null; };
@@ -1489,6 +1702,7 @@ function createGame(o) {
   function pactAction(pid, a) {
     const p = R.get(pid);
     if (!p || p.bot || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
+    if (a.k.slice(0, 2) === 'rc') { const r = rcAction(p, a); if (r) onChange(); return r; }
     cleanOffers();
     let ok = false;
     switch (a.k) {
@@ -1602,7 +1816,8 @@ function createGame(o) {
   // privatno stanje: samo za tog igrača
   function priv(pid) {
     const p = R.get(pid);
-    if (!p || p.bot || !pactsOn()) return null;
+    if (!p || p.bot || (!pactsOn() && !rcOn())) return null;
+    if (!pactsOn()) return Object.assign({ can: false, used: false, inv: [], out: null, note: p.note }, rcPriv(p));
     cleanOffers();
     const k = pactOf(p), mate = partnerOf(p);
     const o = {
@@ -1619,9 +1834,24 @@ function createGame(o) {
       if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; }
       if (p.wh && p.wh.s === G.s) o.k.wh = p.wh.c;
     }
-    return o;
+    return Object.assign(o, rcPriv(p));
   }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } }
+  function rcPriv(p) {
+    if (!rcOn()) return {};
+    rcClean();
+    const r = { st: cfg.rcStake };
+    if (rcCanSend(p)) {
+      r.can = 1;
+      r.cand = list().filter((q) => rcOk(q, p)).map((q) => ({ id: q.pid, rev: rcRev(p.pid, q.pid) ? 1 : 0, riv: rcRival(p.pid, q.pid) ? 1 : 0 }));
+      if (!r.cand.length) delete r.can;
+    }
+    const inv = G.rc.offers.filter((x) => x.t === p.pid).map((x) => ({ f: x.f, ms: Math.max(0, x.until - now()), dur: cfg.rcOffer * 1000, rev: x.rev, riv: x.riv }));
+    if (inv.length) r.inv = inv;
+    const out = G.rc.offers.find((x) => x.f === p.pid);
+    if (out) r.out = { t: out.t, ms: Math.max(0, out.until - now()) };
+    return { rc: r };
+  }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'rc') { G.opt.rc = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -1731,6 +1961,7 @@ function createGame(o) {
       if (ph === 'fstart') e.fs = p.fst;
       if (ph === 'fr') { e.ch = p.ch; e.mv = p.mv; }
       if (ph === 'reveal' && p.xb) e.xb = p.xb;
+      if (ph === 'reveal' && p.rx) e.rx = p.rx;
       if (ph === 'duelResult' && G.du && (p.pid === G.du.a || p.pid === G.du.b)) e.ch = p.ch;
       return e;
     });
@@ -1742,7 +1973,7 @@ function createGame(o) {
       v.q = { c: G.q.c, t: G.q.t, o: G.q.o, n: G.qn };
       if (G.q.k && (ph === 'question' || ph === 'reveal')) { v.q.k = G.q.k; if (G.q.cl) v.q.cl = G.q.cl; }
     }
-    if (ph === 'howto' && G.ht) v.ht = Object.assign({}, G.ht, HOWTO[G.ht.k]);
+    if (ph === 'howto' && G.ht) v.ht = Object.assign({ kd: KIND[G.ht.k] || '' }, G.ht, HOWTO[G.ht.k]);
     if (ph === 'order' || ph === 'orderReveal') v.or = { t: G.or.t, lo: G.or.lo, hi: G.or.hi, it: G.or.items };
     if (ph === 'orderReveal') { v.or.key = G.or.key; if (G.or.v) v.or.v = G.or.v; }
     if (ph === 'hilo' || ph === 'hiloReveal') v.hl = { list: G.hl.list };
@@ -1762,7 +1993,11 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0 };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0 };
+    if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
+    if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
+    // posljednji poziv: projekcija samo između pitanja (nikad tijekom odgovaranja)
+    if (FC_PH[ph] && fcOn()) v.pj = { P: fcProj(), left: fcLeft(), max: cfg.pyrReq.length };
     if (pactsOn() && G.ph !== 'lobby') v.pk = 1;
     if ((ph === 'reveal' || ph === 'sortReveal' || ph === 'linkReveal' || ph === 'fr') && G.pend && G.pend.mo) v.mo = G.pend.mo;
     if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {
@@ -1779,6 +2014,6 @@ function createGame(o) {
 
   // samo za testove
   function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
-  return { pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _G: G };
+  return { pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
 }
 //#engine-end
