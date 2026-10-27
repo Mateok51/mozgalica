@@ -1982,6 +1982,22 @@
   .finale-q.crownq .opts { width: min(100%, 1100px); }
   /* izrazi likova */
   .spr.m-happy, .spr.m-sad, .spr.m-shocked, .spr.m-attack, .spr.m-victory { animation-delay: 0ms; }
+  /* krčma 2.0: na otkrivanju s kolom kartica dolazi tek kad se poredak složi */
+  .rv.wheel .tdl { animation-delay: calc(2700ms + var(--rvo, 0ms) - var(--el, 0ms)); }
+  /* jačina 2: istaknuti trenutak — topliji okvir i krupniji naslov */
+  .tdl.lv2 { box-shadow: inset 0 0 0 1px rgba(232, 170, 80, 0.95), inset 0 0 0 3px rgba(42, 23, 11, 0.9), inset 0 0 0 4px rgba(232, 170, 80, 0.55), 0 0 18px rgba(232, 160, 70, 0.28), var(--shadow-soft); }
+  .tdl.lv2 .tx b { font-size: 1.2rem; }
+  /* jačina 3: veliki događaj — zlatni sjaj i kratki "pečat" (jednom, bez ponavljanja) */
+  .tdl.lv3 { box-shadow: inset 0 0 0 2px rgba(255, 204, 110, 1), inset 0 0 0 4px rgba(42, 23, 11, 0.9), inset 0 0 0 5px rgba(255, 204, 110, 0.6), 0 0 26px rgba(255, 190, 80, 0.45), var(--shadow-soft);
+    animation-name: tdlBig; animation-duration: 0.7s; animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1); }
+  .tdl.lv3 .tx b { font-size: 1.3rem; color: #ffe2a0; }
+  .tv .tdl.lv2 .tx b { font-size: 1.95rem; }
+  .tv .tdl.lv3 .tx b { font-size: 2.2rem; }
+  @keyframes tdlBig { 0% { opacity: 0; transform: scale(1.12); } 60% { opacity: 1; transform: scale(0.98); } 100% { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .tdl.lv3 { animation-name: tdlIn; } }
+  /* dvoboj: napomena iz povijesti para */
+  .du-note { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber-hi); margin-top: 4px; }
+  .tv .du-note { font-size: 1.4rem; }
 </style>
 
 <div id="app" class="screen center"></div>
@@ -4359,10 +4375,11 @@ __ENGINE__
     const m = d.mo; if (!m) return '';
     const el = Math.max(0, d.dur - d.ms), ids = m.a || [], poses = m.pose || [];
     const figs = ids.map((id, i) => { const p = pById(d, id); return p ? '<span class="mini">' + avSvg(p.a, poses[i] || 'idle') + '</span>' : ''; }).join('');
-    return '<div class="tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + '" style="--el:' + el + 'ms"><span class="figs">' + figs + '</span><span class="tx"><b>' + esc(m.t) + '</b><span>' + esc(m.s || '') + '</span></span></div>';
+    const lv = m.lv === 3 ? ' lv3' : m.lv === 2 ? ' lv2' : '';
+    return '<div class="tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + lv + '" data-mo="' + (+m.id || 0) + '" style="--el:' + el + 'ms"><span class="figs">' + figs + '</span><span class="tx"><b>' + esc(m.t) + '</b><span>' + esc(m.s || '') + '</span></span></div>';
   }
-  function tdSting(d) { if (!d.mo) return; const s0 = d.s, wait = Math.max(0, 2700 - Math.max(0, d.dur - d.ms)); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo.snd || 'stingSmall'); }, wait); }
-  function duelIntroMo(d) { return { t: 'Dvoboj!', s: 'Brži točan odgovor osvaja +' + d.du.bonus, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 }; }
+  function tdSting(d) { if (!d.mo) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo.snd || 'stingSmall'); }, wait); }
+  function duelIntroMo(d) { return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 }; }
   function duelVs(d, pose) {
     const du = d.du, st = (id) => (pById(d, id) || {}).ok ? ' ok' : '';
     return '<div class="du-vs">' + tmFig(d, du.a, pose ? pose(du.a) : 'idle', d.ph === 'duel' ? st(du.a) : '') + '<span class="tm-vs">VS</span>' + tmFig(d, du.b, pose ? pose(du.b) : 'idle', d.ph === 'duel' ? st(du.b) : '') + '</div>';
@@ -4381,7 +4398,7 @@ __ENGINE__
     const me = pById(d, PID), mine = me && (me.id === du.a || me.id === du.b) ? me.ch : -1;
     const sec = (ms) => (ms >= 0 ? (ms / 1000).toFixed(1).replace('.', ',') + ' s' : '—');
     return '<div class="du-k">Dvoboj</div>' + duelVs(d, pose) +
-      '<div class="du-res">' + (w ? 'Pobjeđuje <b>' + esc(w.n) + '</b> · +' + du.bonus : 'Nema pobjednika. Nitko ne gubi bodove.') + '</div>' +
+      '<div class="du-res">' + (w ? 'Pobjeđuje <b>' + esc(w.n) + '</b> · +' + du.bonus : 'Nema pobjednika. Nitko ne gubi bodove.') + '</div>' + (du.o ? '<div class="du-note">' + esc(du.o) + '</div>' : '') +
       (du.ms ? '<div class="du-ms">' + esc((pById(d, du.a) || {}).n || '') + ' ' + sec(du.ms[0]) + ' · ' + esc((pById(d, du.b) || {}).n || '') + ' ' + sec(du.ms[1]) + '</div>' : '') +
       (tv ? '' : '<div class="p-q">' + esc(d.q.t) + '</div>') + revOpts(d, mine, tv);
   }

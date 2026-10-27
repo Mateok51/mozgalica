@@ -1,0 +1,16 @@
+  /* krčma 2.0: na otkrivanju s kolom kartica dolazi tek kad se poredak složi */
+  .rv.wheel .tdl { animation-delay: calc(2700ms + var(--rvo, 0ms) - var(--el, 0ms)); }
+  /* jačina 2: istaknuti trenutak — topliji okvir i krupniji naslov */
+  .tdl.lv2 { box-shadow: inset 0 0 0 1px rgba(232, 170, 80, 0.95), inset 0 0 0 3px rgba(42, 23, 11, 0.9), inset 0 0 0 4px rgba(232, 170, 80, 0.55), 0 0 18px rgba(232, 160, 70, 0.28), var(--shadow-soft); }
+  .tdl.lv2 .tx b { font-size: 1.2rem; }
+  /* jačina 3: veliki događaj — zlatni sjaj i kratki "pečat" (jednom, bez ponavljanja) */
+  .tdl.lv3 { box-shadow: inset 0 0 0 2px rgba(255, 204, 110, 1), inset 0 0 0 4px rgba(42, 23, 11, 0.9), inset 0 0 0 5px rgba(255, 204, 110, 0.6), 0 0 26px rgba(255, 190, 80, 0.45), var(--shadow-soft);
+    animation-name: tdlBig; animation-duration: 0.7s; animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1); }
+  .tdl.lv3 .tx b { font-size: 1.3rem; color: #ffe2a0; }
+  .tv .tdl.lv2 .tx b { font-size: 1.95rem; }
+  .tv .tdl.lv3 .tx b { font-size: 2.2rem; }
+  @keyframes tdlBig { 0% { opacity: 0; transform: scale(1.12); } 60% { opacity: 1; transform: scale(0.98); } 100% { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .tdl.lv3 { animation-name: tdlIn; } }
+  /* dvoboj: napomena iz povijesti para */
+  .du-note { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber-hi); margin-top: 4px; }
+  .tv .du-note { font-size: 1.4rem; }

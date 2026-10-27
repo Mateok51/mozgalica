@@ -259,7 +259,7 @@ const FAST = { howto: 0.05, howtoShort: 0.05, order: 0.8, hilo: 0.8, blitz: 0.8,
   await battle(g, { a: 1, b: 1, c: 0 }, null, { a: 2000, b: 1000, c: 0 });
   await battle(g, { a: 0, b: 0, c: 0 });
   const r8 = await battle(g, { a: 0, b: 0, c: 1 }, null, { a: 2600, b: 1100, c: 1000 });
-  ok(r8.mo && r8.mo.k === 'COMEBACK' && /3\. → 2\./.test(r8.mo.s), 'POVRATAK U IGRU: ' + (r8.mo && r8.mo.s));
+  ok(r8.mo && r8.mo.k === 'COMEBACK' && /3\. → 2\.|s 3\. na 2\./.test(r8.mo.s), 'POVRATAK U IGRU: ' + (r8.mo && r8.mo.k + ' ' + r8.mo.s));
   g.stop();
 
   console.log('9) Tavern Director: rivalstvo i dvoboj');

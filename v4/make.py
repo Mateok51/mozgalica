@@ -2301,3 +2301,25 @@ s = rep(s, "data-cud=\"' + (2150 + WH.end) + '\"", "data-cud=\"' + (2150 + whT(d
 assert 'WH.walk + t' not in s and s.count('WH.') == 3, s.count('WH.')
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('tempo UI OK')
+
+# ---- krčma 2.0: jačine prikaza, usklađen zvuk i kartica s kolom, napomene dvoboja ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/td2.css', encoding='utf-8').read() + s[i:]
+s = rep(s, "    return '<div class=\"tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + '\" style=\"--el:' + el + 'ms\">",
+           "    const lv = m.lv === 3 ? ' lv3' : m.lv === 2 ? ' lv2' : '';\n    return '<div class=\"tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + lv + '\" data-mo=\"' + (+m.id || 0) + '\" style=\"--el:' + el + 'ms\">")
+# zvuk trenutka svira kad se kartica pojavi (kod kola: nakon poretka), a ne dok se kolo još vrti
+s = rep(s, "  function tdSting(d) { if (!d.mo) return; const s0 = d.s, wait = Math.max(0, 2700 - Math.max(0, d.dur - d.ms));",
+           "  function tdSting(d) { if (!d.mo) return; const s0 = d.s, wait = Math.max(0, 2700 + (d.ph === 'reveal' ? whT(d).end : 0) - Math.max(0, d.dur - d.ms));")
+s = rep(s, "  function duelIntroMo(d) { return { t: 'Dvoboj!', s: 'Brži točan odgovor osvaja +' + d.du.bonus,",
+           "  function duelIntroMo(d) { return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus,")
+s = rep(s, "      '<div class=\"du-res\">' + (w ? 'Pobjeđuje <b>' + esc(w.n) + '</b> · +' + du.bonus : 'Nema pobjednika. Nitko ne gubi bodove.') + '</div>' +",
+           "      '<div class=\"du-res\">' + (w ? 'Pobjeđuje <b>' + esc(w.n) + '</b> · +' + du.bonus : 'Nema pobjednika. Nitko ne gubi bodove.') + '</div>' + (du.o ? '<div class=\"du-note\">' + esc(du.o) + '</div>' : '') +")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('krcma 2.0 UI OK')
+
+# ---- krčma 2.0: nakon ponovnog spajanja zvuk trenutka se ne ponavlja ako je kartica već prikazana ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  function tdSting(d) { if (!d.mo) return; const s0 = d.s, wait = Math.max(0, 2700 + (d.ph === 'reveal' ? whT(d).end : 0) - Math.max(0, d.dur - d.ms));",
+           "  function tdSting(d) { if (!d.mo) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0);")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('tdSting reconnect OK')
