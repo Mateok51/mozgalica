@@ -46,6 +46,8 @@ const CFG = {
   // Social Flow: Vrijeme za dogovore nakon tih odigranih pitanja (atBot u testnom načinu s botovima), trajanje (s),
   // nevidljiva sigurnosna granica kad je jedini čovjek u testnom načinu (nema odbrojavanja), najviše dolaznih ponuda za pakt po igraču
   // offerQ: koliko odigranih običnih pitanja ponuda (pakt, obračun) čeka odgovor — dovoljno mirnog vremena između pitanja
+  // Krčmar 2.0: sigurnosna granica čekanja na ploči bodova (s)
+  kr: { wait: 45 },
   sf: { on: true, at: [], atBot: [], dur: 20, soloMax: 600, inMax: 2, offerQ: 2,
     // profili botova (samo društvene odluke): prihvaćanje ponude, slanje ponude po fazi, šapat, izdaja po fazi (uz riznicu ≥ btMin)
     prof: { loyal: { acc: 0.85, off: 0.45, wh: 0.8, bt: 0.05 }, sly: { acc: 0.7, off: 0.35, wh: 0.5, bt: 0.4 }, wild: { acc: 0.5, off: 0.4, wh: 0.5, bt: 0.2 } }, btMin: 75 },
@@ -221,6 +223,9 @@ function createGame(o) {
       case 'deal':
         if (inp.ok !== 1) return false;
         break;
+      case 'reveal':
+        if (inp.ok !== 1 || !krCanGo(p)) return false;
+        break;
       case 'vote':
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
         p.vote = inp.v; break;
@@ -309,7 +314,7 @@ function createGame(o) {
     const r = p ? accept(p, inp) : false;
     if (r === 'partial') return true;
     if (!r) return false;
-    if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) endPhase(); else onChange();
+    if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) endPhase(); else if (krReady()) endPhase(); else onChange();
     return true;
   }
 
@@ -334,6 +339,7 @@ function createGame(o) {
     for (const p of list()) if (!p.bot && !p.local && p.on && !seen.has(p.pid)) { p.on = false; changed = true; tkGone(p); }
     if (G.ph === 'lobby') for (const [id, p] of R) if (!p.on) { R.delete(id); changed = true; }
     if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) return endPhase();
+    if (krReady()) return endPhase();
     if (changed) onChange();
   }
 
@@ -647,7 +653,9 @@ function createGame(o) {
     const pc = cfg.pace && cfg.pace[G.pace];
     // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje malo dulje
     const mo = G.pend && G.pend.mo ? (cfg.paceMo != null ? cfg.paceMo : 1) : 0;
-    setPhase('reveal', (pc ? pc.t : cfg.reveal != null ? cfg.reveal : 10.5) + mo);
+    const rb = (pc ? pc.t : cfg.reveal != null ? cfg.reveal : 10.5) + mo;
+    setPhase('reveal', rb + (cfg.kr ? cfg.kr.wait : 0));
+    krRevealStart(rb);
   }
   // ----- tempo otkrivanja: jednostavna pravila, najviša razina pobjeđuje (ne zbrajaju se) -----
   function paceSnap() { return list().filter((p) => p.on !== false).map((p) => ({ pid: p.pid, sc: p.score })); }
@@ -1971,6 +1979,18 @@ function createGame(o) {
     }
     return { ok: 0, msg: 'Nepoznat scenarij.' };
   }
+  // ===================== KRČMAR 2.0 =====================
+  // ploča bodova nakon pitanja: animacija (rb) pa čekanje da svi dodirnu Nastavi
+  function krRevealStart(rb) {
+    G.revMin = G.startedAt + Math.round(rb * 1000);
+    for (const p of list()) if (p.bot) p.done = true;
+    const s0 = G.s;
+    later(() => { if (G.s === s0 && krReady()) endPhase(); }, Math.round(rb * 1000) + 30);
+    onChange();
+  }
+  // može li igrač potvrditi Nastavi (kasnije: tko ima otvorenu odluku krčmara, prvo odlučuje)
+  function krCanGo(p) { return true; }
+  const krReady = () => G.ph === 'reveal' && G.revMin && now() >= G.revMin && allDone();
   const humansIn = () => list().filter((p) => !p.bot);
   const pactOf = (p) => (p && p.pact ? G.pacts.find((x) => x.id === p.pact && x.on) : null);
   const partnerOf = (p) => { const k = pactOf(p); return k ? R.get(k.a === p.pid ? k.b : k.a) : null; };
@@ -2313,6 +2333,7 @@ function createGame(o) {
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
+    if (ph === 'reveal' && G.revMin) { v.rw = 1; v.rmin = Math.max(0, G.revMin - now()); }
     // posljednji poziv: projekcija samo između pitanja (nikad tijekom odgovaranja)
     if (pactsOn() && G.ph !== 'lobby') v.pk = 1;
     if ((ph === 'reveal' || ph === 'sortReveal' || ph === 'linkReveal' || ph === 'fr') && G.pend && G.pend.mo) v.mo = G.pend.mo;

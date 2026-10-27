@@ -2509,3 +2509,16 @@ s = rep(s, "  function rcToggle(d) {\n", "  function rcToggle(d) {\n    return '
 s = rep(s, "  function tkToggle(d) {\n", "  function tkToggle(d) {\n    return '';   // krčmarove tajne oklade su uklonjene (oklada je sada moć)\n")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('KR 1 UI OK')
+# ---- Krčmar 2.0, korak 2: Nastavi na ploči bodova (mobitel), stanje spremnosti (TV) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/kr.css', encoding='utf-8').read() + s[i:]
+s = rep(s, "  const PACT_STEAL = 0.08;", open(SP + '/v4/kr-ui.js', encoding='utf-8').read() + "  const PACT_STEAL = 0.08;")
+s = rep(s, "esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';", "esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';")
+s = rep(s, "esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';", "esc(b.lead.n) + '!</div>' : '') + krTv(d) + '</div></div></div>';")
+s = rep(s, "    bindWhi();\n", "    bindWhi();\n    bindKr(d);\n")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR 2 UI OK')
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0,", "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0,")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR 2 potpis OK')
