@@ -46,9 +46,9 @@
       '<div class="pk-row"><button class="btn pk-acc" data-rc="rcAccept" data-f="' + esc(o.f) + '">Prihvati</button><button class="btn ghost pk-dec" data-rc="rcDecline" data-f="' + esc(o.f) + '">Odbij</button></div></div>';
   }
   const sfRules = () => '<div class="sf-rules"><div class="sf-h">🍻 Tajni paktovi</div><ol>' +
-    '<li><b>1</b>Oboje točno → riznica +75.</li>' +
-    '<li><b>2</b>🔮 na odgovoru šapne ga savezniku.</li>' +
-    '<li><b>3</b>Odani do finala: riznica +40 %, dijeli se. Izdaja: uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</li></ol></div>';
+    '<li><b>1</b>Oboje točno → riznica +100. Jedan točno → +40.</li>' +
+    '<li><b>2</b>Odani do finala: riznica +40 %, dijeli se napola.</li>' +
+    '<li><b>3</b>Izdaja (nakon 2 zajednička pitanja): uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300). Izdate li oboje, riznica propada.</li></ol></div>';
   function sfPact(d, me) {
     if (!PV || !PV.k) return '';
     const k = PV.k, m = pById(d, k.m);
@@ -56,7 +56,7 @@
       '<span class="sf-tre">💰 <b>' + fmtN(k.tre) + '</b></span></div>';
     if (k.dl || k.cb) {
       if (k.bt) h += '<div class="sf-row"><span class="sf-bt on">🗡️ Izdaja pripremljena</span><button class="pk-b" data-bt="0">Odustani</button></div>';
-      else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</div>' +
+      else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div>' +
         '<div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
       else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
     } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja zaključana</div>';
@@ -170,6 +170,7 @@
   }
   // šapat na kartici odgovora: 🔮 šalje to slovo savezniku (vlastiti odgovor se NE zaključava); primljeni šapat = mali avatar saveznika
   function sfOptX(d, i, answered, gone) {
+    return '';   // šaputanje je uklonjeno
     if (!PV || !PV.sf || !PV.k || d.ph !== 'question') return '';
     const k = PV.k, m = pById(d, k.m);
     let h = '';

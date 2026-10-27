@@ -168,17 +168,10 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     await click(iva, '#sfbox .sf-card [data-pk="accept"]');
     ok(await ana.waitForFunction(() => /💰/.test(((document.querySelector('#sfbox .sf-ally') || {}).textContent) || '') || !!document.querySelector('#sfbox .sf-ally-dot'), null, { timeout: 8000 }).then(() => true, () => false), 'Ana vidi savez (🍻 na ključu ili u kutku)');
     ok(await waitPh(P, 'question', 30000), 'sljedeće pitanje');
-    await ana.waitForSelector('#app [data-whi="2"]', { timeout: 5000 }).catch(() => {});
-    ok(!(await has(ana, '#app .sf-qbar')), 'nema trake saveznika iznad pitanja');
-    await click(ana, '#app [data-whi="2"]');
-    const sentC = await ana.waitForSelector('#app [data-c="2"] .sf-whi.sent', { timeout: 5000 }).then(() => true, () => false);
-    const freeAns = await ana.evaluate(() => [...document.querySelectorAll('#app [data-c]')].every((b) => !b.disabled));
-    ok(sentC && freeAns, 'Ana dodirne 🔮 na C: šapat poslan, vlastiti odgovor i dalje slobodan');
-    const wh = await iva.waitForSelector('#app [data-c="2"] .sf-whav', { timeout: 8000 }).then(() => true, () => false);
-    ok(wh, iva.__n + ' vidi Anin avatar na odgovoru C');
-    ok(!(await has(mateo, '#app .sf-whav')) && !(await has(mateo, '#app [data-whi]')), mateo.__n + ' ne vidi ni savez ni šapat');
+    await ana.waitForSelector('#app [data-c]', { timeout: 5000 }).catch(() => {});
+    ok(!(await has(ana, '#app [data-whi]')) && !(await has(ana, '#app .sf-qbar')), 'nema šaputanja ni trake saveznika na pitanju');
     await click(ana, '#app [data-c="0"]');
-    await iva.screenshot({ path: OUT + '/i2-sapat-iva.png' });
+    await iva.screenshot({ path: OUT + '/i2-pitanje-iva.png' });
     // Iva priprema izdaju u kutku između pitanja (dvostupanjski), Ana ništa ne zna; zaključava se kad pitanje počne
     let armed = false;
     for (let t = 0; t < 300 && !armed; t++) {

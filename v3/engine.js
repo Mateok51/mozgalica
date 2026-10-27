@@ -30,7 +30,7 @@ const CFG = {
   sgd: { on: true, share: 0.3, open: 0.2, finalMax: 1, varMin: 1, varMax: 2, moveChal: 0.5, sameCat: 0.35, sameType: 0.1,
     w: { who: 1, emoji: 1, order: 1, hilo: 1, sort: 1, link: 1, blitz: 1, maj: 1 } },
   // tajni paktovi (balans na jednom mjestu)
-  pactMin: 3, pactAfter: 3, pactBonus: 75, pactSteal: 0.25, pactDouble: 0.2, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
+  pactMin: 3, pactAfter: 3, pactBonus: 100, pactOne: 40, pactMinQ: 2, pactSteal: 0.08, pactStealMax: 300, pactDouble: 0, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
   // tempo otkrivanja odgovora (jedno mjesto za podešavanje): w = šetnja likova, s = kolo, t = cijela faza (s)
   // n = obično, t = napeto, d = dramatično; trenutak krčme dodaje paceMo sekundi
   // reveal: ako je postavljen (npr. u testovima), otkrivanje ima to fiksno trajanje bez prilagodbe tempa
@@ -246,7 +246,6 @@ function createGame(o) {
         const el = now() - G.startedAt;
         const t = Number.isFinite(inp.t) ? inp.t : el;
         p.ans = c; p.ansMs = Math.max(0, Math.min(t, el));
-        if (inp.w === 1 && G.ph === 'question') sfWhisper(p, c);   // odgovori i šapni: ista poruka, isti odgovor
         break;
       }
       case 'duel': {
@@ -969,7 +968,7 @@ function createGame(o) {
       if (e.k === 'betray') {
         add('bt', 90 + e.gain / 80, [e.t, e.v], nmL(e.t) + ' → ' + nmL(e.v) + ' · +' + bodN(e.gain), 'Pakt je trajao ' + plN(e.dur, 'pitanje', 'pitanja', 'pitanja'), 'bt' + e.id);
         if (e.st > 0) add('vic', 48 + e.st / 100, [e.v], 'U izdaji gubi ' + bodN(e.st) + '. Krčmar časti jednu rundu!', '', 'bt' + e.id);
-      } else add('dbl', 88 + (e.la + e.lb) / 100, [e.a, e.b], 'Oboje vade noževe u istom trenutku!', 'Gubici: −' + fmtN(e.la) + ' i −' + bodN(e.lb), 'bt' + e.id);
+      } else add('dbl', 88 + (e.la + e.lb) / 100, [e.a, e.b], 'Oboje vade noževe u istom trenutku!', 'Riznica ' + bodN(e.tre) + ' propada', 'bt' + e.id);
     }
     // odani pakt do kraja (botovi ne sklapaju paktove)
     for (const e of S.loyal) add('ly', 70 + (e.tre + e.bonus) / 60, [e.a, e.b], 'Njihov pakt preživljava do kraja!', 'Riznica ' + fmtN(e.tre) + ' + bonus odanosti ' + fmtN(e.bonus));
@@ -1907,8 +1906,8 @@ function createGame(o) {
         const sc = G.scn && k && (G.scn.k === 'betray' || G.scn.k === 'double' || G.scn.k === 'loyal') && (k.a === G.scn.pid || k.b === G.scn.pid) ? G.scn.k : null;
         const bt = sc ? sc !== 'loyal' : !b.sfLoyal && k.tre >= cfg.sf.btMin && Math.random() < pr.bt;
         if (sc === 'loyal') b.sfLoyal = 1;
-        if (sc && sc !== 'loyal') G.scn = null;
-        botPact(b, { k: 'betray', on: bt });
+        const okBt = botPact(b, { k: 'betray', on: bt });
+        if (sc && sc !== 'loyal' && okBt) G.scn = null;
         continue;
       }
       sfBotOffer(b, Math.random() < pr.off);
@@ -1959,6 +1958,7 @@ function createGame(o) {
         if (!pactFree(p)) return { ok: 0, msg: 'Za ovaj scenarij ne smiješ već imati pakt.' };
         G.scn = { k, pid }; return { ok: 1, msg: 'Sada u Tajnom kutku ponudi pakt botu — ' + (k === 'accept' ? 'prihvatit će ga.' : 'odbit će ga.') };
       case 'whisper':
+        return { ok: 0, msg: 'Šaputanje je uklonjeno iz igre.' };
         if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (Tajni kutak → ponudi savez).' };
         G.scn = { k, pid }; return { ok: 1, msg: mate.name + ' će ti šapnuti svoj odgovor na sljedećem pitanju.' };
       case 'betray': case 'double': case 'loyal':
@@ -1966,7 +1966,7 @@ function createGame(o) {
         if (k === 'loyal') { mate.sfLoyal = 1; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }
         if (!left && G.ph !== 'deal') return { ok: 0, msg: 'U ovoj partiji više nema Vremena za dogovore prije finala.' };
         G.scn = { k, pid };
-        if (G.ph === 'deal') { mate.sfLoyal = 0; botPact(mate, { k: 'betray', on: true }); G.scn = null; }
+        if (G.ph === 'deal') { mate.sfLoyal = 0; if (botPact(mate, { k: 'betray', on: true })) G.scn = null; }
         return { ok: 1, msg: (G.ph === 'deal' ? mate.name + ' je upravo potajno pripremio izdaju.' : mate.name + ' će pripremiti izdaju u sljedećem Vremenu za dogovore.') + (k === 'double' ? ' Pripremi i ti izdaju u Tajnom kutku.' : '') };
     }
     return { ok: 0, msg: 'Nepoznat scenarij.' };
@@ -2035,12 +2035,13 @@ function createGame(o) {
         ok = true; break;
       }
       case 'whisper': {
+        break;   // šaputanje je uklonjeno
         const mate = partnerOf(p);
         if (!mate || G.ph !== 'question' || p.whS === G.s || !isInt(a.c) || !G.q || a.c < 0 || a.c >= G.q.o.length) break;
         p.whS = G.s; mate.wh = { from: pid, c: a.c, s: G.s }; ok = true; break;
       }
       case 'betray': {
-        if (!pactOf(p) || (sfOn() ? sfBusy(p) || G.inFinale || G.ph === 'lobby' || G.ph === 'final' : G.ph !== 'question')) break;
+        if (!pactOf(p) || (a.on && (pactOf(p).n || 0) < (cfg.pactMinQ || 0)) || (sfOn() ? sfBusy(p) || G.inFinale || G.ph === 'lobby' || G.ph === 'final' : G.ph !== 'question')) break;
         p.betray = !!a.on; ok = true; break;
       }
     }
@@ -2054,8 +2055,9 @@ function createGame(o) {
       if (!k.on) continue;
       const a = R.get(k.a), b = R.get(k.b);
       if (!a || !b) { k.on = false; continue; }
-      const both = a.ans === G.q.a && b.ans === G.q.a;
-      if (both) { k.tre += cfg.pactBonus; k.grew = G.s; note(a, '💰 +' + cfg.pactBonus + ' u riznicu!', 'tre'); note(b, '💰 +' + cfg.pactBonus + ' u riznicu!', 'tre'); }
+      const ra = a.ans === G.q.a, rb = b.ans === G.q.a, add = ra && rb ? cfg.pactBonus : ra || rb ? (cfg.pactOne || 0) : 0;
+      k.n = (k.n || 0) + 1;   // zajednički odigrana pitanja (za pravilo najmanje pactMinQ prije izdaje)
+      if (add) { k.tre += add; k.grew = G.s; note(a, '💰 +' + add + ' u riznicu!', 'tre'); note(b, '💰 +' + add + ' u riznicu!', 'tre'); }
       if (!k.rich && k.tre >= cfg.pactRich) { k.rich = true; news(pickLine('rich')); }
       const ta = a.betray, tb = b.betray;
       a.betray = false; b.betray = false;
@@ -2081,7 +2083,7 @@ function createGame(o) {
         TD.onBetray(evs[evs.length - 1]);
       } else {
         const T = q.a ? A : B, V = q.a ? B : A;
-        const st = Math.max(0, Math.round(V.score * cfg.pactSteal));
+        const st = Math.max(0, Math.min(V.score, Math.round(V.score * cfg.pactSteal), cfg.pactStealMax != null ? cfg.pactStealMax : Infinity));
         V.score = Math.max(0, V.score - st); T.score += k.tre + st;
         T.px = k.tre + st; V.px = -st;
         const dur = Math.max(1, G.qn - (k.since || G.qn)), gain = k.tre + st;
@@ -2136,11 +2138,11 @@ function createGame(o) {
     if (sfOn()) { o.sf = 1; if (G.ph === 'deal') o.dl = 1; if (bsOn()) o.bs = 1; }
     if (k && mate) {
       o.k = { m: mate.pid, tre: k.tre, grew: k.grew === G.s ? 1 : 0, since: k.since };
-      if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; if (mate.wh && mate.wh.from === pid && mate.wh.s === G.s) o.k.wc = mate.wh.c; }
+      if (G.ph === 'question') o.k.bt = p.betray ? 1 : 0;
       if (sfOn() && G.ph === 'deal') { o.k.bt = p.betray ? 1 : 0; o.k.dl = 1; }
-      if (sfOn() && !sfBusy(p) && !G.inFinale) { o.k.cb = 1; o.k.bt = p.betray ? 1 : 0; }
+      if (sfOn() && !sfBusy(p) && !G.inFinale && (k.n || 0) >= (cfg.pactMinQ || 0)) { o.k.cb = 1; o.k.bt = p.betray ? 1 : 0; }
+      if ((k.n || 0) < (cfg.pactMinQ || 0)) o.k.wait = (cfg.pactMinQ || 0) - (k.n || 0);
       if (sfOn() && p.betray && sfBusy(p)) o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)
-      if (p.wh && p.wh.s === G.s) o.k.wh = p.wh.c;
     }
     return Object.assign(o, rcPriv(p));
   }
@@ -2217,7 +2219,6 @@ function createGame(o) {
         const wrong = opts.filter((i) => i !== G.q.a);
         const right = Math.random() < (G.ph === 'fq' ? 0.7 : G.ph === 'duel' ? 0.66 : 0.62) || !wrong.length;
         // primljeni šapat saveznika (stigao prije bototovog odgovora) bot ponekad posluša — kao čovjek; ne zna je li točan
-        if (G.ph === 'question' && b.wh && b.wh.s === G.s && opts.includes(b.wh.c) && Math.random() < 0.6) return { s, c: b.wh.c, t: now() - G.startedAt };
         return { s, c: right ? G.q.a : pick(wrong), t: now() - G.startedAt };
       }
       case 'order': return { s, r: Math.random() < 0.45 ? G.or.key.slice() : shuffle(G.or.key.slice()) };
@@ -2236,7 +2237,7 @@ function createGame(o) {
       const extra = G.ph === 'question' ? b.fx.length * 2500 : G.ph === 'fq' ? b.fx.length * 1500 : 0;
       later(() => {
         if (G.s !== s || b.done) return;
-        if (accept(b, botInput(b))) { if (G.ph === 'question') sfBotWhisper(b); if (allDone()) endPhase(); else onChange(); }
+        if (accept(b, botInput(b))) { if (allDone()) endPhase(); else onChange(); }
       }, Math.min(botDelay() + extra, G.dur - 200));
     }
   }

@@ -4127,9 +4127,9 @@ __ENGINE__
       '<div class="pk-row"><button class="btn pk-acc" data-rc="rcAccept" data-f="' + esc(o.f) + '">Prihvati</button><button class="btn ghost pk-dec" data-rc="rcDecline" data-f="' + esc(o.f) + '">Odbij</button></div></div>';
   }
   const sfRules = () => '<div class="sf-rules"><div class="sf-h">🍻 Tajni paktovi</div><ol>' +
-    '<li><b>1</b>Oboje točno → riznica +75.</li>' +
-    '<li><b>2</b>🔮 na odgovoru šapne ga savezniku.</li>' +
-    '<li><b>3</b>Odani do finala: riznica +40 %, dijeli se. Izdaja: uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</li></ol></div>';
+    '<li><b>1</b>Oboje točno → riznica +100. Jedan točno → +40.</li>' +
+    '<li><b>2</b>Odani do finala: riznica +40 %, dijeli se napola.</li>' +
+    '<li><b>3</b>Izdaja (nakon 2 zajednička pitanja): uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300). Izdate li oboje, riznica propada.</li></ol></div>';
   function sfPact(d, me) {
     if (!PV || !PV.k) return '';
     const k = PV.k, m = pById(d, k.m);
@@ -4137,7 +4137,7 @@ __ENGINE__
       '<span class="sf-tre">💰 <b>' + fmtN(k.tre) + '</b></span></div>';
     if (k.dl || k.cb) {
       if (k.bt) h += '<div class="sf-row"><span class="sf-bt on">🗡️ Izdaja pripremljena</span><button class="pk-b" data-bt="0">Odustani</button></div>';
-      else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</div>' +
+      else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div>' +
         '<div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
       else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
     } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja zaključana</div>';
@@ -4252,6 +4252,7 @@ __ENGINE__
   }
   // šapat na kartici odgovora: 🔮 šalje to slovo savezniku (vlastiti odgovor se NE zaključava); primljeni šapat = mali avatar saveznika
   function sfOptX(d, i, answered, gone) {
+    return '';   // šaputanje je uklonjeno
     if (!PV || !PV.sf || !PV.k || d.ph !== 'question') return '';
     const k = PV.k, m = pById(d, k.m);
     let h = '';
@@ -4266,7 +4267,7 @@ __ENGINE__
       x.onclick = (e) => { e.stopPropagation(); e.preventDefault(); AUDIO.play('whoosh'); pactSend({ k: 'whisper', c: +x.dataset.whi }); };
     });
   }
-  const PACT_STEAL = 0.25;
+  const PACT_STEAL = 0.08;
   function bindPact(d) {
     bindRc();
     bindTk();
@@ -4312,12 +4313,12 @@ __ENGINE__
       h = '<div class="bt-t dbl">💀 DVOSTRUKA IZDAJA!</div><div class="bt-s"><span class="bt-who">' + esc(nameOf(d, e.a)).toUpperCase() + '</span> <span class="bt-arrow">⚔️</span> <span class="bt-who">' + esc(nameOf(d, e.b)).toUpperCase() + '</span></div>' +
         '<div class="bt-stage dbl">' + fig(e.a, 'attack', 'l') + '<div class="bt-mid"><span class="bt-knife a">🗡️</span><span class="bt-knife b">🗡️</span><span class="bt-chest broken">💰</span></div>' + fig(e.b, 'attack', 'r') + '</div>' +
         '<div class="bt-rows"><div class="bt-row lost">💰 Riznica <b>' + fmtN(e.tre) + '</b> propada</div>' +
-        '<div class="bt-row neg">' + esc(nameOf(d, e.a)) + ' ' + num('bta' + i, e.la, '−', 1700) + '</div><div class="bt-row neg">' + esc(nameOf(d, e.b)) + ' ' + num('btb' + i, e.lb, '−', 1900) + '</div></div>';
+        (e.la || e.lb ? '<div class="bt-row neg">' + esc(nameOf(d, e.a)) + ' ' + num('bta' + i, e.la, '−', 1700) + '</div><div class="bt-row neg">' + esc(nameOf(d, e.b)) + ' ' + num('btb' + i, e.lb, '−', 1900) + '</div>' : '<div class="bt-row">Nitko nikome ne krade bodove</div>') + '</div>';
     } else {
       h = '<div class="bt-t">🗡️ IZDAJA U KRČMI!</div><div class="bt-s"><span class="bt-who t">' + esc(nameOf(d, e.t)).toUpperCase() + '</span> <span class="bt-arrow">🗡️</span> <span class="bt-who v">' + esc(nameOf(d, e.v)).toUpperCase() + '</span></div>' +
         '<div class="bt-stage">' + fig(e.t, 'attack', 'l') + '<div class="bt-mid"><span class="bt-knife">🗡️</span><span class="bt-coins">' + '<i>🪙</i>'.repeat(6) + '</span></div>' + fig(e.v, 'shocked', 'r v') + '</div>' +
         '<div class="bt-rows"><div class="bt-row">💰 Ukradena riznica ' + num('btt' + i, e.tre, '+', 1500) + '</div>' +
-        '<div class="bt-row">🗡️ Ukradeni bodovi (' + Math.round(PACT_STEAL * 100) + ' %) ' + num('bts' + i, e.st, '+', 1800) + '</div>' +
+        '<div class="bt-row">🗡️ Ukradeno partneru (' + Math.round(PACT_STEAL * 100) + ' %, najviše 300) ' + num('bts' + i, e.st, '+', 1800) + '</div>' +
         '<div class="bt-row tot">Izdajnik ' + esc(nameOf(d, e.t)) + ' ' + num('btg' + i, e.gain, '+', 2300) + '</div>' +
         '<div class="bt-row neg">Izdan: ' + esc(nameOf(d, e.v)) + ' ' + num('btv' + i, e.st, '−', 2300) + '</div></div>';
     }

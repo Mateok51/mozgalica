@@ -21,7 +21,7 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
 - web/mini-broker.js — lokalni MQTT broker za testove
 
 ## Testovi
-- Motor: node v3/engine-test.js, bots-test.js, pact-test.js, pyr-test.js, pace-test.js (tempo otkrivanja), td2-test.js (krčma 2.0), leg-test.js (legende). howto-test.js (upute), rc-test.js (rivalski obračun), fc-test.js (posljednji poziv), sgd-test.js (raspored izazova), tk-test.js (krčmarove tajne ponude), sf-test.js (Social Flow 2.0: Vrijeme za dogovore, izdaja prije pitanja, šapat jednim dodirom, testni način s botovima). Stariji testovi motora rade po pravilima v28 (cfg.sf.on = false)
+- Motor: node v3/engine-test.js, bots-test.js, pact-test.js, pyr-test.js, pace-test.js (tempo otkrivanja), td2-test.js (krčma 2.0), leg-test.js (legende). howto-test.js (upute), rc-test.js (rivalski obračun), fc-test.js (posljednji poziv), sgd-test.js (raspored izazova), tk-test.js (krčmarove tajne ponude), pact2-test.js (balans paktova v31), sf-test.js (Social Flow 2.0: Vrijeme za dogovore, izdaja prije pitanja, šapat jednim dodirom, testni način s botovima). Stariji testovi motora rade po pravilima v28 (cfg.sf.on = false)
 - Motor se gradi lancem: python3 v3/ux.py (td2.py nad engine.pretd2.js → leg.py → howto.py → rc.py → fc.py → sgd.py → tk.py → sf.py → ux.py); nove izmjene motora dodaju se kao novi korak na kraj lanca
 - Simulacija rasporeda: MODE=old|new PLAN=std|short|long N=1000 node sim/sgd-sim.js
 - Web testovi s pravim tempom: PACE=1 node web/notv-test.js

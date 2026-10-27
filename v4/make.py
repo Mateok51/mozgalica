@@ -2495,3 +2495,11 @@ s = rep(s, "    return head + sfQuestionBar(d, me) + tags + pjChip(d, me);", "  
 s = rep(s, "    bind('sfready', () => {", "    bindWhi();\n    bind('sfready', () => {")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('UX 3 UI OK')
+# ---- UX 5: novi balans paktova (krađa 8 %, najviše 300; dvostruka izdaja bez krađe) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  const PACT_STEAL = 0.25;", "  const PACT_STEAL = 0.08;")
+s = rep(s, "'<div class=\"bt-row\">🗡️ Ukradeni bodovi (' + Math.round(PACT_STEAL * 100) + ' %) '", "'<div class=\"bt-row\">🗡️ Ukradeno partneru (' + Math.round(PACT_STEAL * 100) + ' %, najviše 300) '")
+s = rep(s, "        '<div class=\"bt-row neg\">' + esc(nameOf(d, e.a)) + ' ' + num('bta' + i, e.la, '−', 1700) + '</div><div class=\"bt-row neg\">' + esc(nameOf(d, e.b)) + ' ' + num('btb' + i, e.lb, '−', 1900) + '</div></div>';",
+           "        (e.la || e.lb ? '<div class=\"bt-row neg\">' + esc(nameOf(d, e.a)) + ' ' + num('bta' + i, e.la, '−', 1700) + '</div><div class=\"bt-row neg\">' + esc(nameOf(d, e.b)) + ' ' + num('btb' + i, e.lb, '−', 1900) + '</div>' : '<div class=\"bt-row\">Nitko nikome ne krade bodove</div>') + '</div>';")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('UX 5 UI OK')
