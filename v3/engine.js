@@ -10,6 +10,7 @@ const POWERS = {
   dupli: { n: 'Dupli bodovi', atk: false, d: 'Točan odgovor vrijedi dvostruko.' },
   pola:  { n: 'Pola-pola',    atk: false, d: 'Uklanja dva netočna odgovora s tvog ekrana.' },
   stit:  { n: 'Štit',         atk: false, d: 'Odbija sve napade na tebe u ovom pitanju.' },
+  oklada: { n: 'Oklada',      atk: false, tg: true, d: 'Kladi se na igrača. Ako oboje točno odgovorite, dobivaš i njegove bodove.' },
 };
 const POWER_KEYS = Object.keys(POWERS);
 const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
@@ -242,7 +243,7 @@ function createGame(o) {
       case 'power': {
         if (inp.p === '' || inp.p == null) { p.pw = null; break; }
         if (!p.offers.includes(inp.p)) return false;
-        if (POWERS[inp.p].atk) {
+        if (POWERS[inp.p].atk || POWERS[inp.p].tg) {
           const t = R.get(inp.t);
           if (!t || t.pid === p.pid) return false;
           p.pw = { k: inp.p, t: t.pid };
@@ -555,7 +556,7 @@ function createGame(o) {
   }
   function offersFor(p, t, multi) {
     // u finalu (točno/netočno) pola-pola i grickalice nemaju smisla
-    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'pola' || k === 'grick')));
+    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'pola' || k === 'grick' || k === 'oklada')) && !(k === 'oklada' && !multi));
     const wf = (k) => powerWeight(k, t, p) * (k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1);
     const out = [];
     if (multi) { const a = weightedPick(pool.filter((k) => POWERS[k].atk), wf); if (a) out.push(a); }
@@ -585,7 +586,7 @@ function createGame(o) {
   function startPower() {
     const multi = active().length > 1, st = standing();
     for (const p of list()) {
-      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null;
+      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null; p.okl = null; p.ob = 0;
       p.offers = offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);
     }
     setPhase('power', G.inFinale ? cfg.fpower : cfg.power);
@@ -606,6 +607,7 @@ function createGame(o) {
       } else {
         if (k === 'dupli') p.dbl = true;
         if (k === 'pola') p.pola = true;
+        if (k === 'oklada') p.okl = p.pw.t;
         G.ev.push({ f: p.pid, p: k });
       }
     }
@@ -660,6 +662,7 @@ function createGame(o) {
       if (p.bet > 0) { p.betRes = p.ans === G.q.a ? Math.round(p.bet * p.betMul) : -p.bet; p.score = Math.max(0, p.score + p.betRes); }
       p.bet = 0;
     }
+    for (const p of list()) { p.ob = 0; const X = p.okl && R.get(p.okl); if (X && p.ans === G.q.a && X.ans === G.q.a && X.gained > 0) { p.ob = X.gained; p.score += p.ob; } }
     resolveSecret();
     rcResolve();
     tkResolve();
@@ -1107,7 +1110,7 @@ function createGame(o) {
   // ===================== TAVERN DIRECTOR =====================
   // Prati što se događa u partiji i povremeno pretvara zanimljive trenutke u kratki "show" (bez promjene pravila igre).
   // Sve je lokalno i determinističko iz stanja igre; pamti se samo unutar trenutne partije.
-  const PW_ACC = { led: 'Led', sluz: 'Sluz', grick: 'Grickalice', bomba: 'Bombu', dupli: 'Dupli bodove', pola: 'Pola-pola', stit: 'Štit' };
+  const PW_ACC = { oklada: 'Okladu', led: 'Led', sluz: 'Sluz', grick: 'Grickalice', bomba: 'Bombu', dupli: 'Dupli bodove', pola: 'Pola-pola', stit: 'Štit' };
   const TD = (() => {
     let T = null;
     const pairKey = (a, b) => (a < b ? a + '|' + b : b + '|' + a);
@@ -2069,6 +2072,7 @@ function createGame(o) {
     if (p.ko && p.ko.st === 'o' && G.ph === 'reveal') r.ko = { id: p.ko.id, k: p.ko.k, line: p.ko.line, win: p.ko.win, loss: p.ko.loss };
     if (p.kt) r.kt = { line: p.kt.line, n: p.kt.n, kind: p.kt.kind, win: p.kt.win };
     if (p.kf) r.kf = 1;
+    if (p.okl && !G.inFinale && (G.ph === 'cast' || G.ph === 'question')) r.okl = p.okl;
     return r;
   }
   // ----- izazov vođi -----
@@ -2329,7 +2333,7 @@ function createGame(o) {
   // privatno stanje: samo za tog igrača
   function priv(pid) {
     const p = R.get(pid), b0 = priv0(pid), t = p && !p.bot ? tkPriv(p) : null, kp = p && !p.bot ? krPriv(p) : null;
-    const ko = p && !p.bot ? krOfferPriv(p) : {}, any = kp || ko.ko || ko.kt || ko.kf;
+    const ko = p && !p.bot ? krOfferPriv(p) : {}, any = kp || ko.ko || ko.kt || ko.kf || ko.okl;
     const b = any ? Object.assign(b0 || { can: false, used: false, inv: [], out: null, note: p.note }, kp ? { kp } : {}, ko) : b0;
     if (!t) return b;
     return Object.assign(b || { can: false, used: false, inv: [], out: null, note: p.note }, { tk: t });
@@ -2417,7 +2421,7 @@ function createGame(o) {
       case 'power': {
         if (Math.random() < 0.15) return { s, p: '' };
         const k = pick(b.offers);
-        if (!POWERS[k].atk) return { s, p: k };
+        if (!POWERS[k].atk && !POWERS[k].tg) return { s, p: k };
         const others = active().filter((p) => p.pid !== b.pid);
         if (!others.length) return { s, p: '' };
         const leader = others.slice().sort((x, y) => y.score - x.score)[0];
@@ -2496,6 +2500,7 @@ function createGame(o) {
       if (ph === 'reveal' && p.rx) e.rx = p.rx;
       if (ph === 'reveal' && p.tb) e.tb = p.tb;
       if (ph === 'reveal' && p.kb) e.kb = p.kb;
+      if (ph === 'reveal' && p.ob) e.ob = p.ob;
       if (ph === 'duelResult' && G.du && (p.pid === G.du.a || p.pid === G.du.b)) e.ch = p.ch;
       return e;
     });

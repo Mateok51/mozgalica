@@ -2548,3 +2548,18 @@ s = rep(s, "    bindKr(d);\n", "    bindKr(d);\n    bindRope(d);\n")
 s = rep(s, "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0,", "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0,")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('KR 5 UI OK')
+# ---- Krčmar 2.0, korak 6: moć Oklada (ikona, odabir mete, oznaka tijekom pitanja, dobitak u poretku) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  for (const k in ICON) ICON[k] = '<img class=\"ic pw-img\" src=\"ui/pw-' + k + '.webp\" alt=\"\" draggable=\"false\">';", "  ICON.oklada = '';\n  for (const k in ICON) ICON[k] = '<img class=\"ic pw-img\" src=\"ui/pw-' + k + '.webp\" alt=\"\" draggable=\"false\">';")
+s = rep(s, "    const COL = { led: '#bcdbe6',", "    const COL = { oklada: '#f0c66a', led: '#bcdbe6',")
+s = rep(s, "    const SND = { led: 'freeze',", "    const SND = { oklada: 'correct', led: 'freeze',")
+s = rep(s, "        if (POWERS[k].atk) { L.pw = k; phoneRender(true); } else sendInput({ p: k });", "        if (POWERS[k].atk || POWERS[k].tg) { L.pw = k; phoneRender(true); } else sendInput({ p: k });")
+s = rep(s, "      return headH('Odaberi metu', 'Na koga bacaš ovu moć?')", "      return headH(L.pw === 'oklada' ? 'Na koga se kladiš?' : 'Odaberi metu', L.pw === 'oklada' ? 'Ako oboje točno odgovorite, dobivaš i njegove bodove. Nitko neće znati na koga.' : 'Na koga bacaš ovu moć?')")
+s = rep(s, "(me.bt ? '<span class=\"tag betag\">Ulog ' + me.bt + '</span>' : '');", "(me.bt ? '<span class=\"tag betag\">Ulog ' + me.bt + '</span>' : '') + (PV && PV.okl ? '<span class=\"tag\">🎲 Oklada: ' + esc(nameOf(d, PV.okl)) + '</span>' : '');")
+for v in ['a', 'b', 'me', 'p']:
+    a = '(' + v + '.kb || 0)'
+    assert s.count(a) >= 1, a
+    s = s.replace(a, a + ' - (' + v + '.ob || 0)')
+s = rep(s, "(gain && p.kb ? '<span class=\"betb krb'", "(gain && p.ob ? '<span class=\"betb krb\">🎲 +' + p.ob + '</span>' : '') + (gain && p.kb ? '<span class=\"betb krb'")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR 6 UI OK')

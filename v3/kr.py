@@ -310,3 +310,23 @@ rep("      v.du = { a: G.du.a, b: G.du.b, bonus: cfg.duelBonus };", "      v.du 
 rep("if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {", "if ((ph === 'duelIntro' || ph === 'duel' || ph === 'rope' || ph === 'duelResult') && G.du) {")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR 5 (izazov vođi, konop) OK')
+
+# ---------- 6) nova moć 🎲 Oklada: kladiš se na igrača; ako oboje odgovorite točno, dobivaš i njegove bodove ----------
+# Meta je tajna (javno se vidi samo da je netko upotrijebio Okladu). Nema je u piramidi ni u igri za jednog igrača.
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("  stit:  { n: 'Štit',         atk: false, d: 'Odbija sve napade na tebe u ovom pitanju.' },",
+    "  stit:  { n: 'Štit',         atk: false, d: 'Odbija sve napade na tebe u ovom pitanju.' },\n"
+    "  oklada: { n: 'Oklada',      atk: false, tg: true, d: 'Kladi se na igrača. Ako oboje točno odgovorite, dobivaš i njegove bodove.' },")
+rep("    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'pola' || k === 'grick')));",
+    "    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'pola' || k === 'grick' || k === 'oklada')) && !(k === 'oklada' && !multi));")
+rep("        if (POWERS[inp.p].atk) {", "        if (POWERS[inp.p].atk || POWERS[inp.p].tg) {")
+rep("      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null;", "      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null; p.okl = null; p.ob = 0;")
+rep("        if (k === 'pola') p.pola = true;", "        if (k === 'pola') p.pola = true;\n        if (k === 'oklada') p.okl = p.pw.t;")
+rep("    resolveSecret();", "    for (const p of list()) { p.ob = 0; const X = p.okl && R.get(p.okl); if (X && p.ans === G.q.a && X.ans === G.q.a && X.gained > 0) { p.ob = X.gained; p.score += p.ob; } }\n    resolveSecret();")
+rep("      if (ph === 'reveal' && p.kb) e.kb = p.kb;", "      if (ph === 'reveal' && p.kb) e.kb = p.kb;\n      if (ph === 'reveal' && p.ob) e.ob = p.ob;")
+rep("    if (p.kf) r.kf = 1;\n    return r;", "    if (p.kf) r.kf = 1;\n    if (p.okl && !G.inFinale && (G.ph === 'cast' || G.ph === 'question')) r.okl = p.okl;\n    return r;")
+rep("any = kp || ko.ko || ko.kt || ko.kf;", "any = kp || ko.ko || ko.kt || ko.kf || ko.okl;")
+rep("        if (!POWERS[k].atk) return { s, p: k };", "        if (!POWERS[k].atk && !POWERS[k].tg) return { s, p: k };")
+rep("  const PW_ACC = { led: 'Led', sluz: 'Sluz', grick: 'Grickalice',", "  const PW_ACC = { oklada: 'Okladu', led: 'Led', sluz: 'Sluz', grick: 'Grickalice',")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR 6 (Oklada) OK')

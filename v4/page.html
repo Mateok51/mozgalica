@@ -2356,6 +2356,7 @@ __ENGINE__
     pola: svgIc('<defs><linearGradient id="icp" x1="0" x2="1"><stop offset=".5" stop-color="#ffffff"/><stop offset=".5" stop-color="#e2c891"/></linearGradient></defs><circle cx="24" cy="24" r="21" fill="url(#icp)" stroke="#1a6f8a" stroke-width="2"/><path d="M24 3v42" stroke="#1a6f8a" stroke-width="2" stroke-dasharray="4 3"/><text x="13.5" y="30" text-anchor="middle" font-family="Fredoka, Arial Rounded MT Bold, sans-serif" font-weight="700" font-size="15" fill="#1a1530">50</text><text x="34.5" y="30" text-anchor="middle" font-family="Fredoka, Arial Rounded MT Bold, sans-serif" font-weight="700" font-size="15" fill="#06344a">50</text>'),
     stit: svgIc('<defs><linearGradient id="ict" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8f4ff"/><stop offset=".5" stop-color="#4a8dff"/><stop offset="1" stop-color="#1b3fa8"/></linearGradient></defs><path d="M24 3l17 6v12c0 11-7.5 20-17 24C14.5 41 7 32 7 21V9z" fill="url(#ict)" stroke="#e8f4ff" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 24l6 6 11-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'),
   };
+  ICON.oklada = '';
   for (const k in ICON) ICON[k] = '<img class="ic pw-img" src="ui/pw-' + k + '.webp" alt="" draggable="false">';
   const bugSvg = '<svg viewBox="0 0 60 60" aria-hidden="true"><defs><radialGradient id="bgb" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#e0a86a"/><stop offset="1" stop-color="#6b3f17"/></radialGradient></defs><path d="M12 30l-9-4M12 38l-10 2M48 30l9-4M48 38l10 2M14 45l-6 6M46 45l6 6" stroke="#4a2b10" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="30" cy="36" rx="20" ry="16" fill="url(#bgb)"/><path d="M30 22v30" stroke="#4a2b10" stroke-width="1.6" opacity=".5"/><circle cx="22" cy="34" r="3" fill="#f2c48d" opacity=".6"/><circle cx="30" cy="20" r="11" fill="#5a3412"/><circle cx="25" cy="18" r="4.2" fill="#fff"/><circle cx="35" cy="18" r="4.2" fill="#fff"/><circle cx="26" cy="19" r="2" fill="#000"/><circle cx="36" cy="19" r="2" fill="#000"/><path d="M24 26q6 5 12 0" stroke="#fff" stroke-width="2" fill="none"/><path d="M26 27v3M34 27v3" stroke="#fff" stroke-width="2"/></svg>';
   const bombSvg = '<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="bbg" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#70708c"/><stop offset=".55" stop-color="#23232f"/><stop offset="1" stop-color="#08080d"/></radialGradient></defs><circle cx="46" cy="60" r="34" fill="url(#bbg)"/><ellipse cx="33" cy="46" rx="9" ry="6" fill="#fff" opacity=".3"/><rect x="58" y="16" width="18" height="16" rx="3" fill="#555" transform="rotate(35 67 24)"/><path d="M72 18q10-13 19-6" stroke="#d99a35" stroke-width="4.5" fill="none"/><path d="M91 3l2.6 6.4L100 12l-6.4 2.6L91 21l-2.6-6.4L82 12l6.4-2.6z" fill="#ffcf4a"><animateTransform attributeName="transform" type="rotate" from="0 91 12" to="360 91 12" dur=".6s" repeatCount="indefinite"/></path></svg>';
@@ -2933,9 +2934,9 @@ __ENGINE__
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
   function miniBoard(d, gain) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc);
-    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0))).map((p) => p.id) : [];
-    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.kb ? '<span class="betb krb' + (p.kb < 0 ? ' neg' : '') + '">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
-      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
+    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0))).map((p) => p.id) : [];
+    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.ob ? '<span class="betb krb">🎲 +' + p.ob + '</span>' : '') + (gain && p.kb ? '<span class="betb krb' + (p.kb < 0 ? ' neg' : '') + '">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
+      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0) - (p.ob || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
   }
   function phoneEvents(d) {
     if (!d.ev || !d.ev.length) return '';
@@ -3187,8 +3188,8 @@ __ENGINE__
 
   const CAST = (() => {
     let run = 0, fx = [], cv = null, ctx = null, stage = null, W = 1, H = 1, last = 0, looping = false;
-    const SND = { led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };
-    const COL = { led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };
+    const SND = { oklada: 'correct', led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };
+    const COL = { oklada: '#f0c66a', led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };
     const S = () => W / 960;
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -4596,7 +4597,7 @@ __ENGINE__
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem">MOZGALICA</div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
     const demoBar = mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '';
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -5042,7 +5043,7 @@ __ENGINE__
   }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
-    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0);
+    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0);
     return '<div class="statline"><div class="stat"><b data-bk="pos" data-bv="' + pos + '">' + pos + '.</b><span>mjesto</span></div><div class="stat"><b data-ck="mysc" data-cu="' + from + '" data-to="' + me.sc + '" data-cud="500" data-cdur="900">' + me.sc + '</b><span>bodova</span></div></div>';
   }
   function stepMeter(d, me) {
@@ -5064,7 +5065,7 @@ __ENGINE__
     }
     if (L.pw) {
       const others = d.P.filter((p) => p.id !== PID && p.c);
-      return headH('Odaberi metu', 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
+      return headH(L.pw === 'oklada' ? 'Na koga se kladiš?' : 'Odaberi metu', L.pw === 'oklada' ? 'Ako oboje točno odgovorite, dobivaš i njegove bodove. Nitko neće znati na koga.' : 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
         '<div class="targets pw-step">' + others.map((p) => '<button class="target" data-t="' + esc(p.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + '</span></button>').join('') + '</div>' +
         '<button class="btn ghost" id="pwback">Natrag</button>';
     }
@@ -5076,7 +5077,7 @@ __ENGINE__
     const mine = L.sent ? L.sent.c : -1;
     const hide = me.h || [];
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
-    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class="tag betag">Ulog ' + me.bt + '</span>' : '');
+    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class="tag betag">Ulog ' + me.bt + '</span>' : '') + (PV && PV.okl ? '<span class="tag">🎲 Oklada: ' + esc(nameOf(d, PV.okl)) + '</span>' : '');
     const opts = d.q.o.map((o, i) => {
       const gone = hide.includes(i);
       let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
@@ -5100,7 +5101,7 @@ __ENGINE__
     }).join('') + '</div>';
   }
   function revBoard(d, el) {
-    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0)));
+    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0)));
     const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
     const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;
     return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
@@ -5306,7 +5307,7 @@ __ENGINE__
     $app.querySelectorAll('[data-p]').forEach((b) => {
       b.onclick = () => {
         const k = b.dataset.p;
-        if (POWERS[k].atk) { L.pw = k; phoneRender(true); } else sendInput({ p: k });
+        if (POWERS[k].atk || POWERS[k].tg) { L.pw = k; phoneRender(true); } else sendInput({ p: k });
       };
     });
     $app.querySelectorAll('[data-t]').forEach((b) => { b.onclick = () => sendInput({ p: L.pw, t: b.dataset.t }); });

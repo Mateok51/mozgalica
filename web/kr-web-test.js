@@ -8,8 +8,8 @@ MOCK = MOCK.replace("else if (m.k === 'data') { const c = this.conns[m.cid]; if 
 MOCK = "window.__MQTT_URLS = ['ws://localhost:8767/mqtt'];\n" + MOCK;
 const server = http.createServer((req, res) => { const p = path.join(SITE, decodeURIComponent(req.url.split('?')[0].split('#')[0]).replace(/\/$/, '/index.html')); if (!p.startsWith(SITE) || !fs.existsSync(p)) { res.writeHead(404); return res.end(); } if (p.endsWith('index.html')) { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(fs.readFileSync(p, 'utf8').replace("connect-src 'self'", "connect-src 'self' ws://localhost:8767")); } res.writeHead(200, { 'content-type': { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.webp': 'image/webp', '.svg': 'image/svg+xml' }[path.extname(p)] || 'text/plain' }); fs.createReadStream(p).pipe(res); });
 let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails++; };
-const CH = process.env.CH === '1';
-const CFGX = { kr: CH ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0, pactMin: 3, offFrom: 99, offChance: 0, offMax: 0, chFrom: 1, chGap: 0, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 12, ropeWin: 7, ropeN: 40 } : { wait: 45, pactOffers: 2, pactFrom: 1, pactChance: 1, pactMin: 3 }, duelIntro: 2, qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 0], intro: 0.4, vote: 3, voteShow: 0.5, roul: 0.3, power: 3, q: 8, reveal: 2, howto: 0.5, howtoMax: 0.5, howtoShort: 0.3, sort: 3, link: 3, chReveal: 0.5 };
+const CH = process.env.CH === '1', OKL = process.env.OKL === '1';
+const CFGX = { kr: OKL ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0, pactMin: 3, offFrom: 99, offChance: 0, offMax: 0, chFrom: 99, chGap: 99999, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 12, ropeWin: 7, ropeN: 40 } : CH ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0, pactMin: 3, offFrom: 99, offChance: 0, offMax: 0, chFrom: 1, chGap: 0, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 12, ropeWin: 7, ropeN: 40 } : { wait: 45, pactOffers: 2, pactFrom: 1, pactChance: 1, pactMin: 3 }, duelIntro: 2, qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 0], intro: 0.4, vote: 3, voteShow: 0.5, roul: 0.3, power: 3, q: 8, reveal: 2, howto: 0.5, howtoMax: 0.5, howtoShort: 0.3, sort: 3, link: 3, chReveal: 0.5 };
 (async () => {
   const broker = require('./mini-broker').start(8767);
   await new Promise((r) => server.listen(8766, r)); const URL = 'http://localhost:8766/';
@@ -33,6 +33,27 @@ const CFGX = { kr: CH ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0, 
   await click(host, '#dstart');
   const P = [host, ana, iva];
   const auto = () => Promise.all(P.map((p) => p.evaluate(() => { const A = document.getElementById('app'); if (!A) return; const x = A.querySelector('[data-v]:not([disabled]), #nopw, [data-c]:not([disabled])'); if (x) x.click(); }).catch(() => {})));
+  if (OKL) {
+    let who = null;
+    for (let t = 0; t < 1500 && !who; t++) {
+      for (const p of P) if (await has(p, '#app [data-p="oklada"]')) { who = p; break; }
+      if (who) break;
+      await Promise.all(P.map((p) => p.evaluate(() => { const A = document.getElementById('app'); const x = A && A.querySelector('[data-v]:not([disabled]), #nopw, [data-c]:not([disabled]), #krok'); if (x) x.click(); }).catch(() => {})));
+      await host.waitForTimeout(150);
+    }
+    ok(!!who, 'Oklada se pojavila među ponuđenim moćima');
+    await who.screenshot({ path: OUT + '/o1-moci.png' });
+    await click(who, '#app [data-p="oklada"]'); await who.waitForTimeout(400);
+    ok(/Na koga se kladiš/.test(await who.textContent('#app')), 'odabir mete: „Na koga se kladiš?”');
+    await who.screenshot({ path: OUT + '/o2-meta.png' });
+    await click(who, '#app [data-t]');
+    const tag = await who.waitForSelector('#app .tag', { timeout: 15000 }).then(() => who.textContent('#app .buffs'), () => '');
+    ok(/Oklada/.test(tag), 'tijekom pitanja privatna oznaka: ' + tag.trim());
+    const others = P.filter((p) => p !== who);
+    ok(!(await Promise.all(others.map((p) => p.textContent('#app')))).some((t) => /Oklada:/.test(t)), 'ostali ne vide metu');
+    ok(errors.length === 0, 'bez JS grešaka ' + errors.join(' | '));
+    await b.close(); server.close(); await broker.close(); console.log(fails ? 'NEUSPJEH ' + fails : 'SVE OK'); process.exit(fails ? 1 : 0);
+  }
   let t0 = Date.now(); while (Date.now() - t0 < 90000 && (await ph(host)) !== 'reveal') { await auto(); await host.waitForTimeout(150); }
   ok((await ph(host)) === 'reveal', 'prvo otkrivanje');
   const btn = await host.waitForSelector('#app #krok, #app .kr-card', { timeout: 12000 }).then(() => true, () => false);
