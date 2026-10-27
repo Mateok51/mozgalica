@@ -2522,3 +2522,12 @@ s = open(SP + '/v4/page.html', encoding='utf-8').read()
 s = rep(s, "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0,", "d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0,")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('KR 2 potpis OK')
+# ---- Krčmar 2.0, korak 4: zadatak u poretku (oznaka), prije-bodovi uključuju zadatak ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+for v in ['a', 'b', 'me', 'p']:
+    a = '(' + v + '.tb || 0)'
+    assert s.count(a) >= 1, a
+    s = s.replace(a, a + ' - (' + v + '.kb || 0)')
+s = rep(s, "(gain && p.tb ? '<span class=\"betb tkb'", "(gain && p.kb ? '<span class=\"betb krb' + (p.kb < 0 ? ' neg' : '') + '\">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class=\"betb tkb'")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR 4 UI OK')
