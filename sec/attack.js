@@ -66,6 +66,18 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
     for (const h of hs) hits[h] = (hits[h] || 0) + 1;
     if (await pg.$('#app .err')) { crashes++; }
   }
+  // Legende ove krčme: lažno završno stanje s kodom u svakom tekstu legendi, pa otvaranje pregleda
+  const finals = JSON.parse(fs.readFileSync(path.join(__dirname, 'views-sort,link.json'))).filter((x) => x.v.ph === 'final' && x.v.lg);
+  let lgOpened = 0;
+  for (const mutIds of [false, true]) for (const pay of PAY) for (const it of finals) {
+    const v = mutate(it.v, pay, mutIds, 'pid-v', 'final'); v.code = 'ABCD'; v.s = 100000 + (n++);
+    att.pub('mozgalica-kip/v1/abcd/all', v);
+    await pg.waitForTimeout(80);
+    if (await pg.$('#legOpen')) { await pg.click('#legOpen').catch(() => {}); await pg.waitForTimeout(120); if (await pg.$('.lg-wrap')) lgOpened++; await pg.click('#legClose').catch(() => {}); }
+    const hs = await pg.evaluate(() => { const h = window.__h || []; window.__h = []; return h; }).catch(() => []);
+    for (const h of hs) hits[h] = (hits[h] || 0) + 1;
+  }
+  ok(finals.length > 0 && lgOpened > 0, 'legende otvorene na lažnim podacima (' + lgOpened + ' puta)');
   await pg.waitForTimeout(400);
   console.log('  poslano lažnih stanja:', n);
   ok(Object.keys(hits).length === 0, 'nijedan ubačeni kod se nije izvršio' + (Object.keys(hits).length ? ': ' + JSON.stringify(hits, null, 1) : ''));

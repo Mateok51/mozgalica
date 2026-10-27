@@ -1999,6 +1999,59 @@
   /* dvoboj: napomena iz povijesti para */
   .du-note { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber-hi); margin-top: 4px; }
   .tv .du-note { font-size: 1.4rem; }
+  /* ===== Legende ove krčme: osobni pregled preko završnog ekrana, s vlastitim pomicanjem ===== */
+  .lg-wrap { position: fixed; inset: 0; z-index: 40; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    padding: calc(12px + env(safe-area-inset-top)) 12px calc(96px + env(safe-area-inset-bottom)); background: rgba(16, 8, 3, 0.62); }
+  .lg-book { position: relative; width: 100%; max-width: 560px; margin: 0 auto; padding: 18px 14px 16px; border-radius: 18px;
+    background: radial-gradient(120% 70% at 50% 0%, rgba(120, 76, 28, 0.55), rgba(42, 23, 11, 0.96) 60%), #2a170b;
+    box-shadow: inset 0 0 0 2px rgba(232, 170, 80, 0.9), inset 0 0 0 5px rgba(42, 23, 11, 0.95), inset 0 0 0 6px rgba(232, 170, 80, 0.4), 0 12px 40px rgba(0, 0, 0, 0.55);
+    transform-origin: 50% 0; animation: lgOpen 1.1s cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+  .lg-head { text-align: center; }
+  .lg-t { font-family: var(--font-display); font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1.05; color: #ffcf6e; text-shadow: 0 2px 0 rgba(70, 36, 10, 0.95), 0 0 18px rgba(255, 190, 80, 0.35); }
+  .lg-sub { margin-top: 4px; font-weight: 800; font-style: italic; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); opacity: 0.9; }
+  .lg-story { margin: 12px 4px 4px; padding: 10px 12px; border-radius: 12px; font-weight: 800; font-size: 1rem; line-height: 1.4; color: var(--text-main, #f6ead0);
+    background: rgba(246, 234, 208, 0.07); box-shadow: inset 0 0 0 1px rgba(232, 170, 80, 0.35); animation: lgIn 0.5s ease both; animation-delay: 0.7s; }
+  .lg-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .lg-card { padding: 10px 12px 11px; border-radius: 14px; background: rgba(42, 23, 11, 0.92);
+    box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.85), inset 0 0 0 3px rgba(42, 23, 11, 0.9), inset 0 0 0 4px rgba(232, 170, 80, 0.3);
+    animation: lgCard 0.6s cubic-bezier(0.3, 1.3, 0.5, 1) both; animation-delay: calc(1s + var(--i, 0) * 0.18s); }
+  .lg-k { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 1.15rem; color: #ffcf6e; text-transform: uppercase; letter-spacing: 0.02em; }
+  .lg-ic { font-size: 1.35rem; }
+  .lg-who { display: flex; align-items: center; gap: 6px; margin-top: 6px; min-width: 0; }
+  .lg-fig { position: relative; display: inline-flex; }
+  .lg-fig .mini { width: 46px; height: 46px; display: inline-flex; }
+  .lg-fig .mini > * { width: 100%; height: 100%; object-fit: contain; }
+  .lg-fig + .lg-fig { margin-left: -10px; }
+  .lg-bot { position: absolute; left: 50%; bottom: -4px; transform: translateX(-50%); font-size: 0.6rem; font-weight: 900; padding: 0 4px; border-radius: 6px; background: #5b3a22; color: #ffe2a6; }
+  .lg-nm { margin-left: 4px; font-weight: 900; font-size: 1.1rem; color: var(--text-main, #f6ead0); overflow-wrap: anywhere; }
+  .lg-line { margin-top: 4px; font-weight: 800; font-size: 0.98rem; color: var(--text-main, #f6ead0); }
+  .lg-num { margin-top: 2px; font-weight: 800; font-size: 0.85rem; color: #e2b764; }
+  .lg-crown { box-shadow: inset 0 0 0 2px rgba(255, 204, 110, 1), inset 0 0 0 4px rgba(42, 23, 11, 0.9), inset 0 0 0 5px rgba(255, 204, 110, 0.55), 0 0 22px rgba(255, 190, 80, 0.4); }
+  .lg-crown .lg-fig .mini { width: 72px; height: 72px; }
+  .lg-crown .lg-nm { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; color: #ffe2a0; }
+  .lg-crown::after, .lg-bt::after, .lg-cb::after, .lg-dbl::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 226, 160, 0.28) 50%, transparent 70%) -200% 0 / 200% 100% no-repeat;
+    animation: lgShine 1.1s ease-out both; animation-delay: calc(1.3s + var(--i, 0) * 0.18s); }
+  .lg-card { position: relative; overflow: hidden; }
+  .lg-act { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .lg-act .btn { min-height: 52px; }
+  .lg-note { min-height: 1.2em; text-align: center; font-weight: 800; font-size: 0.9rem; color: var(--amber-hi, #ffe2a6); }
+  .lg-instant .lg-book, .lg-instant .lg-story, .lg-instant .lg-card, .lg-instant .lg-card::after { animation: none !important; }
+  .win-act .btn.lg-open { min-height: 50px; }
+  /* TV: svečanija verzija istih nagrada */
+  .tv-lg .lg-book { max-width: 1100px; padding: 26px 30px; }
+  .tv-lg .lg-t { font-size: 3rem; }
+  .tv-lg .lg-story { font-size: 1.35rem; }
+  .tv-lg .lg-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .tv-lg .lg-crown { grid-column: 1 / -1; }
+  .tv-lg .lg-crown .lg-nm { font-size: 2.2rem; } .tv-lg .lg-crown .lg-fig .mini { width: 96px; height: 96px; }
+  .tv-lg .lg-k { font-size: 1.5rem; } .tv-lg .lg-line { font-size: 1.25rem; } .tv-lg .lg-nm { font-size: 1.4rem; }
+  .tv-lg .lg-act { flex-direction: row; justify-content: center; } .tv-lg .lg-act .btn { min-width: 280px; }
+  @keyframes lgOpen { from { opacity: 0; transform: perspective(900px) rotateX(-14deg) scale(0.94); } to { opacity: 1; transform: none; } }
+  @keyframes lgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes lgCard { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+  @keyframes lgShine { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .lg-book, .lg-story, .lg-card, .lg-card::after { animation: none !important; } }
 </style>
 
 <div id="app" class="screen center"></div>
@@ -2368,7 +2421,7 @@ function createGame(o) {
     if (G.ph !== 'lobby' || active().length < 1) return;
     for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; }
     for (const k in G.used) G.used[k].clear();
-    G.pi = -1; G.qn = 0; G.inFinale = false; G.win = null;
+    G.pi = -1; G.qn = 0; G.inFinale = false; G.win = null; G.leg = null; G.crownWin = null;
     // kladionica: nasumično 2-3 puta po igri, najviše jednom po rundi (nikad u finalu)
     G.bn = -1; G.betAt = new Set();
     const nb = plan.filter((it) => it.t === 'battle').length, rounds = Math.ceil(nb / 3);
@@ -2812,7 +2865,7 @@ function createGame(o) {
     }
     // kruna: tko je bio na vrhu i točno odgovori, pobjeđuje; ako ih je više, brži (vlastito vrijeme odgovora), pa više bodova
     const win = list().filter((p) => crown.has(p.pid) && p.ans === G.q.a).sort((a, b) => a.ansMs - b.ansMs || b.score - a.score || (a.name < b.name ? -1 : 1))[0];
-    if (win) { win.mv = cfg.steps - win.fstep; win.fstep = cfg.steps; }
+    if (win) { win.mv = cfg.steps - win.fstep; win.fstep = cfg.steps; G.crownWin = win.pid; }
     if (!list().some((p) => p.fstep >= cfg.steps)) {
       TD.afterFinale();
       // novi na vrhu: krčma to javlja svima
@@ -2827,12 +2880,117 @@ function createGame(o) {
     startFinaleQ();
   }
 
+  // ===================== LEGENDE OVE KRČME =====================
+  // Počasne nagrade iz stvarnih događaja (bez bodova). Domaćin ih sastavi jednom, pri proglašenju pobjednika.
+  const LEG_T = { cb: ['🔥', 'Povratak večeri'], bt: ['🗡️', 'Najveća izdaja'], vic: ['💔', 'Najveća žrtva izdaje'], dbl: ['💀', 'Noževi pod stolom'], ly: ['❤️', 'Nerazdvojni saveznici'],
+    rv: ['⚔️', 'Rivalstvo večeri'], rev: ['🔁', 'Osveta večeri'], bet: ['💰', 'Majstor rizika'], fast: ['⚡', 'Munja večeri'], acc: ['🎯', 'Oko sokolovo'], st: ['🏹', 'Najduži niz'] };
+  const LEG_ORDER = Object.keys(LEG_T);
+  // hrvatska množina: 1 napad, 2 napada, 5 napada
+  const plN = (n, one, few, many) => { const a = Math.abs(n) % 100, b = a % 10; return n + ' ' + (b === 1 && a !== 11 ? one : b >= 2 && b <= 4 && (a < 12 || a > 14) ? few : many); };
+  const fmtN = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  // broj bodova s ispravnim oblikom: 1 bod, 3 boda, 5 bodova, 4.483 boda
+  const bodN = (n) => { const r = Math.round(Math.abs(n)), a = r % 100, b = a % 10; return fmtN(n) + ' ' + (b === 1 && a !== 11 ? 'bod' : b >= 2 && b <= 4 && (a < 12 || a > 14) ? 'boda' : 'bodova'); };
+  function buildLegends() {
+    const T = TD.state, ps = list();
+    if (!T || !ps.length) return null;
+    const S = T.stat, nmL = (id) => (R.get(id) || {}).name || '?', n = ps.length, aw = [];
+    const add = (k, score, who, line, num, story) => aw.push({ k, score, who, line, num: num || '', story: story || k + ':' + who.slice().sort().join('|') });
+    // povratak: bio zadnji s velikim zaostatkom, kasnije među prva dva (nikad onome tko je stalno vodio)
+    for (const p of ps) {
+      const w = T.worst[p.pid] || 0, best = S.rise[p.pid];
+      if (n >= 3 && T.lowRank[p.pid] === n && best && best <= 2 && w >= 800)
+        add('cb', 70 + w / 60 + (best === 1 ? 25 : 0), [p.pid], best === 1 ? 'S posljednjeg mjesta sve do vrha ljestvice!' : 'S posljednjeg mjesta do ' + best + '. mjesta!', 'Najveći zaostatak: ' + bodN(w));
+    }
+    // izdaje (javne): izdajnik, žrtva (druga priča), dvostruka izdaja
+    for (const e of S.bt) {
+      if (e.k === 'betray') {
+        add('bt', 90 + e.gain / 80, [e.t, e.v], nmL(e.t) + ' → ' + nmL(e.v) + ' · +' + bodN(e.gain), 'Pakt je trajao ' + plN(e.dur, 'pitanje', 'pitanja', 'pitanja'), 'bt' + e.id);
+        if (e.st > 0) add('vic', 48 + e.st / 100, [e.v], 'U izdaji gubi ' + bodN(e.st) + '. Krčmar časti jednu rundu!', '', 'bt' + e.id);
+      } else add('dbl', 88 + (e.la + e.lb) / 100, [e.a, e.b], 'Oboje vade noževe u istom trenutku!', 'Gubici: −' + fmtN(e.la) + ' i −' + bodN(e.lb), 'bt' + e.id);
+    }
+    // odani pakt do kraja (botovi ne sklapaju paktove)
+    for (const e of S.loyal) add('ly', 70 + (e.tre + e.bonus) / 60, [e.a, e.b], 'Njihov pakt preživljava do kraja!', 'Riznica ' + fmtN(e.tre) + ' + bonus odanosti ' + fmtN(e.bonus));
+    // rivalstvo: zamjene mjesta, međusobni napadi, dvoboj, ocjena rivalstva krčme
+    for (const key in T.pairs) {
+      const P = T.pairs[key], [a, b] = key.split('|');
+      if (!R.get(a) || !R.get(b)) continue;
+      const du = S.duels.filter((x) => (x.a === a && x.b === b) || (x.a === b && x.b === a)).length;
+      const sw = P.all || 0;
+      if (!(sw >= 3 || P.ev >= 3 || (sw >= 2 && P.ev >= 2) || (du && sw + P.ev >= 2))) continue;
+      const sc = sw * 1.5 + P.sw + P.ev * 1.5 + (T.rival[key] || 0) * 0.3 + du * 3;
+      const bits = [];
+      if (sw) bits.push(plN(sw, 'zamjena mjesta', 'zamjene mjesta', 'zamjena mjesta'));
+      if (P.ev) bits.push(plN(P.ev, 'međusobni napad', 'međusobna napada', 'međusobnih napada'));
+      if (du) bits.push('dvoboj');
+      add('rv', 50 + sc * 3, [a, b], ['Cijelu večer ne daju jedno drugom mira.', 'Krčma je cijelu večer gledala samo njih dvoje.'][(P.ev + P.sw) % 2], bits.join(' · '), 'pair:' + key);
+    }
+    // osveta (krčma ju je zapamtila tijekom igre)
+    const rv = T.leg.rev;
+    if (rv && rv.av && rv.at && R.get(rv.av) && R.get(rv.at)) add('rev', 62 + Math.min(20, rv.v * 2), [rv.av, rv.at], nmL(rv.av) + ' vraća udarac: ' + nmL(rv.at), rv.bt ? 'Osveta za izdaju' : rv.du ? 'Osveta u dvoboju' : 'Nakon ' + plN(rv.v, 'napada', 'napada', 'napada'), 'pair:' + [rv.av, rv.at].sort().join('|'));
+    // kladionica: stvarni neto rezultat (dobici − gubici)
+    for (const pid in S.betNet) if (S.betNet[pid] >= 300 && R.get(pid)) add('bet', 45 + S.betNet[pid] / 40, [pid], 'Neto dobitak iz kladionice: +' + bodN(S.betNet[pid]));
+    // munja: najbrži točan odgovor u običnim pitanjima
+    { let best = null; for (const pid in S.fast) if (R.get(pid) && (!best || S.fast[pid] < S.fast[best] || (S.fast[pid] === S.fast[best] && pid < best))) best = pid;
+      if (best && S.fast[best] < 4000) add('fast', 32 + Math.max(0, 4000 - S.fast[best]) / 150, [best], 'Točan odgovor za ' + (S.fast[best] / 1000).toFixed(1).replace('.', ',') + ' s'); }
+    // točnost: najmanje 4 pitanja i 60 % pitanja partije; izjednačenje: više točnih, pa brži, pa abeceda
+    { const min = Math.max(4, Math.ceil(S.qn * 0.6));
+      const c = ps.filter((p) => (S.ans[p.pid] || 0) >= min).map((p) => ({ pid: p.pid, ok: S.ok[p.pid] || 0, n: S.ans[p.pid] }));
+      c.sort((x, y) => y.ok / y.n - x.ok / x.n || y.ok - x.ok || (S.fast[x.pid] || 9e9) - (S.fast[y.pid] || 9e9) || (x.pid < y.pid ? -1 : 1));
+      if (c[0] && c[0].ok / c[0].n >= 0.7) add('acc', 30 + (c[0].ok / c[0].n) * 25, [c[0].pid], c[0].ok + ' od ' + c[0].n + ' točno (' + Math.round((c[0].ok / c[0].n) * 100) + ' %)'); }
+    // najdulji niz
+    { let best = null; for (const pid in S.maxSt) if (R.get(pid) && (!best || S.maxSt[pid] > S.maxSt[best] || (S.maxSt[pid] === S.maxSt[best] && pid < best))) best = pid;
+      if (best && S.maxSt[best] >= 4) add('st', 34 + S.maxSt[best] * 4, [best], plN(S.maxSt[best], 'točan', 'točna', 'točnih') + ' odgovora zaredom'); }
+    // izbor: najvažnije prvo; ista priča samo jednom; isti igrač najviše dvaput (uz krunu)
+    aw.sort((x, y) => y.score - x.score || LEG_ORDER.indexOf(x.k) - LEG_ORDER.indexOf(y.k) || (x.who.join() < y.who.join() ? -1 : 1));
+    const W = G.win, picked = [], stories = new Set(), feat = {};
+    if (W) feat[W] = 1;
+    for (const x of aw) {
+      if (picked.length >= 5) break;
+      if (stories.has(x.story) || picked.some((p) => p.k === x.k)) continue;
+      if (x.who.some((id) => (feat[id] || 0) >= 2)) continue;
+      picked.push(x); stories.add(x.story); for (const id of x.who) feat[id] = (feat[id] || 0) + 1;
+    }
+    // pobjednik: poruka prema stvarnom tijeku završnice (ne uzrocima)
+    const wp = R.get(W), sorted = ps.slice().sort((a, b) => b.fstep - a.fstep || (b.fu || 0) - (a.fu || 0) || b.score - a.score);
+    let wl = 'Osvaja krunu krčme!';
+    if (wp) {
+      const second = sorted.find((p) => p.pid !== W), maxStart = Math.max(...ps.map((p) => p.fst || 0));
+      if (G.crownWin === W && (wp.fst || 0) < maxStart) wl = 'Kreće s niže stepenice, a ipak osvaja krunu!';
+      else if (G.crownWin === W && second && second.fstep >= cfg.steps - 1) wl = 'Osvaja krunu nakon napete završnice!';
+      else if (G.crownWin === W) wl = 'Osvaja krunu na pitanju za krunu!';
+      else if ((T.leadTurns[W] || 0) >= Math.max(3, T.turn * 0.7)) wl = 'Vodi gotovo cijelu večer i ne ispušta krunu!';
+    }
+    // kratka priča iz odabranih događaja (predlošci; nikad ne tvrdi uzrok pobjede)
+    const by = (k) => picked.find((x) => x.k === k), v = (T.turn + n) % 2;
+    const ev = [];
+    const b1 = by('bt'), d1 = by('dbl'), c1 = by('cb'), r1 = by('rv'), l1 = by('ly'), k1 = by('bet'), q1 = by('st') || by('acc');
+    if (b1) ev.push(nmL(b1.who[0]) + ' bira zlato umjesto prijateljstva, a ' + nmL(b1.who[1]) + ' ostaje praznih džepova.');
+    if (d1) ev.push(nmL(d1.who[0]) + ' i ' + nmL(d1.who[1]) + ' istovremeno vade noževe, a riznica nestaje u trenu.');
+    if (r1 && ev.length < 3) ev.push(nmL(r1.who[0]) + ' i ' + nmL(r1.who[1]) + ' cijelu večer ne daju jedno drugom mira.');
+    if (c1 && ev.length < 3) ev.push(c1.line.indexOf('vrha') >= 0 ? nmL(c1.who[0]) + ' se s dna penje sve do vrha ljestvice.' : nmL(c1.who[0]) + ' kreće s dna, ali ne odustaje.');
+    if (l1 && ev.length < 3) ev.push(nmL(l1.who[0]) + ' i ' + nmL(l1.who[1]) + ' dokazuju da u ovoj krčmi još postoji čast.');
+    if (k1 && ev.length < 3) ev.push(nmL(k1.who[0]) + ' riskira i odnosi zlato iz kladionice.');
+    if (q1 && ev.length < 2) ev.push(nmL(q1.who[0]) + ' odgovara kao da zna pitanja unaprijed.');
+    let story;
+    if (!wp) story = 'Još jedna večer u krčmi je za nama.';
+    else if (ev.length >= 2) story = [['Večer je počela mirno, ali nije dugo ostala takva.', 'Od prvog pitanja krčma je brujala.'][v]].concat(ev, [(wl.indexOf('napete') >= 0 ? 'Nakon napete završnice krunu nosi ' : 'Krunu na kraju nosi ') + wp.name + '.',
+      ['Ova krčma dugo će pamtiti večerašnje goste!', 'Jedni su tražili slavu, drugi zlato, a neki su samo pokušavali preživjeti.'][v]]).join(' ');
+    else if (ev.length === 1) story = ev[0] + ' Krunu na kraju nosi ' + wp.name + '. ' + ['Ova krčma dugo će pamtiti ovu večer!', 'Krčmar briše šank i smiješi se.'][v];
+    else story = 'Još jedna napeta večer u krčmi! Krunu nosi ' + wp.name + ', ali ostali pružaju ozbiljan otpor.';
+    return {
+      id: G.s, w: wp ? { pid: W, line: wl, num: bodN(wp.score) } : null,
+      aw: picked.map((x) => ({ k: x.k, ic: LEG_T[x.k][0], t: LEG_T[x.k][1], who: x.who, line: x.line, num: x.num })),
+      story,
+    };
+  }
   function finish() {
     clear();
     payLoyalty();
     const ranked = list().slice().sort((a, b) => b.fstep - a.fstep || (b.fu || 0) - (a.fu || 0) || b.score - a.score);
     G.win = ranked.length ? ranked[0].pid : null;
     G.fact = pick(D.facts);
+    // legende: sastave se jednom i ne mijenjaju se do nove partije (isti pregled pri ponovnom otvaranju i spajanju)
+    try { G.leg = buildLegends(); } catch (e) { G.leg = null; }
     G.ph = 'final'; G.s += 1; G.dur = 0; G.endsAt = now();
     onChange();
   }
@@ -2842,7 +3000,7 @@ function createGame(o) {
     clear();
     for (const [id, p] of R) if (!p.on) R.delete(id);
     for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; p.done = false; }
-    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.win = null; G.rl = ''; TD.reset(); pactReset();
+    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.win = null; G.rl = ''; G.leg = null; G.crownWin = null; TD.reset(); pactReset();
     onChange();
   }
   function skip() { if (SKIPPABLE[G.ph]) endPhase(); }
@@ -2869,7 +3027,7 @@ function createGame(o) {
       REVENGE: [['⚔️ {B} uzvraća udarac!', '{A} sada plaća za svoje napade'], ['⚔️ Osveta!', 'Nakon {K} napada {B} prestiže napadača: {A}'], ['⚔️ Tko se zadnji smije…', '{B} je sada ispred, a {A} gleda u leđa']],
       POWER_REVENGE: [['⚔️ {B} vraća milo za drago!', '{A} dobiva vlastiti lijek'], ['⚔️ Uzvrat!', '{B} napokon cilja natrag: {A}']],
       BETRAY_REVENGE: [['🔥 {V} se vraća po svoje!', '{T} ipak neće mirno uživati u ukradenom zlatu'], ['🗡️ Izdaja se ne zaboravlja', '{V} je opet ispred izdajnika: {T}']],
-      CB_RISE: [['🔥 {X} se vraća iz mrtvih!', 'Zaostatak je pao s {G} na {H} bodova. Ostali, oprez!'], ['🔥 Povratak se zahuktava', '{X} topi zaostatak: {G} → {H}']],
+      CB_RISE: [['🔥 {X} se vraća iz mrtvih!', 'Zaostatak se topi: {G} → {H}. Ostali, oprez!'], ['🔥 Povratak se zahuktava', '{X} topi zaostatak: {G} → {H}']],
       COMEBACK: [['🔥 Povratak u igru!', '{X}: {L}. → {R}.'], ['🔥 Netko je otpisan prerano', '{X} skače s {L}. na {R}. mjesto']],
       COMEBACK_BIG: [['🏆 OD POSLJEDNJEG DO PRVOG!', '{X} upravo piše legendu ove krčme'], ['🏆 Povratak večeri!', '{X}: s dna ravno na vrh']],
       STREAK3: [['🔥 U formi!', '{X} — 3 točna zaredom'], ['🎯 Zagrijavanje je gotovo', '{X} niže treći točan zaredom']],
@@ -2906,6 +3064,8 @@ function createGame(o) {
         // TD 2.0: parovi (zamjene mjesta, osvete), povratci, vladavina, izdaje, ponavljanje rečenica, legende
         pairs: {}, worst: {}, leadTurns: {}, chase: {}, betr: [], lineAt: {}, typeAt: {}, feat: {}, moSeq: 0,
         leg: { cb: null, bt: null, rv: null, rev: null, bet: null, lead: null },
+        // za legende: pitanja, točni, najbrži točan (obična pitanja), najdulji niz, neto kladionica, najbolje mjesto nakon dna, dvoboji, izdaje, odani paktovi
+        stat: { qn: 0, ans: {}, ok: {}, fast: {}, maxSt: {}, betNet: {}, rise: {}, duels: [], bt: [], loyal: [] },
       };
       G.pend = null; G.du = null; G.se = null; G.mo = null;
     }
@@ -2942,7 +3102,7 @@ function createGame(o) {
         // uzvrat moću: napadnuti napokon cilja onoga tko ga je više puta napao
         const before = (T.attacks[e.t] && T.attacks[e.t][e.f]) || 0;
         if (n === 1 && before >= 2 && T.turn - P.revAt > 3) {
-          const c = cand('POWER_REVENGE', 7, 'pr:' + pairKey(e.f, e.t) + ':' + T.turn, { A: nm(e.t), B: nm(e.f) }, [e.f, e.t], ['attack', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', before, { a: e.t, b: e.f }); } });
+          const c = cand('POWER_REVENGE', 7, 'pr:' + pairKey(e.f, e.t) + ':' + T.turn, { A: nm(e.t), B: nm(e.f) }, [e.f, e.t], ['attack', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', before, { av: e.f, at: e.t }); } });
           if (c) cands.push(c);
         } else if (n === 1 && !back && human(e.f) && human(e.t)) {
           const c = cand('RIVAL_FIRST', 3, 'fb:' + pairKey(e.f, e.t), { A: nm(e.f), B: nm(e.t) }, [e.f, e.t], ['attack', 'shocked'], { vs: 1 });
@@ -2988,12 +3148,12 @@ function createGame(o) {
         const pa = T.prevRank[A.pid], pb = T.prevRank[B.pid];
         if (!pa || !pb || pa < pb) continue;
         const P = pairOf(A.pid, B.pid), close = A.score - B.score <= 500;
-        if (close) { P.sw++; P.last = A.pid; }
+        P.all = (P.all || 0) + 1; if (close) { P.sw++; P.last = A.pid; }
         const key = pairKey(A.pid, B.pid);
         legend('rv', P.sw + P.ev, { a: A.pid, b: B.pid });
         const hits = (T.attacks[B.pid] && T.attacks[B.pid][A.pid]) || 0;
         if (hits >= 2 && T.turn - P.revAt > 3) {
-          const c = cand('REVENGE', 8.5, 'rg:' + key + ':' + T.turn, { A: nm(B.pid), B: nm(A.pid), K: hits }, [A.pid, B.pid], ['happy', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', hits, { a: B.pid, b: A.pid }); } });
+          const c = cand('REVENGE', 8.5, 'rg:' + key + ':' + T.turn, { A: nm(B.pid), B: nm(A.pid), K: hits }, [A.pid, B.pid], ['happy', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', hits, { av: A.pid, at: B.pid }); } });
           if (c) cands.push(c);
         } else if (close && P.sw >= 3 && A.pid !== lead) {
           const c = cand('RIVAL_SWAP', 5, 'sw:' + key + ':' + P.sw, { A: nm(A.pid), B: nm(B.pid), K: P.sw }, [A.pid, B.pid], ['happy', 'shocked'], { vs: 1, snd: 'stingRival' });
@@ -3007,7 +3167,7 @@ function createGame(o) {
         if (!V || !Tr) { b.done = true; continue; }
         if (V.score > Tr.score && b.below) {
           b.done = true;
-          const c = cand('BETRAY_REVENGE', 9, 'br:' + b.id, { V: nm(b.v), T: nm(b.t) }, [b.v, b.t], ['happy', 'shocked'], { vs: 1, snd: 'stingComeback', onShow: () => legend('rev', 10 + b.gain / 100, { a: b.v, b: b.t, bt: 1 }) });
+          const c = cand('BETRAY_REVENGE', 9, 'br:' + b.id, { V: nm(b.v), T: nm(b.t) }, [b.v, b.t], ['happy', 'shocked'], { vs: 1, snd: 'stingComeback', onShow: () => legend('rev', 10 + b.gain / 100, { av: b.v, at: b.t, bt: 1 }) });
           if (c) cands.push(c);
         }
       }
@@ -3017,6 +3177,7 @@ function createGame(o) {
         if (T.highRank[k] == null || now < T.highRank[k]) T.highRank[k] = now;
         const low = T.lowRank[k], was = T.prevRank[k], gapNow = ps[0].score - p.score;
         if (n >= 3 && now === n) T.worst[k] = Math.max(T.worst[k] || 0, gapNow);
+        if (n >= 3 && T.lowRank[k] === n && (T.stat.rise[k] == null || now < T.stat.rise[k])) T.stat.rise[k] = now;
         const worst = T.worst[k] || 0, big = worst >= Math.max(800, ps[0].score * 0.3);
         if ((T.cbN || 0) >= 3) continue;
         const done = () => { T.cbN = (T.cbN || 0) + 1; legend('cb', worst, { pid: k, low, now }); };
@@ -3127,6 +3288,13 @@ function createGame(o) {
       T.turn++;
       const cands = [];
       const right = active().filter((p) => p.ans === G.q.a);
+      { const S = T.stat; S.qn++;
+        for (const p of active()) {
+          inc(S.ans, p.pid); if (p.ans === G.q.a) inc(S.ok, p.pid);
+          // najbrži točan: samo obična pitanja (isto vrijeme za odgovor, bez posebnih bitaka)
+          if (p.ans === G.q.a && !G.qv && p.ansMs > 0 && (S.fast[p.pid] == null || p.ansMs < S.fast[p.pid])) S.fast[p.pid] = p.ansMs;
+          if (p.betRes) S.betNet[p.pid] = (S.betNet[p.pid] || 0) + p.betRes;
+        } }
       const fast = right.slice().sort((a, b) => a.ansMs - b.ansMs)[0];
       T.lastFast = fast && right.length > 1 ? fast.pid : null;
       if (T.lastFast) inc(T.fastest, T.lastFast);
@@ -3134,6 +3302,7 @@ function createGame(o) {
         const k = p.pid;
         if (p.ans === G.q.a) {
           const st = inc(T.streak, k); T.wrongStreak[k] = 0;
+          if (st > (T.stat.maxSt[k] || 0)) T.stat.maxSt[k] = st;
           const c = st === 5 ? cand('STREAK5', 7, 's5:' + k + ':' + T.turn, { X: p.name }, [k], ['happy'], { snd: 'stingStreak' })
             : st === 3 ? cand('STREAK3', 5, 's3:' + k + ':' + T.turn, { X: p.name }, [k], ['happy'], { snd: 'stingStreak' }) : null;
           if (c) cands.push(c);
@@ -3183,6 +3352,7 @@ function createGame(o) {
     // javna izdaja (podaci postaju javni tek s izdajom): pamti za kasniji "vraća se po svoje"
     function onBetray(e) {
       if (!T) return;
+      if (T.stat.bt.length < 8) T.stat.bt.push({ id: T.stat.bt.length + 1, k: e.k, t: e.t, v: e.v, a: e.a, b: e.b, gain: e.gain || 0, st: e.st || 0, la: e.la || 0, lb: e.lb || 0, dur: e.dur || 1 });
       if (e.k === 'betray') {
         const Tr = R.get(e.t), V = R.get(e.v);
         if (T.betr.length < 6) T.betr.push({ id: T.betr.length + 1, t: e.t, v: e.v, gain: e.gain, turn: T.turn, below: !!(V && Tr && V.score < Tr.score), done: false });
@@ -3197,10 +3367,12 @@ function createGame(o) {
       if (ab + ba >= 3) return 'Ovo dvoje imaju neraščišćenih računa.';
       return '';
     }
+    function onLoyal(evs) { if (T) for (const e of evs) if (T.stat.loyal.length < 6) T.stat.loyal.push({ a: e.a, b: e.b, tre: e.tre, bonus: e.bonus }); }
     function duelOut(w, a, b) {
+      if (T && T.stat.duels.length < 4) T.stat.duels.push({ a, b, w: w || null });
       if (!T || !w) return '';
       const l = w === a ? b : a, hits = (T.attacks[l] || {})[w] || 0;
-      if (hits >= 2) { legend('rev', hits, { a: w, b: l, du: 1 }); return '⚔️ Osveta je slatka: ' + nm(w) + ' pobjeđuje napadača!'; }
+      if (hits >= 2) { legend('rev', hits, { av: w, at: l, du: 1 }); return '⚔️ Osveta je slatka: ' + nm(w) + ' pobjeđuje napadača!'; }
       if (T.activeRival === pairKey(a, b)) return 'Rivalstvo dobiva novo poglavlje.';
       return '';
     }
@@ -3222,7 +3394,7 @@ function createGame(o) {
       T.secrets[who.pid] = 1; T.secretTotal++; T.lastSecretBn = G.bn;
       return { k: kind, p: who.pid, x: null, ok: 0 };
     }
-    return { reset, onVote, onPower, afterQuestion, afterScores, afterFinale, secretPick, onBetray, duelNote, duelOut, get state() { return T; } };
+    return { reset, onVote, onPower, afterQuestion, afterScores, afterFinale, secretPick, onBetray, onLoyal, duelNote, duelOut, get state() { return T; } };
   })();
 
   function showMoment() {
@@ -3476,6 +3648,7 @@ function createGame(o) {
       if (A) { A.score += tot - half; A.pact = null; } if (B) { B.score += half; B.pact = null; }
       out.push({ a: k.a, b: k.b, tre: k.tre, bonus: tot - k.tre, each: half, ea: tot - half });
     }
+    TD.onLoyal(out);
     G.offers = [];
     return out;
   }
@@ -3637,7 +3810,7 @@ function createGame(o) {
     if (ph === 'sortReveal') v.so.key = G.so.key;
     if (ph === 'link' || ph === 'linkReveal') v.li = { t: G.li.t, L: G.li.L, R: G.li.R };
     if (ph === 'linkReveal') v.li.key = G.li.key;
-    if (ph === 'final') { v.win = G.win; v.fact = G.fact; }
+    if (ph === 'final') { v.win = G.win; v.fact = G.fact; if (G.leg) v.lg = G.leg; }
     if (ph === 'moment' && G.mo) v.mo = G.mo;
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
@@ -4611,7 +4784,8 @@ function createGame(o) {
   const byScore = (P) => P.slice().sort((a, b) => b.sc - a.sc);
   const nameOf = (d, id) => { const p = d.P.find((x) => x.id === id); return p ? p.n : '?'; };
   const avOf = (d, id) => { const p = d.P.find((x) => x.id === id); return p ? p.a : 0; };
-  function timerHtml(urgentAt) { return '<div class="timer" id="timer" data-u="' + (urgentAt || 3000) + '"><div id="tbar"></div></div>'; }
+  function timerNow() { const ms = Math.max(0, clockEnds - Date.now()); return { ms, fr: clockDur ? Math.max(0, Math.min(1, ms / clockDur)) : 1 }; }
+  function timerHtml(urgentAt) { const t = timerNow(), u = urgentAt || 3000; return '<div class="timer' + (clockDur && t.ms <= u ? ' urgent' : '') + '" id="timer" data-u="' + u + '"><div id="tbar" data-lv="' + (t.fr > 0.5 ? 'g' : t.fr > 0.2 ? 'a' : 'r') + '" style="width:' + (t.fr * 100).toFixed(2) + '%"></div></div>'; }
   function lineup(d, opts) {
     opts = opts || {};
     return '<div class="lineup">' + d.P.map((p) => {
@@ -5188,6 +5362,149 @@ function createGame(o) {
     for (let s = 1; s <= steps; s++) bars += '<i class="' + ((me.st || 0) >= s ? 'on' : (me.st || 0) + 1 === s && me.fp ? 'half' : '') + '" style="width:' + (40 + (steps - s) * 18) + 'px"></i>';
     return '<div class="step-meter" aria-label="Stepenica ' + (me.st || 0) + ' od ' + steps + '"><i class="crown' + (me.st >= d.steps ? ' on' : '') + '">👑</i>' + bars + '</div><div class="p-sub">' + esc(progTxt(d, me)) + '</div>';
   }
+  // ===================== LEGENDE OVE KRČME: prikaz =====================
+  // Pregled je osobni (svaki uređaj ga sam otvara i zatvara) i ne blokira domaćina; sadržaj dolazi gotov od domaćina (d.lg).
+  const LEGV = { open: -1, done: -1, png: null, pngId: -1, busy: false, note: '' };
+  const legP = (d, id) => d.P.find((p) => p.id === id);
+  const legRank = (d) => d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
+  function legFig(d, id, pose) {
+    const p = legP(d, id); if (!p) return '';
+    return '<span class="lg-fig"><span class="mini">' + avSvg(p.a, pose || 'happy') + '</span>' + (p.b ? '<span class="lg-bot">BOT</span>' : '') + '</span>';
+  }
+  function legNames(d, who) { return who.map((id) => esc((legP(d, id) || {}).n || '?')).join(who.length === 2 ? ' i ' : ', '); }
+  function legHtml(d, tv) {
+    const L0 = d.lg, w = L0.w && legP(d, L0.w.pid);
+    const instant = LEGV.done === L0.id ? ' lg-instant' : '';
+    const crown = w ? '<div class="lg-card lg-crown" style="--i:0"><div class="lg-k"><span class="lg-ic">🏆</span>Kruna krčme</div>' +
+      '<div class="lg-who">' + legFig(d, w.id, 'victory') + '<span class="lg-nm">' + esc(w.n) + '</span></div><div class="lg-line">' + esc(L0.w.line) + '</div>' + (L0.w.num ? '<div class="lg-num">' + esc(L0.w.num) + '</div>' : '') + '</div>' : '';
+    const cards = L0.aw.map((x, i) => '<div class="lg-card lg-' + esc(x.k) + '" style="--i:' + (i + 1) + '"><div class="lg-k"><span class="lg-ic">' + esc(x.ic) + '</span>' + esc(x.t) + '</div>' +
+      '<div class="lg-who">' + x.who.map((id) => legFig(d, id, x.k === 'vic' ? 'sad' : x.k === 'rv' || x.k === 'dbl' ? 'attack' : 'happy')).join('') + '<span class="lg-nm">' + legNames(d, x.who) + '</span></div>' +
+      '<div class="lg-line">' + esc(x.line) + '</div>' + (x.num ? '<div class="lg-num">' + esc(x.num) + '</div>' : '') + '</div>').join('');
+    const share = '<button class="btn win-cta" id="legSave"' + (LEGV.busy ? ' disabled' : '') + '>📸 Spremi legendu</button>';
+    return '<div class="lg-wrap' + (tv ? ' tv-lg' : '') + instant + '" id="legWrap"><div class="lg-book" id="legBook">' +
+      '<div class="lg-head"><div class="lg-t">📜 Legende ove krčme</div><div class="lg-sub">Svaka večer u krčmi stvara nove legende…</div></div>' +
+      '<div class="lg-story">' + esc(L0.story || '') + '</div>' +
+      '<div class="lg-list">' + crown + cards + '</div>' +
+      '<div class="lg-act">' + share + '<div class="lg-note" role="status">' + esc(LEGV.note) + '</div><button class="btn ghost" id="legClose">Natrag na poredak</button></div>' +
+      '</div></div>';
+  }
+  function legRerender() { if (!S) return; if (phoneShown()) phoneRender(false); else tvV(S); }
+  function bindLeg(d) {
+    if (!d || d.ph !== 'final' || !d.lg) return;
+    bind('legOpen', () => { AUDIO.play('whoosh'); LEGV.open = d.lg.id; LEGV.note = ''; legRerender(); legPrep(d); });
+    bind('legClose', () => { AUDIO.play('tap'); LEGV.open = -1; LEGV.done = d.lg.id; legRerender(); });
+    // dodir na knjigu: odmah prikaži sve (bez čekanja animacija)
+    const bk = document.getElementById('legBook');
+    if (bk) bk.addEventListener('click', (e) => { if (e.target.closest('button')) return; const wr = document.getElementById('legWrap'); if (wr && !wr.classList.contains('lg-instant')) { wr.classList.add('lg-instant'); LEGV.done = d.lg.id; } });
+    if (LEGV.open === d.lg.id) setTimeout(() => { LEGV.done = d.lg.id; }, 2200);
+    bind('legSave', () => legSave(d));
+  }
+
+  // ---------- kartica za dijeljenje (9:16, crta se lokalno na canvasu, samo javni podaci) ----------
+  const legImg = (src) => new Promise((res) => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
+  function legWrap(c, text, x, y, maxW, lh, maxLines) {
+    const words = String(text).split(/\s+/); let line = '', n = 0;
+    for (let i = 0; i < words.length; i++) {
+      const t = line ? line + ' ' + words[i] : words[i];
+      if (c.measureText(t).width > maxW && line) {
+        if (maxLines && n === maxLines - 1) { while (c.measureText(line + '…').width > maxW && line) line = line.slice(0, -1); c.fillText(line + '…', x, y + n * lh); return n + 1; }
+        c.fillText(line, x, y + n * lh); n++; line = words[i];
+      } else line = t;
+    }
+    if (line) { c.fillText(line, x, y + n * lh); n++; }
+    return n;
+  }
+  function legPanel(c, x, y, w, h, gold) {
+    const r = 28;
+    c.save(); c.beginPath(); c.roundRect ? c.roundRect(x, y, w, h, r) : c.rect(x, y, w, h);
+    c.fillStyle = 'rgba(42, 23, 11, 0.9)'; c.fill();
+    c.lineWidth = gold ? 6 : 4; c.strokeStyle = gold ? 'rgba(255, 204, 110, 0.95)' : 'rgba(176, 122, 58, 0.9)'; c.stroke();
+    c.beginPath(); c.roundRect ? c.roundRect(x + 10, y + 10, w - 20, h - 20, r - 8) : c.rect(x + 10, y + 10, w - 20, h - 20);
+    c.lineWidth = 2; c.strokeStyle = 'rgba(232, 170, 80, 0.45)'; c.stroke(); c.restore();
+  }
+  async function legCard(d) {
+    const L0 = d.lg, W = 1080, H = 1920;
+    try { if (document.fonts) { await Promise.race([Promise.all([document.fonts.load('80px "Titan One"'), document.fonts.load('900 40px Nunito'), document.fonts.ready]), new Promise((r) => setTimeout(r, 1500))]); } } catch (e) {}
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const c = cv.getContext('2d');
+    const DISP = '"Titan One", "Fredoka", "Trebuchet MS", sans-serif', BODY = 'Nunito, system-ui, sans-serif';
+    const spr = (p, pose) => p && AV[p.a] && AV[p.a].spr ? 'chars/' + AV[p.a].spr + '/' + pose + '.webp' : null;
+    const rank = legRank(d), w = L0.w && legP(d, L0.w.pid);
+    const aws = L0.aw.slice(0, 3);
+    const srcs = ['ui/bg-p.webp', spr(w, 'victory')].concat(rank.slice(0, 6).map((p) => spr(p, 'idle')), aws.map((x) => spr(legP(d, x.who[0]), 'happy')));
+    const imgs = await Promise.all(srcs.map((s) => (s ? legImg(s) : Promise.resolve(null))));
+    // pozadina krčme + topli sloj
+    c.fillStyle = '#2a170b'; c.fillRect(0, 0, W, H);
+    const bg = imgs[0];
+    if (bg) { const k = Math.max(W / bg.width, H / bg.height), bw = bg.width * k, bh = bg.height * k; c.drawImage(bg, (W - bw) / 2, (H - bh) / 2, bw, bh); }
+    const gr = c.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, 'rgba(20, 10, 4, 0.55)'); gr.addColorStop(0.5, 'rgba(20, 10, 4, 0.35)'); gr.addColorStop(1, 'rgba(20, 10, 4, 0.75)');
+    c.fillStyle = gr; c.fillRect(0, 0, W, H);
+    c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    // naslov
+    c.fillStyle = '#ffe2a6'; c.font = '900 40px ' + BODY; c.fillText('🍻 TRIVIA TAVERN', W / 2, 110);
+    c.font = '84px ' + DISP; c.lineWidth = 10; c.strokeStyle = 'rgba(70, 36, 10, 0.95)'; c.strokeText('LEGENDE VEČERI', W / 2, 205);
+    c.fillStyle = '#ffcf6e'; c.fillText('LEGENDE VEČERI', W / 2, 205);
+    // pobjednik
+    let y = 250;
+    legPanel(c, 70, y, W - 140, 430, true);
+    if (imgs[1]) { const s = 300; c.drawImage(imgs[1], W / 2 - s / 2, y + 20, s, s); }
+    c.fillStyle = '#ffe2a0'; c.font = '64px ' + DISP; c.fillText('👑 ' + (w ? w.n : ''), W / 2, y + 372);
+    c.fillStyle = '#f6ead0'; c.font = '800 34px ' + BODY; legWrap(c, L0.w ? L0.w.line : '', W / 2, y + 412, W - 220, 40, 1);
+    // konačni poredak
+    y += 460;
+    const rows = rank.slice(0, 6), rh = 64;
+    legPanel(c, 70, y, W - 140, 40 + rows.length * rh, false);
+    rows.forEach((p, i) => {
+      const ry = y + 26 + i * rh;
+      c.textAlign = 'left'; c.fillStyle = i === 0 ? '#ffcf6e' : '#e2b764'; c.font = '900 36px ' + BODY; c.fillText((i + 1) + '.', 110, ry + 44);
+      const im = imgs[2 + i]; if (im) c.drawImage(im, 170, ry + 2, 56, 56);
+      c.fillStyle = '#f6ead0'; c.font = '800 36px ' + BODY; legWrap(c, p.n + (p.b ? ' (bot)' : ''), 245, ry + 44, 520, 40, 1);
+      c.textAlign = 'right'; c.fillStyle = '#ffe2a6'; c.font = '900 36px ' + BODY; c.fillText(d.steps ? (p.st || 0) + '/' + d.steps : String(p.sc), W - 110, ry + 44);
+    });
+    c.textAlign = 'center';
+    y += 40 + rows.length * rh + 30;
+    // 2–3 najvažnija događaja
+    const ah = 150;
+    aws.forEach((x, i) => {
+      const ay = y + i * (ah + 18);
+      if (ay + ah > H - 260) return;
+      legPanel(c, 70, ay, W - 140, ah, false);
+      const im = imgs[2 + rows.length + i]; if (im) c.drawImage(im, 100, ay + 20, 110, 110);
+      c.textAlign = 'left'; c.fillStyle = '#ffcf6e'; c.font = '44px ' + DISP; legWrap(c, x.ic + ' ' + x.t, 235, ay + 62, W - 360, 46, 1);
+      c.fillStyle = '#f6ead0'; c.font = '800 32px ' + BODY; legWrap(c, x.who.map((id) => (legP(d, id) || {}).n || '?').join(' i ') + ' — ' + x.line, 235, ay + 108, W - 360, 36, 1);
+      c.textAlign = 'center';
+    });
+    // završna poruka (kraj priče)
+    const end = (((L0.story || '').match(/[^.!?]+[.!?]+/g) || []).pop() || '').trim();
+    c.fillStyle = '#ffe2a6'; c.font = 'italic 800 36px ' + BODY; legWrap(c, end, W / 2, H - 170, W - 200, 44, 2);
+    c.fillStyle = 'rgba(246, 234, 208, 0.7)'; c.font = '900 28px ' + BODY; c.fillText('Trivia Tavern · krčma koja pamti', W / 2, H - 70);
+    return new Promise((res) => cv.toBlob((b) => res(b), 'image/png'));
+  }
+  // pripremi sliku čim se legende otvore (dijeljenje mora krenuti odmah na dodir)
+  function legPrep(d) {
+    if (LEGV.pngId === d.lg.id && LEGV.png) return Promise.resolve(LEGV.png);
+    const id = d.lg.id;
+    return legCard(d).then((b) => { if (b && id === (S && S.lg && S.lg.id)) { LEGV.png = b; LEGV.pngId = id; } return b; }).catch(() => null);
+  }
+  async function legSave(d) {
+    if (LEGV.busy) return;
+    AUDIO.play('tap');
+    const setNote = (t) => { LEGV.note = t; const n = document.querySelector('.lg-note'); if (n) n.textContent = t; };
+    try {
+      let blob = LEGV.pngId === d.lg.id ? LEGV.png : null;
+      if (!blob) { LEGV.busy = true; setNote('Pripremam sliku…'); blob = await legPrep(d); LEGV.busy = false; }
+      if (!blob) { setNote('Slika se nije mogla napraviti. Pokušaj ponovno.'); return; }
+      const file = typeof File === 'function' ? new File([blob], 'trivia-tavern-legende.png', { type: 'image/png' }) : null;
+      if (file && navigator.canShare && navigator.share && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: 'Trivia Tavern — Legende večeri' }); setNote('Legenda je podijeljena! 🍻'); return; }
+        catch (e) { if (e && e.name === 'AbortError') { setNote(''); return; } }
+      }
+      const url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = 'trivia-tavern-legende.png'; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      setNote('Slika je spremljena (trivia-tavern-legende.png).');
+    } catch (e) { LEGV.busy = false; setNote('Spremanje nije uspjelo. Pokušaj ponovno.'); }
+  }
   const CONT = { 't:vote>t:voteResult': 1, 'p:vote>p:voteResult': 1 };
   // ---------- KEEP: isti ekran iscrtan ponovno -> animacije se nastavljaju gdje su stale ----------
   // (bez ovoga svako osvježavanje unutar iste faze ponovno pokrene ulazne animacije pa elementi "zatitraju")
@@ -5196,6 +5513,7 @@ function createGame(o) {
     const IDS = ['bk', 'v', 'c', 't', 'p', 'av', 'pk', 'bet', 'k'];
     function idOf(e) {
       let s = e.id ? '#' + e.id : '';
+      if (e.getAttribute && e.getAttribute('title')) s += '[t=' + e.getAttribute('title') + ']';
       for (const k of IDS) if (e.dataset && e.dataset[k] !== undefined) s += '[' + k + '=' + e.dataset[k] + ']';
       return s;
     }
@@ -5279,7 +5597,7 @@ function createGame(o) {
   // ---------- TV ----------
   function tvTop(d, label) {
     const ring = INPUT_PHASES[d.ph]
-      ? '<span class="ring" id="tring"><svg viewBox="0 0 100 100"><circle class="rbg" cx="50" cy="50" r="42"/><circle class="rfg" id="tarc" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="0"/></svg><b id="tnum"></b></span>'
+      ? '<span class="ring" id="tring"><svg viewBox="0 0 100 100"><circle class="rbg" cx="50" cy="50" r="42"/><circle class="rfg" id="tarc" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="' + (clockDur ? (263.9 * (1 - timerNow().fr)).toFixed(1) : 0) + '"/></svg><b id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</b></span>'
       : '<span class="ring empty"></span>';
     return '<div class="tv-top"><span class="rl">' + esc(d.rl || '') + '</span><span class="tv-sub" style="flex:1">' + (label || '') + '</span>' + ring + '</div>';
   }
@@ -5419,6 +5737,7 @@ function createGame(o) {
     if (d.ph === 'cast') CAST.start(document.getElementById('castStage'), d, true);
     bind('skip', () => game.skip());
     bind('again', () => { game.restart(); });
+    bindLeg(d);
     bind('quit', reset);
     bind('toPhone', () => { demoView = 'phone'; lastSig = ''; render(); });
     tick();
@@ -5639,6 +5958,7 @@ function createGame(o) {
     return show.map((p) => '<span class="vface" title="' + esc(p.n) + '">' + avSvg(p.a, 'idle') + '</span>').join('') + (list.length > show.length ? '<span class="vface more">+' + (list.length - show.length) + '</span>' : '');
   }
   function winHtml(d, tv) {
+    const legBtn = d.lg ? '<button class="btn lg-open" id="legOpen">📜 Legende ove krčme</button>' : '';
     const ranked = d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
     const w = d.P.find((p) => p.id === d.win) || ranked[0];
     const others = ranked.filter((p) => p !== w);
@@ -5648,11 +5968,12 @@ function createGame(o) {
     const sub = !tv && me ? (w.id === PID ? 'Pobijedio si! Vladar Trivia Taverna!' : esc(w.n) + ' je pobijedio!') : 'Vladar Trivia Taverna!';
     const board = '<div class="mboard wide">' + ranked.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a) + '</span><span class="nm">' + esc(p.n) + (!tv && p.id === PID ? '<span class="you">Ti</span>' : '') + '</span><span class="sc">' + (p.st || 0) + '/' + d.steps + '</span></div>').join('') + '</div>';
     const fact = d.fact && (tv || (me && w.id === PID)) ? '<div class="win-fact"><b>Nagrada za pobjednika:</b> ' + esc(d.fact) + '</div>' : '';
-    const act = tv ? '<div class="win-act"><button class="btn win-cta" id="again">Igraj ponovno</button><button class="btn ghost" id="quit">Početni ekran</button></div>'
-      : '<div class="win-act">' + (isLocalHost() ? '<button class="btn win-cta" id="dagain">Igraj ponovno</button>' : '<div class="win-wait">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Početni ekran</button></div>';
+    const act = tv ? '<div class="win-act">' + legBtn + '<button class="btn win-cta" id="again">Igraj ponovno</button><button class="btn ghost" id="quit">Početni ekran</button></div>'
+      : '<div class="win-act">' + legBtn + (isLocalHost() ? '<button class="btn win-cta" id="dagain">Igraj ponovno</button>' : '<div class="win-wait">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Početni ekran</button></div>';
     const name = '<div class="win-name">' + esc(w.n) + '</div><div class="win-sub">' + sub + '</div>';
-    if (tv) return '<div class="winscr"><div class="win-t">Pobjednik!</div><div class="win-left">' + hero + name + '</div><div class="win-right">' + board + fact + '</div>' + act + '</div>';
-    return '<div class="winscr"><div class="win-t">Pobjednik!</div>' + hero + name + board + fact + act + '</div>';
+    const lgo = d.lg && LEGV.open === d.lg.id ? legHtml(d, tv) : '';
+    if (tv) return '<div class="winscr"><div class="win-t">Pobjednik!</div><div class="win-left">' + hero + name + '</div><div class="win-right">' + board + fact + '</div>' + act + '</div>' + lgo;
+    return '<div class="winscr"><div class="win-t">Pobjednik!</div>' + hero + name + board + fact + act + '</div>' + lgo;
   }
   // ---------- Tavern Director ----------
   const pById = (d, id) => d.P.find((p) => p.id === id);
@@ -5957,7 +6278,7 @@ function createGame(o) {
     }).join('');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
-    return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
+    return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +
       qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + '</div>';
@@ -6163,6 +6484,7 @@ function createGame(o) {
     bind('dstart', () => game.start());
     if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
+    bindLeg(d);
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });
     bind('lobInv', () => { L.inv = true; phoneRender(true); });
     bind('invClose', () => { L.inv = false; phoneRender(true); });

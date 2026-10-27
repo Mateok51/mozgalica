@@ -2323,3 +2323,32 @@ s = rep(s, "  function tdSting(d) { if (!d.mo) return; const s0 = d.s, wait = Ma
            "  function tdSting(d) { if (!d.mo) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0);")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('tdSting reconnect OK')
+
+# ---- Legende ove krčme: pregled na završnom ekranu (mobitel i TV) + kartica za dijeljenje ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/leg.css', encoding='utf-8').read() + s[i:]
+s = rep(s, "  const CONT = {", open(SP + '/v4/leg-ui.js', encoding='utf-8').read() + "  const CONT = {")
+s = rep(s, "  function winHtml(d, tv) {\n", "  function winHtml(d, tv) {\n    const legBtn = d.lg ? '<button class=\"btn lg-open\" id=\"legOpen\">📜 Legende ove krčme</button>' : '';\n")
+s = rep(s, "    const act = tv ? '<div class=\"win-act\"><button class=\"btn win-cta\" id=\"again\">Igraj ponovno</button>",
+           "    const act = tv ? '<div class=\"win-act\">' + legBtn + '<button class=\"btn win-cta\" id=\"again\">Igraj ponovno</button>")
+s = rep(s, "      : '<div class=\"win-act\">' + (isLocalHost() ?", "      : '<div class=\"win-act\">' + legBtn + (isLocalHost() ?")
+# otvoreni pregled crta se iznad završnog ekrana (završni ekran ostaje ispod, isti kao prije)
+s = rep(s, "    if (tv) return '<div class=\"winscr\"><div class=\"win-t\">Pobjednik!</div><div class=\"win-left\">' + hero + name + '</div><div class=\"win-right\">' + board + fact + '</div>' + act + '</div>';\n    return '<div class=\"winscr\"><div class=\"win-t\">Pobjednik!</div>' + hero + name + board + fact + act + '</div>';",
+           "    const lgo = d.lg && LEGV.open === d.lg.id ? legHtml(d, tv) : '';\n    if (tv) return '<div class=\"winscr\"><div class=\"win-t\">Pobjednik!</div><div class=\"win-left\">' + hero + name + '</div><div class=\"win-right\">' + board + fact + '</div>' + act + '</div>' + lgo;\n    return '<div class=\"winscr\"><div class=\"win-t\">Pobjednik!</div>' + hero + name + board + fact + act + '</div>' + lgo;")
+s = rep(s, "    bind('again', () => { game.restart(); });\n", "    bind('again', () => { game.restart(); });\n    bindLeg(d);\n")
+s = rep(s, "    bind('dagain', () => { game.restart(); });\n", "    bind('dagain', () => { game.restart(); });\n    bindLeg(d);\n")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('legende UI OK')
+
+# ---- traka/krug vremena: novo iscrtavanje kreće od točnog stanja (bez skoka na 100 % i praznog broja) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  function timerHtml(urgentAt) { return '<div class=\"timer\" id=\"timer\" data-u=\"' + (urgentAt || 3000) + '\"><div id=\"tbar\"></div></div>'; }",
+           "  function timerNow() { const ms = Math.max(0, clockEnds - Date.now()); return { ms, fr: clockDur ? Math.max(0, Math.min(1, ms / clockDur)) : 1 }; }\n"
+           "  function timerHtml(urgentAt) { const t = timerNow(), u = urgentAt || 3000; return '<div class=\"timer' + (clockDur && t.ms <= u ? ' urgent' : '') + '\" id=\"timer\" data-u=\"' + u + '\"><div id=\"tbar\" data-lv=\"' + (t.fr > 0.5 ? 'g' : t.fr > 0.2 ? 'a' : 'r') + '\" style=\"width:' + (t.fr * 100).toFixed(2) + '%\"></div></div>'; }")
+s = rep(s, "<span id=\"tnum\"></span></div>' +\n      qTextHtml(d, false)", "<span id=\"tnum\">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +\n      qTextHtml(d, false)")
+s = rep(s, "stroke-dasharray=\"263.9\" stroke-dashoffset=\"0\"/></svg><b id=\"tnum\"></b></span>'",
+           "stroke-dasharray=\"263.9\" stroke-dashoffset=\"' + (clockDur ? (263.9 * (1 - timerNow().fr)).toFixed(1) : 0) + '\"/></svg><b id=\"tnum\">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</b></span>'")
+# KEEP: igrači u traci likova razlikuju se po imenu (title), pa izraz lica ne "preskače" na drugog lika
+s = rep(s, "      let s = e.id ? '#' + e.id : '';\n      for (const k of IDS)", "      let s = e.id ? '#' + e.id : '';\n      if (e.getAttribute && e.getAttribute('title')) s += '[t=' + e.getAttribute('title') + ']';\n      for (const k of IDS)")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('timer bez skoka OK')

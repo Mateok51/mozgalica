@@ -21,7 +21,7 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
 - web/mini-broker.js — lokalni MQTT broker za testove
 
 ## Testovi
-- Motor: node v3/engine-test.js, bots-test.js, pact-test.js, pyr-test.js, pace-test.js (tempo otkrivanja), td2-test.js (krčma 2.0; v3/td2.py primjenjuje nadogradnju na engine.pretd2.js)
+- Motor: node v3/engine-test.js, bots-test.js, pact-test.js, pyr-test.js, pace-test.js (tempo otkrivanja), td2-test.js (krčma 2.0), leg-test.js (legende). Motor: python3 v3/leg.py (pokreće td2.py nad engine.pretd2.js, zatim dodaje legende)
 - Web (pokretati jedan po jedan, port 8766): web/multi-test.js, notv-test.js, bots-web-test.js, net-test.js, relay-test.js, pact-web-test.js (TV=1, RELAY=1, LOYAL=1)
 - Cijeli demo u pregledniku: node v3/ui-test.js (~9 min)
 - Sigurnost: sec/attack.js, sec/impersonate.js, sec/csp-check.js

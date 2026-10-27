@@ -29,7 +29,7 @@ rep("""    function reset() {
       REVENGE: [['⚔️ {B} uzvraća udarac!', '{A} sada plaća za svoje napade'], ['⚔️ Osveta!', 'Nakon {K} napada {B} prestiže napadača: {A}'], ['⚔️ Tko se zadnji smije…', '{B} je sada ispred, a {A} gleda u leđa']],
       POWER_REVENGE: [['⚔️ {B} vraća milo za drago!', '{A} dobiva vlastiti lijek'], ['⚔️ Uzvrat!', '{B} napokon cilja natrag: {A}']],
       BETRAY_REVENGE: [['🔥 {V} se vraća po svoje!', '{T} ipak neće mirno uživati u ukradenom zlatu'], ['🗡️ Izdaja se ne zaboravlja', '{V} je opet ispred izdajnika: {T}']],
-      CB_RISE: [['🔥 {X} se vraća iz mrtvih!', 'Zaostatak je pao s {G} na {H} bodova. Ostali, oprez!'], ['🔥 Povratak se zahuktava', '{X} topi zaostatak: {G} → {H}']],
+      CB_RISE: [['🔥 {X} se vraća iz mrtvih!', 'Zaostatak se topi: {G} → {H}. Ostali, oprez!'], ['🔥 Povratak se zahuktava', '{X} topi zaostatak: {G} → {H}']],
       COMEBACK: [['🔥 Povratak u igru!', '{X}: {L}. → {R}.'], ['🔥 Netko je otpisan prerano', '{X} skače s {L}. na {R}. mjesto']],
       COMEBACK_BIG: [['🏆 OD POSLJEDNJEG DO PRVOG!', '{X} upravo piše legendu ove krčme'], ['🏆 Povratak večeri!', '{X}: s dna ravno na vrh']],
       STREAK3: [['🔥 U formi!', '{X} — 3 točna zaredom'], ['🎯 Zagrijavanje je gotovo', '{X} niže treći točan zaredom']],
@@ -75,7 +75,7 @@ rep("""        if (!e.b && (T.streak[e.t] || 0) >= 3) T.threat[e.t] = e.f;
         // uzvrat moću: napadnuti napokon cilja onoga tko ga je više puta napao
         const before = (T.attacks[e.t] && T.attacks[e.t][e.f]) || 0;
         if (n === 1 && before >= 2 && T.turn - P.revAt > 3) {
-          const c = cand('POWER_REVENGE', 7, 'pr:' + pairKey(e.f, e.t) + ':' + T.turn, { A: nm(e.t), B: nm(e.f) }, [e.f, e.t], ['attack', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', before, { a: e.t, b: e.f }); } });
+          const c = cand('POWER_REVENGE', 7, 'pr:' + pairKey(e.f, e.t) + ':' + T.turn, { A: nm(e.t), B: nm(e.f) }, [e.f, e.t], ['attack', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', before, { av: e.f, at: e.t }); } });
           if (c) cands.push(c);
         } else if (n === 1 && !back && human(e.f) && human(e.t)) {
           const c = cand('RIVAL_FIRST', 3, 'fb:' + pairKey(e.f, e.t), { A: nm(e.f), B: nm(e.t) }, [e.f, e.t], ['attack', 'shocked'], { vs: 1 });
@@ -132,7 +132,7 @@ rep("""      if (ps[0].score > 0 && lead !== T.leader) {
         legend('rv', P.sw + P.ev, { a: A.pid, b: B.pid });
         const hits = (T.attacks[B.pid] && T.attacks[B.pid][A.pid]) || 0;
         if (hits >= 2 && T.turn - P.revAt > 3) {
-          const c = cand('REVENGE', 8.5, 'rg:' + key + ':' + T.turn, { A: nm(B.pid), B: nm(A.pid), K: hits }, [A.pid, B.pid], ['happy', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', hits, { a: B.pid, b: A.pid }); } });
+          const c = cand('REVENGE', 8.5, 'rg:' + key + ':' + T.turn, { A: nm(B.pid), B: nm(A.pid), K: hits }, [A.pid, B.pid], ['happy', 'shocked'], { vs: 1, snd: 'stingRival', onShow: () => { P.revAt = T.turn; legend('rev', hits, { av: A.pid, at: B.pid }); } });
           if (c) cands.push(c);
         } else if (close && P.sw >= 3 && A.pid !== lead) {
           const c = cand('RIVAL_SWAP', 5, 'sw:' + key + ':' + P.sw, { A: nm(A.pid), B: nm(B.pid), K: P.sw }, [A.pid, B.pid], ['happy', 'shocked'], { vs: 1, snd: 'stingRival' });
@@ -146,7 +146,7 @@ rep("""      if (ps[0].score > 0 && lead !== T.leader) {
         if (!V || !Tr) { b.done = true; continue; }
         if (V.score > Tr.score && b.below) {
           b.done = true;
-          const c = cand('BETRAY_REVENGE', 9, 'br:' + b.id, { V: nm(b.v), T: nm(b.t) }, [b.v, b.t], ['happy', 'shocked'], { vs: 1, snd: 'stingComeback', onShow: () => legend('rev', 10 + b.gain / 100, { a: b.v, b: b.t, bt: 1 }) });
+          const c = cand('BETRAY_REVENGE', 9, 'br:' + b.id, { V: nm(b.v), T: nm(b.t) }, [b.v, b.t], ['happy', 'shocked'], { vs: 1, snd: 'stingComeback', onShow: () => legend('rev', 10 + b.gain / 100, { av: b.v, at: b.t, bt: 1 }) });
           if (c) cands.push(c);
         }
       }""")
@@ -248,7 +248,7 @@ rep("""    function secretPick() {""", """    // javna izdaja (podaci postaju ja
     function duelOut(w, a, b) {
       if (!T || !w) return '';
       const l = w === a ? b : a, hits = (T.attacks[l] || {})[w] || 0;
-      if (hits >= 2) { legend('rev', hits, { a: w, b: l, du: 1 }); return '⚔️ Osveta je slatka: ' + nm(w) + ' pobjeđuje napadača!'; }
+      if (hits >= 2) { legend('rev', hits, { av: w, at: l, du: 1 }); return '⚔️ Osveta je slatka: ' + nm(w) + ' pobjeđuje napadača!'; }
       if (T.activeRival === pairKey(a, b)) return 'Rivalstvo dobiva novo poglavlje.';
       return '';
     }

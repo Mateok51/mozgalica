@@ -35,7 +35,7 @@ html = ('<!doctype html>\n<html lang="hr">\n<head>\n<meta charset="utf-8">\n'
         '<link rel="icon" href="icon.svg" type="image/svg+xml">\n'
         '<link rel="apple-touch-icon" href="icon-192.png">\n'
         + head_part.rstrip() + '\n</head>\n<body>\n' + rest.rstrip() + '\n' + sw + '</body>\n</html>\n')
-VERSION = 'v24'
+VERSION = 'v25'
 html = html.replace('MOZGALICA', '<span class="lt">Trivia</span><span class="lt">Tavern</span>').replace('<title>Mozgalica</title>', '<title>Trivia Tavern</title>')
 assert html.count('__VER__') == 1
 html = html.replace('__VER__', VERSION)
@@ -66,7 +66,7 @@ manifest = {
 json.dump(manifest, open(OUT + '/manifest.webmanifest', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
 
 open(OUT + '/sw.js', 'w').write("""// Mozgalica: uvijek pokušaj mrežu, a bez interneta posluži zadnju spremljenu verziju.
-const CACHE = 'mozgalica-v24';
+const CACHE = 'mozgalica-v25';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));

@@ -1998,6 +1998,59 @@
   /* dvoboj: napomena iz povijesti para */
   .du-note { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber-hi); margin-top: 4px; }
   .tv .du-note { font-size: 1.4rem; }
+  /* ===== Legende ove krčme: osobni pregled preko završnog ekrana, s vlastitim pomicanjem ===== */
+  .lg-wrap { position: fixed; inset: 0; z-index: 40; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    padding: calc(12px + env(safe-area-inset-top)) 12px calc(96px + env(safe-area-inset-bottom)); background: rgba(16, 8, 3, 0.62); }
+  .lg-book { position: relative; width: 100%; max-width: 560px; margin: 0 auto; padding: 18px 14px 16px; border-radius: 18px;
+    background: radial-gradient(120% 70% at 50% 0%, rgba(120, 76, 28, 0.55), rgba(42, 23, 11, 0.96) 60%), #2a170b;
+    box-shadow: inset 0 0 0 2px rgba(232, 170, 80, 0.9), inset 0 0 0 5px rgba(42, 23, 11, 0.95), inset 0 0 0 6px rgba(232, 170, 80, 0.4), 0 12px 40px rgba(0, 0, 0, 0.55);
+    transform-origin: 50% 0; animation: lgOpen 1.1s cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+  .lg-head { text-align: center; }
+  .lg-t { font-family: var(--font-display); font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1.05; color: #ffcf6e; text-shadow: 0 2px 0 rgba(70, 36, 10, 0.95), 0 0 18px rgba(255, 190, 80, 0.35); }
+  .lg-sub { margin-top: 4px; font-weight: 800; font-style: italic; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); opacity: 0.9; }
+  .lg-story { margin: 12px 4px 4px; padding: 10px 12px; border-radius: 12px; font-weight: 800; font-size: 1rem; line-height: 1.4; color: var(--text-main, #f6ead0);
+    background: rgba(246, 234, 208, 0.07); box-shadow: inset 0 0 0 1px rgba(232, 170, 80, 0.35); animation: lgIn 0.5s ease both; animation-delay: 0.7s; }
+  .lg-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .lg-card { padding: 10px 12px 11px; border-radius: 14px; background: rgba(42, 23, 11, 0.92);
+    box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.85), inset 0 0 0 3px rgba(42, 23, 11, 0.9), inset 0 0 0 4px rgba(232, 170, 80, 0.3);
+    animation: lgCard 0.6s cubic-bezier(0.3, 1.3, 0.5, 1) both; animation-delay: calc(1s + var(--i, 0) * 0.18s); }
+  .lg-k { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 1.15rem; color: #ffcf6e; text-transform: uppercase; letter-spacing: 0.02em; }
+  .lg-ic { font-size: 1.35rem; }
+  .lg-who { display: flex; align-items: center; gap: 6px; margin-top: 6px; min-width: 0; }
+  .lg-fig { position: relative; display: inline-flex; }
+  .lg-fig .mini { width: 46px; height: 46px; display: inline-flex; }
+  .lg-fig .mini > * { width: 100%; height: 100%; object-fit: contain; }
+  .lg-fig + .lg-fig { margin-left: -10px; }
+  .lg-bot { position: absolute; left: 50%; bottom: -4px; transform: translateX(-50%); font-size: 0.6rem; font-weight: 900; padding: 0 4px; border-radius: 6px; background: #5b3a22; color: #ffe2a6; }
+  .lg-nm { margin-left: 4px; font-weight: 900; font-size: 1.1rem; color: var(--text-main, #f6ead0); overflow-wrap: anywhere; }
+  .lg-line { margin-top: 4px; font-weight: 800; font-size: 0.98rem; color: var(--text-main, #f6ead0); }
+  .lg-num { margin-top: 2px; font-weight: 800; font-size: 0.85rem; color: #e2b764; }
+  .lg-crown { box-shadow: inset 0 0 0 2px rgba(255, 204, 110, 1), inset 0 0 0 4px rgba(42, 23, 11, 0.9), inset 0 0 0 5px rgba(255, 204, 110, 0.55), 0 0 22px rgba(255, 190, 80, 0.4); }
+  .lg-crown .lg-fig .mini { width: 72px; height: 72px; }
+  .lg-crown .lg-nm { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; color: #ffe2a0; }
+  .lg-crown::after, .lg-bt::after, .lg-cb::after, .lg-dbl::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 226, 160, 0.28) 50%, transparent 70%) -200% 0 / 200% 100% no-repeat;
+    animation: lgShine 1.1s ease-out both; animation-delay: calc(1.3s + var(--i, 0) * 0.18s); }
+  .lg-card { position: relative; overflow: hidden; }
+  .lg-act { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .lg-act .btn { min-height: 52px; }
+  .lg-note { min-height: 1.2em; text-align: center; font-weight: 800; font-size: 0.9rem; color: var(--amber-hi, #ffe2a6); }
+  .lg-instant .lg-book, .lg-instant .lg-story, .lg-instant .lg-card, .lg-instant .lg-card::after { animation: none !important; }
+  .win-act .btn.lg-open { min-height: 50px; }
+  /* TV: svečanija verzija istih nagrada */
+  .tv-lg .lg-book { max-width: 1100px; padding: 26px 30px; }
+  .tv-lg .lg-t { font-size: 3rem; }
+  .tv-lg .lg-story { font-size: 1.35rem; }
+  .tv-lg .lg-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .tv-lg .lg-crown { grid-column: 1 / -1; }
+  .tv-lg .lg-crown .lg-nm { font-size: 2.2rem; } .tv-lg .lg-crown .lg-fig .mini { width: 96px; height: 96px; }
+  .tv-lg .lg-k { font-size: 1.5rem; } .tv-lg .lg-line { font-size: 1.25rem; } .tv-lg .lg-nm { font-size: 1.4rem; }
+  .tv-lg .lg-act { flex-direction: row; justify-content: center; } .tv-lg .lg-act .btn { min-width: 280px; }
+  @keyframes lgOpen { from { opacity: 0; transform: perspective(900px) rotateX(-14deg) scale(0.94); } to { opacity: 1; transform: none; } }
+  @keyframes lgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes lgCard { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+  @keyframes lgShine { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .lg-book, .lg-story, .lg-card, .lg-card::after { animation: none !important; } }
 </style>
 
 <div id="app" class="screen center"></div>
@@ -2957,7 +3010,8 @@ __ENGINE__
   const byScore = (P) => P.slice().sort((a, b) => b.sc - a.sc);
   const nameOf = (d, id) => { const p = d.P.find((x) => x.id === id); return p ? p.n : '?'; };
   const avOf = (d, id) => { const p = d.P.find((x) => x.id === id); return p ? p.a : 0; };
-  function timerHtml(urgentAt) { return '<div class="timer" id="timer" data-u="' + (urgentAt || 3000) + '"><div id="tbar"></div></div>'; }
+  function timerNow() { const ms = Math.max(0, clockEnds - Date.now()); return { ms, fr: clockDur ? Math.max(0, Math.min(1, ms / clockDur)) : 1 }; }
+  function timerHtml(urgentAt) { const t = timerNow(), u = urgentAt || 3000; return '<div class="timer' + (clockDur && t.ms <= u ? ' urgent' : '') + '" id="timer" data-u="' + u + '"><div id="tbar" data-lv="' + (t.fr > 0.5 ? 'g' : t.fr > 0.2 ? 'a' : 'r') + '" style="width:' + (t.fr * 100).toFixed(2) + '%"></div></div>'; }
   function lineup(d, opts) {
     opts = opts || {};
     return '<div class="lineup">' + d.P.map((p) => {
@@ -3534,6 +3588,149 @@ __ENGINE__
     for (let s = 1; s <= steps; s++) bars += '<i class="' + ((me.st || 0) >= s ? 'on' : (me.st || 0) + 1 === s && me.fp ? 'half' : '') + '" style="width:' + (40 + (steps - s) * 18) + 'px"></i>';
     return '<div class="step-meter" aria-label="Stepenica ' + (me.st || 0) + ' od ' + steps + '"><i class="crown' + (me.st >= d.steps ? ' on' : '') + '">👑</i>' + bars + '</div><div class="p-sub">' + esc(progTxt(d, me)) + '</div>';
   }
+  // ===================== LEGENDE OVE KRČME: prikaz =====================
+  // Pregled je osobni (svaki uređaj ga sam otvara i zatvara) i ne blokira domaćina; sadržaj dolazi gotov od domaćina (d.lg).
+  const LEGV = { open: -1, done: -1, png: null, pngId: -1, busy: false, note: '' };
+  const legP = (d, id) => d.P.find((p) => p.id === id);
+  const legRank = (d) => d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
+  function legFig(d, id, pose) {
+    const p = legP(d, id); if (!p) return '';
+    return '<span class="lg-fig"><span class="mini">' + avSvg(p.a, pose || 'happy') + '</span>' + (p.b ? '<span class="lg-bot">BOT</span>' : '') + '</span>';
+  }
+  function legNames(d, who) { return who.map((id) => esc((legP(d, id) || {}).n || '?')).join(who.length === 2 ? ' i ' : ', '); }
+  function legHtml(d, tv) {
+    const L0 = d.lg, w = L0.w && legP(d, L0.w.pid);
+    const instant = LEGV.done === L0.id ? ' lg-instant' : '';
+    const crown = w ? '<div class="lg-card lg-crown" style="--i:0"><div class="lg-k"><span class="lg-ic">🏆</span>Kruna krčme</div>' +
+      '<div class="lg-who">' + legFig(d, w.id, 'victory') + '<span class="lg-nm">' + esc(w.n) + '</span></div><div class="lg-line">' + esc(L0.w.line) + '</div>' + (L0.w.num ? '<div class="lg-num">' + esc(L0.w.num) + '</div>' : '') + '</div>' : '';
+    const cards = L0.aw.map((x, i) => '<div class="lg-card lg-' + esc(x.k) + '" style="--i:' + (i + 1) + '"><div class="lg-k"><span class="lg-ic">' + esc(x.ic) + '</span>' + esc(x.t) + '</div>' +
+      '<div class="lg-who">' + x.who.map((id) => legFig(d, id, x.k === 'vic' ? 'sad' : x.k === 'rv' || x.k === 'dbl' ? 'attack' : 'happy')).join('') + '<span class="lg-nm">' + legNames(d, x.who) + '</span></div>' +
+      '<div class="lg-line">' + esc(x.line) + '</div>' + (x.num ? '<div class="lg-num">' + esc(x.num) + '</div>' : '') + '</div>').join('');
+    const share = '<button class="btn win-cta" id="legSave"' + (LEGV.busy ? ' disabled' : '') + '>📸 Spremi legendu</button>';
+    return '<div class="lg-wrap' + (tv ? ' tv-lg' : '') + instant + '" id="legWrap"><div class="lg-book" id="legBook">' +
+      '<div class="lg-head"><div class="lg-t">📜 Legende ove krčme</div><div class="lg-sub">Svaka večer u krčmi stvara nove legende…</div></div>' +
+      '<div class="lg-story">' + esc(L0.story || '') + '</div>' +
+      '<div class="lg-list">' + crown + cards + '</div>' +
+      '<div class="lg-act">' + share + '<div class="lg-note" role="status">' + esc(LEGV.note) + '</div><button class="btn ghost" id="legClose">Natrag na poredak</button></div>' +
+      '</div></div>';
+  }
+  function legRerender() { if (!S) return; if (phoneShown()) phoneRender(false); else tvV(S); }
+  function bindLeg(d) {
+    if (!d || d.ph !== 'final' || !d.lg) return;
+    bind('legOpen', () => { AUDIO.play('whoosh'); LEGV.open = d.lg.id; LEGV.note = ''; legRerender(); legPrep(d); });
+    bind('legClose', () => { AUDIO.play('tap'); LEGV.open = -1; LEGV.done = d.lg.id; legRerender(); });
+    // dodir na knjigu: odmah prikaži sve (bez čekanja animacija)
+    const bk = document.getElementById('legBook');
+    if (bk) bk.addEventListener('click', (e) => { if (e.target.closest('button')) return; const wr = document.getElementById('legWrap'); if (wr && !wr.classList.contains('lg-instant')) { wr.classList.add('lg-instant'); LEGV.done = d.lg.id; } });
+    if (LEGV.open === d.lg.id) setTimeout(() => { LEGV.done = d.lg.id; }, 2200);
+    bind('legSave', () => legSave(d));
+  }
+
+  // ---------- kartica za dijeljenje (9:16, crta se lokalno na canvasu, samo javni podaci) ----------
+  const legImg = (src) => new Promise((res) => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
+  function legWrap(c, text, x, y, maxW, lh, maxLines) {
+    const words = String(text).split(/\s+/); let line = '', n = 0;
+    for (let i = 0; i < words.length; i++) {
+      const t = line ? line + ' ' + words[i] : words[i];
+      if (c.measureText(t).width > maxW && line) {
+        if (maxLines && n === maxLines - 1) { while (c.measureText(line + '…').width > maxW && line) line = line.slice(0, -1); c.fillText(line + '…', x, y + n * lh); return n + 1; }
+        c.fillText(line, x, y + n * lh); n++; line = words[i];
+      } else line = t;
+    }
+    if (line) { c.fillText(line, x, y + n * lh); n++; }
+    return n;
+  }
+  function legPanel(c, x, y, w, h, gold) {
+    const r = 28;
+    c.save(); c.beginPath(); c.roundRect ? c.roundRect(x, y, w, h, r) : c.rect(x, y, w, h);
+    c.fillStyle = 'rgba(42, 23, 11, 0.9)'; c.fill();
+    c.lineWidth = gold ? 6 : 4; c.strokeStyle = gold ? 'rgba(255, 204, 110, 0.95)' : 'rgba(176, 122, 58, 0.9)'; c.stroke();
+    c.beginPath(); c.roundRect ? c.roundRect(x + 10, y + 10, w - 20, h - 20, r - 8) : c.rect(x + 10, y + 10, w - 20, h - 20);
+    c.lineWidth = 2; c.strokeStyle = 'rgba(232, 170, 80, 0.45)'; c.stroke(); c.restore();
+  }
+  async function legCard(d) {
+    const L0 = d.lg, W = 1080, H = 1920;
+    try { if (document.fonts) { await Promise.race([Promise.all([document.fonts.load('80px "Titan One"'), document.fonts.load('900 40px Nunito'), document.fonts.ready]), new Promise((r) => setTimeout(r, 1500))]); } } catch (e) {}
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const c = cv.getContext('2d');
+    const DISP = '"Titan One", "Fredoka", "Trebuchet MS", sans-serif', BODY = 'Nunito, system-ui, sans-serif';
+    const spr = (p, pose) => p && AV[p.a] && AV[p.a].spr ? 'chars/' + AV[p.a].spr + '/' + pose + '.webp' : null;
+    const rank = legRank(d), w = L0.w && legP(d, L0.w.pid);
+    const aws = L0.aw.slice(0, 3);
+    const srcs = ['ui/bg-p.webp', spr(w, 'victory')].concat(rank.slice(0, 6).map((p) => spr(p, 'idle')), aws.map((x) => spr(legP(d, x.who[0]), 'happy')));
+    const imgs = await Promise.all(srcs.map((s) => (s ? legImg(s) : Promise.resolve(null))));
+    // pozadina krčme + topli sloj
+    c.fillStyle = '#2a170b'; c.fillRect(0, 0, W, H);
+    const bg = imgs[0];
+    if (bg) { const k = Math.max(W / bg.width, H / bg.height), bw = bg.width * k, bh = bg.height * k; c.drawImage(bg, (W - bw) / 2, (H - bh) / 2, bw, bh); }
+    const gr = c.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, 'rgba(20, 10, 4, 0.55)'); gr.addColorStop(0.5, 'rgba(20, 10, 4, 0.35)'); gr.addColorStop(1, 'rgba(20, 10, 4, 0.75)');
+    c.fillStyle = gr; c.fillRect(0, 0, W, H);
+    c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    // naslov
+    c.fillStyle = '#ffe2a6'; c.font = '900 40px ' + BODY; c.fillText('🍻 TRIVIA TAVERN', W / 2, 110);
+    c.font = '84px ' + DISP; c.lineWidth = 10; c.strokeStyle = 'rgba(70, 36, 10, 0.95)'; c.strokeText('LEGENDE VEČERI', W / 2, 205);
+    c.fillStyle = '#ffcf6e'; c.fillText('LEGENDE VEČERI', W / 2, 205);
+    // pobjednik
+    let y = 250;
+    legPanel(c, 70, y, W - 140, 430, true);
+    if (imgs[1]) { const s = 300; c.drawImage(imgs[1], W / 2 - s / 2, y + 20, s, s); }
+    c.fillStyle = '#ffe2a0'; c.font = '64px ' + DISP; c.fillText('👑 ' + (w ? w.n : ''), W / 2, y + 372);
+    c.fillStyle = '#f6ead0'; c.font = '800 34px ' + BODY; legWrap(c, L0.w ? L0.w.line : '', W / 2, y + 412, W - 220, 40, 1);
+    // konačni poredak
+    y += 460;
+    const rows = rank.slice(0, 6), rh = 64;
+    legPanel(c, 70, y, W - 140, 40 + rows.length * rh, false);
+    rows.forEach((p, i) => {
+      const ry = y + 26 + i * rh;
+      c.textAlign = 'left'; c.fillStyle = i === 0 ? '#ffcf6e' : '#e2b764'; c.font = '900 36px ' + BODY; c.fillText((i + 1) + '.', 110, ry + 44);
+      const im = imgs[2 + i]; if (im) c.drawImage(im, 170, ry + 2, 56, 56);
+      c.fillStyle = '#f6ead0'; c.font = '800 36px ' + BODY; legWrap(c, p.n + (p.b ? ' (bot)' : ''), 245, ry + 44, 520, 40, 1);
+      c.textAlign = 'right'; c.fillStyle = '#ffe2a6'; c.font = '900 36px ' + BODY; c.fillText(d.steps ? (p.st || 0) + '/' + d.steps : String(p.sc), W - 110, ry + 44);
+    });
+    c.textAlign = 'center';
+    y += 40 + rows.length * rh + 30;
+    // 2–3 najvažnija događaja
+    const ah = 150;
+    aws.forEach((x, i) => {
+      const ay = y + i * (ah + 18);
+      if (ay + ah > H - 260) return;
+      legPanel(c, 70, ay, W - 140, ah, false);
+      const im = imgs[2 + rows.length + i]; if (im) c.drawImage(im, 100, ay + 20, 110, 110);
+      c.textAlign = 'left'; c.fillStyle = '#ffcf6e'; c.font = '44px ' + DISP; legWrap(c, x.ic + ' ' + x.t, 235, ay + 62, W - 360, 46, 1);
+      c.fillStyle = '#f6ead0'; c.font = '800 32px ' + BODY; legWrap(c, x.who.map((id) => (legP(d, id) || {}).n || '?').join(' i ') + ' — ' + x.line, 235, ay + 108, W - 360, 36, 1);
+      c.textAlign = 'center';
+    });
+    // završna poruka (kraj priče)
+    const end = (((L0.story || '').match(/[^.!?]+[.!?]+/g) || []).pop() || '').trim();
+    c.fillStyle = '#ffe2a6'; c.font = 'italic 800 36px ' + BODY; legWrap(c, end, W / 2, H - 170, W - 200, 44, 2);
+    c.fillStyle = 'rgba(246, 234, 208, 0.7)'; c.font = '900 28px ' + BODY; c.fillText('Trivia Tavern · krčma koja pamti', W / 2, H - 70);
+    return new Promise((res) => cv.toBlob((b) => res(b), 'image/png'));
+  }
+  // pripremi sliku čim se legende otvore (dijeljenje mora krenuti odmah na dodir)
+  function legPrep(d) {
+    if (LEGV.pngId === d.lg.id && LEGV.png) return Promise.resolve(LEGV.png);
+    const id = d.lg.id;
+    return legCard(d).then((b) => { if (b && id === (S && S.lg && S.lg.id)) { LEGV.png = b; LEGV.pngId = id; } return b; }).catch(() => null);
+  }
+  async function legSave(d) {
+    if (LEGV.busy) return;
+    AUDIO.play('tap');
+    const setNote = (t) => { LEGV.note = t; const n = document.querySelector('.lg-note'); if (n) n.textContent = t; };
+    try {
+      let blob = LEGV.pngId === d.lg.id ? LEGV.png : null;
+      if (!blob) { LEGV.busy = true; setNote('Pripremam sliku…'); blob = await legPrep(d); LEGV.busy = false; }
+      if (!blob) { setNote('Slika se nije mogla napraviti. Pokušaj ponovno.'); return; }
+      const file = typeof File === 'function' ? new File([blob], 'trivia-tavern-legende.png', { type: 'image/png' }) : null;
+      if (file && navigator.canShare && navigator.share && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: 'Trivia Tavern — Legende večeri' }); setNote('Legenda je podijeljena! 🍻'); return; }
+        catch (e) { if (e && e.name === 'AbortError') { setNote(''); return; } }
+      }
+      const url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = 'trivia-tavern-legende.png'; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      setNote('Slika je spremljena (trivia-tavern-legende.png).');
+    } catch (e) { LEGV.busy = false; setNote('Spremanje nije uspjelo. Pokušaj ponovno.'); }
+  }
   const CONT = { 't:vote>t:voteResult': 1, 'p:vote>p:voteResult': 1 };
   // ---------- KEEP: isti ekran iscrtan ponovno -> animacije se nastavljaju gdje su stale ----------
   // (bez ovoga svako osvježavanje unutar iste faze ponovno pokrene ulazne animacije pa elementi "zatitraju")
@@ -3542,6 +3739,7 @@ __ENGINE__
     const IDS = ['bk', 'v', 'c', 't', 'p', 'av', 'pk', 'bet', 'k'];
     function idOf(e) {
       let s = e.id ? '#' + e.id : '';
+      if (e.getAttribute && e.getAttribute('title')) s += '[t=' + e.getAttribute('title') + ']';
       for (const k of IDS) if (e.dataset && e.dataset[k] !== undefined) s += '[' + k + '=' + e.dataset[k] + ']';
       return s;
     }
@@ -3625,7 +3823,7 @@ __ENGINE__
   // ---------- TV ----------
   function tvTop(d, label) {
     const ring = INPUT_PHASES[d.ph]
-      ? '<span class="ring" id="tring"><svg viewBox="0 0 100 100"><circle class="rbg" cx="50" cy="50" r="42"/><circle class="rfg" id="tarc" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="0"/></svg><b id="tnum"></b></span>'
+      ? '<span class="ring" id="tring"><svg viewBox="0 0 100 100"><circle class="rbg" cx="50" cy="50" r="42"/><circle class="rfg" id="tarc" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="' + (clockDur ? (263.9 * (1 - timerNow().fr)).toFixed(1) : 0) + '"/></svg><b id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</b></span>'
       : '<span class="ring empty"></span>';
     return '<div class="tv-top"><span class="rl">' + esc(d.rl || '') + '</span><span class="tv-sub" style="flex:1">' + (label || '') + '</span>' + ring + '</div>';
   }
@@ -3765,6 +3963,7 @@ __ENGINE__
     if (d.ph === 'cast') CAST.start(document.getElementById('castStage'), d, true);
     bind('skip', () => game.skip());
     bind('again', () => { game.restart(); });
+    bindLeg(d);
     bind('quit', reset);
     bind('toPhone', () => { demoView = 'phone'; lastSig = ''; render(); });
     tick();
@@ -3985,6 +4184,7 @@ __ENGINE__
     return show.map((p) => '<span class="vface" title="' + esc(p.n) + '">' + avSvg(p.a, 'idle') + '</span>').join('') + (list.length > show.length ? '<span class="vface more">+' + (list.length - show.length) + '</span>' : '');
   }
   function winHtml(d, tv) {
+    const legBtn = d.lg ? '<button class="btn lg-open" id="legOpen">📜 Legende ove krčme</button>' : '';
     const ranked = d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);
     const w = d.P.find((p) => p.id === d.win) || ranked[0];
     const others = ranked.filter((p) => p !== w);
@@ -3994,11 +4194,12 @@ __ENGINE__
     const sub = !tv && me ? (w.id === PID ? 'Pobijedio si! Vladar Trivia Taverna!' : esc(w.n) + ' je pobijedio!') : 'Vladar Trivia Taverna!';
     const board = '<div class="mboard wide">' + ranked.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a) + '</span><span class="nm">' + esc(p.n) + (!tv && p.id === PID ? '<span class="you">Ti</span>' : '') + '</span><span class="sc">' + (p.st || 0) + '/' + d.steps + '</span></div>').join('') + '</div>';
     const fact = d.fact && (tv || (me && w.id === PID)) ? '<div class="win-fact"><b>Nagrada za pobjednika:</b> ' + esc(d.fact) + '</div>' : '';
-    const act = tv ? '<div class="win-act"><button class="btn win-cta" id="again">Igraj ponovno</button><button class="btn ghost" id="quit">Početni ekran</button></div>'
-      : '<div class="win-act">' + (isLocalHost() ? '<button class="btn win-cta" id="dagain">Igraj ponovno</button>' : '<div class="win-wait">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Početni ekran</button></div>';
+    const act = tv ? '<div class="win-act">' + legBtn + '<button class="btn win-cta" id="again">Igraj ponovno</button><button class="btn ghost" id="quit">Početni ekran</button></div>'
+      : '<div class="win-act">' + legBtn + (isLocalHost() ? '<button class="btn win-cta" id="dagain">Igraj ponovno</button>' : '<div class="win-wait">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Početni ekran</button></div>';
     const name = '<div class="win-name">' + esc(w.n) + '</div><div class="win-sub">' + sub + '</div>';
-    if (tv) return '<div class="winscr"><div class="win-t">Pobjednik!</div><div class="win-left">' + hero + name + '</div><div class="win-right">' + board + fact + '</div>' + act + '</div>';
-    return '<div class="winscr"><div class="win-t">Pobjednik!</div>' + hero + name + board + fact + act + '</div>';
+    const lgo = d.lg && LEGV.open === d.lg.id ? legHtml(d, tv) : '';
+    if (tv) return '<div class="winscr"><div class="win-t">Pobjednik!</div><div class="win-left">' + hero + name + '</div><div class="win-right">' + board + fact + '</div>' + act + '</div>' + lgo;
+    return '<div class="winscr"><div class="win-t">Pobjednik!</div>' + hero + name + board + fact + act + '</div>' + lgo;
   }
   // ---------- Tavern Director ----------
   const pById = (d, id) => d.P.find((p) => p.id === id);
@@ -4303,7 +4504,7 @@ __ENGINE__
     }).join('');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
-    return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum"></span></div>' +
+    return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +
       qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + '</div>';
@@ -4509,6 +4710,7 @@ __ENGINE__
     bind('dstart', () => game.start());
     if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
+    bindLeg(d);
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });
     bind('lobInv', () => { L.inv = true; phoneRender(true); });
     bind('invClose', () => { L.inv = false; phoneRender(true); });

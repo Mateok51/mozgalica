@@ -1,0 +1,53 @@
+  /* ===== Legende ove krčme: osobni pregled preko završnog ekrana, s vlastitim pomicanjem ===== */
+  .lg-wrap { position: fixed; inset: 0; z-index: 40; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    padding: calc(12px + env(safe-area-inset-top)) 12px calc(96px + env(safe-area-inset-bottom)); background: rgba(16, 8, 3, 0.62); }
+  .lg-book { position: relative; width: 100%; max-width: 560px; margin: 0 auto; padding: 18px 14px 16px; border-radius: 18px;
+    background: radial-gradient(120% 70% at 50% 0%, rgba(120, 76, 28, 0.55), rgba(42, 23, 11, 0.96) 60%), #2a170b;
+    box-shadow: inset 0 0 0 2px rgba(232, 170, 80, 0.9), inset 0 0 0 5px rgba(42, 23, 11, 0.95), inset 0 0 0 6px rgba(232, 170, 80, 0.4), 0 12px 40px rgba(0, 0, 0, 0.55);
+    transform-origin: 50% 0; animation: lgOpen 1.1s cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+  .lg-head { text-align: center; }
+  .lg-t { font-family: var(--font-display); font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1.05; color: #ffcf6e; text-shadow: 0 2px 0 rgba(70, 36, 10, 0.95), 0 0 18px rgba(255, 190, 80, 0.35); }
+  .lg-sub { margin-top: 4px; font-weight: 800; font-style: italic; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); opacity: 0.9; }
+  .lg-story { margin: 12px 4px 4px; padding: 10px 12px; border-radius: 12px; font-weight: 800; font-size: 1rem; line-height: 1.4; color: var(--text-main, #f6ead0);
+    background: rgba(246, 234, 208, 0.07); box-shadow: inset 0 0 0 1px rgba(232, 170, 80, 0.35); animation: lgIn 0.5s ease both; animation-delay: 0.7s; }
+  .lg-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .lg-card { padding: 10px 12px 11px; border-radius: 14px; background: rgba(42, 23, 11, 0.92);
+    box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.85), inset 0 0 0 3px rgba(42, 23, 11, 0.9), inset 0 0 0 4px rgba(232, 170, 80, 0.3);
+    animation: lgCard 0.6s cubic-bezier(0.3, 1.3, 0.5, 1) both; animation-delay: calc(1s + var(--i, 0) * 0.18s); }
+  .lg-k { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 1.15rem; color: #ffcf6e; text-transform: uppercase; letter-spacing: 0.02em; }
+  .lg-ic { font-size: 1.35rem; }
+  .lg-who { display: flex; align-items: center; gap: 6px; margin-top: 6px; min-width: 0; }
+  .lg-fig { position: relative; display: inline-flex; }
+  .lg-fig .mini { width: 46px; height: 46px; display: inline-flex; }
+  .lg-fig .mini > * { width: 100%; height: 100%; object-fit: contain; }
+  .lg-fig + .lg-fig { margin-left: -10px; }
+  .lg-bot { position: absolute; left: 50%; bottom: -4px; transform: translateX(-50%); font-size: 0.6rem; font-weight: 900; padding: 0 4px; border-radius: 6px; background: #5b3a22; color: #ffe2a6; }
+  .lg-nm { margin-left: 4px; font-weight: 900; font-size: 1.1rem; color: var(--text-main, #f6ead0); overflow-wrap: anywhere; }
+  .lg-line { margin-top: 4px; font-weight: 800; font-size: 0.98rem; color: var(--text-main, #f6ead0); }
+  .lg-num { margin-top: 2px; font-weight: 800; font-size: 0.85rem; color: #e2b764; }
+  .lg-crown { box-shadow: inset 0 0 0 2px rgba(255, 204, 110, 1), inset 0 0 0 4px rgba(42, 23, 11, 0.9), inset 0 0 0 5px rgba(255, 204, 110, 0.55), 0 0 22px rgba(255, 190, 80, 0.4); }
+  .lg-crown .lg-fig .mini { width: 72px; height: 72px; }
+  .lg-crown .lg-nm { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; color: #ffe2a0; }
+  .lg-crown::after, .lg-bt::after, .lg-cb::after, .lg-dbl::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 226, 160, 0.28) 50%, transparent 70%) -200% 0 / 200% 100% no-repeat;
+    animation: lgShine 1.1s ease-out both; animation-delay: calc(1.3s + var(--i, 0) * 0.18s); }
+  .lg-card { position: relative; overflow: hidden; }
+  .lg-act { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .lg-act .btn { min-height: 52px; }
+  .lg-note { min-height: 1.2em; text-align: center; font-weight: 800; font-size: 0.9rem; color: var(--amber-hi, #ffe2a6); }
+  .lg-instant .lg-book, .lg-instant .lg-story, .lg-instant .lg-card, .lg-instant .lg-card::after { animation: none !important; }
+  .win-act .btn.lg-open { min-height: 50px; }
+  /* TV: svečanija verzija istih nagrada */
+  .tv-lg .lg-book { max-width: 1100px; padding: 26px 30px; }
+  .tv-lg .lg-t { font-size: 3rem; }
+  .tv-lg .lg-story { font-size: 1.35rem; }
+  .tv-lg .lg-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .tv-lg .lg-crown { grid-column: 1 / -1; }
+  .tv-lg .lg-crown .lg-nm { font-size: 2.2rem; } .tv-lg .lg-crown .lg-fig .mini { width: 96px; height: 96px; }
+  .tv-lg .lg-k { font-size: 1.5rem; } .tv-lg .lg-line { font-size: 1.25rem; } .tv-lg .lg-nm { font-size: 1.4rem; }
+  .tv-lg .lg-act { flex-direction: row; justify-content: center; } .tv-lg .lg-act .btn { min-width: 280px; }
+  @keyframes lgOpen { from { opacity: 0; transform: perspective(900px) rotateX(-14deg) scale(0.94); } to { opacity: 1; transform: none; } }
+  @keyframes lgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes lgCard { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+  @keyframes lgShine { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .lg-book, .lg-story, .lg-card, .lg-card::after { animation: none !important; } }

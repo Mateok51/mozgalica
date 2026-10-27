@@ -127,7 +127,27 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
   if (!process.env.CHAL) { ok(seen.has('sortsol'), 'nakon razvrstavanja vidi se rješenje'); ok(seen.has('linksol'), 'nakon spajanja vide se točni parovi'); }
   ok(seen.has('pyr'), 'u finalu se na mobitelu vidi piramida sa svim igračima');
   ok(!!(await host.$('#dagain')) && !(await players[0].$('#dagain')), 'samo domaćin može pokrenuti novu igru');
+  // Legende ove krčme: isti pregled na svim mobitelima, i nakon ponovnog spajanja
+  const legOf = async (p) => { await p.click('#legOpen'); await p.waitForSelector('.lg-list', { timeout: 4000 }); return p.evaluate(() => document.querySelector('.lg-story').textContent + '||' + [...document.querySelectorAll('.lg-card')].map((c) => c.textContent).join('|')); };
+  const L = [];
+  for (const p of all) L.push(await legOf(p));
+  ok(L[0].length > 40 && L.every((x) => x === L[0]), 'svi mobiteli vide iste legende (' + (L[0].match(/\|/g) || []).length + ' dijelova)');
+  console.log('     ' + L[0].split('||')[0]);
+  await players[1].screenshot({ path: SHOTS + '/legende-iva.png' });
+  await players[0].reload();
+  await players[0].waitForSelector('#name', { timeout: 6000 }).catch(() => {});
+  if (await players[0].$('#name')) { await players[0].fill('#name', 'Ana'); await players[0].click('button[type=submit]'); }
+  await players[0].waitForSelector('#legOpen', { timeout: 8000 }).catch(() => {});
+  ok(!!(await players[0].$('#legOpen')), 'Ana se ponovno spaja nakon kraja i dobiva završni ekran');
+  ok(await legOf(players[0]) === L[0], 'nakon ponovnog spajanja isti pregled legendi');
+  // Iva gleda legende dok domaćin pokreće novu igru
+  ok(!!(await players[1].$('.lg-wrap')), 'Iva ima otvorene legende');
+  await host.click('#legClose');
   await host.click('#dagain');
+  await players[1].waitForFunction(() => document.documentElement.dataset.ph === 'lobby', null, { timeout: 6000 }).catch(() => {});
+  await players[1].waitForTimeout(500);
+  const ivaSt = await players[1].evaluate(() => document.documentElement.dataset.ph + ' / pregled ' + (document.querySelector('.lg-wrap') ? 'otvoren' : 'zatvoren') + ' / ' + (document.querySelector('#app') || {}).className);
+  ok(/^lobby \/ pregled zatvoren/.test(ivaSt), 'nova igra dok Iva gleda legende: Iva prelazi u predvorje (' + ivaSt + ')');
   await host.waitForSelector('#dstart', { timeout: 4000 }).catch(() => {});
   ok(!!(await host.$('#dstart')), 'nova igra: domaćin je opet u predvorju');
   ok(errors.length === 0, 'bez grešaka u pregledniku' + (errors.length ? ': ' + errors.join(' | ') : ''));

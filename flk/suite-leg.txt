@@ -1,0 +1,21 @@
+== engine-test: SVE PROVJERE PROŠLE ✔
+== bots-test: BOT TESTOVI OK
+== pact-test: SVE PROVJERE PROŠLE ✔
+== pyr-test: SVE PROVJERE PROŠLE ✔
+== pace-test: TEMPO OK
+== td2-test: KRČMA 2.0 OK
+== leg-test: LEGENDE OK
+== multi-test: SVE PROVJERE PROŠLE ✔
+== notv-test: SVE PROVJERE PROŠLE ✔
+== bots-web-test: SVE OK
+== net-test: SVE OK
+== pact-web-test: SVE OK
+== pact TV: SVE OK
+== pact relej: SVE OK
+== pact odani: SVE OK
+== relay: SVE OK
+== imp: SVE OK
+== csp: do kraja igre: ne | CSP povrede: 0 [] [] | JS greške: []
+== ui: Greške: nema
+== restarts: {"question pHappy":2,"cast pShock":1} 
+KRAJ

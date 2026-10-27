@@ -62,7 +62,7 @@ const all = (w) => ({ p0: w, p1: w, p2: w, p3: w });
   m = await Q(g, { p0: false, p1: true, p2: false, p3: false });
   ok(m && m.k === 'REVENGE', 'osveta ima prednost pred običnom promjenom vodstva: ' + (m && m.k + ' · ' + m.t + ' / ' + m.s));
   ok(m && m.lv === 2, 'istaknuti trenutak (jačina 2)');
-  ok(g._td().leg.rev && g._td().leg.rev.a === 'p0', 'legenda: zapamćena osveta');
+  ok(g._td().leg.rev && g._td().leg.rev.at === 'p0' && g._td().leg.rev.av === 'p1', 'legenda: zapamćena osveta');
   g.stop();
 
   console.log('3) Uzvrat moću: napadnuti napokon napada onoga tko ga je napadao');
