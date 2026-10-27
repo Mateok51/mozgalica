@@ -1,0 +1,47 @@
+Planeti po veličini | najmanji | najveći | Merkur=4880 km ; Mars=6780 km ; Zemlja=12 742 km ; Jupiter=139 820 km
+Planeti po udaljenosti od Sunca | najbliži | najdalji | Venera=2. ; Mars=4. ; Saturn=6. ; Neptun=8.
+Životinje po veličini | najmanja | najveća | Mrav=~5 mm ; Miš=~8 cm ; Konj=~1,6 m ; Slon=~3 m
+Životinje po brzini trčanja | najsporija | najbrža | Kornjača=~0,3 km/h ; Čovjek=~37 km/h ; Konj=~70 km/h ; Gepard=~110 km/h
+Kontinenti po površini | najmanji | najveći | Australija=8,6 mil. km² ; Europa=10 mil. km² ; Afrika=30 mil. km² ; Azija=44,6 mil. km²
+Oceani po površini | najmanji | najveći | Arktički=~14 mil. km² ; Indijski=~70 mil. km² ; Atlantski=~85 mil. km² ; Tihi=~165 mil. km²
+Vrhovi po visini | najniži | najviši | Sljeme=1033 m ; Dinara=1831 m ; Mont Blanc=4806 m ; Mount Everest=8849 m
+Hrvatski gradovi po broju stanovnika | najmanji | najveći | Zadar=~70 000 ; Osijek=~96 000 ; Split=~160 000 ; Zagreb=~770 000
+Hrvatski otoci po površini | najmanji | najveći | Mljet=98 km² ; Korčula=279 km² ; Hvar=297 km² ; Brač=395 km²
+Rijeke po duljini | najkraća | najdulja | Krka=73 km ; Sava=~950 km ; Dunav=~2850 km ; Nil=~6650 km
+Države po površini | najmanja | najveća | Hrvatska=56 594 km² ; Italija=302 000 km² ; Francuska=~550 000 km² ; Rusija=17,1 mil. km²
+Države po broju stanovnika | najmanje | najviše | Hrvatska=~3,9 mil. ; Španjolska=~48 mil. ; SAD=~340 mil. ; Indija=~1,4 mlrd.
+Izumi po godini | najstariji | najnoviji | Tiskarski stroj=~1440. ; Parni stroj (Watt)=1769. ; Telefon=1876. ; Internetski web=1989.
+Izumi po godini (2) | najstariji | najnoviji | Žarulja (Edison)=1879. ; Automobil (Benz)=1886. ; Televizija=1926. ; Mobitel=1973.
+Povijesni događaji | najstariji | najnoviji | Pad Zapadnog Rimskog Carstva=476. ; Kolumbo stiže u Ameriku=1492. ; Francuska revolucija=1789. ; Pad Berlinskog zida=1989.
+Povijesni događaji (2) | najstariji | najnoviji | Krunidba kralja Tomislava=925. ; Bitka kod Sigeta=1566. ; Ukidanje kmetstva (Jelačić)=1848. ; Samostalnost Hrvatske=1991.
+Svemirski događaji | najstariji | najnoviji | Sputnjik 1=1957. ; Gagarin u svemiru=1961. ; Slijetanje na Mjesec=1969. ; Teleskop Hubble=1990.
+Hrvatska u EU i svijetu | najstarije | najnovije | Samostalnost=1991. ; Članica NATO-a=2009. ; Članica EU=2013. ; Uvođenje eura=2023.
+Olimpijske igre po godini | najstarije | najnovije | Atena=1896. ; Moskva=1980. ; Sydney=2000. ; Pariz=2024.
+Skladatelji po rođenju | najstariji | najmlađi | Bach=1685. ; Mozart=1756. ; Beethoven=1770. ; Chopin=1810.
+Slikari po rođenju | najstariji | najmlađi | Leonardo da Vinci=1452. ; Rembrandt=1606. ; Van Gogh=1853. ; Picasso=1881.
+Pisci po rođenju | najstariji | najmlađi | Dante=1265. ; Shakespeare=1564. ; Tolstoj=1828. ; Orwell=1903.
+Hrvatski pisci po rođenju | najstariji | najmlađi | Marulić=1450. ; Gundulić=1589. ; Šenoa=1838. ; Krleža=1893.
+Filmovi po godini | najstariji | najnoviji | Snjeguljica (Disney)=1937. ; Ratovi zvijezda=1977. ; Titanic=1997. ; Avatar=2009.
+Filmovi Harry Potter po redu | prvi | zadnji | Kamen mudraca=1. ; Odaja tajni=2. ; Zatočenik Azkabana=3. ; Plameni pehar=4.
+Pixarovi filmovi po godini | najstariji | najnoviji | Toy Story=1995. ; Potraga za Nemom=2003. ; Automobili=2006. ; Izvrnuto obrnuto=2015.
+Konzole po godini izlaska | najstarija | najnovija | Game Boy=1989. ; PlayStation=1994. ; Xbox=2001. ; Nintendo Switch=2017.
+Tvrtke po godini osnutka | najstarija | najnovija | Nintendo=1889. ; Microsoft=1975. ; Google=1998. ; Facebook=2004.
+Mobiteli i aplikacije | najstarije | najnovije | SMS poruka=1992. ; YouTube=2005. ; Prvi iPhone=2007. ; Instagram=2010.
+Mjerne jedinice po veličini | najmanja | najveća | Milimetar=0,001 m ; Centimetar=0,01 m ; Metar=1 m ; Kilometar=1000 m
+Jedinice za masu | najmanja | najveća | Miligram=0,001 g ; Gram=1 g ; Kilogram=1000 g ; Tona=1 000 000 g
+Vremenske jedinice | najkraća | najdulja | Minuta=60 s ; Sat=3600 s ; Dan=86 400 s ; Tjedan=604 800 s
+Brojevi | najmanji | najveći | Tisuća=10³ ; Milijun=10⁶ ; Milijarda=10⁹ ; Bilijun=10¹²
+Rimski brojevi | najmanji | najveći | IX=9 ; XL=40 ; XC=90 ; CD=400
+Razlomci | najmanji | najveći | 1/8=0,125 ; 1/4=0,25 ; 1/3=0,33 ; 1/2=0,5
+Mjeseci u godini | prvi | zadnji | Ožujak=3. ; Lipanj=6. ; Rujan=9. ; Prosinac=12.
+Šahovske figure po vrijednosti | najslabija | najjača | Pješak=1 ; Skakač=3 ; Top=5 ; Kraljica=9
+Boje duge od vrha | prva (vanjska) | zadnja (unutarnja) | Crvena=1. ; Žuta=3. ; Zelena=4. ; Ljubičasta=7.
+Slojevi atmosfere od tla | najbliži tlu | najviši | Troposfera=1. ; Stratosfera=2. ; Mezosfera=3. ; Termosfera=4.
+Faze života leptira | prva | zadnja | Jaje=1. ; Gusjenica=2. ; Kukuljica=3. ; Leptir=4.
+Razvoj žabe | prvo | zadnje | Jaje=1. ; Punoglavac=2. ; Punoglavac s nogama=3. ; Žaba=4.
+Temperature vrenja | najniža | najviša | Dušik=−196 °C ; Alkohol (etanol)=78 °C ; Voda=100 °C ; Željezo=2862 °C
+Zgrade po visini | najniža | najviša | Kosi toranj u Pisi=56 m ; Big Ben=96 m ; Eiffelov toranj=330 m ; Burj Khalifa=828 m
+Mostovi i tuneli po duljini | najkraći | najdulji | Krčki most=1,4 km ; Pelješki most=2,4 km ; Tunel Sveti Rok=5,7 km ; Tunel Mala Kapela=5,8 km
+Kovanice eura po vrijednosti | najmanja | najveća | 1 cent=0,01 € ; 10 centi=0,10 € ; 50 centi=0,50 € ; 2 eura=2 €
+Ljudske kosti po duljini | najkraća | najdulja | Stremen (uho)=~3 mm ; Palčana kost=~25 cm ; Goljenična kost=~37 cm ; Bedrena kost=~48 cm
+Organi po masi | najlakši | najteži | Bubreg=~150 g ; Srce=~300 g ; Mozak=~1,4 kg ; Koža=~4 kg

@@ -1,0 +1,1608 @@
+{
+ "cats": {
+  "Film i TV": [
+   {
+    "q": "Koji glumac utjelovljuje Nea u filmu Matrix (1999.)?",
+    "o": [
+     "Keanu Reeves",
+     "Tom Cruise",
+     "Johnny Depp",
+     "Brad Pitt"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je režirao film Kum (1972.)?",
+    "o": [
+     "Sergio Leone",
+     "Francis Ford Coppola",
+     "Martin Scorsese",
+     "Brian De Palma"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji glumac glumi Vita Corleonea u filmu Kum (1972.)?",
+    "o": [
+     "James Caan",
+     "Robert De Niro",
+     "Marlon Brando",
+     "Al Pacino"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Za koji je film Leonardo DiCaprio osvojio Oscara za glavnu mušku ulogu?",
+    "o": [
+     "Titanic",
+     "Vuk s Wall Streeta",
+     "Početak",
+     "Povratnik (The Revenant)"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji glumac glumi Harryja Pottera u filmskom serijalu?",
+    "o": [
+     "Daniel Radcliffe",
+     "Tom Felton",
+     "Elijah Wood",
+     "Rupert Grint"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko glavnih likova ima humoristična serija Prijatelji?",
+    "o": [
+     "7",
+     "6",
+     "4",
+     "5"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu odvija radnja američke serije The Office?",
+    "o": [
+     "Philadelphia",
+     "Allentown",
+     "Scranton",
+     "Pittsburgh"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Prema čijim je romanima snimljena serija Igra prijestolja?",
+    "o": [
+     "J. R. R. Tolkien",
+     "Terry Pratchett",
+     "Robert Jordan",
+     "George R. R. Martin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove djevojčica s telekinetičkim moćima u seriji Stranger Things?",
+    "o": [
+     "Eleven",
+     "Robin",
+     "Max",
+     "Nancy"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj američkoj saveznoj državi živi mafijaš Tony Soprano?",
+    "o": [
+     "Illinois",
+     "New Jersey",
+     "New York",
+     "Nevada"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu odvija radnja serije Breaking Bad?",
+    "o": [
+     "Phoenix",
+     "Las Vegas",
+     "Albuquerque",
+     "El Paso"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji glumac glumi Sherlocka u BBC-jevoj seriji Sherlock (2010.)?",
+    "o": [
+     "Tom Hiddleston",
+     "Jude Law",
+     "Martin Freeman",
+     "Benedict Cumberbatch"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove vremeplov u kojem putuje Doktor iz serije Doctor Who?",
+    "o": [
+     "TARDIS",
+     "Nautilus",
+     "Nostromo",
+     "Millennium Falcon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji automobil služi kao vremeplov u filmu Povratak u budućnost?",
+    "o": [
+     "Chevrolet Camaro",
+     "DeLorean",
+     "Ford Mustang",
+     "Pontiac Firebird"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove svemirski brod kapetana Kirka u Zvjezdanim stazama?",
+    "o": [
+     "Galactica",
+     "Nostromo",
+     "Enterprise",
+     "Serenity"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove junakinja filma Osmi putnik (1979.) koju glumi Sigourney Weaver?",
+    "o": [
+     "Clarice",
+     "Sarah Connor",
+     "Leia",
+     "Ripley"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji lik Anthony Hopkins tumači u filmu Kad jaganjci utihnu?",
+    "o": [
+     "Hannibal Lecter",
+     "Jack Torrance",
+     "Norman Bates",
+     "Patrick Bateman"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je režirao film Psiho (1960.)?",
+    "o": [
+     "Stanley Kubrick",
+     "Alfred Hitchcock",
+     "Orson Welles",
+     "Billy Wilder"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je redatelj snimio film Isijavanje (1980.) prema romanu Stephena Kinga?",
+    "o": [
+     "David Lynch",
+     "John Carpenter",
+     "Stanley Kubrick",
+     "Wes Craven"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je režirao film Građanin Kane i u njemu glumio naslovnu ulogu?",
+    "o": [
+     "Humphrey Bogart",
+     "Charlie Chaplin",
+     "Cary Grant",
+     "Orson Welles"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji glumac glumi Ricka u filmu Casablanca (1942.)?",
+    "o": [
+     "Humphrey Bogart",
+     "Cary Grant",
+     "James Stewart",
+     "Clark Gable"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je komičar nijemog filma poznat po liku s polucilindrom, štapom i brčićima?",
+    "o": [
+     "Stan Laurel",
+     "Charlie Chaplin",
+     "Buster Keaton",
+     "Harold Lloyd"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja glumica glumi Holly Golightly u filmu Doručak kod Tiffanyja?",
+    "o": [
+     "Marilyn Monroe",
+     "Grace Kelly",
+     "Audrey Hepburn",
+     "Elizabeth Taylor"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove glavna nagrada filmskog festivala u Cannesu?",
+    "o": [
+     "Zlatni globus",
+     "Zlatni lav",
+     "Zlatni medvjed",
+     "Zlatna palma"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove glavna nagrada filmskog festivala u Veneciji?",
+    "o": [
+     "Zlatni lav",
+     "Zlatna palma",
+     "Zlatni medvjed",
+     "Zlatna arena"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu održava filmski festival na kojem se dodjeljuje Zlatni medvjed?",
+    "o": [
+     "München",
+     "Berlin",
+     "Prag",
+     "Beč"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove nagrada Pulskog filmskog festivala?",
+    "o": [
+     "Zlatni medvjed",
+     "Srce Sarajeva",
+     "Zlatna arena",
+     "Zlatna palma"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se istarskom gradiću od 1999. održava poznati filmski festival?",
+    "o": [
+     "Buzet",
+     "Grožnjan",
+     "Hum",
+     "Motovun"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je film Dalibora Matanića 2015. dobio nagradu žirija programa Un Certain Regard u Cannesu?",
+    "o": [
+     "Zvizdan",
+     "Fine mrtve djevojke",
+     "Ne gledaj mi u pijat",
+     "Svećenikova djeca"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je režirao film Kako je počeo rat na mom otoku (1996.)?",
+    "o": [
+     "Rajko Grlić",
+     "Vinko Brešan",
+     "Antonio Nuić",
+     "Dalibor Matanić"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je režirao film Tko pjeva zlo ne misli (1970.)?",
+    "o": [
+     "Veljko Bulajić",
+     "Branko Bauer",
+     "Krešo Golik",
+     "Fadil Hadžić"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je napisao seriju Gruntovčani, u kojoj se proslavio lik Dudeka?",
+    "o": [
+     "Ivo Štivičić",
+     "Pavao Pavličić",
+     "Miljenko Smoje",
+     "Mladen Kerstner"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glumac u seriji Naše malo misto utjelovio Roka Prča?",
+    "o": [
+     "Boris Dvornik",
+     "Boris Buzančić",
+     "Relja Bašić",
+     "Ante Pivac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji hrvatski glumac glumi Borisa „Oštricu“ u filmu Snatch (2000.)?",
+    "o": [
+     "Goran Višnjić",
+     "Rade Šerbedžija",
+     "Leon Lučev",
+     "Zlatko Burić"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj je znanstvenofantastičnoj seriji Mira Furlan glumila Delenn?",
+    "o": [
+     "Firefly",
+     "Zvjezdane staze",
+     "Babylon 5",
+     "Battlestar Galactica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je Oscara osvojio film Gospodar prstenova: Povratak kralja?",
+    "o": [
+     "10",
+     "9",
+     "12",
+     "11"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je film prvi na neengleskom jeziku osvojio Oscara za najbolji film?",
+    "o": [
+     "Parazit",
+     "Roma",
+     "Amélie",
+     "Život je lijep"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje potječe serija Igra lignje?",
+    "o": [
+     "Tajvan",
+     "Južna Koreja",
+     "Japan",
+     "Kina"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je indijski grad središte filmske industrije Bollywood?",
+    "o": [
+     "Delhi",
+     "Chennai",
+     "Mumbai",
+     "Kolkata"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu nalazi četvrt Hollywood?",
+    "o": [
+     "Las Vegas",
+     "San Diego",
+     "San Francisco",
+     "Los Angeles"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glumac bio James Bond u prvom filmu o Bondu, Dr. No (1962.)?",
+    "o": [
+     "Sean Connery",
+     "George Lazenby",
+     "Timothy Dalton",
+     "Roger Moore"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji glumac glumi arheologa Indianu Jonesa?",
+    "o": [
+     "Mel Gibson",
+     "Harrison Ford",
+     "Bruce Willis",
+     "Kevin Costner"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji glumac glumi policajca Johna McClanea u filmu Umri muški?",
+    "o": [
+     "Sylvester Stallone",
+     "Kurt Russell",
+     "Bruce Willis",
+     "Mel Gibson"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je režirao film Pakleni šund (Pulp Fiction)?",
+    "o": [
+     "Guy Ritchie",
+     "David Fincher",
+     "Robert Rodriguez",
+     "Quentin Tarantino"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove mjesec na kojem se odvija radnja filma Avatar (2009.)?",
+    "o": [
+     "Pandora",
+     "Arrakis",
+     "Tatooine",
+     "Endor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove pustinjski planet na kojem se odvija Dina?",
+    "o": [
+     "Vulkan",
+     "Arrakis",
+     "Tatooine",
+     "Pandora"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem je planetu odrastao Luke Skywalker?",
+    "o": [
+     "Hoth",
+     "Naboo",
+     "Tatooine",
+     "Endor"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja glumica glumi Mary Poppins u filmu iz 1964.?",
+    "o": [
+     "Audrey Hepburn",
+     "Doris Day",
+     "Judy Garland",
+     "Julie Andrews"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove djevojčica koja u Čarobnjaku iz Oza putuje cestom od žute cigle?",
+    "o": [
+     "Dorothy",
+     "Matilda",
+     "Wendy",
+     "Alice"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove dječak kojeg obitelj slučajno ostavi kod kuće u filmu Sam u kući?",
+    "o": [
+     "Jimmy",
+     "Kevin",
+     "Tommy",
+     "Danny"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je pilotski nadimak lika Toma Cruisea u filmu Top Gun?",
+    "o": [
+     "Viper",
+     "Goose",
+     "Maverick",
+     "Iceman"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove agent kojeg Tom Cruise glumi u serijalu Nemoguća misija?",
+    "o": [
+     "Jason Bourne",
+     "Jack Ryan",
+     "Jack Reacher",
+     "Ethan Hunt"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem gradu živi Jerry u humorističnoj seriji Seinfeld?",
+    "o": [
+     "New York",
+     "Chicago",
+     "Boston",
+     "Los Angeles"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji lik u seriji Teorija velikog praska često uzvikuje „Bazinga!“?",
+    "o": [
+     "Raj Koothrappali",
+     "Sheldon Cooper",
+     "Howard Wolowitz",
+     "Leonard Hofstadter"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je britanski glumac utjelovio Mr. Beana?",
+    "o": [
+     "Ricky Gervais",
+     "John Cleese",
+     "Rowan Atkinson",
+     "Benny Hill"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji glumac glumi dr. Gregoryja Housea u seriji Dr. House?",
+    "o": [
+     "Colin Firth",
+     "Kiefer Sutherland",
+     "Hugh Grant",
+     "Hugh Laurie"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove beskrupulozni naftni magnat iz serije Dallas?",
+    "o": [
+     "J. R. Ewing",
+     "Bobby Ewing",
+     "Cliff Barnes",
+     "Blake Carrington"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove pametni automobil koji govori u seriji Vitez na cesti?",
+    "o": [
+     "Johnny 5",
+     "KITT",
+     "R2-D2",
+     "Herbie"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove računalo svemirskog broda u filmu 2001.: Odiseja u svemiru?",
+    "o": [
+     "KITT",
+     "Skynet",
+     "HAL 9000",
+     "WOPR"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je model automobila Herbie iz Disneyjevih filmova?",
+    "o": [
+     "Fiat 500",
+     "Citroën 2CV",
+     "Mini Cooper",
+     "Volkswagen Buba"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove junakinja serijala Igre gladi?",
+    "o": [
+     "Katniss Everdeen",
+     "Tris Prior",
+     "Clary Fray",
+     "Bella Swan"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kakvo je biće Edward Cullen u Sumrak sagi?",
+    "o": [
+     "Duh",
+     "Vampir",
+     "Anđeo",
+     "Vukodlak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji glumac glumi Tonyja Montanu u filmu Lice s ožiljkom (1983.)?",
+    "o": [
+     "Joe Pesci",
+     "Robert De Niro",
+     "Al Pacino",
+     "Ray Liotta"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji glumac u filmu Taksist izgovara slavnu rečenicu „You talkin' to me?“",
+    "o": [
+     "Jack Nicholson",
+     "Harvey Keitel",
+     "Al Pacino",
+     "Robert De Niro"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove general kojeg Russell Crowe glumi u filmu Gladijator?",
+    "o": [
+     "Maximus",
+     "Komod",
+     "Leonida",
+     "Spartak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je škotski junak glavni lik filma Hrabro srce?",
+    "o": [
+     "Macbeth",
+     "William Wallace",
+     "Rob Roy",
+     "Robert the Bruce"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je talijanski redatelj poznat po vesternima s Clintom Eastwoodom, npr. Dobar, loš, zao?",
+    "o": [
+     "Sergio Corbucci",
+     "Federico Fellini",
+     "Sergio Leone",
+     "Bernardo Bertolucci"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je Fellinijev film poznat po sceni kupanja u fontani di Trevi?",
+    "o": [
+     "Cesta",
+     "Osam i pol",
+     "Amarcord",
+     "Slatki život"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu braća koja su 1895. u Parizu održala prvu javnu projekciju filma s ulaznicama?",
+    "o": [
+     "Braća Lumière",
+     "Braća Warner",
+     "Braća Wright",
+     "Braća Pathé"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se film iz 1927. smatra prvim dugometražnim filmom sa sinkroniziranim govorom?",
+    "o": [
+     "Građanin Kane",
+     "Pjevač jazza",
+     "Metropolis",
+     "Krila"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je redatelj snimio nijemi znanstvenofantastični film Metropolis (1927.)?",
+    "o": [
+     "Sergej Ejzenštejn",
+     "F. W. Murnau",
+     "Fritz Lang",
+     "Charlie Chaplin"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glumac mađarskog podrijetla proslavio ulogu Drakule u filmu iz 1931.?",
+    "o": [
+     "Christopher Lee",
+     "Boris Karloff",
+     "Lon Chaney",
+     "Bela Lugosi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Vladavinu koje kraljice prati serija Kruna (The Crown)?",
+    "o": [
+     "Elizabete II.",
+     "Elizabete I.",
+     "Ane",
+     "Viktorije"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se engleskom gradu odvija serija Peaky Blinders?",
+    "o": [
+     "Manchester",
+     "Birmingham",
+     "Liverpool",
+     "Leeds"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj obitelji pripada Wednesday iz istoimene serije?",
+    "o": [
+     "Simpson",
+     "Munster",
+     "Addams",
+     "Griswold"
+    ],
+    "a": 2
+   },
+   {
+    "q": "O kojem kolumbijskom narkobosu govore prve sezone serije Narcos?",
+    "o": [
+     "Manuel Noriega",
+     "Joaquín Guzmán",
+     "Carlos Lehder",
+     "Pablo Escobar"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je film iz serijala Ratovi zvijezda dijelom snimljen u Dubrovniku?",
+    "o": [
+     "Posljednji Jedi",
+     "Povratak Jedija",
+     "Fantomska prijetnja",
+     "Nova nada"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Filmovi o kojem su indijanskom poglavici 1960-ih snimani u Hrvatskoj, npr. na Plitvicama?",
+    "o": [
+     "Crni Jastreb",
+     "Winnetou",
+     "Bik Koji Sjedi",
+     "Geronimo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem je hrvatskom otoku snimljen film Mamma Mia! Here We Go Again (2018.)?",
+    "o": [
+     "Korčula",
+     "Brač",
+     "Vis",
+     "Hvar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je hrvatski producent osvojio Oscare za filmove Schindlerova lista i Gladijator?",
+    "o": [
+     "Dušan Vukotić",
+     "Veljko Bulajić",
+     "Rajko Grlić",
+     "Branko Lustig"
+    ],
+    "a": 3
+   }
+  ],
+  "Glazba": [
+   {
+    "q": "Koji je talijanski skladatelj napisao glazbu za film Dobar, loš, zao?",
+    "o": [
+     "Ennio Morricone",
+     "Nino Rota",
+     "Hans Zimmer",
+     "John Williams"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je simfonija dovršio Ludwig van Beethoven?",
+    "o": [
+     "12",
+     "9",
+     "7",
+     "10"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je skladao valcer Na lijepom plavom Dunavu?",
+    "o": [
+     "Franz Schubert",
+     "Johann Strauss stariji",
+     "Johann Strauss mlađi",
+     "Joseph Haydn"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je skladatelj poljskog podrijetla poznat po nokturnima i mazurkama za klavir?",
+    "o": [
+     "Robert Schumann",
+     "Sergej Rahmanjinov",
+     "Franz Liszt",
+     "Frédéric Chopin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je skladao Bolero?",
+    "o": [
+     "Maurice Ravel",
+     "Georges Bizet",
+     "Claude Debussy",
+     "Erik Satie"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje je zemlje skladatelj Edvard Grieg?",
+    "o": [
+     "Finska",
+     "Norveška",
+     "Švedska",
+     "Danska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je skladao operu Seviljski brijač?",
+    "o": [
+     "Giacomo Puccini",
+     "Vincenzo Bellini",
+     "Gioachino Rossini",
+     "Giuseppe Verdi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je skladao operu Madama Butterfly?",
+    "o": [
+     "Gaetano Donizetti",
+     "Gioachino Rossini",
+     "Giuseppe Verdi",
+     "Giacomo Puccini"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko crta ima notno crtovlje?",
+    "o": [
+     "5",
+     "4",
+     "7",
+     "6"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se još naziva G-ključ?",
+    "o": [
+     "Alt-ključ",
+     "Violinski ključ",
+     "Tenorski ključ",
+     "Bas-ključ"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove štapić kojim dirigent ravna orkestrom?",
+    "o": [
+     "Trzalica",
+     "Metronom",
+     "Taktirka",
+     "Gudalo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove naprava koja ravnomjerno otkucava zadani tempo?",
+    "o": [
+     "Glazbena vilica",
+     "Rezonator",
+     "Taktirka",
+     "Metronom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najveći i najdublji gudački instrument u simfonijskom orkestru?",
+    "o": [
+     "Kontrabas",
+     "Viola",
+     "Violončelo",
+     "Harfa"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje je zemlje bio Adolphe Sax, izumitelj saksofona?",
+    "o": [
+     "Švicarska",
+     "Belgija",
+     "Nizozemska",
+     "Francuska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj skupini instrumenata pripada ksilofon?",
+    "o": [
+     "Trzalačkim",
+     "Gudačima",
+     "Udaraljkama",
+     "Puhačima"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko pedala obično ima koncertni klavir?",
+    "o": [
+     "4",
+     "1",
+     "2",
+     "3"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je tradicionalni trzalački instrument osobito vezan uz Slavoniju?",
+    "o": [
+     "Tambura",
+     "Gusle",
+     "Lijerica",
+     "Sopila"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove gudački instrument, obično s jednom žicom, uz koji se pjevaju epske pjesme?",
+    "o": [
+     "Mandolina",
+     "Gusle",
+     "Tambura",
+     "Lijerica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove tradicionalni gudački instrument s tri žice iz dubrovačkog kraja?",
+    "o": [
+     "Gusle",
+     "Mandolina",
+     "Lijerica",
+     "Tambura"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako glasi pravo ime pjevača Gibonnija?",
+    "o": [
+     "Zoran Predin",
+     "Zlatan Ibrić",
+     "Zlatko Pejaković",
+     "Zlatan Stipišić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je pjevačica s pjesmom Marija Magdalena predstavljala Hrvatsku na Eurosongu 1999.?",
+    "o": [
+     "Doris Dragović",
+     "Maja Blagdan",
+     "Danijela Martinović",
+     "Severina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je grupa s pjesmom Don't Ever Cry 1993. prva predstavljala samostalnu Hrvatsku na Eurosongu?",
+    "o": [
+     "Novi fosili",
+     "Put",
+     "ET",
+     "Magazin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz kojeg grada potječe grupa Parni valjak?",
+    "o": [
+     "Rijeka",
+     "Split",
+     "Zagreb",
+     "Osijek"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je dugogodišnji pjevač grupe Parni valjak?",
+    "o": [
+     "Massimo Savić",
+     "Jura Stublić",
+     "Mladen Bodalec",
+     "Aki Rahimovski"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz kojeg grada potječe grupa Let 3?",
+    "o": [
+     "Rijeka",
+     "Pula",
+     "Zadar",
+     "Zagreb"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je bio pjevač i vođa grupe Azra?",
+    "o": [
+     "Jura Stublić",
+     "Branimir Štulić",
+     "Husein Hasanefendić",
+     "Darko Rundek"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je pjevač grupe Film, poznat po pjesmi Zamisli život u ritmu muzike za ples?",
+    "o": [
+     "Aki Rahimovski",
+     "Branimir Štulić",
+     "Jura Stublić",
+     "Damir Urban"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojom je pjesmom Severina predstavljala Hrvatsku na Eurosongu 2006.?",
+    "o": [
+     "Neka mi ne svane",
+     "Marija Magdalena",
+     "Lijepa naša",
+     "Moja štikla"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je pjevačica 1973. izdala album Dnevnik jedne ljubavi?",
+    "o": [
+     "Josipa Lisac",
+     "Gabi Novak",
+     "Radojka Šverko",
+     "Tereza Kesovija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kantautor bio suprug pjevačice Gabi Novak?",
+    "o": [
+     "Oliver Dragojević",
+     "Arsen Dedić",
+     "Zdenko Runjić",
+     "Kemal Monteno"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je hrvatski funk glazbenik bio sin glumca Borisa Dvornika?",
+    "o": [
+     "Neno Belan",
+     "Davor Gobac",
+     "Dino Dvornik",
+     "Dado Topić"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je hrvatski pijanist izazvao senzaciju na Chopinovu natjecanju u Varšavi 1980.?",
+    "o": [
+     "Ivo Malec",
+     "Dubravko Detoni",
+     "Maksim Mrvica",
+     "Ivo Pogorelić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove hrvatski nacionalni ansambl narodnih plesova i pjesama osnovan 1949.?",
+    "o": [
+     "Lado",
+     "Lindo",
+     "Kolo",
+     "Dubrava"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvao pjevač grupe The Doors?",
+    "o": [
+     "Jimi Hendrix",
+     "Jim Morrison",
+     "Janis Joplin",
+     "Robert Plant"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je gitarist na Woodstocku 1969. izveo slavnu verziju američke himne?",
+    "o": [
+     "Jimmy Page",
+     "Eric Clapton",
+     "Jimi Hendrix",
+     "Carlos Santana"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se američkoj saveznoj državi 1969. održao festival Woodstock?",
+    "o": [
+     "Pennsylvania",
+     "Kalifornija",
+     "Massachusetts",
+     "New York"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je pjevačica 1989. izdala pjesmu Like a Prayer?",
+    "o": [
+     "Madonna",
+     "Whitney Houston",
+     "Kylie Minogue",
+     "Cyndi Lauper"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je bend 1991. izdao album Nevermind?",
+    "o": [
+     "Soundgarden",
+     "Nirvana",
+     "Pearl Jam",
+     "Metallica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je bend snimio pjesmu Stairway to Heaven?",
+    "o": [
+     "Deep Purple",
+     "The Who",
+     "Led Zeppelin",
+     "Black Sabbath"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je bend snimio pjesmu Smoke on the Water?",
+    "o": [
+     "Led Zeppelin",
+     "Uriah Heep",
+     "Black Sabbath",
+     "Deep Purple"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je bend snimio pjesmu Hotel California?",
+    "o": [
+     "Eagles",
+     "Fleetwood Mac",
+     "Lynyrd Skynyrd",
+     "The Doors"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je australski rock bend poznat po gitaristu Angusu Youngu u školskoj uniformi?",
+    "o": [
+     "INXS",
+     "AC/DC",
+     "Men at Work",
+     "Midnight Oil"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje zemlje potječe bend Rammstein?",
+    "o": [
+     "Švicarska",
+     "Austrija",
+     "Njemačka",
+     "Nizozemska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glazbenik 2016. dobio Nobelovu nagradu za književnost?",
+    "o": [
+     "Bruce Springsteen",
+     "Leonard Cohen",
+     "Paul Simon",
+     "Bob Dylan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji album Beatlesa na naslovnici ima članove benda na pješačkom prijelazu?",
+    "o": [
+     "Abbey Road",
+     "Help!",
+     "Let It Be",
+     "Revolver"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je otpjevao pjesmu I Will Always Love You u filmu Tjelohranitelj?",
+    "o": [
+     "Tina Turner",
+     "Whitney Houston",
+     "Mariah Carey",
+     "Céline Dion"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glazbenik snimio pjesmu i film Purple Rain?",
+    "o": [
+     "Lionel Richie",
+     "George Michael",
+     "Prince",
+     "Stevie Wonder"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je jamajčanski glazbenik otpjevao No Woman, No Cry?",
+    "o": [
+     "Peter Tosh",
+     "Shaggy",
+     "Jimmy Cliff",
+     "Bob Marley"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje dolazi pjevačica Shakira?",
+    "o": [
+     "Kolumbija",
+     "Argentina",
+     "Meksiko",
+     "Venezuela"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje dolazi pjevačica Björk?",
+    "o": [
+     "Norveška",
+     "Island",
+     "Danska",
+     "Finska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je britanski pjevač, rođen kao Reginald Dwight, poznat po pjesmi Rocket Man?",
+    "o": [
+     "Phil Collins",
+     "David Bowie",
+     "Elton John",
+     "Rod Stewart"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako je glasilo pravo ime Freddieja Mercuryja?",
+    "o": [
+     "Farid Bulsari",
+     "Frederick Mercer",
+     "Ferdinand Murray",
+     "Farrokh Bulsara"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koju pjevačicu nazivaju „Kraljicom soula“?",
+    "o": [
+     "Aretha Franklin",
+     "Diana Ross",
+     "Ella Fitzgerald",
+     "Tina Turner"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem je instrumentu svirao Louis Armstrong?",
+    "o": [
+     "Trombon",
+     "Truba",
+     "Saksofon",
+     "Klarinet"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je američkom gradu nastao jazz?",
+    "o": [
+     "Chicago",
+     "Memphis",
+     "New Orleans",
+     "New York"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je britanski bend snimio pjesmu Wonderwall?",
+    "o": [
+     "Blur",
+     "Pulp",
+     "The Verve",
+     "Oasis"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji bend predvodi pjevač Chris Martin?",
+    "o": [
+     "Coldplay",
+     "Travis",
+     "Radiohead",
+     "Keane"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je britanska pjevačica snimila pjesme Rolling in the Deep i Hello?",
+    "o": [
+     "Duffy",
+     "Adele",
+     "Dua Lipa",
+     "Amy Winehouse"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je američka pjevačica izdala albume Fearless, 1989 i Folklore?",
+    "o": [
+     "Selena Gomez",
+     "Katy Perry",
+     "Taylor Swift",
+     "Ariana Grande"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je pjevačica snimila pjesmu Bad Romance?",
+    "o": [
+     "Rihanna",
+     "Beyoncé",
+     "Britney Spears",
+     "Lady Gaga"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se reper pravim imenom zove Marshall Mathers?",
+    "o": [
+     "Eminem",
+     "50 Cent",
+     "Dr. Dre",
+     "Snoop Dogg"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je južnokorejski izvođač 2012. postao svjetski poznat pjesmom Gangnam Style?",
+    "o": [
+     "Jungkook",
+     "PSY",
+     "G-Dragon",
+     "Rain"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je bend 1974. pobijedio na Eurosongu s pjesmom Waterloo?",
+    "o": [
+     "Boney M.",
+     "Brotherhood of Man",
+     "ABBA",
+     "Bucks Fizz"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je kanadska pjevačica 1988. pobijedila na Eurosongu predstavljajući Švicarsku?",
+    "o": [
+     "Shania Twain",
+     "Alanis Morissette",
+     "Avril Lavigne",
+     "Céline Dion"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je bend predvodio pjevač i basist Sting?",
+    "o": [
+     "The Police",
+     "Duran Duran",
+     "Genesis",
+     "Dire Straits"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je skladao Malu noćnu muziku?",
+    "o": [
+     "Franz Schubert",
+     "Wolfgang Amadeus Mozart",
+     "Antonio Salieri",
+     "Joseph Haydn"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je skladao oratorij Mesija s poznatim zborom Aleluja?",
+    "o": [
+     "Johann Sebastian Bach",
+     "Henry Purcell",
+     "Georg Friedrich Händel",
+     "Joseph Haydn"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je skladao kantatu Carmina Burana?",
+    "o": [
+     "Richard Strauss",
+     "Gustav Mahler",
+     "Richard Wagner",
+     "Carl Orff"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je tenor proslavio ariju Nessun dorma uz Svjetsko nogometno prvenstvo 1990.?",
+    "o": [
+     "Luciano Pavarotti",
+     "Plácido Domingo",
+     "Andrea Bocelli",
+     "José Carreras"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove najviši ženski pjevački glas?",
+    "o": [
+     "Alt",
+     "Sopran",
+     "Mezzosopran",
+     "Kontraalt"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji instrument s tipkama proizvodi zvuk propuhivanjem zraka kroz cijevi?",
+    "o": [
+     "Čembalo",
+     "Klavir",
+     "Orgulje",
+     "Celesta"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je mali instrument s četiri žice osobito povezan s Havajima?",
+    "o": [
+     "Balalajka",
+     "Mandolina",
+     "Bendžo",
+     "Ukulele"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje potječe flamenco?",
+    "o": [
+     "Španjolska",
+     "Meksiko",
+     "Italija",
+     "Portugal"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove imanje Elvisa Presleyja u Memphisu?",
+    "o": [
+     "Paisley Park",
+     "Graceland",
+     "Neverland",
+     "Dollywood"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je skladao Rapsodiju u plavom (Rhapsody in Blue)?",
+    "o": [
+     "Leonard Bernstein",
+     "Aaron Copland",
+     "George Gershwin",
+     "Cole Porter"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je skladatelj napisao glazbu za filmove Ratovi zvijezda i Ralje?",
+    "o": [
+     "Hans Zimmer",
+     "Ennio Morricone",
+     "Howard Shore",
+     "John Williams"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se gradu održao Eurosong 1990.?",
+    "o": [
+     "Zagreb",
+     "Sarajevo",
+     "Beograd",
+     "Ljubljana"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je hrvatska skladateljica skladala Simfoniju u fis-molu?",
+    "o": [
+     "Mila Gojsalić",
+     "Dora Pejačević",
+     "Ivana Lang",
+     "Ivana Brlić-Mažuranić"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je skladao komičnu operu Ero s onoga svijeta?",
+    "o": [
+     "Ivan Zajc",
+     "Blagoje Bersa",
+     "Jakov Gotovac",
+     "Vatroslav Lisinski"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko glazbenika svira u kvartetu?",
+    "o": [
+     "5",
+     "6",
+     "3",
+     "4"
+    ],
+    "a": 3
+   }
+  ]
+ }
+}

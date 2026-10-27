@@ -1,0 +1,10 @@
+const { chromium } = require('playwright'); const path = require('path');
+(async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage();
+  const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.route(/fonts\.|jsdelivr|unpkg/, (r) => r.abort());
+  await p.goto('file://' + path.join(__dirname, '..', 'v3/out.html'));
+  await p.evaluate(() => Object.assign(CFG, { intro: 0.2, vote: 0.5, voteShow: 0.2, power: 0.5, cast: 0.1, q: 0.6, reveal: 0.2, sort: 0.8, chReveal: 0.3, link: 30 }));
+  await p.click('#demo'); await p.waitForTimeout(300); await p.click('#dstart');
+  await p.waitForSelector('[data-l], .link-opt, .srt', { timeout: 120000 }).catch(() => {}); await p.waitForTimeout(3000);
+  await p.waitForTimeout(500);
+  console.log((await p.evaluate(() => document.getElementById('app').innerHTML)).slice(0, 1500), errs); await b.close(); })();

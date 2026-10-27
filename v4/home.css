@@ -1,0 +1,33 @@
+  /* početni ekran: logo, jedna glavna akcija, dvije sekundarne, tihi izbor za isprobavanje; puno praznog prostora */
+  .home-screen { justify-content: flex-start; }
+  .home { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 420px; margin: 0 auto;
+    min-height: calc(100dvh - 28px); padding: clamp(8px, 3vh, 36px) 0 76px; }
+  .home-logo { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 0; padding-bottom: clamp(16px, 5vh, 56px); }
+  .home .logo:has(.lt) { width: min(78vw, 32vh, 400px); margin: 0; filter: none; }
+  .home-actions { display: flex; flex-direction: column; align-items: stretch; width: 100%; gap: clamp(18px, 3.6vh, 34px); }
+  .home .btn, .home #host, .home #join, .home #hostp { border-image-source: url("ui/btn-neutral.webp"); }
+  .home .home-cta { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 70px; width: 100%;
+    filter: drop-shadow(0 0 7px rgba(232, 170, 80, 0.45)) brightness(1.08); }
+  .home .home-cta:hover, .home .home-cta:focus-visible { filter: drop-shadow(0 0 8px rgba(232, 170, 80, 0.55)) brightness(1.14); }
+  .home .home-cta:active { transform: scale(0.98); filter: drop-shadow(0 0 5px rgba(232, 170, 80, 0.4)) brightness(0.96); }
+  .home-cta .hb-t { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.1; color: #fff4dc; }
+  .home-cta .hb-s { font-family: var(--font-body); font-weight: 800; font-size: 0.8rem; color: #e8cf9c; letter-spacing: 0.02em; }
+  .home-sec { display: flex; flex-direction: column; gap: 10px; padding: 0 6%; }
+  .home-sec .btn.ghost { width: 100%; min-height: 50px; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; letter-spacing: 0.03em; }
+  .home-try { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .home-sep { display: flex; align-items: center; gap: 10px; width: 70%; font-family: var(--font-body); font-weight: 800; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(243, 227, 196, 0.55); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .home-sep::before, .home-sep::after { content: ""; flex: 1; height: 1px; background: rgba(196, 146, 66, 0.4); }
+  .home-link { min-height: 44px; padding: 0 14px; background: none; border: 0; font-family: var(--font-body); font-weight: 800; font-size: 1rem; color: #f3e3c4;
+    text-decoration: underline; text-decoration-color: rgba(196, 146, 66, 0.6); text-underline-offset: 4px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85); }
+  .home-link:hover, .home-link:focus-visible { color: #fff4dc; text-decoration-color: rgba(232, 170, 80, 0.9); }
+  .home-foot { flex: 0 0 auto; margin-top: clamp(18px, 6vh, 60px); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .home-status { font-size: 0.72rem; font-weight: 700; color: rgba(243, 227, 196, 0.55); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); text-align: center; }
+  .home-ver { font-size: 0.66rem; font-weight: 700; color: rgba(243, 227, 196, 0.35); }
+  @media (max-height: 700px) { .home .logo:has(.lt) { width: min(66vw, 28vh, 340px); } .home-actions { gap: 14px; } .home-logo { padding-bottom: 10px; } }
+  /* TV / široki zaslon: logo lijevo, akcije desno, puno zraka */
+  @media (orientation: landscape) and (min-width: 900px) {
+    .home { max-width: 1100px; display: grid; grid-template-columns: 1.1fr 0.9fr; grid-template-rows: 1fr auto; align-items: center; column-gap: 8vw; padding: 6vh 4vw 9vh; }
+    .home-logo { padding: 0; } .home .logo:has(.lt) { width: min(40vw, 58vh, 560px); }
+    .home-actions { max-width: 380px; justify-self: start; }
+    .home-foot { grid-column: 1 / -1; margin-top: 2vh; }
+  }

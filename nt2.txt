@@ -1,0 +1,2 @@
+Error: listen EADDRINUSE: address already in use 0.0.0.0:8766
+    at emitErrorNT (node:net:1976:8)

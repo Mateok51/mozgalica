@@ -1,0 +1,20 @@
+{
+ "remove": [],
+ "fix": [
+  {
+   "q": "Tko je napisala priču prema kojoj je snimljen crtani film o šegrtu Hlapiću?",
+   "new": {
+    "q": "Tko je napisao priču prema kojoj je snimljen crtani film o šegrtu Hlapiću?",
+    "o": [
+     "Mato Lovrak",
+     "Grigor Vitez",
+     "Vladimir Nazor",
+     "Ivana Brlić-Mažuranić"
+    ],
+    "a": 3
+   },
+   "why": "Upitna zamjenica 'tko' u standardu traži muški rod ('napisao'); ženski rod usto odaje točan odgovor jer su ostale opcije muškarci."
+  }
+ ],
+ "notes": "Provjereno svih 80 pitanja (5 kategorija). Svi označeni odgovori točni, nema dvosmislenih ni vremenski ovisnih pitanja, nema duplikata. 1 jezični ispravak (Hlapić: 'napisala' -> 'napisao'). Ništa nije izbačeno."
+}

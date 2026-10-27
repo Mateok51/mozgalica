@@ -1,0 +1,11 @@
+  /* kartica rezultata: tamna ploča s mesinganim rubom kao ostatak sučelja (bez razvučene zelene daske) */
+  #app .result { border: 0; border-image: none; border-radius: 14px; padding: 14px 14px 12px; gap: 2px;
+    background: linear-gradient(180deg, rgba(58, 33, 15, 0.94), rgba(28, 14, 6, 0.96));
+    box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.6), inset 0 0 0 4px rgba(0, 0, 0, 0.28), inset 0 0 0 5px rgba(196, 146, 66, 0.22), 0 10px 24px rgba(0, 0, 0, 0.45); }
+  #app .result.ok { background: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(240, 196, 100, 0.3), transparent 70%), linear-gradient(180deg, rgba(64, 38, 16, 0.95), rgba(30, 15, 6, 0.96));
+    box-shadow: inset 0 0 0 1px rgba(240, 198, 110, 0.9), inset 0 0 0 4px rgba(0, 0, 0, 0.28), inset 0 0 0 5px rgba(240, 198, 110, 0.35), 0 0 26px rgba(232, 170, 80, 0.28), 0 10px 24px rgba(0, 0, 0, 0.45); }
+  #app .result.bad { background: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(200, 70, 50, 0.3), transparent 70%), linear-gradient(180deg, rgba(58, 26, 14, 0.95), rgba(28, 12, 6, 0.96));
+    box-shadow: inset 0 0 0 1px rgba(214, 110, 80, 0.75), inset 0 0 0 4px rgba(0, 0, 0, 0.28), 0 10px 24px rgba(0, 0, 0, 0.45); }
+  #app .result .p-title { font-size: 1.15rem; color: #f3e3c4; }
+  #app .result .pts { font-size: 2.6rem; line-height: 1.05; }
+  #app .result.none .pts { color: rgba(243, 227, 196, 0.55); text-shadow: none; }

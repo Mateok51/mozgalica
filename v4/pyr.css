@@ -1,0 +1,30 @@
+  /* finale: piramida od 8 modularnih drvenih stepenica (isti asset, 9-slice: rasteže se samo sredina),
+     razina 0 je start ispred piramide. Niže stepenice preklapaju stražnji dio gornjih. */
+  .pyramid { --H: 30px; --ov: calc(var(--H) * 0.3); --dy: calc(var(--H) - var(--ov)); flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    gap: 0; width: 100%; padding-top: calc(var(--H) * 1.4); filter: none; }
+  .tv .pyramid { --H: clamp(38px, 6.4vh, 72px); }
+  .phone-pyr { height: auto; }
+  .phone-pyr .pyramid { --H: 30px; }
+  .pyramid .pstep, .phone-pyr .pstep, .pstep.top { position: relative; height: var(--H); margin-top: calc(-1 * var(--ov)); padding: 0; gap: 0;
+    background: none; box-shadow: none; clip-path: none; filter: none; border-radius: 0;
+    border-style: solid; border-width: 0 calc(var(--H) * 0.72); border-image: url("ui/step.webp") 0 260 fill / 0 calc(var(--H) * 0.72) / 0 stretch; }
+  .pyramid .pstep:first-child { margin-top: 0; }
+  .pyramid .pstep::before, .pyramid .pstep::after { display: none; }
+  .pyramid .pstep.base { border: 0; border-image: none; height: calc(var(--H) * 0.75); }
+  .pyramid .pstep .lv { position: absolute; left: 2px; top: 54%; bottom: auto; transform: translateY(-50%); z-index: 1;
+    font-family: var(--font-body); font-weight: 900; font-size: calc(var(--H) * 0.3); line-height: 1; color: rgba(255, 228, 184, 0.6); text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6); }
+  .pyramid .pstep.base .lv { left: calc(var(--H) * 0.4); top: 60%; }
+  /* igrači stoje na gornjoj plohi stepenice */
+  .pyramid .here { position: absolute; left: 0; right: 0; bottom: 64%; z-index: 5; display: flex; justify-content: center; align-items: flex-end; pointer-events: none; }
+  .pyramid .pstep.base .here { bottom: 18%; }
+  .pyramid .pstep .climber, .phone-pyr .pstep .climber { position: relative; width: calc(var(--H) * 1.15); margin: 0; flex: none; z-index: auto; }
+  .pyramid .here .climber + .climber { margin-left: calc(var(--H) * -0.28); }
+  .pyramid .climber.go { animation: climb calc(0.42s + var(--mv) * 0.16s) cubic-bezier(0.3, 0.7, 0.3, 1) both; }
+  @keyframes climb {
+    0% { transform: translateY(calc(var(--mv) * var(--dy))); }
+    72% { transform: translateY(calc(var(--H) * -0.22)); }
+    86% { transform: translateY(calc(var(--H) * 0.05)) scale(1.04, 0.95); }
+    100% { transform: none; } }
+  .pyramid .climber .up { top: calc(var(--H) * -0.3); right: calc(var(--H) * -0.2); padding: 0 4px; border-radius: 6px; font-size: calc(var(--H) * 0.32); font-weight: 900;
+    color: #f3e3c4; background: rgba(30, 15, 6, 0.75); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.6); animation: none; }
+  .phone-pyr .pyramid { --H: clamp(30px, 4.6vh, 40px); }

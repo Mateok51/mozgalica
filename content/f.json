@@ -1,0 +1,1118 @@
+{
+ "cats": {
+  "More i oceani": [
+   {
+    "q": "Kako se zove najdublje poznato mjesto u svjetskim oceanima?",
+    "o": [
+     "Marijanska brazda",
+     "Portorikanska brazda",
+     "Tongaška brazda",
+     "Javanska brazda"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko ukupno krakova (zajedno s dvije lovke) ima lignja?",
+    "o": [
+     "8",
+     "6",
+     "12",
+     "10"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Približno koliko je dubok Jadran na svom najdubljem mjestu?",
+    "o": [
+     "Oko 300 m",
+     "Oko 3000 m",
+     "Oko 1200 m",
+     "Oko 5000 m"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji tjesnac povezuje Jadransko i Jonsko more?",
+    "o": [
+     "Gibraltarska vrata",
+     "Otrantska vrata",
+     "Bospor",
+     "Mesinski tjesnac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najveća riba na svijetu?",
+    "o": [
+     "Bijela psina",
+     "Kitopsina",
+     "Golema psina",
+     "Sunčanica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najmanji ocean na svijetu?",
+    "o": [
+     "Sjeverni ledeni ocean",
+     "Indijski ocean",
+     "Južni ocean",
+     "Atlantski ocean"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Uz obalu koje se države nalazi Veliki koraljni greben?",
+    "o": [
+     "Indonezije",
+     "Filipina",
+     "Novog Zelanda",
+     "Australije"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Plemenita periska, najveća školjka Sredozemlja, pripada kojoj skupini?",
+    "o": [
+     "Puževima",
+     "Rakovima",
+     "Školjkašima",
+     "Bodljikašima"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojoj skupini životinja pripada morska zvijezda?",
+    "o": [
+     "Mekušcima",
+     "Ribama",
+     "Bodljikašima",
+     "Žarnjacima"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove hladan i mahovit sjeveroistočni vjetar na Jadranu?",
+    "o": [
+     "Jugo",
+     "Bura",
+     "Maestral",
+     "Lebić"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je vrsta dupina najčešća u Jadranu?",
+    "o": [
+     "Dobri dupin",
+     "Prugasti dupin",
+     "Glavati dupin",
+     "Obični dupin"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Sredozemna medvjedica, rijetko viđena u Jadranu, vrsta je koje životinje?",
+    "o": [
+     "Morskog psa",
+     "Dupina",
+     "Kornjače",
+     "Tuljana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je more poznato po tome što nema kopnenu obalu?",
+    "o": [
+     "Karipsko more",
+     "Crveno more",
+     "Baltičko more",
+     "Sargaško more"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Otprilike koliki dio Zemljine površine prekriva voda mora i oceana?",
+    "o": [
+     "Oko 51 %",
+     "Oko 61 %",
+     "Oko 71 %",
+     "Oko 81 %"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je morska kornjača najčešća u Jadranu?",
+    "o": [
+     "Zelena želva",
+     "Glavata želva",
+     "Sedmopruga usminjača",
+     "Karetna želva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje nebesko tijelo najviše utječe na plimu i oseku?",
+    "o": [
+     "Mjesec",
+     "Sunce",
+     "Mars",
+     "Jupiter"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja se riba u opasnosti napuhne poput kugle?",
+    "o": [
+     "Napuhača",
+     "Iglica",
+     "Raža",
+     "Murina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se hobotnica najčešće brani kad bježi od napadača?",
+    "o": [
+     "Pušta električni udar",
+     "Napuhuje se",
+     "Izbacuje bodlje",
+     "Ispušta crnilo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja riba iz Jadrana može napadača omamiti električnim udarom?",
+    "o": [
+     "Šnjur",
+     "Kirnja",
+     "Drhtulja",
+     "Ugor"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kod koje morske životinje mužjak nosi jaja i „rađa“ mlade?",
+    "o": [
+     "Hobotnice",
+     "Morskog konjica",
+     "Murine",
+     "Raka samca"
+    ],
+    "a": 1
+   }
+  ],
+  "Biljke i priroda": [
+   {
+    "q": "Kako se zove zeleni pigment u listovima biljaka?",
+    "o": [
+     "Hemoglobin",
+     "Klorofil",
+     "Melanin",
+     "Karoten"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji dio biljke upija vodu i hranjive tvari iz tla?",
+    "o": [
+     "Korijen",
+     "List",
+     "Cvijet",
+     "Plod"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se cvijet najčešće povezuje s Nizozemskom i njezinim poljima?",
+    "o": [
+     "Ruža",
+     "Orhideja",
+     "Ljiljan",
+     "Tulipan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se biljka okreće prema Suncu, a iz sjemenki joj se dobiva ulje?",
+    "o": [
+     "Maslačak",
+     "Kamilica",
+     "Suncokret",
+     "Neven"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje drvo daje žir?",
+    "o": [
+     "Bukva",
+     "Bor",
+     "Hrast",
+     "Lipa"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako zovemo drveće koje tijekom cijele godine zadržava lišće?",
+    "o": [
+     "Listopadno",
+     "Zimzeleno",
+     "Jednogodišnje",
+     "Mesojedno"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je od ovih biljaka mesožderka?",
+    "o": [
+     "Venerina muholovka",
+     "Paprat",
+     "Bršljan",
+     "Mahovina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja se biljka smatra neslužbenim nacionalnim cvijetom Hrvatske?",
+    "o": [
+     "Lavanda",
+     "Ruža",
+     "Ljubičica",
+     "Hrvatska perunika"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja endemska biljka u divljini raste samo na Velebitu?",
+    "o": [
+     "Runolist",
+     "Lavanda",
+     "Mažuran",
+     "Velebitska degenija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je biljka poznata kao najbrže rastuća na svijetu?",
+    "o": [
+     "Hrast",
+     "Kaktus",
+     "Bambus",
+     "Bršljan"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove znanost o biljkama?",
+    "o": [
+     "Zoologija",
+     "Botanika",
+     "Geologija",
+     "Ekologija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojem carstvu živih bića pripadaju gljive?",
+    "o": [
+     "Zasebnom carstvu gljiva",
+     "Biljkama",
+     "Životinjama",
+     "Bakterijama"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji dio cvijeta proizvodi pelud?",
+    "o": [
+     "Prašnici",
+     "Tučak",
+     "Latice",
+     "Čašica"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od kore kojeg se drveta dobiva pluto?",
+    "o": [
+     "Bora",
+     "Bukve",
+     "Breze",
+     "Hrasta plutnjaka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što su zapravo bodlje kaktusa?",
+    "o": [
+     "Preobraženo korijenje",
+     "Osušeni cvjetovi",
+     "Preobraženi listovi",
+     "Komadići kore"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove najpoznatiji slap u Nacionalnom parku Krka?",
+    "o": [
+     "Veliki slap",
+     "Skradinski buk",
+     "Gubavica",
+     "Slap Kozjak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove pojas crnogoričnih šuma u hladnim sjevernim krajevima?",
+    "o": [
+     "Tundra",
+     "Tajga",
+     "Savana",
+     "Prašuma"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je hrvatski otok osobito poznat po poljima lavande?",
+    "o": [
+     "Hvar",
+     "Krk",
+     "Lošinj",
+     "Pag"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što se broji kako bi se odredila starost posječenog stabla?",
+    "o": [
+     "Grane",
+     "Listovi",
+     "Korijenje",
+     "Godovi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja biljka peče kožu kad je dodirnemo?",
+    "o": [
+     "Kamilica",
+     "Djetelina",
+     "Kopriva",
+     "Maslačak"
+    ],
+    "a": 2
+   }
+  ],
+  "Rekordi i superlativi": [
+   {
+    "q": "Koja je najveća pustinja na svijetu ako se računaju i hladne pustinje?",
+    "o": [
+     "Sahara",
+     "Gobi",
+     "Antarktika",
+     "Kalahari"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je najveći otok na svijetu?",
+    "o": [
+     "Nova Gvineja",
+     "Grenland",
+     "Borneo",
+     "Madagaskar"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je jezero najveće na svijetu po površini?",
+    "o": [
+     "Kaspijsko jezero",
+     "Gornje jezero",
+     "Viktorijino jezero",
+     "Bajkalsko jezero"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je jezero najdublje na svijetu?",
+    "o": [
+     "Tanganjika",
+     "Kaspijsko jezero",
+     "Gornje jezero",
+     "Bajkalsko jezero"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najviši vodopad na svijetu?",
+    "o": [
+     "Nijagarini slapovi",
+     "Viktorijini slapovi",
+     "Slapovi Iguazú",
+     "Anđeoski slap"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja rijeka nosi najviše vode, tj. ima najveći protok na svijetu?",
+    "o": [
+     "Nil",
+     "Kongo",
+     "Amazona",
+     "Jangce"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je kontinent najveći po površini?",
+    "o": [
+     "Afrika",
+     "Azija",
+     "Sjeverna Amerika",
+     "Antarktika"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najmanja država na svijetu?",
+    "o": [
+     "Vatikan",
+     "Monako",
+     "San Marino",
+     "Lihtenštajn"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je afrička država najveća po površini?",
+    "o": [
+     "Alžir",
+     "Egipat",
+     "Nigerija",
+     "Etiopija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je najviši vrh Afrike?",
+    "o": [
+     "Kenija",
+     "Atlas",
+     "Ruwenzori",
+     "Kilimandžaro"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najviši vrh Južne Amerike?",
+    "o": [
+     "Chimborazo",
+     "Huascarán",
+     "Aconcagua",
+     "Cotopaxi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja vrsta drveća doseže najveću visinu na svijetu?",
+    "o": [
+     "Eukaliptus",
+     "Obalna sekvoja",
+     "Baobab",
+     "Cedar"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najviša životinja na svijetu?",
+    "o": [
+     "Slon",
+     "Žirafa",
+     "Noj",
+     "Deva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najveći mjesec u Sunčevu sustavu?",
+    "o": [
+     "Ganimed",
+     "Titan",
+     "Europa",
+     "Io"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je zvijezda najbliža Zemlji?",
+    "o": [
+     "Proxima Centauri",
+     "Sirius",
+     "Sjevernjača",
+     "Sunce"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najveći poluotok na svijetu?",
+    "o": [
+     "Pirenejski poluotok",
+     "Indokina",
+     "Arapski poluotok",
+     "Skandinavski poluotok"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je najtvrđi prirodni mineral?",
+    "o": [
+     "Kvarc",
+     "Rubin",
+     "Dijamant",
+     "Granit"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je najveće prirodno jezero u Hrvatskoj?",
+    "o": [
+     "Prokošćansko jezero",
+     "Vransko jezero",
+     "Jezero Kozjak",
+     "Peruća"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najdulji planinski lanac na kopnu?",
+    "o": [
+     "Ande",
+     "Himalaja",
+     "Stjenjak",
+     "Alpe"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je najveći organ ljudskog tijela?",
+    "o": [
+     "Jetra",
+     "Pluća",
+     "Mozak",
+     "Koža"
+    ],
+    "a": 3
+   }
+  ],
+  "Izumi i otkrića": [
+   {
+    "q": "Tko je 1876. patentirao telefon?",
+    "o": [
+     "Thomas Edison",
+     "Guglielmo Marconi",
+     "Samuel Morse",
+     "Alexander Graham Bell"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je 1928. otkrio penicilin?",
+    "o": [
+     "Louis Pasteur",
+     "Robert Koch",
+     "Alexander Fleming",
+     "Edward Jenner"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je u Europi izumio tisak s pomičnim slovima?",
+    "o": [
+     "Leonardo da Vinci",
+     "Johannes Gutenberg",
+     "Galileo Galilei",
+     "Martin Luther"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je autor teorije relativnosti?",
+    "o": [
+     "Albert Einstein",
+     "Isaac Newton",
+     "Niels Bohr",
+     "Max Planck"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja su braća 1903. izvela prvi let motornim zrakoplovom?",
+    "o": [
+     "Braća Wright",
+     "Braća Lumière",
+     "Braća Montgolfier",
+     "Braća Grimm"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je otkrio kemijske elemente polonij i radij?",
+    "o": [
+     "Dmitrij Mendeljejev",
+     "Ernest Rutherford",
+     "Alfred Nobel",
+     "Marie i Pierre Curie"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je razvio prvo cjepivo protiv bjesnoće?",
+    "o": [
+     "Alexander Fleming",
+     "Edward Jenner",
+     "Louis Pasteur",
+     "Robert Koch"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je 1877. izumio fonograf, uređaj za snimanje zvuka?",
+    "o": [
+     "Nikola Tesla",
+     "Thomas Edison",
+     "Alexander Graham Bell",
+     "James Watt"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Nikola Tesla poznat je po razvoju sustava koje vrste struje?",
+    "o": [
+     "Istosmjerne struje",
+     "Izmjenične struje",
+     "Statičkog elektriciteta",
+     "Nuklearne energije"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je znanstvenik postavio zakon opće gravitacije?",
+    "o": [
+     "Isaac Newton",
+     "Galileo Galilei",
+     "Johannes Kepler",
+     "Albert Einstein"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji su znanstvenici 1953. opisali dvostruku uzvojnicu DNK?",
+    "o": [
+     "Curie i Curie",
+     "Darwin i Wallace",
+     "Bohr i Planck",
+     "Watson i Crick"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je predložio da se Zemlja okreće oko Sunca, a ne obrnuto?",
+    "o": [
+     "Klaudije Ptolemej",
+     "Aristotel",
+     "Nikola Kopernik",
+     "Tycho Brahe"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je 1610. otkrio četiri najveća Jupiterova mjeseca?",
+    "o": [
+     "Nikola Kopernik",
+     "Isaac Newton",
+     "Galileo Galilei",
+     "Johannes Kepler"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je izumio dinamit?",
+    "o": [
+     "Thomas Edison",
+     "Alfred Nobel",
+     "James Watt",
+     "Nikola Tesla"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je izumio World Wide Web?",
+    "o": [
+     "Tim Berners-Lee",
+     "Bill Gates",
+     "Steve Jobs",
+     "Mark Zuckerberg"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je osmislio periodni sustav kemijskih elemenata?",
+    "o": [
+     "Antoine Lavoisier",
+     "John Dalton",
+     "Marie Curie",
+     "Dmitrij Mendeljejev"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je znanstvenik rođen u Vukovaru dobio Nobelovu nagradu za kemiju 1939.?",
+    "o": [
+     "Vladimir Prelog",
+     "Ruđer Bošković",
+     "Andrija Mohorovičić",
+     "Lavoslav Ružička"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Hrvat Ivan Vučetić u Argentini je razvio identifikaciju pomoću čega?",
+    "o": [
+     "Uzoraka DNK",
+     "Fotografija lica",
+     "Otisaka prstiju",
+     "Rukopisa"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je starogrčki znanstvenik uzviknuo „Heureka!“ otkrivši zakon uzgona?",
+    "o": [
+     "Pitagora",
+     "Arhimed",
+     "Euklid",
+     "Aristotel"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradu razvijen prvi samohodni torpedo?",
+    "o": [
+     "Rijeci",
+     "Puli",
+     "Splitu",
+     "Trstu"
+    ],
+    "a": 0
+   }
+  ],
+  "Životinje": [
+   {
+    "q": "Koji je najveći kopneni sisavac?",
+    "o": [
+     "Afrički slon",
+     "Nosorog",
+     "Vodenkonj",
+     "Žirafa"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja životinja danju spava viseći naglavačke?",
+    "o": [
+     "Sova",
+     "Lenjivac",
+     "Vjeverica",
+     "Šišmiš"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja ptica ima najveći raspon krila?",
+    "o": [
+     "Kondor",
+     "Suri orao",
+     "Lutajući albatros",
+     "Pelikan"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji sisavac nese jaja?",
+    "o": [
+     "Klokan",
+     "Čudnovati kljunaš",
+     "Koala",
+     "Vombat"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Čime se gotovo isključivo hrani koala?",
+    "o": [
+     "Bambusom",
+     "Lišćem eukaliptusa",
+     "Kukcima",
+     "Travom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove deva s dvije grbe?",
+    "o": [
+     "Baktrijska deva",
+     "Dromedar",
+     "Lama",
+     "Alpaka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji gušter mijenja boju kože?",
+    "o": [
+     "Gekon",
+     "Iguana",
+     "Varan",
+     "Kameleon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je ptica najbrža u obrušavanju?",
+    "o": [
+     "Suri orao",
+     "Lastavica",
+     "Sokol selac",
+     "Albatros"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je pasmina psa s točkicama dobila ime po hrvatskoj regiji?",
+    "o": [
+     "Bigl",
+     "Doberman",
+     "Dalmatinac",
+     "Pudl"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je najveća zvijer (mesojed) u hrvatskim šumama?",
+    "o": [
+     "Vuk",
+     "Smeđi medvjed",
+     "Ris",
+     "Divlja svinja"
+    ],
+    "a": 1
+   }
+  ],
+  "Hrana i piće": [
+   {
+    "q": "Iz koje zemlje potječe gulaš?",
+    "o": [
+     "Mađarska",
+     "Austrija",
+     "Češka",
+     "Poljska"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od čega se pravi tofu?",
+    "o": [
+     "Od riže",
+     "Od slanutka",
+     "Od kukuruza",
+     "Od soje"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od kojeg se voća radi zadarski liker maraschino?",
+    "o": [
+     "Od šljive",
+     "Od smokve",
+     "Od limuna",
+     "Od višnje maraske"
+    ],
+    "a": 3
+   },
+   {
+    "q": "S kojim se nadjevom tradicionalno rade zagorski štrukli?",
+    "o": [
+     "S mljevenim mesom",
+     "S jabukama",
+     "Sa svježim sirom",
+     "S makom"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni sastojak pesta alla genovese?",
+    "o": [
+     "Peršin",
+     "Bosiljak",
+     "Špinat",
+     "Rukola"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja se žitarica najčešće koristi za proizvodnju piva?",
+    "o": [
+     "Ječam",
+     "Kukuruz",
+     "Riža",
+     "Zob"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što je wasabi?",
+    "o": [
+     "Japanski hren",
+     "Morska alga",
+     "Sojin umak",
+     "Ukiseljeni đumbir"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove talijanski desert s kavom, piškotama i mascarponeom?",
+    "o": [
+     "Panna cotta",
+     "Cannoli",
+     "Gelato",
+     "Tiramisu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od kojeg se mesa tradicionalno priprema bečki odrezak?",
+    "o": [
+     "Od svinjetine",
+     "Od piletine",
+     "Od teletine",
+     "Od janjetine"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Po uzgoju kojih je školjaka poznat Malostonski zaljev?",
+    "o": [
+     "Jakovljevih kapica",
+     "Kamenica",
+     "Kunjki",
+     "Prstaca"
+    ],
+    "a": 1
+   }
+  ],
+  "Općenito": [
+   {
+    "q": "Koliko minuta ima jedan dan?",
+    "o": [
+     "1240",
+     "1440",
+     "1400",
+     "1640"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko ploha ima kocka?",
+    "o": [
+     "6",
+     "4",
+     "8",
+     "12"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju godinu označava rimski zapis MMXX?",
+    "o": [
+     "2010.",
+     "1020.",
+     "2200.",
+     "2020."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko nula ima broj milijun?",
+    "o": [
+     "5",
+     "7",
+     "6",
+     "9"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko stupnjeva ima pravi kut?",
+    "o": [
+     "45",
+     "180",
+     "90",
+     "360"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko polja ima šahovska ploča?",
+    "o": [
+     "48",
+     "64",
+     "81",
+     "100"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja boja nastaje miješanjem plave i žute?",
+    "o": [
+     "Zelena",
+     "Ljubičasta",
+     "Narančasta",
+     "Smeđa"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se naziva 25. godišnjica braka?",
+    "o": [
+     "Zlatni pir",
+     "Dijamantni pir",
+     "Biserni pir",
+     "Srebrni pir"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najveći prosti broj manji od 20?",
+    "o": [
+     "17",
+     "18",
+     "15",
+     "19"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko slova ima hrvatska abeceda?",
+    "o": [
+     "26",
+     "28",
+     "30",
+     "32"
+    ],
+    "a": 2
+   }
+  ]
+ }
+}

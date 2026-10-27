@@ -1,0 +1,34 @@
+{
+ "remove": [],
+ "fix": [
+  {
+   "q": "Koji se lakši od zraka i nezapaljiv plin koristi za punjenje balona?",
+   "new": {
+    "q": "Koji se plin, lakši od zraka i nezapaljiv, koristi za punjenje balona?",
+    "o": [
+     "Vodik",
+     "Helij",
+     "Ugljikov dioksid",
+     "Argon"
+    ],
+    "a": 1
+   },
+   "why": "Nespretan red riječi; opcija Neon je također lakša od zraka i nezapaljiva pa je zamijenjena ugljikovim dioksidom."
+  },
+  {
+   "q": "Što mjeri Richterova ljestvica?",
+   "new": {
+    "q": "Što mjeri Richterova ljestvica?",
+    "o": [
+     "Brzinu vjetra",
+     "Magnitudu potresa",
+     "Tlak zraka",
+     "Kiselost tla"
+    ],
+    "a": 1
+   },
+   "why": "Richterova ljestvica mjeri magnitudu (oslobođenu energiju); 'jačina/intenzitet' potresa stručno se mjeri ljestvicom MCS (Mercalli)."
+  }
+ ],
+ "notes": "Provjereno svih 90 pitanja (5 kategorija). Nema krivih odgovora ni duplikata. 2 ispravka: helij (gramatika + Neon također ispravan) i Richter (magnituda umjesto jačine). Ništa nije izbačeno."
+}

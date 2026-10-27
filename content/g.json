@@ -1,0 +1,1240 @@
+{
+ "sort": [
+  {
+   "a": "Kontinent",
+   "b": "Ocean",
+   "A": [
+    "Afrika",
+    "Australija",
+    "Europa",
+    "Antarktika"
+   ],
+   "B": [
+    "Tihi",
+    "Atlantski",
+    "Indijski",
+    "Arktički"
+   ]
+  },
+  {
+   "a": "Grad na obali",
+   "b": "Grad u unutrašnjosti",
+   "A": [
+    "Zadar",
+    "Šibenik",
+    "Pula",
+    "Makarska"
+   ],
+   "B": [
+    "Osijek",
+    "Varaždin",
+    "Karlovac",
+    "Vukovar"
+   ]
+  },
+  {
+   "a": "Kukac",
+   "b": "Paučnjak",
+   "A": [
+    "Mrav",
+    "Pčela",
+    "Leptir",
+    "Komarac"
+   ],
+   "B": [
+    "Škorpion",
+    "Krpelj",
+    "Tarantula",
+    "Pauk križar"
+   ]
+  },
+  {
+   "a": "Programski jezik",
+   "b": "Operacijski sustav",
+   "A": [
+    "Python",
+    "Java",
+    "C++",
+    "JavaScript"
+   ],
+   "B": [
+    "Windows",
+    "Linux",
+    "macOS",
+    "Android"
+   ]
+  },
+  {
+   "a": "Puhački instrument",
+   "b": "Žičani instrument",
+   "A": [
+    "Flauta",
+    "Truba",
+    "Klarinet",
+    "Saksofon"
+   ],
+   "B": [
+    "Violina",
+    "Gitara",
+    "Harfa",
+    "Violončelo"
+   ]
+  },
+  {
+   "a": "Prosti broj",
+   "b": "Složeni broj",
+   "A": [
+    "7",
+    "13",
+    "29",
+    "41"
+   ],
+   "B": [
+    "9",
+    "15",
+    "21",
+    "49"
+   ]
+  },
+  {
+   "a": "Grčki bog",
+   "b": "Rimski bog",
+   "A": [
+    "Zeus",
+    "Hera",
+    "Atena",
+    "Posejdon"
+   ],
+   "B": [
+    "Jupiter",
+    "Junona",
+    "Minerva",
+    "Neptun"
+   ]
+  },
+  {
+   "a": "Talijanski klub",
+   "b": "Španjolski klub",
+   "A": [
+    "Juventus",
+    "AC Milan",
+    "Napoli",
+    "Roma"
+   ],
+   "B": [
+    "Barcelona",
+    "Real Madrid",
+    "Sevilla",
+    "Valencia"
+   ]
+  },
+  {
+   "a": "Sir",
+   "b": "Suhomesnato",
+   "A": [
+    "Gauda",
+    "Parmezan",
+    "Brie",
+    "Feta"
+   ],
+   "B": [
+    "Kulen",
+    "Pršut",
+    "Chorizo",
+    "Slanina"
+   ]
+  },
+  {
+   "a": "Pasmina psa",
+   "b": "Pasmina mačke",
+   "A": [
+    "Dalmatiner",
+    "Labrador",
+    "Pudla",
+    "Bigl"
+   ],
+   "B": [
+    "Perzijska",
+    "Sijamska",
+    "Mainska rakunska",
+    "Sfinks"
+   ]
+  },
+  {
+   "a": "Tekućina (sobna t.)",
+   "b": "Plin (sobna t.)",
+   "A": [
+    "Živa",
+    "Voda",
+    "Etanol",
+    "Benzin"
+   ],
+   "B": [
+    "Kisik",
+    "Dušik",
+    "Helij",
+    "Neon"
+   ]
+  },
+  {
+   "a": "Film S. Spielberga",
+   "b": "Film C. Nolana",
+   "A": [
+    "Ralje",
+    "E.T.",
+    "Jurski park",
+    "Schindlerova lista"
+   ],
+   "B": [
+    "Početak",
+    "Interstellar",
+    "Oppenheimer",
+    "Memento"
+   ]
+  },
+  {
+   "a": "Nacionalni park",
+   "b": "Park prirode",
+   "A": [
+    "Plitvička jezera",
+    "Krka",
+    "Kornati",
+    "Mljet"
+   ],
+   "B": [
+    "Kopački rit",
+    "Telašćica",
+    "Lonjsko polje",
+    "Papuk"
+   ]
+  },
+  {
+   "a": "The Beatles",
+   "b": "The Rolling Stones",
+   "A": [
+    "John Lennon",
+    "Paul McCartney",
+    "George Harrison",
+    "Ringo Starr"
+   ],
+   "B": [
+    "Mick Jagger",
+    "Keith Richards",
+    "Charlie Watts",
+    "Ronnie Wood"
+   ]
+  },
+  {
+   "a": "Zimski OI sport",
+   "b": "Ljetni OI sport",
+   "A": [
+    "Biatlon",
+    "Curling",
+    "Skeleton",
+    "Bob"
+   ],
+   "B": [
+    "Veslanje",
+    "Mačevanje",
+    "Judo",
+    "Jedrenje"
+   ]
+  },
+  {
+   "a": "Afrička država",
+   "b": "Južnoamerička država",
+   "A": [
+    "Kenija",
+    "Egipat",
+    "Nigerija",
+    "Maroko"
+   ],
+   "B": [
+    "Čile",
+    "Peru",
+    "Kolumbija",
+    "Argentina"
+   ]
+  },
+  {
+   "a": "Kost",
+   "b": "Mišić",
+   "A": [
+    "Bedrena kost",
+    "Ključna kost",
+    "Lopatica",
+    "Kralježak"
+   ],
+   "B": [
+    "Biceps",
+    "Triceps",
+    "Ošit",
+    "Kvadriceps"
+   ]
+  },
+  {
+   "a": "Hrvatski pisac",
+   "b": "Hrvatski slikar",
+   "A": [
+    "Miroslav Krleža",
+    "August Šenoa",
+    "Tin Ujević",
+    "Marija Jurić Zagorka"
+   ],
+   "B": [
+    "Vlaho Bukovac",
+    "Ivan Generalić",
+    "Edo Murtić",
+    "Miroslav Kraljević"
+   ]
+  },
+  {
+   "a": "Tjestenina",
+   "b": "Vrsta riže",
+   "A": [
+    "Špageti",
+    "Penne",
+    "Fusilli",
+    "Lazanje"
+   ],
+   "B": [
+    "Basmati",
+    "Jasmin",
+    "Arborio",
+    "Carnaroli"
+   ]
+  },
+  {
+   "a": "Simpsoni",
+   "b": "Ratovi zvijezda",
+   "A": [
+    "Homer",
+    "Marge",
+    "Bart",
+    "Lisa"
+   ],
+   "B": [
+    "Luke Skywalker",
+    "Darth Vader",
+    "Yoda",
+    "Han Solo"
+   ]
+  },
+  {
+   "a": "Plemeniti plin",
+   "b": "Metal",
+   "A": [
+    "Neon",
+    "Argon",
+    "Kripton",
+    "Ksenon"
+   ],
+   "B": [
+    "Zlato",
+    "Bakar",
+    "Cink",
+    "Aluminij"
+   ]
+  },
+  {
+   "a": "Latinoamerički ples",
+   "b": "Standardni ples",
+   "A": [
+    "Salsa",
+    "Samba",
+    "Rumba",
+    "Cha-cha-cha"
+   ],
+   "B": [
+    "Bečki valcer",
+    "Quickstep",
+    "Fokstrot",
+    "Spori valcer"
+   ]
+  },
+  {
+   "a": "Kralježnjak",
+   "b": "Beskralježnjak",
+   "A": [
+    "Žaba",
+    "Zmija",
+    "Šaran",
+    "Orao"
+   ],
+   "B": [
+    "Puž",
+    "Meduza",
+    "Glista",
+    "Hobotnica"
+   ]
+  },
+  {
+   "a": "Kava",
+   "b": "Čaj",
+   "A": [
+    "Espresso",
+    "Cappuccino",
+    "Macchiato",
+    "Caffè latte"
+   ],
+   "B": [
+    "Earl Grey",
+    "Matcha",
+    "Sencha",
+    "Oolong"
+   ]
+  },
+  {
+   "a": "Stari Egipat",
+   "b": "Stara Grčka",
+   "A": [
+    "Piramide",
+    "Faraon",
+    "Hijeroglifi",
+    "Mumija"
+   ],
+   "B": [
+    "Partenon",
+    "Sokrat",
+    "Akropola",
+    "Sparta"
+   ]
+  }
+ ],
+ "link": [
+  {
+   "t": "Izumitelj i izum",
+   "p": [
+    [
+     "A. G. Bell",
+     "Telefon"
+    ],
+    [
+     "Thomas Edison",
+     "Fonograf"
+    ],
+    [
+     "Johannes Gutenberg",
+     "Tiskarski stroj"
+    ],
+    [
+     "Slavoljub Penkala",
+     "Mehanička olovka"
+    ]
+   ]
+  },
+  {
+   "t": "Slikar i slika",
+   "p": [
+    [
+     "Vincent van Gogh",
+     "Zvjezdana noć"
+    ],
+    [
+     "Edvard Munch",
+     "Krik"
+    ],
+    [
+     "Salvador Dalí",
+     "Postojanost pamćenja"
+    ],
+    [
+     "Sandro Botticelli",
+     "Rođenje Venere"
+    ]
+   ]
+  },
+  {
+   "t": "Država i jezik",
+   "p": [
+    [
+     "Brazil",
+     "Portugalski"
+    ],
+    [
+     "Austrija",
+     "Njemački"
+    ],
+    [
+     "Egipat",
+     "Arapski"
+    ],
+    [
+     "Iran",
+     "Perzijski"
+    ]
+   ]
+  },
+  {
+   "t": "Životinja i glasanje",
+   "p": [
+    [
+     "Pas",
+     "Laje"
+    ],
+    [
+     "Mačka",
+     "Mijauče"
+    ],
+    [
+     "Krava",
+     "Muče"
+    ],
+    [
+     "Konj",
+     "Rže"
+    ]
+   ]
+  },
+  {
+   "t": "Grad i znamenitost",
+   "p": [
+    [
+     "Pariz",
+     "Eiffelov toranj"
+    ],
+    [
+     "Rim",
+     "Koloseum"
+    ],
+    [
+     "Agra",
+     "Tadž Mahal"
+    ],
+    [
+     "Barcelona",
+     "Sagrada Família"
+    ]
+   ]
+  },
+  {
+   "t": "Znanstvenik i otkriće",
+   "p": [
+    [
+     "Isaac Newton",
+     "Zakon gravitacije"
+    ],
+    [
+     "Albert Einstein",
+     "Teorija relativnosti"
+    ],
+    [
+     "Charles Darwin",
+     "Teorija evolucije"
+    ],
+    [
+     "Marie Curie",
+     "Radij"
+    ]
+   ]
+  },
+  {
+   "t": "Mjesec i redni broj",
+   "p": [
+    [
+     "Siječanj",
+     "1."
+    ],
+    [
+     "Svibanj",
+     "5."
+    ],
+    [
+     "Listopad",
+     "10."
+    ],
+    [
+     "Studeni",
+     "11."
+    ]
+   ]
+  },
+  {
+   "t": "Planet i njegov mjesec",
+   "p": [
+    [
+     "Zemlja",
+     "Mjesec"
+    ],
+    [
+     "Mars",
+     "Fobos"
+    ],
+    [
+     "Jupiter",
+     "Ganimed"
+    ],
+    [
+     "Saturn",
+     "Titan"
+    ]
+   ]
+  },
+  {
+   "t": "Sportaš i sport",
+   "p": [
+    [
+     "Luka Modrić",
+     "Nogomet"
+    ],
+    [
+     "Janica Kostelić",
+     "Skijanje"
+    ],
+    [
+     "Goran Ivanišević",
+     "Tenis"
+    ],
+    [
+     "Dražen Petrović",
+     "Košarka"
+    ]
+   ]
+  },
+  {
+   "t": "Lik i glumac",
+   "p": [
+    [
+     "Jack Sparrow",
+     "Johnny Depp"
+    ],
+    [
+     "Forrest Gump",
+     "Tom Hanks"
+    ],
+    [
+     "Rocky Balboa",
+     "Sylvester Stallone"
+    ],
+    [
+     "Terminator",
+     "Arnold Schwarzenegger"
+    ]
+   ]
+  },
+  {
+   "t": "Formula i tvar",
+   "p": [
+    [
+     "H₂O",
+     "Voda"
+    ],
+    [
+     "CO₂",
+     "Ugljikov dioksid"
+    ],
+    [
+     "NaCl",
+     "Kuhinjska sol"
+    ],
+    [
+     "O₃",
+     "Ozon"
+    ]
+   ]
+  },
+  {
+   "t": "Jelo i zemlja podrijetla",
+   "p": [
+    [
+     "Paella",
+     "Španjolska"
+    ],
+    [
+     "Sushi",
+     "Japan"
+    ],
+    [
+     "Gulaš",
+     "Mađarska"
+    ],
+    [
+     "Pizza",
+     "Italija"
+    ]
+   ]
+  },
+  {
+   "t": "Grčki bog i područje",
+   "p": [
+    [
+     "Posejdon",
+     "More"
+    ],
+    [
+     "Ares",
+     "Rat"
+    ],
+    [
+     "Afrodita",
+     "Ljubav"
+    ],
+    [
+     "Had",
+     "Podzemni svijet"
+    ]
+   ]
+  },
+  {
+   "t": "Jedinica i veličina",
+   "p": [
+    [
+     "Amper",
+     "Električna struja"
+    ],
+    [
+     "Kelvin",
+     "Temperatura"
+    ],
+    [
+     "Njutn",
+     "Sila"
+    ],
+    [
+     "Vat",
+     "Snaga"
+    ]
+   ]
+  },
+  {
+   "t": "Kontinent i najviši vrh",
+   "p": [
+    [
+     "Azija",
+     "Mount Everest"
+    ],
+    [
+     "Afrika",
+     "Kilimanjaro"
+    ],
+    [
+     "Južna Amerika",
+     "Aconcagua"
+    ],
+    [
+     "Sjeverna Amerika",
+     "Denali"
+    ]
+   ]
+  },
+  {
+   "t": "Rimski broj i vrijednost",
+   "p": [
+    [
+     "X",
+     "10"
+    ],
+    [
+     "L",
+     "50"
+    ],
+    [
+     "C",
+     "100"
+    ],
+    [
+     "M",
+     "1000"
+    ]
+   ]
+  },
+  {
+   "t": "Životinja i dom",
+   "p": [
+    [
+     "Pčela",
+     "Košnica"
+    ],
+    [
+     "Ptica",
+     "Gnijezdo"
+    ],
+    [
+     "Konj",
+     "Štala"
+    ],
+    [
+     "Svinja",
+     "Svinjac"
+    ]
+   ]
+  },
+  {
+   "t": "Djelo i skladatelj",
+   "p": [
+    [
+     "Labuđe jezero",
+     "Čajkovski"
+    ],
+    [
+     "Čarobna frula",
+     "Mozart"
+    ],
+    [
+     "Carmen",
+     "Bizet"
+    ],
+    [
+     "Aida",
+     "Verdi"
+    ]
+   ]
+  },
+  {
+   "t": "Pisac i lik",
+   "p": [
+    [
+     "Arthur Conan Doyle",
+     "Sherlock Holmes"
+    ],
+    [
+     "Agatha Christie",
+     "Hercule Poirot"
+    ],
+    [
+     "I. Brlić-Mažuranić",
+     "Šegrt Hlapić"
+    ],
+    [
+     "Carlo Collodi",
+     "Pinokio"
+    ]
+   ]
+  },
+  {
+   "t": "Planina i država",
+   "p": [
+    [
+     "Triglav",
+     "Slovenija"
+    ],
+    [
+     "Olimp",
+     "Grčka"
+    ],
+    [
+     "Fuji",
+     "Japan"
+    ],
+    [
+     "Etna",
+     "Italija"
+    ]
+   ]
+  },
+  {
+   "t": "Boja na engleskom",
+   "p": [
+    [
+     "Red",
+     "Crvena"
+    ],
+    [
+     "Blue",
+     "Plava"
+    ],
+    [
+     "Green",
+     "Zelena"
+    ],
+    [
+     "Yellow",
+     "Žuta"
+    ]
+   ]
+  },
+  {
+   "t": "Tvrtka i osnivač",
+   "p": [
+    [
+     "Apple",
+     "Steve Jobs"
+    ],
+    [
+     "Microsoft",
+     "Bill Gates"
+    ],
+    [
+     "Facebook",
+     "Mark Zuckerberg"
+    ],
+    [
+     "Amazon",
+     "Jeff Bezos"
+    ]
+   ]
+  },
+  {
+   "t": "Organ i sustav",
+   "p": [
+    [
+     "Srce",
+     "Krvožilni"
+    ],
+    [
+     "Pluća",
+     "Dišni"
+    ],
+    [
+     "Želudac",
+     "Probavni"
+    ],
+    [
+     "Mozak",
+     "Živčani"
+    ]
+   ]
+  },
+  {
+   "t": "Mjesto i otok",
+   "p": [
+    [
+     "Supetar",
+     "Brač"
+    ],
+    [
+     "Jelsa",
+     "Hvar"
+    ],
+    [
+     "Mali Lošinj",
+     "Lošinj"
+    ],
+    [
+     "Novalja",
+     "Pag"
+    ]
+   ]
+  },
+  {
+   "t": "Događaj i godina",
+   "p": [
+    [
+     "Kolumbo u Americi",
+     "1492."
+    ],
+    [
+     "Kraj 2. svjetskog rata",
+     "1945."
+    ],
+    [
+     "Slijetanje na Mjesec",
+     "1969."
+    ],
+    [
+     "Pad Berlinskog zida",
+     "1989."
+    ]
+   ]
+  }
+ ],
+ "tf": [
+  [
+   "Hobotnica ima tri srca.",
+   true
+  ],
+  [
+   "Šišmiš je jedini sisavac sposoban za aktivan let.",
+   true
+  ],
+  [
+   "Australija je istodobno država i kontinent.",
+   true
+  ],
+  [
+   "Kostur odrasla čovjeka obično ima 206 kostiju.",
+   true
+  ],
+  [
+   "Pluton je 2006. preklasificiran u patuljasti planet.",
+   true
+  ],
+  [
+   "Krv u ljudskim venama je plava.",
+   false
+  ],
+  [
+   "Mozart je rođen u Salzburgu.",
+   true
+  ],
+  [
+   "Klokani prirodno žive u Južnoj Americi.",
+   false
+  ],
+  [
+   "Hrvatska je postala članica Europske unije 2013.",
+   true
+  ],
+  [
+   "Hrvatska je euro uvela 1. siječnja 2023.",
+   true
+  ],
+  [
+   "Rubikovu kocku izumio je Mađar Ernő Rubik.",
+   true
+  ],
+  [
+   "Žirafa ima jednako vratnih kralježaka kao čovjek – sedam.",
+   true
+  ],
+  [
+   "Grafitne olovke sadrže olovo.",
+   false
+  ],
+  [
+   "Bambus pripada porodici trava.",
+   true
+  ],
+  [
+   "Atlantski ocean najveći je ocean na Zemlji.",
+   false
+  ],
+  [
+   "Sahara je najveća vruća pustinja na svijetu.",
+   true
+  ],
+  [
+   "Sunčevoj svjetlosti treba oko osam minuta do Zemlje.",
+   true
+  ],
+  [
+   "Dijamant je građen od ugljika.",
+   true
+  ],
+  [
+   "Šahovska ploča ima 64 polja.",
+   true
+  ],
+  [
+   "Pingvini mogu letjeti.",
+   false
+  ],
+  [
+   "Kilogram perja teži je od kilograma željeza.",
+   false
+  ],
+  [
+   "Kitovi dišu plućima.",
+   true
+  ],
+  [
+   "Zlato privlači magnet.",
+   false
+  ],
+  [
+   "Čovjek koristi samo 10 % svog mozga.",
+   false
+  ],
+  [
+   "Sova može okrenuti glavu za puni krug od 360°.",
+   false
+  ],
+  [
+   "Prvi čovjek na Mjesecu bio je Jurij Gagarin.",
+   false
+  ],
+  [
+   "Jurij Gagarin bio je prvi čovjek u svemiru.",
+   true
+  ],
+  [
+   "Titanic je potonuo na svom prvom putovanju.",
+   true
+  ],
+  [
+   "Eiffelov toranj nalazi se u Londonu.",
+   false
+  ],
+  [
+   "Kip slobode bio je dar Francuske Sjedinjenim Državama.",
+   true
+  ],
+  [
+   "Bruxelles je glavni grad Nizozemske.",
+   false
+  ],
+  [
+   "Dunav se ulijeva u Crno more.",
+   true
+  ],
+  [
+   "Rijeka Sava izvire u Hrvatskoj.",
+   false
+  ],
+  [
+   "Dioklecijanova palača nalazi se u Zadru.",
+   false
+  ],
+  [
+   "Arena u Puli rimski je amfiteatar.",
+   true
+  ],
+  [
+   "Najviši vrh Hrvatske nalazi se na Velebitu.",
+   false
+  ],
+  [
+   "Košarkaški obruč visok je 3,05 metara.",
+   true
+  ],
+  [
+   "Antičke olimpijske igre održavale su se u Rimu.",
+   false
+  ],
+  [
+   "Ivan Meštrović bio je kipar.",
+   true
+  ],
+  [
+   "William Shakespeare napisao je Don Quijotea.",
+   false
+  ],
+  [
+   "Beethoven je u kasnijim godinama gotovo potpuno oglušio.",
+   true
+  ],
+  [
+   "Pablo Picasso bio je Talijan.",
+   false
+  ],
+  [
+   "Mjesec je veći od Zemlje.",
+   false
+  ],
+  [
+   "Merkur je planet najbliži Suncu.",
+   true
+  ],
+  [
+   "Koža je najveći organ ljudskog tijela.",
+   true
+  ],
+  [
+   "Pauci imaju šest nogu.",
+   false
+  ],
+  [
+   "Kukci imaju šest nogu.",
+   true
+  ],
+  [
+   "Zec je glodavac.",
+   false
+  ],
+  [
+   "Kikiriki je u botaničkom smislu mahunarka, a ne orah.",
+   true
+  ],
+  [
+   "Krumpir potječe iz Europe.",
+   false
+  ],
+  [
+   "Čokolada se proizvodi od zrna kakaovca.",
+   true
+  ],
+  [
+   "Svaki sushi sadrži sirovu ribu.",
+   false
+  ],
+  [
+   "Švicarska je članica Europske unije.",
+   false
+  ],
+  [
+   "Vatikan je površinom najmanja država na svijetu.",
+   true
+  ],
+  [
+   "Kanada je površinom najveća država na svijetu.",
+   false
+  ],
+  [
+   "Nil se ulijeva u Sredozemno more.",
+   true
+  ],
+  [
+   "Kleopatra je bila rimska carica.",
+   false
+  ],
+  [
+   "Napoleon Bonaparte rođen je na Korzici.",
+   true
+  ],
+  [
+   "Big Ben nalazi se u Parizu.",
+   false
+  ],
+  [
+   "Super Mario po zanimanju je vodoinstalater.",
+   true
+  ],
+  [
+   "Pikachu je Pokémon vatrenog tipa.",
+   false
+  ],
+  [
+   "Sherlock Holmes stanuje u ulici Baker Street.",
+   true
+  ],
+  [
+   "Tiranosaurus je bio biljojed.",
+   false
+  ],
+  [
+   "Gepard je najbrža kopnena životinja.",
+   true
+  ],
+  [
+   "Hrvatska zastava ima okomite pruge.",
+   false
+  ],
+  [
+   "Bijeli medvjedi žive na Antarktici.",
+   false
+  ],
+  [
+   "Kava se dobiva iz sjemenki ploda kavovca.",
+   true
+  ],
+  [
+   "Ljudsko srce ima dvije klijetke i dvije pretklijetke.",
+   true
+  ],
+  [
+   "Venera ima više mjeseca od Jupitera.",
+   false
+  ],
+  [
+   "Nogometni golman smije uhvatiti loptu rukama u svom kaznenom prostoru.",
+   true
+  ]
+ ],
+ "facts": [
+  "Srce plavetnog kita može težiti više od 150 kilograma.",
+  "Kleopatra je živjela bliže vremenu slijetanja na Mjesec nego gradnji Keopsove piramide.",
+  "Na Sveučilištu u Oxfordu predavalo se već prije osnutka Tenochtitlana, glavnog grada Asteka.",
+  "Flamingi su ružičasti zbog pigmenata iz rakova i algi kojima se hrane.",
+  "Ljekarna Male braće u Dubrovniku radi neprekidno od 1317. godine.",
+  "Dalmatinski psi rađaju se potpuno bijeli, a pjege im se pojave tek nakon nekoliko tjedana.",
+  "Ivan Vučetić, rodom s Hvara, u Argentini je razvio sustav identifikacije otiscima prstiju.",
+  "Zagrebačka uspinjača duga je samo 66 metara i jedna je od najkraćih na svijetu.",
+  "Koale mogu spavati i do 20 sati dnevno.",
+  "Venera se vrti u suprotnom smjeru od većine planeta, pa ondje Sunce izlazi na zapadu.",
+  "Prosječna gustoća Saturna manja je od gustoće vode.",
+  "Prve uzgojene mrkve bile su ljubičaste i žute, a ne narančaste.",
+  "Kravlji želudac ima četiri dijela: burag, kapuraru, listavac i sirište.",
+  "Morske vidre dok spavaju katkad se drže za šape kako ih struja ne bi razdvojila.",
+  "Kanarski otoci ime su dobili po latinskoj riječi za pse, a ne po pticama kanarincima.",
+  "Eiffelov toranj prvotno je trebao stajati samo 20 godina, a zatim biti srušen.",
+  "Na Merkuru od jednog izlaska Sunca do drugog prođe oko 176 zemaljskih dana.",
+  "Novorođenče ima više kostiju od odrasla čovjeka jer se neke kosti s vremenom srastu.",
+  "Pčela radilica tijekom cijelog života proizvede tek oko dvanaestinu žličice meda.",
+  "Riječ „robot” prvi je put upotrijebljena u drami R.U.R. Karela Čapeka 1920.",
+  "Međunarodna svemirska postaja obiđe Zemlju otprilike svakih 90 minuta.",
+  "Mačke ne osjećaju slatki okus jer im nedostaje receptor za slatko.",
+  "Morske zvijezde nemaju mozak, nego mrežu živaca raspoređenu po tijelu.",
+  "Hrvatska ima više od tisuću otoka, otočića, hridi i grebena.",
+  "Egipatski hijeroglifi dešifrirani su zahvaljujući kamenu iz Rosette."
+ ]
+}

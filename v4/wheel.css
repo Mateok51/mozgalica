@@ -1,0 +1,28 @@
+  /* kolo sreće: do kraja okretanja odgovori izgledaju neutralno, tek onda točno / netočno */
+  .rv.wheel .rv-opts .rv-ok, .rv.wheel .rv-opts .rv-bad, .rv.wheel .rv-opts .rv-dim { animation: rvHold var(--rvo) linear both; animation-delay: calc(-1 * var(--el)); animation-fill-mode: none; }
+  .rv.wheel .rv-opts .rv-ok.mine { animation: rvHold var(--rvo) linear, rvPop 0.45s ease-out both; animation-delay: calc(-1 * var(--el)), calc(250ms + var(--rvo) - var(--el)); animation-fill-mode: none, both; }
+  @keyframes rvHold { 0%, 100% { filter: none; opacity: 1; box-shadow: none; transform: none; } }
+  .rv.wheel .rv-opts .rv-ok::after, .rv.wheel .rv-opts .rv-bad::after { animation: rvBadge 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) both; animation-delay: calc(var(--rvo) - var(--el)); }
+  @keyframes rvBadge { from { opacity: 0; transform: translateY(-50%) scale(0.2); } }
+  .rv.wheel .rv-opts .cnt { animation: rvIn 0.3s ease both; animation-delay: calc(var(--rvo) - var(--el)); }
+  .rv-opts .opt, .rv-opts .p-opt { position: relative; overflow: visible !important; contain: none; }
+  .rv-opts .whs { inset: -4px; border-radius: 10px; z-index: 3; mix-blend-mode: normal;
+    background: linear-gradient(90deg, rgba(255, 240, 190, 0.05), rgba(255, 236, 170, 0.42) 50%, rgba(255, 240, 190, 0.05));
+    box-shadow: 0 0 0 3px #ffe7a0, 0 0 22px 6px rgba(255, 200, 90, 0.85), inset 0 0 24px rgba(255, 230, 160, 0.6); }
+  /* likovi koji su odabrali odgovor stoje na njemu */
+  .rv-opts .rv-who, .rv-opts > * > .rv-who:last-child { position: absolute; right: 38px; bottom: 6px; display: flex; align-items: flex-end; z-index: 4; pointer-events: none; font-size: 16px; }
+  .walker { position: relative; width: 40px; height: 46px; margin-left: -10px; display: block;
+    animation: walkIn 1.05s cubic-bezier(0.25, 0.7, 0.3, 1) both; animation-delay: calc(var(--wd) - var(--el, 0ms)); }
+  .walker .wbob { display: block; width: 100%; height: 100%; animation: waddle 0.26s ease-in-out 4 alternate both; animation-delay: calc(var(--wd) - var(--el, 0ms)); }
+  .walker .wbob > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)); }
+  .walker.me .wbob > * { filter: drop-shadow(0 0 2px #f2c35b) drop-shadow(0 0 3px #f2c35b) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)); }
+  @keyframes walkIn { from { transform: translate(var(--wx), 70vh); opacity: 0; } 12% { opacity: 1; } }
+  @keyframes waddle { from { transform: translateY(0) rotate(-7deg); } to { transform: translateY(-5px) rotate(7deg); } }
+  .tv .walker { width: 58px; height: 66px; margin-left: -14px; }
+  .tv .rv-opts .rv-who, .tv .rv-opts > * > .rv-who:last-child { right: 120px; bottom: 8px; }
+  /* nakon otkrivanja: točni skaču od sreće, ostali pokunjeno */
+  .rv.wheel .rv-ok .walker .wbob { animation: waddle 0.26s ease-in-out 4 alternate both, cheer 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 2 both; animation-delay: calc(var(--wd) - var(--el, 0ms)), calc(var(--rvo) + 100ms - var(--el, 0ms)); }
+  .rv.wheel .rv-bad .walker, .rv.wheel .rv-dim .walker { animation: walkIn 1.05s cubic-bezier(0.25, 0.7, 0.3, 1) both, droop 0.5s ease both; animation-delay: calc(var(--wd) - var(--el, 0ms)), calc(var(--rvo) - var(--el, 0ms)); }
+  @keyframes cheer { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-12px) scale(1.08); } }
+  @keyframes droop { to { filter: grayscale(0.6) brightness(0.8); transform: translateY(3px); } }
+  @media (prefers-reduced-motion: reduce) { .walker, .walker .wbob, .whs { animation: none !important; } }

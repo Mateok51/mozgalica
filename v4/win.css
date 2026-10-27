@@ -1,0 +1,47 @@
+  /* proglašenje pobjednika: lik je glavni; topli amber iza njega, kratki slijed ulaza, jedan panel za poredak */
+  .winscr { position: relative; display: flex; flex-direction: column; align-items: center; width: 100%; gap: 8px; padding-bottom: 64px; isolation: isolate; }
+  .winscr::after { content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none; background: radial-gradient(ellipse 75% 60% at 50% 35%, rgba(255, 170, 70, 0.14), rgba(10, 5, 2, 0.5) 85%); }
+  .win-t { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 11vw, 3.4rem); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1;
+    color: #ffe2a6; text-shadow: 0 2px 0 rgba(140, 86, 24, 0.95), 0 6px 14px rgba(0, 0, 0, 0.45); margin-top: 4px; }
+  .win-hero { position: relative; display: grid; grid-template-columns: 1fr 1.9fr 1fr; align-items: end; width: 100%; max-width: 420px; }
+  .win-hero::before { content: ""; position: absolute; left: 20%; right: 20%; top: 4%; bottom: 0; z-index: -1; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255, 186, 90, 0.42), rgba(255, 160, 60, 0.12) 60%, transparent); }
+  .win-fig { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .win-fig .pic { width: 100%; aspect-ratio: 1; display: flex; align-items: flex-end; justify-content: center; }
+  .win-fig .pic > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45)); }
+  .win-fig .pic > svg { width: 82%; height: 82%; }
+  .win-fig.side { padding-bottom: 6px; } .win-fig.side .pic { width: 78%; }
+  .win-fig .pl { font-family: var(--font-body); font-weight: 900; font-size: 0.8rem; color: rgba(243, 227, 196, 0.85); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .win-name { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.6rem, 7.5vw, 2.3rem); line-height: 1.05; color: #fbefd6; text-shadow: 0 2px 3px rgba(0, 0, 0, 0.7); text-align: center; }
+  .win-sub { font-family: var(--font-body); font-weight: 800; font-size: 0.95rem; color: rgba(243, 227, 196, 0.8); text-align: center; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .winscr .mboard { max-width: 420px; }
+  .winscr .mboard .rank-row { padding-block: 4px; }
+  .win-fact { max-width: 420px; font-size: 0.8rem; font-weight: 700; color: rgba(243, 227, 196, 0.72); text-align: center; line-height: 1.35; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .win-fact b { color: #e2b764; }
+  .win-act { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 420px; margin-top: 4px; }
+  .win-act .btn.lob-cta, .win-act .btn.win-cta { min-height: 56px; font-family: var(--font-display); font-weight: 400; font-size: 1.2rem; filter: drop-shadow(0 0 7px rgba(232, 170, 80, 0.45)) brightness(1.08); }
+  .win-act .btn.ghost { min-height: 48px; font-family: var(--font-display); font-weight: 400; font-size: 1.02rem; }
+  .win-wait { text-align: center; font-size: 0.85rem; font-weight: 800; color: rgba(243, 227, 196, 0.7); }
+  /* slijed ulaza (samo pri prvom prikazu ekrana) */
+  .fresh .win-hero .main .pic > * { animation: winIn 0.9s cubic-bezier(0.25, 0.9, 0.3, 1) both 0.15s; }
+  .fresh .win-t { animation: winFade 0.5s ease both 0.55s; }
+  .fresh .win-name, .fresh .win-sub { animation: winFade 0.5s ease both 0.75s; }
+  .fresh .win-fig.side { animation: winFade 0.5s ease both 0.95s; }
+  .fresh .win-hero::before { animation: winFade 0.8s ease both 0.2s; }
+  .fresh .winscr .mboard, .fresh .win-fact, .fresh .win-act, .fresh .win-wait { animation: winFade 0.5s ease both 1.15s; }
+  @keyframes winIn { 0% { opacity: 0; transform: scale(0.85) translateY(6%); } 55% { opacity: 1; transform: scale(1.02) translateY(-4%); } 75% { transform: translateY(1%); } 100% { opacity: 1; transform: none; } }
+  @keyframes winFade { from { opacity: 0; transform: translateY(6px); } }
+  @media (max-height: 760px) { .win-hero { max-width: 330px; } .win-fact { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .fresh .win-hero .main .pic > * { animation-name: winFade; } }
+  /* TV: pobjednik lijevo velik, poredak desno */
+  .tv .winscr { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-areas: "t t" "hero board" "hero act"; column-gap: 5vw; row-gap: 2vh; align-items: start; padding: 2vh 3vw 9vh; }
+  .tv .win-t { grid-area: t; justify-self: center; font-size: clamp(3rem, 6vw, 6rem); }
+  .tv .win-left { grid-area: hero; display: flex; flex-direction: column; align-items: center; gap: 1vh; }
+  .tv .win-hero { max-width: 720px; }
+  .tv .win-name { font-size: clamp(2rem, 3.6vw, 3.6rem); }
+  .tv .win-right { grid-area: board; display: flex; flex-direction: column; gap: 2vh; }
+  .tv .winscr .mboard, .tv .win-fact { max-width: none; }
+  .tv .win-fact { font-size: clamp(0.9rem, 1.2vw, 1.2rem); text-align: left; }
+  .tv .win-act { grid-area: act; flex-direction: row; max-width: none; }
+  .tv .win-act .btn { flex: 1; }
+  .win-hero { grid-template-columns: 1fr 2.5fr 1fr; max-width: 470px; } .winscr { gap: 10px; }

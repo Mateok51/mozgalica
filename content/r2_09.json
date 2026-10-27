@@ -1,0 +1,2058 @@
+{
+ "cats": {
+  "Videoigre": [
+   {
+    "q": "Kako se zove Mariov brat koji nosi zelenu odjeću?",
+    "o": [
+     "Luigi",
+     "Wario",
+     "Toad",
+     "Yoshi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove zeleni dinosaur kojeg Mario jaše?",
+    "o": [
+     "Rex",
+     "Yoshi",
+     "Birdo",
+     "Koopa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja tvrtka proizvodi konzole Xbox?",
+    "o": [
+     "Nintendo",
+     "Sony",
+     "Microsoft",
+     "Sega"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje potječe tvrtka Nintendo?",
+    "o": [
+     "Kina",
+     "Južna Koreja",
+     "Sjedinjene Američke Države",
+     "Japan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zvala Nintendova prijenosna konzola iz 1989. koja je dolazila s Tetrisom?",
+    "o": [
+     "Game Boy",
+     "Game Gear",
+     "Atari Lynx",
+     "Nintendo DS"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove princeza po kojoj je nazvan serijal igara s junakom Linkom?",
+    "o": [
+     "Peach",
+     "Zelda",
+     "Daisy",
+     "Rosalina"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove glavni negativac serijala The Legend of Zelda?",
+    "o": [
+     "Ridley",
+     "Bowser",
+     "Ganondorf",
+     "Dr. Wily"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove virtualna valuta u igri Roblox?",
+    "o": [
+     "Rupije",
+     "V-Bucks",
+     "Simoleoni",
+     "Robux"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove valuta, obično u obliku dragulja, u serijalu The Legend of Zelda?",
+    "o": [
+     "Rupije",
+     "Zlatnici",
+     "Robux",
+     "Kristali"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je tvrtka razvila i izdala Fortnite?",
+    "o": [
+     "Valve",
+     "Epic Games",
+     "Blizzard",
+     "Riot Games"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U koju dimenziju u Minecraftu vodi portal izgrađen od opsidijana?",
+    "o": [
+     "Aether",
+     "End",
+     "Nether",
+     "Overworld"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove zmaj kojeg igrač pobjeđuje u dimenziji End u Minecraftu?",
+    "o": [
+     "Deathwing",
+     "Alduin",
+     "Smaug",
+     "Ender Dragon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je izvorno stvorio Minecraft?",
+    "o": [
+     "Markus Persson",
+     "Gabe Newell",
+     "Hideo Kojima",
+     "Shigeru Miyamoto"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje je zemlje studio Mojang, koji je razvio Minecraft?",
+    "o": [
+     "Finska",
+     "Švedska",
+     "Norveška",
+     "Danska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je japanski dizajner stvorio Super Maria i serijal Zelda?",
+    "o": [
+     "Satoru Iwata",
+     "Hideo Kojima",
+     "Shigeru Miyamoto",
+     "Hironobu Sakaguchi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je japanski autor poznat kao tvorac serijala Metal Gear?",
+    "o": [
+     "Tetsuya Nomura",
+     "Shigeru Miyamoto",
+     "Yu Suzuki",
+     "Hideo Kojima"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove oklopljeni vojnik, glavni junak serijala Halo?",
+    "o": [
+     "Master Chief",
+     "Commander Shepard",
+     "Marcus Fenix",
+     "Doomguy"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove fizičar s naočalama, glavni lik serijala Half-Life?",
+    "o": [
+     "Isaac Clarke",
+     "Gordon Freeman",
+     "Duke Nukem",
+     "Adam Jensen"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je tvrtka razvila Half-Life i pokrenula platformu Steam?",
+    "o": [
+     "id Software",
+     "Epic Games",
+     "Valve",
+     "Bethesda"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove spartanski ratnik, glavni junak serijala God of War?",
+    "o": [
+     "Perzej",
+     "Leonida",
+     "Ahilej",
+     "Kratos"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se mitologiji odvija igra God of War iz 2018.?",
+    "o": [
+     "Nordijskoj",
+     "Grčkoj",
+     "Egipatskoj",
+     "Japanskoj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove izmišljeni grad nalik Los Angelesu u igri GTA V?",
+    "o": [
+     "Liberty City",
+     "Los Santos",
+     "Vice City",
+     "San Fierro"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem se stvarnom gradu temelji Vice City iz serijala GTA?",
+    "o": [
+     "New York",
+     "Los Angeles",
+     "Miami",
+     "Las Vegas"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji studio stoji iza serijala GTA i Red Dead Redemption?",
+    "o": [
+     "Naughty Dog",
+     "Ubisoft",
+     "Bethesda",
+     "Rockstar Games"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je boje Pac-Man?",
+    "o": [
+     "Žute",
+     "Crvene",
+     "Plave",
+     "Zelene"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od koliko se kvadratića sastoji svaki lik koji pada u Tetrisu?",
+    "o": [
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je stvorio Tetris?",
+    "o": [
+     "Nolan Bushnell",
+     "Jurij Gagarin",
+     "Aleksej Pajitnov",
+     "Toru Iwatani"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji Pokémon ima broj 1 u Pokédexu?",
+    "o": [
+     "Charmander",
+     "Pikachu",
+     "Mew",
+     "Bulbasaur"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojeg Pokémona najprije evoluira Charmander?",
+    "o": [
+     "Charmeleon",
+     "Charizard",
+     "Dragonite",
+     "Arcanine"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojeg Pokémona evoluira Pikachu?",
+    "o": [
+     "Pichu",
+     "Raichu",
+     "Jolteon",
+     "Plusle"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove mačji Pokémon iz Tima Rocket koji govori ljudskim jezikom?",
+    "o": [
+     "Eevee",
+     "Persian",
+     "Meowth",
+     "Skitty"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove Sonicov prijatelj, lisac s dva repa?",
+    "o": [
+     "Amy",
+     "Knuckles",
+     "Shadow",
+     "Tails"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove ludi znanstvenik, Sonicov glavni neprijatelj?",
+    "o": [
+     "Dr. Robotnik (Eggman)",
+     "Dr. Wily",
+     "Dr. Neo Cortex",
+     "Dr. Mario"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što Sonic skuplja dok trči kroz razine?",
+    "o": [
+     "Zlatnike",
+     "Zlatne prstenove",
+     "Zvjezdice",
+     "Dragulje"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je životinja Crash Bandicoot?",
+    "o": [
+     "Rakun",
+     "Lisica",
+     "Bandikut",
+     "Vombat"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove ljubičasti zmaj, junak serijala igara za PlayStation?",
+    "o": [
+     "Charizard",
+     "Drogon",
+     "Toothless",
+     "Spyro"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem serijalu borbenih igara nastupaju Ryu i Ken?",
+    "o": [
+     "Street Fighter",
+     "Tekken",
+     "Mortal Kombat",
+     "Soulcalibur"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove energetska kugla koju ispaljuje Ryu u Street Fighteru?",
+    "o": [
+     "Kamehameha",
+     "Hadouken",
+     "Rasengan",
+     "Sonic Boom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je japanska tvrtka izdala Pac-Mana 1980.?",
+    "o": [
+     "Konami",
+     "Sega",
+     "Namco",
+     "Capcom"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je tvrtka stvorila serijale Street Fighter i Resident Evil?",
+    "o": [
+     "Square Enix",
+     "Konami",
+     "Namco",
+     "Capcom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove zla korporacija iz serijala Resident Evil?",
+    "o": [
+     "Umbrella",
+     "Aperture",
+     "Black Mesa",
+     "Shinra"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove zlonamjerna umjetna inteligencija iz igre Portal?",
+    "o": [
+     "HAL 9000",
+     "GLaDOS",
+     "SHODAN",
+     "Cortana"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Microsoftova digitalna asistentica Cortana dobila je ime po liku iz kojeg serijala?",
+    "o": [
+     "Mass Effect",
+     "Gears of War",
+     "Halo",
+     "Starcraft"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove izmišljeni jezik kojim govore likovi u The Simsima?",
+    "o": [
+     "Esperanto",
+     "Sindarin",
+     "Klingonski",
+     "Simlish"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je boje dijamant (plumbob) iznad glave lika u The Simsima, kad je lik zadovoljan?",
+    "o": [
+     "Zelene",
+     "Plave",
+     "Crvene",
+     "Žute"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je dizajner stvorio igre SimCity i The Sims?",
+    "o": [
+     "Sid Meier",
+     "Will Wright",
+     "John Carmack",
+     "Peter Molyneux"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove igrač koji potajno sabotira posadu u igri Among Us?",
+    "o": [
+     "Saboteur",
+     "Traitor",
+     "Impostor",
+     "Spy"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je tvrtka razvila igru League of Legends?",
+    "o": [
+     "Epic Games",
+     "Blizzard",
+     "Valve",
+     "Riot Games"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj igri tvrtke Blizzard milijuni igrača istražuju svijet Azerotha?",
+    "o": [
+     "World of Warcraft",
+     "Diablo",
+     "Overwatch",
+     "Guild Wars"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što znači kratica RPG kao žanr videoigara?",
+    "o": [
+     "Rapid player game",
+     "Role-playing game",
+     "Real power game",
+     "Random puzzle game"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znači kratica FPS kao žanr videoigara?",
+    "o": [
+     "Free player system",
+     "Fast-paced strategy",
+     "First-person shooter",
+     "Full party service"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što u videoigrama znači kratica NPC?",
+    "o": [
+     "Neutral pixel code",
+     "New player challenge",
+     "Next power control",
+     "Non-player character"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja kultna pucačina iz 1993. šalje igrača u borbu protiv demona na Marsovim mjesecima?",
+    "o": [
+     "Doom",
+     "Quake",
+     "Duke Nukem 3D",
+     "Half-Life"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je japanska arkadna igra iz 1978. u kojoj se puca na redove vanzemaljaca koji se spuštaju?",
+    "o": [
+     "Asteroids",
+     "Space Invaders",
+     "Galaga",
+     "Defender"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Čime se Nintendo bavio kad je osnovan 1889.?",
+    "o": [
+     "Satovima",
+     "Šivaćim strojevima",
+     "Igraćim kartama",
+     "Biciklima"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je Nintendova konzola iz 2006. poznata po upravljaču koji prepoznaje pokrete?",
+    "o": [
+     "Switch",
+     "Wii U",
+     "GameCube",
+     "Wii"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se Nintendova konzola iz 2017. može igrati i na televizoru i kao prijenosna?",
+    "o": [
+     "Switch",
+     "Wii U",
+     "3DS",
+     "Game Boy Advance"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je godine u Japanu izašla prva konzola PlayStation?",
+    "o": [
+     "1991.",
+     "1994.",
+     "1997.",
+     "1999."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je bila posljednja Segina kućna konzola?",
+    "o": [
+     "Mega Drive",
+     "Saturn",
+     "Dreamcast",
+     "Master System"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je igra iz 1982. prema Spielbergovu filmu postala sinonim za neuspjeh i završila zakopana u pustinji?",
+    "o": [
+     "Gremlins",
+     "Jaws",
+     "Indiana Jones",
+     "E.T."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje životinje gađaju ptice u igri Angry Birds?",
+    "o": [
+     "Svinje",
+     "Mačke",
+     "Lisice",
+     "Žabe"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj arkadnoj igri igrač vodi žabu preko prometne ceste i rijeke?",
+    "o": [
+     "Pong",
+     "Frogger",
+     "Q*bert",
+     "Dig Dug"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koju je logičku igru s filozofskim temama hrvatski studio Croteam izdao 2014.?",
+    "o": [
+     "Braid",
+     "The Witness",
+     "The Talos Principle",
+     "Portal"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje je zemlje studio CD Projekt Red?",
+    "o": [
+     "Mađarska",
+     "Češka",
+     "Ukrajina",
+     "Poljska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se gradu odvija igra Cyberpunk 2077?",
+    "o": [
+     "Night City",
+     "Neo Tokyo",
+     "Rapture",
+     "Los Santos"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove podvodni grad u igri BioShock iz 2007.?",
+    "o": [
+     "Columbia",
+     "Rapture",
+     "Atlantis",
+     "City 17"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj igri junak izvikuje „Fus Ro Dah“?",
+    "o": [
+     "Dragon Age",
+     "Oblivion",
+     "Skyrim",
+     "Dark Souls"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je japanski studio stvorio Dark Souls i Elden Ring?",
+    "o": [
+     "PlatinumGames",
+     "Capcom",
+     "Square Enix",
+     "FromSoftware"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove sveti artefakt od tri zlatna trokuta u serijalu Zelda?",
+    "o": [
+     "Triforce",
+     "Master Sword",
+     "Okarina",
+     "Kristal vremena"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj je igri Mario prvi put nastupio 1981.?",
+    "o": [
+     "Super Mario Bros.",
+     "Donkey Kong",
+     "Mario Bros.",
+     "Pac-Man"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji predmet u Mario Kartu sam pronalazi i pogađa vozača na prvom mjestu?",
+    "o": [
+     "Banana",
+     "Zeleni oklop",
+     "Plavi oklop",
+     "Bob-omb"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Za koju se igru održava slavni e-sportski turnir The International?",
+    "o": [
+     "Overwatch",
+     "League of Legends",
+     "Counter-Strike",
+     "Dota 2"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je mobilna igra iz 2016. pokrenula hvatanje Pokémona po stvarnim ulicama?",
+    "o": [
+     "Pokémon Go",
+     "Pokémon Sun",
+     "Ingress",
+     "Pokémon Snap"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zovu prilagodljivi crtani avatari na Nintendovoj konzoli Wii?",
+    "o": [
+     "Sim",
+     "Mii",
+     "Avatar",
+     "Pixel"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove slavna šifra ↑↑↓↓←→←→BA iz starih igara?",
+    "o": [
+     "Sega kod",
+     "Nintendo kod",
+     "Konami kod",
+     "Atari kod"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se konzola iz 1972. smatra prvom kućnom igraćom konzolom?",
+    "o": [
+     "Intellivision",
+     "Atari 2600",
+     "ColecoVision",
+     "Magnavox Odyssey"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja francuska tvrtka izdaje serijal Assassin's Creed?",
+    "o": [
+     "Ubisoft",
+     "Electronic Arts",
+     "Activision",
+     "Square Enix"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Pod kojim se imenom od 2023. izdaje EA-ov nogometni serijal koji se prije zvao FIFA?",
+    "o": [
+     "eFootball",
+     "EA Sports FC",
+     "Football Manager",
+     "Pro Soccer"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je Blizzardova strategija iz 1998. s rasama Terran, Zerg i Protoss?",
+    "o": [
+     "Command & Conquer",
+     "WarCraft",
+     "StarCraft",
+     "Age of Empires"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj mobilnoj igri igrač slaže po tri ista slatkiša u niz?",
+    "o": [
+     "Subway Surfers",
+     "Angry Birds",
+     "Fruit Ninja",
+     "Candy Crush Saga"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koju je mobilnu igru njezin autor 2014. povukao iz trgovina usred golemog uspjeha?",
+    "o": [
+     "Flappy Bird",
+     "Doodle Jump",
+     "Temple Run",
+     "Cut the Rope"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove lovkinja na glave, glavna junakinja serijala Metroid?",
+    "o": [
+     "Lara Croft",
+     "Samus Aran",
+     "Bayonetta",
+     "Jill Valentine"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je boje Capcomov junak Mega Man?",
+    "o": [
+     "Zelene",
+     "Crvene",
+     "Plave",
+     "Ljubičaste"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu glavni likovi igre The Last of Us iz 2013.?",
+    "o": [
+     "Leon i Ada",
+     "Nathan i Elena",
+     "Arthur i John",
+     "Joel i Ellie"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove lovac na blago, glavni junak serijala Uncharted?",
+    "o": [
+     "Nathan Drake",
+     "Arthur Morgan",
+     "Sam Fisher",
+     "Marcus Fenix"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojoj se ruskoj narodnoj pjesmi temelji poznata glazba iz Tetrisa?",
+    "o": [
+     "Kaljinka",
+     "Korobeiniki",
+     "Katjuša",
+     "Kozački ples"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove crveni duh iz Pac-Mana?",
+    "o": [
+     "Inky",
+     "Pinky",
+     "Blinky",
+     "Clyde"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove žuta ptica za jahanje iz serijala Final Fantasy?",
+    "o": [
+     "Cactuar",
+     "Moogle",
+     "Yoshi",
+     "Chocobo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje su bile prve Pokémon igre izdane izvan Japana?",
+    "o": [
+     "Red i Blue",
+     "Gold i Silver",
+     "Ruby i Sapphire",
+     "Yellow i Green"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što u igrama Super Mario igraču daje zelena gljiva?",
+    "o": [
+     "Nevidljivost",
+     "Dodatni život",
+     "Vatrene kugle",
+     "Letenje"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znači kratica NES, Nintendove konzole iz 1980-ih?",
+    "o": [
+     "Nintendo Electric Set",
+     "New Electronic Station",
+     "Nintendo Entertainment System",
+     "Next Entertainment Screen"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko zaslona ima Nintendo DS?",
+    "o": [
+     "Četiri",
+     "Jedan",
+     "Tri",
+     "Dva"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se u igrama naziva skrivena šala ili tajni sadržaj koji su ostavili autori?",
+    "o": [
+     "Easter egg",
+     "Cheat code",
+     "Glitch",
+     "Patch"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove glavni junak igre Assassin's Creed II, plemić iz Firence?",
+    "o": [
+     "Altaïr",
+     "Ezio Auditore",
+     "Edward Kenway",
+     "Arno Dorian"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je pisac „Igre prijestolja“ surađivao na svijetu igre Elden Ring?",
+    "o": [
+     "Neil Gaiman",
+     "Stephen King",
+     "George R. R. Martin",
+     "Andrzej Sapkowski"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se Nintendovoj borbenoj igri međusobno tuku Mario, Link, Pikachu i drugi?",
+    "o": [
+     "Brawlhalla",
+     "Mario Party",
+     "Tekken",
+     "Super Smash Bros."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove lik koji u Animal Crossingu igraču prodaje kuću na kredit?",
+    "o": [
+     "Tom Nook",
+     "Isabelle",
+     "K.K. Slider",
+     "Blathers"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove žanr igara u kojem se 100 igrača bori dok ne ostane samo jedan?",
+    "o": [
+     "MOBA",
+     "Battle royale",
+     "Roguelike",
+     "Tower defense"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kao modifikacija koje igre je nastala izvorna DotA?",
+    "o": [
+     "Diablo II",
+     "StarCraft",
+     "Warcraft III",
+     "Age of Empires II"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je pucačina nastala kao modifikacija igre Half-Life?",
+    "o": [
+     "Overwatch",
+     "Call of Duty",
+     "Battlefield",
+     "Counter-Strike"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem je ratu smještena prva igra Call of Duty iz 2003.?",
+    "o": [
+     "Drugi svjetski rat",
+     "Vijetnamski rat",
+     "Prvi svjetski rat",
+     "Korejski rat"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja igra spaja vožnju automobila i nogomet?",
+    "o": [
+     "Gran Turismo",
+     "Rocket League",
+     "Mario Kart",
+     "Need for Speed"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj su igri igrači svirali na plastičnoj gitari, prateći note na zaslonu?",
+    "o": [
+     "SingStar",
+     "Just Dance",
+     "Guitar Hero",
+     "Dance Dance Revolution"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj igri treba spasiti stvorenja zelene kose koja slijepo hodaju prema provaliji?",
+    "o": [
+     "Oddworld",
+     "Worms",
+     "Pikmin",
+     "Lemmings"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu zadani likovi kojima se igra u Minecraftu?",
+    "o": [
+     "Steve i Alex",
+     "Bob i Alice",
+     "Jack i Jill",
+     "Tom i Jerry"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je boje tradicionalno Linkova odjeća u serijalu Zelda?",
+    "o": [
+     "Plave",
+     "Zelene",
+     "Crvene",
+     "Smeđe"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je igra postala slavna na Nokijinim mobitelima krajem 1990-ih?",
+    "o": [
+     "Pong",
+     "Tetris",
+     "Snake",
+     "Space Impact"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se naziva prelazak igre što je brže moguće, često uz mjerenje vremena?",
+    "o": [
+     "Let's Play",
+     "Walkthrough",
+     "Grinding",
+     "Speedrun"
+    ],
+    "a": 3
+   }
+  ],
+  "Tehnologija i internet": [
+   {
+    "q": "Što znači kratica RAM?",
+    "o": [
+     "Random Access Memory",
+     "Read And Modify",
+     "Rapid Active Memory",
+     "Remote Access Module"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što znači kratica HTML?",
+    "o": [
+     "High Tech Modern Language",
+     "HyperText Markup Language",
+     "Home Tool Markup Language",
+     "Hyperlink Text Mode Line"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znači slovo S u kratici HTTPS?",
+    "o": [
+     "System",
+     "Server",
+     "Secure",
+     "Speed"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što znači kratica PDF?",
+    "o": [
+     "Personal Digital Format",
+     "Printed Data File",
+     "Public Document File",
+     "Portable Document Format"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što znači kratica GPS?",
+    "o": [
+     "Global Positioning System",
+     "General Path Service",
+     "Geo Point Satellite",
+     "Global Power Signal"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojem je vladaru nazvana bežična tehnologija Bluetooth?",
+    "o": [
+     "Švedskom kralju Gustavu",
+     "Danskom kralju Haraldu",
+     "Norveškom kralju Olafu",
+     "Engleskom kralju Alfredu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je od navedenih jedinica za količinu podataka najveća?",
+    "o": [
+     "Megabajt",
+     "Gigabajt",
+     "Terabajt",
+     "Kilobajt"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje znamenke koristi binarni brojevni sustav?",
+    "o": [
+     "0 do 9",
+     "1 i 2",
+     "0 do 7",
+     "0 i 1"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zvao Microsoftov web-preglednik predstavljen 1995.?",
+    "o": [
+     "Internet Explorer",
+     "Netscape Navigator",
+     "Opera",
+     "Safari"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je web-preglednik razvila organizacija Mozilla?",
+    "o": [
+     "Chrome",
+     "Firefox",
+     "Safari",
+     "Edge"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zvao prvi web-preglednik, koji je napisao Tim Berners-Lee?",
+    "o": [
+     "Netscape",
+     "Mosaic",
+     "WorldWideWeb",
+     "Lynx"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na računalu koje je tvrtke radio prvi web-poslužitelj u CERN-u?",
+    "o": [
+     "Compaq",
+     "IBM",
+     "Commodore",
+     "NeXT"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je 1971. poslao prvu e-poruku između računala u mreži?",
+    "o": [
+     "Ray Tomlinson",
+     "Vint Cerf",
+     "Bill Gates",
+     "Steve Wozniak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvala mreža američkog Ministarstva obrane, preteča interneta?",
+    "o": [
+     "NASANET",
+     "ARPANET",
+     "USENET",
+     "MILNET"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz kojeg jezika potječe riječ „emoji“?",
+    "o": [
+     "Iz korejskog",
+     "Iz engleskog",
+     "Iz japanskog",
+     "Iz kineskog"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se naziva neželjena masovna e-pošta?",
+    "o": [
+     "Firewall",
+     "Phishing",
+     "Cookie",
+     "Spam"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove zlonamjerni program nazvan po varci s drvenim konjem?",
+    "o": [
+     "Trojanac",
+     "Crv",
+     "Spartanac",
+     "Kentaur"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove prijevara u kojoj lažne poruke mame lozinke i podatke s kartica?",
+    "o": [
+     "Spoofing",
+     "Phishing",
+     "Streaming",
+     "Caching"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znači kratica VPN?",
+    "o": [
+     "Visual Protocol Number",
+     "Very Private Node",
+     "Virtual Private Network",
+     "Verified Public Network"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zvalo IBM-ovo računalo koje je 1997. u šahu pobijedilo Garija Kasparova?",
+    "o": [
+     "AlphaZero",
+     "Watson",
+     "Big Blue",
+     "Deep Blue"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je IBM-ov sustav 2011. pobijedio prvake u američkom kvizu Jeopardy!?",
+    "o": [
+     "Watson",
+     "Deep Blue",
+     "Siri",
+     "HAL"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je program 2016. pobijedio Leeja Sedola u drevnoj igri go?",
+    "o": [
+     "Deep Blue",
+     "AlphaGo",
+     "Watson",
+     "Stockfish"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove test koji provjerava može li stroj u razgovoru uvjerljivo glumiti čovjeka?",
+    "o": [
+     "Mooreov test",
+     "Babbageov test",
+     "Turingov test",
+     "Lovelacein test"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove zapažanje da se broj tranzistora na čipu udvostručuje otprilike svake dvije godine?",
+    "o": [
+     "Gatesov zakon",
+     "Ohmov zakon",
+     "Murphyjev zakon",
+     "Mooreov zakon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem je laboratoriju 1947. izumljen tranzistor?",
+    "o": [
+     "Bell Labs",
+     "Xerox PARC",
+     "CERN",
+     "IBM Research"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kukac 1947. pronađen u računalu Harvard Mark II i zapisan kao prvi pravi „bug“?",
+    "o": [
+     "Žohar",
+     "Moljac",
+     "Mrav",
+     "Pauk"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po čemu je dobio ime programski jezik Python?",
+    "o": [
+     "Po grčkom mitu",
+     "Po zmiji pitonu",
+     "Po skupini Monty Python",
+     "Po imenu autora"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji programski jezik ima logotip sa šalicom kave?",
+    "o": [
+     "Swift",
+     "Python",
+     "Ruby",
+     "Java"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što je maskota operacijskog sustava Android?",
+    "o": [
+     "Zeleni robot",
+     "Plavi pingvin",
+     "Narančasta lisica",
+     "Crveni pas"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po čemu su verzije Androida godinama dobivale nadimke?",
+    "o": [
+     "Po planetima",
+     "Po slasticama",
+     "Po životinjama",
+     "Po gradovima"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zvalo Appleovo računalo predstavljeno 1984. reklamom nadahnutom Orwellom?",
+    "o": [
+     "Apple II",
+     "Lisa",
+     "Macintosh",
+     "iMac"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Po čemu je dobila ime tvrtka Amazon?",
+    "o": [
+     "Po osnivaču",
+     "Po prašumi",
+     "Po ratnicama iz mita",
+     "Po rijeci"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od kojeg matematičkog pojma potječe ime Google?",
+    "o": [
+     "Googol",
+     "Gugolpleks",
+     "Gigabajt",
+     "Gaussov broj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je godine pokrenuta Wikipedija?",
+    "o": [
+     "1998.",
+     "2001.",
+     "2004.",
+     "2007."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je suosnivač internetske enciklopedije Wikipedije?",
+    "o": [
+     "Jeff Bezos",
+     "Jack Dorsey",
+     "Jimmy Wales",
+     "Kevin Systrom"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Pod kojim je imenom bila poznata društvena mreža X prije 2023.?",
+    "o": [
+     "MySpace",
+     "Vine",
+     "Tumblr",
+     "Twitter"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je znakova izvorno smjela imati jedna objava na Twitteru?",
+    "o": [
+     "140",
+     "100",
+     "160",
+     "280"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju je društvenu mrežu za fotografije Facebook kupio 2012.?",
+    "o": [
+     "Snapchat",
+     "Instagram",
+     "Pinterest",
+     "Flickr"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje je zemlje glazbena platforma Spotify?",
+    "o": [
+     "Nizozemska",
+     "Norveška",
+     "Švedska",
+     "Sjedinjene Američke Države"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje je zemlje tvrtka Samsung?",
+    "o": [
+     "Tajvan",
+     "Japan",
+     "Kina",
+     "Južna Koreja"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje je zemlje tvrtka Philips?",
+    "o": [
+     "Nizozemska",
+     "Njemačka",
+     "Belgija",
+     "Švedska"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj je zemlji izumljen QR kod?",
+    "o": [
+     "Južna Koreja",
+     "Japan",
+     "Kina",
+     "Sjedinjene Američke Države"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znače slova QR u nazivu QR koda?",
+    "o": [
+     "Quantum Reader",
+     "Quality Record",
+     "Quick Response",
+     "Quick Route"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove raspored tipkovnice uobičajen u Hrvatskoj?",
+    "o": [
+     "Dvorak",
+     "QWERTY",
+     "AZERTY",
+     "QWERTZ"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što na računalu najčešće radi kombinacija tipki Ctrl + Z?",
+    "o": [
+     "Poništava zadnju radnju",
+     "Kopira tekst",
+     "Sprema datoteku",
+     "Zatvara prozor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove mala datoteka koju web-stranica sprema u preglednik?",
+    "o": [
+     "Keks (cracker)",
+     "Kolačić (cookie)",
+     "Mrvica",
+     "Biskvit"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znači kratica LOL u internetskom dopisivanju?",
+    "o": [
+     "Lost online",
+     "Lots of love",
+     "Laughing out loud",
+     "Leave or log"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove oznaka # ispred ključne riječi na društvenim mrežama?",
+    "o": [
+     "Keyword",
+     "Tag-line",
+     "Pound-link",
+     "Hashtag"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je znanstvenik u knjizi „Sebični gen“ skovao riječ „mem“?",
+    "o": [
+     "Richard Dawkins",
+     "Carl Sagan",
+     "Stephen Hawking",
+     "Charles Darwin"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Čija se pjesma podmeće u internetskoj šali poznatoj kao „rickrolling“?",
+    "o": [
+     "Ricky Martina",
+     "Ricka Astleyja",
+     "Richarda Marxa",
+     "Rick Jamesa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je pjesma 2012. prva na YouTubeu prešla milijardu pregleda?",
+    "o": [
+     "Despacito",
+     "Baby",
+     "Gangnam Style",
+     "Friday"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove prvi video ikad objavljen na YouTubeu?",
+    "o": [
+     "First video",
+     "Charlie bit my finger",
+     "Hello World",
+     "Me at the zoo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Čime se Netflix bavio kad je počeo s radom?",
+    "o": [
+     "Iznajmljivanjem DVD-ova poštom",
+     "Prodajom televizora",
+     "Kinodistribucijom",
+     "Videoigrama"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je 1973. obavio prvi javni poziv ručnim mobilnim telefonom?",
+    "o": [
+     "Graham Bell",
+     "Martin Cooper",
+     "Steve Jobs",
+     "Guglielmo Marconi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko je znakova mogla imati jedna klasična SMS poruka?",
+    "o": [
+     "100",
+     "140",
+     "160",
+     "255"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je Nokijin model iz 2000. postao legendaran po izdržljivosti?",
+    "o": [
+     "6600",
+     "N95",
+     "Lumia",
+     "3310"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što prikazuje uobičajena ikona za spremanje datoteke?",
+    "o": [
+     "Disketu",
+     "Mapu",
+     "Strelicu prema dolje",
+     "CD"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je podataka stalo na standardnu disketu od 3,5 inča?",
+    "o": [
+     "144 MB",
+     "1,44 MB",
+     "14,4 MB",
+     "0,44 MB"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Amazonova glasovna asistentica?",
+    "o": [
+     "Cortana",
+     "Siri",
+     "Alexa",
+     "Bixby"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što znači kratica LCD kod zaslona?",
+    "o": [
+     "Linear Contrast Display",
+     "Light Color Diode",
+     "Low Current Device",
+     "Liquid Crystal Display"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove najmanji element slike na digitalnom zaslonu?",
+    "o": [
+     "Piksel",
+     "Bit",
+     "Voksel",
+     "Vektor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Pod kojim se pseudonimom krije tvorac Bitcoina?",
+    "o": [
+     "Hal Finney",
+     "Satoshi Nakamoto",
+     "Vitalik Buterin",
+     "Nick Szabo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove tehnologija decentraliziranog zapisa na kojoj počivaju kriptovalute?",
+    "o": [
+     "Firewall",
+     "Cloud",
+     "Blockchain",
+     "Bluetooth"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se naziva softver čiji je izvorni kod javno dostupan svima?",
+    "o": [
+     "Adware",
+     "Freemium",
+     "Shareware",
+     "Otvoreni kod"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se na hrvatskom zove „firewall“, zaštita računalne mreže?",
+    "o": [
+     "Vatrozid",
+     "Plamenik",
+     "Protupožarnik",
+     "Zaštitnik"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se naziva zlonamjerni softver u cjelini, uključujući viruse i crve?",
+    "o": [
+     "Firmware",
+     "Malware",
+     "Middleware",
+     "Freeware"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je vršna internetska domena Hrvatske?",
+    "o": [
+     ".hv",
+     ".cr",
+     ".hr",
+     ".ch"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Za koju je englesku riječ izvorno kratica internetske domene .com?",
+    "o": [
+     "Company",
+     "Computer",
+     "Community",
+     "Commercial"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojoj državi pripada internetska domena .tv?",
+    "o": [
+     "Tuvalu",
+     "Tajvan",
+     "Tunis",
+     "Turska"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što znači kratica IP u izrazu „IP adresa“?",
+    "o": [
+     "Internal Port",
+     "Internet Protocol",
+     "Identity Profile",
+     "Internet Provider"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko bitova ima IPv4 adresa?",
+    "o": [
+     "64",
+     "16",
+     "32",
+     "128"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je u 19. stoljeću osmislio analitički stroj, preteču računala?",
+    "o": [
+     "John von Neumann",
+     "Alan Turing",
+     "Blaise Pascal",
+     "Charles Babbage"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je njemački inženjer 1941. dovršio programabilno računalo Z3?",
+    "o": [
+     "Konrad Zuse",
+     "Werner von Braun",
+     "Rudolf Diesel",
+     "Max Planck"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je izumio računalni miš?",
+    "o": [
+     "Steve Jobs",
+     "Douglas Engelbart",
+     "Bill Gates",
+     "Tim Berners-Lee"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je istraživačkom centru razvijeno grafičko sučelje koje je nadahnulo Apple?",
+    "o": [
+     "MIT",
+     "Bell Labs",
+     "Xerox PARC",
+     "CERN"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se saveznoj državi SAD-a nalazi Silicijska dolina?",
+    "o": [
+     "Massachusetts",
+     "Teksas",
+     "Washington",
+     "Kalifornija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je tvrtka osnovana 1939. u garaži u Palo Altu?",
+    "o": [
+     "Hewlett-Packard",
+     "Apple",
+     "Intel",
+     "Google"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je 1983. pokrenuo projekt slobodnog softvera GNU?",
+    "o": [
+     "Linus Torvalds",
+     "Richard Stallman",
+     "Dennis Ritchie",
+     "Bill Joy"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je tvrtka 1979. predstavila prijenosni kazetofon Walkman?",
+    "o": [
+     "Philips",
+     "Panasonic",
+     "Sony",
+     "Toshiba"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je Appleov uređaj iz 2001. obećavao „1000 pjesama u džepu“?",
+    "o": [
+     "iPad",
+     "iPhone",
+     "iMac",
+     "iPod"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojim znakom počinje formula u programu Excel?",
+    "o": [
+     "=",
+     "+",
+     "#",
+     "@"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što znači kratica CSS u izradi web-stranica?",
+    "o": [
+     "Computer Style System",
+     "Cascading Style Sheets",
+     "Creative Site Script",
+     "Coded Screen Style"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji broj pogreške dobijete kad tražena web-stranica ne postoji?",
+    "o": [
+     "200",
+     "500",
+     "404",
+     "301"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se popularno zove plavi zaslon koji Windows prikaže pri ozbiljnoj pogrešci?",
+    "o": [
+     "Plavi kraj",
+     "Plavi alarm",
+     "Plavo zamrzavanje",
+     "Plavi zaslon smrti"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što znači kratica GIF?",
+    "o": [
+     "Graphics Interchange Format",
+     "Graphic Image File",
+     "General Image Frame",
+     "Great Internet Format"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove platforma za prijenos igranja uživo s ljubičastim logotipom?",
+    "o": [
+     "Kick",
+     "Twitch",
+     "Vimeo",
+     "Dailymotion"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je komunikacijska tehnološka tvrtka osnovana 2006. u Vodnjanu?",
+    "o": [
+     "Nanobit",
+     "Rimac",
+     "Infobip",
+     "Span"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja hrvatska aplikacija rješava matematičke zadatke fotografiranjem?",
+    "o": [
+     "Wolfram Alpha",
+     "Mathway",
+     "Microblink",
+     "Photomath"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove prijava koja uz lozinku traži i drugi dokaz, npr. kod na mobitelu?",
+    "o": [
+     "Dvofaktorska autentifikacija",
+     "Dvostruki ključ",
+     "Biometrijska šifra",
+     "Sigurnosni kolačić"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove napad koji ruši poslužitelj poplavom zahtjeva s mnogo računala?",
+    "o": [
+     "Phishing",
+     "DDoS",
+     "Spoofing",
+     "Ransomware"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je holivudska glumica 1942. patentirala tehniku skakanja frekvencija?",
+    "o": [
+     "Greta Garbo",
+     "Marilyn Monroe",
+     "Hedy Lamarr",
+     "Bette Davis"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je znanstvenik 1982. predložio smajlić :-) za označavanje šale?",
+    "o": [
+     "Tim Berners-Lee",
+     "Ray Tomlinson",
+     "Vint Cerf",
+     "Scott Fahlman"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Microsoftova internetska tražilica?",
+    "o": [
+     "Bing",
+     "Yahoo",
+     "DuckDuckGo",
+     "Ask"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju je popularnu igru pogađanja riječi 2022. kupio list The New York Times?",
+    "o": [
+     "Scrabble GO",
+     "Wordle",
+     "Quordle",
+     "Words with Friends"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je bila prva poruka poslana ARPANET-om 1969., prije nego što se sustav srušio?",
+    "o": [
+     "OK",
+     "HI",
+     "LO",
+     "TEST"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje izvorno potječe aplikacija TikTok?",
+    "o": [
+     "Singapur",
+     "Južna Koreja",
+     "Japan",
+     "Kina"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojom se bežičnom tehnologijom, prema standardu IEEE 802.11, uređaji spajaju na mrežu?",
+    "o": [
+     "Wi-Fi",
+     "Bluetooth",
+     "NFC",
+     "Infracrveno"
+    ],
+    "a": 0
+   }
+  ]
+ }
+}

@@ -1,0 +1,30 @@
+  /* kladionica: kratka najava i odabir uloga */
+  .bet { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+  .bet-t { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 11vw, 3.2rem); line-height: 1; letter-spacing: 0.05em; text-transform: uppercase;
+    color: #ffe2a6; text-shadow: 0 2px 0 rgba(140, 86, 24, 0.95), 0 6px 14px rgba(0, 0, 0, 0.45); margin-top: 6px; }
+  @keyframes betIn { from { opacity: 0; transform: scale(0.94); } }
+  .fresh .bet-t { animation: betIn 0.5s ease-out both; }
+  .bet-sub { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.98rem; color: rgba(243, 227, 196, 0.85); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .bet-sub b { color: #e2b764; }
+  .bet .timer { width: 100%; }
+  .bet-have { font-family: var(--font-body); font-weight: 800; font-size: 0.9rem; color: rgba(243, 227, 196, 0.75); }
+  .bet-have b { color: #fbefd6; font-size: 1.1rem; }
+  .bet-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+  .bet-opts .btn.ghost { min-height: 56px; font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; }
+  .bet-opts .btn.ghost.all { grid-column: 1 / -1; filter: drop-shadow(0 0 6px rgba(232, 170, 80, 0.4)) brightness(1.06); }
+  .bet-opts .btn.ghost.all:disabled { filter: saturate(0.35) brightness(0.8); }
+  .bet-opts .btn.ghost.none { grid-column: 1 / -1; min-height: 48px; font-size: 1.02rem; }
+  .bet-opts .btn small { font-family: var(--font-body); font-weight: 800; font-size: 0.7em; opacity: 0.8; margin-left: 4px; }
+  .bet-rule { text-align: center; font-size: 0.82rem; font-weight: 700; color: rgba(243, 227, 196, 0.7); line-height: 1.35; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .bet-rule b { color: #e2b764; }
+  .bet-done { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 1.15rem; color: #f3e3c4; padding: 18px 0 6px; }
+  .bet-done b { color: #e2b764; }
+  .tv .bet-t { font-size: clamp(4rem, 9vw, 8rem); }
+  .tv .bet-sub { font-size: clamp(1.2rem, 2vw, 2rem); }
+  .tv .bet-mid { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2vh; }
+  /* ulog u pitanju, otkrivanju i poretku */
+  .tag.betag { color: #2a1606; background: #e2ac54; border-image: none; box-shadow: none; border: 0; padding: 0.15em 0.6em; border-radius: 6px; filter: none; }
+  .rv-bet { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: #e2b764; opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(950ms - var(--el)); }
+  .rv-bet.neg { color: rgba(225, 140, 120, 0.9); }
+  .mboard .rank-row .betb { margin-left: 6px; padding: 0 5px; border-radius: 4px; font-size: 0.66rem; font-weight: 900; color: #e2b764; box-shadow: inset 0 0 0 1px rgba(226, 172, 84, 0.55); vertical-align: 1px; }
+  .mboard .rank-row .betb.neg { color: rgba(225, 140, 120, 0.95); box-shadow: inset 0 0 0 1px rgba(225, 140, 120, 0.5); }

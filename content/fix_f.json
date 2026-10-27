@@ -1,0 +1,21 @@
+{
+  "remove": [],
+  "fix": [
+    {
+      "q": "Koja životinja danju spava viseći naglavačke?",
+      "new": { "q": "Koja životinja danju spava viseći naglavačke?", "o": ["Sova", "Jež", "Vjeverica", "Šišmiš"], "a": 3 },
+      "why": "Lenjivac također spava viseći naglavačke s grana, pa je opcija braniva; zamijenjena ježem."
+    },
+    {
+      "q": "Koji gušter mijenja boju kože?",
+      "new": { "q": "Koji je gušter najpoznatiji po mijenjanju boje kože?", "o": ["Gekon", "Iguana", "Varan", "Kameleon"], "a": 3 },
+      "why": "Boju mogu mijenjati i neki gekoni i anolisi, pa je formulacija pooštrena na 'najpoznatiji'."
+    },
+    {
+      "q": "Koji je znanstvenik rođen u Vukovaru dobio Nobelovu nagradu za kemiju 1939.?",
+      "new": { "q": "Koji je znanstvenik, rođen u Vukovaru, dobio Nobelovu nagradu za kemiju 1939.?", "o": ["Vladimir Prelog", "Ruđer Bošković", "Andrija Mohorovičić", "Lavoslav Ružička"], "a": 3 },
+      "why": "Jezično: umetnuta surečenica treba zareze."
+    }
+  ],
+  "notes": "Provjereno 110 pitanja (7 kategorija). Svi označeni odgovori su točni; rekordi (Marijanska brazda, Jadran ~1233 m, Grenland, Kaspijsko, Bajkal, Anđeoski slap, Amazona, Arapski poluotok, obalna sekvoja, Vransko jezero kod Biograda kao najveće prirodno jezero RH, Ande, koža) su stabilni. Duplikata nema. Popravljena 3 pitanja (1 braniva druga opcija, 1 preširoka formulacija, 1 jezična), izbačeno 0."
+}

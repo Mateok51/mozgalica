@@ -1,0 +1,85 @@
+#Općenito
+Koliko mjeseci ima 31 dan? | 7 | 6 | 5 | 8
+Koji je mjesec najkraći u godini? | Veljača | Travanj | Studeni | Lipanj
+Koji je deseti mjesec u godini? | Listopad | Rujan | Studeni | Prosinac
+Koji je po redu mjesec srpanj? | Sedmi | Šesti | Osmi | Peti
+Koliko dana ima tjedan? | 7 | 5 | 6 | 10
+Koliko godina ima jedno desetljeće? | 10 | 100 | 5 | 1000
+Koliko godina ima jedno tisućljeće? | 1000 | 100 | 10 | 10 000
+Kako se zove 50. godišnjica braka? | Zlatni pir | Srebrni pir | Dijamantni pir | Biserni pir
+Koje je godišnje doba nakon proljeća? | Ljeto | Jesen | Zima | Proljeće
+Kojeg datuma je Božić? | 25. prosinca | 24. prosinca | 6. siječnja | 1. siječnja
+Kojeg se datuma slavi Valentinovo? | 14. veljače | 14. ožujka | 1. svibnja | 8. ožujka
+Kojeg se datuma obilježava Međunarodni praznik rada? | 1. svibnja | 1. lipnja | 8. ožujka | 25. lipnja
+Kojeg se datuma obilježava Međunarodni dan žena? | 8. ožujka | 14. veljače | 1. svibnja | 1. ožujka
+Koliko strana ima trokut? | 3 | 4 | 5 | 6
+Koja se boja dobiva miješanjem crvene i plave? | Ljubičasta | Narančasta | Zelena | Smeđa
+Koja se boja dobiva miješanjem crvene i žute? | Narančasta | Ljubičasta | Zelena | Ružičasta
+Koja se boja dobiva miješanjem crne i bijele? | Siva | Smeđa | Bež | Plava
+Koje su tri osnovne boje u slikarstvu (pigmenti)? | Crvena, žuta, plava | Crvena, zelena, plava | Crna, bijela, siva | Zelena, narančasta, ljubičasta
+Koje su osnovne boje svjetla na ekranima (RGB)? | Crvena, zelena, plava | Crvena, žuta, plava | Cijan, magenta, žuta | Bijela, crna, siva
+Koja boja na semaforu znači „stani“? | Crvena | Žuta | Zelena | Plava
+Kojim redom stoje boje na semaforu odozgo prema dolje? | Crvena, žuta, zelena | Zelena, žuta, crvena | Žuta, crvena, zelena | Crvena, zelena, žuta
+Koji je hitni broj u Europskoj uniji? | 112 | 911 | 192 | 999
+Koji je hitni broj za hitnu pomoć u Hrvatskoj? | 194 | 192 | 193 | 195
+Koji je broj policije u Hrvatskoj? | 192 | 193 | 194 | 112
+Koji je broj vatrogasaca u Hrvatskoj? | 193 | 192 | 194 | 195
+Koji je najveći ocean na svijetu? | Tihi ocean | Atlantski ocean | Indijski ocean | Arktički ocean
+Koliko planeta ima Sunčev sustav? | 8 | 9 | 7 | 10
+Koji je planet najbliži Suncu? | Merkur | Venera | Mars | Zemlja
+Kako se zove naša galaksija? | Mliječni put | Andromeda | Orionova maglica | Veliki Magellanov oblak
+Koja je kemijska formula vode? | H₂O | CO₂ | O₂ | NaCl
+Kako se zove kuhinjska sol kemijski? | Natrijev klorid | Kalijev klorid | Kalcijev karbonat | Natrijev bikarbonat
+Na koliko stupnjeva Celzijevih voda vrije na razini mora? | 100 | 90 | 120 | 80
+Na koliko stupnjeva Celzijevih se voda smrzava? | 0 | −10 | 4 | 32
+Koliko nogu ima pauk? | 8 | 6 | 10 | 12
+Koliko nogu ima kukac? | 6 | 8 | 4 | 10
+Koliko zubi ima odrastao čovjek s umnjacima? | 32 | 28 | 30 | 36
+Koliko srca ima hobotnica? | 3 | 1 | 2 | 4
+Koje životinje proizvode med? | Pčele | Ose | Leptiri | Mravi
+Kako se zove mladunče konja? | Ždrijebe | Tele | Jare | Janje
+Kako se zove mladunče krave? | Tele | Janje | Prase | Ždrijebe
+Kako se zove mladunče ovce? | Janje | Jare | Tele | Lane
+Kako se zove mladunče jelena? | Lane | Jare | Tele | Ždrijebe
+Koji je instrument s 88 tipki? | Klavir | Harmonika | Orgulje | Ksilofon
+Koliko žica ima standardna gitara? | 6 | 4 | 5 | 12
+Koliko žica ima violina? | 4 | 5 | 6 | 3
+Kako se zove osoba koja vodi orkestar? | Dirigent | Kompozitor | Koncertni majstor | Producent
+Koliko pješaka ima svaki igrač na početku šahovske partije? | 8 | 6 | 7 | 10
+Koliko karata ima standardni špil bez jokera? | 52 | 54 | 48 | 32
+Koliko točkica ukupno ima standardna kocka za igru? | 21 | 18 | 20 | 24
+Koliko figura ima svaki igrač u igri „Čovječe, ne ljuti se“? | 4 | 3 | 5 | 6
+Koja je igra poznata po riječima „šah-mat“? | Šah | Dama | Go | Backgammon
+Koja je najprodavanija igračka-kocka koju je izumio Ernő Rubik? | Rubikova kocka | Tetris | Jo-jo | Lego kocka
+Iz koje zemlje dolaze Lego kocke? | Danska | Švedska | Njemačka | Nizozemska
+Iz koje zemlje dolazi IKEA? | Švedska | Norveška | Danska | Finska
+Iz koje zemlje dolazi Nokia? | Finska | Švedska | Danska | Japan
+Iz koje zemlje dolazi Samsung? | Južna Koreja | Japan | Kina | Tajvan
+Iz koje zemlje dolazi Toyota? | Japan | Južna Koreja | Kina | SAD
+Iz koje zemlje dolazi Ferrari? | Italija | Francuska | Njemačka | Španjolska
+U kojoj se zemlji nalazi Kip slobode? | SAD | Francuska | Kanada | UK
+Koja je zemlja poklonila Kip slobode SAD-u? | Francuska | Ujedinjeno Kraljevstvo | Španjolska | Nizozemska
+U kojem se gradu nalazi Eiffelov toranj? | Pariz | London | Rim | Bruxelles
+U kojem se gradu nalazi Koloseum? | Rim | Atena | Napulj | Firenca
+U kojoj se zemlji nalaze piramide u Gizi? | Egipat | Meksiko | Sudan | Maroko
+U kojoj se zemlji nalazi Taj Mahal? | Indija | Pakistan | Iran | Bangladeš
+U kojoj se zemlji nalazi Machu Picchu? | Peru | Čile | Bolivija | Meksiko
+Kako se zove valuta Japana? | Jen | Juan | Von | Rupija
+Kako se zove valuta Ujedinjenog Kraljevstva? | Funta | Euro | Dolar | Kruna
+Kako se zove valuta Švicarske? | Franak | Euro | Kruna | Marka
+Koja je valuta SAD-a? | Dolar | Funta | Euro | Peso
+Što mjeri termometar? | Temperaturu | Tlak | Vlagu | Brzinu vjetra
+Što mjeri barometar? | Tlak zraka | Temperaturu | Vlažnost | Visinu
+Čime se mjeri potres? | Seizmografom | Barometrom | Anemometrom | Higrometrom
+Koja je jedinica za mjerenje jakosti električne struje? | Amper | Volt | Vat | Om
+Koja je jedinica za snagu? | Vat | Džul | Njutn | Amper
+Kojim se blagdanom tradicionalno ukrašavaju pisanice? | Uskrs | Božić | Nova godina | Martinje
+Kako se zove dan prije Uskrsa? | Velika subota | Cvjetnica | Veliki četvrtak | Uskrsni ponedjeljak
+Koji se blagdan slavi 1. studenoga? | Svi sveti | Martinje | Tijelovo | Velika Gospa
+Koji se blagdan slavi 15. kolovoza? | Velika Gospa | Svi sveti | Sveti Nikola | Tijelovo
+Kada dolazi Sveti Nikola? | 6. prosinca | 24. prosinca | 6. siječnja | 1. prosinca
+Kada se slavi Sveta tri kralja? | 6. siječnja | 25. prosinca | 1. siječnja | 2. veljače
+Kako se zove posljednji dan u godini? | Stara godina | Nova godina | Badnjak | Štefanje
+Koji je planet poznat kao „Crveni planet“? | Mars | Jupiter | Venera | Saturn
+Koji je najviši vrh na svijetu? | Mount Everest | K2 | Kangchenjunga | Mont Blanc
+Koja je najdulja rijeka u Europi? | Volga | Dunav | Rajna | Dnjepar

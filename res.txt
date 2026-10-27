@@ -1,0 +1,41 @@
+RES ["https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js","https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Titan+One&family=Nunito:wght@600;800;900&display=swap"]
+kraj igre: false 302s
+faze: intro > vote > voteResult > power > cast > question > reveal > vote > voteResult > power > cast > question > reveal > vote > voteResult > bet > power > cast > question > reveal > intro > sort > sortReveal > intro > vote > voteResult > power > cast > question > reveal > vote > voteResult > power > cast > question > reveal > vote > voteResult > power > cast > question > reveal > intro > link > linkReveal > intro > vote > voteResult > power > cast > question > reveal > vote > voteResult > bet > power > cast > question > reveal > vote > voteResult > power > cast > question > reveal > intro > fstart > power > cast > fq > fr > power > cast > fq > fr > power > cast > fq > fr > power > cast > fq > fr > power
+prazni kadrovi: 0 | višestruki ghost: 0 | h-scroll: {}
+beskonačne animacije:
+  bet :: blink @ ellipse
+  cast :: blink @ ellipse
+  cast :: castBreath @ cfig.idle
+  cast :: castTick @ cbomb
+  cast :: pHover @ av.spr.spr-vila
+  fq :: blink @ ellipse
+  fq :: castBreath @ cfig.idle
+  fq :: castTick @ cbomb
+  fq :: pHover @ av.spr.spr-vila
+  fq :: pulse @ fly-bomb
+  fr :: blink @ ellipse
+  fr :: hearth @ BODY
+  fr :: pHover @ av.spr.spr-vila
+  fstart :: blink @ ellipse
+  fstart :: pHover @ av.spr.spr-vila
+  intro :: blink @ ellipse
+  intro :: pHover @ av.spr.spr-vila
+  link :: blink @ ellipse
+  linkReveal :: blink @ ellipse
+  power :: blink @ ellipse
+  power :: bob @ bob
+  power :: hearth @ BODY
+  power :: pHover @ av.spr.spr-vila
+  question :: blink @ ellipse
+  question :: castBreath @ cfig.idle
+  question :: castTick @ cbomb
+  question :: pHover @ av.spr.spr-vila
+  question :: pulse @ fly-bomb
+  reveal :: blink @ ellipse
+  reveal :: pHover @ av.spr.spr-vila
+  sort :: blink @ ellipse
+  sortReveal :: blink @ ellipse
+  vote :: blink @ ellipse
+  vote :: pHover @ av.spr.spr-vila
+  voteResult :: blink @ ellipse
+greške: nema

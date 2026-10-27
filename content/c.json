@@ -1,0 +1,914 @@
+{
+ "cats": {
+  "Nogomet": [
+   {
+    "q": "Koja je država osvojila prvo Svjetsko prvenstvo u nogometu 1930.?",
+    "o": [
+     "Brazil",
+     "Urugvaj",
+     "Argentina",
+     "Italija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je država bila domaćin SP-a 1998. na kojem je Hrvatska osvojila broncu?",
+    "o": [
+     "Italija",
+     "Njemačka",
+     "Španjolska",
+     "Francuska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je hrvatski nogometaš bio najbolji strijelac SP-a 1998.?",
+    "o": [
+     "Zvonimir Boban",
+     "Robert Prosinečki",
+     "Alen Bokšić",
+     "Davor Šuker"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko ukupno traje produžetak u nogometnoj utakmici?",
+    "o": [
+     "15 minuta",
+     "20 minuta",
+     "30 minuta",
+     "45 minuta"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji igrač smije uhvatiti loptu rukom unutar vlastitog kaznenog prostora?",
+    "o": [
+     "Kapetan",
+     "Libero",
+     "Stoper",
+     "Vratar"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji karton u nogometu znači isključenje igrača?",
+    "o": [
+     "Žuti",
+     "Zeleni",
+     "Crveni",
+     "Plavi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je reprezentacija osvojila SP 2014. u Brazilu?",
+    "o": [
+     "Argentina",
+     "Nizozemska",
+     "Brazil",
+     "Njemačka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je reprezentacija pobijedila Hrvatsku u finalu SP-a 2018.?",
+    "o": [
+     "Engleska",
+     "Belgija",
+     "Španjolska",
+     "Francuska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje je države legendarni nogometaš Pelé?",
+    "o": [
+     "Argentina",
+     "Portugal",
+     "Brazil",
+     "Urugvaj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Protiv koje je reprezentacije Maradona 1986. zabio gol „Božjom rukom“?",
+    "o": [
+     "Engleska",
+     "Njemačka",
+     "Italija",
+     "Belgija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Za koju je reprezentaciju igrao legendarni Johan Cruyff?",
+    "o": [
+     "Belgija",
+     "Nizozemska",
+     "Danska",
+     "Njemačka"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je reprezentacija iznenađujuće osvojila Europsko prvenstvo 2004.?",
+    "o": [
+     "Portugal",
+     "Grčka",
+     "Češka",
+     "Danska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je reprezentacija u finalu prvog EP-a 1960. izgubila od SSSR-a?",
+    "o": [
+     "Jugoslavija",
+     "Čehoslovačka",
+     "Francuska",
+     "Španjolska"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju je reprezentaciju Hrvatska pobijedila u utakmici za treće mjesto na SP-u 2022.?",
+    "o": [
+     "Maroko",
+     "Argentinu",
+     "Francusku",
+     "Brazil"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je bio izbornik Hrvatske na SP-u 1998.?",
+    "o": [
+     "Zlatko Dalić",
+     "Miroslav Blažević",
+     "Otto Barić",
+     "Slaven Bilić"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je reprezentacija osvojila SP 2006. u Njemačkoj?",
+    "o": [
+     "Francuska",
+     "Njemačka",
+     "Italija",
+     "Portugal"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko bodova momčad dobiva za pobjedu u nogometnom prvenstvu?",
+    "o": [
+     "1",
+     "3",
+     "2",
+     "4"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove kad igrač zabije tri gola na jednoj utakmici?",
+    "o": [
+     "Hat-trick",
+     "Triplet",
+     "Treble",
+     "Tripleks"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je jedini vratar u povijesti osvojio Zlatnu loptu?",
+    "o": [
+     "Lav Jašin",
+     "Gianluigi Buffon",
+     "Oliver Kahn",
+     "Dino Zoff"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je reprezentacija sudjelovalo na SP-u 2022. u Katru?",
+    "o": [
+     "16",
+     "24",
+     "32",
+     "48"
+    ],
+    "a": 2
+   }
+  ],
+  "Olimpijske igre": [
+   {
+    "q": "U kojem su gradu 1896. održane prve moderne Olimpijske igre?",
+    "o": [
+     "Pariz",
+     "Atena",
+     "London",
+     "Rim"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko se smatra osnivačem modernih Olimpijskih igara?",
+    "o": [
+     "Jacques Rogge",
+     "Juan Antonio Samaranch",
+     "Avery Brundage",
+     "Pierre de Coubertin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je grad 1984. bio domaćin Zimskih olimpijskih igara?",
+    "o": [
+     "Zagreb",
+     "Ljubljana",
+     "Sarajevo",
+     "Innsbruck"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je zlatnih olimpijskih medalja osvojila Janica Kostelić?",
+    "o": [
+     "4",
+     "2",
+     "3",
+     "5"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem je gradu Janica Kostelić 2002. osvojila tri olimpijska zlata?",
+    "o": [
+     "Salt Lake City",
+     "Torino",
+     "Nagano",
+     "Vancouver"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Za koju je državu nastupao sprinter Usain Bolt?",
+    "o": [
+     "SAD",
+     "Kubu",
+     "Trinidad i Tobago",
+     "Jamajku"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem je sportu Michael Phelps osvojio rekordan broj olimpijskih zlata?",
+    "o": [
+     "Plivanju",
+     "Atletici",
+     "Gimnastici",
+     "Veslanju"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Gdje se tradicionalno pali olimpijski plamen?",
+    "o": [
+     "U Olimpiji, Grčka",
+     "U Ateni, Grčka",
+     "U Rimu, Italija",
+     "U Lausannei, Švicarska"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja boja NE postoji na olimpijskim krugovima?",
+    "o": [
+     "Zelena",
+     "Žuta",
+     "Ljubičasta",
+     "Crna"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje su godine zbog pandemije održane Olimpijske igre Tokio 2020?",
+    "o": [
+     "2020.",
+     "2022.",
+     "2019.",
+     "2021."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je grad prvi bio domaćin i Ljetnih i Zimskih olimpijskih igara?",
+    "o": [
+     "Peking",
+     "Tokio",
+     "Oslo",
+     "Pariz"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje su boje bile sve olimpijske medalje Ivice Kostelića?",
+    "o": [
+     "Zlatne",
+     "Srebrne",
+     "Brončane",
+     "Zlatne i srebrne"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj je disciplini Sandra Perković osvojila dva olimpijska zlata?",
+    "o": [
+     "Bacanje koplja",
+     "Bacanje kugle",
+     "Bacanje diska",
+     "Skok uvis"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj je disciplini Sara Kolak 2016. postala olimpijska pobjednica?",
+    "o": [
+     "Bacanje diska",
+     "Bacanje kugle",
+     "Bacanje koplja",
+     "Skok udalj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je momčadskom sportu Hrvatska 2012. u Londonu osvojila zlato?",
+    "o": [
+     "Rukometu",
+     "Košarci",
+     "Odbojci",
+     "Vaterpolu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojim je OI hrvatska rukometna reprezentacija osvojila prvo zlato?",
+    "o": [
+     "Barcelona 1992.",
+     "Sydney 2000.",
+     "Atena 2004.",
+     "Atlanta 1996."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je dugačka maratonska utrka?",
+    "o": [
+     "40 km",
+     "42,195 km",
+     "42,915 km",
+     "45,195 km"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od koliko se disciplina sastoji atletski desetoboj?",
+    "o": [
+     "7",
+     "10",
+     "8",
+     "12"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je atletičar osvojio četiri zlata na OI 1936. u Berlinu?",
+    "o": [
+     "Carl Lewis",
+     "Jesse Owens",
+     "Jim Thorpe",
+     "Paavo Nurmi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je gimnastičarka 1976. prva dobila savršenu ocjenu 10 na OI?",
+    "o": [
+     "Olga Korbut",
+     "Larisa Latinjina",
+     "Nadia Comăneci",
+     "Simone Biles"
+    ],
+    "a": 2
+   }
+  ],
+  "Automobili i promet": [
+   {
+    "q": "Iz koje zemlje potječe automobilska marka Volvo?",
+    "o": [
+     "Švedska",
+     "Norveška",
+     "Finska",
+     "Njemačka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje potječe automobilska marka Škoda?",
+    "o": [
+     "Slovačka",
+     "Poljska",
+     "Češka",
+     "Mađarska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja prikazana na logotipu Ferrarija?",
+    "o": [
+     "Bik",
+     "Lav",
+     "Jaguar",
+     "Konj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je životinja prikazana na logotipu Lamborghinija?",
+    "o": [
+     "Konj",
+     "Lav",
+     "Orao",
+     "Bik"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje potječe automobilska marka Seat?",
+    "o": [
+     "Italija",
+     "Portugal",
+     "Španjolska",
+     "Francuska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje potječe automobilska marka Kia?",
+    "o": [
+     "Južna Koreja",
+     "Japan",
+     "Kina",
+     "Tajvan"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove električni hiperautomobil tvrtke Rimac predstavljen 2021.?",
+    "o": [
+     "Bura",
+     "Tramontana",
+     "Maestral",
+     "Nevera"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je automobil Henry Ford od 1908. masovno proizvodio?",
+    "o": [
+     "Model T",
+     "Model A",
+     "Mustang",
+     "Thunderbird"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je 1886. patentirao vozilo koje se smatra prvim modernim automobilom?",
+    "o": [
+     "Henry Ford",
+     "Ferdinand Porsche",
+     "Karl Benz",
+     "Rudolf Diesel"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kakav oblik ima prometni znak STOP?",
+    "o": [
+     "Krug",
+     "Trokut",
+     "Šesterokut",
+     "Osmerokut"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kakav oblik imaju znakovi opasnosti u Hrvatskoj?",
+    "o": [
+     "Krug",
+     "Kvadrat",
+     "Trokut",
+     "Osmerokut"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kolika je u Hrvatskoj opća ograničena brzina u naselju?",
+    "o": [
+     "40 km/h",
+     "60 km/h",
+     "50 km/h",
+     "70 km/h"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kolika je u Hrvatskoj najveća dopuštena brzina na autocesti?",
+    "o": [
+     "110 km/h",
+     "130 km/h",
+     "120 km/h",
+     "140 km/h"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je međunarodna oznaka vozila za Švicarsku?",
+    "o": [
+     "CH",
+     "S",
+     "SW",
+     "SZ"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se popularno zove legendarni Volkswagen Type 1?",
+    "o": [
+     "Golf",
+     "Buba",
+     "Kornjača",
+     "Polo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je životinja prikazana na logotipu Peugeota?",
+    "o": [
+     "Konj",
+     "Lav",
+     "Orao",
+     "Tigar"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se od ovih zemalja vozi lijevom stranom ceste?",
+    "o": [
+     "Njemačka",
+     "Japan",
+     "Italija",
+     "Španjolska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradu osnovan Fiat?",
+    "o": [
+     "Milano",
+     "Rim",
+     "Bologna",
+     "Torino"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što je prikazano na logotipu Audija?",
+    "o": [
+     "Tri kruga",
+     "Četiri kruga",
+     "Trokraka zvijezda",
+     "Pet krugova"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi sjedište BMW-a?",
+    "o": [
+     "München",
+     "Stuttgart",
+     "Wolfsburg",
+     "Berlin"
+    ],
+    "a": 0
+   }
+  ],
+  "Videoigre": [
+   {
+    "q": "Kojim se zanimanjem bavi Super Mario?",
+    "o": [
+     "Stolar",
+     "Električar",
+     "Kuhar",
+     "Vodoinstalater"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove princeza koju Mario najčešće spašava od Bowsera?",
+    "o": [
+     "Peach",
+     "Daisy",
+     "Zelda",
+     "Rosalina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je životinja Sonic?",
+    "o": [
+     "Jež",
+     "Lisica",
+     "Mačka",
+     "Zec"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je tvrtka stvorila lik Sonica?",
+    "o": [
+     "Nintendo",
+     "Sony",
+     "Sega",
+     "Atari"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što proganja Pac-Mana po labirintu?",
+    "o": [
+     "Zmajevi",
+     "Vanzemaljci",
+     "Roboti",
+     "Duhovi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj je državi nastala igra Tetris?",
+    "o": [
+     "Japan",
+     "Sovjetski Savez",
+     "SAD",
+     "Ujedinjeno Kraljevstvo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja tvrtka proizvodi konzole PlayStation?",
+    "o": [
+     "Microsoft",
+     "Sony",
+     "Nintendo",
+     "Sega"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem serijalu igara glavni se junak zove Link?",
+    "o": [
+     "Final Fantasy",
+     "Metroid",
+     "Castlevania",
+     "The Legend of Zelda"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu zelena čudovišta koja eksplodiraju u Minecraftu?",
+    "o": [
+     "Creeperi",
+     "Zombiji",
+     "Endermani",
+     "Slimeovi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojeg je tipa Pokémon Pikachu?",
+    "o": [
+     "Vatreni",
+     "Električni",
+     "Vodeni",
+     "Travnati"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem serijalu igara je glavna junakinja Lara Croft?",
+    "o": [
+     "Resident Evil",
+     "Tomb Raider",
+     "Uncharted",
+     "Hitman"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znači kratica GTA u nazivu poznatog serijala?",
+    "o": [
+     "Grand Theft Auto",
+     "Great Town Adventure",
+     "Grand Turbo Action",
+     "Gang Theft Arena"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je tvrtka 1972. izdala arkadnu igru Pong?",
+    "o": [
+     "Nintendo",
+     "Sega",
+     "Atari",
+     "Namco"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja Donkey Kong?",
+    "o": [
+     "Gorila",
+     "Medvjed",
+     "Krokodil",
+     "Lav"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je poznati pucački serijal napravio hrvatski studio Croteam?",
+    "o": [
+     "Doom",
+     "Quake",
+     "Half-Life",
+     "Serious Sam"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove završni potez kojim se dokrajčuje protivnik u Mortal Kombatu?",
+    "o": [
+     "Knockout",
+     "Fatality",
+     "Combo",
+     "Finisher"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove glavni lik serijala igara The Witcher?",
+    "o": [
+     "Ciri",
+     "Yennefer",
+     "Jaskier",
+     "Geralt"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje potječe igra Angry Birds?",
+    "o": [
+     "Švedska",
+     "Norveška",
+     "Finska",
+     "Danska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je boje Nintendov lik Kirby?",
+    "o": [
+     "Plave",
+     "Žute",
+     "Ružičaste",
+     "Zelene"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što Mario pojede da bi postao veći?",
+    "o": [
+     "Zvijezdu",
+     "Cvijet",
+     "Gljivu",
+     "Jabuku"
+    ],
+    "a": 2
+   }
+  ],
+  "Sport": [
+   {
+    "q": "Kako se u golfu zove rezultat od jednog udarca ispod para?",
+    "o": [
+     "Eagle",
+     "Birdie",
+     "Bogey",
+     "Albatros"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko minuta traje jedna četvrtina u NBA ligi?",
+    "o": [
+     "12",
+     "10",
+     "15",
+     "20"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji tradicionalni japanski sport hrvanja igraju teški borci u kružnom ringu?",
+    "o": [
+     "Sumo",
+     "Judo",
+     "Karate",
+     "Kendo"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje boje majicu nosi vodeći u ukupnom poretku Tour de Francea?",
+    "o": [
+     "Zelenu",
+     "Ružičastu",
+     "Bijelu",
+     "Žutu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što u Formuli 1 označava zastava s crno-bijelim kvadratima?",
+    "o": [
+     "Opasnost na stazi",
+     "Prekid utrke",
+     "Ulazak u boks",
+     "Kraj utrke"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko osvojenih setova treba za pobjedu u odbojkaškoj utakmici?",
+    "o": [
+     "2",
+     "4",
+     "3",
+     "5"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko iznosi najveći mogući niz (break) u snookeru bez faula?",
+    "o": [
+     "100",
+     "147",
+     "155",
+     "180"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko je najviše bodova moguće osvojiti s tri strelice u pikadu?",
+    "o": [
+     "150",
+     "171",
+     "180",
+     "200"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojoj se podlozi igra teniski turnir Wimbledon?",
+    "o": [
+     "Trava",
+     "Zemlja",
+     "Tvrda podloga",
+     "Tepih"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem je sportu Dražen Petrović postao legenda?",
+    "o": [
+     "Rukomet",
+     "Košarka",
+     "Vaterpolo",
+     "Nogomet"
+    ],
+    "a": 1
+   }
+  ]
+ }
+}

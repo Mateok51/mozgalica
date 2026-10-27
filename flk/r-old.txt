@@ -1,0 +1,1 @@
+{"vote flyIn":10,"power pHover":2,"power pIdle":15,"power subIn":4,"cast castBreath":317,"cast pShock":1,"question splatIn":168,"question pIdle":4,"question bumpPop":5,"reveal gainIn":35,"reveal waddle":73,"reveal walkIn":28,"question pickIn":1,"howto tdlIn":176,"cast castBomb":31,"cast castTick":90,"sortReveal rise":32,"sortReveal gainIn":11} 

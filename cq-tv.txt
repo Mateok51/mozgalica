@@ -1,0 +1,26 @@
+TV kraj: false | pogodaka: 25
+  FONT div.cnm  →  cast Fredoka
+  FONT span.cbadge.b-dupli  →  cast Fredoka
+  FONT span.cbadge.b-pola  →  cast Fredoka
+  backgroundImage span.cbadge.b-pola  →  cast rgb(94, 231, 255)
+  borderTopColor b.pw-led  →  cast rgb(159, 231, 255)
+  borderTopColor b.pw-pola  →  cast rgb(94, 231, 255)
+  borderTopColor div.cnm  →  cast DARKCOOL rgb(244, 239, 255)
+  borderTopColor i  →  cast rgb(94, 231, 255)
+  borderTopColor span.carr  →  cast DARKCOOL rgb(185, 169, 230)
+  borderTopColor span.cbadge.b-pola  →  cast rgb(6, 52, 74)
+  boxShadow span.cbadge.b-pola  →  cast rgba(94, 231, 255, 0.6)
+  color b.pw-led  →  cast rgb(159, 231, 255)
+  color b.pw-pola  →  cast rgb(94, 231, 255)
+  color div.cnm  →  cast DARKCOOL rgb(244, 239, 255)
+  color span.carr  →  cast DARKCOOL rgb(185, 169, 230)
+  color span.cbadge.b-pola  →  cast rgb(6, 52, 74)
+  filter div.cfig.cheer  →  cast rgb(159, 231, 255)
+  filter div.cfig.idle  →  cast rgb(159, 231, 255)
+  filter div.cfig.jolt  →  cast rgba(159, 231, 255, 0.74)
+  filter div.cfig.lunge  →  cast rgb(159, 231, 255)
+  outlineColor b.pw-led  →  cast rgb(159, 231, 255)
+  outlineColor b.pw-pola  →  cast rgb(94, 231, 255)
+  outlineColor div.cnm  →  cast DARKCOOL rgb(244, 239, 255)
+  outlineColor span.carr  →  cast DARKCOOL rgb(185, 169, 230)
+  outlineColor span.cbadge.b-pola  →  cast rgb(6, 52, 74)

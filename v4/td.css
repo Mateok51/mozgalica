@@ -1,0 +1,68 @@
+  /* ---------- Tavern Director: kratki filmski trenutak, dvoboj, tajni događaji ---------- */
+  .tm { --dur: 2400ms; --el: 0ms; position: relative; flex: 1; min-height: 62dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(8px, 1.6vh, 18px); text-align: center; padding: 0 4vw; }
+  .tm::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: rgba(12, 6, 2, 0.6); animation: tmVeil var(--dur) linear both; animation-delay: calc(-1 * var(--el)); }
+  .tm-figs { display: flex; align-items: flex-end; justify-content: center; gap: clamp(6px, 3vw, 28px); animation: tmFade var(--dur) ease both; animation-delay: calc(-1 * var(--el)); }
+  .tm-fig { display: flex; flex-direction: column; align-items: center; gap: 4px; width: clamp(84px, 26vw, 150px); }
+  .tm-fig .pic { width: 100%; aspect-ratio: 1; display: flex; align-items: flex-end; justify-content: center; }
+  .tm-fig .pic > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45)); }
+  .tm-fig .pic > svg { width: 84%; height: 84%; }
+  .tm-nm { font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--text-main); padding: 1px 10px; border-radius: 99px; background: rgba(42, 23, 11, 0.85); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.6); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tm-fig.ok .tm-nm::after { content: " ✓"; color: var(--success); }
+  .tm-vs { align-self: center; font-family: var(--font-display); font-size: clamp(1.6rem, 8vw, 3rem); color: var(--amber); text-shadow: 0 2px 0 rgba(90, 46, 16, 0.95); padding-bottom: 28px; }
+  .tm-k { font-family: var(--font-body); font-weight: 900; font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+  .tm-t { font-family: var(--font-display); line-height: 1; text-transform: uppercase; letter-spacing: 0.03em; color: var(--amber-hi); font-size: clamp(2rem, 10vw, 4.4rem); max-width: 100%; overflow-wrap: break-word;
+    text-shadow: 0 2px 0 rgba(150, 92, 24, 0.95), 0 6px 16px rgba(0, 0, 0, 0.45); animation: tmIn var(--dur) cubic-bezier(0.25, 0.8, 0.3, 1) both; animation-delay: calc(-1 * var(--el)); }
+  .tm-s { font-family: var(--font-body); font-weight: 900; font-size: clamp(1rem, 4.6vw, 1.6rem); color: var(--text-main); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); animation: tmSub var(--dur) ease both; animation-delay: calc(-1 * var(--el)); }
+  .tm.mem .tm-t { font-family: var(--font-body); font-weight: 900; font-size: clamp(0.85rem, 3.4vw, 1.1rem); letter-spacing: 0.16em; color: var(--amber); text-shadow: none; }
+  .tm.mem .tm-s { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.4rem, 6.6vw, 2.6rem); line-height: 1.15; color: var(--amber-hi); text-shadow: 0 2px 0 rgba(120, 76, 28, 0.85); }
+  .tv .tm-t { font-size: clamp(3.4rem, 7vw, 7rem); }
+  .tv .tm-s { font-size: clamp(1.4rem, 2.4vw, 2.6rem); }
+  .tv .tm-fig { width: clamp(140px, 16vw, 260px); }
+  @keyframes tmVeil { 0% { opacity: 0; } 10% { opacity: 1; } 88% { opacity: 1; } 100% { opacity: 0.5; } }
+  @keyframes tmIn { 0%, 6% { opacity: 0; transform: scale(0.94); } 22% { opacity: 1; transform: none; } 86% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes tmSub { 0%, 16% { opacity: 0; } 30% { opacity: 1; } 86% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes tmFade { 0%, 4% { opacity: 0; transform: translateY(6px); } 20% { opacity: 1; transform: none; } 88% { opacity: 1; } 100% { opacity: 0; } }
+  /* dvoboj */
+  .du-k { text-align: center; font-family: var(--font-display); font-size: clamp(1.6rem, 8vw, 2.4rem); color: var(--amber-hi); text-transform: uppercase; text-shadow: 0 2px 0 rgba(150, 92, 24, 0.95); }
+  .du-vs { display: flex; align-items: flex-end; justify-content: center; gap: 10px; }
+  .du-vs .tm-fig { width: clamp(70px, 22vw, 110px); }
+  .du-vs .tm-vs { font-size: 1.6rem; padding-bottom: 24px; }
+  .tv .du-vs .tm-fig { width: clamp(120px, 12vw, 200px); }
+  .du-res { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 1.15rem; color: var(--text-main); }
+  .du-res b { color: var(--amber-hi); }
+  .du-ms { text-align: center; font-size: 0.85rem; font-weight: 800; color: var(--text-muted); }
+  /* tajni događaj: osoban, tih ekran */
+  .se { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; text-align: center; }
+  .se-k { font-family: var(--font-display); font-size: clamp(1.8rem, 9vw, 2.6rem); text-transform: uppercase; color: var(--amber-hi); text-shadow: 0 2px 0 rgba(150, 92, 24, 0.95); }
+  .se-d { font-weight: 800; color: var(--text-main); line-height: 1.4; max-width: 30em; }
+  .se-d b { color: var(--amber); }
+  .se-note { font-size: 0.85rem; font-weight: 800; color: var(--text-muted); }
+  .se-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; }
+  .se-list .btn { min-height: 64px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.05rem; }
+  .se-list .btn .mini { width: 40px; height: 40px; display: inline-flex; }
+  .se-list .btn .mini > * { width: 100%; height: 100%; object-fit: contain; }
+  .se-wait { min-height: 50dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+  .se-wait .tm-t { font-size: clamp(1.4rem, 7vw, 2.4rem); animation: none; }
+  .tv .se-wait .tm-t { font-size: clamp(2.4rem, 5vw, 4.4rem); }
+  .rv-sx { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; color: var(--amber); opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(1100ms - var(--el)); }
+  .rv-sx.none { color: var(--text-muted); }
+  @media (prefers-reduced-motion: reduce) { .tm-t, .tm-figs { animation-name: tmSub; } }
+  /* trenutak iz krčme na ekranu s poretkom: kratka kartica ispod liste, pojavi se nakon što se poredak složi */
+  .tdl { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 560px; margin: 10px auto 0; padding: 8px 12px; border-radius: var(--radius-medium); text-align: left;
+    background: rgba(42, 23, 11, 0.88); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.75), inset 0 0 0 3px rgba(42, 23, 11, 0.9), inset 0 0 0 4px rgba(232, 170, 80, 0.35), var(--shadow-soft);
+    opacity: 0; animation: tdlIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) forwards; animation-delay: calc(2700ms - var(--el, 0ms)); }
+  .tdl .figs { display: flex; flex-shrink: 0; }
+  .tdl .figs .mini { width: 42px; height: 42px; display: inline-flex; }
+  .tdl .figs .mini + .mini { margin-left: -8px; }
+  .tdl .figs .mini > * { width: 100%; height: 100%; object-fit: contain; }
+  .tdl .tx { display: flex; flex-direction: column; min-width: 0; }
+  .tdl .tx b { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; line-height: 1.1; text-transform: uppercase; color: var(--amber-hi); text-shadow: 0 1px 0 rgba(120, 76, 28, 0.9); }
+  .tdl .tx span { font-weight: 800; font-size: 0.9rem; color: var(--text-main); }
+  .tdl.mem .tx b { font-family: var(--font-body); font-weight: 900; font-size: 0.72rem; letter-spacing: 0.14em; color: var(--amber); text-shadow: none; }
+  .tdl.mem .tx span { font-size: 1rem; }
+  .tv .tdl { max-width: 760px; padding: 12px 18px; }
+  .tv .tdl .figs .mini { width: 64px; height: 64px; }
+  .tv .tdl .tx b { font-size: 1.7rem; }
+  .tv .tdl .tx span { font-size: 1.25rem; }
+  @keyframes tdlIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .tdl { animation-duration: 0.01ms; } }

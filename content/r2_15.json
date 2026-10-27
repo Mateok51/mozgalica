@@ -1,0 +1,1618 @@
+{
+ "cats": {
+  "More i oceani": [
+   {
+    "q": "Koji je ocean drugi po veličini na svijetu?",
+    "o": [
+     "Atlantski",
+     "Indijski",
+     "Južni",
+     "Sjeverni ledeni"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Uz obalu kojeg se vodenog tijela nalazi najniža točka kopna na Zemlji?",
+    "o": [
+     "Kaspijsko jezero",
+     "Mrtvo more",
+     "Crveno more",
+     "Bajkalsko jezero"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji kanal brodovima omogućuje plovidbu između Atlantskog i Tihog oceana?",
+    "o": [
+     "Sueski",
+     "Kielski",
+     "Panamski",
+     "Korintski"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji tjesnac povezuje Crno more s Mramornim morem?",
+    "o": [
+     "Dardaneli",
+     "Gibraltar",
+     "Otrantska vrata",
+     "Bospor"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove morski kanal između Engleske i Francuske?",
+    "o": [
+     "La Manche",
+     "Skagerrak",
+     "Bospor",
+     "Kattegat"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je pomorac vodio prvu ekspediciju oko svijeta (1519.–1522.), ali je usput poginuo?",
+    "o": [
+     "Kristofor Kolumbo",
+     "Ferdinand Magellan",
+     "Vasco da Gama",
+     "James Cook"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je otok najveći u Sredozemnom moru?",
+    "o": [
+     "Sardinija",
+     "Cipar",
+     "Sicilija",
+     "Korzika"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje se more nalazi između Italije, Sicilije, Sardinije i Korzike?",
+    "o": [
+     "Jonsko",
+     "Ligursko",
+     "Egejsko",
+     "Tirensko"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove topla morska struja koja ublažava klimu zapadne Europe?",
+    "o": [
+     "Golfska struja",
+     "Humboldtova struja",
+     "Kuroshio",
+     "Labradorska struja"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja hladna struja teče uz zapadnu obalu Južne Amerike?",
+    "o": [
+     "Golfska",
+     "Humboldtova",
+     "Agulhas",
+     "Kuroshio"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove pojava zagrijavanja Tihog oceana kod Perua, nazvana po djetetu Isusu?",
+    "o": [
+     "La Niña",
+     "Monsun",
+     "El Niño",
+     "Pasat"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove golemi val koji najčešće izazove podmorski potres?",
+    "o": [
+     "Tajfun",
+     "Tornado",
+     "Monsun",
+     "Tsunami"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove snažna tropska ciklona u zapadnom Tihom oceanu, npr. kod Japana?",
+    "o": [
+     "Tajfun",
+     "Tornado",
+     "Bura",
+     "Mistral"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove topli jugoistočni vjetar na Jadranu koji donosi oblake, kišu i valove?",
+    "o": [
+     "Bura",
+     "Jugo",
+     "Maestral",
+     "Tramontana"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove ugodan ljetni sjeverozapadni vjetar koji danju puše s mora?",
+    "o": [
+     "Jugo",
+     "Bura",
+     "Maestral",
+     "Lebić"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko metara ima jedna nautička milja?",
+    "o": [
+     "1609",
+     "1000",
+     "1500",
+     "1852"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove jedinica brzine broda od jedne nautičke milje na sat?",
+    "o": [
+     "Čvor",
+     "Hvat",
+     "Lakat",
+     "Palac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se zaljevu u Kanadi bilježe najveće plime na svijetu?",
+    "o": [
+     "Hudsonov zaljev",
+     "Zaljev Fundy",
+     "Biskajski zaljev",
+     "Meksički zaljev"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojem oceanu pripada Bengalski zaljev?",
+    "o": [
+     "Tihom",
+     "Atlantskom",
+     "Indijskom",
+     "Južnom"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje more razdvaja Egipat i Saudijsku Arabiju?",
+    "o": [
+     "Arapsko",
+     "Kaspijsko",
+     "Egejsko",
+     "Crveno"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem se otoku nalazi poznata Modra špilja?",
+    "o": [
+     "Biševo",
+     "Vis",
+     "Lastovo",
+     "Mljet"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je otočje golih kamenih otoka u srednjoj Dalmaciji nacionalni park?",
+    "o": [
+     "Brijuni",
+     "Kornati",
+     "Elafiti",
+     "Lastovsko otočje"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najveća vrsta iz porodice dupina?",
+    "o": [
+     "Dobri dupin",
+     "Plavobijeli dupin",
+     "Orka",
+     "Obični dupin"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji kit ima dugačak spiralni zub koji podsjeća na rog jednoroga?",
+    "o": [
+     "Beluga",
+     "Ulješura",
+     "Orka",
+     "Narval"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja životinja ima najveći mozak od svih živih bića na Zemlji?",
+    "o": [
+     "Ulješura",
+     "Plavi kit",
+     "Afrički slon",
+     "Orka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Mužjaci kojeg kita poznati su po dugim i složenim „pjesmama“?",
+    "o": [
+     "Ulješure",
+     "Grbavog kita",
+     "Narvala",
+     "Belugе"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Čime se uglavnom hrani plavi kit?",
+    "o": [
+     "Tunom",
+     "Lignjama",
+     "Krilom",
+     "Tuljanima"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu rožnate ploče u ustima nekih kitova kojima procjeđuju hranu?",
+    "o": [
+     "Škrge",
+     "Peraje",
+     "Krljušti",
+     "Usi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od čega je građen kostur morskih pasa?",
+    "o": [
+     "Od hrskavice",
+     "Od kostiju",
+     "Od vapnenca",
+     "Od hitina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji morski pas ima glavu u obliku slova T?",
+    "o": [
+     "Tigrasti pas",
+     "Čekićar",
+     "Veliki bijeli",
+     "Modrulj"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je druga najveća riba na svijetu, koja se katkad viđa i u Jadranu?",
+    "o": [
+     "Veliki bijeli pas",
+     "Tuna",
+     "Psina golema",
+     "Sabljarka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja riba može kliziti zrakom iznad vode na raširenim perajama?",
+    "o": [
+     "Sabljarka",
+     "Arbun",
+     "Skuša",
+     "Leteća riba"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja riba ima dugačku, plosnatu gubicu nalik maču?",
+    "o": [
+     "Sabljarka",
+     "Jegulja",
+     "Bakalar",
+     "Ugor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se moru, prema prihvaćenom mišljenju, mrijeste europske jegulje?",
+    "o": [
+     "Baltičkom",
+     "Sargaškom",
+     "Sjevernom",
+     "Crnom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja se riba radi mriještenja vraća u rijeku u kojoj se izlegla?",
+    "o": [
+     "Tuna",
+     "Bakalar",
+     "Losos",
+     "Skuša"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji glavonožac ima vanjsku spiralnu ljušturu s komoricama?",
+    "o": [
+     "Sipa",
+     "Lignja",
+     "Hobotnica",
+     "Nautilus"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojoj skupini životinja pripadaju meduze?",
+    "o": [
+     "Žarnjacima",
+     "Bodljikašima",
+     "Mekušcima",
+     "Spužvama"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojoj skupini živih bića pripadaju koralji?",
+    "o": [
+     "Biljkama",
+     "Životinjama",
+     "Algama",
+     "Gljivama"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove gubitak boje koralja zbog previsoke temperature mora?",
+    "o": [
+     "Okamenjivanje",
+     "Cvjetanje",
+     "Izbjeljivanje",
+     "Oksidacija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je hrvatski otok poznat po tradiciji vađenja i obrade crvenog koralja?",
+    "o": [
+     "Silba",
+     "Ist",
+     "Susak",
+     "Zlarin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko krakova obično ima morska zvijezda?",
+    "o": [
+     "5",
+     "4",
+     "6",
+     "8"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja se riba zakopava u pijesak na plićaku i ima otrovne bodlje na leđima?",
+    "o": [
+     "Ugor",
+     "Pauk",
+     "Orada",
+     "Cipal"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je crvena riba s otrovnim bodljama cijenjena za brodet i juhu?",
+    "o": [
+     "Orada",
+     "Arbun",
+     "Škrpina",
+     "Lokarda"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se od ovih riba ubraja u plavu ribu?",
+    "o": [
+     "Orada",
+     "Brancin",
+     "Zubatac",
+     "Skuša"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se još naziva brancin?",
+    "o": [
+     "Lubin",
+     "Komarča",
+     "Zubatac",
+     "Fratar"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se dagnja popularno zove u Dalmaciji?",
+    "o": [
+     "Kamenica",
+     "Mušula",
+     "Prstac",
+     "Kunjka"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je školjka strogo zaštićena jer se vadi razbijanjem stijena?",
+    "o": [
+     "Dagnja",
+     "Kamenica",
+     "Prstac",
+     "Kunjka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove uzak i dubok morski zaljev sa strmim stijenama, tipičan za Norvešku?",
+    "o": [
+     "Estuarij",
+     "Laguna",
+     "Delta",
+     "Fjord"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Otprilike kolika je prosječna slanost oceana?",
+    "o": [
+     "Oko 3,5 %",
+     "Oko 0,5 %",
+     "Oko 10 %",
+     "Oko 20 %"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja sol čini najveći dio soli otopljenih u morskoj vodi?",
+    "o": [
+     "Magnezijev sulfat",
+     "Natrijev klorid",
+     "Kalcijev karbonat",
+     "Kalijev nitrat"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove svjetlucanje mora noću koje stvaraju sitni organizmi?",
+    "o": [
+     "Fotosinteza",
+     "Refrakcija",
+     "Bioluminiscencija",
+     "Kondenzacija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Približno koliko je duboka Marijanska brazda na najdubljem mjestu?",
+    "o": [
+     "Oko 5 km",
+     "Oko 8 km",
+     "Oko 15 km",
+     "Oko 11 km"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je filmski redatelj 2012. sam zaronio na dno Marijanske brazde?",
+    "o": [
+     "James Cameron",
+     "Steven Spielberg",
+     "Ridley Scott",
+     "Christopher Nolan"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvao batiskaf koji je 1960. prvi dosegnuo dno Marijanske brazde?",
+    "o": [
+     "Nautilus",
+     "Trieste",
+     "Alvin",
+     "Calypso"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zvao istraživački brod Jacquesa-Yvesa Cousteaua?",
+    "o": [
+     "Trieste",
+     "Beagle",
+     "Calypso",
+     "Endeavour"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove podmornica kapetana Nema iz romana Julesa Vernea?",
+    "o": [
+     "Calypso",
+     "Trieste",
+     "Neptun",
+     "Nautilus"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se otočje u Tihom oceanu, poznato po Darwinovim istraživanjima, nalazi uz Ekvador?",
+    "o": [
+     "Galápagos",
+     "Havaji",
+     "Fidži",
+     "Azori"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji ocean okružuje Antarktiku?",
+    "o": [
+     "Indijski",
+     "Južni",
+     "Sjeverni ledeni",
+     "Atlantski"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove pojas vulkana i čestih potresa oko Tihog oceana?",
+    "o": [
+     "Ledeni pojas",
+     "Zlatni trokut",
+     "Vatreni prsten",
+     "Vulkanski luk"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove prednji dio broda?",
+    "o": [
+     "Krma",
+     "Jarbol",
+     "Kobilica",
+     "Pramac"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Za koliko otprilike raste tlak sa svakih 10 metara dubine u moru?",
+    "o": [
+     "Za oko 1 bar",
+     "Za oko 0,1 bar",
+     "Za oko 5 bara",
+     "Za oko 10 bara"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove bolest ronioca koja nastaje zbog prebrzog izrona?",
+    "o": [
+     "Morska bolest",
+     "Dekompresijska bolest",
+     "Visinska bolest",
+     "Kesonska groznica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je morska kornjača najveća na svijetu?",
+    "o": [
+     "Glavata želva",
+     "Zelena želva",
+     "Sedmopruga usminjača",
+     "Karetna želva"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojoj skupini sisavaca pripadaju lamantin i dugong?",
+    "o": [
+     "Perajarima",
+     "Kitovima",
+     "Vidrama",
+     "Morskim kravama"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji perajar ima dvije dugačke kljove?",
+    "o": [
+     "Morž",
+     "Tuljan",
+     "Morski lav",
+     "Morski slon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "S kojom životinjom u zajednici živi riba klaun?",
+    "o": [
+     "Sa spužvom",
+     "S moruzgvom",
+     "S ježincem",
+     "S hobotnicom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja morska cvjetnica (prava biljka, ne alga) tvori podvodne livade u Jadranu?",
+    "o": [
+     "Kaulerpa",
+     "Sargasum",
+     "Posidonija",
+     "Morska salata"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu sitni organizmi koje voda nosi jer ne mogu plivati protiv struje?",
+    "o": [
+     "Bentos",
+     "Nekton",
+     "Koralji",
+     "Plankton"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najviši planinski vrh na Zemlji mjeren od podnožja na dnu oceana?",
+    "o": [
+     "Mauna Kea",
+     "Mount Everest",
+     "Kilimandžaro",
+     "Etna"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove najdulji planinski lanac na Zemlji, koji se većinom nalazi pod morem?",
+    "o": [
+     "Ande",
+     "Srednjooceanski hrbat",
+     "Himalaja",
+     "Stjenjak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove prstenasti koraljni otok s lagunom u sredini?",
+    "o": [
+     "Fjord",
+     "Delta",
+     "Atol",
+     "Sprud"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je „more“ u srednjoj Aziji gotovo presušilo zbog navodnjavanja?",
+    "o": [
+     "Kaspijsko",
+     "Mrtvo",
+     "Azovsko",
+     "Aralsko"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je more poznato po vrlo niskoj slanosti, a nalazi se između Švedske i Finske?",
+    "o": [
+     "Baltičko",
+     "Sjeverno",
+     "Barentsovo",
+     "Crno"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se moru nalazi otok Jamajka?",
+    "o": [
+     "Sargaškom",
+     "Karipskom",
+     "Koraljnom",
+     "Južnokineskom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako su stari Rimljani nazivali Sredozemno more?",
+    "o": [
+     "Mare Adriaticum",
+     "Pontus Euxinus",
+     "Mare Nostrum",
+     "Oceanus"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je portugalski pomorac prvi doplovio iz Europe u Indiju oko Afrike?",
+    "o": [
+     "Bartolomeu Dias",
+     "Ferdinand Magellan",
+     "Amerigo Vespucci",
+     "Vasco da Gama"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je rt na jugu Afrike Bartolomeu Dias oplovio 1488.?",
+    "o": [
+     "Rt dobre nade",
+     "Rt Horn",
+     "Rt Kamenjak",
+     "Zeleni rt"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na jugu kojeg se kontinenta nalazi Rt Horn?",
+    "o": [
+     "Afrike",
+     "Južne Amerike",
+     "Australije",
+     "Azije"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najviša ocjena (orkan) na Beaufortovoj ljestvici jačine vjetra?",
+    "o": [
+     "10",
+     "7",
+     "12",
+     "20"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se otok s paunovima i botaničkim vrtom nalazi tik uz Dubrovnik?",
+    "o": [
+     "Koločep",
+     "Šipan",
+     "Lopud",
+     "Lokrum"
+    ],
+    "a": 3
+   }
+  ],
+  "Životinje": [
+   {
+    "q": "Kako se zovu sisavci čije ženke mladunčad nose u trbušnoj vrećici?",
+    "o": [
+     "Tobolčari",
+     "Glodavci",
+     "Kukcojedi",
+     "Primati"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je najveći živući gmaz?",
+    "o": [
+     "Komodski varan",
+     "Morski krokodil",
+     "Zelena anakonda",
+     "Nilski krokodil"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najveći gušter na svijetu?",
+    "o": [
+     "Zelena iguana",
+     "Kameleon",
+     "Komodski varan",
+     "Gila"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je zmija najdulja na svijetu?",
+    "o": [
+     "Zelena anakonda",
+     "Kraljevska kobra",
+     "Crna mamba",
+     "Mrežasti piton"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja zmija s „rogom“ na vrhu njuške je najotrovnija zmija u Hrvatskoj?",
+    "o": [
+     "Poskok",
+     "Riđovka",
+     "Bjelouška",
+     "Smukulja"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji slijepi vodozemac živi u podzemnim vodama dinarskog krša?",
+    "o": [
+     "Pjegavi daždevnjak",
+     "Čovječja ribica",
+     "Veliki vodenjak",
+     "Gatalinka"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem hrvatskom otoku žive poznate kolonije bjeloglavih supova?",
+    "o": [
+     "Brač",
+     "Hvar",
+     "Cres",
+     "Korčula"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja divlja mačka s čupercima na ušima ponovno živi u hrvatskim šumama?",
+    "o": [
+     "Puma",
+     "Ocelot",
+     "Karakal",
+     "Ris"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu ptice koje zimi odlaze u toplije krajeve?",
+    "o": [
+     "Selice",
+     "Stanarice",
+     "Grabljivice",
+     "Močvarice"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je selo u Lonjskom polju proglašeno europskim selom roda?",
+    "o": [
+     "Kumrovec",
+     "Čigoč",
+     "Ston",
+     "Hum"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je ptica najmanja na svijetu?",
+    "o": [
+     "Carić",
+     "Kraljić",
+     "Pčelinji kolibrić",
+     "Plavetna sjenica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove skupina ptica kojoj pripadaju orao, jastreb i sokol?",
+    "o": [
+     "Pjevice",
+     "Močvarice",
+     "Penjačice",
+     "Grabljivice"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kod carskog pingvina, tko tijekom zime grije jaje?",
+    "o": [
+     "Mužjak",
+     "Ženka",
+     "Oboje naizmjence",
+     "Nitko"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja ptica koja ne leti je nacionalni simbol Novog Zelanda?",
+    "o": [
+     "Emu",
+     "Kivi",
+     "Kazuar",
+     "Nandu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je ptica neletačica s Mauricijusa izumrla u 17. stoljeću?",
+    "o": [
+     "Kivi",
+     "Moa",
+     "Dodo",
+     "Kakapo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja ptica ima veliku kožnatu vreću ispod kljuna za hvatanje ribe?",
+    "o": [
+     "Kormoran",
+     "Čaplja",
+     "Galeb",
+     "Pelikan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja ptica kljunom kuca po deblu tražeći kukce pod korom?",
+    "o": [
+     "Djetlić",
+     "Kos",
+     "Vrabac",
+     "Svraka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja ptica podmeće svoja jaja u gnijezda drugih ptica?",
+    "o": [
+     "Lastavica",
+     "Kukavica",
+     "Sjenica",
+     "Grlica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je južnoamerička životinja poznata po iznimno sporom kretanju po krošnjama?",
+    "o": [
+     "Tapir",
+     "Kapibara",
+     "Lijenivac",
+     "Koati"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je južnoamerički sisavac zaštićen oklopom od koštanih pločica?",
+    "o": [
+     "Mravojed",
+     "Lijenivac",
+     "Tapir",
+     "Pasanac"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja životinja nema zube, a mrave i termite skuplja dugim ljepljivim jezikom?",
+    "o": [
+     "Veliki mravojed",
+     "Pasanac",
+     "Jazavac",
+     "Rakun"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojoj skupini sisavaca pripada dikobraz?",
+    "o": [
+     "Kukcojedima",
+     "Glodavcima",
+     "Zvijerima",
+     "Tobolčarima"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najveći glodavac na svijetu?",
+    "o": [
+     "Dabar",
+     "Dikobraz",
+     "Kapibara",
+     "Svizac"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja životinja gradi brane od granja na rijekama?",
+    "o": [
+     "Vidra",
+     "Bizamski štakor",
+     "Nutrija",
+     "Dabar"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što je kod svake zebre jedinstveno, poput otiska prsta?",
+    "o": [
+     "Uzorak pruga",
+     "Boja očiju",
+     "Oblik kopita",
+     "Duljina repa"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od čega je građen rog nosoroga?",
+    "o": [
+     "Od kosti",
+     "Od keratina",
+     "Od bjelokosti",
+     "Od hrskavice"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji su zubi zapravo slonove kljove?",
+    "o": [
+     "Očnjaci",
+     "Kutnjaci",
+     "Sjekutići",
+     "Pretkutnjaci"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Po čemu se afrički slon najlakše razlikuje od azijskog?",
+    "o": [
+     "Po duljem repu",
+     "Po boji kože",
+     "Po broju nogu",
+     "Po većim ušima"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je skupina životinja najbliži živući srodnik vodenkonja?",
+    "o": [
+     "Kitovi",
+     "Svinje",
+     "Nosorozi",
+     "Slonovi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je životinja, uz bonobo, najbliži živući srodnik čovjeka?",
+    "o": [
+     "Gorila",
+     "Čimpanza",
+     "Orangutan",
+     "Gibon"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji čovjekoliki majmun prirodno živi samo na Borneu i Sumatri?",
+    "o": [
+     "Gorila",
+     "Čimpanza",
+     "Orangutan",
+     "Bonobo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je najveći živući primat?",
+    "o": [
+     "Orangutan",
+     "Čimpanza",
+     "Pavijan",
+     "Gorila"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem otoku prirodno žive lemuri?",
+    "o": [
+     "Madagaskar",
+     "Borneo",
+     "Šri Lanka",
+     "Tasmanija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je najveća vrsta mačke na svijetu?",
+    "o": [
+     "Lav",
+     "Tigar",
+     "Jaguar",
+     "Leopard"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja velika mačka živi u prašumama Južne Amerike?",
+    "o": [
+     "Leopard",
+     "Gepard",
+     "Jaguar",
+     "Tigar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U lavljem čoporu tko obavlja većinu lova?",
+    "o": [
+     "Lavovi",
+     "Mladi lavovi",
+     "Najstariji lav",
+     "Lavice"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je pasmina psa poznata kao najbrža?",
+    "o": [
+     "Hrt",
+     "Dalmatinac",
+     "Dobermann",
+     "Haski"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je pasmina psa poznata po spašavanju ljudi u švicarskim Alpama?",
+    "o": [
+     "Njufaundlender",
+     "Bernardinac",
+     "Haski",
+     "Bokser"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je od ovih pasmina pasa izvorno hrvatska?",
+    "o": [
+     "Bigl",
+     "Šarplaninac",
+     "Posavski gonič",
+     "Dobermann"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je bijela pasmina konja vezana uz poznatu ergelu u Đakovu?",
+    "o": [
+     "Arapski konj",
+     "Haflinger",
+     "Mustang",
+     "Lipicanac"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što deva zapravo pohranjuje u grbi?",
+    "o": [
+     "Masnoću",
+     "Vodu",
+     "Krv",
+     "Zrak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove razvojni stadij leptira između gusjenice i odraslog leptira?",
+    "o": [
+     "Ličinka",
+     "Kukuljica",
+     "Jaje",
+     "Nimfa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji leptir svake godine seli tisućama kilometara između Kanade i Meksika?",
+    "o": [
+     "Lastin rep",
+     "Admiral",
+     "Monarh",
+     "Kupusar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako pčele drugim pčelama u košnici pokazuju gdje je hrana?",
+    "o": [
+     "Zujanjem",
+     "Bojom",
+     "Dodirom krila",
+     "Plesom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove jedina plodna ženka u pčelinjoj košnici?",
+    "o": [
+     "Matica",
+     "Radilica",
+     "Trut",
+     "Kraljica majka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji komarci ubadaju ljude i piju krv?",
+    "o": [
+     "Samo mužjaci",
+     "Samo ženke",
+     "I mužjaci i ženke",
+     "Samo mladi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji kukac noću svijetli zahvaljujući kemijskoj reakciji u zatku?",
+    "o": [
+     "Bubamara",
+     "Vilin konjic",
+     "Krijesnica",
+     "Skakavac"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kod kojeg kukca ženka ponekad pojede mužjaka tijekom ili nakon parenja?",
+    "o": [
+     "Bubamara",
+     "Skakavac",
+     "Mrav",
+     "Bogomoljka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što je posebno kod spola većine kopnenih puževa?",
+    "o": [
+     "Dvospolci su",
+     "Svi su mužjaci",
+     "Mijenjaju spol zimi",
+     "Nemaju spol"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove ličinka žabe?",
+    "o": [
+     "Gusjenica",
+     "Punoglavac",
+     "Crvić",
+     "Kukuljica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj skupini kralježnjaka pripadaju žabe i daždevnjaci?",
+    "o": [
+     "Gmazovima",
+     "Ribama",
+     "Vodozemcima",
+     "Sisavcima"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji meksički vodozemac cijeli život zadržava ličinački oblik sa škrgama?",
+    "o": [
+     "Gatalinka",
+     "Daždevnjak",
+     "Krastača",
+     "Aksolotl"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Po čemu se krokodil razlikuje od aligatora kad zatvori usta?",
+    "o": [
+     "Vidi mu se donji zub",
+     "Ima plave oči",
+     "Nema jezik",
+     "Ima kraći rep"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji gušter može hodati po staklu i stropu zahvaljujući dlačicama na prstima?",
+    "o": [
+     "Kameleon",
+     "Gekon",
+     "Iguana",
+     "Varan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji dio tijela gušteri mogu odbaciti kako bi pobjegli grabežljivcu?",
+    "o": [
+     "Nogu",
+     "Kožu s glave",
+     "Rep",
+     "Jezik"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čime zmija skuplja mirisne čestice iz zraka?",
+    "o": [
+     "Nosnicama",
+     "Očima",
+     "Ljuskama",
+     "Rascijepljenim jezikom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je najdulja otrovnica na svijetu?",
+    "o": [
+     "Kraljevska kobra",
+     "Crna mamba",
+     "Poskok",
+     "Tajpan"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji sisavac ima najdulju trudnoću, gotovo dvije godine?",
+    "o": [
+     "Plavi kit",
+     "Slon",
+     "Žirafa",
+     "Nosorog"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se većina šišmiša snalazi u letu po mraku?",
+    "o": [
+     "Njuhom",
+     "Toplinskim vidom",
+     "Eholokacijom",
+     "Magnetskim poljem"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je ptica nacionalni simbol Sjedinjenih Američkih Država?",
+    "o": [
+     "Suri orao",
+     "Puran",
+     "Kondor",
+     "Bjeloglavi orao"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kod pauna, tko ima raskošan šareni rep?",
+    "o": [
+     "Mužjak",
+     "Ženka",
+     "Oboje jednako",
+     "Samo mladi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove dugotrajni zimski san životinja poput ježa i puha?",
+    "o": [
+     "Migracija",
+     "Hibernacija",
+     "Metamorfoza",
+     "Mitarenje"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je, uz čudnovatog kljunaša, jedini sisavac koji nese jaja?",
+    "o": [
+     "Vombat",
+     "Oposum",
+     "Ehidna",
+     "Jež"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja najbliži živući srodnik žirafe?",
+    "o": [
+     "Zebra",
+     "Antilopa",
+     "Deva",
+     "Okapi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se afrička zvijer glasa zvukom koji podsjeća na smijeh?",
+    "o": [
+     "Pjegava hijena",
+     "Šakal",
+     "Lav",
+     "Divlji pas"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove skupina vukova koji žive i love zajedno?",
+    "o": [
+     "Krdo",
+     "Čopor",
+     "Jato",
+     "Roj"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove divlji pas Australije?",
+    "o": [
+     "Kojot",
+     "Šakal",
+     "Dingo",
+     "Fenek"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je boje koža polarnog medvjeda ispod bijelog krzna?",
+    "o": [
+     "Bijela",
+     "Ružičasta",
+     "Žuta",
+     "Crna"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji sisavac gotovo cijeli život provodi kopajući tunele pod zemljom?",
+    "o": [
+     "Krtica",
+     "Jež",
+     "Rovka",
+     "Jazavac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je osjetilo kod pasa najrazvijenije?",
+    "o": [
+     "Vid",
+     "Njuh",
+     "Okus",
+     "Opip"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od koje divlje ptice potječe domaća kokoš?",
+    "o": [
+     "Fazana",
+     "Jarebice",
+     "Bankivske kokoši",
+     "Prepelice"
+    ],
+    "a": 2
+   },
+   {
+    "q": "S kojeg kontinenta potječe domaća purica?",
+    "o": [
+     "Azije",
+     "Afrike",
+     "Europe",
+     "Sjeverne Amerike"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je ptice Charles Darwin proučavao na otočju Galápagos?",
+    "o": [
+     "Zebe",
+     "Lastavice",
+     "Papige",
+     "Galebove"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zovu tamne pjege u obliku ruže na krznu leoparda?",
+    "o": [
+     "Pruge",
+     "Rozete",
+     "Mrlje",
+     "Prstenovi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što bi se vidjelo na koži tigra kad bi mu se obrijalo krzno?",
+    "o": [
+     "Pjege",
+     "Ništa, koža je bijela",
+     "Pruge",
+     "Ljuske"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je mala grabežljivica poznata po borbama s kobrama?",
+    "o": [
+     "Lasica",
+     "Kuna",
+     "Tvor",
+     "Mungos"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od koliko se glavnih dijelova sastoji tijelo kukca?",
+    "o": [
+     "Tri",
+     "Dva",
+     "Četiri",
+     "Pet"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Čime leptiri osjećaju okus hrane?",
+    "o": [
+     "Krilima",
+     "Nogama",
+     "Antenama",
+     "Očima"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko krila ima muha?",
+    "o": [
+     "Četiri",
+     "Šest",
+     "Dva",
+     "Nijedno"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čime se uglavnom hrane bubamare, zbog čega ih vrtlari vole?",
+    "o": [
+     "Lišćem",
+     "Peludi",
+     "Gljivicama",
+     "Lisnim ušima"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove životinja koja se hrani i biljkama i mesom?",
+    "o": [
+     "Svejed",
+     "Biljojed",
+     "Mesojed",
+     "Strvinar"
+    ],
+    "a": 0
+   }
+  ]
+ }
+}

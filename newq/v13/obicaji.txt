@@ -1,0 +1,80 @@
+#Hrvatski običaji i baština
+Koji je dubrovački svetac zaštitnik? | Sveti Vlaho | Sveti Duje | Sveti Stjepan | Sveti Vid
+Koji je svetac zaštitnik Splita? | Sveti Duje | Sveti Vlaho | Sveti Kvirin | Sveti Šimun
+Koji je svetac zaštitnik Rijeke? | Sveti Vid | Sveti Duje | Sveti Juraj | Sveti Mihovil
+Koji je svetac zaštitnik Zadra? | Sveta Stošija | Sveti Vlaho | Sveti Duje | Sveti Kvirin
+Koja je zaštitnica Zagreba, uz sv. Stjepana? | Majka Božja od Kamenitih vrata | Sveta Lucija | Sveta Stošija | Sveta Eufemija
+Kako se zove dalmatinska kamena kućica bez žbuke za čuvanje alata ili sklonište? | Bunja | Kažun | Pojata | Klijet
+Kako se zove istarska kamena kućica okruglog oblika? | Kažun | Bunja | Sjenik | Klet
+Kako se zove ručno rađeni slatkiš od kandiranih kora naranče, tipičan za Dubrovnik? | Arancini | Kotonjata | Paprenjaci | Mantala
+Kako se zove dubrovačka slastica od jaja s karameliziranim šećerom, slična pudingu? | Rožata | Kremšnita | Paprenjak | Fritule
+Kako se zovu male okrugle pržene kuglice od tijesta, tipične za Božić u Dalmaciji? | Fritule | Kroštule | Paprenjaci | Medenjaci
+Kako se zovu hrskavi prženi kolačići oblika vrpce, tipični za poklade? | Kroštule | Fritule | Krafne | Šnenokle
+Koji je kolač poznat kao samoborski specijalitet s kremom i lisnatim tijestom? | Samoborska kremšnita | Rapska torta | Bučnica | Rožata
+Kako se zove poznata torta s otoka Raba od badema? | Rapska torta | Makarska torta | Paška baškotina | Splitska torta
+Kako se zove tradicionalni zagorski kolač od tijesta i nadjeva od bundeve? | Bučnica | Zlevanka | Gibanica | Štrudla
+Kako se zove tradicionalni papreni kolačić s medom i paprom? | Paprenjak | Medenjak | Licitar | Kroštula
+Kako se zove dalmatinsko jelo od mesa i povrća pečeno pod željeznim poklopcem prekrivenim žarom? | Peka | Pašticada | Brudet | Gulaš
+Kako se zove riblje jelo s rajčicom i vinom, tipično za obalu? | Brudet | Pašticada | Čobanac | Sarma
+Kako se zove jelo od kiselog kupusa punjenog mljevenim mesom? | Sarma | Punjene paprike | Musaka | Ćevapi
+Kako se zove slavonska suha kobasica s mnogo paprike, zaštićena oznakom? | Kulen | Čajna | Salama | Češnjovka
+Koji se sir proizvodi na otoku Pagu? | Paški sir | Lički škripavac | Tounjski sir | Prgica
+Kako se zove jelo od kukuruznog brašna kuhanog u vodi, često uz mlijeko ili čvarke? | Žganci | Zlevanka | Štrukli | Mlinci
+Kako se zovu tanki pečeni listovi tijesta uz purana na zagorski način? | Mlinci | Štrukli | Lazanje | Rezanci
+Koji se hrvatski pršut tradicionalno suši na buri, bez dimljenja i bez kože? | Istarski pršut | Dalmatinski pršut | Kulen | Slanina
+Koji se jestivi gomolj, skup i aromatičan, skuplja u istarskim šumama? | Tartuf | Vrganj | Lisičarka | Šampinjon
+Kako se zove poznato istarsko bijelo vino? | Malvazija | Plavac mali | Graševina | Pošip
+Koja je poznata crna sorta vina s poluotoka Pelješca? | Plavac mali | Malvazija | Graševina | Teran
+Koja je najraširenija bijela sorta vina u kontinentalnoj Hrvatskoj? | Graševina | Malvazija | Pošip | Žlahtina
+Koje se bijelo vino tradicionalno proizvodi na otoku Krku, u Vrbniku? | Žlahtina | Pošip | Graševina | Malvazija
+Kako se zove rakija od trave i bilja, tipična za Dalmaciju? | Travarica | Šljivovica | Medica | Viljamovka
+Kako se zove liker od višanja, poznat iz Zadra? | Maraschino | Pelinkovac | Orahovac | Medica
+Kako se zove tradicionalni slavonski žičani instrument? | Tamburica | Lijerica | Gusle | Mandolina
+Kako se zove tradicionalni gudački instrument s tri žice iz južne Dalmacije? | Lijerica | Tamburica | Gusle | Diple
+Kako se zove tradicionalni puhački instrument iz Istre i Kvarnera, u paru? | Sopile | Gajde | Diple | Frula
+Kako se zove dvoglasno pjevanje i sviranje u tijesnim intervalima iz Istre i Hrvatskog primorja, upisano na UNESCO? | Istarska ljestvica (dvoglasje) | Ojkanje | Bećarac | Klapa
+Kako se zove tradicionalni ples u kolu, osobito u Slavoniji? | Kolo | Moreška | Polka | Kvadrilja
+Kako se zove nijemo kolo iz Dalmatinske zagore, upisano na UNESCO popis? | Nijemo kolo | Linđo | Kumpanija | Drmeš
+Kako se zove ples uz lijericu iz okolice Dubrovnika? | Linđo | Moreška | Nijemo kolo | Drmeš
+Kako se zove živahan ples s tresenjem, tipičan za sjeverozapadnu Hrvatsku? | Drmeš | Linđo | Moreška | Kolo
+Kako se zove proljetni ophod djevojaka iz Gorjana, upisan na UNESCO popis? | Ljelje | Zvončari | Kraljice iz Bistre | Kumpanija
+Kako se zove procesija na Hvaru na Veliki četvrtak, upisana na UNESCO popis? | Za Križen | Ljelje | Sinjska alka | Moreška
+Kako se zove trka u kojoj jahači iz Barbana kopljem gađaju prsten? | Trka na prstenac | Alka | Moreška | Kumpanija
+Koji se licitarski kolačić u obliku srca tradicionalno poklanja kao znak ljubavi? | Licitarsko srce | Paprenjak | Medenjak | Kroštula
+Što su licitari upisani na UNESCO popis? | Ukrašeni medeni kolači | Čipka | Narodne nošnje | Glazbeni instrumenti
+Koja se čipka izrađuje u Lepoglavi? | Lepoglavska čipka (na batiće) | Paška čipka | Hvarska čipka | Brabantska čipka
+Kako se zove čipka koju izrađuju žene na otoku Pagu? | Paška čipka | Lepoglavska čipka | Hvarska čipka | Burano čipka
+Kako se zove umijeće izrade drvenih dječjih igračaka iz Hrvatskog zagorja upisano na UNESCO popis? | Tradicionalne drvene igračke | Licitari | Klopoteci | Tamburice
+Kako se zove najpoznatiji pokladni događaj u Rijeci? | Riječki karneval | Samoborski fašnik | Kastavski zvončari | Šokačke poklade
+Kako se zove pokladni običaj u Samoboru? | Samoborski fašnik | Riječki karneval | Đakovački vezovi | Vinkovačke jeseni
+Kako se zove festival folklora u Đakovu? | Đakovački vezovi | Vinkovačke jeseni | Brodsko kolo | Sinjska alka
+Kako se zove poznata smotra folklora u Vinkovcima? | Vinkovačke jeseni | Đakovački vezovi | Brodsko kolo | Pozdrav proljeću
+Kako se zove ljetni festival u Dubrovniku s kazalištem i glazbom? | Dubrovačke ljetne igre | Splitsko ljeto | Motovunski festival | Špancirfest
+Kako se zove ulični festival u Varaždinu? | Špancirfest | Varaždinske barokne večeri | Advent u Zagrebu | Kraljevski Čakovec
+Koji se glazbeni festival održava u Varaždinu i posvećen je baroknoj glazbi? | Varaždinske barokne večeri | Špancirfest | Splitsko ljeto | Dubrovačke ljetne igre
+Na kojem se otoku nalazi Starogradsko polje, antičko poljoprivredno zemljište na UNESCO popisu? | Hvar | Brač | Vis | Korčula
+Koji je nacionalni park 1979. upisan na UNESCO popis kao prva hrvatska prirodna baština? | Plitvička jezera | Krka | Kornati | Mljet
+Koji je dio Splita uvršten na UNESCO popis 1979.? | Dioklecijanova palača | Marjan | Riva | Prokurative
+Koji je grad u Hrvatskoj prvi uvršten na UNESCO popis 1979. zajedno sa Splitom? | Dubrovnik | Trogir | Zadar | Šibenik
+Koja su kamena nadgrobna obilježja, upisana na UNESCO popis 2016., iz srednjeg vijeka? | Stećci | Kažuni | Bunje | Gromače
+Koja je tvrđava kod Šibenika upisana na UNESCO popis kao dio mletačkih obrambenih sustava? | Tvrđava sv. Nikole | Kliška tvrđava | Tvrđava Nehaj | Tvrđava Minčeta
+Kako se zove ploča iz oko 1100. godine koja spominje kralja Zvonimira? | Bašćanska ploča | Plominski natpis | Valunska ploča | Humačka ploča
+Gdje se danas čuva izvorna Bašćanska ploča? | U Zagrebu (HAZU) | U Baški | U Krku | U Rijeci
+Koja je prva tiskana hrvatska knjiga, tiskana 1483. glagoljicom? | Misal po zakonu rimskoga dvora | Judita | Bašćanski brevijar | Vinodolski zakonik
+Kako se zove tradicionalna ženska narodna nošnja iz Slavonije bogato izvezena zlatnim nitima? | Šokačka nošnja | Lička nošnja | Dalmatinska nošnja | Istarska nošnja
+Kako se zove crvena kapa s crnim resama, dio muške narodne nošnje u Lici? | Lička kapa | Fes | Šubara | Šešir
+Kako se zove tradicionalna pokladna lutka koja se na kraju poklada spaljuje? | Pust | Krampus | Jurjevo | Badnjak
+Koji se blagdan slavi 11. studenoga, kada se mošt „krsti“ u vino? | Martinje | Jurjevo | Ivanje | Vincekovo
+Koji se blagdan vinogradara slavi 22. siječnja? | Vincekovo | Martinje | Ivanje | Jurjevo
+Kako se zovu vatre koje se pale uoči blagdana sv. Ivana? | Ivanjski krijesovi | Badnjaci | Uskrsne svijeće | Martinjske vatre
+Koji se proljetni blagdan s ophodom okićenog „zelenog“ mladića slavi 23. travnja? | Jurjevo | Ivanje | Martinje | Vincekovo
+Što se tradicionalno sije na blagdan svete Lucije, 13. prosinca? | Božićna pšenica | Grah | Kukuruz | Cvijeće
+Kako se zove drvo ili cjepanica koja se pali na Badnjak? | Badnjak | Jurjevo drvo | Krijes | Majsko drvo
+Koji se kolač s orasima tradicionalno peče za Božić i Uskrs? | Orehnjača (orahnjača) | Kremšnita | Sacher torta | Rožata
+Kako se zove umijeće izrade suhozida, upisano na UNESCO popis 2018.? | Suhozidna gradnja | Klesarstvo | Bunjarstvo | Kaštelarstvo
+Kako se zove tradicionalni brod iz Komiže, s posebnim latinskim jedrom? | Falkuša | Gajeta | Pasara | Leut
+Kako se zove tradicionalna drvena barka s latinskim jedrom, česta na Jadranu? | Gajeta | Gondola | Trabakul | Kajak
+Na kojem se otoku nalazi poznata plaža Zlatni rat? | Brač | Hvar | Krk | Rab
+Kako se zove tradicionalna pogača s otoka Visa punjena slanim srdelama, rajčicom i lukom? | Komiška pogača | Paška baškotina | Lička pogača | Pinca
+Kako se zove uskršnji slatki kruh tipičan za Dalmaciju i Istru? | Pinca | Bučnica | Pogača | Povitica
+Kako se zove pečeno janje na ražnju, tipično za Dalmatinsku zagoru? | Janjetina s ražnja | Pašticada | Peka od hobotnice | Čobanac

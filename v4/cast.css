@@ -1,0 +1,59 @@
+  /* ---------- prikaz bacanja moći ---------- */
+  .cast-mid { justify-content: center; }
+  .cast { position: relative; width: 100%; flex: 1; min-height: 260px; display: flex; flex-direction: column; justify-content: flex-end; overflow: visible; }
+  .phone .cast { flex: 1; min-height: 340px; justify-content: center; padding-top: 70px; }
+  .phone .cast-row { grid-template-columns: repeat(var(--c), minmax(0, 1fr)); row-gap: 34px; padding-bottom: 24px; }
+  .cast.shake { animation: castShake 0.35s; }
+  @keyframes castShake { 20% { transform: translate(-6px, 3px); } 40% { transform: translate(5px, -4px); } 60% { transform: translate(-4px, 2px); } 80% { transform: translate(3px, -1px); } }
+  .cast-cv { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+  .cast-banner { position: absolute; top: 2%; left: 50%; z-index: 4; transform: translateX(-50%) scale(0.6); opacity: 0; white-space: nowrap; max-width: 96%;
+    display: flex; align-items: center; gap: 0.45em; font: 700 clamp(15px, 2.8vw, 34px) 'Fredoka', system-ui, sans-serif; color: #f4efff;
+    background: rgba(10, 5, 30, 0.78); border: 2px solid rgba(255, 201, 60, 0.6); padding: 0.3em 1em; border-radius: 99px;
+    transition: transform 0.3s cubic-bezier(0.3, 1.7, 0.5, 1), opacity 0.25s; }
+  .cast-banner.on { opacity: 1; transform: translateX(-50%) scale(1); }
+  .phone .cast-banner { font-size: 15px; white-space: normal; text-align: center; justify-content: center; flex-wrap: wrap; width: max-content; }
+  .cast-banner .cico { width: 1.3em; height: 1.3em; display: inline-flex; }
+  .cast-banner .cico svg { width: 100%; height: 100%; }
+  .cast-banner .carr { color: #b9a9e6; }
+  .pw-led { color: #9fe7ff; } .pw-sluz { color: #9be85a; } .pw-grick { color: #f0b87a; } .pw-bomba { color: #ffb347; }
+  .pw-dupli { color: #ffd23c; } .pw-pola { color: #5ee7ff; } .pw-stit { color: #7cf0c8; }
+  .cast-row { position: relative; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); align-items: end; gap: 2%; padding: 0 2% 3.5%; }
+  .cact { position: relative; width: min(100%, 40vh); justify-self: center; aspect-ratio: 1; }
+  .phone .cact { width: 100%; }
+  .cact .cfig { position: absolute; inset: 0; transform-origin: 50% 100%; transition: filter 0.3s; }
+  .cact .cfig > * { width: 100%; height: 100%; }
+  .cact .cfig.idle { animation: castBreath 2.6s ease-in-out infinite; }
+  .cact .cfig.lunge { animation: castLunge 0.5s ease-out; }
+  .cact .cfig.jolt { animation: castJolt 0.5s; }
+  .cact .cfig.cheer { animation: castCheer 0.6s ease-in-out 2; }
+  @keyframes castBreath { 50% { transform: scale(1.02, 0.985); } }
+  @keyframes castLunge { 35% { transform: translateX(calc(var(--dir, 1) * -6%)) rotate(calc(var(--dir, 1) * -5deg)); } 60% { transform: translateX(calc(var(--dir, 1) * 12%)) rotate(calc(var(--dir, 1) * 6deg)); } }
+  @keyframes castJolt { 15% { transform: translateX(6%) rotate(5deg); } 35% { transform: translateX(-5%) rotate(-4deg); } 55% { transform: translateX(3%); } 75% { transform: translateX(-2%); } }
+  @keyframes castCheer { 40% { transform: translateY(-9%) scale(1.03); } }
+  .cact.frozen .cfig { filter: saturate(0.35) brightness(1.15) sepia(0.2) hue-rotate(160deg) drop-shadow(0 0 12px #9fe7ff); }
+  .cact.slimed .cfig { filter: hue-rotate(-25deg) saturate(1.2) drop-shadow(0 0 8px #8be04a); }
+  .cact.gold .cfig { filter: drop-shadow(0 0 14px #ffd23c) brightness(1.08); }
+  .cnm { position: absolute; left: 50%; bottom: -14%; transform: translateX(-50%); z-index: 2; white-space: nowrap; font: 700 clamp(11px, 1.6vw, 20px) 'Fredoka', system-ui, sans-serif; background: rgba(10, 5, 30, 0.72); color: #f4efff; padding: 1px 10px; border-radius: 99px; }
+  .cshield { position: absolute; inset: -8% -8% -2%; border-radius: 50% 50% 46% 46%; pointer-events: none; opacity: 0; transform: scale(0.2); z-index: 2;
+    background: radial-gradient(circle at 34% 26%, rgba(255,255,255,.5) 0 5%, transparent 14%), radial-gradient(circle at 50% 50%, rgba(124,240,200,.04) 50%, rgba(124,240,200,.28) 68%, rgba(124,240,200,0) 71%);
+    border: 3px solid rgba(124, 240, 200, 0.75); box-shadow: 0 0 26px rgba(124, 240, 200, 0.45), inset 0 0 36px rgba(124, 240, 200, 0.35);
+    transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1), opacity 0.3s; }
+  .cshield.on { opacity: 1; transform: scale(1); }
+  .cshield.hit { animation: castShHit 0.45s; }
+  @keyframes castShHit { 30% { transform: scale(0.92, 1.06); border-color: #fff; box-shadow: 0 0 60px #fff, inset 0 0 60px rgba(255,255,255,.7); } }
+  .cbadges { position: absolute; left: 50%; top: -6%; transform: translateX(-50%); display: flex; gap: 4px; z-index: 4; }
+  .cbadge { font: 700 clamp(13px, 2vw, 26px) 'Fredoka', system-ui, sans-serif; padding: 0.1em 0.5em; border-radius: 12px; animation: castPop 0.45s cubic-bezier(0.3, 1.8, 0.5, 1) both; }
+  .b-dupli { color: #3a2100; background: linear-gradient(#fff3b0, #ffc93c); box-shadow: 0 0 20px rgba(255, 210, 60, 0.7); }
+  .b-pola { color: #06344a; background: linear-gradient(#e6fbff, #5ee7ff); box-shadow: 0 0 18px rgba(94, 231, 255, 0.6); }
+  @keyframes castPop { from { transform: scale(0) rotate(-20deg); } }
+  .csplit { position: absolute; left: 50%; top: 8%; width: 30%; aspect-ratio: 3 / 4; transform: translateX(-50%); z-index: 4; pointer-events: none; }
+  .csplit i { position: absolute; top: 0; bottom: 0; width: 50%; background: linear-gradient(#ffffff, #cfe9ff); border: 2px solid #5ee7ff; }
+  .csplit i:first-child { left: 0; border-radius: 8px 0 0 8px; animation: castSplitL 0.9s ease-out forwards; }
+  .csplit i:last-child { right: 0; border-radius: 0 8px 8px 0; animation: castSplitR 0.9s ease-out forwards; }
+  @keyframes castSplitL { 30% { transform: none; opacity: 1; } 100% { transform: translate(-90%, -40%) rotate(-40deg); opacity: 0; } }
+  @keyframes castSplitR { 30% { transform: none; opacity: 1; } 100% { transform: translate(90%, -40%) rotate(40deg); opacity: 0; } }
+  .cbomb { position: absolute; left: 58%; bottom: -2%; width: 26%; z-index: 3; animation: castBomb 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both, castTick 0.5s 0.5s ease-in-out infinite; }
+  @keyframes castBomb { from { transform: translateY(-40%) scale(0.6); } }
+  @keyframes castTick { 50% { transform: scale(1.08); } }
+  .p-cast-me { width: 140px; }
+  @media (prefers-reduced-motion: reduce) { .cast.shake, .cact .cfig { animation: none !important; } }

@@ -1,0 +1,1598 @@
+{
+ "cats": {
+  "Biljke i priroda": [
+   {
+    "q": "Kako se zove isparavanje vode kroz listove biljke?",
+    "o": [
+     "Transpiracija",
+     "Fotosinteza",
+     "Oprašivanje",
+     "Klijanje"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zovu sitni otvori na listu kroz koje biljka izmjenjuje plinove?",
+    "o": [
+     "Godovi",
+     "Puči",
+     "Pupoljci",
+     "Žilice"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem drvetu rastu jestivi kesteni koje zimi pečemo?",
+    "o": [
+     "Divlji kesten",
+     "Bukva",
+     "Pitomi kesten",
+     "Lijeska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji plod daje lijeska?",
+    "o": [
+     "Orah",
+     "Badem",
+     "Kesten",
+     "Lješnjak"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje drvo ima bijelu koru s tamnim prugama?",
+    "o": [
+     "Breza",
+     "Bukva",
+     "Jasen",
+     "Topola"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja se ljekovita biljka bijelih latica i žute sredine često pije kao čaj?",
+    "o": [
+     "Maslačak",
+     "Kamilica",
+     "Neven",
+     "Kopriva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Cvjetovi kojeg se drveta beru za čaj, a drvo je čest simbol Slavena?",
+    "o": [
+     "Hrast",
+     "Bor",
+     "Lipa",
+     "Jela"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se livadna biljka žutog cvijeta pretvara u bijelu kuglu sjemenki koje raznosi vjetar?",
+    "o": [
+     "Tratinčica",
+     "Kamilica",
+     "Ivančica",
+     "Maslačak"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Grančica kojeg je drveta u kljunu goluba simbol mira?",
+    "o": [
+     "Masline",
+     "Lovora",
+     "Palme",
+     "Hrasta"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od lišća koje su se biljke plele vijenci za antičke pjesnike i pobjednike?",
+    "o": [
+     "Bršljan",
+     "Lovor",
+     "Ružmarin",
+     "Kadulja"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja aromatična biljka latinskog imena Salvia raste na dalmatinskim kamenjarima?",
+    "o": [
+     "Lavanda",
+     "Ružmarin",
+     "Kadulja",
+     "Timijan"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja biljka ima najveći pojedinačni cvijet na svijetu?",
+    "o": [
+     "Lotos",
+     "Suncokret",
+     "Magnolija",
+     "Raflezija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se biljke perastih listova razmnožavaju sporama, a ne sjemenkama?",
+    "o": [
+     "Paprati",
+     "Ruže",
+     "Trave",
+     "Kaktusi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove prijenos peludi s cvijeta na cvijet?",
+    "o": [
+     "Klijanje",
+     "Oprašivanje",
+     "Cijepljenje",
+     "Transpiracija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove početak rasta nove biljke iz sjemenke?",
+    "o": [
+     "Cvjetanje",
+     "Oprašivanje",
+     "Klijanje",
+     "Venuće"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje od ovih stabala NIJE četinjača?",
+    "o": [
+     "Jela",
+     "Smreka",
+     "Bor",
+     "Bukva"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja četinjača zimi odbacuje iglice?",
+    "o": [
+     "Ariš",
+     "Jela",
+     "Smreka",
+     "Tisa"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se park prirode s golemim poplavnim područjem nalazi kod ušća Drave u Dunav?",
+    "o": [
+     "Lonjsko polje",
+     "Kopački rit",
+     "Papuk",
+     "Žumberak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojoj se planini nalazi Nacionalni park Paklenica?",
+    "o": [
+     "Na Biokovu",
+     "Na Učki",
+     "Na Velebitu",
+     "Na Dinari"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se nacionalni park nalazi u Gorskom kotaru?",
+    "o": [
+     "Paklenica",
+     "Mljet",
+     "Brijuni",
+     "Risnjak"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji nacionalni park čini otočje uz zapadnu obalu Istre?",
+    "o": [
+     "Brijuni",
+     "Kornati",
+     "Mljet",
+     "Lastovo"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je nacionalni park skupina od gotovo 90 golih, kamenitih otoka i hridi?",
+    "o": [
+     "Brijuni",
+     "Kornati",
+     "Mljet",
+     "Telašćica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove porozna stijena koja gradi slapove na Plitvicama i Krki?",
+    "o": [
+     "Mramor",
+     "Granit",
+     "Bazalt",
+     "Sedra"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove vapnenački reljef sa špiljama, ponorima i vrtačama, tipičan za Dinaride?",
+    "o": [
+     "Krš",
+     "Tundra",
+     "Delta",
+     "Fjord"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove špiljski ukras koji visi sa stropa i raste prema dolje?",
+    "o": [
+     "Stalagmit",
+     "Stalaktit",
+     "Stalagnat",
+     "Sedra"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iznad kojeg se primorskog grada uzdiže planina Biokovo?",
+    "o": [
+     "Senja",
+     "Omiša",
+     "Makarske",
+     "Opatije"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se planina uzdiže iznad Opatije i dijeli Istru od Kvarnera?",
+    "o": [
+     "Biokovo",
+     "Velebit",
+     "Risnjak",
+     "Učka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je od ovih gljiva smrtno otrovna?",
+    "o": [
+     "Zelena pupavka",
+     "Vrganj",
+     "Lisičica",
+     "Šampinjon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove zajednica gljive i alge koja raste na kamenu i kori drveća?",
+    "o": [
+     "Mahovina",
+     "Lišaj",
+     "Paprat",
+     "Plijesan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je afričko drvo poznato po debelom deblu u kojem skladišti vodu?",
+    "o": [
+     "Eukaliptus",
+     "Mahagonij",
+     "Baobab",
+     "Ebanovina"
+    ],
+    "a": 2
+   },
+   {
+    "q": "S kojeg kontinenta potječe eukaliptus?",
+    "o": [
+     "Afrike",
+     "Južne Amerike",
+     "Azije",
+     "Australije"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Gdje prirodno raste gotovo svaka vrsta kaktusa?",
+    "o": [
+     "U Americi",
+     "U Africi",
+     "U Australiji",
+     "U Aziji"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Vanilija se dobiva iz plodova koje biljke?",
+    "o": [
+     "Palme",
+     "Orhideje",
+     "Ljiljana",
+     "Paprati"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji se skupi začin dobiva od njuški tučka jedne vrste krokusa?",
+    "o": [
+     "Kurkuma",
+     "Kardamom",
+     "Šafran",
+     "Cimet"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Od kojeg se dijela biljke dobiva cimet?",
+    "o": [
+     "Od sjemenki",
+     "Od korijena",
+     "Od cvijeta",
+     "Od kore"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od vlakana koje se biljke najčešće izrađuje traper?",
+    "o": [
+     "Pamuka",
+     "Lana",
+     "Konoplje",
+     "Jute"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz soka kojeg se drveta dobiva prirodni kaučuk?",
+    "o": [
+     "Javora",
+     "Kaučukovca",
+     "Bora",
+     "Breze"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što je jantar?",
+    "o": [
+     "Vrsta kvarca",
+     "Okamenjeni koralj",
+     "Okamenjena smola drveća",
+     "Vulkansko staklo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je biljka nacionalni simbol Irske?",
+    "o": [
+     "Ruža",
+     "Čičak",
+     "Lan",
+     "Trolisna djetelina"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu japanski cvjetovi trešnje čija se proljetna cvatnja slavi?",
+    "o": [
+     "Sakura",
+     "Bonsai",
+     "Ikebana",
+     "Origami"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove japanska vještina uzgoja minijaturnih stabala u posudi?",
+    "o": [
+     "Ikebana",
+     "Bonsai",
+     "Origami",
+     "Kintsugi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je vodeni cvijet sveti simbol u hinduizmu i budizmu?",
+    "o": [
+     "Tulipan",
+     "Ljiljan",
+     "Lotos",
+     "Orhideja"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove bijeli alpski cvijet (njem. Edelweiss)?",
+    "o": [
+     "Visibaba",
+     "Encijan",
+     "Đurđica",
+     "Runolist"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji bijeli cvijet među prvima procvjeta krajem zime, često kroz snijeg?",
+    "o": [
+     "Visibaba",
+     "Ruža",
+     "Ljiljan",
+     "Mak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja biljka sklapa listiće čim ih dodirnemo?",
+    "o": [
+     "Kopriva",
+     "Mimoza stidljivica",
+     "Aloja",
+     "Bršljan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Gel iz listova koje se biljke često koristi za opekline od sunca?",
+    "o": [
+     "Koprive",
+     "Kadulje",
+     "Aloje vere",
+     "Bršljana"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se zimzelena penjačica penje po zidovima i deblima drveća?",
+    "o": [
+     "Vinova loza",
+     "Kopriva",
+     "Paprat",
+     "Bršljan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja poluparazitska biljka raste na granama drveća, a pod njom se za blagdane ljubi?",
+    "o": [
+     "Imela",
+     "Bršljan",
+     "Božikovina",
+     "Lovor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja biljka crvenih listova, popularan božićni ukras, potječe iz Meksika?",
+    "o": [
+     "Ciklama",
+     "Božićna zvijezda",
+     "Kamelija",
+     "Begonija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najveća tropska prašuma na svijetu?",
+    "o": [
+     "Kongoanska",
+     "Borneanska",
+     "Amazonska",
+     "Daintree"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove travnato područje s rijetkim drvećem, tipično za istočnu Afriku?",
+    "o": [
+     "Tundra",
+     "Tajga",
+     "Makija",
+     "Savana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove hladno područje bez drveća, s mahovinama i lišajevima, na krajnjem sjeveru?",
+    "o": [
+     "Tundra",
+     "Savana",
+     "Stepa",
+     "Prerija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove gusto zimzeleno grmlje tipično za jadransku obalu?",
+    "o": [
+     "Tajga",
+     "Makija",
+     "Savana",
+     "Prerija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Pinjoli su sjemenke kojeg drveta?",
+    "o": [
+     "Hrasta",
+     "Jele",
+     "Bora pinije",
+     "Čempresa"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojoj biljci raste kokosov orah?",
+    "o": [
+     "Na baobabu",
+     "Na mangu",
+     "Na orahu",
+     "Na palmi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji amazonski lopoč ima okrugle listove promjera i do tri metra?",
+    "o": [
+     "Viktorija",
+     "Lotos",
+     "Raflezija",
+     "Papirus"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove ženski dio cvijeta koji prima pelud?",
+    "o": [
+     "Prašnik",
+     "Tučak",
+     "Lapovi",
+     "Peteljka"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zovu obojeni listići cvijeta koji privlače kukce?",
+    "o": [
+     "Lapovi",
+     "Prašnici",
+     "Latice",
+     "Peteljke"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove podzemni zadebljani dio krumpira koji jedemo?",
+    "o": [
+     "Lukovica",
+     "Korijen",
+     "Mahuna",
+     "Gomolj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji dio mrkve jedemo?",
+    "o": [
+     "Korijen",
+     "Stabljiku",
+     "Plod",
+     "Gomolj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje se drvo lepezastih listova naziva „živim fosilom”?",
+    "o": [
+     "Baobab",
+     "Ginko",
+     "Sekvoja",
+     "Magnolija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je mediteranski ukrasni grm ružičastih ili bijelih cvjetova vrlo otrovan?",
+    "o": [
+     "Lavanda",
+     "Ružmarin",
+     "Oleandar",
+     "Hibiskus"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja invazivna korovna biljka krajem ljeta izaziva jake alergije na pelud?",
+    "o": [
+     "Kamilica",
+     "Metvica",
+     "Djetelina",
+     "Ambrozija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja šumska biljka daje sitne tamnoplave bobice?",
+    "o": [
+     "Borovnica",
+     "Kupina",
+     "Malina",
+     "Ribiz"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je vrsta hrasta simbol slavonskih šuma?",
+    "o": [
+     "Hrast plutnjak",
+     "Hrast lužnjak",
+     "Hrast crnika",
+     "Hrast medunac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je vrsta drveća najrasprostranjenija u hrvatskim šumama?",
+    "o": [
+     "Obična smreka",
+     "Alepski bor",
+     "Obična bukva",
+     "Pitomi kesten"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove rijeka koja u kršu nestaje pod zemljom?",
+    "o": [
+     "Pritoka",
+     "Lagunica",
+     "Delta",
+     "Ponornica"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je slap najviši u Hrvatskoj?",
+    "o": [
+     "Veliki slap na Plitvicama",
+     "Skradinski buk",
+     "Roški slap",
+     "Slap Gubavica"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je drvo poznato po vrlo tvrdom, gotovo crnom drvu?",
+    "o": [
+     "Breza",
+     "Ebanovina",
+     "Bukva",
+     "Balza"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od lišća koje se biljke dobivaju i zeleni i crni čaj?",
+    "o": [
+     "Metvice",
+     "Kamilice",
+     "Čajevca",
+     "Lipe"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem je kontinentu izvorno rastao duhan?",
+    "o": [
+     "U Africi",
+     "U Aziji",
+     "U Europi",
+     "U Americi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem je području kukuruz izvorno udomaćen?",
+    "o": [
+     "U Srednjoj Americi",
+     "Na Bliskom istoku",
+     "U Kini",
+     "U Indiji"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se mirisni bijeli cvijet u Francuskoj tradicionalno poklanja 1. svibnja?",
+    "o": [
+     "Ljubičica",
+     "Đurđica",
+     "Visibaba",
+     "Jasmin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kod koje ukrasne biljke boja cvjetova ovisi o kiselosti tla?",
+    "o": [
+     "Ruže",
+     "Tulipana",
+     "Hortenzije",
+     "Orhideje"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje se drvo nalazi na zastavi Libanona?",
+    "o": [
+     "Maslina",
+     "Palma",
+     "Hrast",
+     "Cedar"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je crnogorično drvo s crvenim bobicama gotovo u cijelosti otrovno?",
+    "o": [
+     "Tisa",
+     "Jela",
+     "Ariš",
+     "Smreka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove izvor koji povremeno izbacuje mlaz vruće vode i pare?",
+    "o": [
+     "Vrulja",
+     "Gejzir",
+     "Ponor",
+     "Delta"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove rastaljena stijena kad izbije na površinu iz vulkana?",
+    "o": [
+     "Magma",
+     "Sedra",
+     "Lava",
+     "Plašt"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove velika masa leda koja polako klizi niz planinu?",
+    "o": [
+     "Lavina",
+     "Ledolom",
+     "Santa",
+     "Ledenjak"
+    ],
+    "a": 3
+   }
+  ],
+  "Hrana i piće": [
+   {
+    "q": "Od mlijeka koje se životinje radi izvorna mozzarella di bufala?",
+    "o": [
+     "Bivolice",
+     "Kozje",
+     "Ovce",
+     "Krave"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove grčki bijeli sir u salamuri, sastojak grčke salate?",
+    "o": [
+     "Mascarpone",
+     "Feta",
+     "Gorgonzola",
+     "Brie"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje talijanske regije potječe sir Parmigiano Reggiano?",
+    "o": [
+     "Toskana",
+     "Sicilija",
+     "Emilija-Romanja",
+     "Pijemont"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je talijanski sir poznat po plavoj plijesni?",
+    "o": [
+     "Mozzarella",
+     "Ricotta",
+     "Pecorino",
+     "Gorgonzola"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od kojeg se mlijeka radi francuski plavi sir roquefort?",
+    "o": [
+     "Ovčjeg",
+     "Kravljeg",
+     "Kozjeg",
+     "Bivoljeg"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je sir dobio ime po selu u Engleskoj?",
+    "o": [
+     "Gauda",
+     "Cheddar",
+     "Brie",
+     "Edamer"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove korejsko jelo od fermentiranog kupusa i začina?",
+    "o": [
+     "Bulgogi",
+     "Pho",
+     "Kimchi",
+     "Tempura"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Od čega se proizvodi japanski sake?",
+    "o": [
+     "Od ječma",
+     "Od krumpira",
+     "Od grožđa",
+     "Od riže"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od koje se biljke proizvodi tekila?",
+    "o": [
+     "Od plave agave",
+     "Od kaktusa",
+     "Od kukuruza",
+     "Od šećerne trske"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od čega se proizvodi rum?",
+    "o": [
+     "Od krumpira",
+     "Od šećerne trske",
+     "Od ječma",
+     "Od grožđa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Pjenušac se smije zvati šampanjac samo ako dolazi iz koje zemlje?",
+    "o": [
+     "Italije",
+     "Španjolske",
+     "Francuske",
+     "Njemačke"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje potječe pjenušac prosecco?",
+    "o": [
+     "Francuska",
+     "Španjolska",
+     "Portugal",
+     "Italija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje potječe desertno vino porto?",
+    "o": [
+     "Portugal",
+     "Španjolska",
+     "Italija",
+     "Grčka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je bijela sorta grožđa najraširenija u Slavoniji i kontinentalnoj Hrvatskoj?",
+    "o": [
+     "Malvazija",
+     "Graševina",
+     "Pošip",
+     "Žlahtina"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je bijela vinska sorta najpoznatija u Istri?",
+    "o": [
+     "Graševina",
+     "Pošip",
+     "Malvazija",
+     "Kujundžuša"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Od koje se sorte grožđa radi vino Dingač s Pelješca?",
+    "o": [
+     "Teran",
+     "Babić",
+     "Graševina",
+     "Plavac mali"
+    ],
+    "a": 3
+   },
+   {
+    "q": "S kojeg je otoka najpoznatije bijelo vino pošip?",
+    "o": [
+     "S Korčule",
+     "S Krka",
+     "S Paga",
+     "S Brača"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se u Dalmaciji zove crno vino razrijeđeno vodom?",
+    "o": [
+     "Gemišt",
+     "Bevanda",
+     "Bambus",
+     "Bermet"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove rakija u koju se dodaju ljekovite trave?",
+    "o": [
+     "Šljivovica",
+     "Lozovača",
+     "Travarica",
+     "Medica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Istarska rakija biska aromatizirana je kojom biljkom?",
+    "o": [
+     "Pelinom",
+     "Lavandom",
+     "Kaduljom",
+     "Imelom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja biljka daje pivu karakterističnu gorčinu?",
+    "o": [
+     "Hmelj",
+     "Pelin",
+     "Ječam",
+     "Kvasac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove poznati pivski festival u Münchenu?",
+    "o": [
+     "Beerfest",
+     "Oktoberfest",
+     "Bierstube",
+     "Maifest"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje afričke zemlje potječe kava arabika?",
+    "o": [
+     "Iz Kenije",
+     "Iz Egipta",
+     "Iz Etiopije",
+     "Iz Maroka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Uz arabiku, koja je druga najraširenija vrsta kave?",
+    "o": [
+     "Moka",
+     "Liberica",
+     "Kona",
+     "Robusta"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Čaj Earl Grey aromatiziran je uljem kojeg agruma?",
+    "o": [
+     "Bergamota",
+     "Limete",
+     "Grejpa",
+     "Mandarine"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što je zapravo začin klinčić?",
+    "o": [
+     "Sjemenka",
+     "Osušeni cvjetni pupoljak",
+     "Kora drveta",
+     "Korijen"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako nastaje bijeli papar?",
+    "o": [
+     "Od nezrelih zrna",
+     "Od bijele biljke",
+     "Od zrelih zrna bez ljuske",
+     "Bijeljenjem crnog"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji začin curryju daje izrazito žutu boju?",
+    "o": [
+     "Muškatni oraščić",
+     "Klinčić",
+     "Kumin",
+     "Kurkuma"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove talijanska tjestenina u obliku leptirića?",
+    "o": [
+     "Farfalle",
+     "Fusilli",
+     "Penne",
+     "Rigatoni"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što znači kad je tjestenina kuhana „al dente”?",
+    "o": [
+     "Prekuhana je",
+     "Čvrsta je na zub",
+     "Kuhana je u mlijeku",
+     "Pržena je"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji se sastojak NE stavlja u tradicionalnu talijansku carbonaru?",
+    "o": [
+     "Žumanjak",
+     "Pecorino",
+     "Vrhnje",
+     "Guanciale"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što na talijanskom znači naziv deserta panna cotta?",
+    "o": [
+     "Slatki kruh",
+     "Pečeni sir",
+     "Hladna krema",
+     "Kuhano vrhnje"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz kojeg talijanskog grada potječe tradicionalni balzamični ocat?",
+    "o": [
+     "Iz Modene",
+     "Iz Napulja",
+     "Iz Firence",
+     "Iz Venecije"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove provansalsko jelo od pirjanog patlidžana, tikvica i paprike?",
+    "o": [
+     "Bouillabaisse",
+     "Ratatouille",
+     "Cassoulet",
+     "Quiche"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz kojeg grada potječe riblja juha bouillabaisse?",
+    "o": [
+     "Iz Pariza",
+     "Iz Lyona",
+     "Iz Marseillea",
+     "Iz Bordeauxa"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove hladna španjolska juha od rajčice i povrća?",
+    "o": [
+     "Paella",
+     "Tortilla",
+     "Churros",
+     "Gazpacho"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove španjolski sušeni pršut?",
+    "o": [
+     "Jamón",
+     "Chorizo",
+     "Prosciutto",
+     "Salami"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je piće od crnog vina i komadića voća tipično za Španjolsku?",
+    "o": [
+     "Sherry",
+     "Sangrija",
+     "Cava",
+     "Tinto"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od čega se radi grčki umak tzatziki?",
+    "o": [
+     "Od rajčice i luka",
+     "Od avokada",
+     "Od jogurta i krastavca",
+     "Od slanutka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojeg je okusa grčki aperitiv ouzo?",
+    "o": [
+     "Limuna",
+     "Metvice",
+     "Kave",
+     "Anisa"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od kojih se sjemenki radi pasta tahini?",
+    "o": [
+     "Od sezama",
+     "Od suncokreta",
+     "Od lana",
+     "Od buče"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od čega se tradicionalno radi kus-kus?",
+    "o": [
+     "Od riže",
+     "Od pšenične krupice",
+     "Od kukuruza",
+     "Od leće"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove pročišćeni maslac u indijskoj kuhinji?",
+    "o": [
+     "Naan",
+     "Lassi",
+     "Ghee",
+     "Masala"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Od čega se tradicionalno rade meksičke tortilje?",
+    "o": [
+     "Od krumpira",
+     "Od riže",
+     "Od graha",
+     "Od kukuruza"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji neobičan sastojak sadrži meksički umak mole poblano?",
+    "o": [
+     "Čokoladu",
+     "Kavu",
+     "Med",
+     "Pivo"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz soka kojeg se drveta dobiva sirup koji Kanađani liju po palačinkama?",
+    "o": [
+     "Breze",
+     "Javora",
+     "Hrasta",
+     "Lipe"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je škotsko nacionalno jelo od ovčjih iznutrica i zobi?",
+    "o": [
+     "Pudding",
+     "Scone",
+     "Haggis",
+     "Shortbread"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje se voće stavlja u Schwarzwald tortu?",
+    "o": [
+     "Jagode",
+     "Marelice",
+     "Kruške",
+     "Višnje"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se marmelada tradicionalno stavlja u Sacher tortu?",
+    "o": [
+     "Od marelica",
+     "Od jagoda",
+     "Od šljiva",
+     "Od naranči"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kavijar su ikre koje ribe?",
+    "o": [
+     "Lososa",
+     "Jesetre",
+     "Bakalara",
+     "Tune"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od čega se radi japanska pasta miso?",
+    "o": [
+     "Od riže i ribe",
+     "Od algi",
+     "Od fermentirane soje",
+     "Od sezama"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove morska alga u koju se zamata sushi?",
+    "o": [
+     "Wakame",
+     "Kombu",
+     "Spirulina",
+     "Nori"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove „peti okus”, uz slatko, slano, kiselo i gorko?",
+    "o": [
+     "Umami",
+     "Wasabi",
+     "Sake",
+     "Miso"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojem je gradu nazvana poznata kineska pečena patka?",
+    "o": [
+     "Šangaju",
+     "Pekingu",
+     "Hong Kongu",
+     "Tokiju"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove vijetnamska juha s rižinim rezancima?",
+    "o": [
+     "Ramen",
+     "Miso",
+     "Pho",
+     "Laksa"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje se slavonsko i baranjsko jelo kuha od riječne ribe i ljute paprike?",
+    "o": [
+     "Čobanac",
+     "Brudet",
+     "Sarma",
+     "Fiš paprikaš"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Uz koje se tijesto tradicionalno poslužuje zagorska purica?",
+    "o": [
+     "Uz mlince",
+     "Uz njoke",
+     "Uz fuže",
+     "Uz štrukle"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove zvonasti poklopac pod kojim se jelo peče prekriveno žarom?",
+    "o": [
+     "Kotlić",
+     "Peka",
+     "Tava",
+     "Ražanj"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove priprema školjaka ili škampa na vinu, češnjaku i peršinu?",
+    "o": [
+     "Brudet",
+     "Gregada",
+     "Buzara",
+     "Pašticada"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što crnom rižotu daje crnu boju?",
+    "o": [
+     "Crni papar",
+     "Prženi luk",
+     "Gljive",
+     "Crnilo sipe"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu male pržene kuglice od tijesta koje se u Dalmaciji rade uoči Božića?",
+    "o": [
+     "Fritule",
+     "Krafne",
+     "Kroštule",
+     "Paprenjaci"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove dubrovački desert sličan karamel-kremi?",
+    "o": [
+     "Kremšnita",
+     "Rožata",
+     "Tiramisu",
+     "Rapska torta"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zovu tradicionalni hrvatski medeni keksi s paprom?",
+    "o": [
+     "Fritule",
+     "Kroštule",
+     "Paprenjaci",
+     "Medenjaci"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čime se puni zagrebački odrezak?",
+    "o": [
+     "Gljivama",
+     "Špinatom",
+     "Mljevenim mesom",
+     "Šunkom i sirom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od čega se dobiva tamnozeleno ulje, omiljeno u Međimurju i Štajerskoj?",
+    "o": [
+     "Od sjemenki buče",
+     "Od maslina",
+     "Od oraha",
+     "Od suncokreta"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove lički mladi sir koji „škripi” pod zubima?",
+    "o": [
+     "Kajmak",
+     "Škripavac",
+     "Basa",
+     "Prgica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U čemu sazrijeva tradicionalni dalmatinski sir iz mišine?",
+    "o": [
+     "U drvenoj bačvi",
+     "U glinenom loncu",
+     "U ovčjoj ili janjećoj koži",
+     "U pepelu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se otok ponosi tortom od badema nazvanom po njemu?",
+    "o": [
+     "Krk",
+     "Hvar",
+     "Brač",
+     "Rab"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se sušena riba tradicionalno jede na Badnjak u Dalmaciji?",
+    "o": [
+     "Bakalar",
+     "Srdela",
+     "Oslić",
+     "Tuna"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojoj je skupocjenoj podzemnoj gljivi poznata unutrašnjost Istre?",
+    "o": [
+     "Po vrganju",
+     "Po tartufu",
+     "Po smrčku",
+     "Po lisičarki"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja bolest pomoraca nastaje zbog nedostatka vitamina C?",
+    "o": [
+     "Rahitis",
+     "Beriberi",
+     "Skorbut",
+     "Pelagra"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se od ovih namirnica nalazi gluten?",
+    "o": [
+     "U riži",
+     "U krumpiru",
+     "U kukuruzu",
+     "U pšenici"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Po kojem je znanstveniku nazvano zagrijavanje mlijeka radi uništavanja mikroba?",
+    "o": [
+     "Louisu Pasteuru",
+     "Robertu Kochu",
+     "Alexanderu Flemingu",
+     "Edwardu Jenneru"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje izvorno potječe kivi, iako se veže uz Novi Zeland?",
+    "o": [
+     "Iz Australije",
+     "Iz Kine",
+     "Iz Čilea",
+     "Iz Indije"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je tropsko voće poznato po izrazito neugodnom mirisu?",
+    "o": [
+     "Mango",
+     "Papaja",
+     "Durian",
+     "Liči"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je gradu 1886. prvi put prodana Coca-Cola?",
+    "o": [
+     "U New Yorku",
+     "U Chicagu",
+     "U Bostonu",
+     "U Atlanti"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove južnoamerički čaj koji se pije iz tikvice kroz metalnu slamku?",
+    "o": [
+     "Mate",
+     "Rooibos",
+     "Chai",
+     "Matcha"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje bobice daju džinu karakterističan okus?",
+    "o": [
+     "Bobice bazge",
+     "Bobice borovice",
+     "Brusnice",
+     "Ribiz"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove najkvalitetnija kategorija maslinova ulja?",
+    "o": [
+     "Rafinirano",
+     "Djevičansko",
+     "Ekstra djevičansko",
+     "Komovinsko"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni sastojak majoneze uz ulje?",
+    "o": [
+     "Bjelanjak",
+     "Vrhnje",
+     "Maslac",
+     "Žumanjak"
+    ],
+    "a": 3
+   }
+  ]
+ }
+}

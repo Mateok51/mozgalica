@@ -1,0 +1,12 @@
+const { chromium } = require('playwright'); const path = require('path');
+(async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true })).newPage();
+  const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.route(/fonts\.|jsdelivr|unpkg/, (r) => r.abort());
+  await p.goto('file://' + path.join(__dirname, '..', 'v3/out.html'));
+  await p.evaluate(() => Object.assign(CFG, { intro: 0.3, vote: 1, voteShow: 0.3, power: 8, cast: 1.2 }));
+  await p.click('#demo'); await p.waitForTimeout(300); await p.click('#dstart');
+  await p.waitForSelector('.pw-card', { timeout: 30000 }); await p.waitForTimeout(1200);
+  await p.screenshot({ path: __dirname + '/tour/pw-phone.png' });
+  await p.setViewportSize({ width: 1280, height: 720 }); await p.click('#toTv'); await p.waitForTimeout(800); await p.screenshot({ path: __dirname + '/tour/pw-tv.png' });
+  await p.waitForSelector('#castStage', { timeout: 30000 }); await p.waitForTimeout(1600); await p.screenshot({ path: __dirname + '/tour/pw-cast.png' });
+  console.log(errs); await b.close(); })();

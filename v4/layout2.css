@@ -1,0 +1,26 @@
+  /* predvorje: stalne dimenzije; samo popis igrača raste i pomiče se unutar preostalog prostora */
+  #app.lobfit { display: flex; flex-direction: column; min-height: calc(100dvh - 28px); box-sizing: border-box; padding-bottom: calc(66px + env(safe-area-inset-bottom, 0px)); }
+  @supports not (height: 100dvh) { #app.lobfit { min-height: calc(100vh - 28px); } }
+  #app.lobfit > .lob { flex: 1 1 auto; min-height: 0; padding-bottom: 0; }
+  #app.lobfit .lob-players { flex: 1 1 0; min-height: 108px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  #app.lobfit .lob-players.more { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 34px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 34px), transparent); }
+  #app.lobfit > .lob > .home-link { flex: none; }
+  .lob .av-grid, .lob .lob-bots, .lob .lob-cta, .lob .lob-toggle, .lob .lob-title, .lob > .home-link, .lob .lob-wait { flex: none; }
+  .lob-chip { margin-left: 8px; padding: 1px 8px; border-radius: 6px; font-family: var(--font-body); font-weight: 800; font-size: 0.78em; letter-spacing: 0.02em; color: #f3e3c4; background: rgba(0, 0, 0, 0.35); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.5); vertical-align: middle; }
+  .lob-chip .lob-code { font-size: 1em; letter-spacing: 0.12em; padding-left: 0.12em; color: #fff4dc; }
+  /* pozivnica: zaseban prozor iznad predvorja, ništa ispod se ne mijenja */
+  .inv-modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px)); background: rgba(10, 5, 2, 0.72); backdrop-filter: blur(3px); overflow-y: auto; animation: invIn 0.22s ease-out both; }
+  .inv-card { width: min(100%, 380px); display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 18px 16px 16px; border-radius: 14px;
+    background: linear-gradient(180deg, rgba(58, 33, 15, 0.98), rgba(28, 14, 6, 0.98)); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.7), inset 0 0 0 5px rgba(0, 0, 0, 0.28), 0 18px 40px rgba(0, 0, 0, 0.6); animation: invCard 0.28s cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+  .inv-code { font-family: var(--font-body); font-weight: 900; font-size: 2.8rem; line-height: 1; letter-spacing: 0.22em; padding-left: 0.22em; color: #fff4dc; }
+  .inv-qr { width: min(72vw, 300px, 46dvh); }
+  .inv-card .lob-cta { width: 100%; }
+  @keyframes invIn { from { opacity: 0; } }
+  @keyframes invCard { from { opacity: 0; transform: translateY(12px) scale(0.97); } }
+  /* niži mobiteli (prema visini zaslona, ne prema količini sadržaja): malo tješnji razmaci, iste veličine teksta i gumba */
+  @media (max-height: 820px) and (max-width: 640px) {
+    .screen.phone { gap: 10px; }
+    .pw-cards { gap: 6px; }
+    .whoq { gap: 6px; } .whoq ol { gap: 4px; } .whoq li { padding: 5px 10px; line-height: 1.25; }
+    .phone .waiting { margin: 0; }
+  }

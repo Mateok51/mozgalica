@@ -1,0 +1,102 @@
+Film | 🦁👑 | Kralj lavova | Madagaskar | Knjiga o džungli | Zootopia
+Film | 🚢🧊💔 | Titanic | Pirati s Kariba | Avatar | Ralje
+Film | 🦈🏖️🩸 | Ralje | Potraga za Nemom | Titanic | Moby Dick
+Film | 🦖🏝️🚙 | Jurski park | King Kong | Godzilla | Ledeno doba
+Film | 👽📞🏠 | E.T. | Ratovi zvijezda | Muškarci u crnom | Bliski susreti
+Film | 🧙‍♂️💍🌋 | Gospodar prstenova | Harry Potter | Narnija | Willow
+Film | ⚡👓🧙 | Harry Potter | Gospodar prstenova | Merlin | Čarobnjak iz Oza
+Film | 🐠🔍👨‍👦 | Potraga za Nemom | Mala sirena | Ralje | Moana
+Film | 🤖🌱🌍 | WALL-E | Ja, robot | Terminator | Veliki heroj 6
+Film | ❄️👸⛄ | Snježno kraljevstvo | Ledeno doba | Pepeljuga | Narnija
+Film | 🐀👨‍🍳🇫🇷 | Ratatouille | Kung Fu Panda | Zootopia | Madagaskar
+Film | 🎈🏠👴 | Nebesa (Up) | Toy Story | Mary Poppins | Coco
+Film | 🧸🤠🚀 | Toy Story | Automobili | Shrek | Nebesa (Up)
+Film | 🏎️⚡🏁 | Automobili | Brzi i žestoki | Toy Story | Avioni
+Film | 🟢👹🐴 | Shrek | Hulk | Grinch | Mulan
+Film | 🦇🃏🌃 | Batman (Vitez tame) | Spider-Man | Joker: Ludilo udvoje | Superman
+Film | 🕷️🧑‍🎓🏙️ | Spider-Man | Batman | Ant-Man | Iron Man
+Film | 🛡️🇺🇸💪 | Kapetan Amerika | Superman | Thor | Iron Man
+Film | 🔨⚡👑 | Thor | Kapetan Amerika | Hulk | Aquaman
+Film | 🧛🦇🏰 | Drakula | Frankenstein | Mumija | King Kong
+Film | 🍫🏭🎟️ | Charlie i tvornica čokolade | Matilda | Kum | Ratatouille
+Film | 🐒🍌🏙️🗼 | King Kong | Planet majmuna | Tarzan | Jumanji
+Film | 🎲🌴🐘 | Jumanji | Knjiga o džungli | Madagaskar | Jurski park
+Film | 👻🚫🔫 | Lovci na duhove | Duh | Muškarci u crnom | Beetlejuice
+Film | ⏰🚗⚡ | Povratak u budućnost | Brzi i žestoki | Terminator | Interstellar
+Film | 🌌⚔️👨‍👦 | Ratovi zvijezda | Zvjezdane staze | Dina | Avatar
+Film | 🔵🌳👽 | Avatar | Štrumpfovi | Aladin | Dina
+Film | 💊🕶️💻 | Matrix | Početak | Terminator | Tron
+Film | 🦸‍♂️🛡️🔨🟢 | Osvetnici | Fantastična četvorka | Nevjerojatni | Liga pravde
+Film | 🏹👧🔥 | Igre gladi | Divergentna | Labirint | Robin Hood
+Film | 🐼🥋🥟 | Kung Fu Panda | Karate Kid | Mulan | Ip Man
+Film | 🐧🐧🐧🐧🗺️ | Pingvini s Madagaskara | Sretna stopala | Ledeno doba | Surf's Up
+Film | 🐘🎪👂 | Dumbo | Madagaskar | Horton | Bambi
+Film | 🦌❄️🍃 | Bambi | Snježno kraljevstvo | Kralj lavova | Mulan
+Film | 👨‍🚀🌽🕳️ | Interstellar | Marsovac | Gravitacija | Apollo 13
+Film | 🧠😊😢😡 | Izvrnuto obrnuto | Nebesa (Up) | Duša | Coco
+Film | 💀🎸🌼🇲🇽 | Coco | Duša | Encanto | Zootopia
+Film | 🏰👠🎃 | Pepeljuga | Trnoružica | Snjeguljica | Matovilka
+Film | 🌹🐺📚 | Ljepotica i zvijer | Crvenkapica | Pepeljuga | Snježno kraljevstvo
+Film | 🧞‍♂️🪔🐒 | Aladin | Sinbad | Mulan | Pinokio
+Serija | 👑🐉❄️ | Igra prijestolja | Vještac | Merlin | Vikinzi
+Serija | 🧪💊👨‍🏫 | Breaking Bad | Ozark | Dr. House | Narcos
+Serija | ☕🛋️👫👫👫 | Prijatelji | Seinfeld | Teorija velikog praska | Moderna obitelj
+Serija | 🔦🚲👾 | Stranger Things | Dosjei X | Wednesday | Dark
+Serija | 💰🎭🔴 | Kuća od papira | Lupin | Narcos | Ozark
+Serija | 🦑🎮💸 | Igra lignje | Alice in Borderland | Black Mirror | Arcane
+Serija | 🧟🔫🏚️ | Živi mrtvaci | Prison Break | Wednesday | Lost
+Serija | 🏝️✈️🔢 | Izgubljeni (Lost) | Survivor | Dosjei X | Twin Peaks
+Serija | 🖤🎻✋ | Wednesday | Sabrina | Stranger Things | Obitelj Munster
+Serija | 🔬🤓🌌 | Teorija velikog praska | Kozmos | Ured | Doctor Who
+Serija | 👨‍👩‍👧‍👦🍩🟡 | Simpsoni | Obiteljski čovjek | Futurama | Bluey
+Serija | 🧽🍍🌊 | Spužva Bob | Ribica Nemo | Pustolovine Pipija | Gumball
+Serija | 🐶🔵🏡 | Bluey | Peppa Pig | Snoopy | Scooby-Doo
+Serija | 🐷☔🟤 | Peppa Pig | Bluey | Winnie Pooh | Maša i medvjed
+Serija | 👧🐻🌲 | Maša i medvjed | Peppa Pig | Bluey | Winnie Pooh
+Serija | 🐕👻🚐 | Scooby-Doo | Lovci na duhove | Snoopy | Bluey
+Serija | 🚀🤖🍕 | Futurama | Rick i Morty | Jetsonovi | Simpsoni
+Serija | 👑🇬🇧💂 | Kruna | Downton Abbey | Bridgerton | Peaky Blinders
+Serija | 🧢🔪🥃🇬🇧 | Peaky Blinders | Kruna | Sherlock | Downton Abbey
+Serija | 🔍🎻🇬🇧 | Sherlock | Doctor Who | Kruna | Peaky Blinders
+Bajka | 🍎👸🪞 | Snjeguljica | Pepeljuga | Trnoružica | Crvenkapica
+Bajka | 🐺👵🧺 | Crvenkapica | Tri praščića | Ivica i Marica | Snjeguljica
+Bajka | 🐷🐷🐷🐺 | Tri praščića | Crvenkapica | Vuk i sedam kozlića | Ružno pače
+Bajka | 🍬🏠🧙‍♀️ | Ivica i Marica | Snjeguljica | Matovilka | Pinokio
+Bajka | 👸💤🌹 | Trnoružica | Snjeguljica | Pepeljuga | Ljepotica i zvijer
+Bajka | 🐸👑💋 | Žablji kralj | Mala sirena | Palčica | Trnoružica
+Bajka | 🧜‍♀️🌊🗣️ | Mala sirena | Palčica | Snježna kraljica | Pepeljuga
+Bajka | 🐥🦢 | Ružno pače | Divlji labudovi | Palčica | Žablji kralj
+Bajka | 🐈👢🏰 | Mačak u čizmama | Pinokio | Ivica i Marica | Snjeguljica
+Bajka | 🫛🛏️👸 | Princeza na zrnu graška | Trnoružica | Pepeljuga | Matovilka
+Bajka | 🐻🐻🐻👧🥣 | Zlatokosa i tri medvjeda | Crvenkapica | Maša i medvjed | Tri praščića
+Bajka | 👑🧥🙈 | Carevo novo ruho | Mačak u čizmama | Ružno pače | Pinokio
+Bajka | 🫘🌱☁️👹 | Jack i čarobni grah | Ivica i Marica | Palčica | Mačak u čizmama
+Bajka | 🐢🐇🏁 | Kornjača i zec | Lisica i gavran | Mrav i cvrčak | Vuk i janje
+Bajka | 🦊🍇 | Lisica i grožđe | Lisica i gavran | Kornjača i zec | Mrav i cvrčak
+Pjesma ili bend | 🪲🪲🪲🪲🎸 | The Beatles | Queen | ABBA | The Rolling Stones
+Pjesma ili bend | 👸🎤👑🇬🇧 | Queen | ABBA | Kiss | Madonna
+Igra | 🧱⬇️📏 | Tetris | Minecraft | Lego | Jenga
+Igra | ⛏️🟩🧟 | Minecraft | Fortnite | Terraria | Roblox
+Igra | 🍄👨‍🔧👸 | Super Mario | Sonic | Zelda | Donkey Kong
+Igra | 🦔💍💨 | Sonic | Super Mario | Crash Bandicoot | Spyro
+Igra | 🐦😠🐷 | Angry Birds | Flappy Bird | Pokémon | Candy Crush
+Igra | 🟡👻🍒 | Pac-Man | Tetris | Space Invaders | Frogger
+Igra | ⚡🐭🔴⚪ | Pokémon | Super Mario | Digimon | Kirby
+Brend | 🍎📱 | Apple | Samsung | Nokia | Huawei
+Brend | 👟✔️ | Nike | Adidas | Puma | Reebok
+Brend | 🐆👟 | Puma | Nike | Jaguar | Reebok
+Brend | ☕🧜‍♀️ | Starbucks | Nescafé | Costa | Lavazza
+Brend | 🍔🤡🍟 | McDonald's | Burger King | KFC | Subway
+Brend | 🐂🥤🪽 | Red Bull | Monster | Coca-Cola | Burn
+Brend | 🐊👕 | Lacoste | Ralph Lauren | Tommy Hilfiger | Polo
+Brend | 📦➡️😊 | Amazon | eBay | Alibaba | Zalando
+Brend | 🔴▶️ | YouTube | Netflix | Twitch | Spotify
+Brend | 🟢🎧 | Spotify | Deezer | Apple Music | SoundCloud
+Brend | 🟦🟨🛋️🇸🇪 | IKEA | H&M | Volvo | Lego
+Poslovica | 🐦✋🌳🐦🐦 | Bolje vrabac u ruci nego golub na grani | Tko rano rani, dvije sreće grabi | Pas koji laje ne grize | Iver ne pada daleko od klade
+Poslovica | 🐕🗣️🚫🦷 | Pas koji laje ne grize | Bolje vrabac u ruci | Tko rano rani | Gdje ima dima, ima i vatre
+Poslovica | 🌅🏃‍♂️🍀🍀 | Tko rano rani, dvije sreće grabi | Bolje ikad nego nikad | Pas koji laje ne grize | Polako se daleko stiže
+Poslovica | 💨🔥 | Gdje ima dima, ima i vatre | Pas koji laje ne grize | Tko rano rani | Zrno po zrno pogača
+Poslovica | 🪵🌳⬇️ | Iver ne pada daleko od klade | Bolje vrabac u ruci | Gdje ima dima, ima i vatre | Kad mačke nema, miševi kolo vode
+Poslovica | 🐈❌🐭🐭💃 | Kad mačke nema, miševi kolo vode | Pas koji laje ne grize | Bolje vrabac u ruci | Iver ne pada daleko od klade
+Poslovica | 🐢🛣️🏁 | Polako se daleko stiže | Tko rano rani | Bolje ikad nego nikad | Pas koji laje ne grize

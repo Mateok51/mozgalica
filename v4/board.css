@@ -1,0 +1,29 @@
+  /* poredak: jedan tamni panel s tankim brončanim rubom, igrači su redovi s tankim separatorom */
+  .mboard { display: block; width: 100%; padding: 4px 12px; border-radius: 12px;
+    background: linear-gradient(180deg, rgba(48, 26, 12, 0.88), rgba(30, 16, 7, 0.9)); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.65); }
+  .mboard .rank-row, .mboard .rank-row:first-child, .mboard .rank-row.me {
+    display: grid; grid-template-columns: 1.7em 30px minmax(0, 1fr) auto 3.6em; align-items: center; gap: 8px;
+    min-height: 0; padding: clamp(5px, 1.2vh, 10px) 2px; margin: 0; border: 0; border-image: none; border-radius: 0; background: none; box-shadow: none; filter: none; outline: 0;
+    border-bottom: 1px solid rgba(196, 146, 66, 0.18); font-family: var(--font-body); font-weight: 800; font-size: 1rem; color: #f3e3c4; text-shadow: none; }
+  .mboard .rank-row:last-child { border-bottom: 0; }
+  .mboard .rank-row .pos { width: auto; text-align: left; font-family: var(--font-body); font-weight: 900; color: #cdb48a; font-variant-numeric: tabular-nums; }
+  .mboard .rank-row:first-child .pos { color: #e6b75c; }
+  .mboard .rank-row:first-child .pos::after { content: "♛"; margin-left: 2px; font-size: 0.85em; color: #e6b75c; }
+  .mboard .rank-row .mini { width: 30px; height: 30px; }
+  .mboard .rank-row .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mboard .rank-row .you { margin-left: 6px; padding: 0 5px; border-radius: 4px; font-size: 0.68rem; font-weight: 900; letter-spacing: 0.04em; color: #e8cf9c; box-shadow: inset 0 0 0 1px rgba(232, 207, 156, 0.55); vertical-align: 1px; }
+  .mboard .rank-row .gain { text-align: right; font-variant-numeric: tabular-nums; font-weight: 900; color: #e2b764; animation: gainIn 0.5s cubic-bezier(0.2, 1.2, 0.4, 1) both; }
+  .mboard .rank-row .gain.zero { color: rgba(243, 227, 196, 0.4); font-weight: 800; animation: none; }
+  .mboard .rank-row:nth-child(2) .gain { animation-delay: 0.08s; } .mboard .rank-row:nth-child(3) .gain { animation-delay: 0.16s; }
+  .mboard .rank-row:nth-child(4) .gain { animation-delay: 0.24s; } .mboard .rank-row:nth-child(5) .gain { animation-delay: 0.32s; } .mboard .rank-row:nth-child(6) .gain { animation-delay: 0.4s; }
+  @keyframes gainIn { from { opacity: 0; transform: translateX(14px); } }
+  .mboard .rank-row .sc { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: rgba(243, 227, 196, 0.78); white-space: nowrap; }
+  .mboard.wide .rank-row { grid-template-columns: 1.7em 30px minmax(0, 1fr) auto; }
+  .mboard.nopos .rank-row { grid-template-columns: 30px minmax(0, 1fr) auto; }
+  .mboard.nopos .rank-row:first-child .pos::after { content: none; }
+  /* TV: isti dizajn, više prostora */
+  .tv .mboard { padding: 8px 20px; border-radius: 14px; }
+  .tv .mboard .rank-row { grid-template-columns: 2em 44px minmax(0, 1fr) auto auto; gap: 14px; padding: 12px 4px; font-size: clamp(1rem, 1.6vw, 1.5rem); }
+  .tv .mboard.wide .rank-row { grid-template-columns: 2em 44px minmax(0, 1fr) auto; }
+  .tv .mboard.nopos .rank-row { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .tv .mboard .rank-row .mini { width: 44px; height: 44px; }

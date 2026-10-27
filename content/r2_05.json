@@ -1,0 +1,1838 @@
+{
+ "cats": {
+  "Umjetnost": [
+   {
+    "q": "Tko je naslikao „Posljednju večeru“ u jednom milanskom samostanu?",
+    "o": [
+     "Leonardo da Vinci",
+     "Rafael",
+     "Tizian",
+     "Giotto"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je renesansni umjetnik izradio golemi mramorni kip Davida u Firenci (1504.)?",
+    "o": [
+     "Donatello",
+     "Michelangelo",
+     "Bernini",
+     "Rafael"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je slikar naslikao poznatu seriju slika „Suncokreti“?",
+    "o": [
+     "Paul Gauguin",
+     "Claude Monet",
+     "Vincent van Gogh",
+     "Paul Cézanne"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja su dva slikara utemeljila kubizam?",
+    "o": [
+     "Monet i Renoir",
+     "Matisse i Derain",
+     "Dalí i Magritte",
+     "Picasso i Braque"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je slikar u svom vrtu u Givernyju desetljećima slikao lopoče?",
+    "o": [
+     "Claude Monet",
+     "Édouard Manet",
+     "Edgar Degas",
+     "Camille Pissarro"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je naslikao „Američku gotiku“, sliku farmera s vilama i žene?",
+    "o": [
+     "Edward Hopper",
+     "Grant Wood",
+     "Norman Rockwell",
+     "Andrew Wyeth"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je japanski umjetnik autor drvoreza „Veliki val kod Kanagawe“?",
+    "o": [
+     "Utagawa Hiroshige",
+     "Hayao Miyazaki",
+     "Katsushika Hokusai",
+     "Kitagawa Utamaro"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je španjolski slikar autor slike „Las Meninas“ (Dvorske dame)?",
+    "o": [
+     "Francisco Goya",
+     "El Greco",
+     "Joan Miró",
+     "Diego Velázquez"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je naslikao „Vrt zemaljskih užitaka“ punu čudnih bića?",
+    "o": [
+     "Hieronymus Bosch",
+     "Pieter Bruegel",
+     "Albrecht Dürer",
+     "Jan van Eyck"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je naslikao „Slobodu koja predvodi narod“?",
+    "o": [
+     "Jacques-Louis David",
+     "Eugène Delacroix",
+     "Théodore Géricault",
+     "Gustave Courbet"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je naslikao „Splav Meduze“, prizor brodolomaca na splavi?",
+    "o": [
+     "Eugène Delacroix",
+     "William Turner",
+     "Théodore Géricault",
+     "Gustave Courbet"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je renesansni slikar autor freske „Atenska škola“ u Vatikanu?",
+    "o": [
+     "Michelangelo",
+     "Botticelli",
+     "Tizian",
+     "Rafael"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se francuski slikar smatra predvodnikom fovizma?",
+    "o": [
+     "Henri Matisse",
+     "Paul Cézanne",
+     "Georges Seurat",
+     "Edgar Degas"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove tehnika slikanja sitnim točkicama čiste boje?",
+    "o": [
+     "Sfumato",
+     "Pointilizam",
+     "Impasto",
+     "Frotaž"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je američki slikar poznat po kapanju i prskanju boje po platnu?",
+    "o": [
+     "Andy Warhol",
+     "Mark Rothko",
+     "Jackson Pollock",
+     "Edward Hopper"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je nizozemski slikar poznat po crnim linijama i poljima crvene, žute i plave?",
+    "o": [
+     "Rembrandt",
+     "Vincent van Gogh",
+     "M. C. Escher",
+     "Piet Mondrian"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je meksička slikarica poznata po autoportretima i braku s Diegom Riverom?",
+    "o": [
+     "Frida Kahlo",
+     "Remedios Varo",
+     "Tamara de Lempicka",
+     "Georgia O'Keeffe"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je belgijski nadrealist naslikao lulu s natpisom „Ovo nije lula“?",
+    "o": [
+     "Salvador Dalí",
+     "René Magritte",
+     "Max Ernst",
+     "Joan Miró"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je naslikao „Olimpiju“ i „Doručak na travi“?",
+    "o": [
+     "Claude Monet",
+     "Auguste Renoir",
+     "Édouard Manet",
+     "Paul Cézanne"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je impresionist najpoznatiji po slikama i kipovima balerina?",
+    "o": [
+     "Claude Monet",
+     "Alfred Sisley",
+     "Camille Pissarro",
+     "Edgar Degas"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je slikar poznat po plakatima za pariški kabare Moulin Rouge?",
+    "o": [
+     "Henri de Toulouse-Lautrec",
+     "Alfons Mucha",
+     "Edgar Degas",
+     "Paul Signac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je francuski slikar otišao na Tahiti i ondje slikao domorodačke prizore?",
+    "o": [
+     "Paul Cézanne",
+     "Paul Gauguin",
+     "Henri Rousseau",
+     "Georges Seurat"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove slikarski postupak naglašenog kontrasta svjetla i sjene, tipičan za Caravaggia?",
+    "o": [
+     "Sfumato",
+     "Pointilizam",
+     "Chiaroscuro",
+     "Grafito"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove tehnika slikanja bojama na svježoj, još vlažnoj žbuci?",
+    "o": [
+     "Tempera",
+     "Gvaš",
+     "Akvarel",
+     "Freska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove slika složena od sitnih kamenčića ili staklenih pločica?",
+    "o": [
+     "Mozaik",
+     "Kolaž",
+     "Intarzija",
+     "Vitraj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove slika podijeljena na tri spojena dijela, česta na oltarima?",
+    "o": [
+     "Diptih",
+     "Triptih",
+     "Poliptih",
+     "Friz"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove slikarski žanr koji prikazuje nežive predmete poput voća i posuđa?",
+    "o": [
+     "Veduta",
+     "Pejzaž",
+     "Mrtva priroda",
+     "Žanr-scena"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je boja komplementarna plavoj?",
+    "o": [
+     "Zelena",
+     "Ljubičasta",
+     "Crvena",
+     "Narančasta"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je slavni antički kip božice bez ruku izložen u Louvreu?",
+    "o": [
+     "Venera Milska",
+     "Nike sa Samotrake",
+     "Venera Willendorfska",
+     "Laokoon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je francuski kipar osmislio Kip slobode u New Yorku?",
+    "o": [
+     "Auguste Rodin",
+     "Frédéric Auguste Bartholdi",
+     "Gustave Eiffel",
+     "Camille Claudel"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Za koju je svjetsku izložbu 1889. sagrađen Eiffelov toranj?",
+    "o": [
+     "Londonsku",
+     "Bečku",
+     "Parišku",
+     "Čikašku"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se indijskom gradu nalazi mauzolej Taj Mahal?",
+    "o": [
+     "Delhi",
+     "Mumbai",
+     "Jaipur",
+     "Agra"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je američki arhitekt projektirao „Kuću nad slapom“ (Fallingwater)?",
+    "o": [
+     "Frank Lloyd Wright",
+     "Frank Gehry",
+     "Louis Sullivan",
+     "Philip Johnson"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je arhitekt projektirao Guggenheimov muzej u Bilbau?",
+    "o": [
+     "Renzo Piano",
+     "Frank Gehry",
+     "Norman Foster",
+     "Zaha Hadid"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojim je pseudonimom poznat arhitekt Charles-Édouard Jeanneret?",
+    "o": [
+     "Mies van der Rohe",
+     "Gaudí",
+     "Le Corbusier",
+     "Bauhaus"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je 1919. u Weimaru osnovao umjetničku školu Bauhaus?",
+    "o": [
+     "Le Corbusier",
+     "Ludwig Mies van der Rohe",
+     "Adolf Loos",
+     "Walter Gropius"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je arhitektica 2004. postala prva žena dobitnica Pritzkerove nagrade?",
+    "o": [
+     "Zaha Hadid",
+     "Kazuyo Sejima",
+     "Lina Bo Bardi",
+     "Jeanne Gang"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi muzej Prado?",
+    "o": [
+     "Barcelona",
+     "Madrid",
+     "Lisabon",
+     "Sevilla"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi muzej Ermitaž?",
+    "o": [
+     "Moskva",
+     "Kijev",
+     "Sankt Peterburg",
+     "Varšava"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu nalazi Muzej moderne umjetnosti MoMA?",
+    "o": [
+     "Chicago",
+     "Los Angeles",
+     "Boston",
+     "New York"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se londonski muzej suvremene umjetnosti nalazi u bivšoj elektrani?",
+    "o": [
+     "Tate Modern",
+     "British Museum",
+     "National Gallery",
+     "Victoria and Albert"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je slikar iz Cavtata naslikao svečani zastor zagrebačkog HNK?",
+    "o": [
+     "Celestin Medović",
+     "Vlaho Bukovac",
+     "Bela Čikoš Sesija",
+     "Oton Iveković"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Čije se djelo „Zdenac života“ nalazi ispred HNK u Zagrebu?",
+    "o": [
+     "Antuna Augustinčića",
+     "Ivana Rendića",
+     "Ivana Meštrovića",
+     "Vanje Radauša"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je hrvatski kipar autor spomenika „Mir“ ispred sjedišta UN-a u New Yorku?",
+    "o": [
+     "Ivan Meštrović",
+     "Kosta Angeli Radovani",
+     "Dušan Džamonja",
+     "Antun Augustinčić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je hrvatski slikar autor „Autoportreta sa psom“ (1910.)?",
+    "o": [
+     "Miroslav Kraljević",
+     "Josip Račić",
+     "Vlaho Bukovac",
+     "Emanuel Vidović"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je renesansni minijaturist iz Hrvatske nazvan „Michelangelom minijature“?",
+    "o": [
+     "Andrija Medulić",
+     "Julije Klović",
+     "Juraj Ćulinović",
+     "Federiko Benković"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po kojem je kolekcionaru nazvan zagrebački muzej na Rooseveltovu trgu?",
+    "o": [
+     "Josipu Jurju Strossmayeru",
+     "Ivanu Meštroviću",
+     "Anti Topiću Mimari",
+     "Baltazaru Bogišiću"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je zagrebački muzej poznat po predmetima iz završenih ljubavnih veza?",
+    "o": [
+     "Muzej iluzija",
+     "Muzej mamurluka",
+     "Muzej naivne umjetnosti",
+     "Muzej prekinutih veza"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je majstor 1240. potpisao glavni portal trogirske katedrale?",
+    "o": [
+     "Radovan",
+     "Juraj Dalmatinac",
+     "Andrija Buvina",
+     "Nikola Firentinac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je majstor izrezbario drvena vrata splitske katedrale 1214.?",
+    "o": [
+     "Radovan",
+     "Andrija Buvina",
+     "Juraj Dalmatinac",
+     "Ivan Duknović"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Leonardov crtež muškarca raširenih ruku u krugu i kvadratu?",
+    "o": [
+     "Idealni čovjek",
+     "Zlatni rez",
+     "Vitruvijev čovjek",
+     "Anatomski čovjek"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je umjetnik 1917. kao umjetničko djelo izložio pisoar nazvan „Fontana“?",
+    "o": [
+     "Man Ray",
+     "Andy Warhol",
+     "Salvador Dalí",
+     "Marcel Duchamp"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je pop-art umjetnik slikao velike prizore iz stripova s rasterskim točkicama?",
+    "o": [
+     "Roy Lichtenstein",
+     "Keith Haring",
+     "Jasper Johns",
+     "Jeff Koons"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što doslovno znači riječ „renesansa“?",
+    "o": [
+     "Prosvjetljenje",
+     "Preporod",
+     "Pobuna",
+     "Ljepota"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je barokni umjetnik oblikovao kolonadu na Trgu svetog Petra u Rimu?",
+    "o": [
+     "Francesco Borromini",
+     "Michelangelo",
+     "Gian Lorenzo Bernini",
+     "Donato Bramante"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu nalazi Fontana di Trevi?",
+    "o": [
+     "Firenca",
+     "Venecija",
+     "Milano",
+     "Rim"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojoj je božici posvećen Partenon na atenskoj Akropoli?",
+    "o": [
+     "Ateni",
+     "Heri",
+     "Afroditi",
+     "Artemidi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji grčki stup ima kapitel ukrašen akantovim lišćem?",
+    "o": [
+     "Dorski",
+     "Korintski",
+     "Jonski",
+     "Toskanski"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je stil, s polukružnim lukovima i debelim zidovima, prethodio gotici?",
+    "o": [
+     "Barok",
+     "Renesansa",
+     "Romanika",
+     "Klasicizam"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove japanska umjetnost aranžiranja cvijeća?",
+    "o": [
+     "Origami",
+     "Bonsai",
+     "Kintsugi",
+     "Ikebana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove japanska tehnika popravljanja razbijene keramike zlatnim lakom?",
+    "o": [
+     "Kintsugi",
+     "Ikebana",
+     "Raku",
+     "Sumi-e"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je autor najstarije sačuvane fotografije snimljene u kameri (oko 1826.)?",
+    "o": [
+     "Louis Daguerre",
+     "Nicéphore Niépce",
+     "Henry Fox Talbot",
+     "Louis Lumière"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi kipić dječaka koji piški, Manneken Pis?",
+    "o": [
+     "Amsterdam",
+     "Antwerpen",
+     "Bruxelles",
+     "Luxembourg"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu nalazi kip Male sirene prema bajci Andersena?",
+    "o": [
+     "Oslo",
+     "Stockholm",
+     "Helsinki",
+     "Kopenhagen"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iznad kojeg se grada uzdiže kip Krista Otkupitelja?",
+    "o": [
+     "Rio de Janeiro",
+     "Lisabon",
+     "São Paulo",
+     "Buenos Aires"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je predsjedničkih lica isklesano u stijeni Mount Rushmorea?",
+    "o": [
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem se otoku nalaze goleme kamene glave moai?",
+    "o": [
+     "Tahitiju",
+     "Havajima",
+     "Uskršnjem otoku",
+     "Madagaskaru"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Po kojem su flamanskom slikaru punašne ženske figure nazvane „rubensovskima“?",
+    "o": [
+     "Anthonyju van Dycku",
+     "Janu van Eycku",
+     "Pieteru Bruegelu",
+     "Peteru Paulu Rubensu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je njemački renesansni umjetnik poznat po akvarelu „Mladi zec“?",
+    "o": [
+     "Albrecht Dürer",
+     "Hans Holbein",
+     "Lucas Cranach",
+     "Matthias Grünewald"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojem je slikaru nazvana prestižna britanska nagrada za suvremenu umjetnost?",
+    "o": [
+     "Johnu Constableu",
+     "J. M. W. Turneru",
+     "Williamu Blakeu",
+     "Thomasu Gainsboroughu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradu djelovao Tizian, prvak renesansnog slikarstva?",
+    "o": [
+     "Firenci",
+     "Napulju",
+     "Veneciji",
+     "Bologni"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem je otoku rođen slikar El Greco?",
+    "o": [
+     "Na Siciliji",
+     "Na Cipru",
+     "Na Malti",
+     "Na Kreti"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je godine „Mona Lisa“ ukradena iz Louvrea?",
+    "o": [
+     "1911.",
+     "1889.",
+     "1939.",
+     "1962."
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se u hrvatskom naziva umjetnički stil art nouveau s početka 20. st.?",
+    "o": [
+     "Bidermajer",
+     "Secesija",
+     "Ekspresionizam",
+     "Historicizam"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je japanska umjetnica poznata po točkicama i bundevama?",
+    "o": [
+     "Yoko Ono",
+     "Mariko Mori",
+     "Yayoi Kusama",
+     "Chiharu Shiota"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji su umjetnici 1995. zamotali berlinski Reichstag u tkaninu?",
+    "o": [
+     "Gilbert i George",
+     "Marina Abramović i Ulay",
+     "Ai Weiwei i Banksy",
+     "Christo i Jeanne-Claude"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je arhitekt vodio neogotičku obnovu zagrebačke katedrale nakon potresa 1880.?",
+    "o": [
+     "Hermann Bollé",
+     "Viktor Kovačić",
+     "Friedrich von Schmidt",
+     "Ivan Zemljak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je gluha hrvatska slikarica bila majstorica akvarela?",
+    "o": [
+     "Nasta Rojc",
+     "Slava Raškaj",
+     "Anka Krizmanić",
+     "Ivana Kobilca"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je kipar autor konjaničkog kipa bana Jelačića u Zagrebu?",
+    "o": [
+     "Ivan Meštrović",
+     "Ivan Rendić",
+     "Anton Dominik Fernkorn",
+     "Robert Frangeš-Mihanović"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je kipar autor konjaničkog spomenika kralju Tomislavu u Zagrebu?",
+    "o": [
+     "Anton Dominik Fernkorn",
+     "Antun Augustinčić",
+     "Ivan Rendić",
+     "Robert Frangeš-Mihanović"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je antički grčki kipar autor „Bacača diska“?",
+    "o": [
+     "Miron",
+     "Fidija",
+     "Praksitel",
+     "Poliklet"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se državi nalazi špilja Lascaux s prapovijesnim slikama životinja?",
+    "o": [
+     "U Španjolskoj",
+     "U Francuskoj",
+     "U Italiji",
+     "U Portugalu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj je državi pronađena prapovijesna figurica Venere Willendorfske?",
+    "o": [
+     "U Njemačkoj",
+     "U Češkoj",
+     "U Austriji",
+     "U Mađarskoj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je prapovijesna posuda u obliku ptice postala simbol Vukovara?",
+    "o": [
+     "Vinkovački orao",
+     "Iška sova",
+     "Vukovarski labud",
+     "Vučedolska golubica"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kod kojeg je otoka 1999. iz mora izvađen brončani kip Apoksiomena?",
+    "o": [
+     "Lošinja",
+     "Krka",
+     "Visa",
+     "Hvara"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Kožarićeva velika brončana kugla u središtu Zagreba?",
+    "o": [
+     "Zlatna jabuka",
+     "Prizemljeno sunce",
+     "Zagrebački mjesec",
+     "Sunčani sat"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradu 1916. nastao umjetnički pokret dadaizam?",
+    "o": [
+     "U Parizu",
+     "U Berlinu",
+     "U Zürichu",
+     "U Beču"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je napisao Manifest nadrealizma 1924.?",
+    "o": [
+     "Salvador Dalí",
+     "Tristan Tzara",
+     "Guillaume Apollinaire",
+     "André Breton"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove japanska umjetnost savijanja papira?",
+    "o": [
+     "Origami",
+     "Ikebana",
+     "Kirigami",
+     "Haiku"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Pod kojim se još imenom poznaje „Mona Lisa“?",
+    "o": [
+     "Madonna",
+     "Gioconda",
+     "Primavera",
+     "Fornarina"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji umjetnik NIJE dao ime nijednoj od Nindža kornjača?",
+    "o": [
+     "Donatello",
+     "Rafael",
+     "Botticelli",
+     "Leonardo"
+    ],
+    "a": 2
+   }
+  ],
+  "Mitologija": [
+   {
+    "q": "Kako se zove grčki bog mora koji nosi trozub?",
+    "o": [
+     "Posejdon",
+     "Had",
+     "Apolon",
+     "Ares"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji grčki bog vlada podzemnim svijetom?",
+    "o": [
+     "Posejdon",
+     "Had",
+     "Hermes",
+     "Hefest"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grčki bog glasnik bogova s krilatim sandalama?",
+    "o": [
+     "Apolon",
+     "Ares",
+     "Hermes",
+     "Dioniz"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove grčka božica lova, Apolonova sestra blizanka?",
+    "o": [
+     "Atena",
+     "Demetra",
+     "Hestija",
+     "Artemida"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je grčki bog vina i veselja?",
+    "o": [
+     "Dioniz",
+     "Apolon",
+     "Hefest",
+     "Eros"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je hromi grčki bog kovač bogova?",
+    "o": [
+     "Ares",
+     "Hefest",
+     "Hermes",
+     "Kron"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Zeusova žena, božica braka?",
+    "o": [
+     "Afrodita",
+     "Demetra",
+     "Hera",
+     "Hestija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojoj su planini prema grčkim mitovima živjeli bogovi?",
+    "o": [
+     "Parnas",
+     "Ida",
+     "Etna",
+     "Olimp"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Dedalov sin koji je na krilima od voska poletio preblizu Suncu?",
+    "o": [
+     "Ikar",
+     "Tezej",
+     "Faeton",
+     "Perzej"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je atenski junak u labirintu ubio Minotaura?",
+    "o": [
+     "Perzej",
+     "Tezej",
+     "Jazon",
+     "Odisej"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što je prema mitu ostalo u Pandorinoj kutiji kad su sva zla izletjela?",
+    "o": [
+     "Ljubav",
+     "Mudrost",
+     "Nada",
+     "Sreća"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove mladić koji se zaljubio u vlastiti odraz u vodi?",
+    "o": [
+     "Adonis",
+     "Ganimed",
+     "Hijacint",
+     "Narcis"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se kralj pretvarao u zlato sve što bi dotaknuo?",
+    "o": [
+     "Mida",
+     "Krez",
+     "Minos",
+     "Edip"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kažnjenik u podzemlju vječno gurao kamen uzbrdo?",
+    "o": [
+     "Tantal",
+     "Sizif",
+     "Prometej",
+     "Atlas"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je u podzemlju stajao u vodi pod voćkama, a nije mogao ni piti ni jesti?",
+    "o": [
+     "Sizif",
+     "Iksion",
+     "Tantal",
+     "Prometej"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je pjevač sišao u podzemlje po svoju ženu Euridiku?",
+    "o": [
+     "Apolon",
+     "Odisej",
+     "Heraklo",
+     "Orfej"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na koji se otok kralj Odisej deset godina vraćao nakon Trojanskog rata?",
+    "o": [
+     "Itaku",
+     "Kretu",
+     "Rodos",
+     "Lezbos"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Odisejeva vjerna žena koja je danju tkala, a noću parala?",
+    "o": [
+     "Helena",
+     "Penelopa",
+     "Andromaha",
+     "Kasandra"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove kiklop kojeg je Odisej oslijepio?",
+    "o": [
+     "Argos",
+     "Brontes",
+     "Polifem",
+     "Talos"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu morska bića koja pjesmom mame mornare u propast?",
+    "o": [
+     "Harpije",
+     "Gorgone",
+     "Nimfe",
+     "Sirene"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što su Grci podmetnuli Trojancima kao ratnu lukavštinu?",
+    "o": [
+     "Drvenog konja",
+     "Zlatnu jabuku",
+     "Brončanog bika",
+     "Kamenog lava"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je trojanski princ oteo Helenu i time izazvao rat?",
+    "o": [
+     "Hektor",
+     "Paris",
+     "Eneja",
+     "Prijam"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj je božici Paris dodijelio zlatnu jabuku kao najljepšoj?",
+    "o": [
+     "Heri",
+     "Ateni",
+     "Afroditi",
+     "Artemidi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što su Jazon i Argonauti tražili na svom putovanju?",
+    "o": [
+     "Sveti gral",
+     "Zlatnu jabuku",
+     "Ambroziju",
+     "Zlatno runo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove krilati konj iz grčke mitologije?",
+    "o": [
+     "Pegaz",
+     "Bukefal",
+     "Sleipnir",
+     "Arion"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove mnogoglava zmija kojoj su odsječene glave ponovno izrastale?",
+    "o": [
+     "Kimera",
+     "Hidra",
+     "Scila",
+     "Tifon"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je titan bio kažnjen da na svojim plećima drži nebo?",
+    "o": [
+     "Kron",
+     "Prometej",
+     "Atlas",
+     "Hiperion"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je grčka praboginja personifikacija Zemlje?",
+    "o": [
+     "Reja",
+     "Tetida",
+     "Hestija",
+     "Gea"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je titan progutao svoju djecu iz straha da ga ne svrgnu?",
+    "o": [
+     "Kron",
+     "Atlas",
+     "Uran",
+     "Okean"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove krilati grčki bog ljubavi koji odapinje strijele?",
+    "o": [
+     "Hermes",
+     "Eros",
+     "Apolon",
+     "Pan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove grčka božica pobjede?",
+    "o": [
+     "Hebe",
+     "Iris",
+     "Nike",
+     "Tiha"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je plod Perzefona pojela u podzemlju pa se morala onamo vraćati?",
+    "o": [
+     "Jabuku",
+     "Smokvu",
+     "Grožđe",
+     "Šipak"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je muza u grčkoj mitologiji?",
+    "o": [
+     "9",
+     "7",
+     "3",
+     "12"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazilo slavno Apolonovo proročište?",
+    "o": [
+     "U Olimpiji",
+     "U Delfima",
+     "U Korintu",
+     "U Sparti"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove skelar koji duše mrtvih prevozi preko rijeke u podzemlje?",
+    "o": [
+     "Kerber",
+     "Tanat",
+     "Haron",
+     "Hipnos"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove rijeka zaborava u grčkom podzemlju?",
+    "o": [
+     "Stiks",
+     "Aheront",
+     "Kokit",
+     "Leta"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojeg je trojanskog junaka Ahilej ubio pred zidinama Troje?",
+    "o": [
+     "Hektora",
+     "Parisa",
+     "Eneju",
+     "Prijama"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je mikenski kralj predvodio grčku vojsku pred Trojom?",
+    "o": [
+     "Menelaj",
+     "Agamemnon",
+     "Odisej",
+     "Nestor"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je junak riješio zagonetku Sfinge kod Tebe?",
+    "o": [
+     "Tezej",
+     "Perzej",
+     "Edip",
+     "Jazon"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove biće napola čovjek, a napola konj?",
+    "o": [
+     "Satir",
+     "Minotaur",
+     "Grifon",
+     "Kentaur"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu mitske ratnice iz naroda u kojem su vladale žene?",
+    "o": [
+     "Amazonke",
+     "Valkire",
+     "Menade",
+     "Furije"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove rimski bog koji odgovara grčkom Hermesu?",
+    "o": [
+     "Vulkan",
+     "Merkur",
+     "Neptun",
+     "Apolon"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je životinja prema legendi othranila Romula i Rema?",
+    "o": [
+     "Medvjedica",
+     "Košuta",
+     "Vučica",
+     "Koza"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se trojanski junak, prema Vergiliju, smatra pretkom Rimljana?",
+    "o": [
+     "Hektor",
+     "Paris",
+     "Prijam",
+     "Eneja"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojoj su rimskoj božici ognjišta služile svećenice zvane vestalke?",
+    "o": [
+     "Vesti",
+     "Junoni",
+     "Cereri",
+     "Dijani"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od imena kojeg boga s kozjim nogama potječe riječ „panika“?",
+    "o": [
+     "Dioniz",
+     "Pan",
+     "Hermes",
+     "Ares"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je nimfa kažnjena tako da može samo ponavljati tuđe riječi?",
+    "o": [
+     "Dafna",
+     "Kalipso",
+     "Eho",
+     "Galateja"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Po kojem je bogu snova nazvan lijek morfij?",
+    "o": [
+     "Hipnosu",
+     "Tanatu",
+     "Hermesu",
+     "Morfeju"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je Heraklovo djelo dalo izraz za golem nered?",
+    "o": [
+     "Čišćenje Augijevih štala",
+     "Hvatanje Kerbera",
+     "Ubijanje Hidre",
+     "Krađa zlatnih jabuka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je čarobnica Odisejeve drugove pretvorila u svinje?",
+    "o": [
+     "Kalipso",
+     "Kirka",
+     "Medeja",
+     "Hekata"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Između kojih je dviju nemani Odisej morao proploviti kroz tjesnac?",
+    "o": [
+     "Hidre i Kimere",
+     "Gorgone i Harpije",
+     "Scile i Haribde",
+     "Pitona i Tifona"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove trojanska proročica čijim proročanstvima nitko nije vjerovao?",
+    "o": [
+     "Pitija",
+     "Andromaha",
+     "Penelopa",
+     "Kasandra"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove hrana grčkih bogova koja daje besmrtnost?",
+    "o": [
+     "Ambrozija",
+     "Mana",
+     "Medovina",
+     "Soma"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvala Ahilejeva majka, morska nimfa?",
+    "o": [
+     "Tetis",
+     "Tetida",
+     "Amfitrita",
+     "Galateja"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se Heraklo naziva u rimskoj mitologiji?",
+    "o": [
+     "Hektor",
+     "Hermes",
+     "Herkul",
+     "Hiperion"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je nordijski bog dao jedno oko za gutljaj iz izvora mudrosti?",
+    "o": [
+     "Thor",
+     "Tyr",
+     "Heimdall",
+     "Odin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko nogu ima Odinov konj Sleipnir?",
+    "o": [
+     "8",
+     "4",
+     "6",
+     "12"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove golemo drvo svijeta koje u nordijskoj mitologiji povezuje svjetove?",
+    "o": [
+     "Asgard",
+     "Yggdrasil",
+     "Bifröst",
+     "Midgard"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se u nordijskoj mitologiji zove konačna bitka i propast svijeta?",
+    "o": [
+     "Valhalla",
+     "Ginnungagap",
+     "Ragnarök",
+     "Niflheim"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu nordijska ženska bića koja biraju koji će ratnici pasti u boju?",
+    "o": [
+     "Norne",
+     "Sirene",
+     "Vile",
+     "Valkire"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove dugin most između svijeta ljudi i Asgarda?",
+    "o": [
+     "Bifröst",
+     "Yggdrasil",
+     "Mjölnir",
+     "Gjallarhorn"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove golemi vuk, Lokijev sin, koji će na kraju svijeta progutati Odina?",
+    "o": [
+     "Sleipnir",
+     "Fenrir",
+     "Garm",
+     "Jörmungandr"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je biće Midgardska zmija koja obavija cijeli svijet?",
+    "o": [
+     "Fenrir",
+     "Nidhogg",
+     "Jörmungandr",
+     "Ymir"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je biljka jedina mogla nauditi nordijskom bogu Baldru?",
+    "o": [
+     "Bršljan",
+     "Hrast",
+     "Ruža",
+     "Imela"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se u nordijskoj mitologiji zove svijet ljudi?",
+    "o": [
+     "Midgard",
+     "Asgard",
+     "Jotunheim",
+     "Helheim"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojem je nordijskom bogu nazvan engleski dan „Thursday“?",
+    "o": [
+     "Odinu",
+     "Thoru",
+     "Tyru",
+     "Lokiju"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je egipatski bog ubio svog brata Ozirisa?",
+    "o": [
+     "Horus",
+     "Thot",
+     "Set",
+     "Ptah"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je egipatski bog prikazivan s glavom sokola?",
+    "o": [
+     "Anubis",
+     "Set",
+     "Sobek",
+     "Horus"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je egipatska božica prikazivana kao mačka ili žena s mačjom glavom?",
+    "o": [
+     "Bastet",
+     "Sekhmet",
+     "Hathor",
+     "Nut"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je egipatski bog mudrosti i pisma prikazivan s glavom ibisa?",
+    "o": [
+     "Horus",
+     "Thot",
+     "Ptah",
+     "Amon"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je kukac u starom Egiptu bio sveti simbol Sunca i preporoda?",
+    "o": [
+     "Bogomoljka",
+     "Pčela",
+     "Skarabej",
+     "Leptir"
+    ],
+    "a": 2
+   },
+   {
+    "q": "S čime se u egipatskom podzemlju važe srce pokojnika?",
+    "o": [
+     "Sa zlatom",
+     "S kamenom",
+     "S kruhom",
+     "S perom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je slavenska božica vezana uz predenje, vodu i plodnost?",
+    "o": [
+     "Mokoš",
+     "Morana",
+     "Vesna",
+     "Lada"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je slavenski bog prikazivan s četiri lica?",
+    "o": [
+     "Perun",
+     "Svetovid",
+     "Veles",
+     "Svarog"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja slavenska božica zime i smrti se u proljeće spaljuje kao lutka?",
+    "o": [
+     "Mokoš",
+     "Vesna",
+     "Morana",
+     "Živa"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu nadnaravna ženska bića hrvatskih predaja s gora i šuma?",
+    "o": [
+     "Sirene",
+     "Valkire",
+     "Nimfe",
+     "Vile"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kakva je kuća vještice Babe Jage u slavenskim bajkama?",
+    "o": [
+     "Na kokošjim nogama",
+     "Od medenjaka",
+     "Pod zemljom",
+     "Na oblaku"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se u istarskim predajama zove dobri zaštitnik koji se bori protiv kudlaka?",
+    "o": [
+     "Vukodlak",
+     "Krsnik",
+     "Štrigon",
+     "Malik"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je božanstvo Asteka bilo „pernata zmija“?",
+    "o": [
+     "Huitzilopochtli",
+     "Tlaloc",
+     "Kecalkoatl",
+     "Inti"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove japanska božica Sunca?",
+    "o": [
+     "Izanami",
+     "Susanoo",
+     "Inari",
+     "Amaterasu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji hinduistički bog ima glavu slona?",
+    "o": [
+     "Ganeša",
+     "Višnu",
+     "Šiva",
+     "Krišna"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je bog „razarač“ u hinduističkom trojstvu s Brahmom i Višnuom?",
+    "o": [
+     "Indra",
+     "Šiva",
+     "Ganeša",
+     "Krišna"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je sumerski kralj Uruka glavni junak jednog od najstarijih epova?",
+    "o": [
+     "Hamurabi",
+     "Sargon",
+     "Gilgameš",
+     "Nabukodonozor"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove mač legendarnog kralja Arthura?",
+    "o": [
+     "Durendal",
+     "Gram",
+     "Tizona",
+     "Excalibur"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko životinja ima kineski zodijak?",
+    "o": [
+     "12",
+     "10",
+     "8",
+     "9"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove mitska ptica koja se ponovno rađa iz vlastitog pepela?",
+    "o": [
+     "Grifon",
+     "Feniks",
+     "Roc",
+     "Pegaz"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je mitsko biće nacionalna životinja Škotske?",
+    "o": [
+     "Zmaj",
+     "Grifon",
+     "Jednorog",
+     "Feniks"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je antički filozof prvi opisao potonuli otok Atlantidu?",
+    "o": [
+     "Aristotel",
+     "Sokrat",
+     "Herodot",
+     "Platon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje mitsko biće ima tijelo lava te glavu i krila orla?",
+    "o": [
+     "Grifon",
+     "Sfinga",
+     "Kimera",
+     "Mantikora"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove golemo morsko čudovište iz skandinavskih predaja nalik lignji?",
+    "o": [
+     "Leviatan",
+     "Kraken",
+     "Nessie",
+     "Hidra"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove glineno biće iz židovske predaje koje je prema legendi oživio praški rabin?",
+    "o": [
+     "Homunkul",
+     "Džin",
+     "Golem",
+     "Dibuk"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove bog Sunca u religiji Inka?",
+    "o": [
+     "Ra",
+     "Kecalkoatl",
+     "Amaterasu",
+     "Inti"
+    ],
+    "a": 3
+   }
+  ]
+ }
+}

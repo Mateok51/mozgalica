@@ -1,0 +1,24 @@
+  0.0s  dodir gumba
+  0.8s  potvrda odabira
+  2.5s  novi ekran / glasanje
+  3.3s  najava runde
+  4.4s  sat (zadnje sekunde)
+  5.2s  zadnje 3 sekunde
+  6.6s  isteklo vrijeme
+  9.5s  točan odgovor
+ 11.9s  netočan odgovor
+ 13.8s  bodovi
+ 15.2s  korak u finalu
+ 16.2s  moć: led
+ 17.9s  razbijanje leda
+ 18.9s  moć: sluz
+ 19.9s  moć: grickalice
+ 20.9s  moć: bomba
+ 23.0s  magija / napad
+ 24.3s  trenutak: niz
+ 25.8s  trenutak: novo vodstvo
+ 27.7s  trenutak: povratak
+ 30.4s  trenutak: rivalstvo
+ 32.5s  dvoboj
+ 34.8s  pobjeda
+ 39.3s  glazba u pozadini (isječak)

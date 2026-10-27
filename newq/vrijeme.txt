@@ -1,0 +1,97 @@
+#Vrijeme i klima
+Kako se zove znanost koja proučava vrijeme i atmosferu? | Meteorologija | Geologija | Hidrologija | Astronomija
+Kako se zove stručnjak koji prognozira vrijeme? | Meteorolog | Geolog | Astronom | Seizmolog
+Čime se mjeri tlak zraka? | Barometrom | Termometrom | Anemometrom | Higrometrom
+Čime se mjeri brzina vjetra? | Anemometrom | Barometrom | Higrometrom | Kišomjerom
+Čime se mjeri vlažnost zraka? | Higrometrom | Barometrom | Anemometrom | Seizmografom
+Čime se mjeri količina oborine? | Kišomjerom (ombrometrom) | Anemometrom | Barometrom | Termometrom
+Koja se ljestvica koristi za jačinu vjetra od 0 do 12? | Beaufortova | Richterova | Celzijeva | Mercallijeva
+Kako se zove najjači vjetar na Beaufortovoj ljestvici (12)? | Orkan | Oluja | Bura | Povjetarac
+Kako se zove hladni, suhi vjetar s kopna koji puše na mahove na Jadranu? | Bura | Jugo | Maestral | Tramontana
+Kako se zove topli, vlažni jugoistočni vjetar koji donosi kišu na Jadranu? | Jugo | Bura | Maestral | Levant
+Kako se zove ugodni ljetni vjetar s mora koji puše popodne na Jadranu? | Maestral | Bura | Jugo | Lebić
+Kako se zove sjeverni vjetar na Jadranu koji puše s planina, često uz vedrinu? | Tramontana | Jugo | Lebić | Šilok
+Kako se zove jugozapadni olujni vjetar na Jadranu? | Lebić | Bura | Maestral | Tramontana
+Koji se most u Hrvatskoj često zatvara za promet zbog jake bure? | Krčki most | Domovinski most | Most mladosti | Most na Dravi u Osijeku
+U kojem je kraju Hrvatske bura osobito jaka, s naletima i preko 200 km/h? | Pod Velebitom | U Slavoniji | U Zagorju | U Istri
+Kako se zove topli suhi vjetar koji se spušta niz planine u Alpama? | Fen | Bura | Monsun | Mistral
+Kako se zove sezonski vjetar koji donosi kišno razdoblje u južnoj Aziji? | Monsun | Pasat | Mistral | Sirocco
+Kako se zovu stalni vjetrovi koji pušu prema ekvatoru? | Pasati | Monsuni | Jugo | Mlazne struje
+Kako se zove hladni sjeverni vjetar u dolini Rone u Francuskoj? | Mistral | Bura | Fen | Sirocco
+Kako se u Atlantiku zove tropska oluja s vjetrom jačim od 119 km/h? | Uragan | Tajfun | Ciklona | Tornado
+Kako se tropski olujni ciklon zove na zapadnom Tihom oceanu? | Tajfun | Uragan | Tornado | Monsun
+Kako se zove mirno središte uragana? | Oko uragana | Lijevak | Jezgra | Fronta
+Kako se zove rotirajući stup zraka koji se spušta iz oblaka do tla? | Tornado (pijavica) | Uragan | Monsun | Bura
+Kako se zove tornado koji nastaje iznad mora ili jezera? | Morska pijavica | Tsunami | Tajfun | Bura
+U kojoj je zemlji „Aleja tornada“ (Tornado Alley)? | SAD | Kanada | Australija | Indija
+Kako se zove ljestvica za jačinu tornada? | Fujita (EF) ljestvica | Beaufortova | Richterova | Saffir–Simpson
+Kako se zove ljestvica kategorija uragana od 1 do 5? | Saffir–Simpson | Fujita | Beaufort | Mercalli
+Kako se zove oblak koji nalikuje na hrpe vate, tipičan za lijepo vrijeme? | Kumulus | Cirus | Stratus | Nimbostratus
+Kako se zove visoki, tanki oblak koji nalikuje na perje? | Cirus | Kumulus | Stratus | Kumulonimbus
+Kako se zove niski sivi sloj oblaka koji prekriva nebo? | Stratus | Cirus | Kumulus | Altokumulus
+Kako se zove visoki olujni oblak koji donosi grmljavinu i tuču? | Kumulonimbus | Cirus | Stratus | Altostratus
+Kako se zove tamni oblak koji donosi dugotrajnu kišu ili snijeg? | Nimbostratus | Cirus | Kumulus | Cirokumulus
+Kako se zove oblak koji leži na tlu? | Magla | Rosa | Inje | Mraz
+Kako se zovu kapljice vode koje se noću kondenziraju na travi? | Rosa | Inje | Magla | Tuča
+Kako se zovu ledeni kristali koji se noću stvore na biljkama i predmetima? | Inje (mraz) | Rosa | Tuča | Susnježica
+Kako se zove oborina od komadića leda, često ljeti u olujama? | Tuča | Snijeg | Susnježica | Rosa
+Kako se zove mješavina kiše i snijega? | Susnježica | Tuča | Inje | Rosa
+Kako se zove kiša koja se smrzava pri dodiru s tlom? | Ledena kiša | Tuča | Susnježica | Inje
+Kako nastaje duga? | Lom i odbijanje svjetlosti u kapljicama | Odraz neba u moru | Električni izboj | Prašina u zraku
+Na kojoj strani neba se vidi duga u odnosu na Sunce? | Nasuprot Suncu | Ispod Sunca | Uz Sunce | Samo na zapadu
+Zašto munju vidimo prije nego što čujemo grom? | Svjetlost je brža od zvuka | Zvuk je brži | Grom nastaje kasnije | Oči su brže od ušiju
+Koliko otprilike treba zvuku groma da prijeđe 1 km? | Oko 3 sekunde | Oko 1 minute | Oko 10 sekundi | Odmah
+Koja se boja neba vidi danju zbog raspršenja svjetlosti u atmosferi? | Plava | Zelena | Ljubičasta | Bijela
+Kako se zove svjetlosna pojava na nebu blizu polova? | Polarna svjetlost (aurora) | Duga | Halo | Fatamorgana
+Kako se zove optička varka u pustinji kad se čini da u daljini ima vode? | Fatamorgana | Aurora | Duga | Halo
+Kako se zove svjetleći krug oko Sunca ili Mjeseca? | Halo | Duga | Aurora | Fatamorgana
+Kako se zove dio atmosfere u kojem se događa većina vremenskih pojava? | Troposfera | Stratosfera | Mezosfera | Termosfera
+U kojem sloju atmosfere je ozonski omotač? | Stratosferi | Troposferi | Mezosferi | Egzosferi
+Što ozonski omotač štiti od Sunca? | Ultraljubičasto zračenje | Vidljivu svjetlost | Toplinu | Radiovalove
+Koji je plin najzaslužniji za efekt staklenika uz vodenu paru? | Ugljikov dioksid | Kisik | Dušik | Argon
+Kako se zove globalni porast prosječne temperature Zemlje? | Globalno zatopljenje | Ledeno doba | El Niño | Inverzija
+Kako se zove međunarodni sporazum o klimi iz 2015.? | Pariški sporazum | Kjotski protokol | Montrealski protokol | Rimski ugovor
+Kako se zove pojava zatopljenja površine Tihog oceana koja mijenja vrijeme u svijetu? | El Niño | La Niña | Monsun | Golfska struja
+Kako se zove topla morska struja koja grije zapadnu Europu? | Golfska struja | Humboldtova struja | Kalifornijska struja | Labradorska struja
+Kolika je najviša službeno izmjerena temperatura zraka na Zemlji, u Dolini smrti 1913.? | 56,7 °C | 49,0 °C | 61,2 °C | 70,0 °C
+Na kojoj je postaji izmjerena najniža temperatura zraka na Zemlji (−89,2 °C)? | Vostok (Antarktika) | Ojmjakon (Rusija) | Sjeverni pol | Grenland
+Koji je kontinent najhladniji? | Antarktika | Europa | Azija | Sjeverna Amerika
+Koji je kontinent najsuši? | Antarktika | Afrika | Australija | Azija
+Kako se zove klima s vrućim, suhim ljetima i blagim, kišnim zimama, kao na Jadranu? | Sredozemna | Kontinentalna | Tropska | Polarna
+Kakva je klima u kontinentalnoj Hrvatskoj? | Umjereno kontinentalna | Sredozemna | Tropska | Polarna
+Kakva je klima u gorskim krajevima Hrvatske poput Gorskog kotara? | Planinska | Sredozemna | Tropska | Pustinjska
+Kako se zove klima stalno vruća i vlažna, s prašumama? | Tropska (ekvatorijalna) | Sredozemna | Polarna | Kontinentalna
+Kako se zove pojas klime u kojem nastaje tundra? | Subpolarni | Tropski | Sredozemni | Pustinjski
+Kada počinje astronomsko proljeće na sjevernoj polutki? | Oko 20. ožujka | 1. ožujka | 1. travnja | 21. veljače
+Kada je najdulji dan u godini na sjevernoj polutki? | Oko 21. lipnja | Oko 21. ožujka | Oko 21. prosinca | Oko 23. rujna
+Kako se zove dan kada su dan i noć jednako dugi? | Ravnodnevnica (ekvinocij) | Solsticij | Suncostaj | Pomrčina
+Kako se zove trenutak najduljeg ili najkraćeg dana u godini? | Suncostaj (solsticij) | Ravnodnevnica | Ekvinocij | Perihel
+Zašto na Zemlji postoje godišnja doba? | Zbog nagiba Zemljine osi | Zbog udaljenosti od Sunca | Zbog Mjeseca | Zbog oblaka
+Koliko je nagnuta Zemljina os, otprilike? | 23,5° | 10° | 45° | 0°
+Koje je godišnje doba u Australiji kad je u Hrvatskoj Božić? | Ljeto | Zima | Proljeće | Jesen
+Kako se zove područje niskog tlaka koje često donosi kišu i oblake? | Ciklona | Anticiklona | Fronta | Inverzija
+Kako se zove područje visokog tlaka koje obično donosi lijepo, stabilno vrijeme? | Anticiklona | Ciklona | Fronta | Monsun
+Koja anticiklona često donosi vruća ljeta Sredozemlju? | Azorska | Sibirska | Islandska | Genovska
+Kako se zove ciklona koja često nastaje iznad Ligurskog mora i donosi kišu na Jadran? | Genovska ciklona | Azorska | Islandska | Sibirska
+Kako se zove granica između dviju zračnih masa različite temperature? | Fronta | Ciklona | Izobara | Inverzija
+Kako se zovu linije na karti koje spajaju mjesta istog tlaka zraka? | Izobare | Izoterme | Izohipse | Meridijani
+Kako se zovu linije na karti koje spajaju mjesta iste temperature? | Izoterme | Izobare | Izohipse | Paralele
+Kako se zove pojava kada je zrak pri tlu hladniji od zraka iznad, pa se magla i smog zadržavaju? | Temperaturna inverzija | Efekt staklenika | Fen | Konvekcija
+U kojoj je mjernoj jedinici tlak zraka u vremenskim prognozama? | Hektopaskal (hPa) | Kilogram | Kelvin | Bar po metru
+Koliki je otprilike normalni tlak zraka na razini mora? | 1013 hPa | 500 hPa | 2000 hPa | 101 hPa
+Kako se zove kratkotrajna jaka kiša praćena grmljavinom? | Pljusak | Rominjanje | Magla | Susnježica
+Kako se zove slaba kiša sitnih kapljica? | Rominjanje (sipljenje) | Pljusak | Tuča | Prolom oblaka
+Kako se zove dugo razdoblje bez oborina? | Suša | Poplava | Inverzija | Monsun
+Kako se zove naglo izlijevanje rijeka nakon jakih kiša? | Poplava | Suša | Lavina | Erozija
+Kako se zove velika masa snijega koja se naglo strmoglavi niz planinu? | Lavina | Klizište | Odron | Mećava
+Kako se zove snježna oluja s jakim vjetrom? | Mećava | Lavina | Susnježica | Tuča
+Kako se zove smjesa dima i magle nad onečišćenim gradovima? | Smog | Rosa | Inje | Halo
+Koji indeks u vremenskoj prognozi upozorava na opasnost od opeklina od sunca? | UV indeks | Beaufortov indeks | Toplinski indeks | AQI
+Kako se zove razina zagađenja zraka česticama prašine? | PM10 / PM2,5 | UV | hPa | Bofori
+Kako se zove satelitski sustav EU-a za praćenje Zemlje i klime? | Copernicus | Galileo | Hubble | Sputnjik
+Kako se zove hrvatska državna služba za vremensku prognozu? | DHMZ | HAK | HRT | DZS
+Koji grad u Hrvatskoj često ima najviše sunčanih sati godišnje, s oko 2700 sati? | Hvar | Zagreb | Osijek | Gospić
+Kako se u Hrvatskoj tradicionalno zove razdoblje toplog vremena krajem rujna i u listopadu, nazvano po svecu? | Miholjsko ljeto | Ivanjsko ljeto | Antunovo ljeto | Petrovo ljeto
+Što je „toplinski val“? | Razdoblje neuobičajeno vrućeg vremena | Vrsta oblaka | Morska struja | Jaki vjetar
+Prije otprilike koliko je godina završilo posljednje ledeno razdoblje? | Oko 11 700 | Oko 1000 | Oko milijun | Oko 100
+Kako se zove znanost o klimi kroz dulja razdoblja? | Klimatologija | Meteorologija | Oceanografija | Geomorfologija

@@ -1,0 +1,103 @@
+  /* ===================== KRČMA (Trivia Tavern) =====================
+     Sloj preko bajke: bez stakla i hladnog sjaja. Tamno drvo s rezbarenim rubom za panele, obojene drvene ploče za odgovore,
+     stari papir za tekst koji se čita, koža sa šavom za oznake. Odabrano svijetli iznutra jantarno, kao svijeća. */
+  :root {
+    --wd: #4a2e1a; --wd-hi: #6e4628; --wd-lo: #2a170b; --wd-rim: rgba(222, 170, 90, 0.6);
+    --leather: #6b3f2a; --leather-lo: #4a2a1a;
+    --amber: #ffb648;
+    --ink: #f6ead0; --ink-2: #e2cfaa; --ink-3: #b89c74;
+    --edge: rgba(222, 170, 90, 0.45);
+    --panel: var(--woodgrain), var(--grain), linear-gradient(180deg, #5b3a22 0%, #47301c 50%, #3a2414 100%);
+    --rim: inset 0 0 0 2px var(--wd-lo), inset 0 0 0 4px var(--wd-rim), inset 0 0 0 6px var(--wd-lo), inset 0 3px 10px rgba(255, 210, 150, 0.12), inset 0 -6px 14px rgba(0, 0, 0, 0.35);
+  }
+  body { background: #1d120c; }
+  #deco .moon { display: none; }
+  #deco .lights { opacity: 1; }
+
+  /* naziv na traci starog pergamenta */
+  .logo { color: #4a2a10; line-height: 0.92; text-transform: uppercase; letter-spacing: 0.03em; padding: 0.42em 1.15em 0.5em;
+    text-shadow: 0 1px 0 rgba(255, 244, 214, 0.75), 0 -1px 0 rgba(60, 30, 5, 0.35), 0 2px 3px rgba(80, 40, 5, 0.25); }
+  .logo .lt { display: block; }
+  .logo::before { inset: 0 -0.35em; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.55));
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='none'><defs><linearGradient id='p' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fbefd0'/><stop offset='.55' stop-color='%23f0dcae'/><stop offset='1' stop-color='%23d9bb80'/></linearGradient><linearGradient id='r' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23e9d29c'/><stop offset='1' stop-color='%23a98245'/></linearGradient><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .35 0'/><feComposite in2='SourceGraphic' operator='in'/></filter></defs><path d='M22 10 Q150 0 278 10 L278 110 Q150 100 22 110 Z' fill='url(%23p)'/><path d='M22 10 Q150 0 278 10 L278 110 Q150 100 22 110 Z' fill='white' filter='url(%23n)'/><path d='M22 10 Q150 0 278 10 L278 110 Q150 100 22 110 Z' fill='none' stroke='%23a8741f' stroke-width='2.5'/><rect x='6' y='4' width='22' height='112' rx='11' fill='url(%23r)' stroke='%237a5220' stroke-width='2'/><rect x='272' y='4' width='22' height='112' rx='11' fill='url(%23r)' stroke='%237a5220' stroke-width='2'/><path d='M12 12v96M288 12v96' stroke='rgba(255,240,200,.5)' stroke-width='2'/></svg>") center / 100% 100% no-repeat; }
+  .logo small { color: var(--ink-2); text-transform: none; }
+
+  /* paneli: tamno drvo s rezbarenim rubom */
+  .card, .result.none, .stat, .rank-row, .pw-mini, .link-opt, .pair > span, .av-pick, .mboard .rank-row, .pw-card, .ev, .target {
+    background: var(--panel); box-shadow: var(--rim), 0 8px 16px rgba(0, 0, 0, 0.5); }
+  .pw-card.atk, .target { background: var(--woodgrain), var(--grain), linear-gradient(180deg, #7a3324 0%, #5c2418 55%, #43180f 100%); }
+  .pw-card.buff { background: var(--woodgrain), var(--grain), linear-gradient(180deg, #4d6a2e 0%, #3a5222 55%, #2a3c18 100%); }
+  .ev.buff { background: var(--woodgrain), var(--grain), linear-gradient(180deg, #4d6a2e, #2a3c18); box-shadow: var(--rim); }
+  .ev { box-shadow: var(--rim), 0 6px 12px rgba(0, 0, 0, 0.45); }
+  .rank-row:first-child { box-shadow: inset 0 0 0 2px var(--wd-lo), inset 0 0 0 4px #e9b75a, inset 0 0 0 6px var(--wd-lo), inset 0 0 22px rgba(255, 182, 72, 0.35), 0 8px 16px rgba(0, 0, 0, 0.5); }
+  .rank-row.me, .mboard .rank-row.me { box-shadow: inset 0 0 0 2px var(--wd-lo), inset 0 0 0 4px #ffd27a, inset 0 0 0 6px var(--wd-lo), inset 0 0 24px rgba(255, 182, 72, 0.45), 0 8px 16px rgba(0, 0, 0, 0.5); }
+  .result.ok { background: var(--woodgrain), var(--grain), radial-gradient(circle at 50% 0%, #6f8f3f, #3a5222 60%, #263a16); box-shadow: var(--rim), inset 0 0 40px rgba(255, 220, 120, 0.25), 0 10px 20px rgba(0, 0, 0, 0.5); }
+  .result.bad { background: var(--woodgrain), var(--grain), radial-gradient(circle at 50% 0%, #8f4430, #5c2418 60%, #3a140c); box-shadow: var(--rim), 0 10px 20px rgba(0, 0, 0, 0.5); }
+  .sort-col.a, .sort-col.b { box-shadow: var(--rim), 0 12px 22px rgba(0, 0, 0, 0.5); }
+  .sort-col.a { background: var(--woodgrain), var(--grain), linear-gradient(180deg, #46637f, #2c4258); }
+  .sort-col.b { background: var(--woodgrain), var(--grain), linear-gradient(180deg, #8a4430, #5c2418); }
+
+  /* pitanje na starom papiru */
+  .p-q, .q-text { color: #3b2610; text-shadow: 0 1px 0 rgba(255, 244, 214, 0.6); border-radius: 14px; padding: 0.7em 0.9em;
+    background: var(--grain), radial-gradient(ellipse at 50% 40%, #fbf0d4 0%, #f0dcae 60%, #dcc08a 100%);
+    box-shadow: inset 0 0 0 2px rgba(168, 116, 31, 0.6), inset 0 0 26px rgba(150, 100, 35, 0.4), 0 6px 0 #6e4628, 0 12px 20px rgba(0, 0, 0, 0.45); }
+  .q-text { max-width: 42em; margin: 0 auto; }
+  .p-q { text-align: center; }
+
+  /* odgovori: obojene drvene ploče s okvirom i unutarnjom sjenom */
+  .o0 { --c1: #a85a3c; --c2: #8a4430; --c3: #2a170b; }
+  .o1 { --c1: #4f7194; --c2: #3c5878; --c3: #2a170b; }
+  .o2 { --c1: #b98a3e; --c2: #9a6e2a; --c3: #2a170b; }
+  .o3 { --c1: #6c8a40; --c2: #546f30; --c3: #2a170b; }
+  .opt, .p-opt, .sort-btn {
+    background: var(--woodgrain), var(--grain), linear-gradient(180deg, var(--c1) 0%, var(--c2) 60%, color-mix(in srgb, var(--c2) 78%, black) 100%);
+    box-shadow: inset 0 0 0 3px var(--wd-lo), inset 0 0 0 5px var(--wd-rim), inset 0 0 0 7px var(--wd-lo), inset 0 6px 16px rgba(0, 0, 0, 0.45), inset 0 -4px 10px rgba(0, 0, 0, 0.35), 0 5px 0 var(--wd-lo), 0 10px 16px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 0 rgba(30, 14, 4, 0.55); }
+  .opt::before, .p-opt::before { opacity: 0.1; }
+  .opt.correct, .p-opt.picked, .fresh .opt.correct {
+    box-shadow: inset 0 0 0 3px var(--wd-lo), inset 0 0 0 5px #ffd27a, inset 0 0 0 7px var(--wd-lo), inset 0 0 30px 8px rgba(255, 176, 64, 0.75), 0 5px 0 var(--wd-lo), 0 0 22px rgba(255, 160, 60, 0.4);
+    animation: candle 2.4s ease-in-out infinite; filter: none; transform: none; }
+  @keyframes candle { 0%, 100% { filter: brightness(1.08); } 30% { filter: brightness(1.18); } 55% { filter: brightness(1.05); } 80% { filter: brightness(1.15); } }
+  .shape { box-shadow: inset 0 0 0 2px rgba(90, 50, 0, 0.55), 0 0 0 2px var(--wd-lo), 0 3px 0 rgba(0, 0, 0, 0.4); }
+
+  /* gumbi: drvene pločice */
+  .btn { color: var(--ink); text-shadow: 0 2px 0 var(--wd-lo), 0 0 10px rgba(255, 190, 100, 0.25);
+    background: var(--woodgrain), var(--grain), linear-gradient(180deg, #9a6a3e 0%, #7a4f2c 55%, #5e3a1f 100%);
+    box-shadow: inset 0 0 0 2px var(--wd-lo), inset 0 0 0 4px var(--wd-rim), inset 0 0 0 6px var(--wd-lo), inset 0 3px 6px rgba(255, 220, 170, 0.2), 0 5px 0 var(--wd-lo), 0 10px 18px rgba(0, 0, 0, 0.5); }
+  .btn::after { display: none; }
+  .btn:active { box-shadow: inset 0 0 0 2px var(--wd-lo), inset 0 0 0 4px var(--wd-rim), inset 0 0 0 6px var(--wd-lo), 0 1px 0 var(--wd-lo); transform: translateY(4px); }
+  .btn.ghost { background: var(--woodgrain), var(--grain), linear-gradient(180deg, #5b3a22, #3a2414); box-shadow: inset 0 0 0 2px var(--wd-lo), inset 0 0 0 3.5px rgba(222, 170, 90, 0.45), 0 4px 0 #1a0e06, 0 8px 14px rgba(0, 0, 0, 0.5); }
+
+  /* oznake: koža sa šavom */
+  .pill, .tag, .intro-card .sub, .tv-top .tv-sub, .cast-banner {
+    background: var(--grain), linear-gradient(180deg, #7a4a32, var(--leather) 55%, var(--leather-lo)); color: var(--ink);
+    box-shadow: inset 0 0 0 1.5px #2a170b, 0 3px 0 #1a0e06, 0 6px 10px rgba(0, 0, 0, 0.45);
+    outline: 1.5px dashed rgba(240, 210, 160, 0.55); outline-offset: -5px; }
+  .pill { color: var(--ink); }
+
+  /* bez hladnog sjaja u naslovima */
+  .tv-title, .p-title { text-shadow: 0 3px 0 rgba(20, 10, 4, 0.75), 0 0 18px rgba(255, 170, 70, 0.3); }
+  .room-code { text-shadow: 0 4px 0 #2a170b, 0 0 18px rgba(255, 170, 70, 0.35); }
+
+  /* vremenska traka: jantarna */
+  .timer { background: linear-gradient(180deg, #2a170b, #1a0e06); box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7), 0 0 0 2px #6e4628, 0 0 0 4px #2a170b; }
+  .timer > div { background: linear-gradient(180deg, #ffd88a, #f29a2e 55%, #c2621a); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35), 0 0 10px rgba(255, 160, 60, 0.5); }
+  .timer.urgent > div { background: linear-gradient(180deg, #ffb08a, #e0552e 55%, #a8301a); }
+  #ringGrad stop:first-child { stop-color: #ffd88a; } #ringGrad stop:last-child { stop-color: #e0782a; }
+  .ring svg { filter: drop-shadow(0 0 6px rgba(255, 160, 60, 0.45)); }
+  .ring::before { background: radial-gradient(circle, #4a2e1a 60%, #2a170b); box-shadow: 0 0 0 3px #6e4628, 0 0 0 5px #2a170b, 0 6px 14px rgba(0, 0, 0, 0.5); }
+
+  /* polje za unos */
+  .form input { background: var(--woodgrain), linear-gradient(180deg, #2a170b, #3a2414); box-shadow: var(--rim); }
+
+  /* šank s likovima na dnu ekrana mobitela */
+  .bar-row { margin-top: auto; position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 4px; padding: 0 6px 0; z-index: 0; }
+  .bar-row::after { content: ""; position: absolute; left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); bottom: -26px; height: 34px; z-index: -1;
+    background: var(--woodgrain), linear-gradient(180deg, #a8743f 0, #8a5a30 5px, #6e4424 12px, #4a2c17 100%); box-shadow: 0 -2px 0 rgba(255, 220, 170, 0.35), 0 -10px 20px rgba(0, 0, 0, 0.35); }
+  .bar-row .bw { width: min(19%, 78px); display: flex; flex-direction: column; align-items: center; position: relative; }
+  .bar-row .bw .nm { font: 900 0.72rem var(--font-body); color: var(--ink); background: var(--woodgrain), linear-gradient(180deg, var(--wood-hi), var(--wood) 60%, var(--wood-lo)); border-radius: 6px; padding: 0 6px; margin-top: -4px; box-shadow: inset 0 0 0 1px rgba(255, 210, 140, 0.4); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; position: relative; z-index: 1; }
+  .bar-row .bw.me .nm { box-shadow: inset 0 0 0 1.5px #ffd27a, 0 0 10px rgba(255, 180, 70, 0.5); }
+  .bar-row .bw .ok { position: absolute; top: -4px; right: 0; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 900; color: #17360c; background: radial-gradient(circle at 35% 30%, #d9f7a6, #9be36a 50%, #4f8f45); }
+  .bar-row .bw .glow { position: absolute; left: 10%; right: 10%; bottom: 6px; height: 10px; border-radius: 50%; background: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%); }
+  .phone .bar-row { justify-content: flex-start; padding-right: 108px; gap: 2px; }
+  .phone .bar-row .bw { width: min(16%, 62px); }

@@ -1,0 +1,10 @@
+const { chromium } = require('playwright'); const http = require('http'), fs = require('fs'), path = require('path');
+const SITE = path.join(__dirname, 'site');
+const server = http.createServer((req, res) => { const p = path.join(SITE, decodeURIComponent(req.url.split('?')[0]).replace(/\/$/, '/index.html')); if (!fs.existsSync(p)) { res.writeHead(404); return res.end(); } res.writeHead(200, { 'content-type': { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.webp': 'image/webp', '.svg': 'image/svg+xml' }[path.extname(p)] || 'text/plain' }); fs.createReadStream(p).pipe(res); });
+(async () => { await new Promise((r) => server.listen(8766, r)); const b = await chromium.launch();
+  const pg = await b.newPage({ viewport: { width: 360, height: 640 }, isMobile: true, hasTouch: true }); await pg.route(/unpkg|jsdelivr|fonts\./, (r) => r.abort());
+  await pg.goto('http://localhost:8766/'); await pg.click('#demo'); await pg.waitForSelector('#dstart'); await pg.waitForTimeout(500);
+  console.log(await pg.evaluate(() => { const A = document.getElementById('app'), se = document.scrollingElement; const o = { zoom: A.style.zoom, sh: se.scrollHeight, ih: innerHeight, ah: A.scrollHeight, bodyH: document.body.scrollHeight, appRect: A.getBoundingClientRect().height };
+    A.style.zoom = '0.7'; o.sh2 = se.scrollHeight; o.rect2 = A.getBoundingClientRect().height; o.cs = getComputedStyle(A).zoom; return o; }));
+  await pg.screenshot({ path: path.join(__dirname, 'shots-ovf/zdbg.png'), fullPage: true });
+  await b.close(); server.close(); })();

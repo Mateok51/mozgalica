@@ -1,0 +1,71 @@
+Osoba | Rođen sam 1856. u Lici. ; Radio sam za Edisona, a onda sam postao njegov suparnik. ; Po meni je nazvana jedinica za magnetsku indukciju. ; Razvio sam sustav izmjenične struje. | Nikola Tesla | Thomas Edison | Ruđer Bošković | Albert Einstein
+Osoba | Rođen sam 1452. u Toskani. ; Bio sam slikar, izumitelj i anatom. ; Crtao sam letjelice stoljećima prije prvog leta. ; Naslikao sam Mona Lisu. | Leonardo da Vinci | Michelangelo | Rafael | Galileo Galilei
+Osoba | Rođena sam u Varšavi. ; Preselila sam se u Pariz na studij. ; Otkrila sam polonij, nazvan po mojoj domovini. ; Jedina sam dobitnica Nobelove nagrade u dvije znanosti. | Marie Curie | Lise Meitner | Ada Lovelace | Rosalind Franklin
+Osoba | Rođen sam u Salzburgu 1756. ; Skladao sam već kao dijete. ; Napisao sam operu „Čarobna frula“. ; Moje srednje ime je Amadeus. | Wolfgang Amadeus Mozart | Ludwig van Beethoven | Joseph Haydn | Franz Schubert
+Osoba | Rođen sam na Korzici. ; Bio sam general francuske revolucije. ; Okrunio sam se za cara 1804. ; Konačno sam poražen kod Waterlooa. | Napoleon Bonaparte | Luj XIV. | Julije Cezar | Karlo Veliki
+Osoba | Bio sam rimski vojskovođa i državnik. ; Prešao sam rijeku Rubikon. ; Rekao sam „Došao sam, vidio sam, pobijedio sam“. ; Ubijen sam na Martovske ide. | Julije Cezar | August | Neron | Marko Antonije
+Osoba | Rođen sam 1879. u Ulmu. ; Radio sam u patentnom uredu u Bernu. ; Dobio sam Nobelovu nagradu za fotoelektrični efekt. ; Poznat sam po formuli E = mc². | Albert Einstein | Isaac Newton | Niels Bohr | Max Planck
+Osoba | Bio sam engleski fizičar i matematičar. ; Napisao sam „Principia“. ; Kaže se da mi je jabuka pala na glavu. ; Postavio sam zakon gravitacije. | Isaac Newton | Galileo Galilei | Charles Darwin | Johannes Kepler
+Osoba | Putovao sam brodom Beagle. ; Proučavao sam zebe na Galapagosu. ; Napisao sam „Podrijetlo vrsta“. ; Tvorac sam teorije evolucije prirodnim odabirom. | Charles Darwin | Gregor Mendel | Isaac Newton | Alexander von Humboldt
+Osoba | Odgojila me teta Mimi u Liverpoolu. ; Bio sam član najpoznatijeg benda iz tog grada. ; Napisao sam pjesmu „Imagine“. ; Ubijen sam u New Yorku 1980. | John Lennon | Paul McCartney | George Harrison | Ringo Starr
+Osoba | Rođen sam u Tupelu, Mississippi. ; Vozio sam kamion prije slave. ; Živio sam u kući Graceland. ; Zovu me „Kraljem rock and rolla“. | Elvis Presley | Johnny Cash | Chuck Berry | Little Richard
+Osoba | Rođen sam u Rosariju u Argentini. ; Kao dijete sam se liječio zbog problema s rastom. ; Dugo sam igrao za Barcelonu. ; Osvojio sam Svjetsko prvenstvo 2022. | Lionel Messi | Diego Maradona | Cristiano Ronaldo | Neymar
+Osoba | Rođen sam u Zadru 1985. ; Kao dijete sam bio izbjeglica u Domovinskom ratu. ; Godinama sam igrao za Real Madrid. ; Osvojio sam Zlatnu loptu 2018. | Luka Modrić | Ivan Rakitić | Mario Mandžukić | Davor Šuker
+Osoba | Rođen sam u Splitu 1971. ; Zvali su me kraljem servisa. ; Tri sam puta izgubio u finalu Wimbledona. ; Osvojio sam ga 2001. kao „wild card“. | Goran Ivanišević | Marin Čilić | Ivan Ljubičić | Mario Ančić
+Osoba | Rođena sam u Zagrebu 1982. ; Skijala sam od malih nogu s bratom Ivicom. ; Na OI 2002. osvojila sam tri zlata. ; Zovu me „Snježna kraljica“. | Janica Kostelić | Blanka Vlašić | Sandra Perković | Sara Kolak
+Osoba | Rođen sam u Šibeniku 1964. ; Igrao sam za Cibonu i u NBA ligi. ; Zvali su me „Mozart košarke“. ; Poginuo sam u prometnoj nesreći 1993. | Dražen Petrović | Toni Kukoč | Dino Rađa | Krešimir Ćosić
+Osoba | Bio sam kipar rođen 1883. ; Djetinjstvo sam proveo u Otavicama. ; Izradio sam skulpturu Grgura Ninskog u Splitu. ; Moja galerija nalazi se u Splitu, na Mejama. | Ivan Meštrović | Antun Augustinčić | Vanja Radauš | Frano Kršinić
+Osoba | Rođen sam u Zagrebu 1893. ; Pisao sam drame, romane i enciklopedije. ; Napisao sam „Balade Petrice Kerempuha“. ; Moje je djelo „Gospoda Glembajevi“. | Miroslav Krleža | August Šenoa | Tin Ujević | Ivo Andrić
+Osoba | Rođena sam u Ogulinu 1874. ; Bila sam prva žena članica HAZU-a. ; Zovu me „hrvatskim Andersenom“. ; Napisala sam „Čudnovate zgode šegrta Hlapića“. | Ivana Brlić-Mažuranić | Marija Jurić Zagorka | Sunčana Škrinjarić | Grigor Vitez
+Osoba | Rođen sam u Splitu 1450. ; Bio sam humanist i pjesnik. ; Zovu me „ocem hrvatske književnosti“. ; Napisao sam „Juditu“. | Marko Marulić | Ivan Gundulić | Marin Držić | Petar Hektorović
+Osoba | Bio sam slikar rođen u Nizozemskoj 1853. ; Za života sam prodao vrlo malo slika. ; Odrezao sam si dio uha. ; Naslikao sam „Zvjezdanu noć“. | Vincent van Gogh | Claude Monet | Pablo Picasso | Paul Cézanne
+Osoba | Rođen sam u Málagi 1881. ; Bio sam jedan od osnivača kubizma. ; Naslikao sam „Guernicu“. ; Imao sam plavo i ružičasto razdoblje. | Pablo Picasso | Salvador Dalí | Joan Miró | Henri Matisse
+Osoba | Bio sam slikar s velikim zavrnutim brkovima. ; Bio sam nadrealist iz Katalonije. ; Naslikao sam sat koji se topi. ; Djelo se zove „Postojanost pamćenja“. | Salvador Dalí | Pablo Picasso | René Magritte | Joan Miró
+Osoba | Bila sam kraljica Egipta. ; Govorila sam mnogo jezika. ; Bila sam u vezi s Cezarom i Markom Antonijem. ; Prema predaji, ubila sam se ugrizom zmije. | Kleopatra | Nefertiti | Hatšepsut | Kraljica od Sabe
+Osoba | Rođen sam 1809. u kolibi od brvana. ; Bio sam samouki odvjetnik. ; Vodio sam zemlju kroz građanski rat. ; Ukinuo sam ropstvo u SAD-u i ubijen sam u kazalištu. | Abraham Lincoln | George Washington | Thomas Jefferson | John F. Kennedy
+Osoba | Rođen sam u Porbandaru u Indiji. ; Studirao sam pravo u Londonu. ; Vodio sam „Marš soli“. ; Borio sam se za neovisnost Indije nenasiljem. | Mahatma Gandhi | Jawaharlal Nehru | Nelson Mandela | Dalaj-lama
+Osoba | Bio sam 27 godina u zatvoru. ; Dugo sam bio na otoku Robben. ; Dobio sam Nobelovu nagradu za mir 1993. ; Postao sam prvi crni predsjednik Južne Afrike. | Nelson Mandela | Martin Luther King | Desmond Tutu | Kofi Annan
+Osoba | Bio sam baptistički svećenik. ; Vodio sam marš na Washington 1963. ; Održao sam govor „Imam san“. ; Borio sam se za prava Afroamerikanaca. | Martin Luther King | Malcolm X | Barack Obama | Nelson Mandela
+Osoba | Bio sam sovjetski pilot. ; Letio sam u letjelici Vostok 1. ; Moj let trajao je 108 minuta. ; Prvi sam čovjek u svemiru. | Jurij Gagarin | Neil Armstrong | Aleksej Leonov | Valentina Tereškova
+Osoba | Bio sam pilot i inženjer iz Ohija. ; Zapovijedao sam misijom Apollo 11. ; Rekao sam: „Ovo je mali korak za čovjeka…“ ; Prvi sam hodao po Mjesecu. | Neil Armstrong | Buzz Aldrin | Jurij Gagarin | Michael Collins
+Osoba | Bio sam genovski moreplovac. ; Plovio sam za španjolske vladare. ; Moji brodovi zvali su se Niña, Pinta i Santa María. ; Godine 1492. stigao sam u Ameriku. | Kristofor Kolumbo | Ferdinand Magellan | Vasco da Gama | Amerigo Vespucci
+Osoba | Bio sam mletački trgovac. ; Putovao sam do dvora Kublaj-kana. ; Moj se putopis zove „Milijun“. ; Neki tvrde da sam rođen na Korčuli. | Marko Polo | Kristofor Kolumbo | Ibn Battuta | Vasco da Gama
+Osoba | Bio sam engleski dramatičar rođen u Stratfordu. ; Napisao sam oko 39 drama. ; Moje kazalište zvalo se Globe. ; Napisao sam „Romea i Juliju“. | William Shakespeare | Christopher Marlowe | Charles Dickens | Oscar Wilde
+Osoba | Bio sam gluh u kasnijim godinama života. ; Rođen sam u Bonnu. ; Napisao sam devet simfonija. ; Moja Deveta završava „Odom radosti“. | Ludwig van Beethoven | Wolfgang Amadeus Mozart | Johann Sebastian Bach | Richard Wagner
+Osoba | Bio sam animator i poduzetnik. ; Osnovao sam studio u Kaliforniji. ; Stvorio sam Mikija Mausa. ; Po meni su nazvani zabavni parkovi. | Walt Disney | Stan Lee | Charles Schulz | Hanna Barbera
+Osoba | Bio sam suosnivač tvrtke u garaži 1976. ; Nosio sam crnu dolčevitu i traperice. ; Suosnivač sam Applea. ; Predstavio sam iPhone 2007. | Steve Jobs | Bill Gates | Steve Wozniak | Elon Musk
+Životinja | Živim na Antarktici. ; Ne mogu letjeti, ali odlično plivam. ; Mužjak čuva jaje na nogama. ; Najveći od nas zovu se carski. | Pingvin | Albatros | Tuljan | Morski lav
+Životinja | Imam dugačak jezik, i do 50 cm. ; Moj vrat ima samo sedam kralježaka. ; Živim u afričkoj savani. ; Najviša sam životinja na svijetu. | Žirafa | Slon | Noj | Okapi
+Životinja | Spavam i do 20 sati dnevno. ; Mladunče nosim u tobolcu. ; Jedem gotovo samo eukaliptus. ; Iz Australije sam i često me krivo zovu medvjedom. | Koala | Klokan | Vombat | Panda
+Životinja | Moja krv je plava. ; Imam tri srca. ; Mogu mijenjati boju i ispuštati tintu. ; Imam osam krakova. | Hobotnica | Morska zvijezda | Meduza | Rak
+Životinja | Mogu potrčati i do 110 km/h. ; Imam crne „suze“ ispod očiju. ; Živim u Africi i Iranu. ; Najbrža sam kopnena životinja. | Gepard | Leopard | Jaguar | Antilopa
+Životinja | Ja sam ptica koja ne leti. ; Moje oko veće je od mozga. ; Mogu trčati oko 70 km/h. ; Najveća sam ptica na svijetu. | Noj | Emu | Kazuar | Pingvin
+Životinja | Mogu živjeti i u slanoj i u slatkoj vodi. ; Jako sam star, iz doba dinosaura. ; Imam najjači ugriz od svih životinja. ; Ja sam gmaz s dugom njuškom. | Krokodil | Morski pas | Kornjača | Gušter
+Životinja | Spavam viseći naopako. ; Orijentiram se jekom. ; Aktivan sam noću. ; Jedini sam sisavac koji stvarno leti. | Šišmiš | Sova | Leteća vjeverica | Kolibrić
+Životinja | Gradim brane od drva. ; Imam plosnat rep. ; Zubi mi neprestano rastu. ; Najveći sam glodavac u Europi. | Dabar | Vidra | Hrčak | Vjeverica
+Životinja | Ja sam crno-bijela životinja. ; Imam „šesti prst“ za držanje stabljika. ; Živim u planinama Kine. ; Jedem uglavnom bambus. | Divovska panda | Koala | Crvena panda | Zebra
+Grad | Nastao sam oko rimske palače. ; Moja riva gleda na otoke. ; Moj nogometni klub osnovan je 1911. ; U meni je Dioklecijanova palača. | Split | Zadar | Rijeka | Šibenik
+Grad | Imam jedan od najbolje očuvanih rimskih amfiteatara. ; Nalazim se na jugu Istre. ; U mojoj luci gradili su se brodovi. ; U meni je Arena. | Pula | Rovinj | Poreč | Rijeka
+Grad | Okružen sam zidinama dugim gotovo 2 km. ; Moja glavna ulica zove se Stradun. ; Zaštitnik mi je sv. Vlaho. ; Zovu me „Biser Jadrana“. | Dubrovnik | Korčula | Split | Trogir
+Grad | Imam morske orgulje. ; Pozdrav Suncu svijetli noću na mojoj obali. ; Alfred Hitchcock hvalio je moj zalazak sunca. ; Poznat sam po likeru maraschino. | Zadar | Split | Šibenik | Rijeka
+Grad | Leži na rijeci Dravi. ; U meni je barokna Tvrđa. ; Ja sam središte Slavonije. ; Imam katedralu sv. Petra i Pavla. | Osijek | Vukovar | Slavonski Brod | Vinkovci
+Grad | Bio sam glavni grad Hrvatske u 18. stoljeću. ; Poznat sam po baroknim palačama. ; Svake godine imam Špancirfest. ; Imam staro groblje-park i Stari grad. | Varaždin | Čakovec | Karlovac | Koprivnica
+Grad | Osnovan sam kao tvrđava u obliku šesterokrake zvijezde. ; Leže kraj mene četiri rijeke. ; U meni je Aquatika, slatkovodni akvarij. ; Zovu me „gradom na četiri rijeke“. | Karlovac | Sisak | Ogulin | Osijek
+Grad | Imam toranj koji se naginje. ; U Toskani sam. ; Moji su sveučilište i katedrala vrlo stari. ; Galileo Galilei rođen je ovdje. | Pisa | Firenca | Siena | Lucca
+Grad | Izgrađen sam na više od 100 otočića. ; Umjesto ulica imam kanale. ; Moj je karneval poznat po maskama. ; U meni se vozi gondolom. | Venecija | Amsterdam | Brugge | Napulj
+Grad | Imam četvrt Montmartre. ; Kroz mene teče Seina. ; U meni je Louvre. ; Moj simbol je željezni toranj iz 1889. | Pariz | Lyon | Bruxelles | London
+Grad | Imam kip Krista na planini Corcovado. ; Moje plaže su Copacabana i Ipanema. ; Domaćin sam Olimpijskih igara 2016. ; Poznat sam po karnevalu sambe. | Rio de Janeiro | São Paulo | Buenos Aires | Lisabon
+Grad | Bio sam podijeljen zidom do 1989. ; Imam Brandenburška vrata. ; Glavni sam grad Njemačke. ; U meni je Reichstag. | Berlin | Beč | München | Prag
+Planet | Imam najviši vulkan u Sunčevu sustavu. ; Imam dva mala mjeseca. ; Na meni voze roveri. ; Zovu me „Crveni planet“. | Mars | Venera | Jupiter | Merkur
+Planet | Imam više od 270 poznatih mjeseci. ; Gustoća mi je manja od gustoće vode. ; Moj najveći mjesec je Titan. ; Poznat sam po prstenovima. | Saturn | Jupiter | Uran | Neptun
+Planet | Imam Veliku crvenu pjegu. ; Moji su mjeseci Io, Europa, Ganimed i Kalisto. ; Plinoviti sam div. ; Najveći sam planet Sunčeva sustava. | Jupiter | Saturn | Neptun | Uran
+Lik | Živim u šumi sa sedam malih prijatelja. ; Koža mi je bijela kao snijeg. ; Maćeha me pokušala otrovati. ; Zagrizla sam otrovnu jabuku. | Snjeguljica | Pepeljuga | Trnoružica | Crvenkapica
+Lik | Moj otac je drvodjelja Geppetto. ; Napravljen sam od drveta. ; Kad lažem, raste mi nos. ; Želim postati pravi dječak. | Pinokio | Petar Pan | Hlapić | Mowgli
+Lik | Živim u ananasu na dnu mora. ; Radim kao kuhar u restoranu. ; Moj najbolji prijatelj je zvijezda Patrik. ; Ja sam žuta spužva. | Spužva Bob | Nemo | Patrik | Gary
+Lik | Nosim crvenu kapu i plave hlače s naramenicama. ; Imam brata Luigija. ; Spašavam princezu Peach. ; Po zanimanju sam vodoinstalater. | Super Mario | Sonic | Link | Wario
+Lik | Rođen sam na planetu Kriptonu. ; Radim kao novinar Clark Kent. ; Slabi me kriptonit. ; Nosim plavo odijelo i crveni plašt. | Superman | Batman | Thor | Iron Man
+Lik | Moji su roditelji ubijeni kad sam bio dijete. ; Ja sam milijarder iz Gothama. ; Moj batler zove se Alfred. ; Borim se protiv Jokera. | Batman | Superman | Iron Man | Spider-Man
+Lik | Živim u Ulici Privet Drive 4. ; Imam ožiljak u obliku munje. ; Igram metlobal kao tragač. ; Ja sam „dječak koji je preživio“. | Harry Potter | Ron Weasley | Frodo Baggins | Percy Jackson
+Lik | Ja sam hobit iz Shirea. ; Bilbo me posvojio i ostavio mi Vreću. ; Nosim jedan opasan prsten. ; Moram ga baciti u vulkan u Mordoru. | Frodo Baggins | Bilbo Baggins | Sam Gamgee | Gollum
+Lik | Ja sam zeleni div koji živi u močvari. ; Moj najbolji prijatelj je magarac. ; Oženio sam princezu Fionu. ; Kažem da su divovi kao luk. | Shrek | Hulk | Grinch | Gru
+Lik | Ja sam lavić koji je pobjegao od kuće. ; Moj zli stric zove se Scar. ; Moji prijatelji su Timon i Pumba. ; Postao sam kralj Ponosnih zemalja. | Simba | Mufasa | Nala | Bambi

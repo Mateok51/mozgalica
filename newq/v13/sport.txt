@@ -1,0 +1,80 @@
+#Sport
+Koliko igrača jedne momčadi igra na terenu u košarci? | 5 | 4 | 6 | 7
+Koliko igrača jedne momčadi igra na terenu u odbojci? | 6 | 5 | 7 | 8
+Koliko igrača jedne momčadi igra na terenu u rukometu, uključujući vratara? | 7 | 6 | 8 | 9
+Koliko igrača jedne momčadi igra u vodi u vaterpolu, uključujući vratara? | 7 | 6 | 8 | 11
+Koja je visina košarkaškog obruča od poda? | 3,05 m | 2,85 m | 3,25 m | 3,50 m
+Koliko iznosi službena duljina maratona? | 42,195 km | 40 km | 41,5 km | 45 km
+U kojem se sportu koristi izraz „touchdown“? | Američki nogomet | Ragbi | Bejzbol | Hokej na ledu
+U kojem se sportu igra pak umjesto lopte? | Hokej na ledu | Curling | Polo | Lacrosse
+Kako se zove teniski rezultat 40:40? | Deuce | Love | Ace | Break
+Što u tenisu znači rezultat „love“? | Nula | Prednost | Gem | Set
+Kako se zove servis u tenisu koji protivnik uopće ne dotakne? | As | Smeč | Lob | Volej
+Na kojoj se podlozi igra teniski turnir Roland Garros? | Zemlja | Trava | Tvrda podloga | Tepih
+U kojem gradu se igra teniski turnir Roland Garros? | Pariz | London | Madrid | Rim
+Koji se Grand Slam turnir igra prvi u kalendarskoj godini? | Australian Open | Roland Garros | Wimbledon | US Open
+Po kojem je sportu poznat Novak Đoković? | Tenis | Stolni tenis | Badminton | Skvoš
+U kojem je sportu Michael Jordan postao svjetska zvijezda? | Košarka | Bejzbol | Američki nogomet | Golf
+U kojem se sportu natjecao Usain Bolt? | Atletika | Plivanje | Biciklizam | Boks
+U kojoj je disciplini Usain Bolt postavio svjetski rekord od 9,58 sekundi? | 100 m | 200 m | 400 m | 110 m s preponama
+U kojem je sportu Michael Phelps osvojio najviše olimpijskih medalja u povijesti? | Plivanje | Atletika | Gimnastika | Veslanje
+Koji je boksač bio poznat pod nadimkom „Najveći“ („The Greatest“)? | Muhammad Ali | Mike Tyson | Joe Frazier | George Foreman
+U kojem se sportu koristi palica, loptica i „home run“? | Bejzbol | Kriket | Golf | Hokej na travi
+Koji sport koristi izraze „wicket“ i „over“? | Kriket | Bejzbol | Golf | Ragbi
+Koliko rupa ima standardni teren za golf? | 18 | 9 | 12 | 24
+Kako se u golfu zove rezultat od dva udarca ispod para? | Eagle | Birdie | Bogey | Albatros
+Kako se u golfu zove rezultat od jednog udarca iznad para? | Bogey | Birdie | Eagle | Par
+Koliko kuglica u boji (osim crvenih) ima na stolu u snookeru? | 6 | 5 | 7 | 8
+Koliko čunjeva stoji na početku bacanja u kuglanju (bowlingu)? | 10 | 9 | 8 | 12
+Kako se zove rušenje svih čunjeva prvim bacanjem u bowlingu? | Strike | Spare | Split | Gutter
+Koliko je najveći mogući rezultat u jednoj igri bowlinga? | 300 | 200 | 250 | 400
+Kako se zove tradicionalni korejski borilački sport s puno udaraca nogom? | Taekwondo | Karate | Judo | Kung fu
+Iz koje zemlje potječe judo? | Japan | Kina | Koreja | Tajland
+Koja boja pojasa u karateu najčešće označava najviši stupanj? | Crna | Smeđa | Crvena | Bijela
+Kako se zove sport u kojem se kamenje klizi po ledu prema meti, a igrači metlicama čiste led? | Curling | Bob | Sanjkanje | Hokej
+Koliko traje jedna runda u profesionalnom boksu? | 3 minute | 2 minute | 4 minute | 5 minuta
+Kako se zove pobjeda u boksu kada protivnik ne može nastaviti nakon odbrojavanja do deset? | Nokaut | Remi | Diskvalifikacija | Odustajanje
+Koja se poznata višednevna biciklistička utrka vozi svakog srpnja po Francuskoj? | Tour de France | Giro d'Italia | Vuelta a España | Pariz–Roubaix
+Koje boje majicu nosi vodeći na utrci Giro d'Italia? | Ružičastu | Žutu | Crvenu | Zelenu
+Kako se zove dio Formule 1 u kojem bolid staje radi promjene guma? | Boks (pit stop) | Šikana | Paddock | Grid
+Koji je hrvatski skijaš osvojio četiri olimpijske srebrne medalje? | Ivica Kostelić | Natko Zrnčić-Dim | Filip Zubčić | Ivan Ratkić
+Koliko je olimpijskih medalja ukupno osvojila Janica Kostelić? | 6 | 4 | 5 | 8
+Koja je hrvatska atletičarka dvostruka olimpijska pobjednica u bacanju diska? | Sandra Perković | Blanka Vlašić | Sara Kolak | Barbara Matić
+U kojoj je disciplini Blanka Vlašić bila svjetska prvakinja? | Skok u vis | Skok u dalj | Bacanje koplja | Trčanje na 400 m
+U kojem je sportu Sara Kolak 2016. osvojila olimpijsko zlato? | Bacanje koplja | Bacanje diska | Bacanje kugle | Skok s motkom
+U kojem sportu se natječu braća Sinković? | Veslanje | Kajak | Jedrenje | Plivanje
+U kojem je sportu Hrvatska osvojila olimpijsko zlato 1996. i 2004.? | Rukomet | Košarka | Vaterpolo | Nogomet
+Koji je hrvatski košarkaš osvojio tri NBA naslova s Chicago Bullsima? | Toni Kukoč | Dino Rađa | Stojko Vranković | Arijan Komazec
+Koji je hrvatski tenisač osvojio US Open 2014.? | Marin Čilić | Ivan Ljubičić | Mario Ančić | Borna Ćorić
+U kojem se sportu natjecao Mirko Filipović Cro Cop? | MMA i kickboks | Boks | Hrvanje | Judo
+Koji je klub iz Splita poznat po košarkaškim naslovima prvaka Europe 1989.–1991.? | Jugoplastika | Cibona | Zadar | Cedevita
+Koji je zagrebački košarkaški klub dvaput bio prvak Europe (1985. i 1986.)? | Cibona | Cedevita | Zrinjevac | Lokomotiva
+Koliko dugo traje jedna utakmica u košarci po FIBA pravilima, bez produžetka? | 40 minuta | 48 minuta | 60 minuta | 32 minute
+Koliko dugo traje jedno poluvrijeme u rukometu? | 30 minuta | 25 minuta | 35 minuta | 45 minuta
+Koliko je dugačak olimpijski bazen? | 50 m | 25 m | 33 m | 100 m
+Koji stil plivanja je najbrži? | Slobodni (kraul) | Prsni | Leđni | Delfin
+Kojim stilom plivači počinju u vodi, a ne sa startnog bloka? | Leđnim | Prsnim | Delfinom | Kraulom
+Koliko je visoka mreža u odbojci za muškarce? | 2,43 m | 2,24 m | 2,10 m | 2,60 m
+Koliko poena je potrebno za osvajanje seta u odbojci (osim petog)? | 25 | 21 | 15 | 30
+Koliko poena je potrebno za osvajanje seta u stolnom tenisu? | 11 | 15 | 21 | 25
+Kako se zove sportska borba mačevima s tri vrste oružja: floret, mač i sablja? | Mačevanje | Kendo | Biatlon | Sumo
+Koji zimski sport kombinira skijaško trčanje i gađanje puškom? | Biatlon | Nordijska kombinacija | Skeleton | Slalom
+Kako se zove alpska disciplina s najviše vratašca i najkraćim razmakom između njih? | Slalom | Spust | Superveleslalom | Skijaški skokovi
+Koja alpska disciplina ima najveće brzine? | Spust | Slalom | Veleslalom | Kombinacija
+Na kojoj se planini u Zagrebu održava utrka Svjetskog skijaškog kupa „Snježna kraljica“? | Sljeme (Medvednica) | Klek | Bjelolasica | Velebit
+Kako se zove sport u kojem se konj i jahač natječu u skakanju preko prepreka? | Preponsko jahanje | Dresura | Polo | Rodeo
+Koliko igrača jedne momčadi igra u ragbiju (union)? | 15 | 11 | 13 | 7
+Kako se zove trofej koji se dodjeljuje pobjedniku NHL lige? | Stanley Cup | Super Bowl | Larry O'Brien | Ryder Cup
+Kako se zove finalna utakmica lige američkog nogometa NFL? | Super Bowl | World Series | Final Four | Stanley Cup
+Kako se zove finale bejzbolske lige MLB? | World Series | Super Bowl | Grand Final | Big Game
+Što je Davis Cup? | Momčadsko natjecanje u tenisu | Utrka jedrilica | Golf turnir | Šahovsko prvenstvo
+Koju je godinu Hrvatska osvojila Davis Cup prvi put? | 2005. | 1998. | 2010. | 2018.
+Kako se zove figura u šahu koja se kreće u obliku slova L? | Skakač (konj) | Lovac | Top | Kraljica
+Koja šahovska figura može se kretati samo dijagonalno? | Lovac | Top | Skakač | Kralj
+Koliko figura na početku šahovske partije ima svaki igrač? | 16 | 12 | 14 | 18
+Kako se zove potez u šahu u kojem kralj i top istovremeno mijenjaju položaj? | Rokada | En passant | Gambit | Pat
+Kako se zove situacija u šahu kada igrač na potezu nema nijednog legalnog poteza, a kralj mu nije u šahu? | Pat | Mat | Rokada | Remi ponavljanjem
+Po kojem je sportu poznat Luka Modrić? | Nogomet | Rukomet | Košarka | Vaterpolo
+Po kojem je sportu poznat Lewis Hamilton? | Formula 1 | Rally | MotoGP | NASCAR
+Kako se zove poznata utrka Formule 1 koja se vozi ulicama kneževine na Azurnoj obali? | VN Monaka | VN Francuske | VN Italije | VN Španjolske
+Koja je zemlja domaćin poznatog autodroma Monza? | Italija | Francuska | Njemačka | Belgija

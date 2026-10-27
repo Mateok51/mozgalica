@@ -1,0 +1,78 @@
+#Izumi i otkrića
+Tko je otkrio penicilin 1928.? | Alexander Fleming | Louis Pasteur | Robert Koch | Joseph Lister
+Tko je 1769. bitno usavršio parni stroj i time pokrenuo industrijsku revoluciju? | James Watt | George Stephenson | Thomas Newcomen | Robert Fulton
+Tko je izgradio prvu uspješnu parnu lokomotivu „Rocket“? | George Stephenson | James Watt | Richard Trevithick | Isambard Brunel
+Tko je izumio žarulju koja se mogla masovno proizvoditi? | Thomas Edison | Nikola Tesla | Michael Faraday | Alessandro Volta
+Tko je izumio prvu električnu bateriju („Voltin stup“)? | Alessandro Volta | Luigi Galvani | Michael Faraday | Benjamin Franklin
+Tko je izumio gromobran? | Benjamin Franklin | Thomas Edison | Nikola Tesla | Michael Faraday
+Tko je otkrio elektromagnetsku indukciju? | Michael Faraday | James Clerk Maxwell | André-Marie Ampère | Georg Ohm
+Tko je izumio radio i dobio Nobelovu nagradu 1909.? | Guglielmo Marconi | Nikola Tesla | Heinrich Hertz | Alexander Popov
+Tko je otkrio rendgenske zrake 1895.? | Wilhelm Röntgen | Marie Curie | Ernest Rutherford | Max Planck
+Tko je izumio telegraf i abecedu točaka i crta? | Samuel Morse | Alexander Graham Bell | Thomas Edison | Guglielmo Marconi
+Tko je izumio televiziju, prvi javno prikazavši pokretnu sliku 1926.? | John Logie Baird | Philo Farnsworth | Vladimir Zvorykin | Guglielmo Marconi
+Tko je izumio automobil s motorom s unutarnjim izgaranjem 1886.? | Karl Benz | Henry Ford | Ferdinand Porsche | Rudolf Diesel
+Tko je uveo pokretnu traku u masovnu proizvodnju automobila? | Henry Ford | Karl Benz | Ferdinand Porsche | Louis Renault
+Tko je izumio dizelski motor? | Rudolf Diesel | Nikolaus Otto | Karl Benz | Gottlieb Daimler
+Tko je izumio prvi praktični zrakoplov s motorom? | Braća Wright | Braća Montgolfier | Otto Lilienthal | Louis Blériot
+Koja su braća izvela prvi let balonom na vrući zrak 1783.? | Braća Montgolfier | Braća Wright | Braća Lumière | Braća Grimm
+Koja su braća održala prvu javnu filmsku projekciju 1895.? | Braća Lumière | Braća Wright | Braća Montgolfier | Braća Warner
+Tko je prvi svojim mikroskopom promatrao bakterije? | Antonie van Leeuwenhoek | Robert Hooke | Galileo Galilei | Louis Pasteur
+Tko je otkrio stanicu i dao joj ime 1665.? | Robert Hooke | Antonie van Leeuwenhoek | Isaac Newton | Charles Darwin
+Tko je otkrio da se bolesti šire mikroorganizmima i razvio pasterizaciju? | Louis Pasteur | Robert Koch | Edward Jenner | Joseph Lister
+Tko je razvio prvo cjepivo, protiv velikih boginja? | Edward Jenner | Louis Pasteur | Robert Koch | Jonas Salk
+Tko je razvio prvo cjepivo protiv dječje paralize (1955.)? | Jonas Salk | Edward Jenner | Alexander Fleming | Robert Koch
+Tko je otkrio bakteriju koja uzrokuje tuberkulozu? | Robert Koch | Louis Pasteur | Alexander Fleming | Paul Ehrlich
+Tko je postavio teoriju evolucije prirodnim odabirom? | Charles Darwin | Gregor Mendel | Jean-Baptiste Lamarck | Alfred Wegener
+Tko se smatra ocem genetike zbog pokusa s graškom? | Gregor Mendel | Charles Darwin | Louis Pasteur | Thomas Morgan
+Tko je predložio teoriju o pomicanju kontinenata? | Alfred Wegener | Charles Lyell | Andrija Mohorovičić | James Hutton
+Tko je prvi izmjerio opseg Zemlje u antičko doba? | Eratosten | Arhimed | Euklid | Ptolemej
+Tko je otkrio planet Uran 1781.? | William Herschel | Galileo Galilei | Johannes Kepler | Edmond Halley
+Tko je postavio zakone gibanja planeta oko Sunca? | Johannes Kepler | Nikola Kopernik | Galileo Galilei | Tycho Brahe
+Po kojem je astronomu nazvan komet koji se vraća svakih 75–76 godina? | Edmond Halley | Isaac Newton | Johannes Kepler | Carl Sagan
+Tko je otkrio da se svemir širi? | Edwin Hubble | Albert Einstein | Carl Sagan | Stephen Hawking
+Tko je bio prvi čovjek u svemiru 1961.? | Jurij Gagarin | Neil Armstrong | Alan Shepard | German Titov
+Tko je prvi stupio na Mjesec 1969.? | Neil Armstrong | Buzz Aldrin | Michael Collins | Jurij Gagarin
+Koji je bio prvi umjetni satelit, lansiran 1957.? | Sputnjik 1 | Explorer 1 | Vostok 1 | Apollo 1
+Koji je svemirski teleskop lansiran 1990.? | Hubble | James Webb | Kepler | Chandra
+Koji je svemirski teleskop lansiran 2021. kao nasljednik Hubblea? | James Webb | Kepler | Spitzer | Gaia
+Tko je izumio World Wide Web 1989.? | Tim Berners-Lee | Bill Gates | Steve Jobs | Vint Cerf
+Koja je tvrtka 2007. predstavila prvi iPhone? | Apple | Samsung | Nokia | Google
+Tko je suosnivač Microsofta zajedno s Paulom Allenom? | Bill Gates | Steve Jobs | Mark Zuckerberg | Larry Page
+Tko je osnovao Facebook? | Mark Zuckerberg | Jeff Bezos | Larry Page | Elon Musk
+Tko je osnovao Amazon? | Jeff Bezos | Elon Musk | Bill Gates | Jack Ma
+Tko se smatra prvom programericom u povijesti? | Ada Lovelace | Grace Hopper | Marie Curie | Hedy Lamarr
+Tko je zamislio „analitički stroj“, preteču računala, u 19. stoljeću? | Charles Babbage | Alan Turing | Blaise Pascal | John von Neumann
+Koji je britanski matematičar razbio njemačku šifru Enigma u Drugom svjetskom ratu? | Alan Turing | Charles Babbage | John Nash | Tim Berners-Lee
+Koja je glumica suizumiteljica tehnologije preskakanja frekvencija, temelja za Wi-Fi i Bluetooth? | Hedy Lamarr | Marilyn Monroe | Grace Kelly | Ingrid Bergman
+Koja je civilizacija izumila papir? | Kina | Egipat | Grčka | Mezopotamija
+Koja je civilizacija izumila barut? | Kina | Indija | Perzija | Rim
+Koja je civilizacija izumila kompas? | Kina | Grčka | Fenicija | Vikinzi
+Gdje je prema arheolozima izumljen kotač oko 3500. pr. Kr.? | Mezopotamija | Egipat | Kina | Indija
+Koja je civilizacija razvila klinasto pismo? | Sumerani | Egipćani | Feničani | Grci
+Koji je narod razvio abecedu koja je preteča grčke i latinske? | Feničani | Sumerani | Egipćani | Hetiti
+Koji je kemičar otkrio kisik u 18. stoljeću (uz Scheelea)? | Joseph Priestley | Antoine Lavoisier | John Dalton | Robert Boyle
+Tko se smatra ocem moderne kemije? | Antoine Lavoisier | Dmitrij Mendeljejev | John Dalton | Robert Boyle
+Tko je otkrio elektron 1897.? | J. J. Thomson | Ernest Rutherford | Niels Bohr | James Chadwick
+Tko je otkrio atomsku jezgru? | Ernest Rutherford | J. J. Thomson | Niels Bohr | Enrico Fermi
+Tko je izumio termometar sa živom i ljestvicu nazvanu po sebi? | Daniel Gabriel Fahrenheit | Anders Celsius | Lord Kelvin | Galileo Galilei
+Po kome je nazvana temperaturna ljestvica na kojoj voda vrije na 100°? | Anders Celsius | Daniel Fahrenheit | Lord Kelvin | René Réaumur
+Kojeg je talijanskog izumitelja američki Zastupnički dom 2002. priznao kao ranog izumitelja telefona? | Antonio Meucci | Guglielmo Marconi | Alessandro Volta | Enrico Fermi
+Tko je izumio izmjenični elektromotor (indukcijski motor)? | Nikola Tesla | Thomas Edison | Michael Faraday | George Westinghouse
+Kako se zove mjerna jedinica za magnetsku indukciju nazvana po Nikoli Tesli? | Tesla | Gauss | Weber | Henry
+Koji je hrvatski izumitelj patentirao mehaničku olovku 1906.? | Slavoljub Penkala | Faust Vrančić | Josip Belušić | Ivan Vučetić
+Koji je izumitelj rođen u Šibeniku nacrtao padobran „Homo volans“? | Faust Vrančić | Ruđer Bošković | Marin Getaldić | Slavoljub Penkala
+Koji je hrvatski izumitelj suizumio žarulju s volframovom niti? | Franjo Hanaman | Slavoljub Penkala | Nikola Tesla | Josip Belušić
+Što je izumio Eduard Slavoljub Penkala osim olovke? | Termofor (grijač) | Telefon | Radio | Kameru
+Tko je izumio Rubikovu kocku? | Ernő Rubik | Alexey Pajitnov | Nintendo | Hasbro
+Tko je izumio igru Tetris? | Alexey Pajitnov | Ernő Rubik | Shigeru Miyamoto | Nolan Bushnell
+Tko je izumio napuhanu gumu za bicikl? | John Boyd Dunlop | Charles Goodyear | Karl Drais | Michelin
+Tko je izumio postupak vulkanizacije gume? | Charles Goodyear | John Dunlop | Édouard Michelin | Henry Ford
+Koja je znanstvenica jedina dobila Nobelovu nagradu u dvije različite znanosti? | Marie Curie | Lise Meitner | Dorothy Hodgkin | Rosalind Franklin
+Čija je fotografija DNK („Fotografija 51“) pomogla otkriću dvostruke uzvojnice? | Rosalind Franklin | Marie Curie | Barbara McClintock | Lise Meitner
+Što je izumio Louis Braille? | Pismo za slijepe | Šivaći stroj | Fotoaparat | Telegraf
+Tko je 1846. patentirao šivaći stroj s dvostrukim šavom? | Elias Howe | Isaac Singer | Thomas Edison | Samuel Morse
+Tko je izumio dagerotipiju, fotografiju na posrebrenim pločama? | Louis Daguerre | Nicéphore Niépce | George Eastman | Braća Lumière
+Koja je tvrtka popularizirala fotoaparate na film s porukom „Vi pritisnete gumb, mi učinimo ostalo“? | Kodak | Canon | Nikon | Polaroid
+Koji je izum Percy Spencer slučajno otkrio kad mu se rastopila čokolada u džepu? | Mikrovalna pećnica | Hladnjak | Toster | Radar
+Koji je izum slučajno nastao kad je Spencer Silver napravio „slabo“ ljepilo? | Post-it papirići | Selotejp | Čičak | Superljepilo
+Koji je švicarski inženjer izumio čičak traku prema bodljama čička? | George de Mestral | Rudolf Diesel | Karl Elsener | Louis Chevrolet

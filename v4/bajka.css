@@ -1,0 +1,184 @@
+  /* ===================== BAJKA =====================
+     Smjer: topla noćna bajka i društvena igra. Noćno nebo (tamnoplavo, ljubičasto), lampice, mjesec, loze.
+     Materijali: tkanina (trake, gumbi), obojeni kamen sa zlatnim rubom (odgovori), drvo (pločice s imenima),
+     pergament (kartice za čitanje), baršun sa zlatnim rubom (paneli). Odabrano svijetli toplim zlatom. */
+  :root {
+    --abyss: #0e1230; --velvet: #1b1844; --plum: #2c2160;
+    --gold: #f2c35b; --gold-hi: #ffe7a3; --gold-deep: #a8741f;
+    --magenta: #e2553c; --cyan: #ffd27a; --good: #9be36a;
+    --ink: #fbf1dc; --ink-2: #d8cdea; --ink-3: #a99cc9;
+    --edge: rgba(242, 195, 91, 0.32);
+    --wood: #7a4b2a; --wood-hi: #a8703f; --wood-lo: #4a2a14;
+    --fab: #5b4a8b; --fab-hi: #7a69b3; --fab-lo: #3b2d63;
+    --velv-top: rgba(52, 40, 104, 0.92); --velv-bot: rgba(26, 20, 60, 0.94);
+    --parch: #f6e7c4; --parch-lo: #e2c891; --parch-ink: #3b2610;
+    --leaf: #6fae3d; --leaf-lo: #2f6a1f;
+    --font-display: "Titan One", "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+    --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.33'/></svg>");
+    --woodgrain: repeating-linear-gradient(91deg, rgba(40, 18, 4, 0.18) 0 2px, transparent 2px 7px, rgba(255, 220, 170, 0.06) 7px 8px, transparent 8px 15px);
+  }
+  body { font-synthesis: none; background: linear-gradient(180deg, #131a40 0%, #221a4c 55%, #2c1c4f 100%) fixed #131a40; }
+  :focus-visible { outline-color: var(--gold-hi); }
+
+  /* ukrasi */
+  #deco { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  #deco .lights { position: absolute; left: 0; top: 0; opacity: 0.95; }
+  #deco .bulb { animation: bulbTw 3.2s ease-in-out infinite; }
+  @keyframes bulbTw { 50% { opacity: 0.55; } }
+  #deco .moon { position: absolute; top: clamp(34px, 6vh, 70px); right: clamp(20px, 6vw, 90px); width: clamp(34px, 4.5vw, 70px); aspect-ratio: 1; border-radius: 50%; box-shadow: inset calc(-0.32 * clamp(34px, 4.5vw, 70px)) calc(0.08 * clamp(34px, 4.5vw, 70px)) 0 0 #ffe2a0; transform: rotate(-20deg); filter: drop-shadow(0 0 14px rgba(255, 220, 140, 0.55)); }
+  #deco .vine { position: absolute; bottom: -6px; width: clamp(90px, 13vw, 210px); aspect-ratio: 1; opacity: 0.95; }
+  #deco .vine.l { left: -6px; } #deco .vine.r { right: -6px; transform: scaleX(-1); }
+  #deco .vine svg { width: 100%; height: 100%; }
+  .door, .door-btn { isolation: isolate; }
+  .door::after, .door-btn::after { z-index: -1; }
+
+  /* naslovi: razigran font s reljefom i toplim sjajem */
+  .logo, .tv-title, .intro-card .big, .p-title, .h, .room-code, .tv-top .rl, .result .pts, .stat b, .ring b, .door .dn, .door-btn, .sort-col h3, .pw-mini b, .pw-card b, .sort-card, .p-opts.two .p-opt, .btn, .cast-banner, .door .vcount, .winner .tv-title { font-weight: 400; letter-spacing: 0.02em; }
+  .logo { position: relative; color: var(--gold); padding: 0.34em 1.05em 0.4em; margin-bottom: 0.35em; isolation: isolate; font-size: clamp(2.2rem, 6.5vw, 5.2rem);
+    text-shadow: 0 1px 0 #f0b445, 0 2px 0 #d9952f, 0 3px 0 #b77622, 0 4px 0 #8f5616, 0 8px 14px rgba(0, 0, 0, 0.5), 0 0 26px rgba(255, 200, 100, 0.5); }
+  .logo::before { content: ""; position: absolute; inset: 0 -0.2em; z-index: -1; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 90' preserveAspectRatio='none'><defs><linearGradient id='f' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%237a69b3'/><stop offset='.5' stop-color='%235b4a8b'/><stop offset='1' stop-color='%233b2d63'/></linearGradient><linearGradient id='d' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%234a3b78'/><stop offset='1' stop-color='%232a1f4a'/></linearGradient></defs><path d='M4 30 L46 30 L46 80 L4 80 L20 55 Z' fill='url(%23d)' stroke='%23c99a3c' stroke-width='2'/><path d='M296 30 L254 30 L254 80 L296 80 L280 55 Z' fill='url(%23d)' stroke='%23c99a3c' stroke-width='2'/><path d='M36 12 Q150 0 264 12 L264 72 Q150 60 36 72 Z' fill='url(%23f)' stroke='%23e8be62' stroke-width='3'/><path d='M44 19 Q150 7 256 19' fill='none' stroke='rgba(255,230,170,.45)' stroke-width='1.6' stroke-dasharray='5 4'/><path d='M44 65 Q150 53 256 65' fill='none' stroke='rgba(255,230,170,.35)' stroke-width='1.6' stroke-dasharray='5 4'/></svg>") center / 100% 100% no-repeat; }
+  .logo small { position: absolute; left: 0; right: 0; top: 100%; margin-top: 10px; color: var(--ink-2); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); letter-spacing: 0.08em; font-weight: 800; }
+  .tv-title, .p-title { color: var(--ink); text-shadow: 0 3px 0 rgba(40, 18, 60, 0.7), 0 0 26px rgba(255, 196, 110, 0.35); }
+  .intro-card .big { color: var(--gold); text-shadow: 0 2px 0 #e9a93b, 0 4px 0 #c98a2a, 0 6px 0 #a06a1c, 0 8px 0 #7a4c12, 0 16px 30px rgba(0, 0, 0, 0.55), 0 0 60px rgba(255, 196, 90, 0.5); }
+  .intro-card::before { background: repeating-conic-gradient(from 0deg, rgba(255, 210, 120, 0.12) 0deg 6deg, transparent 6deg 18deg); }
+  .intro-card .sub, .tv-top .tv-sub { color: var(--ink); background: linear-gradient(180deg, var(--fab-hi), var(--fab) 50%, var(--fab-lo)); border: 0; border-radius: 999px; padding: 0.3em 1.2em;
+    box-shadow: inset 0 0 0 2px rgba(255, 220, 150, 0.35), inset 0 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 0 #241a40, 0 10px 18px rgba(0, 0, 0, 0.35); font-weight: 800; }
+  .tv-top .tv-sub { flex: 0 1 auto !important; margin: 0 auto; font-size: clamp(0.95rem, 1.5vw, 1.4rem); text-align: center; }
+  .tv-top .rl { color: var(--gold); text-shadow: 0 3px 0 #5a3410, 0 0 16px rgba(255, 200, 100, 0.45); }
+  .q-text, .p-q { font-family: var(--font-body); font-weight: 900; color: var(--ink); letter-spacing: 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55); }
+  .q-text { font-size: clamp(1.5rem, 3.3vw, 3.3rem); }
+  .p-q { font-size: 1.35rem; }
+  .p-sub, .note, .tv-sub, .waiting { color: var(--ink-2); }
+
+  /* gumbi: zlatni med s drvenim podnožjem; sporedni kao tkanina */
+  .btn { color: #3a2208; font-family: var(--font-display); font-size: 1.35rem; letter-spacing: 0.04em;
+    background: var(--grain), linear-gradient(180deg, #ffe39a 0%, var(--gold) 45%, #d99a35 100%);
+    box-shadow: inset 0 0 0 2px rgba(255, 245, 210, 0.7), inset 0 -4px 0 rgba(120, 60, 0, 0.3), 0 6px 0 var(--wood), 0 7px 0 var(--wood-lo), 0 14px 22px rgba(0, 0, 0, 0.45), 0 0 26px rgba(255, 200, 100, 0.25); }
+  .btn::after { background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.4), transparent); }
+  .btn:active { box-shadow: inset 0 0 0 2px rgba(255, 245, 210, 0.7), 0 2px 0 var(--wood-lo), 0 6px 12px rgba(0, 0, 0, 0.4); }
+  .btn.ghost { color: var(--ink); font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; letter-spacing: 0.05em; backdrop-filter: none; border: 0;
+    background: var(--grain), linear-gradient(180deg, var(--fab-hi), var(--fab) 50%, var(--fab-lo));
+    box-shadow: inset 0 0 0 2px rgba(255, 220, 150, 0.32), 0 4px 0 #241a40, 0 10px 16px rgba(0, 0, 0, 0.4); }
+  #mute, #music { background: var(--grain), linear-gradient(180deg, var(--wood-hi), var(--wood) 60%, var(--wood-lo)); border: 0; box-shadow: inset 0 0 0 2px rgba(255, 210, 140, 0.4), 0 4px 0 #2e1708, 0 8px 16px rgba(0, 0, 0, 0.45); backdrop-filter: none; }
+  .pill, .tag { background: linear-gradient(180deg, var(--fab-hi), var(--fab) 50%, var(--fab-lo)); border: 0; color: var(--gold-hi); box-shadow: inset 0 0 0 2px rgba(255, 220, 150, 0.3), 0 3px 0 #241a40; }
+  .err { background: linear-gradient(180deg, rgba(194, 84, 57, 0.4), rgba(90, 20, 10, 0.55)); border-color: rgba(255, 150, 110, 0.7); }
+
+  /* paneli: baršun sa zlatnim rubom */
+  .card, .result.none, .stat, .rank-row, .pw-mini, .link-opt, .pair > span, .av-pick, .ev, .mboard .rank-row {
+    background: var(--grain), linear-gradient(180deg, var(--velv-top), var(--velv-bot)); border: 0; backdrop-filter: none;
+    box-shadow: inset 0 0 0 1.5px rgba(242, 195, 91, 0.55), inset 0 0 0 4px rgba(0, 0, 0, 0.18), inset 0 0 0 5px rgba(242, 195, 91, 0.16), 0 10px 22px rgba(0, 0, 0, 0.4); }
+  .card { border-radius: 26px; }
+  .rank-row:first-child { box-shadow: inset 0 0 0 2px var(--gold), inset 0 0 0 5px rgba(0, 0, 0, 0.15), 0 0 26px rgba(255, 200, 100, 0.35), 0 10px 22px rgba(0, 0, 0, 0.4); }
+  .rank-row .pos, .stat b { color: var(--gold); }
+  .rank-row.me, .mboard .rank-row.me { box-shadow: inset 0 0 0 2px var(--gold-hi), 0 0 20px rgba(255, 210, 120, 0.4); }
+  .ev { box-shadow: inset 0 0 0 1.5px rgba(226, 85, 60, 0.8), 0 8px 18px rgba(0, 0, 0, 0.35); }
+  .ev.buff { box-shadow: inset 0 0 0 1.5px rgba(155, 227, 106, 0.75), 0 8px 18px rgba(0, 0, 0, 0.35); }
+  .av-pick { border-radius: 20px; }
+  .av-pick.me { background: radial-gradient(circle at 50% 35%, rgba(255, 214, 130, 0.42), transparent 70%), linear-gradient(180deg, var(--velv-top), var(--velv-bot));
+    box-shadow: inset 0 0 0 2.5px var(--gold-hi), inset 0 0 0 5px rgba(242, 195, 91, 0.5), 0 0 28px rgba(255, 200, 100, 0.55); }
+  .av-pick span, .av-pick > :last-child { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.03em; }
+
+  /* pergament za čitanje */
+  .scroll, .sort-card, .chip {
+    background: var(--grain), radial-gradient(ellipse at 50% 40%, #fff6dc 0%, var(--parch) 55%, var(--parch-lo) 100%); color: var(--parch-ink);
+    box-shadow: inset 0 0 0 2px rgba(168, 116, 31, 0.55), inset 0 0 22px rgba(160, 110, 40, 0.35), 0 6px 0 #8a6228, 0 14px 26px rgba(0, 0, 0, 0.4); }
+  .scroll b { color: #7a4a10; font-family: var(--font-display); font-weight: 400; letter-spacing: 0.03em; }
+  .chip { box-shadow: inset 0 0 0 1.5px rgba(168, 116, 31, 0.55), 0 4px 0 #8a6228, 0 8px 14px rgba(0, 0, 0, 0.35); }
+
+  /* vremenska traka: loza */
+  .timer { position: relative; overflow: visible; height: 16px; margin: 4px 10px; padding: 3px; background: linear-gradient(180deg, #2a1f45, #1a1430);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 0 0 2px #5e4423, 0 0 0 4px #3a2814; }
+  .timer > div { background: linear-gradient(180deg, #c3ef7c, var(--leaf) 50%, var(--leaf-lo)); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35), 0 0 12px rgba(150, 230, 90, 0.5); }
+  .timer.urgent > div { background: linear-gradient(180deg, #ffd08a, #ee8a2e 50%, #b8461c); box-shadow: 0 0 16px rgba(255, 150, 60, 0.85); }
+  .timer::after { content: ""; position: absolute; inset: -12px -14px; pointer-events: none;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 40' preserveAspectRatio='none'><path d='M4 30 C30 6 50 34 80 14 S130 32 160 12 S220 32 250 14 S290 26 296 12' fill='none' stroke='%233c7a2a' stroke-width='2'/><ellipse cx='60' cy='25' rx='5' ry='2.2' fill='%235fa23a' transform='rotate(-30 60 25)'/><ellipse cx='200' cy='27' rx='5' ry='2.2' fill='%235fa23a' transform='rotate(20 200 27)'/></svg>") center / 100% 100% no-repeat; }
+  .timer::before { content: ""; position: absolute; left: -16px; top: 50%; width: 18px; height: 18px; margin-top: -9px; border-radius: 50%; z-index: 2; pointer-events: none;
+    background: radial-gradient(circle, #e07a2a 0 22%, #ffd24a 24% 60%, transparent 62%), radial-gradient(circle, transparent 0); box-shadow: 0 0 10px rgba(255, 210, 80, 0.6); }
+  #ringGrad stop:first-child { stop-color: #d6f59a; } #ringGrad stop:last-child { stop-color: #4f9a33; }
+  .ring .rbg { stroke: rgba(20, 14, 40, 0.85); }
+  .ring svg { filter: drop-shadow(0 0 8px rgba(150, 230, 90, 0.5)); }
+  .ring::before { content: ""; position: absolute; inset: 2%; border-radius: 50%; background: radial-gradient(circle, #2e2152 60%, #1c1436); box-shadow: 0 0 0 3px #5e4423, 0 0 0 5px #3a2814, 0 6px 14px rgba(0, 0, 0, 0.45); }
+  .ring b { position: relative; font-family: var(--font-body); font-weight: 900; color: var(--ink); }
+  .ring.urgent .rfg { stroke: #ee8a2e; }
+  .ring.urgent svg { filter: drop-shadow(0 0 12px rgba(255, 150, 60, 0.9)); }
+
+  /* odgovori: obojeni kamen sa zlatnim rubom i ugraviranim simbolom */
+  .o0 { --c1: #d8734f; --c2: #b84a30; --c3: #6e2716; --sym: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M52 6c6 20 30 30 30 56a32 32 0 0 1-64 0c0-14 8-22 14-30 2 10 6 14 12 16-4-16 0-28 8-42z' fill='white'/></svg>"); }
+  .o1 { --c1: #5f8bc8; --c2: #36609e; --c3: #1b345e; --sym: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 8l12 30 32 2-25 20 9 32-28-18-28 18 9-32L6 40l32-2z' fill='white'/></svg>"); }
+  .o2 { --c1: #f0b04e; --c2: #d68a26; --c3: #7c4a0e; --sym: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M62 10a40 40 0 1 0 28 62A34 34 0 1 1 62 10z' fill='white'/></svg>"); }
+  .o3 { --c1: #73b064; --c2: #4a8a3e; --c3: #24501c; --sym: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 92C20 70 14 40 50 8c36 32 30 62 0 84z' fill='white'/></svg>"); }
+  .opt, .p-opt, .sort-btn {
+    color: var(--ink); text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+    background: radial-gradient(ellipse 80% 60% at 50% 15%, rgba(255, 255, 255, 0.2), transparent 60%), var(--grain), linear-gradient(180deg, var(--c1) 0%, var(--c2) 55%, color-mix(in srgb, var(--c2) 75%, black) 100%);
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--c2) 55%, black), inset 0 0 0 5px rgba(255, 220, 150, 0.4), inset 0 -6px 12px rgba(0, 0, 0, 0.3), 0 6px 0 var(--c3), 0 12px 20px rgba(0, 0, 0, 0.45); }
+  .opt.o2, .p-opt.o2 { color: var(--ink); text-shadow: 0 2px 0 rgba(90, 45, 0, 0.5); }
+  .opt::before, .p-opt::before { left: 0; right: 0; top: 0; bottom: 0; height: auto; border-radius: 0; background: var(--sym) center / auto 70% no-repeat; opacity: 0.14; }
+  .opt { border-radius: 20px; }
+  .p-opt { border-radius: 18px; }
+  .shape { background: radial-gradient(circle at 35% 30%, #fff3c2, var(--gold) 55%, #b98328); color: #4a2a08; font-family: var(--font-display); font-weight: 400; box-shadow: inset 0 0 0 1.5px rgba(90, 50, 0, 0.45), 0 3px 0 rgba(0, 0, 0, 0.3); }
+  .opt .txt, .p-opt .otxt, .p-opt > span:last-child { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.03em; }
+  .opt.correct { box-shadow: inset 0 0 0 3px var(--gold-hi), inset 0 0 0 6px var(--gold), 0 6px 0 var(--c3), 0 0 0 3px rgba(255, 220, 140, 0.4), 0 0 46px 8px rgba(255, 196, 90, 0.6); animation: warmGlow 1.4s ease-in-out infinite alternate; }
+  .fresh .opt.correct { animation: warmGlow 1.4s ease-in-out infinite alternate; }
+  @keyframes warmGlow { to { filter: brightness(1.12); box-shadow: inset 0 0 0 3px var(--gold-hi), inset 0 0 0 6px var(--gold), 0 6px 0 var(--c3), 0 0 0 4px rgba(255, 220, 140, 0.5), 0 0 70px 14px rgba(255, 196, 90, 0.7); } }
+  .p-opt.picked { box-shadow: inset 0 0 0 3px var(--gold-hi), inset 0 0 0 6px var(--gold), 0 6px 0 var(--c3), 0 0 34px 6px rgba(255, 196, 90, 0.6); }
+  .opt .cnt { background: rgba(30, 14, 4, 0.45); box-shadow: inset 0 0 0 1px rgba(255, 220, 150, 0.4); }
+  .sort-btn.a { --c1: #5f8bc8; --c2: #36609e; --c3: #1b345e; }
+  .sort-btn.b { --c1: #d8734f; --c2: #b84a30; --c3: #6e2716; }
+  .sort-col.a { background: var(--grain), linear-gradient(180deg, rgba(95, 139, 200, 0.5), rgba(27, 52, 94, 0.75)); border: 0; box-shadow: inset 0 0 0 2px rgba(255, 220, 150, 0.45), 0 16px 34px rgba(0, 0, 0, 0.4); }
+  .sort-col.b { background: var(--grain), linear-gradient(180deg, rgba(216, 115, 79, 0.5), rgba(110, 39, 22, 0.75)); border: 0; box-shadow: inset 0 0 0 2px rgba(255, 220, 150, 0.45), 0 16px 34px rgba(0, 0, 0, 0.4); }
+
+  /* vrata kategorija: oslikano drvo sa zlatnim okovom */
+  .door, .door-btn { background: radial-gradient(120% 70% at 50% 18%, color-mix(in srgb, var(--c1) 85%, #fff 15%), var(--c2) 60%, var(--c3)); }
+  .door::after, .door-btn::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--woodgrain), var(--grain); opacity: 0.5; pointer-events: none; mix-blend-mode: multiply; }
+  .door { box-shadow: 0 0 0 4px var(--wood-lo), 0 0 0 8px var(--gold), 0 0 0 10px var(--gold-deep), inset 0 0 40px rgba(0, 0, 0, 0.35), inset 0 6px 0 rgba(255, 255, 255, 0.22), 0 24px 44px rgba(0, 0, 0, 0.5); }
+  .door .dn, .door-btn { color: var(--ink); text-shadow: 0 3px 0 rgba(0, 0, 0, 0.4); }
+  .door.o2 .dn, .door-btn.o2 { color: var(--ink); text-shadow: 0 2px 0 rgba(90, 45, 0, 0.55); }
+  .door.lead, .door.win { box-shadow: 0 0 0 4px var(--wood-lo), 0 0 0 8px var(--gold-hi), 0 0 0 10px var(--gold), 0 0 70px rgba(255, 196, 90, 0.75), inset 0 6px 0 rgba(255, 255, 255, 0.3); }
+  .door-btn { box-shadow: 0 0 0 3px var(--wood-lo), 0 0 0 6px var(--gold), inset 0 4px 0 rgba(255, 255, 255, 0.22), 0 12px 22px rgba(0, 0, 0, 0.45); }
+  .door-btn.picked, .door-btn.win { box-shadow: 0 0 0 3px var(--wood-lo), 0 0 0 6px var(--gold-hi), 0 0 36px rgba(255, 196, 90, 0.75); }
+  .door .vcount { background: radial-gradient(circle at 35% 30%, #fff3c2, var(--gold) 55%, #b98328); color: #4a2a08; font-family: var(--font-display); }
+
+  /* moći */
+  .pw-card { border: 0; background: var(--grain), linear-gradient(180deg, var(--velv-top), var(--velv-bot)); box-shadow: inset 0 0 0 1.5px rgba(242, 195, 91, 0.5), 0 10px 22px rgba(0, 0, 0, 0.4); }
+  .pw-card.atk { background: var(--grain), linear-gradient(180deg, rgba(150, 52, 40, 0.92), rgba(70, 20, 22, 0.95)); box-shadow: inset 0 0 0 2px rgba(255, 170, 120, 0.6), inset 0 0 0 5px rgba(0, 0, 0, 0.15), 0 10px 22px rgba(0, 0, 0, 0.4); }
+  .pw-card.buff { background: var(--grain), linear-gradient(180deg, rgba(62, 110, 52, 0.92), rgba(22, 50, 26, 0.95)); box-shadow: inset 0 0 0 2px rgba(190, 240, 140, 0.55), inset 0 0 0 5px rgba(0, 0, 0, 0.15), 0 10px 22px rgba(0, 0, 0, 0.4); }
+  .pw-card b, .pw-mini b { font-family: var(--font-display); color: var(--gold-hi); }
+  .pw-ico { background: radial-gradient(circle at 35% 25%, #fff3c2, #e9c27a 50%, #a8741f); border: 0; box-shadow: inset 0 0 0 2px rgba(90, 50, 0, 0.4), 0 4px 0 rgba(40, 20, 0, 0.5), 0 0 14px rgba(255, 200, 100, 0.35); border-radius: 50%; }
+  .target { background: var(--grain), linear-gradient(180deg, rgba(150, 52, 40, 0.9), rgba(70, 20, 22, 0.95)); border: 0; box-shadow: inset 0 0 0 2px rgba(255, 170, 120, 0.55), 0 8px 16px rgba(0, 0, 0, 0.4); }
+
+  /* likovi: drvene pločice s imenom, topli krug svjetla pod nogama */
+  .who::before { background: radial-gradient(closest-side, rgba(255, 200, 110, 0.4), transparent); }
+  .who .nm { color: var(--ink); text-shadow: 0 1px 0 #2a160a; border: 0; border-radius: 8px; padding: 1px 10px;
+    background: var(--woodgrain), linear-gradient(180deg, var(--wood-hi), var(--wood) 60%, var(--wood-lo)); box-shadow: inset 0 0 0 1.5px rgba(255, 210, 140, 0.4), 0 3px 0 var(--wood-lo), 0 6px 10px rgba(0, 0, 0, 0.4); }
+  .who .sc { color: var(--gold-hi); }
+  .who .badge { background: radial-gradient(circle at 35% 30%, #d9f7a6, var(--good) 50%, #4f8f45); color: #17360c; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.6), 0 3px 0 #2c5a20, 0 8px 14px rgba(0, 0, 0, 0.4); }
+  .who .badge.gain { background: radial-gradient(circle at 35% 30%, #fff3c2, var(--gold) 55%, #b98328); color: #4a2a08; box-shadow: inset 0 0 0 1.5px rgba(90, 50, 0, 0.4), 0 3px 0 var(--wood), 0 8px 14px rgba(0, 0, 0, 0.4); }
+  .voter .vnm, .cnm { background: var(--woodgrain), linear-gradient(180deg, var(--wood-hi), var(--wood) 60%, var(--wood-lo)); border: 0; border-radius: 7px; box-shadow: inset 0 0 0 1px rgba(255, 210, 140, 0.4), 0 2px 0 var(--wood-lo); }
+
+  /* rezultati */
+  .result.ok { background: var(--grain), radial-gradient(circle at 50% 0%, rgba(155, 227, 106, 0.55), rgba(30, 70, 26, 0.9)); border: 0; box-shadow: inset 0 0 0 2px rgba(220, 255, 170, 0.7), inset 0 0 0 5px rgba(0, 0, 0, 0.12), 0 0 40px rgba(155, 227, 106, 0.35), 0 16px 34px rgba(0, 0, 0, 0.45); }
+  .result.bad { background: var(--grain), radial-gradient(circle at 50% 0%, rgba(226, 85, 60, 0.55), rgba(80, 22, 16, 0.92)); border: 0; box-shadow: inset 0 0 0 2px rgba(255, 180, 140, 0.6), inset 0 0 0 5px rgba(0, 0, 0, 0.12), 0 16px 34px rgba(0, 0, 0, 0.45); }
+  .result .pts { color: var(--gold); text-shadow: 0 3px 0 #5a3410, 0 0 22px rgba(255, 200, 100, 0.6); }
+  .progress i.done { background: linear-gradient(180deg, #c3ef7c, var(--leaf)); box-shadow: 0 0 10px rgba(150, 230, 90, 0.6); }
+
+  /* piramida: zlatno-medeni kamen */
+  .pstep { background: var(--grain), linear-gradient(180deg, #f3cf7a 0%, #d9a04a 40%, #9c6524 100%); }
+  .pstep.top { background: var(--grain), linear-gradient(180deg, #fff3c2, var(--gold) 50%, #c98a2a); box-shadow: 0 0 60px rgba(255, 200, 100, 0.8); }
+  .pstep .lv { color: rgba(74, 38, 6, 0.6); font-family: var(--font-display); font-weight: 400; }
+  .step-meter i.on { background: linear-gradient(180deg, #fff1b8, var(--gold) 50%, #c98a2a); }
+
+  /* predvorje */
+  .qr { box-shadow: 0 0 0 5px var(--wood), 0 0 0 9px var(--gold), 0 0 44px rgba(255, 196, 90, 0.45); }
+  .room-code { font-family: var(--font-display); color: var(--gold-hi); text-shadow: 0 4px 0 #5a3410, 0 0 26px rgba(255, 200, 100, 0.5); }
+  .form input { background: var(--grain), linear-gradient(180deg, rgba(20, 14, 44, 0.9), rgba(32, 24, 66, 0.9)); border: 0; box-shadow: inset 0 0 0 1.5px rgba(242, 195, 91, 0.55), inset 0 3px 8px rgba(0, 0, 0, 0.5); color: var(--ink); }
+  .form input:focus { box-shadow: inset 0 0 0 2px var(--gold-hi), inset 0 3px 8px rgba(0, 0, 0, 0.5), 0 0 18px rgba(255, 200, 100, 0.35); }
+  .form label { color: var(--gold-hi); font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; }
+
+  /* prikaz bacanja moći */
+  .cast-banner { background: var(--grain), linear-gradient(180deg, var(--fab-hi), var(--fab) 50%, var(--fab-lo)); border: 0; font-family: var(--font-display); box-shadow: inset 0 0 0 2px rgba(255, 220, 150, 0.45), 0 4px 0 #241a40, 0 12px 20px rgba(0, 0, 0, 0.45); }
+  .logo { font-size: clamp(2.5rem, 9.5vw, 5.2rem); }
+  .logo small { font-size: max(0.24em, 0.9rem); }
+  .btn { font-size: clamp(1.05rem, 4.4vw, 1.35rem); }
+  .btn.ghost { font-size: clamp(0.95rem, 3.8vw, 1.05rem); }

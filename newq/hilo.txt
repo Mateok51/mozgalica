@@ -1,0 +1,118 @@
+Koji grad ima više stanovnika? | Split=~160 000 | Rijeka=~108 000
+Koji grad ima više stanovnika? | Rijeka=~108 000 | Osijek=~96 000
+Koji grad ima više stanovnika? | Osijek=~96 000 | Zadar=~71 000
+Koji grad ima više stanovnika? | Zadar=~71 000 | Pula=~52 000
+Koji grad ima više stanovnika? | Zagreb=~770 000 | Ljubljana=~290 000
+Koji grad ima više stanovnika? | Beograd=~1,2 mil. | Zagreb=~770 000
+Koji grad ima više stanovnika? | Beč=~2 mil. | Budimpešta=~1,7 mil.
+Koji grad ima više stanovnika? | London=~9 mil. | Pariz=~2,1 mil.
+Koji grad ima više stanovnika? | Tokio=~14 mil. | London=~9 mil.
+Koji grad ima više stanovnika? | Rim=~2,8 mil. | Milano=~1,4 mil.
+Koji grad ima više stanovnika? | Berlin=~3,8 mil. | München=~1,5 mil.
+Koji grad ima više stanovnika? | Madrid=~3,3 mil. | Barcelona=~1,6 mil.
+Koja država ima više stanovnika? | Njemačka=~84 mil. | Francuska=~68 mil.
+Koja država ima više stanovnika? | Italija=~59 mil. | Španjolska=~48 mil.
+Koja država ima više stanovnika? | Poljska=~37 mil. | Rumunjska=~19 mil.
+Koja država ima više stanovnika? | Mađarska=~9,6 mil. | Austrija=~9,1 mil.
+Koja država ima više stanovnika? | Srbija=~6,6 mil. | Hrvatska=~3,9 mil.
+Koja država ima više stanovnika? | Hrvatska=~3,9 mil. | Slovenija=~2,1 mil.
+Koja država ima više stanovnika? | Bosna i Hercegovina=~3,2 mil. | Crna Gora=~0,6 mil.
+Koja država ima više stanovnika? | SAD=~340 mil. | Brazil=~210 mil.
+Koja država ima više stanovnika? | Indonezija=~280 mil. | Pakistan=~240 mil.
+Koja država ima više stanovnika? | Japan=~124 mil. | Njemačka=~84 mil.
+Koja država ima više stanovnika? | Nigerija=~225 mil. | Egipat=~110 mil.
+Koja država ima više stanovnika? | Kanada=~40 mil. | Australija=~27 mil.
+Koja je država veća po površini? | Kanada=~10 mil. km² | SAD=~9,8 mil. km²
+Koja je država veća po površini? | Kina=~9,6 mil. km² | Brazil=~8,5 mil. km²
+Koja je država veća po površini? | Australija=~7,7 mil. km² | Indija=~3,3 mil. km²
+Koja je država veća po površini? | Francuska=~550 000 km² | Španjolska=~506 000 km²
+Koja je država veća po površini? | Španjolska=~506 000 km² | Njemačka=~357 000 km²
+Koja je država veća po površini? | Njemačka=~357 000 km² | Italija=~302 000 km²
+Koja je država veća po površini? | Grčka=~132 000 km² | Hrvatska=~57 000 km²
+Koja je država veća po površini? | Hrvatska=~57 000 km² | Slovenija=~20 000 km²
+Koja je država veća po površini? | Bosna i Hercegovina=~51 000 km² | Slovačka=~49 000 km²
+Koja je država veća po površini? | Mađarska=~93 000 km² | Austrija=~84 000 km²
+Koja je država veća po površini? | Island=~103 000 km² | Irska=~70 000 km²
+Koji je vrh viši? | Mount Everest=8849 m | K2=8611 m
+Koji je vrh viši? | Mont Blanc=4806 m | Matterhorn=4478 m
+Koji je vrh viši? | Kilimandžaro=5895 m | Mont Blanc=4806 m
+Koji je vrh viši? | Triglav=2864 m | Dinara=1831 m
+Koji je vrh viši? | Dinara=1831 m | Sveti Jure (Biokovo)=1762 m
+Koji je vrh viši? | Učka (Vojak)=1401 m | Sljeme=1033 m
+Koja je rijeka dulja? | Dunav=~2850 km | Rajna=~1230 km
+Koja je rijeka dulja? | Sava=~950 km | Drava=~750 km
+Koja je rijeka dulja? | Drava=~750 km | Kupa=~300 km
+Koja je rijeka dulja? | Volga=~3530 km | Dunav=~2850 km
+Koji je otok veći? | Krk=~406 km² | Brač=~395 km²
+Koji je otok veći? | Brač=~395 km² | Hvar=~297 km²
+Koji je otok veći? | Hvar=~297 km² | Pag=~284 km²
+Koji je otok veći? | Korčula=~279 km² | Mljet=~98 km²
+Koji je otok veći? | Grenland=~2,1 mil. km² | Madagaskar=~587 000 km²
+Koji je otok veći? | Sicilija=~25 700 km² | Sardinija=~24 100 km²
+Koje je jezero veće? | Kaspijsko jezero=~371 000 km² | Gornje jezero=~82 000 km²
+Koje je jezero veće? | Balaton=~590 km² | Vransko jezero (Dalmacija)=~30 km²
+Koja je životinja teža? | Plavi kit=~150 t | Afrički slon=~6 t
+Koja je životinja teža? | Afrički slon=~6 t | Vodenkonj=~1,5 t
+Koja je životinja teža? | Polarni medvjed=~450 kg | Lav=~190 kg
+Koja je životinja teža? | Gorila=~160 kg | Čovjek=~70 kg
+Koja je životinja teža? | Noj=~110 kg | Pingvin carski=~30 kg
+Koja je životinja brža? | Gepard=~110 km/h | Lav=~80 km/h
+Koja je životinja brža? | Konj=~70 km/h | Čovjek=~37 km/h
+Koja je životinja brža? | Sivi sokol (u obrušavanju)=~390 km/h | Gepard=~110 km/h
+Koja je životinja brža? | Zec=~70 km/h | Medvjed=~50 km/h
+Koja životinja živi dulje? | Kornjača (divovska)=~150 god. | Slon=~70 god.
+Koja životinja živi dulje? | Pas=~13 god. | Hrčak=~2,5 god.
+Koja životinja živi dulje? | Mačka=~15 god. | Zec=~9 god.
+Koja životinja ima više nogu? | Pauk=8 | Mrav=6
+Koja životinja ima više nogu? | Rak=10 | Pauk=8
+Tko ima više zuba? | Odrastao čovjek=32 | Dijete (mliječni)=20
+Koji planet je veći? | Jupiter=~140 000 km | Saturn=~116 000 km
+Koji planet je veći? | Zemlja=~12 700 km | Venera=~12 100 km
+Koji planet je veći? | Venera=~12 100 km | Mars=~6800 km
+Koji planet ima više mjeseci? | Saturn=274 | Jupiter=95
+Koji planet ima više mjeseci? | Mars=2 | Zemlja=1
+Koji je planet dalje od Sunca? | Neptun=8. | Uran=7.
+Koja zgrada je viša? | Burj Khalifa=828 m | Shanghai Tower=632 m
+Koja zgrada je viša? | Empire State Building=443 m | Eiffelov toranj=330 m
+Koja građevina je starija? | Piramide u Gizi=~2560. pr. Kr. | Koloseum=80.
+Koja građevina je starija? | Koloseum=80. | Dioklecijanova palača=~305.
+Koja građevina je starija? | Dioklecijanova palača=~305. | Katedrala Notre-Dame=1163.–1345.
+Koja građevina je starija? | Kosi toranj u Pisi=1173. | Eiffelov toranj=1889.
+Koja građevina je starija? | Eiffelov toranj=1889. | Opera u Sydneyju=1973.
+Što je izumljeno ranije? | Telefon=1876. | Žarulja (Edison)=1879.
+Što je izumljeno ranije? | Fotografija=1826. | Film (Lumière)=1895.
+Što je izumljeno ranije? | Radio=~1895. | Televizija=1926.
+Što je izumljeno ranije? | Penicilin=1928. | Internetski web=1989.
+Što je izumljeno ranije? | Dinamit=1867. | Avion (braća Wright)=1903.
+Što se dogodilo ranije? | Otkriće Amerike=1492. | Francuska revolucija=1789.
+Što se dogodilo ranije? | Prvi svjetski rat=1914. | Drugi svjetski rat=1939.
+Što se dogodilo ranije? | Pad Berlinskog zida=1989. | Samostalnost Hrvatske=1991.
+Što se dogodilo ranije? | Slijetanje na Mjesec=1969. | Prvi iPhone=2007.
+Što se dogodilo ranije? | Ulazak Hrvatske u EU=2013. | Uvođenje eura u Hrvatskoj=2023.
+Tko je rođen ranije? | Mozart=1756. | Beethoven=1770.
+Tko je rođen ranije? | Leonardo da Vinci=1452. | Michelangelo=1475.
+Tko je rođen ranije? | Nikola Tesla=1856. | Albert Einstein=1879.
+Tko je rođen ranije? | Cervantes=1547. | Shakespeare=1564.
+Koji film je zaradio više u kinima? | Avatar=~2,9 mlrd. $ | Titanic=~2,3 mlrd. $
+Koji film je zaradio više u kinima? | Osvetnici: Završnica=~2,8 mlrd. $ | Titanic=~2,3 mlrd. $
+Što ima više kalorija (na 100 g)? | Čokolada=~540 kcal | Banana=~90 kcal
+Što ima više kalorija (na 100 g)? | Maslinovo ulje=~880 kcal | Maslac=~720 kcal
+Što ima više kalorija (na 100 g)? | Kruh=~260 kcal | Jabuka=~52 kcal
+Što ima više kofeina (po šalici)? | Kava=~95 mg | Zeleni čaj=~30 mg
+Što ima više šećera (na 100 g)? | Med=~82 g | Jabuka=~10 g
+Koji broj je veći? | 2¹⁰=1024 | 10³=1000
+Koji broj je veći? | 1/3=0,333 | 0,3=0,3
+Koji broj je veći? | 7 × 8=56 | 6 × 9=54
+Koji broj je veći? | Milijarda=10⁹ | Milijun=10⁶
+Što ima više: dana u godini ili kostiju u tijelu? | Dana u godini=365 | Kostiju u tijelu=206
+Što ima više: tipki na klaviru ili karata u špilu? | Tipki na klaviru=88 | Karata u špilu=52
+Što ima više: polja na šahovnici ili tjedana u godini? | Polja na šahovnici=64 | Tjedana u godini=52
+Što ima više: država u EU ili županija u Hrvatskoj? | Država u EU=27 | Županija u Hrvatskoj (s Gradom Zagrebom)=21
+Što ima više: igrača u ragbiju ili u nogometu (jedna momčad)? | Ragbi=15 | Nogomet=11
+Što ima više: igrača u odbojci ili košarci (na terenu)? | Odbojka=6 | Košarka=5
+Što ima više: žica na violini ili na gitari? | Gitara=6 | Violina=4
+Koji jezik ima više izvornih govornika? | Španjolski=~480 mil. | Engleski=~380 mil.
+Koji jezik ima više izvornih govornika? | Hindski=~340 mil. | Francuski=~80 mil.
+Koji je nacionalni park veći? | Plitvička jezera=~297 km² | Krka=~109 km²
+Koja je planina dulja? | Ande=~7000 km | Himalaja=~2400 km
+Koja je pustinja veća? | Sahara=~9,2 mil. km² | Gobi=~1,3 mil. km²

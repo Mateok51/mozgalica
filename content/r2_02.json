@@ -1,0 +1,1608 @@
+{
+ "cats": {
+  "Ljudsko tijelo": [
+   {
+    "q": "Kako se zove najveća arterija u ljudskom tijelu?",
+    "o": [
+     "Aorta",
+     "Plućna vena",
+     "Vratna arterija",
+     "Šuplja vena"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zovu krvne žile koje dovode krv natrag u srce?",
+    "o": [
+     "Arterije",
+     "Vene",
+     "Kapilare",
+     "Limfne žile"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zovu najsitnije krvne žile u tijelu?",
+    "o": [
+     "Vene",
+     "Arteriole",
+     "Kapilare",
+     "Aorte"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje krvne pločice sudjeluju u zgrušavanju krvi?",
+    "o": [
+     "Eritrociti",
+     "Leukociti",
+     "Limfociti",
+     "Trombociti"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje krvne stanice brane tijelo od infekcija?",
+    "o": [
+     "Leukociti",
+     "Eritrociti",
+     "Trombociti",
+     "Hepatociti"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja bjelančevina u crvenim krvnim zrncima veže kisik?",
+    "o": [
+     "Inzulin",
+     "Hemoglobin",
+     "Keratin",
+     "Kolagen"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je mineral nužan za stvaranje hemoglobina?",
+    "o": [
+     "Kalcij",
+     "Natrij",
+     "Željezo",
+     "Cink"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se stručno naziva koljena čašica?",
+    "o": [
+     "Tibija",
+     "Fibula",
+     "Ulna",
+     "Patela"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na koju se kost sprijeda vežu rebra?",
+    "o": [
+     "Prsnu kost",
+     "Ključnu kost",
+     "Lopaticu",
+     "Kralježnicu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko kralježaka ima vratni dio kralježnice?",
+    "o": [
+     "5",
+     "7",
+     "12",
+     "9"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji se mišić smatra najvećim u ljudskom tijelu?",
+    "o": [
+     "Biceps",
+     "Ošit",
+     "Veliki stražnjični mišić",
+     "Srčani mišić"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji organ proizvodi žuč?",
+    "o": [
+     "Žučni mjehur",
+     "Gušterača",
+     "Slezena",
+     "Jetra"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se organu pohranjuje žuč?",
+    "o": [
+     "U žučnom mjehuru",
+     "U jetri",
+     "U želucu",
+     "U slezeni"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je najveći unutarnji organ ljudskog tijela?",
+    "o": [
+     "Pluća",
+     "Jetra",
+     "Mozak",
+     "Želudac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojim se strukturama pluća odvija izmjena plinova?",
+    "o": [
+     "U dušniku",
+     "U bronhima",
+     "U plućnim mjehurićima",
+     "U pleuri"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji mišić ispod pluća ima glavnu ulogu u disanju?",
+    "o": [
+     "Trapezni mišić",
+     "Biceps",
+     "Prsni mišić",
+     "Ošit"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove cijev koja vodi hranu od ždrijela do želuca?",
+    "o": [
+     "Jednjak",
+     "Dušnik",
+     "Grkljan",
+     "Dvanaesnik"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove prvi dio tankog crijeva, odmah nakon želuca?",
+    "o": [
+     "Slijepo crijevo",
+     "Dvanaesnik",
+     "Debelo crijevo",
+     "Jednjak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Slijepo crijevo, odnosno crvuljak, dio je kojeg organa?",
+    "o": [
+     "Tankog crijeva",
+     "Želuca",
+     "Debelog crijeva",
+     "Jetre"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se dijelu probavnog sustava najviše upija voda?",
+    "o": [
+     "U želucu",
+     "U jednjaku",
+     "U usnoj šupljini",
+     "U debelom crijevu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji enzim u slini počinje razgradnju škroba?",
+    "o": [
+     "Amilaza",
+     "Pepsin",
+     "Lipaza",
+     "Tripsin"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja žlijezda u vratu proizvodi hormon tiroksin?",
+    "o": [
+     "Hipofiza",
+     "Štitnjača",
+     "Gušterača",
+     "Timus"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji hormon nadbubrežne žlijezde izlučuju u stresu i opasnosti?",
+    "o": [
+     "Inzulin",
+     "Melatonin",
+     "Adrenalin",
+     "Tiroksin"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se žlijezda u mozgu često naziva „glavnom žlijezdom“?",
+    "o": [
+     "Štitnjača",
+     "Epifiza",
+     "Timus",
+     "Hipofiza"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji hormon, važan za ritam spavanja, luči epifiza?",
+    "o": [
+     "Melatonin",
+     "Adrenalin",
+     "Testosteron",
+     "Glukagon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji hormon gušterače podiže razinu šećera u krvi?",
+    "o": [
+     "Inzulin",
+     "Glukagon",
+     "Melatonin",
+     "Tiroksin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zovu stanice koje prenose živčane impulse?",
+    "o": [
+     "Eritrociti",
+     "Osteociti",
+     "Neuroni",
+     "Hepatociti"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Otprilike koliko neurona ima ljudski mozak?",
+    "o": [
+     "Oko 86 milijuna",
+     "Oko 86 tisuća",
+     "Oko 86 bilijuna",
+     "Oko 86 milijardi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove otvor u središtu oka koji propušta svjetlost?",
+    "o": [
+     "Zjenica",
+     "Šarenica",
+     "Mrežnica",
+     "Leća"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove sloj u oku na koji pada slika i koji ima fotoreceptore?",
+    "o": [
+     "Rožnica",
+     "Mrežnica",
+     "Šarenica",
+     "Bjeloočnica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje stanice mrežnice omogućuju razlikovanje boja?",
+    "o": [
+     "Štapići",
+     "Neuroni",
+     "Čunjići",
+     "Trepetljike"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se naziva nemogućnost razlikovanja nekih boja?",
+    "o": [
+     "Astigmatizam",
+     "Glaukom",
+     "Katarakta",
+     "Daltonizam"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se stručno naziva kratkovidnost?",
+    "o": [
+     "Miopija",
+     "Hipermetropija",
+     "Prezbiopija",
+     "Ambliopija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je boja očiju najčešća u svijetu?",
+    "o": [
+     "Plava",
+     "Smeđa",
+     "Zelena",
+     "Siva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji dio uha titra pri udaru zvuka i odvaja vanjsko od srednjeg uha?",
+    "o": [
+     "Pužnica",
+     "Ušna školjka",
+     "Bubnjić",
+     "Stremen"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji dio unutarnjeg uha služi za osjet ravnoteže?",
+    "o": [
+     "Pužnica",
+     "Bubnjić",
+     "Eustahijeva cijev",
+     "Polukružni kanalići"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove cijev koja povezuje srednje uho sa ždrijelom?",
+    "o": [
+     "Eustahijeva cijev",
+     "Falopijeva cijev",
+     "Jednjak",
+     "Dušnik"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se okus, uz slatko, slano, kiselo i gorko, ubraja u osnovne?",
+    "o": [
+     "Ljuto",
+     "Umami",
+     "Opor",
+     "Metalni"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od koje su bjelančevine uglavnom građeni kosa i nokti?",
+    "o": [
+     "Kolagena",
+     "Hemoglobina",
+     "Keratina",
+     "Inzulina"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji pigment daje boju koži i kosi?",
+    "o": [
+     "Klorofil",
+     "Hemoglobin",
+     "Karoten",
+     "Melanin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je najtvrđa tvar u ljudskom tijelu?",
+    "o": [
+     "Zubna caklina",
+     "Bedrena kost",
+     "Lubanja",
+     "Nokat"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zovu prednji zubi namijenjeni odgrizanju hrane?",
+    "o": [
+     "Kutnjaci",
+     "Sjekutići",
+     "Pretkutnjaci",
+     "Umnjaci"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko otprilike puta u minuti kuca srce odrasle osobe u mirovanju?",
+    "o": [
+     "20 – 40",
+     "120 – 160",
+     "60 – 100",
+     "180 – 220"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja klijetka srca pumpa krv u cijelo tijelo?",
+    "o": [
+     "Desna klijetka",
+     "Lijeva pretklijetka",
+     "Desna pretklijetka",
+     "Lijeva klijetka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojim dijelom krvotoka krv putuje iz srca u pluća i natrag?",
+    "o": [
+     "Malim (plućnim) krvotokom",
+     "Velikim krvotokom",
+     "Limfnim sustavom",
+     "Portalnim krvotokom"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je engleski liječnik 1628. opisao kruženje krvi u tijelu?",
+    "o": [
+     "Edward Jenner",
+     "William Harvey",
+     "Joseph Lister",
+     "Isaac Newton"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je 1901. otkrio krvne grupe sustava AB0?",
+    "o": [
+     "Robert Koch",
+     "Louis Pasteur",
+     "Karl Landsteiner",
+     "Sigmund Freud"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je kirurg 1967. izveo prvu transplantaciju srca s čovjeka na čovjeka?",
+    "o": [
+     "Michael DeBakey",
+     "Joseph Murray",
+     "Denton Cooley",
+     "Christiaan Barnard"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se starogrčki liječnik smatra ocem medicine?",
+    "o": [
+     "Hipokrat",
+     "Galen",
+     "Aristotel",
+     "Pitagora"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojim instrumentom liječnik osluškuje rad srca i pluća?",
+    "o": [
+     "Tlakomjerom",
+     "Stetoskopom",
+     "Toplomjerom",
+     "Otoskopom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove gornja vrijednost izmjerenog krvnog tlaka?",
+    "o": [
+     "Dijastolički tlak",
+     "Venski tlak",
+     "Sistolički tlak",
+     "Osmotski tlak"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se stručno naziva povišeni krvni tlak?",
+    "o": [
+     "Hipotenzija",
+     "Hipotermija",
+     "Hipoglikemija",
+     "Hipertenzija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se krvna grupa smatra „univerzalnim primateljem“?",
+    "o": [
+     "AB pozitivna",
+     "0 negativna",
+     "A pozitivna",
+     "B negativna"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji organ u gornjem lijevom dijelu trbuha razgrađuje stare eritrocite?",
+    "o": [
+     "Jetra",
+     "Slezena",
+     "Gušterača",
+     "Žučni mjehur"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Gdje se u tijelu stvara većina krvnih stanica?",
+    "o": [
+     "U jetri",
+     "U srcu",
+     "U koštanoj srži",
+     "U slezeni"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se žlijezda iza prsne kosti nakon puberteta postupno smanjuje?",
+    "o": [
+     "Štitnjača",
+     "Hipofiza",
+     "Slezena",
+     "Timus"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove najdulji živac u ljudskom tijelu?",
+    "o": [
+     "Ishijadični živac",
+     "Vidni živac",
+     "Lutajući živac",
+     "Facijalni živac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji dio mozga, nastavak leđne moždine, upravlja disanjem?",
+    "o": [
+     "Mali mozak",
+     "Produžena moždina",
+     "Hipokampus",
+     "Čeoni režanj"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja moždana polutka uglavnom upravlja desnom stranom tijela?",
+    "o": [
+     "Desna",
+     "Obje jednako",
+     "Lijeva",
+     "Nijedna"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se režnju mozga nalazi glavno središte za vid?",
+    "o": [
+     "U čeonom",
+     "U sljepoočnom",
+     "U tjemenom",
+     "U zatiljnom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je moždana struktura, nazvana po morskom konjicu, važna za pamćenje?",
+    "o": [
+     "Hipokampus",
+     "Hipotalamus",
+     "Talamus",
+     "Amigdala"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Upala čega je meningitis?",
+    "o": [
+     "Jetre",
+     "Moždanih ovojnica",
+     "Zglobova",
+     "Slijepog crijeva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Upala kojeg organa je hepatitis?",
+    "o": [
+     "Bubrega",
+     "Pluća",
+     "Jetre",
+     "Srca"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se naziva upala slijepog crijeva?",
+    "o": [
+     "Gastritis",
+     "Bronhitis",
+     "Artritis",
+     "Apendicitis"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove bolest pri kojoj kosti postaju krhke i porozne?",
+    "o": [
+     "Osteoporoza",
+     "Skolioza",
+     "Artroza",
+     "Rahitis"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Nedostatak kojeg vitamina uzrokuje skorbut?",
+    "o": [
+     "Vitamina A",
+     "Vitamina C",
+     "Vitamina D",
+     "Vitamina B12"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Nedostatak kojeg vitamina može uzrokovati noćnu sljepoću?",
+    "o": [
+     "Vitamina C",
+     "Vitamina K",
+     "Vitamina A",
+     "Vitamina E"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Nedostatak kojeg elementa u prehrani uzrokuje gušu (povećanu štitnjaču)?",
+    "o": [
+     "Željeza",
+     "Kalcija",
+     "Magnezija",
+     "Joda"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Otprilike koliki dio tjelesne mase odrasle osobe čini voda?",
+    "o": [
+     "Oko 60 %",
+     "Oko 30 %",
+     "Oko 90 %",
+     "Oko 10 %"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove mišić s prednje strane nadlaktice koji savija lakat?",
+    "o": [
+     "Triceps",
+     "Biceps",
+     "Deltoidni mišić",
+     "Trapezni mišić"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što povezuje mišić s kosti?",
+    "o": [
+     "Sveza (ligament)",
+     "Hrskavica",
+     "Tetiva",
+     "Živac"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje dvije kosti čine podlakticu?",
+    "o": [
+     "Goljenična i lisna",
+     "Ramena i ključna",
+     "Bedrena i lisna",
+     "Palčana i lakatna"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja hrskavica zatvara dušnik pri gutanju hrane?",
+    "o": [
+     "Grkljanski poklopac",
+     "Resica",
+     "Krajnik",
+     "Glasnica"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se organu nalaze glasnice?",
+    "o": [
+     "U ždrijelu",
+     "U grkljanu",
+     "U dušniku",
+     "U jednjaku"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko režnjeva ima desno plućno krilo?",
+    "o": [
+     "2",
+     "4",
+     "3",
+     "5"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je najveća stanica u ljudskom tijelu?",
+    "o": [
+     "Spermij",
+     "Neuron",
+     "Eritrocit",
+     "Jajna stanica"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji spolni kromosomi određuju muški spol?",
+    "o": [
+     "XY",
+     "XX",
+     "YY",
+     "X0"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Višak kojeg kromosoma uzrokuje Downov sindrom?",
+    "o": [
+     "13.",
+     "21.",
+     "18.",
+     "23."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove organ koji tijekom trudnoće hrani plod?",
+    "o": [
+     "Maternica",
+     "Jajnik",
+     "Posteljica",
+     "Pupčana vrpca"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko otprilike tjedana traje trudnoća kod čovjeka?",
+    "o": [
+     "Oko 28",
+     "Oko 52",
+     "Oko 20",
+     "Oko 40"
+    ],
+    "a": 3
+   }
+  ],
+  "Kemija": [
+   {
+    "q": "Koji je kemijski simbol srebra?",
+    "o": [
+     "Ag",
+     "Si",
+     "Sr",
+     "Au"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kemijski simbol željeza?",
+    "o": [
+     "Ir",
+     "Fe",
+     "Zn",
+     "F"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je kemijski simbol olova?",
+    "o": [
+     "Ol",
+     "Pt",
+     "Pb",
+     "Po"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je kemijski simbol bakra?",
+    "o": [
+     "Ba",
+     "Bk",
+     "Co",
+     "Cu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je kemijski simbol žive?",
+    "o": [
+     "Hg",
+     "Zv",
+     "Ag",
+     "Ho"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojem elementu pripada kemijski simbol S?",
+    "o": [
+     "Siliciju",
+     "Sumporu",
+     "Srebru",
+     "Stronciju"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojem elementu pripada kemijski simbol P?",
+    "o": [
+     "Platini",
+     "Olovu",
+     "Fosforu",
+     "Kaliju"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojem elementu pripada kemijski simbol Zn?",
+    "o": [
+     "Kositru",
+     "Cirkoniju",
+     "Kromu",
+     "Cinku"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji element ima atomski broj 6?",
+    "o": [
+     "Ugljik",
+     "Kisik",
+     "Dušik",
+     "Bor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je atomski broj kisika?",
+    "o": [
+     "6",
+     "8",
+     "16",
+     "2"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je kemijska formula amonijaka?",
+    "o": [
+     "NO2",
+     "CH4",
+     "NH3",
+     "N2O"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je kemijska formula sumporne kiseline?",
+    "o": [
+     "H2S",
+     "HCl",
+     "HNO3",
+     "H2SO4"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je kemijska formula glukoze?",
+    "o": [
+     "C6H12O6",
+     "C12H22O11",
+     "CH3OH",
+     "C2H5OH"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je kemijska formula vodikova peroksida?",
+    "o": [
+     "H2O",
+     "H2O2",
+     "HO",
+     "H3O"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se kemijski naziva soda bikarbona?",
+    "o": [
+     "Natrijev klorid",
+     "Kalcijev karbonat",
+     "Natrijev hidrogenkarbonat",
+     "Kalijev nitrat"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se kemijski naziva kaustična soda?",
+    "o": [
+     "Natrijev klorid",
+     "Kalcijev oksid",
+     "Kalijev karbonat",
+     "Natrijev hidroksid"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se spoj kemijski naziva živim (negašenim) vapnom?",
+    "o": [
+     "Kalcijev oksid",
+     "Kalcijev karbonat",
+     "Kalcijev sulfat",
+     "Natrijev oksid"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja se kiselina nalazi u octu?",
+    "o": [
+     "Limunska",
+     "Octena",
+     "Mravlja",
+     "Mliječna"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja kiselina daje kiseli okus limunu?",
+    "o": [
+     "Octena",
+     "Sumporna",
+     "Limunska",
+     "Oksalna"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja kiselina nastaje kiseljenjem mlijeka?",
+    "o": [
+     "Mravlja",
+     "Octena",
+     "Vinska",
+     "Mliječna"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se kiselina nalazi u akumulatorima automobila?",
+    "o": [
+     "Sumporna",
+     "Dušična",
+     "Fosforna",
+     "Octena"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju kiselinu ubrizgavaju mravi pri ugrizu?",
+    "o": [
+     "Octenu",
+     "Mravlju",
+     "Limunsku",
+     "Mliječnu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se kemijski naziva vitamin C?",
+    "o": [
+     "Folna kiselina",
+     "Limunska kiselina",
+     "Askorbinska kiselina",
+     "Salicilna kiselina"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kakva je otopina čiji je pH manji od 7?",
+    "o": [
+     "Lužnata",
+     "Neutralna",
+     "Zasićena",
+     "Kisela"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koju boju poprima plavi lakmus papir u kiselini?",
+    "o": [
+     "Crvenu",
+     "Zelenu",
+     "Žutu",
+     "Ljubičastu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove reakcija kiseline i lužine?",
+    "o": [
+     "Oksidacija",
+     "Neutralizacija",
+     "Hidroliza",
+     "Elektroliza"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja čestica atoma ima negativan električni naboj?",
+    "o": [
+     "Proton",
+     "Neutron",
+     "Elektron",
+     "Jezgra"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja čestica u jezgri atoma nema električni naboj?",
+    "o": [
+     "Proton",
+     "Elektron",
+     "Ion",
+     "Neutron"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što određuje atomski broj nekog elementa?",
+    "o": [
+     "Broj protona",
+     "Broj neutrona",
+     "Broj molekula",
+     "Masa atoma"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zovu atomi istog elementa s različitim brojem neutrona?",
+    "o": [
+     "Izomeri",
+     "Izotopi",
+     "Ioni",
+     "Alotropi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove negativno nabijeni ion?",
+    "o": [
+     "Kation",
+     "Proton",
+     "Anion",
+     "Izotop"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove prijelaz tvari iz plinovitog u tekuće stanje?",
+    "o": [
+     "Isparavanje",
+     "Taljenje",
+     "Sublimacija",
+     "Kondenzacija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove prijelaz tvari iz tekućeg u čvrsto stanje?",
+    "o": [
+     "Skrućivanje",
+     "Taljenje",
+     "Kondenzacija",
+     "Isparavanje"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što nastaje izgaranjem vodika u kisiku?",
+    "o": [
+     "Ugljikov dioksid",
+     "Voda",
+     "Ozon",
+     "Amonijak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje se dvije tvari dobivaju elektrolizom vode?",
+    "o": [
+     "Dušik i kisik",
+     "Vodik i helij",
+     "Vodik i kisik",
+     "Ugljik i kisik"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što je, kemijski gledano, hrđa?",
+    "o": [
+     "Bakrov sulfat",
+     "Željezov klorid",
+     "Cinkov oksid",
+     "Željezov oksid"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je metal najbolji vodič električne struje?",
+    "o": [
+     "Srebro",
+     "Bakar",
+     "Zlato",
+     "Aluminij"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji metal ima najvišu točku taljenja?",
+    "o": [
+     "Željezo",
+     "Volfram",
+     "Titanij",
+     "Platina"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Bronca je legura bakra i kojeg metala?",
+    "o": [
+     "Cinka",
+     "Olova",
+     "Kositra",
+     "Nikla"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čelik je legura željeza i kojeg elementa?",
+    "o": [
+     "Bakra",
+     "Sumpora",
+     "Kositra",
+     "Ugljika"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji metal nehrđajućem čeliku daje otpornost na hrđu?",
+    "o": [
+     "Krom",
+     "Olovo",
+     "Bakar",
+     "Magnezij"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je metal najzastupljeniji u Zemljinoj kori?",
+    "o": [
+     "Željezo",
+     "Aluminij",
+     "Bakar",
+     "Kalcij"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je metal najmanje gustoće, tj. najlakši?",
+    "o": [
+     "Aluminij",
+     "Magnezij",
+     "Litij",
+     "Natrij"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se metal tali već na oko 30 °C, pa i na dlanu?",
+    "o": [
+     "Olovo",
+     "Kositar",
+     "Cink",
+     "Galij"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je jedini nemetal tekuć na sobnoj temperaturi?",
+    "o": [
+     "Brom",
+     "Jod",
+     "Klor",
+     "Fosfor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji metal gori jarkom bijelom svjetlošću i koristio se u starim bljeskalicama?",
+    "o": [
+     "Bakar",
+     "Magnezij",
+     "Olovo",
+     "Željezo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko karata ima čisto zlato?",
+    "o": [
+     "18",
+     "14",
+     "24",
+     "100"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je plemeniti plin najzastupljeniji u Zemljinoj atmosferi?",
+    "o": [
+     "Neon",
+     "Helij",
+     "Kripton",
+     "Argon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se žutozeleni plin koristi za dezinfekciju vode u bazenima?",
+    "o": [
+     "Klor",
+     "Fluor",
+     "Dušik",
+     "Ozon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kemijski element najelektronegativniji?",
+    "o": [
+     "Kisik",
+     "Fluor",
+     "Klor",
+     "Dušik"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji se element koristi kao gorivo u nuklearnim elektranama?",
+    "o": [
+     "Olovo",
+     "Ugljik",
+     "Uran",
+     "Litij"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je element najzastupljeniji u ljudskom tijelu po masi?",
+    "o": [
+     "Ugljik",
+     "Vodik",
+     "Dušik",
+     "Kisik"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je element osnova poluvodiča i računalnih čipova?",
+    "o": [
+     "Silicij",
+     "Bakar",
+     "Germanij",
+     "Olovo"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kemijski spoj glavni sastojak kvarca?",
+    "o": [
+     "Kalcijev karbonat",
+     "Silicijev dioksid",
+     "Aluminijev oksid",
+     "Željezov sulfid"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je element nazvan u čast Marie i Pierrea Curie?",
+    "o": [
+     "Polonij",
+     "Radij",
+     "Kirij",
+     "Ajnštajnij"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je kemijski element nazvan po Francuskoj?",
+    "o": [
+     "Americij",
+     "Polonij",
+     "Germanij",
+     "Francij"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove plin poznat kao „rajski plin“ ili plin smijeha?",
+    "o": [
+     "Didušikov oksid",
+     "Ugljikov monoksid",
+     "Sumporov dioksid",
+     "Amonijak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji otrovni plin bez boje i mirisa nastaje nepotpunim izgaranjem?",
+    "o": [
+     "Ugljikov dioksid",
+     "Ugljikov monoksid",
+     "Klor",
+     "Amonijak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što je „suhi led“?",
+    "o": [
+     "Smrznuti dušik",
+     "Smrznuti kisik",
+     "Čvrsti ugljikov dioksid",
+     "Led bez minerala"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji plin u zraku najviše pridonosi nastanku kiselih kiša?",
+    "o": [
+     "Kisik",
+     "Argon",
+     "Helij",
+     "Sumporov dioksid"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji su spojevi, nekad česti u sprejevima, oštetili ozonski omotač?",
+    "o": [
+     "Freoni",
+     "Silikati",
+     "Nitrati",
+     "Karbonati"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što je katalizator?",
+    "o": [
+     "Tvar koja otapa metale",
+     "Tvar koja ubrzava reakciju",
+     "Produkt izgaranja",
+     "Vrsta kiseline"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove kemijska reakcija pri kojoj se oslobađa toplina?",
+    "o": [
+     "Endotermna",
+     "Izotermna",
+     "Egzotermna",
+     "Adijabatska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je osnovna mjerna jedinica za količinu tvari?",
+    "o": [
+     "Kilogram",
+     "Litra",
+     "Kelvin",
+     "Mol"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko približno iznosi Avogadrova konstanta (po molu)?",
+    "o": [
+     "6,022 × 10²³",
+     "3,14 × 10⁸",
+     "9,81 × 10²³",
+     "1,6 × 10⁻¹⁹"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se alkohol nalazi u vinu i pivu?",
+    "o": [
+     "Metanol",
+     "Etanol",
+     "Glicerol",
+     "Propanol"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je šećer glavni sastojak konzumnog šećera od šećerne trske ili repe?",
+    "o": [
+     "Glukoza",
+     "Fruktoza",
+     "Saharoza",
+     "Laktoza"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu elementi 18. skupine periodnog sustava?",
+    "o": [
+     "Halogeni elementi",
+     "Alkalijski metali",
+     "Prijelazni metali",
+     "Plemeniti plinovi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu elementi 1. skupine periodnog sustava, osim vodika?",
+    "o": [
+     "Alkalijski metali",
+     "Zemnoalkalijski metali",
+     "Halogeni elementi",
+     "Plemeniti plinovi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove kemijska veza nastala dijeljenjem elektronskih parova?",
+    "o": [
+     "Ionska",
+     "Kovalentna",
+     "Metalna",
+     "Vodikova"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja vrsta kemijske veze drži na okupu kuhinjsku sol?",
+    "o": [
+     "Kovalentna",
+     "Metalna",
+     "Ionska",
+     "Vodikova"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove smjesa dvaju ili više metala?",
+    "o": [
+     "Emulzija",
+     "Suspenzija",
+     "Amalgam",
+     "Legura"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je francuski kemičar 18. stoljeća smatran ocem moderne kemije?",
+    "o": [
+     "Antoine Lavoisier",
+     "Louis Pasteur",
+     "Blaise Pascal",
+     "Pierre Curie"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je engleski znanstvenik početkom 19. stoljeća postavio atomsku teoriju?",
+    "o": [
+     "Michael Faraday",
+     "John Dalton",
+     "Robert Boyle",
+     "Isaac Newton"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je 1897. otkrio elektron?",
+    "o": [
+     "Ernest Rutherford",
+     "Niels Bohr",
+     "J. J. Thomson",
+     "James Chadwick"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je znanstvenik pokusom sa zlatnom folijom otkrio atomsku jezgru?",
+    "o": [
+     "J. J. Thomson",
+     "Niels Bohr",
+     "Max Planck",
+     "Ernest Rutherford"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je kemičar hrvatskih korijena dobio Nobelovu nagradu za kemiju 1975.?",
+    "o": [
+     "Vladimir Prelog",
+     "Lavoslav Ružička",
+     "Ivan Đikić",
+     "Fran Bošnjaković"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se izotop ugljika koristi za određivanje starosti organskih ostataka?",
+    "o": [
+     "Ugljik-12",
+     "Ugljik-14",
+     "Ugljik-13",
+     "Ugljik-10"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove postupak odvajanja tekućina isparavanjem i kondenzacijom?",
+    "o": [
+     "Filtracija",
+     "Dekantacija",
+     "Destilacija",
+     "Kristalizacija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja tvar daje gorak okus toniku?",
+    "o": [
+     "Kofein",
+     "Teobromin",
+     "Kapsaicin",
+     "Kinin"
+    ],
+    "a": 3
+   }
+  ]
+ }
+}

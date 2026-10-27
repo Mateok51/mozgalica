@@ -1,0 +1,1908 @@
+{
+ "cats": {
+  "Olimpijske igre": [
+   {
+    "q": "Na kojem je jeziku izvorni olimpijski moto „Citius, Altius, Fortius“?",
+    "o": [
+     "Latinskom",
+     "Grčkom",
+     "Francuskom",
+     "Talijanskom"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi sjedište Međunarodnog olimpijskog odbora?",
+    "o": [
+     "Ženeva",
+     "Lausanne",
+     "Atena",
+     "Pariz"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grad 1924. bio domaćin prvih Zimskih olimpijskih igara?",
+    "o": [
+     "St. Moritz",
+     "Oslo",
+     "Chamonix",
+     "Innsbruck"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je grad bio domaćin Ljetnih olimpijskih igara 1908., 1948. i 2012.?",
+    "o": [
+     "Pariz",
+     "Los Angeles",
+     "Atena",
+     "London"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojoj je rijeci održana ceremonija otvaranja OI u Parizu 2024.?",
+    "o": [
+     "Seini",
+     "Loiri",
+     "Rajni",
+     "Rhôni"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj su državi održane Zimske olimpijske igre 2018.?",
+    "o": [
+     "Japanu",
+     "Južnoj Koreji",
+     "Kini",
+     "Kanadi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je ruski grad 2014. bio domaćin Zimskih olimpijskih igara?",
+    "o": [
+     "Moskva",
+     "Sankt Peterburg",
+     "Soči",
+     "Kazanj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji su gradovi bili domaćini Zimskih olimpijskih igara 2026.?",
+    "o": [
+     "Torino i Sestriere",
+     "Bolzano i Trento",
+     "Innsbruck i Bormio",
+     "Milano i Cortina"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojeg su datuma 2008. svečano otvorene Olimpijske igre u Pekingu?",
+    "o": [
+     "8. kolovoza",
+     "1. srpnja",
+     "15. rujna",
+     "24. kolovoza"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je australski grad 2000. bio domaćin Ljetnih olimpijskih igara?",
+    "o": [
+     "Melbourne",
+     "Sydney",
+     "Brisbane",
+     "Perth"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grad 1956. bio domaćin prvih Olimpijskih igara na južnoj polutki?",
+    "o": [
+     "Rio de Janeiro",
+     "Buenos Aires",
+     "Melbourne",
+     "Sydney"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojim je Olimpijskim igrama nastupio američki košarkaški „Dream Team“?",
+    "o": [
+     "Seoul 1988.",
+     "Atlanta 1996.",
+     "Sydney 2000.",
+     "Barcelona 1992."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje su Olimpijske igre 1980. bojkotirale Sjedinjene Američke Države?",
+    "o": [
+     "Moskva 1980.",
+     "Lake Placid 1980.",
+     "Montréal 1976.",
+     "Los Angeles 1984."
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je grad 1984. bio domaćin Ljetnih OI koje je bojkotirao Sovjetski Savez?",
+    "o": [
+     "Moskva",
+     "Los Angeles",
+     "Seoul",
+     "Montréal"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradu Bob Beamon 1968. skočio u dalj gotovo 8,90 m?",
+    "o": [
+     "Rim",
+     "München",
+     "Ciudad de México",
+     "Tokio"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je grad 1964. bio domaćin prvih Ljetnih olimpijskih igara u Aziji?",
+    "o": [
+     "Seoul",
+     "Peking",
+     "Manila",
+     "Tokio"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U čast kojeg su se boga održavale antičke Olimpijske igre?",
+    "o": [
+     "Zeusa",
+     "Apolona",
+     "Aresa",
+     "Posejdona"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja se godina tradicionalno uzima kao početak antičkih Olimpijskih igara?",
+    "o": [
+     "490. pr. Kr.",
+     "776. pr. Kr.",
+     "1200. pr. Kr.",
+     "330. pr. Kr."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što su dobivali pobjednici antičkih Olimpijskih igara?",
+    "o": [
+     "Zlatnu medalju",
+     "Srebrni pehar",
+     "Maslinov vijenac",
+     "Lovorov štap"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je rimski car ukinuo antičke Olimpijske igre?",
+    "o": [
+     "Neron",
+     "Konstantin Veliki",
+     "August",
+     "Teodozije I."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojim je Olimpijskim igrama prvi put istaknuta olimpijska zastava?",
+    "o": [
+     "Antwerpen 1920.",
+     "Atena 1896.",
+     "Stockholm 1912.",
+     "Pariz 1924."
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojim je Olimpijskim igrama prvi put održana štafeta s plamenom?",
+    "o": [
+     "Amsterdam 1928.",
+     "Berlin 1936.",
+     "London 1948.",
+     "Helsinki 1952."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što simbolizira pet olimpijskih krugova?",
+    "o": [
+     "Pet sportova",
+     "Pet vrlina",
+     "Pet kontinenata",
+     "Pet osnivača"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je boje podloga olimpijske zastave?",
+    "o": [
+     "Plave",
+     "Zlatne",
+     "Crvene",
+     "Bijele"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojim su Olimpijskim igrama žene prvi put sudjelovale?",
+    "o": [
+     "Pariz 1900.",
+     "Atena 1896.",
+     "London 1908.",
+     "Stockholm 1912."
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem su gradu 1960. održane prve Paraolimpijske igre?",
+    "o": [
+     "Tokiju",
+     "Rimu",
+     "Londonu",
+     "Helsinkiju"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od kojeg su metala većinom izrađene olimpijske zlatne medalje?",
+    "o": [
+     "Zlata",
+     "Bakra",
+     "Srebra",
+     "Mjedi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kakvu su medalju dobivali pobjednici na Olimpijskim igrama 1896.?",
+    "o": [
+     "Zlatnu",
+     "Brončanu",
+     "Nikakvu",
+     "Srebrnu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je Grk pobijedio u prvom olimpijskom maratonu 1896.?",
+    "o": [
+     "Spiridon Louis",
+     "Feidipid",
+     "Jorgos Papasideris",
+     "Dimitrios Vikelas"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojom disciplinom počinje triatlon?",
+    "o": [
+     "Trčanjem",
+     "Plivanjem",
+     "Biciklizmom",
+     "Veslanjem"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja dva sporta spaja biatlon?",
+    "o": [
+     "Skijanje i klizanje",
+     "Sanjkanje i gađanje",
+     "Skijaško trčanje i gađanje",
+     "Skokove i trčanje"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja dva sporta čine nordijsku kombinaciju?",
+    "o": [
+     "Slalom i spust",
+     "Biatlon i skokove",
+     "Klizanje i trčanje",
+     "Skijaško trčanje i skokove"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se zimskom sportu teški granitni kamen kliže po ledu prema meti?",
+    "o": [
+     "Curlingu",
+     "Bobu",
+     "Hokeju",
+     "Skeletonu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se sportu natjecatelj spušta na sanjkama potrbuške, glavom naprijed?",
+    "o": [
+     "Sanjkanju",
+     "Skeletonu",
+     "Bobu",
+     "Curlingu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja atletska disciplina ima prepreke i jarak s vodom?",
+    "o": [
+     "400 m s preponama",
+     "Maraton",
+     "3000 m s preprekama",
+     "10 000 m"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Prema legendi, koji je glasnik trčao od Maratona do Atene?",
+    "o": [
+     "Leonida",
+     "Perikle",
+     "Miltijad",
+     "Feidipid"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je težak disk u muškoj atletskoj konkurenciji?",
+    "o": [
+     "2 kg",
+     "1 kg",
+     "3 kg",
+     "1,5 kg"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je teška kugla u muškoj atletskoj konkurenciji?",
+    "o": [
+     "5 kg",
+     "7,26 kg",
+     "6,5 kg",
+     "8 kg"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko je dugačak olimpijski bazen?",
+    "o": [
+     "25 m",
+     "100 m",
+     "50 m",
+     "33 m"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojim stilom počinje pojedinačna mješovita utrka u plivanju?",
+    "o": [
+     "Leđno",
+     "Prsno",
+     "Slobodno",
+     "Leptir"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje potječe taekwondo?",
+    "o": [
+     "Koreje",
+     "Japana",
+     "Kine",
+     "Tajlanda"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je plesni sport debitirao na Olimpijskim igrama 2024. u Parizu?",
+    "o": [
+     "Salsa",
+     "Breaking",
+     "Tango",
+     "Hip-hop koreografija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je od ovih sportova debitirao na OI u Tokiju 2020.?",
+    "o": [
+     "Triatlon",
+     "Taekwondo",
+     "Skateboarding",
+     "Badminton"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se sport 2016. vratio na Olimpijske igre nakon 112 godina?",
+    "o": [
+     "Tenis",
+     "Ragbi",
+     "Kriket",
+     "Golf"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojim je ZOI Hrvatska prvi put nastupila kao samostalna država?",
+    "o": [
+     "Albertville 1992.",
+     "Calgary 1988.",
+     "Lillehammer 1994.",
+     "Nagano 1998."
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju je medalju osvojila hrvatska košarkaška reprezentacija 1992.?",
+    "o": [
+     "Zlatnu",
+     "Srebrnu",
+     "Brončanu",
+     "Nijednu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "S kim je Goran Ivanišević 1992. osvojio olimpijsku broncu u igri parova?",
+    "o": [
+     "Ivanom Ljubičićem",
+     "Mariom Ančićem",
+     "Goranom Prpićem",
+     "Ivom Karlovićem"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji su hrvatski tenisači 2004. u Ateni osvojili broncu u igri parova?",
+    "o": [
+     "Čilić i Dodig",
+     "Ivanišević i Prpić",
+     "Karlović i Ančić",
+     "Ančić i Ljubičić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji su Hrvati u Tokiju osvojili olimpijsko zlato u tenisu u igri parova?",
+    "o": [
+     "Mektić i Pavić",
+     "Čilić i Dodig",
+     "Ančić i Ljubičić",
+     "Dodig i Pavić"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem sportu braća Martin i Valent Sinković osvajaju olimpijske medalje?",
+    "o": [
+     "Kajaku",
+     "Veslanju",
+     "Jedrenju",
+     "Plivanju"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je sportu Matea Jelić u Tokiju osvojila olimpijsko zlato?",
+    "o": [
+     "Judu",
+     "Karateu",
+     "Taekwondou",
+     "Boksu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je sportu Barbara Matić u Tokiju osvojila olimpijsko zlato?",
+    "o": [
+     "Taekwondou",
+     "Hrvanju",
+     "Karateu",
+     "Judu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj je streljačkoj disciplini Josip Glasnović 2016. osvojio zlato?",
+    "o": [
+     "Trapu",
+     "Zračnoj pušci",
+     "Zračnom pištolju",
+     "Skeetu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj je disciplini Blanka Vlašić osvajala olimpijske medalje?",
+    "o": [
+     "Skoku u dalj",
+     "Skoku uvis",
+     "Skoku s motkom",
+     "Troskoku"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je hrvatski plivač 2004. osvojio olimpijsko srebro na 50 m slobodno?",
+    "o": [
+     "Gordan Kožulj",
+     "Mario Todorović",
+     "Duje Draganja",
+     "Ivan Mladina"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojoj je spravi Filip Ude 2008. osvojio olimpijsko srebro?",
+    "o": [
+     "Preči",
+     "Krugovima",
+     "Razboju",
+     "Konju s hvataljkama"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojoj je spravi Tin Srbić u Tokiju osvojio olimpijsko srebro?",
+    "o": [
+     "Preči",
+     "Konju s hvataljkama",
+     "Krugovima",
+     "Parteru"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojim je OI Hrvatska drugi put osvojila zlato u rukometu?",
+    "o": [
+     "Sydney 2000.",
+     "Atena 2004.",
+     "Peking 2008.",
+     "London 2012."
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je sportu Jakov Fak 2010. osvojio olimpijsku broncu za Hrvatsku?",
+    "o": [
+     "Skijaškim skokovima",
+     "Alpskom skijanju",
+     "Biatlonu",
+     "Bobu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je američki atletičar 1984. u Los Angelesu osvojio četiri zlata?",
+    "o": [
+     "Michael Johnson",
+     "Edwin Moses",
+     "Jesse Owens",
+     "Carl Lewis"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je plivač 1972. u Münchenu osvojio sedam zlatnih medalja?",
+    "o": [
+     "Mark Spitz",
+     "Michael Phelps",
+     "Ian Thorpe",
+     "Johnny Weissmuller"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je zlatnih medalja Michael Phelps osvojio u Pekingu 2008.?",
+    "o": [
+     "6",
+     "8",
+     "7",
+     "9"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se sportu natječe Simone Biles?",
+    "o": [
+     "Atletici",
+     "Plivanju",
+     "Gimnastici",
+     "Umjetničkom klizanju"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se sportu natjecao Britanac Eddie „the Eagle“ Edwards?",
+    "o": [
+     "Bobu",
+     "Brzom klizanju",
+     "Biatlonu",
+     "Skijaškim skokovima"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se tropska zemlja 1988. u Calgaryju proslavila bob-reprezentacijom?",
+    "o": [
+     "Jamajka",
+     "Kuba",
+     "Brazil",
+     "Fidži"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je etiopski maratonac 1960. u Rimu pobijedio trčeći bos?",
+    "o": [
+     "Haile Gebrselassie",
+     "Abebe Bikila",
+     "Kenenisa Bekele",
+     "Mamo Wolde"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je trkač 1952. u Helsinkiju pobijedio na 5000 m, 10 000 m i u maratonu?",
+    "o": [
+     "Paavo Nurmi",
+     "Lasse Virén",
+     "Emil Zátopek",
+     "Abebe Bikila"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je nizozemska atletičarka 1948. u Londonu osvojila četiri zlata?",
+    "o": [
+     "Wilma Rudolph",
+     "Babe Didrikson",
+     "Betty Cuthbert",
+     "Fanny Blankers-Koen"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Pod kojim je imenom Muhammad Ali 1960. osvojio olimpijsko zlato?",
+    "o": [
+     "Cassius Clay",
+     "Joe Frazier",
+     "Sonny Liston",
+     "George Foreman"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojem je skakaču nazvana tehnika skoka uvis leđima preko letvice?",
+    "o": [
+     "Javieru Sotomayoru",
+     "Dicku Fosburyju",
+     "Valeriju Brumelu",
+     "Carlu Lewisu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Čime se pali olimpijski plamen u Olimpiji?",
+    "o": [
+     "Šibicom",
+     "Bakljom iz Atene",
+     "Sunčevim zrakama i zrcalom",
+     "Električnom iskrom"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država tradicionalno prva ulazi u mimohodu na otvaranju OI?",
+    "o": [
+     "Država domaćin",
+     "Francuska",
+     "Švicarska",
+     "Grčka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se naziva razdoblje od četiri godine između dviju Olimpijskih igara?",
+    "o": [
+     "Olimpijada",
+     "Olimpijski ciklus",
+     "Olimpijska era",
+     "Tetrada"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je norveški grad 1994. bio domaćin Zimskih olimpijskih igara?",
+    "o": [
+     "Oslo",
+     "Lillehammer",
+     "Bergen",
+     "Trondheim"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje od navedenog NIJE oružje u olimpijskom mačevanju?",
+    "o": [
+     "Floret",
+     "Mač",
+     "Bodež",
+     "Sablja"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko igrača jedne momčadi istodobno je u vodi u vaterpolu?",
+    "o": [
+     "6",
+     "5",
+     "8",
+     "7"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko igrača čini momčad u odbojci na pijesku?",
+    "o": [
+     "2",
+     "3",
+     "4",
+     "6"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je ljudi u čamcu veslačkog osmerca s kormilarom?",
+    "o": [
+     "8",
+     "9",
+     "10",
+     "7"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se sportu izvodi skok nazvan aksel?",
+    "o": [
+     "Gimnastici",
+     "Skijaškim skokovima",
+     "Umjetničkom klizanju",
+     "Snowboardu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je boje središte mete u olimpijskom streličarstvu?",
+    "o": [
+     "Crvene",
+     "Crne",
+     "Plave",
+     "Žute"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove dvorana s nagnutom stazom za biciklističke utrke?",
+    "o": [
+     "Velodrom",
+     "Hipodrom",
+     "Kartodrom",
+     "Pedalodrom"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Zbog čega nisu održane Olimpijske igre 1940. i 1944.?",
+    "o": [
+     "Pandemije",
+     "Drugog svjetskog rata",
+     "Gospodarske krize",
+     "Bojkota"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zvala maskota Zimskih olimpijskih igara u Sarajevu 1984.?",
+    "o": [
+     "Miša",
+     "Medo",
+     "Vučko",
+     "Lisko"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja bila maskota Olimpijskih igara 1980. u Moskvi?",
+    "o": [
+     "Vuk",
+     "Orao",
+     "Tigar",
+     "Medvjed"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na čemu se temelje maskote Olimpijskih igara u Parizu 2024.?",
+    "o": [
+     "Frigijskoj kapi",
+     "Eiffelovu tornju",
+     "Galskom pijetlu",
+     "Kroasanu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojim je ZOI SAD u hokeju pobijedio SSSR u utakmici „Čudo na ledu“?",
+    "o": [
+     "Sarajevo 1984.",
+     "Lake Placid 1980.",
+     "Calgary 1988.",
+     "Innsbruck 1976."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako je prozvan nacionalni stadion izgrađen za OI u Pekingu 2008.?",
+    "o": [
+     "Zmajevo oko",
+     "Lotosov cvijet",
+     "Ptičje gnijezdo",
+     "Kineski zid"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje dvije discipline čine olimpijsko dizanje utega?",
+    "o": [
+     "Potisak i čučanj",
+     "Mrtvo dizanje i trzaj",
+     "Čučanj i izbačaj",
+     "Trzaj i izbačaj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji stil hrvanja dopušta zahvate samo iznad pojasa?",
+    "o": [
+     "Grčko-rimski",
+     "Slobodni",
+     "Sumo",
+     "Judo"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojim je Zimskim olimpijskim igrama debitirao snowboard?",
+    "o": [
+     "Lillehammer 1994.",
+     "Nagano 1998.",
+     "Salt Lake City 2002.",
+     "Albertville 1992."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojoj je gimnastičkoj spravi površina za nogu široka samo 10 cm?",
+    "o": [
+     "Dvovisinskom razboju",
+     "Preskoku",
+     "Gredi",
+     "Parteru"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na koliko se sprava natječu gimnastičari u muškom višeboju?",
+    "o": [
+     "4",
+     "5",
+     "8",
+     "6"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojom disciplinom završava atletski desetoboj?",
+    "o": [
+     "Utrkom na 1500 m",
+     "Utrkom na 400 m",
+     "Bacanjem koplja",
+     "Skokom s motkom"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je dugačak jedan krug standardne atletske staze (prva traka)?",
+    "o": [
+     "200 m",
+     "400 m",
+     "300 m",
+     "500 m"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojoj udaljenosti muškarci trče kratke prepone?",
+    "o": [
+     "100 m",
+     "120 m",
+     "110 m",
+     "80 m"
+    ],
+    "a": 2
+   }
+  ],
+  "Automobili i promet": [
+   {
+    "q": "U kojem se gradu nalaze sjedišta Mercedes-Benza i Porschea?",
+    "o": [
+     "Stuttgartu",
+     "Münchenu",
+     "Kölnu",
+     "Ingolstadtu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi sjedište Volkswagena?",
+    "o": [
+     "Hamburgu",
+     "Wolfsburgu",
+     "Hannoveru",
+     "Dresdenu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje zemlje potječe automobilska marka Toyota?",
+    "o": [
+     "Južne Koreje",
+     "Kine",
+     "Japana",
+     "Tajvana"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje potječe automobilska marka Dacia?",
+    "o": [
+     "Bugarske",
+     "Slovačke",
+     "Poljske",
+     "Rumunjske"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje potječe automobilska marka Lada?",
+    "o": [
+     "Rusije",
+     "Ukrajine",
+     "Bjelorusije",
+     "Češke"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu proizvodio automobil Yugo?",
+    "o": [
+     "Beogradu",
+     "Kragujevcu",
+     "Novom Sadu",
+     "Nišu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem su se gradu proizvodili mopedi Tomos?",
+    "o": [
+     "Mariboru",
+     "Ljubljani",
+     "Kopru",
+     "Celju"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je gradu 1910. osnovan Alfa Romeo?",
+    "o": [
+     "Torinu",
+     "Rimu",
+     "Modeni",
+     "Milanu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je životinja prikazana na logotipu Alfa Romea?",
+    "o": [
+     "Zmija",
+     "Lav",
+     "Orao",
+     "Konj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je životinja prikazana u središtu Porscheova grba?",
+    "o": [
+     "Bik",
+     "Konj",
+     "Jelen",
+     "Lav"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što je Ferruccio Lamborghini proizvodio prije sportskih automobila?",
+    "o": [
+     "Motocikle",
+     "Zrakoplove",
+     "Traktore",
+     "Bicikle"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se talijanskom mjestu nalazi sjedište Ferrarija?",
+    "o": [
+     "Modeni",
+     "Bologni",
+     "Sant'Agati",
+     "Maranellu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove kip na haubi automobila Rolls-Royce?",
+    "o": [
+     "Spirit of Ecstasy",
+     "Flying Lady Liberty",
+     "Silver Ghost",
+     "Golden Angel"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što prikazuje logotip Mercedes-Benza?",
+    "o": [
+     "Četiri kruga",
+     "Trokraku zvijezdu",
+     "Plavi oval",
+     "Krilati kotač"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po kome je nazvana automobilska marka Mercedes?",
+    "o": [
+     "Supruzi Karla Benza",
+     "Španjolskoj kraljici",
+     "Kćeri Emila Jellineka",
+     "Majci G. Daimlera"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji zvjezdani skup prikazuje logotip Subarua?",
+    "o": [
+     "Orion",
+     "Veliki medvjed",
+     "Kasiopeja",
+     "Plejade"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Po kome je nazvana tvrtka za električne automobile Tesla?",
+    "o": [
+     "Nikoli Tesli",
+     "Osnivaču Elonu Tesli",
+     "Grčkoj božici",
+     "Rijeci u SAD-u"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je osnovao tvrtku Rimac Automobili?",
+    "o": [
+     "Ivan Rimac",
+     "Mate Rimac",
+     "Josip Rimac",
+     "Luka Rimac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se državi nalazi sjedište Bugattija?",
+    "o": [
+     "Italiji",
+     "Njemačkoj",
+     "Francuskoj",
+     "Švicarskoj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je Citroënov model u nas popularno prozvan „spaček“?",
+    "o": [
+     "DS",
+     "Xsara",
+     "AX",
+     "2CV"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je automobil u bivšoj Jugoslaviji prozvan „fićo“?",
+    "o": [
+     "Zastava 750",
+     "Zastava 101",
+     "Yugo 45",
+     "Fiat 126"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je Volkswagenov model 1974. krenuo u proizvodnju kao nasljednik Bube?",
+    "o": [
+     "Passat",
+     "Golf",
+     "Polo",
+     "Jetta"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je automobil vremeplov u filmu „Povratak u budućnost“?",
+    "o": [
+     "Ford Mustang",
+     "Chevrolet Camaro",
+     "DeLorean DMC-12",
+     "Pontiac Firebird"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je marke bio automobil KITT iz serije „Vitez na cesti“?",
+    "o": [
+     "Chevrolet",
+     "Dodge",
+     "Ford",
+     "Pontiac"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je automobil James Bond vozio u filmu „Goldfinger“?",
+    "o": [
+     "Aston Martin DB5",
+     "Jaguar E-Type",
+     "Lotus Esprit",
+     "BMW Z3"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je automobil Herbie iz Disneyjevih filmova?",
+    "o": [
+     "Mini",
+     "Volkswagen Buba",
+     "Fiat 500",
+     "Citroën 2CV"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje je zemlje bio vozač Formule 1 Ayrton Senna?",
+    "o": [
+     "Argentine",
+     "Portugala",
+     "Brazila",
+     "Španjolske"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je naslova svjetskog prvaka u Formuli 1 osvojio Michael Schumacher?",
+    "o": [
+     "5",
+     "6",
+     "8",
+     "7"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko traje slavna automobilistička utrka u Le Mansu?",
+    "o": [
+     "24 sata",
+     "12 sati",
+     "48 sati",
+     "6 sati"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Ulicama koje države prolazi najpoznatija gradska utrka Formule 1?",
+    "o": [
+     "San Marina",
+     "Monaka",
+     "Lihtenštajna",
+     "Andore"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kod kojeg se hrvatskog grada nalazi automotodrom Grobnik?",
+    "o": [
+     "Zagreba",
+     "Pule",
+     "Rijeke",
+     "Zadra"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem se otoku vozi slavna motociklistička utrka TT?",
+    "o": [
+     "Siciliji",
+     "Korzici",
+     "Malti",
+     "Otoku Man"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je izumio motor s paljenjem kompresijom, nazvan po njemu?",
+    "o": [
+     "Rudolf Diesel",
+     "Nikolaus Otto",
+     "Gottlieb Daimler",
+     "Felix Wankel"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je japanski proizvođač poznat po rotacijskom Wankelovu motoru?",
+    "o": [
+     "Honda",
+     "Mazda",
+     "Nissan",
+     "Suzuki"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po kojem je izumitelju nazvan četverotaktni benzinski motor?",
+    "o": [
+     "Rudolfu Dieselu",
+     "Karlu Benzu",
+     "Nikolausu Ottu",
+     "Jamesu Wattu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čemu služi sustav ABS u automobilu?",
+    "o": [
+     "Pali zračni jastuk",
+     "Štedi gorivo",
+     "Hladi motor",
+     "Sprječava blokiranje kotača"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji dio NEMA klasični dizelski motor?",
+    "o": [
+     "Svjećice za paljenje",
+     "Klipove",
+     "Brizgaljke",
+     "Radilicu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što pokreće turbinu turbopunjača?",
+    "o": [
+     "Remen motora",
+     "Ispušni plinovi",
+     "Elektromotor",
+     "Rashladna tekućina"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji dio ispušnog sustava pretvara štetne plinove u manje štetne?",
+    "o": [
+     "Alternator",
+     "Hladnjak",
+     "Katalizator",
+     "Karburator"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je uveo mjernu jedinicu konjska snaga?",
+    "o": [
+     "Henry Ford",
+     "Karl Benz",
+     "Isaac Newton",
+     "James Watt"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko vata iznosi jedna metrička konjska snaga, približno?",
+    "o": [
+     "735 W",
+     "1000 W",
+     "500 W",
+     "100 W"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je proizvođač 1959. prvi uveo sigurnosni pojas s tri točke?",
+    "o": [
+     "Mercedes-Benz",
+     "Volvo",
+     "Ford",
+     "Saab"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove maskota proizvođača guma Michelin?",
+    "o": [
+     "Michelinko",
+     "Gumko",
+     "Bibendum",
+     "Pneumo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je Škot 1888. razvio praktičnu zračnu gumu?",
+    "o": [
+     "Charles Goodyear",
+     "André Michelin",
+     "Robert Thomson",
+     "John Boyd Dunlop"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je automobil 1997. postao prvi serijski hibridni automobil?",
+    "o": [
+     "Toyota Prius",
+     "Honda Civic",
+     "Nissan Leaf",
+     "Lexus RX"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što označava slovo P na automatskom mjenjaču?",
+    "o": [
+     "Pogon",
+     "Parkiranje",
+     "Prijenos",
+     "Polagano"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove instrument koji pokazuje broj okretaja motora?",
+    "o": [
+     "Brzinomjer",
+     "Barometar",
+     "Okretomjer",
+     "Termometar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je pedala skroz lijevo u automobilu s ručnim mjenjačem?",
+    "o": [
+     "Kočnica",
+     "Gas",
+     "Ručna kočnica",
+     "Kvačilo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Za koje se gorivo navodi oktanski broj?",
+    "o": [
+     "Benzin",
+     "Dizel",
+     "Struju",
+     "Vodik"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što znači kratica LPG?",
+    "o": [
+     "Lako pogonsko gorivo",
+     "Ukapljeni naftni plin",
+     "Laki prirodni plin",
+     "Tekući pročišćeni benzin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se jedinici izražava kapacitet baterije električnog automobila?",
+    "o": [
+     "kW",
+     "V",
+     "kWh",
+     "km/h"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove automobil s krovom koji se može spustiti ili skinuti?",
+    "o": [
+     "Karavan",
+     "Limuzina",
+     "Kupe",
+     "Kabriolet"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što znači kratica SUV?",
+    "o": [
+     "Sport Utility Vehicle",
+     "Super Urban Vehicle",
+     "Safe Utility Van",
+     "Sport Ultra Velocity"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je japanski proizvođač osnovao luksuznu marku Lexus?",
+    "o": [
+     "Honda",
+     "Toyota",
+     "Nissan",
+     "Mazda"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je 1888. prvi prevalio dulje putovanje automobilom, od Mannheima do Pforzheima?",
+    "o": [
+     "Karl Benz",
+     "Gottlieb Daimler",
+     "Bertha Benz",
+     "Henry Ford"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je konstruirao Volkswagen Bubu?",
+    "o": [
+     "Enzo Ferrari",
+     "Karl Benz",
+     "Wilhelm Maybach",
+     "Ferdinand Porsche"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što je Henry Ford 1913. uveo u proizvodnju automobila?",
+    "o": [
+     "Pokretnu traku",
+     "Električni pokretač",
+     "Dizelski motor",
+     "Zračni jastuk"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je Fordov model dobio ime po divljem konju?",
+    "o": [
+     "Bronco",
+     "Mustang",
+     "Pinto",
+     "Fiesta"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po kome je nazvana automobilska marka Cadillac?",
+    "o": [
+     "Prvom vozaču",
+     "Francuskom kralju",
+     "Osnivaču Detroita",
+     "Izumitelju motora"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je talijanska tvrtka proizvela skuter Vespa?",
+    "o": [
+     "Ducati",
+     "Fiat",
+     "Lambretta",
+     "Piaggio"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem je gradu osnovan Harley-Davidson?",
+    "o": [
+     "Milwaukeeju",
+     "Detroitu",
+     "Chicagu",
+     "Daytoni"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi sjedište proizvođača motocikala Ducati?",
+    "o": [
+     "Milanu",
+     "Bologni",
+     "Torinu",
+     "Firenci"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što prikazuje logotip Yamahe?",
+    "o": [
+     "Tri dijamanta",
+     "Krilo",
+     "Tri glazbene vilice",
+     "Zvijezdu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je država 1967. prešla s vožnje lijevom na vožnju desnom stranom ceste?",
+    "o": [
+     "Irska",
+     "Norveška",
+     "Island",
+     "Švedska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se od ovih država Europske unije vozi lijevom stranom ceste?",
+    "o": [
+     "Malti",
+     "Grčkoj",
+     "Portugalu",
+     "Danskoj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je 1903. patentirao brisač vjetrobranskog stakla?",
+    "o": [
+     "Bertha Benz",
+     "Mary Anderson",
+     "Henry Ford",
+     "Thomas Edison"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji automobil vozi Mr. Bean?",
+    "o": [
+     "Fiat 500",
+     "Renault 4",
+     "Mini",
+     "Citroën 2CV"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji broj nosi Munja McQueen u animiranom filmu „Auti“?",
+    "o": [
+     "43",
+     "86",
+     "1",
+     "95"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem je gradu 1868. postavljen prvi semafor?",
+    "o": [
+     "Londonu",
+     "Parizu",
+     "New Yorku",
+     "Berlinu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je svjetlo na vrhu okomitog semafora za vozila?",
+    "o": [
+     "Zeleno",
+     "Crveno",
+     "Žuto",
+     "Plavo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je međunarodna oznaka vozila za Hrvatsku?",
+    "o": [
+     "CRO",
+     "HRV",
+     "HR",
+     "H"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je međunarodna oznaka vozila za Španjolsku?",
+    "o": [
+     "S",
+     "SP",
+     "ES",
+     "E"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji hrvatski grad ima registarsku oznaku OS?",
+    "o": [
+     "Osijek",
+     "Ogulin",
+     "Otočac",
+     "Omiš"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja autocesta povezuje Zagreb i Split?",
+    "o": [
+     "A3",
+     "A1",
+     "A6",
+     "A2"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kroz koji se tunel na autocesti A1 prolazi ispod Velebita?",
+    "o": [
+     "Mala Kapela",
+     "Učka",
+     "Sveti Rok",
+     "Tuhobić"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je godine otvoren Pelješki most?",
+    "o": [
+     "2018.",
+     "2020.",
+     "2024.",
+     "2022."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je hrvatski otok 1980. mostom povezan s kopnom?",
+    "o": [
+     "Krk",
+     "Pag",
+     "Čiovo",
+     "Vir"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje su boje zagrebački tramvaji?",
+    "o": [
+     "Crvene",
+     "Plave",
+     "Zelene",
+     "Žute"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji hrvatski grad uz Zagreb ima tramvajski promet?",
+    "o": [
+     "Split",
+     "Rijeka",
+     "Osijek",
+     "Zadar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje dvije države povezuje Eurotunel ispod La Manchea?",
+    "o": [
+     "UK i Belgiju",
+     "UK i Nizozemsku",
+     "UK i Irsku",
+     "UK i Francusku"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je dva grada povezivao slavni Orient Express?",
+    "o": [
+     "Pariz i Istanbul",
+     "London i Rim",
+     "Beč i Atenu",
+     "Berlin i Moskvu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem gradu završava Transsibirska željeznica iz Moskve?",
+    "o": [
+     "Irkutsku",
+     "Vladivostoku",
+     "Novosibirsku",
+     "Pekingu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove japanski brzi vlak?",
+    "o": [
+     "Maglev",
+     "Tōkaidō Express",
+     "Shinkansen",
+     "Sakura Jet"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zvala lokomotiva Georgea Stephensona iz 1829.?",
+    "o": [
+     "Puffing Billy",
+     "Locomotion",
+     "Flying Scotsman",
+     "Rocket"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja dva mora povezuje Sueski kanal?",
+    "o": [
+     "Sredozemno i Crveno",
+     "Crno i Sredozemno",
+     "Crveno i Arapsko",
+     "Jadransko i Jonsko"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja dva oceana povezuje Panamski kanal?",
+    "o": [
+     "Atlantski i Indijski",
+     "Atlantski i Tihi",
+     "Tihi i Indijski",
+     "Arktički i Tihi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po kome je nazvana zagrebačka zračna luka?",
+    "o": [
+     "Stjepanu Radiću",
+     "Nikoli Tesli",
+     "Franji Tuđmanu",
+     "Josipu Jelačiću"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je IATA oznaka zagrebačke zračne luke?",
+    "o": [
+     "ZGB",
+     "ZAB",
+     "ZGR",
+     "ZAG"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje su dvije države zajedno razvile nadzvučni putnički zrakoplov Concorde?",
+    "o": [
+     "UK i Francuska",
+     "SAD i UK",
+     "Francuska i Njemačka",
+     "Italija i Francuska"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je boje zapravo „crna kutija“ u zrakoplovu?",
+    "o": [
+     "Crne",
+     "Narančaste",
+     "Crvene",
+     "Žute"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje su boje tradicionalni njujorški taksiji?",
+    "o": [
+     "Crne",
+     "Bijele",
+     "Žute",
+     "Zelene"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje su boje poznati londonski autobusi na kat?",
+    "o": [
+     "Crne",
+     "Zelene",
+     "Plave",
+     "Crvene"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se tradicionalno plovilo vozi kanalima Venecije?",
+    "o": [
+     "Gondola",
+     "Kanu",
+     "Feluka",
+     "Džunka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se u prometu popularno naziva obilježeni pješački prijelaz?",
+    "o": [
+     "Žirafa",
+     "Zebra",
+     "Tigar",
+     "Ljestve"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove motorni tricikl-taksi popularan na Tajlandu?",
+    "o": [
+     "Riksa",
+     "Vespa",
+     "Tuk-tuk",
+     "Jeepney"
+    ],
+    "a": 2
+   }
+  ]
+ }
+}

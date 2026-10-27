@@ -1,0 +1,67 @@
+  /* predvorje: odabir lika (likovi su glavni), kompaktan popis igrača, sklopivi "Pozovi igrače" */
+  .lob { display: flex; flex-direction: column; gap: 12px; width: 100%; padding-bottom: 66px; }
+  .lob > .home-link { align-self: center; }
+  .lob-title { font-size: 1.7rem; text-shadow: 0 2px 3px rgba(0, 0, 0, 0.7); margin-top: 2px; }
+  .lob .av-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .lob .av-pick, .lob .av-pick.me { position: relative; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 4px 4px 6px; margin: 0; transform: none;
+    border: 0; border-image: none; border-radius: 10px; filter: none; background: linear-gradient(180deg, rgba(58, 33, 15, 0.9), rgba(36, 19, 8, 0.92));
+    box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.5); transition: box-shadow 0.15s, filter 0.15s; }
+  .lob .av-pick .pick-img { position: relative; aspect-ratio: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+  .lob .av-pick .pick-img > img, .lob .av-pick .pick-img > svg { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; filter: none; transform: none; }
+  .lob .av-pick .pick-img > svg { width: 80%; height: 80%; }
+  .lob .av-pick .pick-nm { display: block; text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.84rem; color: #f3e3c4; text-shadow: none; line-height: 1.2; letter-spacing: 0; }
+  .lob .av-pick .pick-tk { display: block; text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.68rem; color: rgba(243, 227, 196, 0.65); line-height: 1.1; }
+  .lob .av-pick:hover:not(:disabled), .lob .av-pick:focus-visible { filter: brightness(1.08); }
+  .lob .av-pick.me { box-shadow: inset 0 0 0 2px rgba(226, 172, 84, 0.95), inset 0 0 22px rgba(226, 160, 70, 0.28); }
+  .lob .av-pick.me::after { content: "✓"; position: absolute; top: 5px; right: 5px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 12px; font-weight: 900; color: #2a1606; background: #e2ac54; }
+  .lob .av-pick.pop { animation: pickPop 0.32s cubic-bezier(0.3, 1.6, 0.5, 1); }
+  @keyframes pickPop { 40% { transform: scale(1.06); } }
+  .lob .av-pick:disabled { opacity: 1; filter: brightness(0.5) saturate(0.7); cursor: not-allowed; }
+  /* popis igrača */
+  .lob-players { border-radius: 10px; padding: 2px 10px; background: rgba(30, 15, 6, 0.6); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.35); }
+  .lob-row { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid rgba(196, 146, 66, 0.16);
+    font-family: var(--font-body); font-weight: 800; font-size: 0.92rem; color: #f3e3c4; }
+  .lob-row:last-child { border-bottom: 0; }
+  .lob-row .mini { width: 26px; height: 26px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px rgba(196, 146, 66, 0.55); background: rgba(255, 230, 190, 0.08); }
+  .lob-row .mini > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; transform: scale(1.2) translateY(6%); }
+  .lob-row .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lob-row .crown { color: #e2ac54; margin-left: 4px; font-size: 0.85em; }
+  .lob-row .you { margin-left: 6px; padding: 0 5px; border-radius: 4px; font-size: 0.68rem; font-weight: 900; color: #e8cf9c; box-shadow: inset 0 0 0 1px rgba(232, 207, 156, 0.55); }
+  .lob-row .st { font-size: 0.8rem; color: #b8c98e; white-space: nowrap; }
+  .lob-row .st.off { color: rgba(243, 227, 196, 0.45); }
+  /* pozovi igrače */
+  .lob-invite { display: flex; flex-direction: column; align-items: center; gap: 8px; border-radius: 10px; padding: 10px; background: rgba(30, 15, 6, 0.6); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.35); }
+  .lob-code-l { font-family: var(--font-body); font-weight: 800; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(243, 227, 196, 0.6); }
+  .lob-code { font-family: var(--font-body); font-weight: 900; font-size: 2.6rem; line-height: 1; letter-spacing: 0.22em; padding-left: 0.22em; color: #fff4dc; text-shadow: none; }
+  .lob-qr { width: min(58vw, 210px); aspect-ratio: 1; padding: 8px; border-radius: 6px; background: #fff; box-shadow: 0 0 0 2px #8a6232; }
+  .lob-qr svg { display: block; width: 100%; height: 100%; }
+  .lob-addr { font-size: 0.74rem; color: rgba(243, 227, 196, 0.6); text-align: center; }
+  .lob .btn.lob-cta { min-height: 58px; font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; filter: drop-shadow(0 0 7px rgba(232, 170, 80, 0.45)) brightness(1.08); }
+  .lob .btn.lob-cta:disabled { filter: saturate(0.35) brightness(0.8); opacity: 0.6; }
+  .lob .btn.ghost.lob-toggle { min-height: 44px; font-size: 0.95rem; }
+  .lob-wait { text-align: center; font-weight: 800; font-size: 0.92rem; color: rgba(243, 227, 196, 0.75); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .lob .home-link { align-self: center; }
+  /* TV predvorje: pozivnica lijevo, veliki likovi igrača desno */
+  .tvlob { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 5vw; align-items: center; flex: 1; padding: 2vh 3vw 8vh; }
+  .tvlob-inv { display: flex; flex-direction: column; align-items: center; gap: 1.6vh; padding: 3vh 2vw; border-radius: 14px; background: rgba(30, 15, 6, 0.62); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.45); }
+  .tvlob-inv .lob-qr { width: min(22vw, 34vh, 320px); }
+  .tvlob-inv .lob-code { font-size: clamp(3rem, 6vw, 5.5rem); }
+  .tvlob-inv .lob-addr { font-size: clamp(0.85rem, 1.1vw, 1.1rem); }
+  .tvlob-cast h2 { margin: 0 0 2vh; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.8rem); color: #f3e3c4; text-shadow: 0 2px 3px rgba(0, 0, 0, 0.7); }
+  .tvlob-cast h2 span { font-family: var(--font-body); font-weight: 800; font-size: 0.5em; color: rgba(243, 227, 196, 0.6); margin-left: 0.6em; }
+  .tvlob-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6vw; }
+  .tvlob-slot { display: flex; flex-direction: column; align-items: stretch; padding: 6px 6px 10px; border-radius: 12px; background: linear-gradient(180deg, rgba(58, 33, 15, 0.9), rgba(36, 19, 8, 0.92)); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.5); }
+  .tvlob-slot.empty { background: none; box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.25); justify-content: center; }
+  .tvlob-slot .pick-img { aspect-ratio: 1; display: flex; align-items: flex-end; justify-content: center; }
+  .tvlob-slot .pick-img > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; }
+  .tvlob-slot .pick-img > svg { width: 78%; height: 78%; }
+  .tvlob-slot .pick-nm { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: clamp(0.9rem, 1.4vw, 1.4rem); color: #f3e3c4; }
+  .tvlob-slot.empty .pick-nm { color: rgba(243, 227, 196, 0.35); font-weight: 700; }
+  .tvlob-slot.off { filter: brightness(0.55) saturate(0.6); }
+  .tvlob-act { display: flex; gap: 14px; align-items: center; margin-top: 3vh; flex-wrap: wrap; }
+  .tvlob-act .btn.lob-cta { min-height: 60px; min-width: 260px; font-family: var(--font-display); font-weight: 400; font-size: 1.3rem; filter: drop-shadow(0 0 7px rgba(232, 170, 80, 0.45)) brightness(1.08); }
+  .tvlob-act .btn.lob-cta:disabled { filter: saturate(0.35) brightness(0.8); opacity: 0.6; }
+  /* 10 likova mora stati bez scrollanja zajedno s popisom i gumbom: 4 u redu na uskim mobitelima */
+  @media (max-width: 520px) { .lob .av-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; } .lob .av-pick .pick-nm { font-size: 0.74rem; } .lob { gap: 10px; } }
+  .tvlob-slot.empty { aspect-ratio: 1 / 1.12; }

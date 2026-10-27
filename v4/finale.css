@@ -1,0 +1,22 @@
+  /* finale: kompaktna piramida tijekom pitanja, veća za napredovanje; figure ulaze na početku i penju se nakon reveala */
+  .phone-pyr.compact .pyramid { --H: clamp(22px, 3.1vh, 28px); padding-top: calc(var(--H) * 1.2); }
+  .phone-pyr.big .pyramid { --H: clamp(32px, 5vh, 44px); }
+  .pyramid .climber.go { animation-delay: calc(var(--cd, 0ms) - var(--el, 0ms)); }
+  .pyramid .climber.enter { animation: climbIn 0.45s ease-out both; animation-delay: var(--cd, 0ms); }
+  @keyframes climbIn { from { opacity: 0; transform: translateY(calc(var(--H) * 0.5)); } }
+  .pyramid .climber .tag-you { position: absolute; left: 50%; top: calc(var(--H) * -0.42); transform: translateX(-50%); padding: 0 4px; border-radius: 4px; font-family: var(--font-body); font-weight: 900;
+    font-size: max(9px, calc(var(--H) * 0.3)); line-height: 1.3; color: #2a1606; background: #e2ac54; white-space: nowrap; }
+  .pyramid .climber .cn { display: none; }
+  .tv .pyramid .climber .cn { display: block; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 1px; font-family: var(--font-body); font-weight: 800;
+    font-size: calc(var(--H) * 0.24); color: #f3e3c4; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); white-space: nowrap; }
+  .pyramid .climber .up { animation: rvIn 0.25s ease both; animation-delay: calc(var(--cd, 0ms) - var(--el, 0ms)); }
+  .rv-opts.two { grid-template-columns: 1fr 1fr; }
+  .rv-opts.two .p-opt { justify-content: center; min-height: 92px; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.15rem, 6vw, 1.5rem); }
+  .fin-note { text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 1.05rem; color: #e2b764; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); }
+  .fin-note.zero { color: rgba(243, 227, 196, 0.75); }
+  .tv .tf-row .opt.correct::after { content: "✓"; }
+  @media (prefers-reduced-motion: reduce) {
+    .pyramid .climber.go { animation-name: climbFade; animation-duration: 0.4s; }
+    @keyframes climbFade { from { opacity: 0.2; } }
+  }
+  .center > .p-top:has(.p-me), .center .p-top:has(.p-me) { align-self: stretch; width: 100%; }

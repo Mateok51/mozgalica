@@ -1,0 +1,31 @@
+{
+  "remove": [],
+  "fix": [
+    {
+      "q": "Na kojem se poluotoku nalazi Ston sa svojim dugim obrambenim zidinama?",
+      "new": { "q": "Na kojem se poluotoku nalazi Ston sa svojim dugim obrambenim zidinama?", "o": ["Istra", "Prevlaka", "Pelješac", "Lapad"], "a": 2 },
+      "why": "Opcija „Pelješac Mali“ ne postoji (postoji naselje Mali Ston na Pelješcu) i zbunjuje igrače; zamijenjena Prevlakom"
+    },
+    {
+      "q": "Koji je grad baroka 1767. postao sjedište Hrvatskog kraljevskog vijeća?",
+      "new": { "q": "Koji je barokni grad 1767. postao sjedište Hrvatskoga kraljevskog vijeća?", "o": ["Karlovac", "Osijek", "Varaždin", "Požega"], "a": 2 },
+      "why": "Jezična ispravka: nespretno „grad baroka“"
+    },
+    {
+      "q": "Koji se grad zove „gradom na četiri rijeke“?",
+      "new": { "q": "Koji se grad naziva „gradom na četiri rijeke“?", "o": ["Sisak", "Osijek", "Slavonski Brod", "Karlovac"], "a": 3 },
+      "why": "Jezična ispravka: „naziva se gradom“ umjesto „zove se gradom“"
+    },
+    {
+      "q": "Koji istarski gradić na brežuljku poznat je po filmskom festivalu?",
+      "new": { "q": "Koji je istarski gradić na brežuljku poznat po filmskom festivalu?", "o": ["Grožnjan", "Buzet", "Labin", "Motovun"], "a": 3 },
+      "why": "Jezična ispravka: red riječi (enklitika „je“)"
+    },
+    {
+      "q": "Koji je glavni grad Egipta?",
+      "new": { "q": "Koji je glavni grad Egipta?", "o": ["Aleksandrija", "Luksor", "Kairo", "Giza"], "a": 2 },
+      "why": "Hrvatski oblik imena: Luksor umjesto Luxor"
+    }
+  ],
+  "notes": "Provjereno svih 100 pitanja (6 kategorija). Svi označeni odgovori su točni; nema duplikata ni spornih pitanja za izbacivanje. Provjereno pretraživanjem: Sava ima najdulji tok kroz Hrvatsku (562 km, Drava 305, Kupa 296); Motovunski filmski festival i dalje se održava (sada pod imenom Cinehill Motovun Film Festival). 5 ispravaka: jedna nepostojeća opcija (Pelješac Mali) i četiri jezične sitnice."
+}

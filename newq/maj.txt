@@ -1,0 +1,60 @@
+Bolji doručak? | Palačinke | Jaja sa slaninom | Žitarice s mlijekom | Burek
+More ili planine? | More | Planine
+Pizza: s ananasom ili bez? | S ananasom | Bez ananasa
+Koje je najbolje godišnje doba? | Proljeće | Ljeto | Jesen | Zima
+Psi ili mačke? | Psi | Mačke
+Kava ili čaj? | Kava | Čaj | Ni jedno ni drugo
+Bolja supermoć? | Letenje | Nevidljivost | Teleportacija | Čitanje misli
+Gdje bi radije živio? | U velikom gradu | Na selu | Na otoku | U planinama
+Najbolji dio dana? | Jutro | Popodne | Večer | Kasna noć
+Film ili serija? | Film | Serija
+Slatko ili slano? | Slatko | Slano
+Najbolji desert? | Čokoladna torta | Sladoled | Palačinke | Tiramisu
+Ljeto: plaža ili bazen? | Plaža | Bazen
+Što bi radije bio? | Vitez | Čarobnjak | Gusar | Astronaut
+Bolji ljubimac? | Pas | Mačka | Papiga | Zlatna ribica
+Kako najradije putuješ? | Autom | Vlakom | Avionom | Brodom
+Što bi ponio na pusti otok? | Nož | Knjigu | Mobitel | Prijatelja
+Najbolji začin za krumpiriće? | Ketchup | Majoneza | Senf | Samo sol
+Najbolja vrsta filma? | Komedija | Akcija | Horor | Romantika
+Bolji sport za gledati? | Nogomet | Košarka | Tenis | Rukomet
+Najdraže voće? | Jagode | Lubenica | Jabuke | Banane
+Što je gore? | Hladan tuš | Spora internetska veza | Mokre čarape | Komarac u sobi
+Gdje bi radije otišao na odmor? | U Pariz | Na Maldive | U Japan | U New York
+Bolja jutarnja navika? | Rano ustajanje | Dugo spavanje
+Najbolja tjestenina? | Špageti | Lazanje | Njoki | Penne
+Najbolja pizza? | Margarita | Capricciosa | Quattro formaggi | Pepperoni
+Što bi radije imao? | Vremeplov | Čarobni tepih | Nevidljivi plašt | Lampu s duhom
+Bolji kućni ljubimac za stan? | Mačka | Hrčak | Mali pas | Riba
+Najbolji blagdan? | Božić | Uskrs | Rođendan | Nova godina
+Ljeto ili zima? | Ljeto | Zima
+Bolji način provođenja večeri? | Društvene igre | Film | Izlazak | Videoigre
+Koji je najbolji superjunak? | Spider-Man | Batman | Superman | Iron Man
+Lijepo vrijeme: šetnja ili bicikl? | Šetnja | Bicikl
+Najbolja grickalica uz film? | Kokice | Čips | Čokolada | Smoki
+Najbolje jelo s roštilja? | Ćevapi | Pljeskavica | Kobasice | Riba
+Što je bolje za ljeto? | Lubenica | Sladoled | Limunada | Ledena kava
+Što bi radije znao? | Svirati gitaru | Plesati | Kuhati | Crtati
+Vrata u bajci: koja bi otvorio? | Zlatna | Drvena | Kamena | Kristalna
+Bolji lik iz bajke? | Pepeljuga | Crvenkapica | Snjeguljica | Matovilka
+Najbolji crtani lik? | Spužva Bob | Bugs Bunny | Mickey Mouse | Tom (i Jerry)
+Koliko često piješ kavu? | Nikad | Jednom dnevno | Dvaput dnevno | Stalno
+Najgora kućanska obveza? | Pranje suđa | Glačanje | Usisavanje | Iznošenje smeća
+Bolja čokolada? | Mliječna | Tamna | Bijela
+Kako najradije slušaš glazbu? | Slušalice | Zvučnik | Uživo na koncertu | U autu
+Najbolja planina za izlet? | Sljeme | Učka | Velebit | Biokovo
+Koji grad bi radije posjetio? | Dubrovnik | Split | Rovinj | Zadar
+Bolje mjesto za kavu? | Kafić u gradu | Kod kuće | Na poslu | Na plaži
+Vikend: odmor ili avantura? | Odmor | Avantura
+Koja boja je najljepša? | Plava | Zelena | Crvena | Crna
+Najbolja vrsta glazbe? | Pop | Rock | Narodna | Hip-hop
+Kakvo vrijeme najviše voliš? | Sunčano | Kišno | Snježno | Oblačno
+Najbolje vrijeme za tuširanje? | Ujutro | Navečer
+Koji bi životinjski zvuk najradije imao kao zvono mobitela? | Mačje mijaukanje | Lavlja rika | Pjev ptica | Pseći lavež
+Kad bi mogao biti životinja? | Orao | Dupin | Mačka | Lav
+Kojim bi se natjecanjem radije bavio? | Kviz | Kuhanje | Ples | Pjevanje
+Što je bolje: rano na zabavu ili zadnji otići? | Doći rano | Zadnji otići
+Bolja igra na plaži? | Picigin | Odbojka | Frizbi | Badminton
+Najbolji kolač? | Kremšnita | Sacher torta | Orahnjača | Fritule
+Koji je najbolji doručak u Hrvatskoj? | Burek i jogurt | Kroasan | Sendvič | Jaja
+Kakav si u kvizu? | Znam sve | Pogađam | Čekam pomoć | Samo sam tu zbog moći

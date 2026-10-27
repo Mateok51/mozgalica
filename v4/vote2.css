@@ -1,0 +1,16 @@
+  /* glasanje → odabir: vrata ostaju na mjestu, pobjednik se glatko izdigne, ostala se polako zatamne (nakon rulete, --rd) */
+  #app .door.win, #app .door-btn.win { animation: doorWin 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) both; animation-delay: calc(var(--rd, 0ms) + 60ms - var(--pel, 0ms)); }
+  #app .door.lose, #app .door-btn.lose { animation: doorLose 0.6s ease-out both; animation-delay: calc(var(--rd, 0ms) + 60ms - var(--pel, 0ms)); }
+  @keyframes doorWin { from { transform: none; filter: none; opacity: 1; } }
+  @keyframes doorLose { from { transform: none; filter: none; opacity: 1; } }
+  .door, .door-btn { position: relative; }
+  .spot { position: absolute; inset: -4px; z-index: 4; pointer-events: none; border-radius: 14px; opacity: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 35%, rgba(255, 238, 180, 0.55), rgba(255, 200, 90, 0.18) 55%, transparent 75%);
+    box-shadow: 0 0 0 3px rgba(255, 226, 150, 0.95), 0 0 28px 8px rgba(255, 196, 90, 0.75), inset 0 0 30px rgba(255, 230, 160, 0.55); mix-blend-mode: screen; }
+  .rl-pre { animation: rlHide 0.25s ease-out both; animation-delay: calc(var(--rd) - var(--pel, 0ms)); }
+  .rl-post { animation: rlShow 0.4s ease-out both; animation-delay: calc(var(--rd) + 80ms - var(--pel, 0ms)); }
+  .rl-pre + .rl-post { position: absolute; left: 0; right: 0; }
+  .p-title:has(.rl-pre), .tv-sub:has(.rl-pre) { position: relative; }
+  @keyframes rlHide { to { opacity: 0; visibility: hidden; } }
+  @keyframes rlShow { from { opacity: 0; transform: translateY(4px); } }
+  @media (prefers-reduced-motion: reduce) { .spot { display: none; } }

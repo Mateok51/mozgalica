@@ -1,0 +1,98 @@
+#Društvene igre i igračke
+Koliko polja ima šahovska ploča po jednoj strani? | 8 | 6 | 10 | 12
+Koja šahovska figura može preskakati druge figure? | Skakač | Lovac | Top | Kraljica
+Koja se šahovska figura kreće samo okomito i vodoravno? | Top | Lovac | Skakač | Pješak
+Koja boja u šahu uvijek igra prvi potez? | Bijela | Crna | Ovisi o ždrijebu | Ona koja je bliže
+U što se može pretvoriti pješak koji dođe do zadnjeg reda šahovske ploče? | U bilo koju figuru osim kralja | Samo u kraljicu | U kralja | Ostaje pješak
+Kako se zove šahovski potez kojim pješak uzima protivnikova pješaka „u prolazu“? | En passant | Rokada | Gambit | Zugzwang
+Kako se zove svjetski šahovski prvak iz Norveške koji je dugo bio broj jedan? | Magnus Carlsen | Garri Kasparov | Bobby Fischer | Viswanathan Anand
+Koji je šahovski velemajstor izgubio meč od IBM-ova računala Deep Blue 1997.? | Garri Kasparov | Anatolij Karpov | Bobby Fischer | Magnus Carlsen
+Koliko kamenčića ima svaki igrač na početku igre dame? | 12 | 10 | 16 | 15
+Na kojim se poljima igra dama na šahovskoj ploči? | Samo na tamnim poljima | Samo na svijetlim | Na svim poljima | Na rubovima
+Kako se zove drevna kineska strateška igra s crnim i bijelim kamenčićima na mreži 19 × 19? | Go | Mahjong | Šogi | Xiangqi
+Iz koje zemlje potječe igra Mahjong? | Kina | Japan | Koreja | Indija
+Iz koje zemlje potječu tradicionalne igraće karte hanafuda, koje je isprva izrađivao Nintendo? | Japan | Kina | Koreja | Tajland
+Kako se zove poznata igra trgovanja nekretninama s ulicama, hotelima i zatvorom? | Monopoly | Cluedo | Catan | Rizik
+Koje je boje najskuplja ulica u izvornom američkom Monopolyju (Boardwalk)? | Tamnoplava | Crvena | Zelena | Žuta
+Što dobiva igrač Monopolyja svaki put kad prođe polje „Kreni“? | Novac (200) | Besplatan hotel | Izlaz iz zatvora | Dodatno bacanje
+Koja je igra o otkrivanju ubojice, oružja i prostorije? | Cluedo | Monopoly | Scrabble | Rizik
+Kako se zove bogataš čije se ubojstvo istražuje u izvornom Cluedu? | Dr. Black | Gospodin Monopoly | Pukovnik Mustard | Profesor Plum
+Koja se igra temelji na slaganju riječi od pločica sa slovima? | Scrabble | Boggle | Uno | Domino
+Koja se igra temelji na osvajanju svijeta vojskama i kockama? | Rizik | Catan | Monopoly | Cluedo
+Koja se igra temelji na naseljavanju otoka i trgovanju drvom, glinom, ovcama, žitom i rudom? | Catan | Carcassonne | Monopoly | Ticket to Ride
+Kako se zove igra polaganja pločica s cestama i gradovima, nazvana po francuskom gradu? | Carcassonne | Catan | Dixit | Azul
+Koja je igra o gradnji željezničkih ruta preko karte? | Ticket to Ride | Catan | Carcassonne | Monopoly
+Koja se kartaška igra igra s kartama u četiri boje i kartama „+2“ i „+4“? | Uno | Remi | Briškula | Belot
+Što igrač mora reći kad mu ostane jedna karta u Unu? | „Uno!“ | „Stop!“ | „Zadnja!“ | „Bingo!“
+Koja se tradicionalna kartaška igra s talijanskim kartama igra u Dalmaciji? | Briškula | Belot | Preferans | Poker
+Koja se kartaška igra s adutima i zvanjima igra u kontinentalnoj Hrvatskoj s mađarskim (njemačkim) kartama? | Belot | Briškula | Trešeta | Remi
+Koliko je karata u špilu talijanskih karata za briškulu? | 40 | 52 | 32 | 36
+Koja je najjača ruka u pokeru? | Royal flush | Poker (četiri iste) | Full house | Skala
+Što je „full house“ u pokeru? | Tri iste i par | Pet karata iste boje | Dva para | Pet karata u nizu
+Koji je ukupan cilj u igri „Blackjack“? | Doći što bliže 21 bez prelaska | Skupiti četiri asa | Doći do 100 | Složiti skalu
+Kako se zove igra s pločicama s točkicama koje se slažu jednaka uz jednaku? | Domino | Mahjong | Remi | Jamb
+Koliko pločica ima standardni set domina (dvostruka šestica)? | 28 | 36 | 24 | 32
+Koja se igra igra s kockicama i listićem s rubrikama, popularna u Hrvatskoj? | Jamb | Remi | Domino | Ludo
+Koliko kockica se koristi u igri jamb? | 5 | 6 | 2 | 3
+Kako se u Hrvatskoj zove igra koju u Engleskoj zovu Ludo? | Čovječe, ne ljuti se | Mlin | Dama | Jamb
+Što mora pasti na kocki da bi figura izašla iz kućice u „Čovječe, ne ljuti se“? | Šestica | Jedinica | Petica | Dvije šestice
+Kako se zove igra s 9 figura po igraču na ploči s tri kvadrata? | Mlin | Dama | Go | Ludo
+Iz koje zemlje potječe igra Zmije i ljestve? | Indija | Kina | Engleska | Egipat
+Koja se igra igra na dvije skrivene mreže, pogađanjem koordinata poput „B5“? | Potapanje brodova | Rizik | Šah | Stratego
+Koja se igra crtanjem i pogađanjem pojmova u timovima zove po crtanju? | Pictionary | Activity | Tabu | Dixit
+Koja se igra igra objašnjavanjem, crtanjem i pantomimom? | Activity | Pictionary | Tabu | Uno
+Kako se zove igra u kojoj se pojam objašnjava bez zabranjenih riječi? | Tabu | Activity | Scrabble | Dixit
+Koja se igra temelji na izvlačenju drvenih kockica iz tornja bez rušenja? | Jenga | Domino | Mikado | Lego
+Kako se zove igra izvlačenja tankih štapića iz hrpe bez pomicanja ostalih? | Mikado | Jenga | Domino | Mlin
+Kako se zove igra pogađanja lica postavljanjem pitanja s odgovorima da ili ne? | Pogodi tko? | Cluedo | Memory | Tabu
+Kako se zove igra pronalaženja parova okrenutih kartica? | Memory | Uno | Domino | Jenga
+Kako se zove igra na mreži 3 × 3 u kojoj treba složiti tri svoja znaka u nizu? | Križić-kružić | Potapanje brodova | Mlin | Vješala
+Koja se igra riječima igra pogađanjem slova, a za svaku grešku se crta dio čovječuljka? | Vješala | Križić-kružić | Scrabble | Kalodont
+Kako se zove igra riječima u kojoj nova riječ počinje zadnjim slovima prethodne? | Kalodont | Vješala | Tabu | Pantomima
+Iz koje zemlje potječu kockice Lego? | Danska | Švedska | Njemačka | Nizozemska
+Što znači naziv Lego, nastao od danskih riječi „leg godt“? | Igraj se dobro | Gradi brzo | Mala kocka | Slagati zajedno
+Kako se zove lutka koju je 1959. predstavila tvrtka Mattel? | Barbie | Sindy | Bratz | Polly Pocket
+Kako se zove Barbiein dečko? | Ken | Ryan | Max | Steve
+Koja je plišana igračka dobila ime po američkom predsjedniku Theodoreu Rooseveltu? | Medvjedić (Teddy) | Zeko | Majmunčić | Lutka
+Kako se zove igračka koja se okreće oko svoje osi na vrhu? | Čigra | Jo-jo | Frizbi | Bumerang
+Kako se zove igračka na koncu koja se spušta i vraća u ruku? | Jo-jo | Čigra | Zmaj | Bumerang
+Kako se zove leteći plastični disk za bacanje? | Frizbi | Bumerang | Zmaj | Jo-jo
+Kako se zove drvena zakrivljena igračka koja se vraća bacaču, porijeklom iz Australije? | Bumerang | Frizbi | Jo-jo | Čigra
+Kako se zove igračka od papira ili tkanine koja leti na vjetru na dugoj uzici? | Zmaj | Balon | Padobran | Jedrilica
+Kako se zove ruska drvena lutka u kojoj se nalaze sve manje lutke? | Babuška (matrjoška) | Pinokio | Marioneta | Barbie
+Kako se zove lutka koju lutkar pokreće pomoću konaca? | Marioneta | Ginjol | Plišanac | Matrjoška
+Koja je slagalica postala hit 1980-ih, s kockom sa šest obojenih strana? | Rubikova kocka | Tetris | Tamagotchi | Mikado
+Kako se zvao japanski digitalni ljubimac u obliku jajeta, popularan 1990-ih? | Tamagotchi | Furby | Pokémon | Game Boy
+Koja je pahuljasta elektronička igračka 1998. „učila“ govoriti? | Furby | Tamagotchi | Teddy Ruxpin | Bratz
+Kako se zove ručna igraća konzola tvrtke Nintendo iz 1989.? | Game Boy | PlayStation | Nintendo Switch | Sega Genesis
+Kako se zovu male figurice sa stezaljkama umjesto šaka, prvi put predstavljene 1978.? | Lego figurice | Playmobil | Barbie | Polly Pocket
+Iz koje zemlje dolaze igračke Playmobil? | Njemačka | Danska | Švedska | Italija
+Kako se zove tvrtka koja proizvodi autiće Hot Wheels? | Mattel | Hasbro | Lego | Bandai
+Kako se zovu metalni minijaturni autići koje je proizvodila britanska tvrtka Lesney? | Matchbox | Hot Wheels | Majorette | Tonka
+Koja je tvrtka izdala igračke Transformers i My Little Pony? | Hasbro | Mattel | Lego | Bandai
+Kako se zove dječja igra u kojoj jedan broji, a ostali se skrivaju? | Skrivača | Lovice | Školica | Graničar
+Kako se zove dječja igra skakanja po nacrtanim poljima na asfaltu? | Školica | Skrivača | Lastika | Graničar
+Kako se zove igra u kojoj se skače preko elastične gumice napete oko nogu? | Lastika | Školica | Preskakanje užeta | Klikeri
+Kako se zove dječja igra s malim staklenim kuglicama? | Klikeri | Kuglanje | Pikado | Bočanje
+Kako se zove igra loptom između dvije ekipe u kojoj se gađa protivnike? | Graničar | Lovice | Školica | Skrivača
+Kako se zove igra bacanja kugli prema maloj kugli, popularna u Dalmaciji? | Bočanje (boće) | Kuglanje | Golf | Curling
+Koja se igra igra bacanjem strelica u okruglu metu? | Pikado | Bočanje | Kuglanje | Biljar
+Koliko je kugli na stolu na početku partije „osmice“ u biljaru, bez bijele? | 15 | 9 | 10 | 16
+Koju kuglu treba ubaciti zadnju u biljarskoj igri „osmica“? | Crnu osmicu | Bijelu | Žutu jedinicu | Bilo koju
+Kako se zove ploča sa slovima i „da“ i „ne“ za navodno prizivanje duhova? | Ouija | Tarot | Cluedo | Scrabble
+Koliko polja ima standardna ploča za igru Scrabble? | 225 (15 × 15) | 100 (10 × 10) | 196 (14 × 14) | 400 (20 × 20)
+Koliko pločica sa slovima igrač drži na stalku u Scrabbleu? | 7 | 5 | 6 | 8
+Koju kocku igrači Dungeons & Dragons bacaju za napade i provjere vještina? | D20 | D6 | D12 | D100
+Koja je najpoznatija stolna igra uloga, nastala 1974. u SAD-u? | Dungeons & Dragons | Warhammer | Magic: The Gathering | Catan
+Koja je kolekcionarska kartaška igra iz 1993. s čarobnjacima i manom? | Magic: The Gathering | Pokémon TCG | Yu-Gi-Oh! | Hearthstone
+Koja je kartaška igra s Pikachuom i drugim čudovištima? | Pokémon TCG | Magic: The Gathering | Uno | Yu-Gi-Oh!
+Kako se zove slagalica od mnogo dijelova koji tvore sliku? | Puzzle (slagalica) | Rubikova kocka | Tangram | Domino
+Kako se zove kineska slagalica od sedam geometrijskih oblika? | Tangram | Mahjong | Sudoku | Go
+Kako se zove logička zagonetka s brojevima od 1 do 9 u mreži 9 × 9? | Sudoku | Kakuro | Križaljka | Tangram
+Kako se zove igra pogađanja skrivene šifre od četiri boje kuglica? | Mastermind | Cluedo | Memory | Uno
+Iz koje je zemlje izumitelj Rubikove kocke? | Mađarska | Rusija | Japan | Češka
+Kako se zove figurica u Monopolyju koja je dugo bila klasik: mali pas, šešir, automobil i…? | Glačalo | Lopta | Avion | Gitara
+Kako se zove igra pogađanja riječi izgovorenih na uho jedan drugome u nizu? | Pokvareni telefon | Tabu | Kalodont | Činovnik
+Kako se zove poznata društvena igra s riječima i kodnim imenima dviju ekipa špijuna? | Codenames | Dixit | Tabu | Scrabble
+Koja je igra s ilustriranim kartama i pričanjem asocijacija, francuskog podrijetla? | Dixit | Codenames | Catan | Uno
+Kako se zove kartaška igra skupljanja nizova i trojki, popularna u Hrvatskoj? | Remi | Belot | Briškula | Poker

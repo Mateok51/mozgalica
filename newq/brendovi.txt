@@ -1,0 +1,101 @@
+#Brendovi i logotipi
+Koja tvrtka ima logotip nagrižene jabuke? | Apple | Samsung | Microsoft | BlackBerry
+Koja tvrtka ima logotip od četiri obojena kvadrata u obliku prozora? | Microsoft | Google | Apple | IBM
+Koje su boje slova u logotipu tvrtke Google? | Plava, crvena, žuta, zelena | Crvena i bijela | Crna i žuta | Samo plava
+Koja tvrtka ima logotip s „M“ u obliku zlatnih lukova? | McDonald's | Motorola | Mastercard | Monster
+Koja tvrtka ima logotip s brkatim pukovnikom Sandersom? | KFC | Burger King | Wendy's | Subway
+Koja tvrtka ima logotip zelene sirene s dva repa? | Starbucks | Costa Coffee | Lavazza | Nespresso
+Koja tvrtka ima logotip s dva crveno-žuta kruga koja se preklapaju? | Mastercard | Visa | PayPal | American Express
+Koja marka automobila ima logotip s četiri isprepletena kruga? | Audi | BMW | Volkswagen | Opel
+Koja marka automobila ima logotip s plavo-bijelim poljima u crnom krugu? | BMW | Audi | Mercedes-Benz | Volvo
+Koja marka automobila ima logotip trokrake zvijezde u krugu? | Mercedes-Benz | Audi | BMW | Lexus
+Koja marka automobila ima logotip s propetim konjem na žutoj podlozi? | Ferrari | Lamborghini | Bugatti | Maserati
+Koja marka automobila ima logotip s bikom? | Lamborghini | Ferrari | Maserati | Dodge
+Koja marka automobila ima logotip s trozupcem? | Maserati | Lamborghini | Alfa Romeo | Fiat
+Koja marka automobila ima logotip s lavom? | Peugeot | Renault | Citroën | Opel
+Koja marka automobila ima logotip s dvostrukim „chevronom“ (dvije strelice)? | Citroën | Peugeot | Renault | Škoda
+Koja marka automobila ima logotip u obliku romba? | Renault | Mazda | Citroën | Hyundai
+Koja marka automobila ima logotip s tri crvena romba? | Mitsubishi | Renault | Suzuki | Mazda
+Koja marka automobila ima logotip sa slovima VW? | Volkswagen | Volvo | Vauxhall | Wiesmann
+Koja marka automobila ima logotip s munjom? | Opel | Tesla | Škoda | Seat
+Koja marka automobila ima logotip s krilatom strelicom? | Škoda | Seat | Opel | Kia
+Koja marka automobila ima logotip s grbom grada Stuttgarta i konjem? | Porsche | Ferrari | Mercedes-Benz | Audi
+Koja marka automobila ima logotip s krugom i strelicom prema gore desno? | Volvo | Peugeot | Mazda | Toyota
+Koja marka automobila ima logotip s tri ovala? | Toyota | Honda | Hyundai | Nissan
+Koja marka automobila ima logotip u obliku plavog ovala s natpisom pisanim rukom? | Ford | Opel | Hyundai | Subaru
+Koja marka automobila ima logotip sa šest zvijezda (zviježđe Plejade)? | Subaru | Mitsubishi | Mazda | Suzuki
+Koja hrvatska tvrtka proizvodi električne hiperautomobile Nevera? | Rimac | Infobip | Podravka | Končar
+Koja tvrtka ima logotip s pticom koju je 2023. zamijenilo slovo X? | Twitter | Facebook | Telegram | Snapchat
+Koja društvena mreža ima logotip žutog duha? | Snapchat | TikTok | Instagram | WhatsApp
+Koja aplikacija ima logotip zelene slušalice u oblačiću? | WhatsApp | Viber | Signal | Skype
+Koja aplikacija ima logotip ljubičastog telefona u oblačiću? | Viber | WhatsApp | Messenger | Telegram
+Koja aplikacija za glazbu ima logotip zelenog kruga s tri zakrivljene crte? | Spotify | Deezer | Apple Music | SoundCloud
+Koja tvrtka ima logotip bijelog trokuta „play“ na crvenom pravokutniku? | YouTube | Netflix | Twitch | Vimeo
+Koja tvrtka ima logotip crvenog slova N? | Netflix | Nintendo | Nokia | NBC
+Koja tvrtka ima logotip s osmijehom u obliku strelice od A do Z? | Amazon | Alibaba | eBay | Google
+Koja je društvena mreža imala logotip ptice zvane „Larry“? | Twitter | Duolingo | Angry Birds | Firefox
+Koja aplikacija za učenje jezika ima zelenu sovu kao maskotu? | Duolingo | Babbel | Memrise | Busuu
+Koji preglednik ima logotip lisice oko globusa? | Firefox | Chrome | Opera | Safari
+Koji preglednik ima logotip u obliku kompasa? | Safari | Firefox | Edge | Opera
+Koja tvrtka ima žutu školjku kao logotip? | Shell | BP | Esso | OMV
+Koje je boje limenka Coca-Cole? | Crvena | Plava | Zelena | Crna
+Koja tvrtka ima logotip s plavo-crveno-bijelim krugom? | Pepsi | Coca-Cola | Fanta | 7Up
+Koje je boje limenka Red Bulla? | Plavo-srebrna | Crveno-zlatna | Zelena | Crna
+Što je na logotipu Red Bulla? | Dva crvena bika | Jelen | Lav | Orao
+Koja tvrtka poljoprivrednih strojeva ima logotip jelena u skoku? | John Deere | Red Bull | Lacoste | Ferrari
+Koje životinje je glava na logotipu likera Jägermeister? | Jelena | Bika | Medvjeda | Lava
+Koja organizacija za zaštitu prirode ima logotip s pandom? | WWF | Greenpeace | UNICEF | Crveni križ
+Koja tvrtka igračaka ima logotip s bijelim slovima na crvenom kvadratu? | Lego | Mattel | Hasbro | Playmobil
+Koja tvrtka ima logotip s miškom Mickeyjem i dvorcem? | Disney | Warner Bros. | Universal | Pixar
+Koja tvrtka ima logotip s lavom koji riče na početku filmova? | MGM | Paramount | 20th Century | Columbia
+Koja filmska tvrtka ima logotip s planinom i zvijezdama? | Paramount | Universal | MGM | DreamWorks
+Koja filmska tvrtka ima logotip s dječakom koji peca na Mjesecu? | DreamWorks | Pixar | Universal | Disney
+Kako se zove čokolada s ljubičastim omotom i ljubičastom kravom u reklamama? | Milka | Kinder | Lindt | Toblerone
+Koja je švicarska čokolada poznata po trokutastom obliku nalik planinskim vrhovima? | Toblerone | Milka | Lindt | Ritter Sport
+Koja čokoladica ima slogan „Have a break, have a …“? | KitKat | Twix | Snickers | Mars
+Koja čokoladica ima reklame o „lijevoj“ i „desnoj“ tvornici? | Twix | KitKat | Mars | Snickers
+Koja je hrvatska tvrtka proizvođač Vegete? | Podravka | Kraš | Ledo | Franck
+Koja hrvatska tvrtka proizvodi Bajadere i Životinjsko carstvo? | Kraš | Podravka | Franck | Ledo
+Koja hrvatska tvrtka proizvodi kavu i čajeve, poznata po „Jubilarnoj“? | Franck | Kraš | Podravka | Atlantic
+Koja hrvatska tvrtka proizvodi sladoled i smrznutu hranu? | Ledo | Kraš | Franck | Dukat
+Koja tvrtka iz Osijeka proizvodi deterdžente i kozmetiku? | Saponia | Kraš | Podravka | Jamnica
+Koja hrvatska tvrtka proizvodi napitak Cedevita? | Atlantic Grupa | Podravka | Kraš | Franck
+Kako se zove Podravkin namaz od lješnjaka i kakaa? | Lino Lada | Čokolino | Nutella | Kraš express
+Koja hrvatska tvrtka je poznata po vafel napolitankama „Napolitanke“? | Kraš | Franck | Podravka | Ledo
+Koja se hrvatska tvrtka bavi komunikacijskim platformama i postala je „jednorog“? | Infobip | Rimac | Span | Nanobit
+Koje je boje logotip tvrtke Facebook? | Plava | Crvena | Zelena | Žuta
+Koje boje je logotip Instagrama? | Ljubičasto-narančasti prijelaz | Plavi | Crni | Zeleni
+Koja marka sportske opreme ima logotip skačuće mačke? | Puma | Adidas | Reebok | Fila
+Koja je marka automobila desetljećima imala logotip skačuće mačke („leaper“)? | Jaguar | Puma | Ferrari | Porsche
+Koja je tvrtka elektronike dugo imala logotip s bijelim natpisom u plavoj elipsi? | Samsung | Sony | LG | Philips
+Koja japanska tvrtka proizvodi konzole PlayStation? | Sony | Nintendo | Sega | Panasonic
+Koja tvrtka proizvodi konzolu Xbox? | Microsoft | Sony | Nintendo | Valve
+Kako se zove maskota tvrtke Sega, plavi jež? | Sonic | Mario | Crash | Spyro
+Koja je švedska tvrtka namještaja poznata po plavo-žutom logotipu? | IKEA | H&M | Volvo | Spotify
+Koje boje ima logotip IKEA-e? | Plavu i žutu | Crvenu i bijelu | Zelenu i bijelu | Crnu i zlatnu
+Kako se zove maskota tvrtke Michelin, napravljena od guma? | Bibendum | Gumko | Michelin Max | Mr. Tire
+Kako se zove maskota sa zečjim ušima tvrtke Duracell? | Ružičasti zeko | Plavi zeko | Medo | Mačak
+Kako se zove maskota-zec Nesquika? | Quicky | Bugs | Roger | Duracell
+Kako se zove tigar-maskota žitarica Kellogg's Frosties? | Tony Tigar | Kapetan Kuka | Sir Frosty | Toucan Sam
+Kako se zove poznati gumeni bombon tvrtke Haribo u obliku medvjedića? | Zlatni medvjedić (Goldbär) | Winnie | Paddington | Bruno
+Iz koje je zemlje tvrtka Haribo? | Njemačka | Švicarska | Austrija | Danska
+Iz koje je zemlje tvrtka Nestlé? | Švicarska | Francuska | Njemačka | Belgija
+Iz koje zemlje potječe Nutella, proizvod tvrtke Ferrero? | Italija | Francuska | Švicarska | Njemačka
+Iz koje je zemlje tvrtka LG? | Južna Koreja | Japan | Kina | Tajvan
+Iz koje je zemlje tvrtka Huawei? | Kina | Južna Koreja | Japan | Tajvan
+Iz koje je zemlje tvrtka Philips? | Nizozemska | Njemačka | Belgija | Danska
+Iz koje je zemlje tvrtka Siemens? | Njemačka | Austrija | Švicarska | Švedska
+Iz koje je zemlje tvrtka Volvo? | Švedska | Norveška | Finska | Danska
+Iz koje je zemlje tvrtka Škoda? | Češka | Slovačka | Poljska | Njemačka
+Iz koje je zemlje tvrtka Rolex? | Švicarska | Njemačka | Francuska | Italija
+Kako se zove švicarski vojni nožić najpoznatijeg proizvođača? | Victorinox | Rolex | Swatch | Leatherman
+Koja je tvrtka poznata po plastičnim satovima jarkih boja iz Švicarske? | Swatch | Rolex | Omega | Casio
+Koja tvrtka ima logotip krokodila na majicama polo? | Lacoste | Ralph Lauren | Tommy Hilfiger | Fred Perry
+Koja modna marka ima logotip igrača pola na konju? | Ralph Lauren | Lacoste | Hugo Boss | Gant
+Koji je lanac brze hrane poznat po hamburgeru „Whopper“? | Burger King | McDonald's | Wendy's | Five Guys
+Koji je lanac brze hrane poznat po hamburgeru „Big Mac“? | McDonald's | Burger King | Subway | KFC
+Koji je lanac poznat po sendvičima koji se slažu po želji kupca, sa zelenim i žutim logotipom? | Subway | KFC | Domino's | Pizza Hut
+Koja je tvrtka poznata po plavoj kutijici s bijelom vrpcom i nakitom? | Tiffany & Co. | Cartier | Pandora | Swarovski
+Koja je austrijska tvrtka poznata po kristalima i logotipu labuda? | Swarovski | Pandora | Tiffany | Riedel
+Koja tvrtka za proizvodnju guma izdaje poznati vodič koji restoranima dodjeljuje zvjezdice? | Michelin | Pirelli | Bridgestone | Goodyear
+Koja je marka guma poznata po kalendaru i sponzoriranju Formule 1, iz Italije? | Pirelli | Michelin | Continental | Bridgestone

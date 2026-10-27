@@ -1,0 +1,1116 @@
+{
+ "cats": {
+  "Književnost": [
+   {
+    "q": "Tko je napisao roman „Zločin i kazna“?",
+    "o": [
+     "Fjodor Dostojevski",
+     "Lav Tolstoj",
+     "Anton Čehov",
+     "Nikolaj Gogolj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je autorica „Čudnovatih zgoda šegrta Hlapića“?",
+    "o": [
+     "Jagoda Truhelka",
+     "Sunčana Škrinjarić",
+     "Grigor Vitez",
+     "Ivana Brlić-Mažuranić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je napisao „Vlak u snijegu“?",
+    "o": [
+     "Dinko Šimunović",
+     "August Šenoa",
+     "Mato Lovrak",
+     "Vladimir Nazor"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je napisao roman „Zlatarovo zlato“?",
+    "o": [
+     "Ksaver Šandor Gjalski",
+     "August Šenoa",
+     "Eugen Kumičić",
+     "Vjenceslav Novak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je autor komedije „Dundo Maroje“?",
+    "o": [
+     "Ivan Gundulić",
+     "Marin Držić",
+     "Hanibal Lucić",
+     "Petar Hektorović"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji ep Ivana Gundulića opisuje bitku Poljaka i Turaka kod Hoćima?",
+    "o": [
+     "Osman",
+     "Dubravka",
+     "Suze sina razmetnoga",
+     "Robinja"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je pisac romana „Na Drini ćuprija“ 1961. dobio Nobelovu nagradu?",
+    "o": [
+     "Miroslav Krleža",
+     "Meša Selimović",
+     "Danilo Kiš",
+     "Ivo Andrić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Krležin roman o slikaru koji se vraća u rodni kraj?",
+    "o": [
+     "Na rubu pameti",
+     "Banket u Blitvi",
+     "Povratak Filipa Latinovicza",
+     "Zastave"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je napisao roman „1984.“?",
+    "o": [
+     "Aldous Huxley",
+     "Ray Bradbury",
+     "George Orwell",
+     "H. G. Wells"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove kapetan koji progoni bijelog kita u „Moby Dicku“?",
+    "o": [
+     "Nemo",
+     "Ahab",
+     "Kuka",
+     "Flint"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je napisao roman „Sto godina samoće“?",
+    "o": [
+     "Gabriel García Márquez",
+     "Jorge Luis Borges",
+     "Mario Vargas Llosa",
+     "Isabel Allende"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu odvija radnja Shakespeareove „Romea i Julije“?",
+    "o": [
+     "Venecija",
+     "Padova",
+     "Firenca",
+     "Verona"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je autor „Božanstvene komedije“?",
+    "o": [
+     "Francesco Petrarca",
+     "Giovanni Boccaccio",
+     "Ludovico Ariosto",
+     "Dante Alighieri"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je pisac stvorio detektiva Sherlocka Holmesa?",
+    "o": [
+     "Agatha Christie",
+     "Edgar Allan Poe",
+     "Arthur Conan Doyle",
+     "Charles Dickens"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove slavni belgijski detektiv iz romana Agathe Christie?",
+    "o": [
+     "Jules Maigret",
+     "Hercule Poirot",
+     "Auguste Dupin",
+     "Philip Marlowe"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je napisao „Malog princa“?",
+    "o": [
+     "Antoine de Saint-Exupéry",
+     "Jules Verne",
+     "Victor Hugo",
+     "Albert Camus"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je napisao roman „Kiklop“?",
+    "o": [
+     "Ranko Marinković",
+     "Slobodan Novak",
+     "Antun Šoljan",
+     "Miroslav Krleža"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je hrvatski pjesnik objavio zbirku „Lelek sebra“?",
+    "o": [
+     "Antun Branko Šimić",
+     "Dobriša Cesarić",
+     "Antun Gustav Matoš",
+     "Tin Ujević"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je napisao roman „Ponos i predrasude“?",
+    "o": [
+     "Charlotte Brontë",
+     "Emily Brontë",
+     "Jane Austen",
+     "George Eliot"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U što se jednog jutra pretvori Gregor Samsa u Kafkinu „Preobražaju“?",
+    "o": [
+     "U štakora",
+     "U golemog kukca",
+     "U psa",
+     "U pticu"
+    ],
+    "a": 1
+   }
+  ],
+  "Umjetnost": [
+   {
+    "q": "Tko je naslikao „Zvjezdanu noć“?",
+    "o": [
+     "Claude Monet",
+     "Vincent van Gogh",
+     "Paul Gauguin",
+     "Paul Cézanne"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je oslikao strop Sikstinske kapele?",
+    "o": [
+     "Michelangelo",
+     "Rafael",
+     "Leonardo da Vinci",
+     "Sandro Botticelli"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja Picassova slika prikazuje bombardiranje baskijskog grada 1937.?",
+    "o": [
+     "Avignonske gospođice",
+     "Plačljiva žena",
+     "Stari gitarist",
+     "Guernica"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se muzeju nalazi „Mona Lisa“?",
+    "o": [
+     "Uffizi",
+     "Prado",
+     "Louvre",
+     "Ermitaž"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je autor kipa „Mislilac“?",
+    "o": [
+     "Michelangelo",
+     "Donatello",
+     "Auguste Rodin",
+     "Antonio Canova"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je kipar autor spomenika Grguru Ninskom u Splitu?",
+    "o": [
+     "Antun Augustinčić",
+     "Ivan Meštrović",
+     "Frano Kršinić",
+     "Vanja Radauš"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je naslikao „Djevojku s bisernom naušnicom“?",
+    "o": [
+     "Johannes Vermeer",
+     "Rembrandt",
+     "Frans Hals",
+     "Jan van Eyck"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po čijoj je slici „Impresija, izlazak sunca“ impresionizam dobio ime?",
+    "o": [
+     "Pierre-Auguste Renoir",
+     "Edgar Degas",
+     "Édouard Manet",
+     "Claude Monet"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je naslikao „Krik“?",
+    "o": [
+     "Gustav Klimt",
+     "Egon Schiele",
+     "Vasilij Kandinski",
+     "Edvard Munch"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je arhitekt projektirao baziliku Sagrada Família u Barceloni?",
+    "o": [
+     "Le Corbusier",
+     "Frank Lloyd Wright",
+     "Antoni Gaudí",
+     "Oscar Niemeyer"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji su arhitektonski stil obilježili šiljasti lukovi i rebrasti svodovi?",
+    "o": [
+     "Romanika",
+     "Gotika",
+     "Barok",
+     "Renesansa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je naslikao „Rođenje Venere“?",
+    "o": [
+     "Sandro Botticelli",
+     "Tizian",
+     "Rafael",
+     "Caravaggio"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je naslikao „Postojanost pamćenja“ s rastopljenim satovima?",
+    "o": [
+     "Salvador Dalí",
+     "René Magritte",
+     "Joan Miró",
+     "Max Ernst"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove poznata hrvatska škola naivnog slikarstva iz Podravine?",
+    "o": [
+     "Samoborska škola",
+     "Osječka škola",
+     "Varaždinska škola",
+     "Hlebinska škola"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je naslikao „Noćnu stražu“?",
+    "o": [
+     "Peter Paul Rubens",
+     "Johannes Vermeer",
+     "Rembrandt",
+     "Anthonis van Dyck"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojem se graditelju pripisuje friz s ljudskim glavama na šibenskoj katedrali?",
+    "o": [
+     "Nikola Firentinac",
+     "Juraj Dalmatinac",
+     "Andrija Aleši",
+     "Majstor Radovan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi galerija Uffizi?",
+    "o": [
+     "Rim",
+     "Firenca",
+     "Milano",
+     "Venecija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je bečki slikar naslikao „Poljubac“ bogat zlatnim listićima?",
+    "o": [
+     "Gustav Klimt",
+     "Egon Schiele",
+     "Alfons Mucha",
+     "Oskar Kokoschka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je projektirao staklenu piramidu ispred Louvrea?",
+    "o": [
+     "Frank Gehry",
+     "Norman Foster",
+     "Renzo Piano",
+     "I. M. Pei"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je umjetnik poznat po slikama limenki Campbellove juhe?",
+    "o": [
+     "Roy Lichtenstein",
+     "Jackson Pollock",
+     "Andy Warhol",
+     "Keith Haring"
+    ],
+    "a": 2
+   }
+  ],
+  "Mitologija": [
+   {
+    "q": "Tko je vrhovni bog u grčkoj mitologiji?",
+    "o": [
+     "Posejdon",
+     "Had",
+     "Zeus",
+     "Apolon"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove rimski bog rata?",
+    "o": [
+     "Jupiter",
+     "Mars",
+     "Merkur",
+     "Neptun"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji nordijski bog nosi čekić Mjölnir?",
+    "o": [
+     "Thor",
+     "Odin",
+     "Loki",
+     "Freyr"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji egipatski bog s glavom šakala štiti mrtve i balzamiranje?",
+    "o": [
+     "Horus",
+     "Ra",
+     "Ptah",
+     "Anubis"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je grčki junak odrubio glavu Meduzi?",
+    "o": [
+     "Heraklo",
+     "Tezej",
+     "Jazon",
+     "Perzej"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove slavenski bog groma?",
+    "o": [
+     "Veles",
+     "Svarog",
+     "Perun",
+     "Dažbog"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je slavenski bog podzemlja i stoke Perunov glavni protivnik?",
+    "o": [
+     "Jarilo",
+     "Veles",
+     "Svarog",
+     "Stribog"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko je zadataka (djela) prema mitu izvršio Heraklo?",
+    "o": [
+     "12",
+     "7",
+     "10",
+     "13"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je jedino ranjivo mjesto na Ahilejevu tijelu?",
+    "o": [
+     "Peta",
+     "Rame",
+     "Koljeno",
+     "Vrat"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je titan ukrao vatru bogovima i darovao je ljudima?",
+    "o": [
+     "Epimetej",
+     "Atlas",
+     "Kronos",
+     "Prometej"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Odinova dvorana u koju dolaze pali ratnici?",
+    "o": [
+     "Asgard",
+     "Midgard",
+     "Valhalla",
+     "Jotunheim"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove čudovište, napola čovjek, napola bik, iz labirinta na Kreti?",
+    "o": [
+     "Kentaur",
+     "Minotaur",
+     "Kiklop",
+     "Satir"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je majstor prema grčkom mitu sagradio labirint na Kreti?",
+    "o": [
+     "Ikar",
+     "Dedal",
+     "Minos",
+     "Tezej"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je grčka božica mudrosti rođena iz Zeusove glave?",
+    "o": [
+     "Atena",
+     "Afrodita",
+     "Hera",
+     "Artemida"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove rimska božica koja odgovara grčkoj Afroditi?",
+    "o": [
+     "Junona",
+     "Minerva",
+     "Dijana",
+     "Venera"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove egipatski bog Sunca?",
+    "o": [
+     "Oziris",
+     "Tot",
+     "Ra",
+     "Anubis"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je egipatska božica bila Ozirisova žena?",
+    "o": [
+     "Neftida",
+     "Hator",
+     "Izida",
+     "Bastet"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je nordijski bog poznat kao lukavi varalica koji mijenja oblik?",
+    "o": [
+     "Tyr",
+     "Loki",
+     "Baldr",
+     "Heimdall"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove troglavi pas koji čuva ulaz u podzemlje?",
+    "o": [
+     "Kerber",
+     "Ortro",
+     "Argos",
+     "Ladon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove rimski bog s dva lica, bog početaka i vrata?",
+    "o": [
+     "Saturn",
+     "Vulkan",
+     "Kvirin",
+     "Janus"
+    ],
+    "a": 3
+   }
+  ],
+  "Jezici i riječi": [
+   {
+    "q": "Kojim je pismom pisana Bašćanska ploča?",
+    "o": [
+     "Ćirilicom",
+     "Latinicom",
+     "Bosančicom",
+     "Glagoljicom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko slova ima hrvatska abeceda?",
+    "o": [
+     "26",
+     "28",
+     "30",
+     "32"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji jezik ima najviše izvornih govornika na svijetu?",
+    "o": [
+     "Engleski",
+     "Mandarinski kineski",
+     "Španjolski",
+     "Hindski"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je službeni jezik Brazila?",
+    "o": [
+     "Portugalski",
+     "Španjolski",
+     "Brazilski",
+     "Talijanski"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko padeža ima hrvatski jezik?",
+    "o": [
+     "7",
+     "5",
+     "6",
+     "8"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz kojeg jezika potječe riječ „robot“?",
+    "o": [
+     "Iz ruskog",
+     "Iz njemačkog",
+     "Iz poljskog",
+     "Iz češkog"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz kojeg je jezika u hrvatski došla riječ „šlag“?",
+    "o": [
+     "Iz talijanskog",
+     "Iz mađarskog",
+     "Iz njemačkog",
+     "Iz turskog"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz kojeg jezika potječe riječ „alkohol“?",
+    "o": [
+     "Iz latinskog",
+     "Iz arapskog",
+     "Iz grčkog",
+     "Iz perzijskog"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što znači latinska izreka „Carpe diem“?",
+    "o": [
+     "Upoznaj samoga sebe",
+     "Iskoristi dan",
+     "Mir s tobom",
+     "Pobijedi ili umri"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je oblik ispravan u hrvatskom standardnom jeziku?",
+    "o": [
+     "Uopće",
+     "Uopče",
+     "Uopšte",
+     "Uopčće"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je oblik ispravno napisan?",
+    "o": [
+     "Primjetiti",
+     "Primetiti",
+     "Primijećiti",
+     "Primijetiti"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što je palindrom?",
+    "o": [
+     "Riječ istog značenja",
+     "Riječ suprotnog značenja",
+     "Čita se isto unatrag",
+     "Riječ stranog porijekla"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove riječ koja ima isto ili slično značenje kao druga riječ?",
+    "o": [
+     "Antonim",
+     "Homonim",
+     "Sinonim",
+     "Akronim"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove japansko slogovno pismo koje se koristi uz katakanu?",
+    "o": [
+     "Hangul",
+     "Hiragana",
+     "Devanagari",
+     "Pinjin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojim se pismom piše hindski jezik?",
+    "o": [
+     "Devanagarijem",
+     "Hangulom",
+     "Arapskim pismom",
+     "Ćirilicom"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji od ovih jezika NIJE indoeuropski?",
+    "o": [
+     "Albanski",
+     "Litavski",
+     "Grčki",
+     "Mađarski"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što znači grčka riječ „demos“ u riječi demokracija?",
+    "o": [
+     "Vlast",
+     "Grad",
+     "Zakon",
+     "Narod"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko slova ima engleska abeceda?",
+    "o": [
+     "24",
+     "28",
+     "26",
+     "30"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko se smatra tvorcem glagoljice?",
+    "o": [
+     "Sveti Klement",
+     "Sveti Ćiril (Konstantin)",
+     "Sveti Benedikt",
+     "Sveti Augustin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz kojeg jezika potječe riječ „sauna“?",
+    "o": [
+     "Iz finskog",
+     "Iz švedskog",
+     "Iz norveškog",
+     "Iz islandskog"
+    ],
+    "a": 0
+   }
+  ],
+  "Drevne civilizacije": [
+   {
+    "q": "Čiju je grobnicu Howard Carter otkrio 1922. u Dolini kraljeva?",
+    "o": [
+     "Tutankamonovu",
+     "Ramzesa II.",
+     "Keopsovu",
+     "Ehnatonovu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojem se faraonu pripisuje Velika piramida u Gizi?",
+    "o": [
+     "Kefrenu",
+     "Mikerinu",
+     "Džoseru",
+     "Keopsu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je grčki grad-država bio poznat po strogom vojnom odgoju?",
+    "o": [
+     "Atena",
+     "Korint",
+     "Sparta",
+     "Teba"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je civilizacija sagradila Machu Picchu?",
+    "o": [
+     "Maje",
+     "Inke",
+     "Asteci",
+     "Olmeci"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zvala prijestolnica Asteka?",
+    "o": [
+     "Cuzco",
+     "Tenochtitlan",
+     "Teotihuacan",
+     "Chichén Itzá"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je narod razvio klinasto pismo?",
+    "o": [
+     "Sumerani",
+     "Egipćani",
+     "Feničani",
+     "Hetiti"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Čiji je alfabet bio uzor grčkom pismu?",
+    "o": [
+     "Asiraca",
+     "Perzijanaca",
+     "Babilonaca",
+     "Feničana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je babilonski kralj poznat po zakoniku uklesanom u kamen?",
+    "o": [
+     "Nabukodonosor II.",
+     "Sargon",
+     "Hamurabi",
+     "Asurbanipal"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Između kojih rijeka leži Mezopotamija?",
+    "o": [
+     "Nila i Jordana",
+     "Inda i Gangesa",
+     "Eufrata i Tigrisa",
+     "Huang Hea i Jangcea"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je natpis pomogao dešifrirati egipatske hijeroglife?",
+    "o": [
+     "Behistunski natpis",
+     "Kamen iz Rosette",
+     "Narmerova paleta",
+     "Kamen iz Palerma"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grad 79. godine zatrpala erupcija Vezuva?",
+    "o": [
+     "Pompeji",
+     "Ostija",
+     "Kartaga",
+     "Sirakuza"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kartaški vojskovođa prešao Alpe sa slonovima?",
+    "o": [
+     "Hamilkar",
+     "Hasdrubal",
+     "Scipion",
+     "Hanibal"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je bio prvi rimski car?",
+    "o": [
+     "Julije Cezar",
+     "Neron",
+     "Tiberije",
+     "August"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je jedino od sedam svjetskih čuda staroga svijeta sačuvano?",
+    "o": [
+     "Kolos s Rodosa",
+     "Svjetionik na Farosu",
+     "Velika piramida u Gizi",
+     "Viseći vrtovi Babilona"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem je poluotoku cvala civilizacija Maja?",
+    "o": [
+     "Baja California",
+     "Jukatan",
+     "Florida",
+     "Labrador"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grčki filozof bio učitelj Aleksandra Velikog?",
+    "o": [
+     "Aristotel",
+     "Platon",
+     "Sokrat",
+     "Pitagora"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvala posljednja vladarica ptolemejskog Egipta?",
+    "o": [
+     "Kleopatra",
+     "Nefertiti",
+     "Hatšepsut",
+     "Berenika"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kineski car pokopan uz vojsku od terakote?",
+    "o": [
+     "Kublaj-kan",
+     "Han Wudi",
+     "Puyi",
+     "Qin Shi Huang"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je grad bio središte minojske civilizacije na Kreti?",
+    "o": [
+     "Mikena",
+     "Troja",
+     "Knos",
+     "Delfi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se današnjoj državi nalaze ostaci drevne Troje?",
+    "o": [
+     "U Grčkoj",
+     "U Turskoj",
+     "U Bugarskoj",
+     "Na Cipru"
+    ],
+    "a": 1
+   }
+  ],
+  "Povijest": [
+   {
+    "q": "Koje je godine počela Francuska revolucija?",
+    "o": [
+     "1776.",
+     "1789.",
+     "1799.",
+     "1815."
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj je bitci 1815. konačno poražen Napoleon?",
+    "o": [
+     "Kod Waterlooa",
+     "Kod Austerlitza",
+     "Kod Leipziga",
+     "Kod Borodina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je godine u Engleskoj potpisana Magna Carta?",
+    "o": [
+     "1066.",
+     "1314.",
+     "1415.",
+     "1215."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je bio britanski premijer većim dijelom Drugoga svjetskog rata?",
+    "o": [
+     "Neville Chamberlain",
+     "Clement Attlee",
+     "Winston Churchill",
+     "Anthony Eden"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje se godine odigrala Mohačka bitka?",
+    "o": [
+     "1493.",
+     "1573.",
+     "1526.",
+     "1593."
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je predvodio Seljačku bunu 1573.?",
+    "o": [
+     "Petar Zrinski",
+     "Matija Gubec",
+     "Fran Krsto Frankopan",
+     "Nikola Šubić Zrinski"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koju je utvrdu 1566. do smrti branio Nikola Šubić Zrinski?",
+    "o": [
+     "Siget",
+     "Sisak",
+     "Klis",
+     "Mohač"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je bio prvi čovjek u svemiru?",
+    "o": [
+     "Aleksej Leonov",
+     "John Glenn",
+     "Alan Shepard",
+     "Jurij Gagarin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se godine raspao Sovjetski Savez?",
+    "o": [
+     "1989.",
+     "1990.",
+     "1993.",
+     "1991."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je engleski kralj imao šest žena?",
+    "o": [
+     "Rikard III.",
+     "Edvard VI.",
+     "Henrik VIII.",
+     "Henrik VII."
+    ],
+    "a": 2
+   }
+  ]
+ }
+}

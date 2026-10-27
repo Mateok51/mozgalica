@@ -1,0 +1,34 @@
+{
+ "remove": [],
+ "fix": [
+  {
+   "q": "U što se jednog jutra pretvori Gregor Samsa u Kafkinu „Preobražaju“?",
+   "new": {
+    "q": "U što se jednog jutra pretvori Gregor Samsa u Kafkinoj „Preobrazbi“?",
+    "o": [
+     "U štakora",
+     "U golemog kukca",
+     "U psa",
+     "U pticu"
+    ],
+    "a": 1
+   },
+   "why": "Uobičajeni hrvatski naslov Kafkine novele je „Preobrazba“."
+  },
+  {
+   "q": "Što je palindrom?",
+   "new": {
+    "q": "Što je palindrom?",
+    "o": [
+     "Riječ istog značenja",
+     "Riječ suprotnog značenja",
+     "Riječ koja se čita isto i unatrag",
+     "Riječ stranog podrijetla"
+    ],
+    "a": 2
+   },
+   "why": "Jezično: „podrijetla“ je preporučeni standardni oblik; točna opcija preoblikovana kao potpuna definicija."
+  }
+ ],
+ "notes": "Provjereno svih 110 pitanja (6 kategorija). Svi označeni odgovori su točni; nema duplikata ni vremenski ovisnih pitanja. Dvije sitne jezične ispravke, ništa izbačeno."
+}

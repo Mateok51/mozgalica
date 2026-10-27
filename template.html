@@ -1,0 +1,728 @@
+<title>Mozgalica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Rubik:wght@400;500;700&display=swap">
+<style>
+  /* Raspored: jedan zaslon po fazi igre; na TV-u dvije kolone, na mobitelu jedna.
+     Boja i oblik dolaze od četiri tipke odgovora (crvena, plava, žuta, zelena). */
+  :root {
+    --ground: #150c33;
+    --ground-2: #2a1466;
+    --surface: rgba(255, 255, 255, 0.09);
+    --line: rgba(255, 255, 255, 0.17);
+    --ink: #ffffff;
+    --ink-2: #cdc2f2;
+    --gold: #ffd166;
+    --gold-deep: #c99a2e;
+    --red: #e63946;
+    --blue: #3a86ff;
+    --yellow: #f4b400;
+    --green: #2bb673;
+    --good: #7dffb4;
+    --font-display: "Lilita One", "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif;
+    --font-body: "Rubik", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--ink);
+    background-color: var(--ground);
+    background-image:
+      radial-gradient(1100px 650px at 12% -8%, #6a35c9 0%, transparent 60%),
+      linear-gradient(160deg, var(--ground), var(--ground-2));
+    background-attachment: fixed;
+    padding-block: 16px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    overflow-x: hidden;
+  }
+  button { font: inherit; color: inherit; border: 0; cursor: pointer; }
+  input { font: inherit; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  .screen { min-height: 100%; display: flex; flex-direction: column; gap: 18px; max-width: 1500px; margin: 0 auto; }
+  .center { align-items: center; justify-content: center; text-align: center; }
+  .brand { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 4.4rem); letter-spacing: 0.08em; color: var(--gold); text-shadow: 0 4px 0 rgba(0,0,0,.28); line-height: 1; }
+  .brand small { display: block; margin-top: 8px; font-family: var(--font-body); font-weight: 500; font-size: 0.26em; letter-spacing: 0.32em; color: var(--ink-2); text-shadow: none; }
+
+  .btn { background: var(--gold); color: #2a1457; font-family: var(--font-display); font-size: 1.25rem; letter-spacing: .02em; padding: .75em 1.5em; border-radius: 16px; box-shadow: 0 6px 0 var(--gold-deep); transition: transform .08s, box-shadow .08s; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--gold-deep); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: 0 6px 0 var(--gold-deep); }
+  .btn.ghost { background: transparent; color: var(--ink); box-shadow: none; border: 2px solid var(--line); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: .6em 1.2em; }
+  .stack { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 420px; }
+  .note { color: var(--ink-2); font-size: .95rem; max-width: 46ch; }
+  .err { background: rgba(230,57,70,.25); border: 1px solid var(--red); border-radius: 12px; padding: 10px 14px; font-weight: 500; text-align: left; }
+
+  .pill { display: inline-block; background: var(--surface); border: 1px solid var(--line); padding: .25em .9em; border-radius: 999px; font-weight: 500; color: var(--gold); letter-spacing: .04em; }
+  .timer { height: 12px; background: rgba(255,255,255,.14); border-radius: 99px; overflow: hidden; }
+  .timer > div { height: 100%; width: 100%; background: var(--gold); border-radius: 99px; transition: width .12s linear; }
+  .timer.urgent > div { background: var(--red); }
+  .o0 { --c: var(--red); } .o1 { --c: var(--blue); } .o2 { --c: var(--yellow); } .o3 { --c: var(--green); }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: clamp(16px, 3vw, 32px); }
+
+  /* --- domaćin --- */
+  .lobby-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(16px, 3vw, 40px); flex: 1; }
+  .join-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+  .qr { width: min(100%, 360px, 42vh); aspect-ratio: 1; border-radius: 18px; overflow: hidden; background: #fff; }
+  .qr svg { display: block; width: 100%; height: 100%; }
+  .join-hint { color: var(--ink-2); font-size: clamp(1rem, 1.6vw, 1.5rem); line-height: 1.45; }
+  .room-code { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6.5rem); letter-spacing: .22em; padding-left: .22em; line-height: 1; }
+  .players-card { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .players-card h2, .rank-card h3 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 2.6vw, 2.4rem); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; flex: 1; }
+  .chip { background: rgba(255,255,255,.14); border-radius: 999px; padding: .4em 1.1em; font-size: clamp(1.1rem, 2vw, 2rem); font-weight: 700; animation: pop .35s ease-out; max-width: 100%; overflow-wrap: anywhere; }
+  .chip.off { opacity: .4; }
+  .empty { color: var(--ink-2); font-size: clamp(1.1rem, 1.8vw, 1.8rem); width: 100%; text-align: center; align-self: center; }
+  .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+  .field-row { display: flex; gap: 8px; width: 100%; }
+  .field-row input { flex: 1; min-width: 0; }
+  @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  .q-screen { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; flex: 1; }
+  .q-screen.with-rank { grid-template-columns: minmax(0, 1fr) minmax(220px, 26vw); gap: 24px; }
+  .q-main { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .q-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: clamp(1rem, 1.8vw, 1.7rem); font-weight: 500; color: var(--ink-2); }
+  .timer-num { font-family: var(--font-display); font-size: clamp(1.8rem, 3.4vw, 3.4rem); color: var(--gold); min-width: 2ch; text-align: right; }
+  .q-text { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 3.6vw, 3.6rem); line-height: 1.18; min-height: 3.6em; display: flex; align-items: center; text-wrap: balance; }
+  .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; flex: 1; }
+  .opt { position: relative; display: flex; align-items: center; gap: 14px; background: var(--c); border-radius: 22px; padding: 16px 18px; font-size: clamp(1.1rem, 2.4vw, 2.4rem); font-weight: 700; color: #fff; box-shadow: 0 8px 0 rgba(0,0,0,.28); min-height: 96px; transition: opacity .3s, transform .3s; overflow-wrap: anywhere; }
+  .opt.o2 { color: #2a1f00; }
+  .opt .shape { font-size: 1.3em; opacity: .85; width: 1.2em; text-align: center; flex: none; }
+  .opt .txt { flex: 1; min-width: 0; }
+  .opt .cnt { background: rgba(0,0,0,.32); color: #fff; border-radius: 999px; min-width: 1.8em; text-align: center; padding: .1em .5em; font-size: .75em; }
+  .opt.dim { opacity: .25; transform: scale(.97); }
+  .opt.correct { outline: 6px solid #fff; transform: scale(1.02); }
+  .q-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--ink-2); font-size: clamp(1rem, 1.7vw, 1.6rem); min-height: 48px; }
+  .q-foot .btn { font-size: 1.1rem; }
+
+  .rank-card { display: flex; flex-direction: column; gap: 10px; align-self: start; }
+  .rank-row { display: flex; align-items: center; gap: 10px; font-size: clamp(1rem, 1.6vw, 1.6rem); font-weight: 500; background: rgba(255,255,255,.08); border-radius: 14px; padding: 8px 12px; }
+  .rank-row .pos { width: 1.7em; text-align: center; color: var(--gold); }
+  .rank-row .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rank-row .gain { color: var(--good); font-size: .8em; }
+  .rank-row .sc { font-variant-numeric: tabular-nums; }
+
+  .podium { display: flex; align-items: flex-end; justify-content: center; gap: clamp(8px, 2vw, 24px); min-height: 36vh; margin-top: 8px; }
+  .pod { flex: 0 1 260px; min-width: 0; border-radius: 22px 22px 0 0; display: flex; flex-direction: column; align-items: center; padding: 14px 8px 0; gap: 4px; }
+  .pod .medal { font-size: clamp(2rem, 4vw, 4rem); line-height: 1; }
+  .pod .pn { font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 2.2rem); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pod .ps { font-size: clamp(.95rem, 1.6vw, 1.6rem); font-weight: 500; }
+  .pod.p1 { height: 36vh; background: linear-gradient(#ffd166, #d49a1a); color: #2a1457; }
+  .pod.p2 { height: 27vh; background: linear-gradient(#d7dce6, #9aa3b5); color: #1f2433; }
+  .pod.p3 { height: 20vh; background: linear-gradient(#e0a06a, #a8672f); color: #2b1604; }
+  .rest { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .rest .rank-row { min-width: min(100%, 240px); }
+
+  /* --- igrač (mobitel) --- */
+  .phone { max-width: 520px; margin: 0 auto; width: 100%; }
+  .phone .brand { font-size: 1.9rem; text-align: center; }
+  .big { font-family: var(--font-display); font-size: 2.1rem; line-height: 1.15; }
+  .sub { color: var(--ink-2); font-size: 1.05rem; line-height: 1.45; }
+  .form { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+  .form label { display: block; text-align: left; font-weight: 500; color: var(--ink-2); font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
+  .form input, .field-row input { width: 100%; padding: 13px 16px; border-radius: 14px; border: 2px solid var(--line); background: rgba(255,255,255,.1); color: #fff; font-size: 1.3rem; font-weight: 700; outline: none; }
+  .form input:focus, .field-row input:focus { border-color: var(--gold); }
+  .form input.code { text-transform: uppercase; letter-spacing: .4em; text-align: center; }
+  .p-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--ink-2); font-weight: 500; }
+  .p-q { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.25; padding: 6px 0 2px; }
+  .p-opts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .p-opt { display: flex; align-items: center; gap: 14px; background: var(--c); color: #fff; border-radius: 18px; padding: 16px; font-size: 1.2rem; font-weight: 700; text-align: left; box-shadow: 0 6px 0 rgba(0,0,0,.28); min-height: 66px; transition: transform .08s, opacity .2s; overflow-wrap: anywhere; }
+  .p-opt.o2 { color: #2a1f00; }
+  .p-opt .shape { font-size: 1.5em; width: 1.2em; text-align: center; opacity: .85; flex: none; }
+  .p-opt:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,.28); }
+  .p-opt:disabled { cursor: default; }
+  .p-opt.dim { opacity: .28; }
+  .p-opt.picked { outline: 4px solid #fff; }
+  .waiting { text-align: center; color: var(--ink-2); font-weight: 500; padding: 6px; }
+  .result { border-radius: 24px; padding: 26px 16px; width: 100%; }
+  .result.ok { background: rgba(43,182,115,.3); border: 2px solid var(--green); }
+  .result.bad { background: rgba(230,57,70,.28); border: 2px solid var(--red); }
+  .result.none { background: var(--surface); border: 2px solid var(--line); }
+  .result .pts { font-family: var(--font-display); font-size: 2.3rem; color: var(--good); margin-top: 6px; }
+  .statline { display: flex; gap: 12px; width: 100%; }
+  .stat { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 8px; }
+  .stat b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.7rem; }
+  .stat span { color: var(--ink-2); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+
+  @media (max-width: 820px) {
+    .lobby-grid { grid-template-columns: minmax(0, 1fr); }
+    .q-screen.with-rank { grid-template-columns: minmax(0, 1fr); }
+    .opts { grid-template-columns: minmax(0, 1fr); }
+    .podium { min-height: 30vh; }
+    .pod.p1 { height: 30vh; } .pod.p2 { height: 23vh; } .pod.p3 { height: 17vh; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chip { animation: none; }
+    .opt, .p-opt, .timer > div { transition: none; }
+  }
+</style>
+
+<div id="app" class="screen center"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+
+<script>
+//#engine-start
+// ---------- Mozgalica: logika igre (bez DOM-a; vodi je domaćin) ----------
+const QUESTIONS = __QUESTIONS__;
+const CFG = { perGame: 10, qSeconds: 15, revealSeconds: 7, maxPlayers: 8, nameMax: 14 };
+const CODE_LETTERS = 'ABCDEFGHJKLMNPRSTUVZ';
+
+function shuffle(a) {
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function makeCode() {
+  let s = '';
+  for (let i = 0; i < 4; i++) s += CODE_LETTERS[Math.floor(Math.random() * CODE_LETTERS.length)];
+  return s;
+}
+function rankOf(players) {
+  return players.slice().sort((a, b) => b.score - a.score).map((p, i) => Object.assign({}, p, { rank: i + 1 }));
+}
+
+function createGame(opts) {
+  const cfg = Object.assign({}, CFG, opts.cfg || {});
+  const now = opts.now || (() => Date.now());
+  const onChange = opts.onChange || (() => {});
+  const bank = opts.questions || QUESTIONS;
+  const g = { code: opts.code, phase: 'lobby', roster: new Map(), qs: [], qi: -1, cur: null, revealEnds: 0 };
+  let qTimer = null, rTimer = null, botTimers = [];
+
+  const players = () => [...g.roster.values()];
+  const connected = () => players().filter((p) => p.connected);
+  const allAnswered = () => { const c = connected(); return c.length > 0 && c.every((p) => p.answer !== null); };
+  const clearTimers = () => { clearTimeout(qTimer); clearTimeout(rTimer); botTimers.forEach(clearTimeout); botTimers = []; };
+
+  function cleanName(raw) { return String(raw || '').replace(/\s+/g, ' ').trim().slice(0, cfg.nameMax); }
+  function uniqueName(name, pid) {
+    let n = name, i = 2;
+    const taken = () => players().some((p) => p.pid !== pid && p.name.toLowerCase() === n.toLowerCase());
+    while (taken()) { const suf = ' (' + i + ')'; n = name.slice(0, cfg.nameMax - suf.length) + suf; i++; }
+    return n;
+  }
+
+  // peers: [{pid, name, a}] svi igrači koji su trenutno spojeni
+  function syncPeers(peers) {
+    const seen = new Set();
+    let changed = false;
+    for (const x of peers) {
+      if (!x || typeof x.pid !== 'string' || x.pid.length > 40) continue;
+      seen.add(x.pid);
+      let p = g.roster.get(x.pid);
+      if (!p) {
+        if (g.phase !== 'lobby' || g.roster.size >= cfg.maxPlayers) continue;
+        const nm = cleanName(x.name);
+        if (!nm) continue;
+        p = { pid: x.pid, name: uniqueName(nm, x.pid), score: 0, gained: 0, connected: true, answer: null, answerMs: 0 };
+        g.roster.set(x.pid, p);
+        changed = true;
+      } else if (!p.connected) { p.connected = true; changed = true; }
+      const a = x.a;
+      if (g.phase === 'question' && g.cur && p.answer === null && a && a.q === g.qi + 1 &&
+          Number.isInteger(a.c) && a.c >= 0 && a.c <= 3) {
+        const elapsed = now() - g.cur.startedAt;
+        const claimed = Number.isFinite(a.t) ? a.t : elapsed;
+        p.answer = a.c;
+        p.answerMs = Math.max(0, Math.min(claimed, elapsed));
+        changed = true;
+      }
+    }
+    for (const p of players()) {
+      if (!p.isBot && p.connected && !seen.has(p.pid)) { p.connected = false; changed = true; }
+    }
+    if (g.phase === 'lobby') {
+      for (const [id, p] of g.roster) if (!p.connected) { g.roster.delete(id); changed = true; }
+    }
+    if (g.phase === 'question' && allAnswered()) return endQuestion();
+    if (changed) onChange();
+  }
+
+  function addBot(name) {
+    const pid = 'bot-' + name;
+    g.roster.set(pid, { pid, name, score: 0, gained: 0, connected: true, answer: null, answerMs: 0, isBot: true });
+    onChange();
+  }
+
+  function startGame() {
+    if (g.phase !== 'lobby' || connected().length < 1) return;
+    g.qs = shuffle(bank).slice(0, cfg.perGame);
+    g.qi = -1;
+    for (const p of players()) { p.score = 0; p.gained = 0; p.answer = null; }
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    clearTimers();
+    g.qi += 1;
+    if (g.qi >= g.qs.length) { g.phase = 'final'; g.cur = null; onChange(); return; }
+    const q = g.qs[g.qi];
+    const order = shuffle([0, 1, 2, 3]);
+    const cur = {
+      text: q.q, category: q.category,
+      options: order.map((i) => q.options[i]),
+      correct: order.indexOf(q.answer),
+      counts: [0, 0, 0, 0],
+      startedAt: now(),
+    };
+    g.cur = cur;
+    for (const p of players()) { p.answer = null; p.answerMs = 0; p.gained = 0; }
+    g.phase = 'question';
+    qTimer = setTimeout(endQuestion, cfg.qSeconds * 1000 + 400);
+    for (const b of players().filter((p) => p.isBot)) {
+      botTimers.push(setTimeout(() => {
+        if (g.phase !== 'question' || g.cur !== cur || b.answer !== null) return;
+        const right = Math.random() < 0.65;
+        b.answer = right ? cur.correct : (cur.correct + 1 + Math.floor(Math.random() * 3)) % 4;
+        b.answerMs = now() - cur.startedAt;
+        if (allAnswered()) endQuestion(); else onChange();
+      }, 1500 + Math.random() * cfg.qSeconds * 600));
+    }
+    onChange();
+  }
+
+  function endQuestion() {
+    if (g.phase !== 'question') return;
+    clearTimers();
+    const c = g.cur;
+    for (const p of players()) {
+      if (p.answer !== null) c.counts[p.answer] += 1;
+      if (p.answer === c.correct) {
+        const ratio = Math.min(1, Math.max(0, 1 - p.answerMs / (cfg.qSeconds * 1000)));
+        p.gained = Math.round(500 + 500 * ratio);
+        p.score += p.gained;
+      } else p.gained = 0;
+    }
+    g.phase = 'reveal';
+    g.revealEnds = now() + cfg.revealSeconds * 1000;
+    rTimer = setTimeout(nextQuestion, cfg.revealSeconds * 1000);
+    onChange();
+  }
+
+  function skipReveal() { if (g.phase === 'reveal') nextQuestion(); }
+
+  function restart() {
+    if (g.phase !== 'final') return;
+    clearTimers();
+    for (const [id, p] of g.roster) {
+      if (!p.connected) g.roster.delete(id);
+      else { p.score = 0; p.gained = 0; p.answer = null; }
+    }
+    g.phase = 'lobby'; g.cur = null; g.qi = -1;
+    onChange();
+  }
+
+  function view() {
+    const ps = players();
+    const s = {
+      v: 2, code: g.code, phase: g.phase, max: cfg.maxPlayers,
+      players: ps.map((p) => {
+        const o = { pid: p.pid, name: p.name, score: p.score, gained: p.gained, connected: p.connected, answered: p.answer !== null };
+        if (g.phase === 'reveal') o.choice = p.answer;
+        return o;
+      }),
+    };
+    if (g.cur && (g.phase === 'question' || g.phase === 'reveal')) {
+      s.q = { index: g.qi + 1, total: g.qs.length, text: g.cur.text, category: g.cur.category, options: g.cur.options };
+      s.duration = cfg.qSeconds * 1000;
+      s.remainingMs = g.phase === 'question' ? Math.max(0, g.cur.startedAt + s.duration - now()) : 0;
+      s.connectedCount = connected().length;
+      s.answered = ps.filter((p) => p.connected && p.answer !== null).length;
+    }
+    if (g.phase === 'reveal') {
+      s.reveal = { correct: g.cur.correct, counts: g.cur.counts };
+      s.revealMs = Math.max(0, g.revealEnds - now());
+    }
+    return s;
+  }
+
+  return { syncPeers, addBot, startGame, skipReveal, restart, view, stop: clearTimers };
+}
+//#engine-end
+</script>
+
+<script>
+(function () {
+  'use strict';
+  const JOIN_URL = '__JOIN_URL__';
+  const $app = document.getElementById('app');
+  const SHAPES = ['▲', '◆', '●', '■'];
+  const MEDALS = ['🥇', '🥈', '🥉'];
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+  const use = (name) => (window.claude && window.claude.use ? window.claude.use(name) : Promise.resolve(null)).catch(() => null);
+
+  let roomNs = null, roomChecked = false;
+  const roomReady = use('room').then((r) => { roomNs = r; roomChecked = true; if (mode === 'home') render(); return r; });
+
+  let mode = 'home';          // home | join | player | host | demo
+  let game = null, hostRoom = null, hostError = '', hostTimer = null, emitWarned = false;
+  let proom = null, pstate = null, perr = '', pcode = '', pname = '', lastSig = '', lastKey = '';
+  let qStart = 0, endsAt = 0, revealEnds = 0, myAnswer = null, waitTimer = null;
+
+  let PID = store.get('mz_pid');
+  if (!PID) { PID = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('mz_pid', PID); }
+
+  // ---------- QR ----------
+  function qrSvg(text) {
+    try {
+      if (typeof qrcode !== 'function') return '';
+      const q = qrcode(0, 'M');
+      q.addData(text); q.make();
+      const n = q.getModuleCount();
+      let d = '';
+      for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += 'M' + (c + 3) + ' ' + (r + 3) + 'h1v1h-1z';
+      const sz = n + 6;
+      return '<svg viewBox="0 0 ' + sz + ' ' + sz + '" shape-rendering="crispEdges" role="img" aria-label="QR kod za pridruživanje"><rect width="' + sz + '" height="' + sz + '" fill="#fff"/><path d="' + d + '" fill="#150c33"/></svg>';
+    } catch (e) { return ''; }
+  }
+  const baseUrl = () => JOIN_URL || store.get('mz_base') || '';
+
+  // ---------- navigacija ----------
+  function reset() {
+    if (game) game.stop();
+    clearInterval(hostTimer); clearTimeout(waitTimer);
+    if (hostRoom) hostRoom.leave().catch(() => {});
+    if (proom) proom.leave().catch(() => {});
+    game = null; hostRoom = null; proom = null; pstate = null; hostError = ''; perr = '';
+    lastSig = ''; lastKey = ''; myAnswer = null; emitWarned = false;
+    mode = 'home';
+    render();
+  }
+
+  // ---------- domaćin ----------
+  function readPlayers(room) {
+    const out = [];
+    for (const p of room.peers()) {
+      const pr = p.presence;
+      if (!pr || pr.role !== 'p' || typeof pr.pid !== 'string' || typeof pr.name !== 'string') continue;
+      out.push({ pid: pr.pid, name: pr.name, a: pr.a && typeof pr.a === 'object' ? pr.a : null });
+    }
+    return out;
+  }
+
+  function publish() {
+    if (!hostRoom || !game) return;
+    hostRoom.emit('state', game.view()).catch((e) => {
+      if (e && e.code === 'not_permitted' && !emitWarned) {
+        emitWarned = true;
+        hostError = 'Ova prijava nema dopuštenje za vođenje igre. Otvori stranicu na računu koji ju je objavio.';
+        render();
+      }
+    });
+  }
+
+  async function startHost() {
+    mode = 'host'; hostError = ''; game = null; render();
+    const ns = await roomReady;
+    if (!ns) { hostError = 'Veza između uređaja nije dostupna u ovom prikazu. Isprobaj demo ili otvori stranicu u Claude aplikaciji.'; render(); return; }
+    const user = await use('user');
+    try { if (user && (await user.canEdit()) === false) { hostError = 'Igru može voditi samo vlasnik stranice ili urednik. Prijavi se računom koji ju je objavio.'; render(); return; } } catch (e) {}
+    const code = makeCode();
+    try { hostRoom = await ns.join('mz-' + code.toLowerCase()); }
+    catch (e) { hostError = 'Ne mogu otvoriti sobu (' + ((e && e.code) || 'greška') + ').'; render(); return; }
+    game = createGame({ code, onChange: () => { publish(); render(); } });
+    hostRoom.presence({ role: 'h' }).catch(() => {});
+    hostRoom.onPeers(() => game && game.syncPeers(readPlayers(hostRoom)));
+    game.syncPeers(readPlayers(hostRoom));
+    hostTimer = setInterval(publish, 1000);
+    render(); publish();
+  }
+
+  function startDemo() {
+    mode = 'demo'; hostError = '';
+    game = createGame({ code: 'DEMO', onChange: render });
+    ['Ana', 'Marko', 'Iva', 'Luka'].forEach((n) => game.addBot(n));
+  }
+
+  // ---------- igrač ----------
+  async function joinGame(code, name) {
+    pcode = code; pname = name; perr = ''; pstate = null; lastSig = ''; lastKey = ''; myAnswer = null;
+    store.set('mz_name', name);
+    mode = 'player'; render();
+    const ns = await roomReady;
+    if (!ns) { perr = 'Veza između uređaja nije dostupna. Prijavi se na Claude i otvori stranicu s linka koji ti je domaćin poslao.'; mode = 'join'; render(); return; }
+    try { proom = await ns.join('mz-' + code.toLowerCase()); }
+    catch (e) { perr = 'Ne mogu se spojiti na sobu (' + ((e && e.code) || 'greška') + ').'; mode = 'join'; render(); return; }
+    proom.on('state', (msg) => {
+      const d = msg && msg.data;
+      if (d && d.code === pcode && Array.isArray(d.players)) applyState(d);
+    });
+    proom.presence({ role: 'p', pid: PID, name: pname }).catch(() => {});
+    clearTimeout(waitTimer);
+    waitTimer = setTimeout(() => {
+      if (pstate) return;
+      perr = 'Domaćin nije pronađen. Provjeri kod sobe i je li igra otvorena.';
+      if (proom) proom.leave().catch(() => {});
+      proom = null; mode = 'join'; render();
+    }, 9000);
+  }
+
+  function applyState(d) {
+    clearTimeout(waitTimer);
+    const key = d.phase + ':' + (d.q ? d.q.index : 0);
+    const t = Date.now();
+    if (key !== lastKey) {
+      lastKey = key;
+      if (d.phase === 'question') { qStart = t - (d.duration - d.remainingMs); endsAt = t + d.remainingMs; }
+      if (d.phase === 'reveal') revealEnds = t + (d.revealMs || 0);
+      if (!d.q || !myAnswer || myAnswer.q !== d.q.index) myAnswer = null;
+    }
+    const sig = JSON.stringify(Object.assign({}, d, { remainingMs: 0, revealMs: 0 }));
+    pstate = d;
+    if (sig !== lastSig) { lastSig = sig; render(); }
+  }
+
+  function answer(i) {
+    if (!pstate || pstate.phase !== 'question' || !proom) return;
+    if (myAnswer && myAnswer.q === pstate.q.index) return;
+    const t = Math.max(0, Math.round(Date.now() - qStart));
+    myAnswer = { q: pstate.q.index, c: i, t };
+    proom.presence({ a: myAnswer }).catch(() => {});
+    if (navigator.vibrate) { try { navigator.vibrate(30); } catch (e) {} }
+    render();
+  }
+
+  // ---------- prikaz ----------
+  function render() {
+    try {
+      if (mode === 'home') return renderHome();
+      if (mode === 'join') return renderJoin();
+      if (mode === 'player') return renderPlayer();
+      return renderHost();
+    } catch (e) {
+      $app.className = 'screen center';
+      $app.innerHTML = '<div class="err">Nešto je pošlo po krivu: ' + esc(e && e.message) + '</div><button class="btn" id="home">Početna</button>';
+      const b = document.getElementById('home'); if (b) b.onclick = reset;
+    }
+  }
+  const bind = (id, fn) => { const el = document.getElementById(id); if (el) el.onclick = fn; };
+
+  function renderHome() {
+    $app.className = 'screen center';
+    const hint = roomChecked && !roomNs
+      ? '<div class="err">Višeigračka veza nije dostupna u ovom prikazu. Demo i dalje radi.</div>' : '';
+    $app.innerHTML =
+      '<div class="brand">MOZGALICA<small>KVIZ ZA CIJELO DRUŠTVO</small></div>' +
+      '<div class="stack">' + hint +
+      '<button class="btn" id="host">Vodim igru (TV)</button>' +
+      '<button class="btn" id="join">Pridruži se igri</button>' +
+      '<button class="btn ghost" id="demo">Demo s botovima</button>' +
+      '</div><div class="note">Domaćin otvori igru i castira ekran na TV. Ostali upišu kod sobe ili skeniraju QR kod.</div>';
+    bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
+  }
+
+  function renderJoin() {
+    $app.className = 'screen phone';
+    const m = (location.hash || '').match(/^#?([A-Za-z]{4})$/);
+    const code = pcode || (m ? m[1].toUpperCase() : '');
+    const name = pname || store.get('mz_name') || '';
+    $app.innerHTML =
+      '<div class="brand">MOZGALICA</div>' +
+      '<form class="form" id="form" autocomplete="off">' +
+      (perr ? '<div class="err">' + esc(perr) + '</div>' : '') +
+      '<div><label for="code">Kod sobe</label><input id="code" class="code" maxlength="4" value="' + esc(code) + '" autocapitalize="characters" autocomplete="off"></div>' +
+      '<div><label for="name">Tvoje ime</label><input id="name" maxlength="14" value="' + esc(name) + '" placeholder="npr. Mateo" autocomplete="off"></div>' +
+      '<button class="btn" type="submit">Uđi u igru</button>' +
+      '<button class="btn ghost" type="button" id="back">Natrag</button></form>';
+    document.getElementById('form').onsubmit = (e) => {
+      e.preventDefault();
+      const c = document.getElementById('code').value.trim().toUpperCase();
+      const n = document.getElementById('name').value.trim();
+      if (!/^[A-Z]{4}$/.test(c) || !n) { perr = 'Upiši četveroslovni kod sobe i svoje ime.'; pcode = c; pname = n; renderJoin(); return; }
+      joinGame(c, n);
+    };
+    bind('back', () => { perr = ''; pcode = ''; mode = 'home'; render(); });
+    if (code) { const el = document.getElementById('name'); if (el && !name) el.focus(); }
+  }
+
+  function rankingHtml(list, gain) {
+    return list.slice(0, 8).map((r) =>
+      '<div class="rank-row"><span class="pos">' + r.rank + '.</span><span class="nm">' + esc(r.name) + '</span>' +
+      (gain && r.gained ? '<span class="gain">+' + r.gained + '</span>' : '') +
+      '<span class="sc">' + r.score + '</span></div>').join('');
+  }
+
+  function joinBlock(v) {
+    if (mode === 'demo') {
+      return '<div class="card join-card"><div class="big">Demo način</div><div class="join-hint">Botovi igraju umjesto prijatelja, da vidiš kako izgleda TV ekran. Pritisni „Započni igru“.</div></div>';
+    }
+    const base = baseUrl();
+    if (!base) {
+      return '<div class="card join-card"><div class="join-hint">Zalijepi link ove stranice (s claude.ai) da se napravi QR kod za igrače.</div>' +
+        '<div class="field-row"><input id="baseurl" placeholder="https://claude.ai/…" inputmode="url" autocomplete="off"><button class="btn ghost" id="savebase">Spremi</button></div>' +
+        '<div class="join-hint">Kod sobe:</div><div class="room-code">' + esc(v.code) + '</div></div>';
+    }
+    const svg = qrSvg(base.split('#')[0] + '#' + v.code);
+    return '<div class="card join-card">' + (svg ? '<div class="qr">' + svg + '</div>' : '') +
+      '<div class="join-hint">Skeniraj QR kod ili otvori stranicu i upiši kod</div><div class="room-code">' + esc(v.code) + '</div></div>';
+  }
+
+  function renderHost() {
+    $app.className = 'screen';
+    if (hostError) {
+      $app.className = 'screen center';
+      $app.innerHTML = '<div class="err">' + esc(hostError) + '</div><button class="btn" id="home">Natrag</button>';
+      return bind('home', reset);
+    }
+    if (!game) {
+      $app.className = 'screen center';
+      $app.innerHTML = '<div class="brand">MOZGALICA</div><div class="note">Otvaram sobu…</div>';
+      return;
+    }
+    const v = game.view();
+    if (v.phase === 'lobby') return renderLobby(v);
+    if (v.phase === 'final') return renderFinal(v);
+    return renderQuestion(v);
+  }
+
+  function renderLobby(v) {
+    const on = v.players.filter((p) => p.connected).length;
+    $app.innerHTML =
+      '<div class="brand">MOZGALICA<small>KVIZ ZA CIJELO DRUŠTVO</small></div>' +
+      '<div class="lobby-grid">' + joinBlock(v) +
+      '<div class="card players-card"><h2>Igrači (' + v.players.length + '/' + v.max + ')</h2><div class="chips">' +
+      (v.players.length ? v.players.map((p) => '<div class="chip' + (p.connected ? '' : ' off') + '">' + esc(p.name) + '</div>').join('')
+        : '<div class="empty">Čekamo prve igrače…</div>') +
+      '</div><div class="actions"><button class="btn" id="start"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' +
+      '<button class="btn ghost" id="quit">Odustani</button></div></div></div>';
+    bind('start', () => game.startGame()); bind('quit', reset);
+    bind('savebase', () => {
+      const el = document.getElementById('baseurl');
+      const val = el ? el.value.trim() : '';
+      if (/^https:\/\//.test(val)) { store.set('mz_base', val); render(); }
+    });
+  }
+
+  function renderQuestion(v) {
+    const rev = v.phase === 'reveal';
+    const q = v.q;
+    const opts = q.options.map((o, i) => {
+      let cls = 'opt o' + i;
+      if (rev) cls += i === v.reveal.correct ? ' correct' : ' dim';
+      return '<div class="' + cls + '"><span class="shape">' + SHAPES[i] + '</span><span class="txt">' + esc(o) + '</span>' +
+        (rev ? '<span class="cnt">' + v.reveal.counts[i] + '</span>' : '') + '</div>';
+    }).join('');
+    const foot = rev
+      ? '<span>Sljedeće pitanje za <b id="rnum">' + Math.ceil(v.revealMs / 1000) + '</b> s</span><button class="btn" id="next">' + (q.index === q.total ? 'Rezultati' : 'Dalje') + ' ▶</button>'
+      : '<span>Odgovorilo ' + v.answered + ' / ' + v.connectedCount + '</span><span></span>';
+    $app.innerHTML =
+      '<div class="q-screen' + (rev ? ' with-rank' : '') + '"><div class="q-main">' +
+      '<div class="q-top"><span class="pill">' + esc(q.category) + '</span><span>Pitanje ' + q.index + ' / ' + q.total + '</span><span class="timer-num" id="tnum">' + (rev ? '' : Math.ceil(v.remainingMs / 1000)) + '</span></div>' +
+      '<div class="timer" id="timer"' + (rev ? ' style="visibility:hidden"' : '') + '><div id="tbar"></div></div>' +
+      '<div class="q-text">' + esc(q.text) + '</div><div class="opts">' + opts + '</div><div class="q-foot">' + foot + '</div></div>' +
+      (rev ? '<div class="card rank-card"><h3>Poredak</h3>' + rankingHtml(rankOf(v.players), true) + '</div>' : '') + '</div>';
+    bind('next', () => game.skipReveal());
+    tick();
+  }
+
+  function renderFinal(v) {
+    const r = rankOf(v.players);
+    const podium = [1, 0, 2].filter((i) => r[i]).map((i) =>
+      '<div class="pod p' + (i + 1) + '"><div class="medal">' + MEDALS[i] + '</div><div class="pn">' + esc(r[i].name) + '</div><div class="ps">' + r[i].score + ' bodova</div></div>').join('');
+    const rest = r.slice(3).map((x) => '<div class="rank-row"><span class="pos">' + x.rank + '.</span><span class="nm">' + esc(x.name) + '</span><span class="sc">' + x.score + '</span></div>').join('');
+    $app.innerHTML =
+      '<div class="brand" style="text-align:center">KRAJ IGRE!<small>KONAČNI POREDAK</small></div>' +
+      '<div class="podium">' + podium + '</div><div class="rest">' + rest + '</div>' +
+      '<div class="actions" style="justify-content:center;margin-top:auto"><button class="btn" id="again">Nova igra</button><button class="btn ghost" id="quit">Izlaz</button></div>';
+    bind('again', () => game.restart()); bind('quit', reset);
+  }
+
+  function renderPlayer() {
+    $app.className = 'screen phone';
+    const s = pstate;
+    if (!s) {
+      $app.className = 'screen phone center';
+      $app.innerHTML = '<div class="brand">MOZGALICA</div><div class="big">Spajam se…</div><div class="sub">Soba ' + esc(pcode) + '</div>';
+      return;
+    }
+    const me = s.players.find((p) => p.pid === PID);
+    const center = (html) => { $app.className = 'screen phone center'; $app.innerHTML = '<div class="brand">MOZGALICA</div>' + html; };
+    if (!me) {
+      return s.phase === 'lobby'
+        ? center('<div class="big">Prijavljujem te…</div><div class="sub">Soba ' + esc(s.code) + '</div>')
+        : center('<div class="big">Igra je u tijeku</div><div class="sub">Pričekaj da završi pa se pridruži sljedećoj rundi.</div>');
+    }
+    const ranked = rankOf(s.players);
+    const rk = ranked.find((p) => p.pid === PID);
+
+    if (s.phase === 'lobby') {
+      return center('<div class="big">Bok, ' + esc(me.name) + '! 👋</div><div class="sub">Uspješno si u sobi <b>' + esc(s.code) + '</b>.<br>Pogledaj TV. Igra počinje kad domaćin pritisne „Započni“.</div>' +
+        '<div class="statline"><div class="stat"><b>' + s.players.length + '</b><span>igrača u sobi</span></div></div>' +
+        '<button class="btn ghost" id="leave">Izađi</button>') || bind('leave', reset);
+    }
+    if (s.phase === 'question') {
+      const q = s.q;
+      const mine = myAnswer && myAnswer.q === q.index ? myAnswer.c : null;
+      const done = mine !== null || me.answered;
+      const opts = q.options.map((o, i) => {
+        let cls = 'p-opt o' + i;
+        if (done) cls += mine === i ? ' picked' : ' dim';
+        return '<button class="' + cls + '" data-i="' + i + '"' + (done ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span>' + esc(o) + '</span></button>';
+      }).join('');
+      $app.innerHTML =
+        '<div class="p-top"><span>' + q.index + ' / ' + q.total + '</span><span class="pill">' + esc(q.category) + '</span><span id="tnum">' + Math.ceil(s.remainingMs / 1000) + '</span></div>' +
+        '<div class="timer" id="timer"><div id="tbar"></div></div><div class="p-q">' + esc(q.text) + '</div><div class="p-opts">' + opts + '</div>' +
+        '<div class="waiting">' + (done ? 'Odgovor je zaprimljen ✔ Čekamo ostale…' : 'Dodirni odgovor!') + '</div>';
+      $app.querySelectorAll('.p-opt').forEach((b) => { b.onclick = () => answer(Number(b.dataset.i)); });
+      return tick();
+    }
+    if (s.phase === 'reveal') {
+      const ok = me.choice === s.reveal.correct;
+      const cls = ok ? 'ok' : (me.choice === null || me.choice === undefined ? 'none' : 'bad');
+      const title = ok ? 'Točno! 🎉' : (cls === 'none' ? 'Vrijeme je isteklo' : 'Netočno 😬');
+      $app.className = 'screen phone center';
+      $app.innerHTML =
+        '<div class="p-top" style="width:100%"><span>' + s.q.index + ' / ' + s.q.total + '</span><span class="pill">' + esc(s.q.category) + '</span><span></span></div>' +
+        '<div class="result ' + cls + '"><div class="big">' + title + '</div>' + (ok ? '<div class="pts">+' + me.gained + '</div>'
+          : '<div class="sub" style="margin-top:10px">Točan odgovor:<br><b>' + SHAPES[s.reveal.correct] + ' ' + esc(s.q.options[s.reveal.correct]) + '</b></div>') + '</div>' +
+        '<div class="statline"><div class="stat"><b>' + rk.rank + '.</b><span>mjesto</span></div><div class="stat"><b>' + me.score + '</b><span>bodova</span></div></div>' +
+        '<div class="sub">Sljedeće pitanje za <b id="rnum">' + Math.ceil(s.revealMs / 1000) + '</b> s</div>';
+      return tick();
+    }
+    const medal = rk.rank === 1 ? '🥇' : rk.rank === 2 ? '🥈' : rk.rank === 3 ? '🥉' : '🎮';
+    center('<div style="font-size:5rem;line-height:1">' + medal + '</div><div class="big">' + (rk.rank === 1 ? 'Pobjednik si!' : rk.rank + '. mjesto od ' + s.players.length) + '</div>' +
+      '<div class="statline"><div class="stat"><b>' + me.score + '</b><span>bodova</span></div></div>' +
+      '<div class="sub">Hvala na igri, ' + esc(me.name) + '! Domaćin može pokrenuti novu rundu.</div><button class="btn ghost" id="leave">Izađi</button>');
+    bind('leave', reset);
+  }
+
+  // ---------- odbrojavanje (bez ponovnog crtanja) ----------
+  function setTimes(ms, dur, revMs) {
+    const bar = document.getElementById('tbar'), num = document.getElementById('tnum');
+    const wrap = document.getElementById('timer'), rnum = document.getElementById('rnum');
+    if (bar && dur) bar.style.width = (ms / dur * 100) + '%';
+    if (num && dur) num.textContent = Math.ceil(ms / 1000);
+    if (wrap) wrap.classList.toggle('urgent', ms <= 5000);
+    if (rnum) rnum.textContent = Math.max(0, Math.ceil(revMs / 1000));
+  }
+  function tick() {
+    if ((mode === 'host' || mode === 'demo') && game) {
+      const v = game.view();
+      if (v.phase === 'question') setTimes(v.remainingMs, v.duration, 0);
+      else if (v.phase === 'reveal') setTimes(0, 0, v.revealMs);
+    } else if (mode === 'player' && pstate) {
+      if (pstate.phase === 'question') setTimes(Math.max(0, endsAt - Date.now()), pstate.duration, 0);
+      else if (pstate.phase === 'reveal') setTimes(0, 0, revealEnds - Date.now());
+    }
+  }
+  setInterval(tick, 100);
+
+  // Ako je stranica otvorena s kodom (#ABCD), odmah ide na prijavu igrača.
+  if (/^#?[A-Za-z]{4}$/.test(location.hash || '')) mode = 'join';
+  render();
+})();
+</script>

@@ -1,0 +1,18 @@
+  /* najava runde: tamni veo preko krčme, "RUNDA X" i kratki podnaslov; trajanje prati postojeći timeout */
+  .ann { --dur: 3500ms; --el: 0ms; position: relative; flex: 1; min-height: 70dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(10px, 2vh, 22px); text-align: center; padding: 0 4vw; }
+  .ann::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: rgba(12, 6, 2, 0.62);
+    animation: annVeil var(--dur) linear both; animation-delay: calc(-1 * var(--el)); }
+  .ann-t { font-family: var(--font-display); font-weight: 400; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; color: #fbefd6;
+    font-size: clamp(3rem, 15vw, 8.5rem); max-width: 100%; overflow-wrap: break-word; text-shadow: 0 2px 0 rgba(120, 76, 28, 0.85), 0 6px 16px rgba(0, 0, 0, 0.45);
+    animation: annIn var(--dur) cubic-bezier(0.25, 0.8, 0.3, 1) both; animation-delay: calc(-1 * var(--el)); }
+  .ann-s { font-family: var(--font-body); font-weight: 800; font-size: clamp(1rem, 4.2vw, 1.7rem); color: rgba(243, 227, 196, 0.82); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    animation: annSub var(--dur) ease both; animation-delay: calc(-1 * var(--el)); }
+  .ann.fin .ann-t { color: #ffe2a6; text-shadow: 0 2px 0 rgba(150, 92, 24, 0.95), 0 0 18px rgba(232, 160, 60, 0.28), 0 6px 16px rgba(0, 0, 0, 0.45); }
+  .ann.fin .ann-s { color: #f1d49c; }
+  .tv .ann-t { font-size: clamp(5rem, 11vw, 11rem); }
+  .tv .ann-s { font-size: clamp(1.4rem, 2.4vw, 2.4rem); }
+  /* 0 ms veo, ~200 ms naslov (0.94 -> 1), ~500 ms podnaslov, ~600 ms prije kraja fade-out */
+  @keyframes annVeil { 0% { opacity: 0; } 8% { opacity: 1; } 86% { opacity: 1; } 100% { opacity: 0.4; } }
+  @keyframes annIn { 0%, 6% { opacity: 0; transform: scale(0.94); } 20% { opacity: 1; transform: none; } 80% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: none; } }
+  @keyframes annSub { 0%, 14% { opacity: 0; } 26% { opacity: 1; } 80% { opacity: 1; } 96%, 100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .ann-t { animation-name: annSub; } }

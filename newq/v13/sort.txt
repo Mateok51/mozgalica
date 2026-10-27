@@ -1,0 +1,44 @@
+Sjeverna polutka | Južna polutka || Norveška, Kanada, Japan, Egipat || Australija, Argentina, Novi Zeland, Južnoafrička Republika
+Slatkovodna riba | Morska riba || Šaran, Pastrva, Som, Štuka || Tuna, Srdela, Orada, Brancin
+Gmaz | Vodozemac || Krokodil, Gušter, Kornjača, Zmija || Žaba, Daždevnjak, Vodenjak, Čovječja ribica
+Biljojed | Mesojed || Krava, Zec, Žirafa, Slon || Lav, Vuk, Morski pas, Orao
+Dalmacija | Slavonija || Split, Šibenik, Makarska, Trogir || Osijek, Vukovar, Đakovo, Vinkovci
+Istra | Zagorje || Pula, Rovinj, Motovun, Poreč || Krapina, Zabok, Pregrada, Klanjec
+Glavni grad u Europi | Glavni grad u Aziji || Lisabon, Prag, Beč, Oslo || Tokio, Bangkok, Hanoi, Seul
+Država EU-a | Država izvan EU-a || Austrija, Irska, Portugal, Slovenija || Norveška, Švicarska, Island, Srbija
+Euro | Druga valuta || Njemačka, Italija, Grčka, Finska || Švedska, Poljska, Češka, Mađarska
+Romanski jezik | Germanski jezik || Talijanski, Španjolski, Rumunjski, Portugalski || Njemački, Nizozemski, Švedski, Danski
+Slavenski jezik | Neslavenski jezik || Poljski, Češki, Slovenski, Bugarski || Mađarski, Rumunjski, Albanski, Litavski
+Sisavac u moru | Riba || Dupin, Kit, Tuljan, Morž || Morski pas, Tuna, Losos, Raža
+Listopadno drvo | Zimzeleno drvo || Hrast, Bukva, Javor, Lipa || Bor, Smreka, Jela, Čempres
+Žitarica | Mahunarka || Pšenica, Ječam, Zob, Raž || Grah, Leća, Slanutak, Grašak
+Prirodni broj veći od 10 | Prirodni broj manji od 10 || 12, 25, 47, 100 || 3, 5, 7, 9
+Paran broj | Neparan broj || 14, 28, 36, 50 || 15, 27, 33, 49
+Mjesec s 31 danom | Mjesec s 30 dana || Siječanj, Ožujak, Svibanj, Srpanj || Travanj, Lipanj, Rujan, Studeni
+Unutarnji planet | Vanjski planet || Merkur, Venera, Zemlja, Mars || Jupiter, Saturn, Uran, Neptun
+Organ u prsnom košu | Organ u trbušnoj šupljini || Srce, Pluća, Dušnik, Jednjak || Jetra, Želudac, Bubrezi, Slezena
+Vitamin | Mineral || Vitamin C, Vitamin D, Vitamin A, Vitamin B12 || Željezo, Kalcij, Magnezij, Cink
+Obnovljiv izvor energije | Neobnovljiv izvor energije || Sunce, Vjetar, Voda, Biomasa || Ugljen, Nafta, Zemni plin, Uran
+Marvel | DC || Iron Man, Thor, Hulk, Spider-Man || Batman, Superman, Wonder Woman, Flash
+Walt Disney Animation | Pixar || Snjeguljica, Pepeljuga, Aladin, Kralj lavova || Toy Story, Potraga za Nemom, Auti, Izvrnuto obrnuto
+Nintendo lik | Sega lik || Mario, Link, Kirby, Donkey Kong || Sonic, Tails, Knuckles, Dr. Robotnik
+Sony (PlayStation Studios) igra | Microsoft (Xbox Game Studios) igra || God of War, Uncharted, The Last of Us, Gran Turismo || Halo, Gears of War, Forza, Fable
+Društvena mreža | Pretraživač || Instagram, TikTok, Facebook, X (Twitter) || Google, Bing, DuckDuckGo, Yahoo
+Hardver | Softver || Tipkovnica, Miš, Procesor, Monitor || Windows, Word, Chrome, Photoshop
+Gudački instrument | Udaraljka || Violina, Viola, Violončelo, Kontrabas || Bubanj, Timpan, Činele, Ksilofon
+Opera | Balet || Carmen, Aida, Čarobna frula, Traviata || Labuđe jezero, Orašar, Giselle, Trnoružica
+Renesansni umjetnik | Impresionist || Leonardo da Vinci, Michelangelo, Rafael, Botticelli || Monet, Renoir, Degas, Pissarro
+Grčki filozof | Rimski car || Sokrat, Platon, Aristotel, Diogen || August, Neron, Trajan, Dioklecijan
+Shakespeareova tragedija | Shakespeareova komedija || Hamlet, Macbeth, Otelo, Kralj Lear || San Ivanjske noći, Na tri kralja, Mletački trgovac, Ukroćena goropadnica
+Hrvatski nacionalni park | Strani nacionalni park || Krka, Paklenica, Mljet, Kornati || Yellowstone, Yosemite, Serengeti, Banff
+Ljetni sport | Zimski sport || Veslanje, Jedrenje, Atletika, Plivanje || Biatlon, Curling, Sanjkanje, Skijaški skokovi
+Igra loptom | Borilački sport || Košarka, Odbojka, Rukomet, Vaterpolo || Judo, Karate, Boks, Taekwondo
+Ptica selica | Ptica stanarica || Lastavica, Roda, Čiopa, Kukavica || Vrabac, Svraka, Gavran, Golub
+Domaća životinja | Divlja životinja || Krava, Koza, Ovca, Kokoš || Vuk, Ris, Medvjed, Divlja svinja
+Začin | Ljekovita biljka || Papar, Cimet, Muškatni oraščić, Klinčić || Kamilica, Gospina trava, Matičnjak, Neven
+Talijansko jelo | Japansko jelo || Pizza, Lazanje, Rižoto, Tiramisu || Sushi, Ramen, Tempura, Miso juha
+Južnoamerička rijeka | Europska rijeka || Amazona, Orinoco, Parana, Magdalena || Rajna, Loira, Temza, Visla
+Afrička životinja | Australska životinja || Lav, Zebra, Nosorog, Vodenkonj || Klokan, Koala, Emu, Vombat
+Plemenita kovina | Obična kovina || Zlato, Srebro, Platina, Paladij || Željezo, Bakar, Cink, Olovo
+Kopneni prijevoz | Vodeni prijevoz || Tramvaj, Vlak, Autobus, Bicikl || Trajekt, Jedrilica, Katamaran, Kajak
+Kost ruke | Kost noge || Nadlaktična kost, Lakatna kost, Palčana kost, Kosti zapešća || Bedrena kost, Goljenična kost, Lisna kost, Iver

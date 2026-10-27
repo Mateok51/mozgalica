@@ -1,0 +1,1523 @@
+{
+ "cats": {
+  "Geografija": [
+   {
+    "q": "Koji je glavni grad Australije?",
+    "o": [
+     "Sydney",
+     "Melbourne",
+     "Canberra",
+     "Perth"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je najduža rijeka u Europi?",
+    "o": [
+     "Dunav",
+     "Volga",
+     "Rajna",
+     "Dnjepar"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najviši vrh Hrvatske?",
+    "o": [
+     "Sljeme",
+     "Dinara (Sinjal)",
+     "Sveti Jure",
+     "Vojak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je država najveća po površini?",
+    "o": [
+     "Kanada",
+     "Kina",
+     "SAD",
+     "Rusija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najveći ocean na svijetu?",
+    "o": [
+     "Atlantski",
+     "Indijski",
+     "Tihi",
+     "Arktički"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Kanade?",
+    "o": [
+     "Toronto",
+     "Ottawa",
+     "Vancouver",
+     "Montreal"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najviša planina na svijetu?",
+    "o": [
+     "K2",
+     "Mont Blanc",
+     "Mount Everest",
+     "Kilimandžaro"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem se kontinentu nalazi pustinja Sahara?",
+    "o": [
+     "Azija",
+     "Afrika",
+     "Australija",
+     "Južna Amerika"
+    ],
+    "a": 1
+   },
+   {
+    "q": "S koliko država Hrvatska ima kopnenu granicu?",
+    "o": [
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Japana?",
+    "o": [
+     "Kyoto",
+     "Osaka",
+     "Tokio",
+     "Hirošima"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kroz koji grad teče rijeka Seina?",
+    "o": [
+     "London",
+     "Pariz",
+     "Rim",
+     "Bruxelles"
+    ],
+    "a": 1
+   }
+  ],
+  "Povijest": [
+   {
+    "q": "Koje je godine Hrvatska postala članica Europske unije?",
+    "o": [
+     "2004.",
+     "2009.",
+     "2013.",
+     "2016."
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je prvi čovjek koji je hodao po Mjesecu?",
+    "o": [
+     "Buzz Aldrin",
+     "Neil Armstrong",
+     "Jurij Gagarin",
+     "John Glenn"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je godine pao Berlinski zid?",
+    "o": [
+     "1985.",
+     "1987.",
+     "1989.",
+     "1991."
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je vladar bio prvi hrvatski kralj?",
+    "o": [
+     "Zvonimir",
+     "Tomislav",
+     "Trpimir",
+     "Petar Krešimir IV."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je godine potonuo Titanic?",
+    "o": [
+     "1905.",
+     "1912.",
+     "1918.",
+     "1923."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je godine počeo Drugi svjetski rat?",
+    "o": [
+     "1936.",
+     "1939.",
+     "1941.",
+     "1945."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je godine Kolumbo doplovio do Amerike?",
+    "o": [
+     "1453.",
+     "1492.",
+     "1517.",
+     "1607."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je bio prvi predsjednik SAD-a?",
+    "o": [
+     "Abraham Lincoln",
+     "Thomas Jefferson",
+     "George Washington",
+     "John Adams"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je gradu 1914. ubijen nadvojvoda Franjo Ferdinand?",
+    "o": [
+     "Beč",
+     "Budimpešta",
+     "Sarajevo",
+     "Beograd"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je rimski car dao sagraditi palaču u Splitu?",
+    "o": [
+     "Neron",
+     "Dioklecijan",
+     "Julije Cezar",
+     "Konstantin"
+    ],
+    "a": 1
+   }
+  ],
+  "Znanost": [
+   {
+    "q": "Koji je kemijski simbol za zlato?",
+    "o": [
+     "Ag",
+     "Fe",
+     "Au",
+     "Zn"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je planet najbliži Suncu?",
+    "o": [
+     "Venera",
+     "Merkur",
+     "Mars",
+     "Zemlja"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko kostiju ima odrasli čovjek?",
+    "o": [
+     "186",
+     "206",
+     "226",
+     "256"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kolika je približno brzina svjetlosti u vakuumu?",
+    "o": [
+     "30 000 km/s",
+     "150 000 km/s",
+     "300 000 km/s",
+     "3 000 000 km/s"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je mjestu rođen Nikola Tesla?",
+    "o": [
+     "Gospić",
+     "Smiljan",
+     "Karlovac",
+     "Otočac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji plin biljke upijaju tijekom fotosinteze?",
+    "o": [
+     "Kisik",
+     "Dušik",
+     "Ugljikov dioksid",
+     "Vodik"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je najveći planet Sunčeva sustava?",
+    "o": [
+     "Saturn",
+     "Jupiter",
+     "Neptun",
+     "Uran"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je kemijska formula vode?",
+    "o": [
+     "CO2",
+     "H2O",
+     "O2",
+     "NaCl"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko planeta ima Sunčev sustav?",
+    "o": [
+     "7",
+     "8",
+     "9",
+     "10"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojoj temperaturi vrije voda na razini mora?",
+    "o": [
+     "90 °C",
+     "100 °C",
+     "110 °C",
+     "120 °C"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najčešći plin u Zemljinoj atmosferi?",
+    "o": [
+     "Kisik",
+     "Dušik",
+     "Ugljikov dioksid",
+     "Argon"
+    ],
+    "a": 1
+   }
+  ],
+  "Sport": [
+   {
+    "q": "Koliko igrača jedne momčadi istodobno igra na terenu u nogometu?",
+    "o": [
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je mjesto Hrvatska osvojila na Svjetskom prvenstvu u nogometu 2018.?",
+    "o": [
+     "Prvo",
+     "Drugo",
+     "Treće",
+     "Četvrto"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grad bio domaćin Olimpijskih igara 2016.?",
+    "o": [
+     "London",
+     "Peking",
+     "Rio de Janeiro",
+     "Tokio"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko Grand Slam turnira ima u tenisu tijekom jedne godine?",
+    "o": [
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je 2018. osvojio Zlatnu loptu?",
+    "o": [
+     "Cristiano Ronaldo",
+     "Lionel Messi",
+     "Luka Modrić",
+     "Kylian Mbappé"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko minuta traje regularno vrijeme nogometne utakmice?",
+    "o": [
+     "60",
+     "80",
+     "90",
+     "120"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je hrvatski tenisač 2001. osvojio Wimbledon?",
+    "o": [
+     "Marin Čilić",
+     "Ivan Ljubičić",
+     "Goran Ivanišević",
+     "Mario Ančić"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se sportu natjecala Janica Kostelić?",
+    "o": [
+     "Plivanje",
+     "Skijanje",
+     "Atletika",
+     "Tenis"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko bodova vrijedi koš ubačen iza linije za tricu?",
+    "o": [
+     "1",
+     "2",
+     "3",
+     "4"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko krugova ima na olimpijskoj zastavi?",
+    "o": [
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "a": 1
+   }
+  ],
+  "Film i TV": [
+   {
+    "q": "Tko je režirao film Titanic iz 1997.?",
+    "o": [
+     "Steven Spielberg",
+     "James Cameron",
+     "Ridley Scott",
+     "Christopher Nolan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je hrvatski grad u seriji Igra prijestolja glumio Kraljevu Luku?",
+    "o": [
+     "Split",
+     "Šibenik",
+     "Dubrovnik",
+     "Pula"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je zagrebački crtani film 1962. osvojio Oscara?",
+    "o": [
+     "Surogat",
+     "Profesor Baltazar",
+     "Čudesna šuma",
+     "Lijepa naša"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove čarobnjak iz Gospodara prstenova kojeg glumi Ian McKellen?",
+    "o": [
+     "Saruman",
+     "Gandalf",
+     "Radagast",
+     "Elrond"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem gradu živi obitelj Simpson?",
+    "o": [
+     "Shelbyville",
+     "Springfield",
+     "Quahog",
+     "South Park"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove glavni lik, mladi lav, u Kralju lavova?",
+    "o": [
+     "Mufasa",
+     "Scar",
+     "Simba",
+     "Nala"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji glumac glumi kapetana Jacka Sparrowa?",
+    "o": [
+     "Orlando Bloom",
+     "Johnny Depp",
+     "Brad Pitt",
+     "Tom Cruise"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj seriji glavni lik je Walter White?",
+    "o": [
+     "Breaking Bad",
+     "Prijatelji",
+     "Lost",
+     "Sopranos"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove kraljica s ledenim moćima u Snježnom kraljevstvu?",
+    "o": [
+     "Anna",
+     "Elsa",
+     "Moana",
+     "Rapunzel"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji lik izgovara rečenicu „I'll be back“?",
+    "o": [
+     "Rambo",
+     "Terminator",
+     "Robocop",
+     "Rocky"
+    ],
+    "a": 1
+   }
+  ],
+  "Glazba": [
+   {
+    "q": "Koliko žica ima standardna gitara?",
+    "o": [
+     "4",
+     "5",
+     "6",
+     "8"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je bend izveo pjesmu Bohemian Rhapsody?",
+    "o": [
+     "The Beatles",
+     "Queen",
+     "Led Zeppelin",
+     "Pink Floyd"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko je članova imao bend The Beatles?",
+    "o": [
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je skladatelj u kasnijem životu izgubio sluh?",
+    "o": [
+     "Mozart",
+     "Beethoven",
+     "Bach",
+     "Vivaldi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko izvodi pjesmu Thriller?",
+    "o": [
+     "Prince",
+     "Michael Jackson",
+     "Stevie Wonder",
+     "Elton John"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko tipki ima standardni klavir?",
+    "o": [
+     "66",
+     "76",
+     "88",
+     "96"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje dolazi grupa ABBA?",
+    "o": [
+     "Norveška",
+     "Danska",
+     "Švedska",
+     "Finska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je pjesma predstavljala Hrvatsku na Eurosongu 2024. i osvojila drugo mjesto?",
+    "o": [
+     "Mama ŠČ!",
+     "Rim Tim Tagi Dim",
+     "Guilty Pleasure",
+     "Crno i belo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko čine dvojac 2Cellos?",
+    "o": [
+     "Luka Šulić i Stjepan Hauser",
+     "Petar Grašo i Tony Cetinski",
+     "Jacques Houdek i Nina Badrić",
+     "Gibonni i Oliver"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojeg pjevača zovu „Kralj rock and rolla“?",
+    "o": [
+     "Elvis Presley",
+     "Chuck Berry",
+     "Frank Sinatra",
+     "Little Richard"
+    ],
+    "a": 0
+   }
+  ],
+  "Hrana i piće": [
+   {
+    "q": "Od kojeg se mlijeka tradicionalno pravi paški sir?",
+    "o": [
+     "Kravljeg",
+     "Kozjeg",
+     "Ovčjeg",
+     "Bivoljeg"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni sastojak guacamolea?",
+    "o": [
+     "Rajčica",
+     "Avokado",
+     "Paprika",
+     "Krastavac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje zemlje potječe sushi?",
+    "o": [
+     "Kina",
+     "Koreja",
+     "Tajland",
+     "Japan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Od kojeg se mesa tradicionalno pravi dalmatinski pršut?",
+    "o": [
+     "Govedine",
+     "Janjetine",
+     "Svinjetine",
+     "Puretine"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz kojeg grada potječe pizza Margherita?",
+    "o": [
+     "Napulj",
+     "Milano",
+     "Firenca",
+     "Venecija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje potječe paella?",
+    "o": [
+     "Portugal",
+     "Italija",
+     "Španjolska",
+     "Meksiko"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što je glavni sastojak humusa?",
+    "o": [
+     "Grah",
+     "Slanutak",
+     "Leća",
+     "Grašak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje zemlje dolazi čokolada Toblerone?",
+    "o": [
+     "Belgija",
+     "Austrija",
+     "Švicarska",
+     "Njemačka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što je kulen?",
+    "o": [
+     "Slavonska kobasica",
+     "Dalmatinski kolač",
+     "Vrsta sira",
+     "Riblja juha"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od čega se pravi vino?",
+    "o": [
+     "Od jabuka",
+     "Od grožđa",
+     "Od šljiva",
+     "Od ječma"
+    ],
+    "a": 1
+   }
+  ],
+  "Životinje": [
+   {
+    "q": "Koliko nogu ima pauk?",
+    "o": [
+     "6",
+     "8",
+     "10",
+     "12"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je životinja najveći sisavac na svijetu?",
+    "o": [
+     "Afrički slon",
+     "Plavi kit",
+     "Žirafa",
+     "Morski pas"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najbrža kopnena životinja?",
+    "o": [
+     "Lav",
+     "Gepard",
+     "Antilopa",
+     "Konj"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja od ovih ptica ne može letjeti?",
+    "o": [
+     "Orao",
+     "Vrabac",
+     "Pingvin",
+     "Galeb"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čime se uglavnom hrani velika panda?",
+    "o": [
+     "Ribom",
+     "Bambusom",
+     "Medom",
+     "Kukcima"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko nogu ima kukac?",
+    "o": [
+     "4",
+     "6",
+     "8",
+     "10"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najveća živuća ptica?",
+    "o": [
+     "Noj",
+     "Emu",
+     "Kondor",
+     "Albatros"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju životinju zovu „kralj džungle“?",
+    "o": [
+     "Tigar",
+     "Gorila",
+     "Lav",
+     "Slon"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja prikazana na hrvatskoj kovanici od 1 eura?",
+    "o": [
+     "Kuna",
+     "Lav",
+     "Orao",
+     "Dupin"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko srca ima hobotnica?",
+    "o": [
+     "1",
+     "2",
+     "3",
+     "4"
+    ],
+    "a": 2
+   }
+  ],
+  "Hrvatska": [
+   {
+    "q": "Koja je službena valuta Hrvatske od 2023.?",
+    "o": [
+     "Kuna",
+     "Euro",
+     "Dolar",
+     "Franak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je nacionalni park poznat po 16 jezera povezanih slapovima?",
+    "o": [
+     "Krka",
+     "Plitvička jezera",
+     "Risnjak",
+     "Kornati"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi rimski amfiteatar Arena?",
+    "o": [
+     "Zadar",
+     "Pula",
+     "Split",
+     "Rijeka"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je izumio mehaničku olovku?",
+    "o": [
+     "Faust Vrančić",
+     "Slavoljub Penkala",
+     "Nikola Tesla",
+     "Ruđer Bošković"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji modni dodatak potječe od hrvatskih vojnika iz 17. stoljeća?",
+    "o": [
+     "Šešir",
+     "Kravata",
+     "Leptir-mašna",
+     "Šal"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko županija ima Hrvatska, ne računajući Grad Zagreb?",
+    "o": [
+     "18",
+     "20",
+     "21",
+     "23"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji grad zovu „Biser Jadrana“?",
+    "o": [
+     "Zadar",
+     "Split",
+     "Dubrovnik",
+     "Rovinj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako počinje hrvatska himna?",
+    "o": [
+     "Lijepa naša domovino",
+     "U boj, u boj",
+     "Zemljo moja",
+     "Rajska djevo"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove najviši vrh Medvednice?",
+    "o": [
+     "Sljeme",
+     "Ivančica",
+     "Klek",
+     "Učka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je izumio padobran, prikazan u djelu Machinae novae?",
+    "o": [
+     "Faust Vrančić",
+     "Marko Marulić",
+     "Ivan Vučetić",
+     "Slavoljub Penkala"
+    ],
+    "a": 0
+   }
+  ],
+  "Općenito": [
+   {
+    "q": "Koliko dana ima prijestupna godina?",
+    "o": [
+     "364",
+     "365",
+     "366",
+     "367"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko boja ima duga?",
+    "o": [
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko sekundi ima jedan sat?",
+    "o": [
+     "600",
+     "3600",
+     "6000",
+     "36 000"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko dana ima veljača u prijestupnoj godini?",
+    "o": [
+     "28",
+     "29",
+     "30",
+     "31"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je boje smaragd?",
+    "o": [
+     "Plave",
+     "Crvene",
+     "Zelene",
+     "Žute"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko stranica ima šesterokut?",
+    "o": [
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji rimski broj označava 50?",
+    "o": [
+     "C",
+     "D",
+     "L",
+     "X"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je 15 % od 200?",
+    "o": [
+     "15",
+     "20",
+     "30",
+     "45"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je centimetara u jednom metru?",
+    "o": [
+     "10",
+     "100",
+     "1000",
+     "10 000"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je dan u tjednu nakon srijede?",
+    "o": [
+     "Utorak",
+     "Četvrtak",
+     "Petak",
+     "Nedjelja"
+    ],
+    "a": 1
+   }
+  ]
+ },
+ "sort": [
+  {
+   "a": "Voće",
+   "b": "Povrće",
+   "A": [
+    "Jabuka",
+    "Banana",
+    "Kruška",
+    "Šljiva"
+   ],
+   "B": [
+    "Mrkva",
+    "Krumpir",
+    "Luk",
+    "Kupus"
+   ]
+  },
+  {
+   "a": "Sisavac",
+   "b": "Ptica",
+   "A": [
+    "Dupin",
+    "Šišmiš",
+    "Kit",
+    "Slon"
+   ],
+   "B": [
+    "Pingvin",
+    "Noj",
+    "Sova",
+    "Galeb"
+   ]
+  },
+  {
+   "a": "Hrvatski otok",
+   "b": "Hrvatska planina",
+   "A": [
+    "Krk",
+    "Hvar",
+    "Brač",
+    "Vis"
+   ],
+   "B": [
+    "Velebit",
+    "Biokovo",
+    "Dinara",
+    "Učka"
+   ]
+  },
+  {
+   "a": "Planet",
+   "b": "Zvijezda",
+   "A": [
+    "Mars",
+    "Venera",
+    "Saturn",
+    "Neptun"
+   ],
+   "B": [
+    "Sirius",
+    "Sjevernjača",
+    "Betelgeuse",
+    "Vega"
+   ]
+  },
+  {
+   "a": "Europska država",
+   "b": "Azijska država",
+   "A": [
+    "Portugal",
+    "Norveška",
+    "Poljska",
+    "Grčka"
+   ],
+   "B": [
+    "Japan",
+    "Indija",
+    "Tajland",
+    "Vijetnam"
+   ]
+  },
+  {
+   "a": "Skladatelj",
+   "b": "Slikar",
+   "A": [
+    "Mozart",
+    "Beethoven",
+    "Bach",
+    "Chopin"
+   ],
+   "B": [
+    "Picasso",
+    "Van Gogh",
+    "Monet",
+    "Rembrandt"
+   ]
+  },
+  {
+   "a": "Kemijski element",
+   "b": "Spoj ili smjesa",
+   "A": [
+    "Kisik",
+    "Željezo",
+    "Helij",
+    "Natrij"
+   ],
+   "B": [
+    "Voda",
+    "Kuhinjska sol",
+    "Zrak",
+    "Čelik"
+   ]
+  },
+  {
+   "a": "Harry Potter",
+   "b": "Gospodar prstenova",
+   "A": [
+    "Hermiona",
+    "Dumbledore",
+    "Snape",
+    "Hagrid"
+   ],
+   "B": [
+    "Frodo",
+    "Gandalf",
+    "Aragorn",
+    "Legolas"
+   ]
+  },
+  {
+   "a": "Rijeka",
+   "b": "Jezero",
+   "A": [
+    "Nil",
+    "Amazona",
+    "Dunav",
+    "Mississippi"
+   ],
+   "B": [
+    "Bajkalsko",
+    "Ženevsko",
+    "Viktorijino",
+    "Titicaca"
+   ]
+  },
+  {
+   "a": "Nogomet",
+   "b": "Tenis",
+   "A": [
+    "Ofsajd",
+    "Korner",
+    "Penal",
+    "Golman"
+   ],
+   "B": [
+    "As",
+    "Servis",
+    "Gem",
+    "Tie-break"
+   ]
+  }
+ ],
+ "link": [
+  {
+   "t": "Država i glavni grad",
+   "p": [
+    [
+     "Francuska",
+     "Pariz"
+    ],
+    [
+     "Španjolska",
+     "Madrid"
+    ],
+    [
+     "Mađarska",
+     "Budimpešta"
+    ],
+    [
+     "Poljska",
+     "Varšava"
+    ]
+   ]
+  },
+  {
+   "t": "Pisac i djelo",
+   "p": [
+    [
+     "Marko Marulić",
+     "Judita"
+    ],
+    [
+     "William Shakespeare",
+     "Hamlet"
+    ],
+    [
+     "Miguel de Cervantes",
+     "Don Quijote"
+    ],
+    [
+     "Lav Tolstoj",
+     "Rat i mir"
+    ]
+   ]
+  },
+  {
+   "t": "Superjunak i pravo ime",
+   "p": [
+    [
+     "Batman",
+     "Bruce Wayne"
+    ],
+    [
+     "Spider-Man",
+     "Peter Parker"
+    ],
+    [
+     "Superman",
+     "Clark Kent"
+    ],
+    [
+     "Iron Man",
+     "Tony Stark"
+    ]
+   ]
+  },
+  {
+   "t": "Životinja i mladunče",
+   "p": [
+    [
+     "Krava",
+     "Tele"
+    ],
+    [
+     "Konj",
+     "Ždrijebe"
+    ],
+    [
+     "Ovca",
+     "Janje"
+    ],
+    [
+     "Pas",
+     "Štene"
+    ]
+   ]
+  },
+  {
+   "t": "Simbol i element",
+   "p": [
+    [
+     "Fe",
+     "Željezo"
+    ],
+    [
+     "Ag",
+     "Srebro"
+    ],
+    [
+     "Cu",
+     "Bakar"
+    ],
+    [
+     "Pb",
+     "Olovo"
+    ]
+   ]
+  },
+  {
+   "t": "Grad i rijeka",
+   "p": [
+    [
+     "Pariz",
+     "Seina"
+    ],
+    [
+     "London",
+     "Temza"
+    ],
+    [
+     "Rim",
+     "Tiber"
+    ],
+    [
+     "Zagreb",
+     "Sava"
+    ]
+   ]
+  },
+  {
+   "t": "Sport i broj igrača na terenu",
+   "p": [
+    [
+     "Nogomet",
+     "11"
+    ],
+    [
+     "Košarka",
+     "5"
+    ],
+    [
+     "Odbojka",
+     "6"
+    ],
+    [
+     "Rukomet",
+     "7"
+    ]
+   ]
+  },
+  {
+   "t": "Bend i pjevač",
+   "p": [
+    [
+     "Queen",
+     "Freddie Mercury"
+    ],
+    [
+     "U2",
+     "Bono"
+    ],
+    [
+     "Nirvana",
+     "Kurt Cobain"
+    ],
+    [
+     "The Rolling Stones",
+     "Mick Jagger"
+    ]
+   ]
+  },
+  {
+   "t": "Država i valuta",
+   "p": [
+    [
+     "Japan",
+     "Jen"
+    ],
+    [
+     "Velika Britanija",
+     "Funta"
+    ],
+    [
+     "Švicarska",
+     "Franak"
+    ],
+    [
+     "SAD",
+     "Dolar"
+    ]
+   ]
+  }
+ ],
+ "tf": [
+  [
+   "Mjesec nema vlastitu svjetlost, nego odbija Sunčevu.",
+   true
+  ],
+  [
+   "Pingvini žive na Sjevernom polu.",
+   false
+  ],
+  [
+   "Venera je najtopliji planet Sunčeva sustava.",
+   true
+  ],
+  [
+   "Rajčica je u botaničkom smislu voće.",
+   true
+  ],
+  [
+   "Papir su izumili Kinezi.",
+   true
+  ],
+  [
+   "Šišmiši su ptice.",
+   false
+  ],
+  [
+   "Zagreb ima više stanovnika od Splita.",
+   true
+  ],
+  [
+   "Sunce je zvijezda.",
+   true
+  ],
+  [
+   "Koala je vrsta medvjeda.",
+   false
+  ],
+  [
+   "Čista voda se pri normalnom tlaku smrzava na 0 °C.",
+   true
+  ],
+  [
+   "Rim je glavni grad Španjolske.",
+   false
+  ],
+  [
+   "Dupini su sisavci.",
+   true
+  ],
+  [
+   "Rijeka Amazona teče kroz Afriku.",
+   false
+  ],
+  [
+   "Mount Everest nalazi se u Alpama.",
+   false
+  ],
+  [
+   "Pauk je kukac.",
+   false
+  ],
+  [
+   "Leonardo da Vinci naslikao je Mona Lisu.",
+   true
+  ],
+  [
+   "Nikola Tesla rođen je u Americi.",
+   false
+  ],
+  [
+   "Antarktika je kontinent.",
+   true
+  ],
+  [
+   "Zvuk putuje brže od svjetlosti.",
+   false
+  ],
+  [
+   "Kit je riba.",
+   false
+  ],
+  [
+   "Ljetne olimpijske igre održavaju se svake četiri godine.",
+   true
+  ],
+  [
+   "Za gorenje je potreban kisik.",
+   true
+  ],
+  [
+   "Brazil je najveća država Južne Amerike.",
+   true
+  ],
+  [
+   "Hobotnica ima osam krakova.",
+   true
+  ],
+  [
+   "Krk je hrvatski poluotok.",
+   false
+  ],
+  [
+   "Jupiter je manji od Zemlje.",
+   false
+  ],
+  [
+   "Pas je ptica.",
+   false
+  ],
+  [
+   "Trokut ima tri stranice.",
+   true
+  ]
+ ],
+ "facts": [
+  "Dan na Veneri traje dulje od cijele godine na Veneri.",
+  "Banane su u botaničkom smislu bobice, a jagode nisu.",
+  "Morski psi postoje dulje od drveća na Zemlji.",
+  "Najkraći rat u povijesti, između Britanije i Zanzibara 1896., trajao je manje od sat vremena.",
+  "Vombati imaju izmet u obliku kocke.",
+  "Med se ne kvari: u egipatskim grobnicama pronađen je med star tisućama godina.",
+  "Eiffelov toranj ljeti je viši nekoliko centimetara jer se metal širi na toplini.",
+  "Hobotnica ima plavu krv.",
+  "Faust Vrančić iz Šibenika opisao je padobran početkom 17. stoljeća.",
+  "Kravata je dobila ime po hrvatskim vojnicima, „Kroatima“, u Francuskoj 17. stoljeća."
+ ]
+}

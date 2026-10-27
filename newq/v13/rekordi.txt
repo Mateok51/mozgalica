@@ -1,0 +1,79 @@
+#Rekordi i superlativi
+Koja je najdulja rijeka u Africi? | Nil | Kongo | Niger | Zambezi
+Koja je najdulja rijeka u Južnoj Americi? | Amazona | Parana | Orinoco | Magdalena
+Koja je najdulja rijeka u SAD-u? | Missouri | Ohio | Colorado | Rio Grande
+Koja je najdulja rijeka u Aziji? | Jangce | Žuta rijeka | Mekong | Ganges
+Koja je najveća vruća pustinja na svijetu? | Sahara | Gobi | Kalahari | Arapska pustinja
+Koja je najsuša pustinja na svijetu (ne računajući polove)? | Atacama | Sahara | Gobi | Namib
+Koji je najviši vrh Afrike? | Kilimandžaro | Mount Kenya | Ras Dashen | Rwenzori
+Koji je najviši vrh Europe, ako se računa Kavkaz? | Elbrus | Mont Blanc | Matterhorn | Kazbek
+Koji je najviši vrh Alpa? | Mont Blanc | Matterhorn | Großglockner | Monte Rosa
+Koji je najviši vrh Sjeverne Amerike? | Denali | Mount Logan | Mount Whitney | Pico de Orizaba
+Koji je drugi najviši vrh na svijetu? | K2 | Kangchenjunga | Lhotse | Makalu
+Koja je najdublja točka u oceanima? | Marijanska brazda (Challengerov ponor) | Portorikanska brazda | Javanska brazda | Tongaška brazda
+Koliko je približno duboka Marijanska brazda? | Oko 11 km | Oko 5 km | Oko 8 km | Oko 15 km
+Koja je najveća država na svijetu po površini? | Rusija | Kanada | Kina | SAD
+Koja je druga najveća država na svijetu po površini? | Kanada | SAD | Kina | Brazil
+Koja je najveća država u Južnoj Americi? | Brazil | Argentina | Peru | Kolumbija
+Koja je najveća država u Europi koja je cijela na europskom kontinentu? | Ukrajina | Francuska | Španjolska | Švedska
+Koja je najmnogoljudnija država na svijetu (od 2023.)? | Indija | Kina | SAD | Indonezija
+Koja je najmnogoljudnija država u Africi? | Nigerija | Egipat | Etiopija | Južnoafrička Republika
+Koja je najmnogoljudnija država EU-a? | Njemačka | Francuska | Italija | Španjolska
+Koji je najveći otok na svijetu? | Grenland | Nova Gvineja | Borneo | Madagaskar
+Koji je najveći otok u Sredozemnom moru? | Sicilija | Sardinija | Cipar | Korzika
+Koji je najveći otok u Europi? | Velika Britanija | Island | Irska | Sicilija
+Koje je najveće more na svijetu? | Filipinsko more | Sredozemno more | Karipsko more | Južno kinesko more
+Koje je najslanije veliko more ili jezero poznato po tome da u njemu lako plutate? | Mrtvo more | Crveno more | Kaspijsko jezero | Bajkalsko jezero
+Koja je najniža točka na kopnu? | Obala Mrtvog mora | Dolina smrti | Kaspijska nizina | Turpanska udubina
+Koje je najhladnije naseljeno mjesto na svijetu? | Ojmjakon | Oslo | Reykjavík | Murmansk
+Gdje je izmjerena najniža prirodna temperatura na Zemlji? | Antarktika | Sibir | Grenland | Aljaska
+Koja je najviša zgrada na svijetu? | Burj Khalifa | Shanghai Tower | Merdeka 118 | Empire State Building
+U kojem se gradu nalazi Burj Khalifa? | Dubai | Abu Dhabi | Doha | Rijad
+Koji je najdulji most na svijetu? | Danyang–Kunshan vijadukt (Kina) | Golden Gate | Most Vasco da Gama | Akashi Kaikyō
+Koji je najdulji zid koji je izgradio čovjek? | Kineski zid | Hadrijanov zid | Berlinski zid | Zid plača
+Koji je najveći ocean po površini? | Tihi ocean | Atlantski ocean | Indijski ocean | Južni ocean
+Koji je najmanji ocean? | Arktički ocean | Indijski ocean | Južni ocean | Atlantski ocean
+Koja je najveća životinja koja je ikad živjela? | Plavi kit | Argentinosaurus | Megalodon | Mamut
+Koja je najveća riba na svijetu? | Kitopsina (kit-morski pas) | Bijela psina | Mjesečarka | Sabljarka
+Koja je najbrža kopnena životinja? | Gepard | Lav | Antilopa | Konj
+Koja je najbrža ptica u obrušavanju? | Sivi sokol | Orao | Lastavica | Čiopa
+Koja je najveća ptica na svijetu? | Noj | Kondor | Albatros | Emu
+Koja je najmanja ptica na svijetu? | Pčelinji kolibrić | Carić | Senica | Kraljić
+Koja je najveća mačka na svijetu? | Tigar | Lav | Jaguar | Leopard
+Koji je najveći kopneni sisavac? | Afrički slon | Nosorog | Vodenkonj | Žirafa
+Koja je najveća zmija po težini? | Zelena anakonda | Mrežasti piton | Kraljevska kobra | Boa
+Koji kralježnjak živi najdulje? | Grenlandski morski pas | Slon | Kornjača | Plavi kit
+Koja je najotrovnija kopnena zmija prema jačini otrova? | Unutarnji tajpan | Crna mamba | Kobra | Poskok
+Koje je najveće drvo po obujmu na svijetu? | Golemi sekvoj (General Sherman) | Baobab | Hrast | Eukaliptus
+Koji je cvijet najveći na svijetu (pojedinačni cvijet)? | Raflezija | Lopoč | Suncokret | Titanski kozlac
+Koji je najveći planet u Sunčevu sustavu? | Jupiter | Saturn | Neptun | Uran
+Koji je najmanji planet u Sunčevu sustavu? | Merkur | Mars | Venera | Pluton
+Koji planet ima najviše poznatih mjeseci? | Saturn | Jupiter | Uran | Neptun
+Koji je najviši vulkan u Sunčevu sustavu? | Olympus Mons | Mauna Kea | Kilimandžaro | Etna
+Koji je najveći aktivni vulkan u Europi? | Etna | Vezuv | Stromboli | Hekla
+Koja je najprevođenija knjiga na svijetu? | Biblija | Mali princ | Don Quijote | Pinokio
+Koja je najprodavanija videoigra svih vremena? | Minecraft | Tetris | GTA V | Wii Sports
+Koji je film najuspješniji po zaradi u kinima svih vremena? | Avatar | Avengers: Endgame | Titanic | Ratovi zvijezda: Sila se budi
+Koji je glazbeni album najprodavaniji svih vremena? | Thriller (Michael Jackson) | Back in Black | The Dark Side of the Moon | Abbey Road
+Koji jezik ima najviše izvornih govornika nakon kineskog (mandarinskog)? | Španjolski | Engleski | Hindski | Arapski
+Koji je glavni grad najviši na svijetu (sjedište vlade)? | La Paz | Quito | Bogotá | Katmandu
+Koji je najsjeverniji glavni grad suverene države? | Reykjavík | Oslo | Helsinki | Nuuk
+Koji je najjužniji glavni grad suverene države? | Wellington | Canberra | Buenos Aires | Montevideo
+Koja je država s najviše vremenskih zona, računajući prekomorska područja? | Francuska | Rusija | SAD | UK
+Koja država ima najviše otoka? | Švedska | Norveška | Indonezija | Filipini
+Koji je najveći ledeni pokrov na Zemlji? | Antarktički ledeni pokrov | Grenlandski | Patagonski | Aletsch
+Koji je najveći ledenjak u Alpama? | Aletsch | Mer de Glace | Pasterze | Rhône
+Koje jezero sadrži najviše slatke vode na svijetu? | Bajkalsko jezero | Gornje jezero | Tanganjika | Viktorijino jezero
+Koje je najveće jezero u Africi? | Viktorijino jezero | Tanganjika | Malavi | Čad
+Koje je najveće jezero u Europi? | Ladoško jezero | Balaton | Ženevsko jezero | Vänern
+Koji je najviši vodopad u Europi? | Vinnufossen (Norveška) | Rajnski slap | Krimmlski slapovi | Gavarnie
+Koje je najstarije sveučilište na svijetu koje još radi, prema Guinnessu? | Al-Karaouine (Fes) | Bologna | Oxford | Sorbonne
+Koje je najstarije europsko sveučilište koje još radi? | Bologna | Oxford | Pariz | Salamanca
+Koji kanal spaja Sredozemno i Crveno more? | Sueski kanal | Panamski kanal | Kielski kanal | Korintski kanal
+Koji je najdulji željeznički tunel na svijetu? | Gotthard (Švicarska) | Eurotunel | Seikan | Simplon
+Koji je najdulji podmorski dio željezničkog tunela na svijetu? | Eurotunel (La Manche) | Seikan | Gotthard | Marmaray
+Koja je najdulja željeznička pruga u jednoj zemlji? | Transsibirska pruga | Orijent ekspres | Kanadska pacifička | Indian Pacific
+Koji je najbrži čovjek na 100 m? | Usain Bolt | Carl Lewis | Tyson Gay | Asafa Powell
+Tko drži rekord za najviše olimpijskih zlatnih medalja? | Michael Phelps | Usain Bolt | Larisa Latinjina | Carl Lewis
+Kako se zove najdublji dio Jadranskog mora, dubok oko 1200 m? | Južnojadranska kotlina | Jabučka kotlina | Kvarner | Tršćanski zaljev
+Koji je najveći vodopad Plitvičkih jezera? | Veliki slap | Skradinski buk | Roški slap | Gubavica

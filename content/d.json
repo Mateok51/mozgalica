@@ -1,0 +1,814 @@
+{
+ "cats": {
+  "Crtani filmovi": [
+   {
+    "q": "Koji je hrvatski animator stvorio lik Profesora Baltazara?",
+    "o": [
+     "Zlatko Grgić",
+     "Dušan Vukotić",
+     "Borivoj Dovniković",
+     "Nedeljko Dragić"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove grad u kojem živi Profesor Baltazar?",
+    "o": [
+     "Čarobgrad",
+     "Izumgrad",
+     "Baltazargrad",
+     "Zvjezdangrad"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je studio proizveo crtanu seriju Profesor Baltazar?",
+    "o": [
+     "Jadran film",
+     "Avala film",
+     "Vardar film",
+     "Zagreb film"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je bio prvi Disneyjev dugometražni animirani film (1937.)?",
+    "o": [
+     "Pinokio",
+     "Bambi",
+     "Fantazija",
+     "Snjeguljica i sedam patuljaka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove svemirski ranger iz filma Priča o igračkama?",
+    "o": [
+     "Buzz Lightyear",
+     "Woody",
+     "Rex",
+     "Slinky"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je bio prvi dugometražni film u potpunosti napravljen računalnom animacijom (1995.)?",
+    "o": [
+     "Shrek",
+     "Priča o igračkama",
+     "Mravci",
+     "Potraga za Nemom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Nemov otac u filmu Potraga za Nemom?",
+    "o": [
+     "Dory",
+     "Crush",
+     "Marlin",
+     "Gill"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je napisala priču prema kojoj je snimljen crtani film o šegrtu Hlapiću?",
+    "o": [
+     "Mato Lovrak",
+     "Grigor Vitez",
+     "Vladimir Nazor",
+     "Ivana Brlić-Mažuranić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je bio prvi hrvatski dugometražni animirani film (1986.)?",
+    "o": [
+     "Čudesna šuma",
+     "Čarobnjakov šešir",
+     "Duh u močvari",
+     "Ježeva kućica"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je godine prikazan crtić Steamboat Willie s Mickeyjem Mouseom?",
+    "o": [
+     "1923.",
+     "1928.",
+     "1932.",
+     "1937."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji glumac u izvornoj verziji posuđuje glas Shreku?",
+    "o": [
+     "Eddie Murphy",
+     "Jim Carrey",
+     "Mike Myers",
+     "Adam Sandler"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glumac posudio glas Duhu iz svjetiljke u Disneyjevu Aladinu (1992.)?",
+    "o": [
+     "Eddie Murphy",
+     "Robin Williams",
+     "Jim Carrey",
+     "Steve Martin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koju pticu u crtićima Looney Tunes neprestano lovi Kojot?",
+    "o": [
+     "Ptica Trkačica",
+     "Tweety",
+     "Daffy Duck",
+     "Woody Woodpecker"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove mačak koji u crtićima lovi kanarinca Tweetyja?",
+    "o": [
+     "Tom",
+     "Silvestar",
+     "Garfield",
+     "Felix"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove štakor koji sanja da postane kuhar u filmu Ratatouille?",
+    "o": [
+     "Emile",
+     "Linguini",
+     "Remy",
+     "Gusteau"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove robot koji skuplja smeće na napuštenoj Zemlji u Pixarovu filmu?",
+    "o": [
+     "EVE",
+     "Baymax",
+     "R2-D2",
+     "WALL-E"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Simbin zli stric u Kralju lavova?",
+    "o": [
+     "Scar",
+     "Mufasa",
+     "Rafiki",
+     "Zazu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove pas koji s društvom u kombiju rješava misterije?",
+    "o": [
+     "Snoopy",
+     "Scooby-Doo",
+     "Pluto",
+     "Lassie"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje zemlje potječu Štrumpfovi?",
+    "o": [
+     "Francuska",
+     "Nizozemska",
+     "Belgija",
+     "Švicarska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je japanski redatelj režirao film Avanture male Chihiro?",
+    "o": [
+     "Akira Kurosawa",
+     "Isao Takahata",
+     "Katsuhiro Otomo",
+     "Hayao Miyazaki"
+    ],
+    "a": 3
+   }
+  ],
+  "Superjunaci i stripovi": [
+   {
+    "q": "Kako se zove Supermanov rodni planet?",
+    "o": [
+     "Kripton",
+     "Asgard",
+     "Oa",
+     "Titan"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem gradu djeluje Batman?",
+    "o": [
+     "Metropolis",
+     "Gotham",
+     "Central City",
+     "Star City"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Thorov čarobni čekić?",
+    "o": [
+     "Gungnir",
+     "Excalibur",
+     "Durendal",
+     "Mjölnir"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojim je metalom presvučen Wolverineov kostur?",
+    "o": [
+     "Vibranijem",
+     "Kriptonitom",
+     "Titanijem",
+     "Adamantijem"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove izmišljena afrička zemlja kojom vlada Black Panther?",
+    "o": [
+     "Wakanda",
+     "Zamunda",
+     "Latverija",
+     "Genovija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Batmanov najpoznatiji neprijatelj, zločinac s licem klauna?",
+    "o": [
+     "Pingvin",
+     "Joker",
+     "Riddler",
+     "Bane"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Batmanov vjerni batler?",
+    "o": [
+     "Lucius",
+     "Gordon",
+     "Alfred",
+     "Harvey"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je od ovih superjunaka iz DC-a, a ne iz Marvela?",
+    "o": [
+     "Thor",
+     "Hulk",
+     "Daredevil",
+     "Flash"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko Kamenja beskonačnosti postoji u Marvelovim filmovima?",
+    "o": [
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je sustvaratelj mnogih Marvelovih junaka poznat po kameo ulogama u filmovima?",
+    "o": [
+     "Bob Kane",
+     "Stan Lee",
+     "Jerry Siegel",
+     "Hergé"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako glasi Spider-Manovo načelo: „Velika moć donosi…“?",
+    "o": [
+     "veliku slavu",
+     "velike neprijatelje",
+     "veliku odgovornost",
+     "veliku samoću"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što Asterixu daje nadljudsku snagu?",
+    "o": [
+     "Čarobni napitak",
+     "Špinat",
+     "Divlja svinjetina",
+     "Rimsko vino"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Zašto Obelix ne smije piti čarobni napitak?",
+    "o": [
+     "Kao dijete je pao u kotao",
+     "Alergičan je na njega",
+     "Zabranio mu je Cezar",
+     "Ne podnosi njegov okus"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojim se poslom bavi Tintin?",
+    "o": [
+     "Detektiv je",
+     "Novinar je",
+     "Policajac je",
+     "Pilot je"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove autor stripa o Tintinu?",
+    "o": [
+     "René Goscinny",
+     "Albert Uderzo",
+     "Hergé",
+     "Peyo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iza kakve se trgovine u stripu Alan Ford skriva sjedište Grupe TNT?",
+    "o": [
+     "Pekare",
+     "Brijačnice",
+     "Knjižare",
+     "Cvjećarnice"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove vođa Grupe TNT, starac u invalidskim kolicima?",
+    "o": [
+     "Broj 1",
+     "Bob Rock",
+     "Superhik",
+     "Sir Oliver"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje potječe strip Alan Ford?",
+    "o": [
+     "Francuska",
+     "Italija",
+     "Belgija",
+     "Sjedinjene Američke Države"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove istražitelj noćnih mora iz talijanskog stripa koji živi u Londonu?",
+    "o": [
+     "Martin Mystère",
+     "Tex Willer",
+     "Dylan Dog",
+     "Zagor"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je stvorio strip o mačku Garfieldu?",
+    "o": [
+     "Charles Schulz",
+     "Bill Watterson",
+     "Hergé",
+     "Jim Davis"
+    ],
+    "a": 3
+   }
+  ],
+  "Tehnologija i internet": [
+   {
+    "q": "Tko je sa Steveom Wozniakom osnovao tvrtku Apple?",
+    "o": [
+     "Steve Jobs",
+     "Bill Gates",
+     "Michael Dell",
+     "Larry Page"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je s Billom Gatesom osnovao Microsoft?",
+    "o": [
+     "Steve Wozniak",
+     "Larry Ellison",
+     "Paul Allen",
+     "Sergey Brin"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je izumio World Wide Web?",
+    "o": [
+     "Alan Turing",
+     "Linus Torvalds",
+     "Charles Babbage",
+     "Tim Berners-Lee"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj je ustanovi nastao World Wide Web?",
+    "o": [
+     "MIT",
+     "NASA",
+     "Sveučilište Stanford",
+     "CERN"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je osnovao Facebook 2004. godine?",
+    "o": [
+     "Mark Zuckerberg",
+     "Jack Dorsey",
+     "Jeff Bezos",
+     "Larry Page"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što je Amazon prodavao kad je počeo s radom?",
+    "o": [
+     "Glazbene CD-e",
+     "Elektroniku",
+     "Knjige",
+     "Odjeću"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko su osnivači Googlea?",
+    "o": [
+     "Jobs i Wozniak",
+     "Gates i Allen",
+     "Larry Page i Sergey Brin",
+     "Hewlett i Packard"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što znači kratica USB?",
+    "o": [
+     "Unified System Board",
+     "Universal Storage Box",
+     "User Service Bridge",
+     "Universal Serial Bus"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko bitova ima jedan bajt?",
+    "o": [
+     "4",
+     "8",
+     "16",
+     "32"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je stvorio jezgru operacijskog sustava Linux?",
+    "o": [
+     "Linus Torvalds",
+     "Dennis Ritchie",
+     "Steve Wozniak",
+     "Alan Turing"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je britanski matematičar bio ključan u razbijanju šifre Enigme?",
+    "o": [
+     "Charles Babbage",
+     "Isaac Newton",
+     "Alan Turing",
+     "John von Neumann"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja se žena smatra prvom programerkom u povijesti?",
+    "o": [
+     "Marie Curie",
+     "Grace Hopper",
+     "Hedy Lamarr",
+     "Ada Lovelace"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove pingvin, maskota Linuxa?",
+    "o": [
+     "Tux",
+     "Pingu",
+     "Gnu",
+     "Kernel"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji znak u adresi e-pošte odvaja korisničko ime od domene?",
+    "o": [
+     "#",
+     "@",
+     "&",
+     "%"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je godine predstavljen prvi iPhone?",
+    "o": [
+     "2005.",
+     "2007.",
+     "2009.",
+     "2010."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je godine pokrenut YouTube?",
+    "o": [
+     "2003.",
+     "2005.",
+     "2007.",
+     "2009."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove američko elektroničko računalo iz 1945. koje je zauzimalo cijelu sobu?",
+    "o": [
+     "ENIAC",
+     "UNIVAC",
+     "Apple I",
+     "Commodore 64"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Čemu služi CAPTCHA na internetskim stranicama?",
+    "o": [
+     "Ubrzava učitavanje",
+     "Razlikuje ljude od botova",
+     "Štedi bateriju",
+     "Prevodi tekst"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje je zemlje tvrtka Nokia?",
+    "o": [
+     "Švedska",
+     "Norveška",
+     "Finska",
+     "Danska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je komponenta računala označena kraticom CPU?",
+    "o": [
+     "Radna memorija",
+     "Tvrdi disk",
+     "Grafička kartica",
+     "Procesor"
+    ],
+    "a": 3
+   }
+  ],
+  "Film i TV": [
+   {
+    "q": "Koji je film osvojio prvog Oscara za najbolji film?",
+    "o": [
+     "Krila",
+     "Casablanca",
+     "Prohujalo s vihorom",
+     "Građanin Kane"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove kafić u kojem se okupljaju likovi serije Prijatelji?",
+    "o": [
+     "MacLaren's",
+     "Central Perk",
+     "Monk's",
+     "Luke's"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je redatelj snimio filmove Ralje i E.T.?",
+    "o": [
+     "George Lucas",
+     "Martin Scorsese",
+     "Steven Spielberg",
+     "Francis Ford Coppola"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je napisao seriju Naše malo misto?",
+    "o": [
+     "Ivo Brešan",
+     "Ranko Marinković",
+     "Miroslav Krleža",
+     "Miljenko Smoje"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je novozelandski redatelj snimio trilogiju Gospodar prstenova?",
+    "o": [
+     "Peter Jackson",
+     "Ridley Scott",
+     "Christopher Nolan",
+     "James Cameron"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove otac Lukea Skywalkera u Ratovima zvijezda?",
+    "o": [
+     "Darth Maul",
+     "Darth Vader",
+     "Palpatine",
+     "Kylo Ren"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje je zemlje serija Kuća od papira?",
+    "o": [
+     "Italija",
+     "Meksiko",
+     "Španjolska",
+     "Argentina"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glumac glumio Jamesa Bonda u filmu Casino Royale (2006.)?",
+    "o": [
+     "Pierce Brosnan",
+     "Sean Connery",
+     "Roger Moore",
+     "Daniel Craig"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem filmu glavni lik kaže da je život kao kutija čokolada?",
+    "o": [
+     "Forrest Gump",
+     "Pulp Fiction",
+     "Iskupljenje u Shawshanku",
+     "Kum"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj je američkoj seriji Goran Višnjić glumio dr. Luku Kovača?",
+    "o": [
+     "Dr. House",
+     "Hitna služba",
+     "Kućanice",
+     "Uvod u anatomiju"
+    ],
+    "a": 1
+   }
+  ],
+  "Glazba": [
+   {
+    "q": "Koliko žica ima violina?",
+    "o": [
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je tradicionalni puhački instrument karakterističan za Istru i otok Krk?",
+    "o": [
+     "Tamburica",
+     "Gusle",
+     "Sopila",
+     "Bisernica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je skladao Četiri godišnja doba?",
+    "o": [
+     "Johann Sebastian Bach",
+     "Wolfgang Amadeus Mozart",
+     "Georg Friedrich Händel",
+     "Antonio Vivaldi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je skladao operu Nikola Šubić Zrinjski?",
+    "o": [
+     "Ivan Zajc",
+     "Vatroslav Lisinski",
+     "Jakov Gotovac",
+     "Blagoje Bersa"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove prva hrvatska opera, Lisinskijevo djelo iz 1846.?",
+    "o": [
+     "Ljubav i zloba",
+     "Porin",
+     "Ero s onoga svijeta",
+     "Nikola Šubić Zrinjski"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je bend snimio album The Dark Side of the Moon?",
+    "o": [
+     "Led Zeppelin",
+     "Pink Floyd",
+     "The Who",
+     "Deep Purple"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz kojeg grada potječe grupa The Beatles?",
+    "o": [
+     "London",
+     "Manchester",
+     "Liverpool",
+     "Birmingham"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojom se talijanskom oznakom u notama traži glasno sviranje?",
+    "o": [
+     "Piano",
+     "Adagio",
+     "Allegro",
+     "Forte"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je zadarska grupa 1989. pobijedila na Eurosongu?",
+    "o": [
+     "Riva",
+     "Novi fosili",
+     "Magazin",
+     "Prljavo kazalište"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je pjevač proslavio pjesmu Cesarica?",
+    "o": [
+     "Gibonni",
+     "Oliver Dragojević",
+     "Tedi Spalato",
+     "Dino Dvornik"
+    ],
+    "a": 1
+   }
+  ]
+ }
+}

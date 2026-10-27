@@ -1,0 +1,31 @@
+'use strict';
+// Slike efekata moći i letećih bodova (izravno postavlja lokalno stanje efekta na mobitelu).
+const { chromium } = require('playwright');
+const path = require('path');
+const shots = path.join(__dirname, 'shots');
+(async () => {
+  const browser = await chromium.launch();
+  const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true })).newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr/, (r) => r.abort());
+  await page.goto('file://' + path.join(__dirname, 'out.html'));
+  await page.evaluate(() => Object.assign(CFG, { intro: 0.8, vote: 2, voteShow: 0.5, power: 2, cast: 0.6, q: 40, reveal: 6 }));
+  await page.click('#demo'); await page.waitForTimeout(300);
+  await page.click('[data-av]:not([disabled])'); await page.click('#dstart');
+  await page.waitForFunction(() => document.documentElement.dataset.ph === 'question', null, { timeout: 60000 });
+  await page.waitForTimeout(600);
+  const snap = async (name, setup, wait) => { await page.evaluate(setup); await page.waitForTimeout(wait); await page.screenshot({ path: shots + '/fx2-' + name + '.png' }); };
+  await snap('led', () => { __dbg.L.fx = __dbg.makeFx('led'); __dbg.phoneRender(true); }, 120);
+  await page.evaluate(() => { for (let i = 0; i < 3; i++) document.getElementById('fx').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); });
+  await page.waitForTimeout(250); await page.screenshot({ path: shots + '/fx2-led-hits.png' });
+  await snap('sluz', () => { __dbg.L.fx = __dbg.makeFx('sluz'); __dbg.phoneRender(true); }, 600);
+  await snap('grick', () => { __dbg.L.fx = null; __dbg.L.eat = 2; __dbg.phoneRender(true); }, 1300);
+  await snap('bombe', () => { __dbg.L.eat = 0; __dbg.L.bombs = [0, 1, 2].map((i) => ({ x: 20 + i * 30, y: 30 + i * 20, vx: 15, vy: 12, on: true })); __dbg.L.bombRaf = 0; __dbg.phoneRender(true); }, 500);
+  const n = await page.evaluate(() => { const b = document.querySelector('.fly-bomb'); const r = b.getBoundingClientRect(); return [r.left, r.top, r.width]; });
+  await page.evaluate(() => document.querySelector('.fly-bomb').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true })));
+  await page.waitForTimeout(260); await page.screenshot({ path: shots + '/fx2-boom.png' });
+  await page.waitForTimeout(900); await page.screenshot({ path: shots + '/fx2-boom-soot.png' });
+  console.log('bomb rect', n, 'errors', errors);
+  await browser.close();
+})();

@@ -1,0 +1,31 @@
+  /* piramida: uvod, napredak, kruna */
+  .fs-rows { display: flex; flex-direction: column; gap: 4px; width: min(100%, 460px); margin: 0 auto; }
+  .fs-row { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto auto; align-items: center; gap: 8px; padding: 4px 10px; border-radius: 10px; font-family: var(--font-body); font-weight: 800; color: #f3e3c4;
+    background: rgba(30, 15, 6, 0.7); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.35); animation: fsDone 0.6s ease-out both; animation-delay: calc(var(--fe) - var(--el, 0ms)); }
+  .fs-row.me { box-shadow: inset 0 0 0 1.5px rgba(240, 198, 110, 0.85); }
+  .fs-row .mini { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px rgba(196, 146, 66, 0.6); }
+  .fs-row .mini > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .fs-row .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fs-sc { font-variant-numeric: tabular-nums; color: #f0c66e; font-weight: 900; min-width: 4ch; text-align: right; }
+  .fs-go { font-size: 0.8rem; color: #b8e08e; white-space: nowrap; opacity: 0; animation: rvIn 0.35s ease both; animation-delay: calc(var(--fe) + 150ms - var(--el, 0ms)); }
+  @keyframes fsDone { 0% { background: rgba(30, 15, 6, 0.7); } 30% { background: rgba(120, 84, 24, 0.8); box-shadow: inset 0 0 0 1.5px #f0c66e, 0 0 16px rgba(240, 190, 90, 0.4); } 100% { background: rgba(30, 15, 6, 0.7); } }
+  .fs { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .fs-me { text-align: center; font-family: var(--font-body); font-weight: 800; color: #f3e3c4; opacity: 0; animation: rvIn 0.35s ease both; animation-delay: calc(var(--fe) + 300ms - var(--el, 0ms)); } .fs-me b { color: #f0c66e; }
+  .tv .fs-rows { width: min(100%, 640px); } .tv .fs-row { font-size: 1.25rem; grid-template-columns: 44px minmax(0, 1fr) auto auto; padding: 6px 14px; } .tv .fs-row .mini { width: 44px; height: 44px; } .tv .fs-go { font-size: 1rem; }
+  /* penjanje u uvodu: korak po korak (lagano gibanje), ne teleport */
+  .pyramid .climber.walk { animation: climbWalk calc(0.35s + var(--mv) * 0.28s) steps(1) both, climb calc(0.35s + var(--mv) * 0.28s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)), calc(var(--cd) - var(--el)); }
+  @keyframes climbWalk { 0%, 100% { filter: none; } }
+  .pyramid .climber.walk > img, .pyramid .climber.walk > svg { animation: wstep 0.28s ease-in-out calc(var(--mv) + 1) alternate both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes wstep { from { transform: rotate(-6deg) translateY(0); } to { transform: rotate(6deg) translateY(-4px); } }
+  .pyramid .climber .prg { position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%); padding: 0 3px; border-radius: 4px; font-family: var(--font-body); font-weight: 900; font-size: calc(var(--H) * 0.26); line-height: 1.2; color: #2a1606; background: #f0c66e; z-index: 3; }
+  .pyramid .pstep.crown { background: linear-gradient(180deg, #fff6cf, #f2c35b 50%, #d59a1c); box-shadow: 0 0 40px rgba(255, 207, 74, 0.7); }
+  .pyramid .pstep.crown .lv { font-size: calc(var(--H) * 0.5); }
+  .pyramid .climber.ontop > img, .pyramid .climber.ontop > svg { filter: drop-shadow(0 0 4px #ffd36a) drop-shadow(0 0 8px rgba(255, 200, 90, 0.8)); animation: topGlow 1.4s ease-in-out infinite; }
+  @keyframes topGlow { 50% { transform: translateY(-3px); } }
+  .crown-k { text-align: center; font-family: var(--font-display); font-size: clamp(1.1rem, 5vw, 1.5rem); color: #ffe08a; text-shadow: 0 2px 0 #6b4310, 0 0 18px rgba(255, 210, 100, 0.6); animation: btSlam 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+  .tv .crown-k { font-size: 2rem; }
+  .fin-prog { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.9rem; color: #f0c66e; }
+  .step-meter i.half { background: linear-gradient(90deg, #e2ac54 50%, rgba(255, 255, 255, 0.12) 50%) !important; }
+  .step-meter i.crown { width: auto !important; height: auto !important; background: none !important; box-shadow: none !important; font-style: normal; font-size: 1.1rem; opacity: 0.45; }
+  .step-meter i.crown.on { opacity: 1; }
+  .finale-q.crownq .opts { width: min(100%, 1100px); }

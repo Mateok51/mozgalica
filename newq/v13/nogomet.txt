@@ -1,0 +1,77 @@
+#Nogomet
+Koja je reprezentacija osvojila najviše Svjetskih prvenstava? | Brazil | Njemačka | Italija | Argentina
+Koliko je puta Brazil osvojio Svjetsko prvenstvo? | 5 | 4 | 3 | 6
+Koja je reprezentacija osvojila SP 2022. u Katru? | Argentina | Francuska | Hrvatska | Brazil
+Koja je reprezentacija osvojila SP 2018. u Rusiji? | Francuska | Hrvatska | Belgija | Engleska
+Koja je reprezentacija osvojila SP 2010. u Južnoj Africi? | Španjolska | Nizozemska | Njemačka | Brazil
+Koja je reprezentacija osvojila Europsko prvenstvo 2024.? | Španjolska | Engleska | Francuska | Italija
+Koja je reprezentacija osvojila Europsko prvenstvo 2020. (igrano 2021.)? | Italija | Engleska | Španjolska | Danska
+Koja je reprezentacija osvojila Europsko prvenstvo 2016.? | Portugal | Francuska | Njemačka | Wales
+Koliko je trajao najbrži gol u povijesti Svjetskih prvenstava, koji je 2002. zabio Hakan Şükür? | Oko 11 sekundi | Oko 30 sekundi | Oko 45 sekundi | Oko 1 minute
+Koja je država bila domaćin SP-a 2026. zajedno s Kanadom i Meksikom? | SAD | Brazil | Kuba | Kolumbija
+Koliko je reprezentacija nastupilo na SP-u 2026.? | 48 | 32 | 40 | 64
+Koji je nogometaš osvojio najviše Zlatnih lopti? | Lionel Messi | Cristiano Ronaldo | Michel Platini | Johan Cruyff
+Koji je hrvatski nogometaš osvojio Zlatnu loptu? | Luka Modrić | Davor Šuker | Ivan Rakitić | Mario Mandžukić
+Za koji je klub Luka Modrić dugo igrao i s njim osvojio više Lige prvaka? | Real Madrid | Barcelona | Tottenham | Inter
+U kojem je hrvatskom klubu Luka Modrić započeo profesionalnu karijeru? | Dinamo Zagreb | Hajduk Split | Rijeka | Osijek
+Kako se zove stadion Hajduka iz Splita? | Poljud | Maksimir | Rujevica | Gradski vrt
+Kako se zove stadion Dinama iz Zagreba? | Maksimir | Poljud | Kantrida | Opus Arena
+Kako se zove stadion HNK Rijeke na kojem igra od 2015.? | Rujevica | Kantrida | Poljud | Šubićevac
+Koje godine je osnovan HNK Hajduk Split? | 1911. | 1945. | 1898. | 1923.
+Kako se zove navijačka skupina Hajduka? | Torcida | Bad Blue Boys | Armada | Kohorta
+Kako se zove navijačka skupina Dinama? | Bad Blue Boys | Torcida | Armada | Tornado
+Kako se zove poznata navijačka skupina HNK Rijeke? | Armada | Kohorta | Torcida | Demoni
+Kako se zove hrvatska prva nogometna liga? | SuperSport HNL | Premier liga | Prva B liga | Superliga
+Tko je bio izbornik Hrvatske na SP-u 2018. i 2022.? | Zlatko Dalić | Slaven Bilić | Ante Čačić | Niko Kovač
+Tko je zabio odlučujući gol Hrvatske protiv Engleske u polufinalu SP-a 2018.? | Mario Mandžukić | Ivan Perišić | Luka Modrić | Andrej Kramarić
+Kojim je rezultatom završilo finale SP-a 2018. između Francuske i Hrvatske? | 4:2 | 2:1 | 3:1 | 4:1
+Kojeg je vratara Hrvatske pamtimo po obranama penala protiv Danske i Rusije na SP-u 2018.? | Danijel Subašić | Dominik Livaković | Stipe Pletikosa | Lovre Kalinić
+Koji je hrvatski vratar obranio tri penala Japanu u osmini finala SP-a 2022.? | Dominik Livaković | Danijel Subašić | Ivica Ivušić | Lovre Kalinić
+Koju je reprezentaciju Hrvatska izbacila u četvrtfinalu SP-a 2022. nakon penala? | Brazil | Argentina | Japan | Maroko
+Koja je reprezentacija Hrvatsku pobijedila u polufinalu SP-a 2022.? | Argentina | Francuska | Maroko | Brazil
+Koja je reprezentacija pobijedila Hrvatsku u finalu Lige nacija 2023.? | Španjolska | Nizozemska | Italija | Francuska
+Koliko igrača ostaje u igri momčadi koja je dobila dva crvena kartona? | 9 | 8 | 10 | 7
+S koliko metara udaljenosti se izvodi jedanaesterac? | 11 m | 9 m | 12 m | 16 m
+Koliko je metara udaljenost koju zid mora poštovati pri slobodnom udarcu? | 9,15 m | 7 m | 11 m | 5 m
+Kako se zove udarac kada lopta izađe preko gol-linije, a zadnji ju je dotaknuo branič? | Udarac iz kuta | Udarac s gola | Ubacivanje | Jedanaesterac
+Kako se zove udarac kojim se nastavlja igra kada lopta izađe preko uzdužne linije? | Ubacivanje (aut) | Korner | Slobodni udarac | Udarac s gola
+Što znači kratica VAR u nogometu? | Videopomoćni sudac | Vratarska akcija | Vrijeme dodatne igre | Vodeći asistent
+Koliko zamjena momčad smije napraviti tijekom regularnog dijela utakmice po današnjim pravilima? | 5 | 3 | 4 | 6
+Koji klub ima najviše naslova Lige prvaka (Kupa prvaka)? | Real Madrid | AC Milan | Bayern München | Liverpool
+U kojem je gradu sjedište kluba Bayern? | München | Berlin | Dortmund | Hamburg
+U kojoj zemlji igra klub Ajax? | Nizozemska | Belgija | Danska | Švedska
+Kako se zove stadion Barcelone? | Camp Nou | Santiago Bernabéu | Wanda Metropolitano | Mestalla
+Kako se zove stadion Real Madrida? | Santiago Bernabéu | Camp Nou | San Siro | Anfield
+Kako se zove stadion na kojem igraju AC Milan i Inter? | San Siro | Olimpico | Juventus Stadium | San Paolo
+Kako se zove stadion Liverpoola? | Anfield | Old Trafford | Stamford Bridge | Emirates
+Kako se zove stadion Manchester Uniteda? | Old Trafford | Anfield | Etihad | Wembley
+Iz kojeg je grada klub Juventus? | Torino | Milano | Rim | Napulj
+Kako se zove engleska najviša nogometna liga? | Premier League | Championship | La Liga | Serie A
+Kako se zove talijanska najviša nogometna liga? | Serie A | La Liga | Ligue 1 | Eredivisie
+Kako se zove španjolska najviša nogometna liga? | La Liga | Serie A | Primeira Liga | Bundesliga
+Iz koje je zemlje Cristiano Ronaldo? | Portugal | Brazil | Španjolska | Argentina
+Iz koje je zemlje Kylian Mbappé? | Francuska | Belgija | Kamerun | Švicarska
+Iz koje je zemlje Erling Haaland? | Norveška | Švedska | Danska | Island
+Iz koje je zemlje Robert Lewandowski? | Poljska | Češka | Ukrajina | Slovačka
+Za koju je reprezentaciju igrao Zinédine Zidane? | Francuska | Alžir | Belgija | Španjolska
+Za koju je reprezentaciju igrao Diego Maradona? | Argentina | Brazil | Urugvaj | Italija
+Koji je klub 1991. kao jedini iz bivše Jugoslavije osvojio Kup prvaka? | Crvena zvezda | Hajduk | Dinamo Zagreb | Partizan
+Koji je hrvatski klub 1967. osvojio Kup velesajmova? | Dinamo Zagreb | Hajduk Split | Rijeka | Osijek
+Koja je reprezentacija osvojila prvo Europsko prvenstvo 1960.? | SSSR | Jugoslavija | Španjolska | Francuska
+Kako se zove trofej koji osvaja pobjednik Svjetskog prvenstva? | Trofej FIFA Svjetskog kupa | Henri Delaunay | Jules Rimet trofej | Zlatna lopta
+Kako se zove trofej koji osvaja prvak Europe u nogometu? | Henri Delaunay | Jules Rimet | Kup Mitropa | Zlatna kopačka
+Koja organizacija upravlja europskim nogometom? | UEFA | FIFA | CONMEBOL | CAF
+Koja organizacija upravlja svjetskim nogometom? | FIFA | UEFA | IOC | CONCACAF
+Kako se zove nagrada za najboljeg strijelca europskih liga u sezoni? | Zlatna kopačka | Zlatna lopta | Zlatna rukavica | Puskás
+Kako se zove nagrada FIFA-e za najljepši gol godine? | Nagrada Puskás | Zlatna lopta | Kopa trofej | Yashin trofej
+Za koju je reprezentaciju igrao Ferenc Puskás prije emigracije? | Mađarska | Austrija | Čehoslovačka | Poljska
+Tko je kapetan Hrvatske koji je osvojio srebro 2018. i broncu 2022.? | Luka Modrić | Darijo Srna | Ivan Perišić | Dejan Lovren
+Tko je najbolji strijelac u povijesti hrvatske reprezentacije? | Davor Šuker | Mario Mandžukić | Ivan Perišić | Eduardo da Silva
+Koliko je širok nogometni gol? | 7,32 m | 6 m | 8 m | 5,5 m
+Koliko je visok nogometni gol? | 2,44 m | 2 m | 2,2 m | 3 m
+Što dobiva momčad za neriješenu utakmicu u prvenstvu? | 1 bod | 0 bodova | 2 boda | Pola boda
+Koji je engleski klub poznat po nadimku „Topnici“ (Gunners)? | Arsenal | Chelsea | West Ham | Tottenham
+Koji klub igra na stadionu Signal Iduna Park? | Borussia Dortmund | Schalke 04 | Bayer Leverkusen | Bayern München
+U kojem je gradu sjedište FIFA-e? | Zürich | Ženeva | Pariz | Bruxelles
+Koja je reprezentacija osvojila SP 1966. kao domaćin? | Engleska | Njemačka | Brazil | Italija
+Koja je afrička reprezentacija prva igrala polufinale Svjetskog prvenstva (2022.)? | Maroko | Senegal | Kamerun | Gana

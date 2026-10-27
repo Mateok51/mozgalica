@@ -1,0 +1,257 @@
+  /* ===================== TRIVIA TAVERN: naslikani elementi =====================
+     Pozadina krčme i drveni elementi su slike (ui/*.webp). Ploče se rastežu kao 9-slice (border-image),
+     pa kutovi ostaju neiskrivljeni, a tekst ostaje pravi tekst preko njih. */
+  body { background: #1a0e08 url("ui/bg-p.webp") center / cover fixed no-repeat; }
+  @media (orientation: landscape) { body { background-image: url("ui/bg-l.webp"); } }
+  body::before { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(20, 10, 4, 0.45), transparent 75%), linear-gradient(180deg, rgba(10, 5, 2, 0.15), rgba(10, 5, 2, 0.25)); }
+  body::after { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 60% 40% at 15% 75%, rgba(255, 140, 50, 0.16), transparent 70%); animation: hearth 3.2s ease-in-out infinite; }
+  @keyframes hearth { 0%, 100% { opacity: 0.6; } 35% { opacity: 1; } 60% { opacity: 0.75; } 80% { opacity: 0.95; } }
+  #bg, #deco { display: none !important; }
+
+  /* logo */
+  .logo:has(.lt) { width: min(88vw, 520px); aspect-ratio: 1309 / 861; padding: 0; margin: 0 auto 1.4em; color: transparent; text-shadow: none; font-size: 1rem;
+    background: url("ui/logo.webp") center / contain no-repeat; filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.55)); }
+  .logo:has(.lt)::before { display: none; }
+  .logo:has(.lt) .lt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .logo:has(.lt) small { font-size: 1rem; color: var(--ink); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); }
+  .tv .logo:has(.lt) { width: min(40vw, 46vh, 520px); }
+
+  /* gumbi: drvene ploče */
+  .btn, .btn.ghost { background: none; border-style: solid; border-width: 16px 22px; padding: 0.15em 0.6em; border-radius: 0; box-shadow: none; overflow: visible;
+    border-image: url("ui/btn-orange.webp") 44 52 fill / 18px 22px / 0 stretch; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.5)); color: #fff4dc; text-shadow: 0 2px 0 rgba(40, 18, 4, 0.8); }
+  .btn.ghost { border-image-source: url("ui/btn-wood.webp"); }
+  .btn:active { transform: translateY(3px); box-shadow: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5)); }
+  .btn:disabled { filter: grayscale(0.7) brightness(0.7); }
+  #join { border-image-source: url("ui/btn-green.webp"); }
+  #demo { border-image-source: url("ui/btn-blue.webp"); }
+  #hostp { border-image-source: url("ui/btn-purple.webp"); }
+  #mute, #music { width: 54px; height: 54px; border: 0; border-radius: 50%; background: url("ui/round.webp") center / contain no-repeat; box-shadow: none; filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.6)); }
+  #mute .ic, #music .ic { width: 22px; height: 22px; filter: drop-shadow(0 1px 0 #3a2008); }
+  #music { right: calc(max(14px, env(safe-area-inset-right, 0px)) + 62px); }
+
+  /* početni ekran: gumbi s ikonom, podnaslovom i strelicom */
+  .hb { display: grid; grid-template-columns: 2.4em 1fr 1em; grid-template-rows: auto auto; align-items: center; column-gap: 0.6em; text-align: left; padding: 0.35em 0.5em; min-height: 4.2em; }
+  .hb::before { content: ""; grid-row: 1 / span 2; width: 2.2em; height: 2.2em; background: var(--hb-ic) center / contain no-repeat; filter: drop-shadow(0 2px 0 rgba(40, 18, 4, 0.7)); }
+  .hb::after { content: ""; display: block !important; position: static !important; grid-column: 3; grid-row: 1 / span 2; width: 0.7em; height: 1.2em; transform: none !important; animation: none !important;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2 2l8 8-8 8' fill='none' stroke='%23ffd88a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat; }
+  .hb .hb-t { font-family: var(--font-display); font-size: 1.2em; line-height: 1.1; }
+  .hb .hb-s { grid-column: 2; font-family: var(--font-body); font-weight: 800; font-size: 0.68em; letter-spacing: 0; color: #f5dfb4; }
+  #host { --hb-ic: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23ffd27a' stroke-width='3.4' stroke-linejoin='round' stroke-linecap='round'><rect x='4' y='12' width='40' height='28' rx='4'/><path d='M17 4l7 8 7-8M18 44h12'/></svg>"); }
+  #join { --hb-ic: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='%23ffd27a'><circle cx='24' cy='15' r='7'/><path d='M11 40c0-8 6-13 13-13s13 5 13 13z'/><circle cx='10' cy='19' r='5'/><path d='M1 38c0-6 4-10 9-10 2 0 3 .4 4 1-2 2-4 6-4 9z'/><circle cx='38' cy='19' r='5'/><path d='M47 38c0-6-4-10-9-10-2 0-3 .4-4 1 2 2 4 6 4 9z'/></svg>"); }
+  #demo { --hb-ic: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='%23ffd27a'><circle cx='24' cy='15' r='9'/><path d='M8 44c0-10 7-16 16-16s16 6 16 16z'/></svg>"); }
+  #hostp { --hb-ic: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23ffd27a' stroke-width='3.4'><rect x='13' y='3' width='22' height='42' rx='4'/><path d='M21 39h6' stroke-linecap='round'/></svg>"); }
+  .home-cast { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; max-width: 440px; margin-top: auto; }
+  .home-cast > span { width: 44%; }
+
+  /* odgovori: obojene drvene ploče, slovo na zlatnom žetonu */
+  .opt, .p-opt, .sort-btn { background: none; border-style: solid; border-width: 17px 26px; border-radius: 0; box-shadow: none; filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5));
+    border-image: url("ui/ans-red.webp") 58 86 fill / 17px 26px / 0 stretch; color: #fff4dc; text-shadow: 0 2px 0 rgba(30, 12, 2, 0.75); }
+  .o1.opt, .o1.p-opt, .sort-btn.a { border-image-source: url("ui/ans-blue.webp"); }
+  .o2.opt, .o2.p-opt { border-image-source: url("ui/ans-gold.webp"); }
+  .o3.opt, .o3.p-opt { border-image-source: url("ui/ans-green.webp"); }
+  .p-opt { padding: 8px 10px; min-height: 58px; }
+  .opt { padding: 6px 12px; }
+  .p-opts.two .p-opt { min-height: 120px; }
+  .opt::before, .p-opt::before { inset: 0; opacity: 0.08; }
+  .opt::after, .p-opt::after { content: ""; position: absolute; inset: -6px -10px; pointer-events: none; opacity: 0; transition: opacity 0.3s;
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(255, 200, 90, 0.55), rgba(255, 150, 40, 0.2) 55%, transparent 75%); mix-blend-mode: screen; }
+  .opt.correct, .p-opt.picked, .fresh .opt.correct { box-shadow: none; filter: drop-shadow(0 0 10px rgba(255, 170, 60, 0.75)) drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5)) brightness(1.08); animation: candle 2.4s ease-in-out infinite; }
+  .opt.correct::after, .p-opt.picked::after { opacity: 1; }
+  @keyframes candle { 0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 170, 60, 0.7)) drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5)) brightness(1.06); } 40% { filter: drop-shadow(0 0 16px rgba(255, 180, 70, 0.9)) drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5)) brightness(1.16); } 70% { filter: drop-shadow(0 0 12px rgba(255, 170, 60, 0.8)) drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5)) brightness(1.1); } }
+  .opt.dim, .p-opt.dim { filter: grayscale(0.6) brightness(0.6); opacity: 0.55; }
+  .shape { width: 2em; height: 2em; background: url("ui/token.webp") center / contain no-repeat; box-shadow: none; color: #4a2608; text-shadow: 0 1px 0 rgba(255, 240, 200, 0.6); font-size: 0.85em; }
+
+  /* pitanje i papiri za čitanje: pergament u drvenom okviru */
+  .p-q, .q-text { background: none; box-shadow: none; border-style: solid; border-radius: 0; border-width: 22px 34px; padding: 0.3em 0.2em;
+    border-image: url("ui/parch.webp") 110 130 fill / 22px 34px / 0 stretch; filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.5)); color: #3b2410; text-shadow: none; }
+  .q-text { border-width: 34px 54px; border-image-width: 34px 54px; }
+  .scroll, .sort-card { background: none; box-shadow: none; border-style: solid; border-radius: 0; border-width: 22px 34px; padding: 6px 4px;
+    border-image: url("ui/parch.webp") 110 130 fill / 22px 34px / 0 stretch; filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.5)); }
+
+  /* paneli: tamno drvo sa zlatnim okvirom */
+  .card, .result, .av-pick, .pw-mini { background: none; box-shadow: none; border-style: solid; border-radius: 0; border-width: 20px;
+    border-image: url("ui/panel.webp") 92 fill / 20px / 0 stretch; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.55)); }
+  .result { padding: 12px 10px; }
+  .result.ok { border-image-source: url("ui/ans-green.webp"); border-image-slice: 58 86 fill; border-width: 18px 24px; }
+  .result.bad { border-image-source: url("ui/ans-red.webp"); border-image-slice: 58 86 fill; border-width: 18px 24px; }
+  .av-pick { border-width: 12px; border-image-width: 12px; padding: 2px; }
+  .av-pick.me { box-shadow: none; filter: drop-shadow(0 0 12px rgba(255, 180, 70, 0.85)); transform: scale(1.05); }
+  .av-pick:disabled { filter: grayscale(1) brightness(0.55); opacity: 0.6; }
+  .rank-row, .mboard .rank-row, .stat, .link-opt, .pair > span, .ev, .pill, .tag, .intro-card .sub, .tv-top .tv-sub, .cast-banner {
+    background: none; box-shadow: none; outline: 0; border-style: solid; border-radius: 0; border-width: 10px 14px; border-image: url("ui/btn-wood.webp") 44 52 fill / 10px 14px / 0 stretch; filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.5)); }
+  .pill, .tag { padding: 0 0.4em; }
+  .rank-row { padding: 0 6px; }
+  .rank-row:first-child { box-shadow: none; filter: drop-shadow(0 0 8px rgba(255, 180, 70, 0.6)) drop-shadow(0 3px 4px rgba(0, 0, 0, 0.5)); }
+  .rank-row.me, .mboard .rank-row.me { box-shadow: none; border-image-source: url("ui/btn-orange.webp"); }
+  .ev.buff { border-image-source: url("ui/btn-green.webp"); box-shadow: none; }
+  .ev { border-image-source: url("ui/btn-purple.webp"); }
+  .stat { border-width: 14px 18px; border-image-width: 14px 18px; }
+  .pw-card, .target { background: none; box-shadow: none; border-style: solid; border-radius: 0; border-width: 16px 20px; padding: 4px 6px; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.5));
+    border-image: url("ui/ans-blue.webp") 58 86 fill / 16px 24px / 0 stretch; }
+  .pw-card.atk, .target { border-image-source: url("ui/ans-red.webp"); }
+  .pw-card.buff { border-image-source: url("ui/ans-green.webp"); }
+  .pw-card .pw-ico, .pw-mini .pw-ico { background: url("ui/token.webp") center / contain no-repeat; box-shadow: none; border-radius: 0; }
+  .sort-col.a, .sort-col.b { box-shadow: none; background: none; border-style: solid; border-radius: 0; border-width: 20px; border-image: url("ui/panel.webp") 92 fill / 20px / 0 stretch; }
+  .form input { background: none; box-shadow: none; border-style: solid; border-width: 12px 16px; border-radius: 0; border-image: url("ui/btn-wood.webp") 44 52 fill / 12px 16px / 0 stretch; }
+  .form input:focus { box-shadow: none; filter: drop-shadow(0 0 8px rgba(255, 180, 70, 0.7)); }
+  .bar-row::after { display: none; }
+  .tv-title, .p-title { text-shadow: 0 3px 0 rgba(20, 8, 2, 0.85), 0 0 14px rgba(0, 0, 0, 0.6); }
+  .p-sub, .note, .waiting, .p-top { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); }
+  .center .logo:has(.lt) { width: min(74vw, 46vh, 460px); margin-bottom: 0.4em; }
+  .hb { min-height: 3.5em; padding: 0.2em 0.4em; }
+  .hb .hb-t { font-size: 1.02em; }
+  .home-cast { max-width: 340px; margin-top: 0; }
+  .home-cast > span { width: 38%; }
+  /* pitanje: okvir s rombovima (rasteže se cijeli, da ukrasi na sredini ruba ostanu cijeli) */
+  .p-q, .q-text { border: 0; border-image: none; padding: 2.1em 2.2em 2em; background: url("ui/parch-q.webp") center / 100% 100% no-repeat; min-height: 6.2em; display: grid; place-items: center; }
+  .q-text { padding: 1.3em 2.4em 1.2em; }
+  /* vrata kategorija: naslikana vrata, ime kategorije na drvenoj pločici */
+  .door, .door-btn { background: url("ui/door-red.webp") center / 100% 100% no-repeat; box-shadow: none; border-radius: 0; filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.55)); overflow: visible; }
+  .door::before, .door::after, .door-btn::before, .door-btn::after, .door .knob { display: none; }
+  .door.o1, .door-btn.o1 { background-image: url("ui/door-blue.webp"); }
+  .door.o2, .door-btn.o2 { background-image: url("ui/door-gold.webp"); }
+  .door.o3, .door-btn.o3 { background-image: url("ui/door-green.webp"); }
+  .door { aspect-ratio: 881 / 1367; min-height: 0; padding: 18% 14% 10%; justify-content: center; }
+  .door-btn { aspect-ratio: 881 / 1180; min-height: 0; padding: 22% 16% 10%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.15rem; }
+  .door .dn, .door-btn { color: #fff4dc; text-shadow: 0 2px 0 #2a1406, 0 0 8px rgba(0, 0, 0, 0.9), 0 0 2px #000; }
+  .door .dn { background: rgba(30, 14, 4, 0.55); border-radius: 10px; padding: 0.15em 0.4em; }
+  .door-btn.o2, .door.o2 .dn { color: #fff4dc; text-shadow: 0 2px 0 #2a1406, 0 0 8px rgba(0, 0, 0, 0.9); }
+  .door.lead, .door.win, .door-btn.picked, .door-btn.win { box-shadow: none; filter: drop-shadow(0 0 16px rgba(255, 180, 70, 0.9)) drop-shadow(0 8px 8px rgba(0, 0, 0, 0.55)); }
+  .doors { align-items: center; }
+  .door-btns { gap: 10px 14px; }
+  /* vremenska traka u drvenom žlijebu s lozom */
+  .timer { height: auto; margin: 4px 0 2px; padding: 0; background: none; box-shadow: none; border-radius: 0; border-style: solid; border-width: 16px 30px 14px;
+    border-image: url("ui/timerbar.webp") 126 240 112 fill / 16px 30px 14px / 0 stretch; filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5)); }
+  .timer::before, .timer::after { display: none; }
+  .timer > div { height: 18px; border-radius: 9px; margin-left: -6px; }
+  .timer > div { background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 45%, rgba(0, 0, 0, 0.2)), linear-gradient(90deg, #d8381a, #f0882a 55%, #ffcf4e); box-shadow: 0 0 10px rgba(255, 140, 40, 0.6); }
+  .timer.urgent > div { background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent 45%), linear-gradient(90deg, #a81a10, #e0401a); animation: urgent 0.5s ease-in-out infinite alternate; }
+  /* nova mobilna pozadina (stara ostaje kao ui/bg-p-old.webp): bez dodatnih slojeva preko slike */
+  @media (orientation: portrait) {
+    body { background: #120a06 url("ui/bg-mobile.webp") center center / cover fixed no-repeat; }
+    body::before, body::after { display: none; }
+  }
+  /* neutralni gumbi: jednostavna drvena ploča s tankim zlatnim obrubom (9-slice, kutovi u izvornom omjeru) */
+  .btn.ghost, .btn:not(.hb) {
+    border-style: solid; border-width: 13px 28px; border-radius: 0; background: none; box-shadow: none;
+    border-image: url("ui/btn-neutral.webp") 64 140 fill / 13px 28px / 0 stretch;
+    min-height: 52px; padding: 0.2em 0.5em; color: #fff1d6; text-shadow: 0 1px 2px rgba(20, 8, 2, 0.85);
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3)); transition: filter 0.12s, transform 0.08s; }
+  .btn.ghost::before, .btn.ghost::after, .btn:not(.hb)::before, .btn:not(.hb)::after { display: none; }
+  .btn.ghost:hover, .btn.ghost:focus-visible, .btn:not(.hb):hover, .btn:not(.hb):focus-visible { filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3)) brightness(1.07); }
+  .btn.ghost:active, .btn:not(.hb):active { transform: scale(0.98); filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3)) brightness(0.9); box-shadow: none; }
+  .btn.ghost:disabled, .btn:not(.hb):disabled { filter: saturate(0.35) brightness(0.8); opacity: 0.6; transform: none; }
+  .demo-bar .btn.ghost { min-height: 44px; }
+  /* panel za pitanje i tvrdnju: jednostavan pergament u drvenom okviru (stari ui/parch-q.webp ostaje, ne koristi se).
+     9-slice: kutovi s okovom ostaju u izvornom omjeru, rasteže se samo pergament u sredini. */
+  .p-q, .q-text { display: grid; place-items: center; text-align: center; background: none; filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.4));
+    border-style: solid; border-radius: 0; border-width: 15px 16px; border-image: url("ui/q-panel.webp") 150 165 fill / 15px 16px / 0 stretch;
+    padding: 12px 16px; min-height: 104px; max-height: 34vh; overflow: hidden;
+    color: #2e1c0c; text-shadow: none; font-family: var(--font-body); font-weight: 900; line-height: 1.22; font-size: 1.32rem; }
+  .q-text { border-width: 30px 33px; border-image-width: 30px 33px; padding: 16px 30px; min-height: 190px; max-height: 38vh; font-size: clamp(1.4rem, 3vw, 3rem); max-width: min(100%, 1400px); }
+  .p-opts.two ~ *, .p-q + .p-opts.two { margin-top: 0; }
+  /* odgovori A–D: jednostavne obojene ploče (A crvena, B plava, C oker, D zelena), slovo kao tekst "A)" */
+  .opt, .p-opt { border-style: solid; border-radius: 0; background: none; box-shadow: none; animation: none;
+    border-image: url("ui/ans2-red.webp") 140 175 fill / 15px 19px / 0 stretch; border-width: 15px 19px;
+    color: #fff6e2; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75); filter: none; transition: filter 0.12s, transform 0.08s, opacity 0.3s;
+    overflow-wrap: break-word; word-break: normal; hyphens: manual; }
+  .o1.opt, .o1.p-opt { border-image-source: url("ui/ans2-blue.webp"); }
+  .o2.opt, .o2.p-opt { border-image-source: url("ui/ans2-gold.webp"); }
+  .o3.opt, .o3.p-opt { border-image-source: url("ui/ans2-green.webp"); }
+  .opt.o2, .p-opt.o2 { color: #fff6e2; text-shadow: 0 1px 2px rgba(60, 25, 0, 0.9), 0 0 4px rgba(60, 25, 0, 0.5); }
+  .opt::before, .p-opt::before { display: none; }
+  .opt::after, .p-opt::after { content: none; }
+  .p-opt { min-height: 60px; padding: 4px 8px; gap: 0.35em; font-size: 1.12rem; line-height: 1.15; }
+  .opt { border-width: 26px 32px; border-image-width: 26px 32px; padding: 4px 10px; gap: 0.35em; }
+  .shape { width: auto; height: auto; background: none; box-shadow: none; border-radius: 0; color: inherit; text-shadow: inherit; font-size: 1em; flex: none; display: inline; }
+  .shape::after { content: ")"; }
+  .p-opts { gap: 10px; }
+  .opts { gap: clamp(8px, 1.4vw, 16px); }
+  /* stanja */
+  .opt:hover, .p-opt:hover:not(:disabled), .opt:focus-visible, .p-opt:focus-visible { filter: brightness(1.07); }
+  .p-opt:active:not(:disabled) { transform: scale(0.985); filter: brightness(0.9); box-shadow: none; }
+  .p-opt.picked, .opt.picked { animation: none; filter: none; transform: none;
+    box-shadow: inset 0 0 0 2px rgba(255, 236, 190, 0.75), inset 0 0 16px rgba(255, 236, 190, 0.35); }
+  .opt.correct, .fresh .opt.correct { animation: none; filter: none; transform: none; position: relative;
+    box-shadow: inset 0 0 0 2px rgba(190, 255, 170, 0.8); }
+  .opt.correct::after { content: "✓"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 1.4em; height: 1.4em; border-radius: 50%;
+    display: grid; place-items: center; font-family: var(--font-body); font-weight: 900; font-size: 0.8em; color: #fff; background: #3c9a3a; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85); text-shadow: none; }
+  .opt.dim, .p-opt.dim { filter: brightness(0.55) saturate(0.6); opacity: 0.85; transform: none; }
+  .p-opt.gone { filter: grayscale(1) brightness(0.5); opacity: 0.35; }
+  .p-opt.locked { filter: brightness(0.75); }
+  .p-opts.two .p-opt { font-size: clamp(1.15rem, 6vw, 1.5rem); }
+  .opt.correct::after { inset: auto; top: -10px; right: -8px; transform: none; z-index: 2; }
+  .opt.correct::after { right: auto; left: -8px; top: -10px; }
+  /* vremenska traka: jednostavan drveni žlijeb (stari okvir s lozom ui/timerbar.webp se više ne koristi).
+     Krajnji okovi su 9-slice u izvornom omjeru; sadržaj (punjenje) počinje unutar žlijeba, uz mali razmak od zlata. */
+  .timer { --h: 26px; position: relative; height: var(--h); margin: 4px 0; padding: 0; background: none; box-shadow: none; border-radius: 0; filter: none; overflow: visible;
+    border-style: solid; border-width: 0 calc(var(--h) * 0.6); border-image: url("ui/timer2.webp") 0 160 fill / 0 calc(var(--h) * 0.812) / 0 stretch; }
+  .tv .timer { --h: 36px; }
+  .timer > div { height: calc(var(--h) * 0.44); margin: calc(var(--h) * 0.28) 0 0 0; border-radius: 99px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 2px rgba(0, 0, 0, 0.35);
+    background: #5f7f3a linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.12)); transition: width 0.12s linear, background-color 0.8s ease; animation: none; filter: none; }
+  .timer > div[data-lv="a"] { background-color: #b07a2c; }
+  .timer > div[data-lv="r"] { background-color: #8e3426; }
+  .timer.urgent > div { animation: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 2px rgba(0, 0, 0, 0.35); background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.12)); }
+  /* vrata kategorija v2: čista vrata bez ukrasa (stara ui/door-*.webp ostaju, ne koriste se) */
+  .door, .door-btn { position: relative; aspect-ratio: 1001 / 1495; min-height: 0; height: auto; padding: 0; border: 0; border-radius: 0; box-shadow: none; overflow: visible;
+    background: url("ui/door2-red.webp") center / 100% 100% no-repeat; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35)); transform: none;
+    display: block; transition: filter 0.15s, transform 0.1s, opacity 0.3s; }
+  .door.o1, .door-btn.o1 { background-image: url("ui/door2-blue.webp"); }
+  .door.o2, .door-btn.o2 { background-image: url("ui/door2-gold.webp"); }
+  .door.o3, .door-btn.o3 { background-image: url("ui/door2-green.webp"); }
+  /* naziv kategorije: na sredini čistog područja vrata */
+  .door .dn, .door-btn .dname { position: absolute; left: 18%; right: 18%; top: 24%; height: 44%; display: flex; align-items: center; justify-content: center;
+    margin: 0; padding: 0; background: none; border-radius: 0; text-align: center; overflow: hidden; overflow-wrap: normal; word-break: normal; hyphens: manual;
+    font-family: var(--font-display); font-weight: 400; line-height: 1.08; color: #fff6e2;
+    text-shadow: 0 2px 0 rgba(30, 12, 2, 0.9), 0 0 4px rgba(30, 12, 2, 0.8), 1px 0 0 rgba(30, 12, 2, 0.6), -1px 0 0 rgba(30, 12, 2, 0.6); }
+  .door-btn { font-size: 1.15rem; color: #fff6e2; }
+  .door-btn.o2, .door.o2 .dn, .door-btn.o2 .dname { color: #fff6e2; }
+  .door .dn { font-size: clamp(1.1rem, 2.2vw, 2.4rem); }
+  /* glasovi: mali avatari i broj uz donji rub */
+  .door .voters, .door-btn .dvoters { position: absolute; left: 16%; right: 16%; bottom: 16%; top: auto; min-height: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 2px; }
+  .door .voter { width: clamp(22px, 2.6vw, 40px); }
+  .door .voter .vnm { display: none; }
+  .door-btn .dvoters span { width: 22px; }
+  .door .vcount, .door-btn .dcount { position: absolute; top: auto; bottom: 9%; left: 50%; transform: translateX(-50%); min-width: 0; padding: 0 0.5em; border-radius: 99px; z-index: 2;
+    font-family: var(--font-body); font-weight: 900; font-size: clamp(0.72rem, 1.1vw, 1.1rem); line-height: 1.5; color: #fff6e2; text-shadow: none; animation: none;
+    background: rgba(30, 14, 4, 0.72); box-shadow: 0 0 0 1px rgba(255, 220, 150, 0.45); display: block; }
+  .door .vcount.zero { display: none; }
+  /* stanja */
+  .door-btn:hover:not(:disabled), .door-btn:focus-visible { filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35)) brightness(1.06); }
+  .door-btn:active:not(:disabled) { transform: scale(0.97); }
+  .door-btn.picked { transform: none; filter: drop-shadow(0 0 6px rgba(255, 176, 70, 0.55)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35)) brightness(1.08); }
+  .door.lead { filter: drop-shadow(0 0 6px rgba(255, 176, 70, 0.45)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35)) brightness(1.05); }
+  .door.win, .door-btn.win { transform: none; filter: drop-shadow(0 0 12px rgba(255, 176, 70, 0.75)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35)) brightness(1.12); opacity: 1; }
+  .door.lose, .door-btn.lose, .door-btn:disabled:not(.picked):not(.win) { transform: none; filter: brightness(0.55) saturate(0.6); opacity: 0.8; }
+  /* raspored: mobitel 2x2 (vrata se smanje samo koliko treba da stanu na zaslon), TV 4 u redu */
+  .door-btns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; justify-items: center; }
+  .door-btn { width: min(100%, calc((100dvh - 330px) / 2 * 0.67)); }
+  .doors { align-items: end; justify-items: center; padding-top: 6px; }
+  .door { width: min(100%, calc((100vh - 330px) * 0.67)); }
+  .door { width: min(100%, calc((100vh - 430px) * 0.67)); }
+  .door .dn, .door-btn .dname { left: 16%; right: 16%; }
+  /* kartice moći: jedna neutralna baza za svih 7 (ikona u krugu, naziv i opis na pergamentu) */
+  .pw-card, .pw-card.atk, .pw-card.buff, .pw-mini {
+    position: relative; display: block; width: 100%; aspect-ratio: 1914 / 700; height: auto; min-height: 0; padding: 0; margin: 0;
+    border: 0; border-image: none; border-radius: 0; box-shadow: none; text-align: left;
+    background: url("ui/pw-card.webp") center / 100% 100% no-repeat; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+    transition: filter 0.12s, transform 0.08s; }
+  .pw-card .pw-ico, .pw-mini .pw-ico { position: absolute; left: 15.7%; top: 50%; width: 16%; height: auto; aspect-ratio: 1; transform: translate(-50%, -50%);
+    background: none; border: 0; border-radius: 0; box-shadow: none; display: grid; place-items: center; }
+  .pw-card .pw-ico .pw-img, .pw-mini .pw-ico .pw-img { width: 100%; height: 100%; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5)); }
+  .pw-card > span:last-child, .pw-mini > div { position: absolute; left: 29.5%; right: 7.5%; top: 17%; bottom: 17%; display: flex; flex-direction: column; justify-content: center; gap: 0.15em; overflow: hidden; }
+  .pw-card b, .pw-mini b { display: flex; align-items: center; gap: 0.35em; font-family: var(--font-display); font-weight: 400; font-size: 1.2rem; line-height: 1.05; color: #3a2208; text-shadow: none; }
+  .pw-card b::before, .pw-mini b::before { content: ""; flex: none; width: 0.42em; height: 0.42em; border-radius: 50%; background: #8e3426; box-shadow: 0 0 0 1px rgba(58, 34, 8, 0.35); }
+  .pw-card.buff b::before, .pw-mini.buff b::before { background: #5f7f3a; }
+  .pw-card span span, .pw-mini span { display: block; color: #4a3018; font-family: var(--font-body); font-weight: 700; font-size: 0.82rem; line-height: 1.2; text-shadow: none; }
+  .pw-card:hover, .pw-card:focus-visible { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)) brightness(1.06); }
+  .pw-card:active { transform: scale(0.98); }
+  .pw-card.sel { filter: drop-shadow(0 0 5px rgba(255, 176, 70, 0.75)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); }
+  .pw-card:disabled { filter: saturate(0.4) brightness(0.8); opacity: 0.6; transform: none; }
+  .pw-cards { gap: 12px; }
+  /* TV: popis moći istim karticama */
+  .powers-legend { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px 14px; }
+  .pw-mini b { font-size: clamp(1rem, 1.4vw, 1.4rem); }
+  .pw-mini span { font-size: clamp(0.72rem, 0.95vw, 0.95rem); }
+  .pw-card > span:last-child, .pw-mini > div { left: 31.5%; right: 8.5%; }

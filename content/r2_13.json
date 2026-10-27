@@ -1,0 +1,2058 @@
+{
+ "cats": {
+  "Hrvatski gradovi i otoci": [
+   {
+    "q": "U kojem se gradu nalaze Morske orgulje koje svira more?",
+    "o": [
+     "Zadar",
+     "Split",
+     "Šibenik",
+     "Rijeka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je arhitekt autor zadarskih Morskih orgulja i Pozdrava Suncu?",
+    "o": [
+     "Ivan Meštrović",
+     "Nikola Bašić",
+     "Viktor Kovačić",
+     "Bernardo Bernardi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je hrvatski grad 2020. bio Europska prijestolnica kulture?",
+    "o": [
+     "Zagreb",
+     "Osijek",
+     "Rijeka",
+     "Zadar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iznad kojeg se grada nalazi Trsat s marijanskim svetištem?",
+    "o": [
+     "Splita",
+     "Senja",
+     "Karlovca",
+     "Rijeke"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se gradu nalazi brodogradilište Uljanik?",
+    "o": [
+     "Pula",
+     "Rijeka",
+     "Split",
+     "Trogir"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja su se dva naselja 1850. ujedinila u jedinstveni grad Zagreb?",
+    "o": [
+     "Trešnjevka i Maksimir",
+     "Gradec i Kaptol",
+     "Gornji grad i Dubrava",
+     "Sesvete i Remete"
+    ],
+    "a": 1
+   },
+   {
+    "q": "S koje zagrebačke kule svakog dana u podne puca top?",
+    "o": [
+     "Kula Popov toranj",
+     "Kula Kaptola",
+     "Lotrščak",
+     "Medvedgrad"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što je u šarenim crijepovima prikazano na krovu crkve sv. Marka u Zagrebu?",
+    "o": [
+     "Sveci",
+     "Zvijezde",
+     "Cvijeće",
+     "Grbovi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove najveća zagrebačka tržnica, smještena iznad Trga bana Jelačića?",
+    "o": [
+     "Dolac",
+     "Britanac",
+     "Kvatrić",
+     "Trešnjevka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se zagrebačkom parku nalazi zoološki vrt?",
+    "o": [
+     "Zrinjevac",
+     "Maksimir",
+     "Ribnjak",
+     "Bundek"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove zagrebačko jezero poznato po veslačkoj stazi?",
+    "o": [
+     "Bundek",
+     "Savica",
+     "Jarun",
+     "Rakitje"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove najpoznatije zagrebačko groblje s arkadama?",
+    "o": [
+     "Miroševac",
+     "Gaj urni",
+     "Markovo polje",
+     "Mirogoj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zovu jedina sačuvana gradska vrata Gradeca s kapelicom?",
+    "o": [
+     "Kamenita vrata",
+     "Zlatna vrata",
+     "Kopnena vrata",
+     "Mesnička vrata"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove šumoviti brdski park na zapadu Splita?",
+    "o": [
+     "Mosor",
+     "Marjan",
+     "Kozjak",
+     "Srđ"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojoj se splitskoj plaži tradicionalno igra picigin?",
+    "o": [
+     "Kašjuni",
+     "Žnjan",
+     "Bačvice",
+     "Firule"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove središnji trg Dioklecijanove palače?",
+    "o": [
+     "Forum",
+     "Pjaca",
+     "Atrij",
+     "Peristil"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je svetac zaštitnik Splita?",
+    "o": [
+     "Sveti Duje",
+     "Sveti Vlaho",
+     "Sveti Jakov",
+     "Sveti Kvirin"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove glavna ulica dubrovačkog Starog grada?",
+    "o": [
+     "Korzo",
+     "Stradun",
+     "Kalelarga",
+     "Riva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove dubrovačka tvrđava izvan zidina, poznata po predstavama Hamleta?",
+    "o": [
+     "Revelin",
+     "Minčeta",
+     "Lovrijenac",
+     "Bokar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se otok nalazi neposredno ispred dubrovačke stare gradske luke?",
+    "o": [
+     "Koločep",
+     "Lopud",
+     "Šipan",
+     "Lokrum"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove brdo iznad Dubrovnika do kojeg vodi žičara?",
+    "o": [
+     "Srđ",
+     "Marjan",
+     "Biokovo",
+     "Učka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je latinska riječ bila geslo Dubrovačke Republike?",
+    "o": [
+     "Veritas",
+     "Libertas",
+     "Concordia",
+     "Pax"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najveći od Elafitskih otoka?",
+    "o": [
+     "Lopud",
+     "Koločep",
+     "Šipan",
+     "Jakljan"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove velika okrugla fontana na ulazu u Stradun?",
+    "o": [
+     "Fontana di Trevi",
+     "Fontana sv. Vlaha",
+     "Orlandova fontana",
+     "Onofrijeva fontana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je šibenska tvrđava na ulazu u kanal sv. Ante upisana na UNESCO popis?",
+    "o": [
+     "Sv. Nikole",
+     "Sv. Mihovila",
+     "Barone",
+     "Sv. Ivana"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja su dva grada 2017. upisana na UNESCO popis zbog mletačkih utvrda?",
+    "o": [
+     "Split i Trogir",
+     "Zadar i Šibenik",
+     "Pula i Rovinj",
+     "Hvar i Korčula"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove predromanička okrugla crkva u Zadru, simbol grada?",
+    "o": [
+     "Sv. Križ",
+     "Sv. Šimun",
+     "Sv. Donat",
+     "Sv. Krševan"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojoj je svetici posvećena zadarska katedrala?",
+    "o": [
+     "Sv. Eufemiji",
+     "Sv. Luciji",
+     "Sv. Katarini",
+     "Sv. Stošiji"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove barokna stara gradska jezgra Osijeka?",
+    "o": [
+     "Tvrđa",
+     "Kaštel",
+     "Gradec",
+     "Varoš"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U blizini kojeg se grada nalazi park prirode Kopački rit?",
+    "o": [
+     "Vukovara",
+     "Osijeka",
+     "Siska",
+     "Slavonskog Broda"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je biskup dao izgraditi katedralu u Đakovu?",
+    "o": [
+     "Juraj Haulik",
+     "Maksimilijan Vrhovac",
+     "J. J. Strossmayer",
+     "Alojzije Stepinac"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je izrešetana građevina postala simbol stradanja Vukovara 1991.?",
+    "o": [
+     "Zvonik crkve",
+     "Most na Vuki",
+     "Dvorac Eltz",
+     "Vodotoranj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je poznati prapovijesni nalaz pronađen kod Vukovara?",
+    "o": [
+     "Vučedolska golubica",
+     "Venera iz Willendorfa",
+     "Apoksiomen",
+     "Krapinski pračovjek"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je grad najistočniji u Hrvatskoj?",
+    "o": [
+     "Vukovar",
+     "Ilok",
+     "Županja",
+     "Vinkovci"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grad središte Međimurja?",
+    "o": [
+     "Varaždin",
+     "Prelog",
+     "Čakovec",
+     "Ludbreg"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu svake godine održava festival Špancirfest?",
+    "o": [
+     "Čakovec",
+     "Koprivnica",
+     "Krapina",
+     "Varaždin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kod kojeg je grada pronađeno poznato nalazište neandertalaca na Hušnjakovu?",
+    "o": [
+     "Krapine",
+     "Zaboka",
+     "Pregrade",
+     "Donje Stubice"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem je zagorskom selu rođen Josip Broz Tito?",
+    "o": [
+     "Klanjec",
+     "Kumrovec",
+     "Tuheljske Toplice",
+     "Pregrada"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je zagorsko mjesto najpoznatije hrvatsko marijansko svetište?",
+    "o": [
+     "Trsat",
+     "Aljmaš",
+     "Marija Bistrica",
+     "Voćin"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je poznati dvorac s jezerom u Hrvatskom zagorju?",
+    "o": [
+     "Veliki Tabor",
+     "Miljana",
+     "Oršić",
+     "Trakošćan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U obliku kojeg je lika 1579. osnovana utvrda Karlovac?",
+    "o": [
+     "Šesterokrake zvijezde",
+     "Kruga",
+     "Kvadrata",
+     "Trokuta"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kod kojeg je grada 1593. poražena osmanska vojska?",
+    "o": [
+     "Karlovca",
+     "Siska",
+     "Petrinje",
+     "Kostajnice"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji se hrvatski grad u antici zvao Siscia?",
+    "o": [
+     "Solin",
+     "Osijek",
+     "Sisak",
+     "Senj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je zagorski grad poznat po čipki izrađenoj na batiće?",
+    "o": [
+     "Krapina",
+     "Zabok",
+     "Oroslavje",
+     "Lepoglava"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem se otoku nalazi poznata party-plaža Zrće?",
+    "o": [
+     "Pag",
+     "Krk",
+     "Hvar",
+     "Rab"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem se otoku nalazi Rajska plaža u Loparu?",
+    "o": [
+     "Pag",
+     "Rab",
+     "Lošinj",
+     "Krk"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi muzej posvećen antičkom kipu Apoksiomenu?",
+    "o": [
+     "Pula",
+     "Zadar",
+     "Mali Lošinj",
+     "Split"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Po kojim je pticama osobito poznat otok Cres?",
+    "o": [
+     "Flamingima",
+     "Pelikanima",
+     "Rodama",
+     "Bjeloglavim supovima"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se bijelo vino tradicionalno proizvodi u Vrbniku na Krku?",
+    "o": [
+     "Žlahtina",
+     "Pošip",
+     "Grk",
+     "Malvazija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove franjevački otočić u Puntarskoj dragi na Krku?",
+    "o": [
+     "Galešnjak",
+     "Košljun",
+     "Badija",
+     "Visovac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem se otoku nalazi Zračna luka Rijeka?",
+    "o": [
+     "Cres",
+     "Rab",
+     "Krk",
+     "Lošinj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu nalazi jedno od najstarijih javnih kazališta u Europi, iz 1612.?",
+    "o": [
+     "Dubrovnik",
+     "Korčula",
+     "Zadar",
+     "Hvar"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem se otoku održava noćna procesija Za Križen?",
+    "o": [
+     "Hvar",
+     "Brač",
+     "Korčula",
+     "Vis"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je najviši vrh na jadranskim otocima?",
+    "o": [
+     "Sveti Nikola",
+     "Vidova gora",
+     "Osorščica",
+     "Hum"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem se otoku nalazi pustinja Blaca s pustinjačkim samostanom?",
+    "o": [
+     "Hvar",
+     "Šolta",
+     "Brač",
+     "Vis"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem je otoku 1944. bio Titov vrhovni štab?",
+    "o": [
+     "Brač",
+     "Korčula",
+     "Lastovo",
+     "Vis"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem je otoku sniman film Mamma Mia! Here We Go Again?",
+    "o": [
+     "Vis",
+     "Hvar",
+     "Brač",
+     "Korčula"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz kojeg mjesta na Visu potječe tradicionalni ribarski brod falkuša?",
+    "o": [
+     "Vis",
+     "Komiža",
+     "Rukavac",
+     "Milna"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je otočje 2006. proglašeno parkom prirode?",
+    "o": [
+     "Kornati",
+     "Brijuni",
+     "Lastovsko otočje",
+     "Elafiti"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je slavni putnik, prema predaji, rođen na Korčuli?",
+    "o": [
+     "Kristofor Kolumbo",
+     "Vasco da Gama",
+     "Ferdinand Magellan",
+     "Marko Polo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se bijelo vino tradicionalno proizvodi u Lumbardi na Korčuli?",
+    "o": [
+     "Grk",
+     "Žlahtina",
+     "Malvazija",
+     "Kujundžuša"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je godine otvoren Pelješki most?",
+    "o": [
+     "2018.",
+     "2022.",
+     "2020.",
+     "2024."
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove poznato crno vino s južnih padina Pelješca?",
+    "o": [
+     "Babić",
+     "Teran",
+     "Dingač",
+     "Plavina"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je mjestu rođen slikar Vlaho Bukovac?",
+    "o": [
+     "Dubrovnik",
+     "Ston",
+     "Makarska",
+     "Cavtat"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se planina strmo uzdiže iznad Makarske?",
+    "o": [
+     "Biokovo",
+     "Mosor",
+     "Velebit",
+     "Dinara"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na ušću koje rijeke leži Omiš, nekoć gusarsko uporište?",
+    "o": [
+     "Krke",
+     "Cetine",
+     "Neretve",
+     "Zrmanje"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po kojim je jezerima, Modrom i Crvenom, poznat grad u Zagori?",
+    "o": [
+     "Sinj",
+     "Vrlika",
+     "Imotski",
+     "Drniš"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se grad s velikom tvrđavom naziva Zvonimirovim gradom?",
+    "o": [
+     "Nin",
+     "Klis",
+     "Biograd",
+     "Knin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem je gradu 1102. Koloman okrunjen za hrvatskog kralja?",
+    "o": [
+     "Biogradu na Moru",
+     "Ninu",
+     "Kninu",
+     "Solinu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove tvrđava iznad Senja, povezana s uskocima?",
+    "o": [
+     "Klis",
+     "Nehaj",
+     "Knin",
+     "Fortica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grad poznat po Villi Angiolini i šetnici Lungomare?",
+    "o": [
+     "Crikvenica",
+     "Lovran",
+     "Opatija",
+     "Rovinj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu na vrhu poluotoka nalazi crkva sv. Eufemije?",
+    "o": [
+     "Poreč",
+     "Piran",
+     "Umag",
+     "Rovinj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se istarski gradić naziva najmanjim gradom na svijetu?",
+    "o": [
+     "Hum",
+     "Roč",
+     "Grožnjan",
+     "Oprtalj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se istarski gradić naziva gradom umjetnika i glazbenika?",
+    "o": [
+     "Hum",
+     "Grožnjan",
+     "Buzet",
+     "Pazin"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je istarski grad Jules Verne opisao u romanu Mathias Sandorf?",
+    "o": [
+     "Pula",
+     "Labin",
+     "Pazin",
+     "Rovinj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem je istarskom gradu rođen teolog Matija Vlačić Ilirik?",
+    "o": [
+     "Puli",
+     "Poreču",
+     "Buzetu",
+     "Labinu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se istarskom gradu tradicionalno održava ATP teniski turnir?",
+    "o": [
+     "Umag",
+     "Poreč",
+     "Rovinj",
+     "Pula"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Između kojih se dvaju gradova u more uvlači Limski kanal?",
+    "o": [
+     "Pule i Fažane",
+     "Vrsara i Rovinja",
+     "Poreča i Novigrada",
+     "Umaga i Savudrije"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradu rođena Ivana Brlić-Mažuranić?",
+    "o": [
+     "Slavonskom Brodu",
+     "Karlovcu",
+     "Ogulinu",
+     "Zagrebu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se grad smatra središtem Gorskog kotara?",
+    "o": [
+     "Ogulin",
+     "Vrbovsko",
+     "Čabar",
+     "Delnice"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Po kojem je slikovitom naselju s mlinovima na slapovima poznat Slunj?",
+    "o": [
+     "Rastoke",
+     "Kumrovec",
+     "Hum",
+     "Krapanj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je grad najteže stradao u potresu 29. prosinca 2020.?",
+    "o": [
+     "Sisak",
+     "Petrinja",
+     "Glina",
+     "Karlovac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradu sjedište prehrambene tvrtke Podravka?",
+    "o": [
+     "Virovitica",
+     "Bjelovar",
+     "Koprivnica",
+     "Đurđevac"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojoj rijeci leži Slavonski Brod?",
+    "o": [
+     "Dravi",
+     "Dunavu",
+     "Kupi",
+     "Savi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se grad u Slavoniji naziva i Zlatnom dolinom (Vallis aurea)?",
+    "o": [
+     "Požega",
+     "Đakovo",
+     "Našice",
+     "Pakrac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je grad u antici bio Cibalae, rodno mjesto careva Valentinijana i Valensa?",
+    "o": [
+     "Vukovar",
+     "Vinkovci",
+     "Osijek",
+     "Sisak"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kod kojeg se grada nalaze ostaci antičke Salone?",
+    "o": [
+     "Trogira",
+     "Kaštela",
+     "Solina",
+     "Omiša"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je naselja dalo ime gradu Kaštela?",
+    "o": [
+     "5",
+     "9",
+     "12",
+     "7"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se crno vino tradicionalno uzgaja na terasama oko Primoštena?",
+    "o": [
+     "Babić",
+     "Dingač",
+     "Teran",
+     "Plavac"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je otok kod Tisnog s kopnom povezan mostom?",
+    "o": [
+     "Pašman",
+     "Murter",
+     "Vir",
+     "Ugljan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja su dva otoka povezana mostom u Ždrelcu?",
+    "o": [
+     "Cres i Lošinj",
+     "Brač i Šolta",
+     "Ugljan i Pašman",
+     "Murter i Žirje"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem se otoku nalazi park prirode Telašćica?",
+    "o": [
+     "Pašman",
+     "Ugljan",
+     "Kornat",
+     "Dugi otok"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je kvarnerski otok poznat po tome što je većinom građen od pijeska?",
+    "o": [
+     "Susak",
+     "Unije",
+     "Ilovik",
+     "Silba"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem je otoku od 1949. bio zloglasni logor za političke zatvorenike?",
+    "o": [
+     "Sveti Grgur",
+     "Goli otok",
+     "Rab",
+     "Prvić"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je pučinski otočić sa svjetionikom gotovo na sredini Jadrana?",
+    "o": [
+     "Lastovo",
+     "Sušac",
+     "Palagruža",
+     "Biševo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je od ovih hrvatskih otočića vulkanskog podrijetla?",
+    "o": [
+     "Biševo",
+     "Sušac",
+     "Svetac",
+     "Jabuka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je šibenski otok tradicionalno poznat po vađenju i obradi koralja?",
+    "o": [
+     "Zlarin",
+     "Krapanj",
+     "Žirje",
+     "Kaprije"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je otočić kod Brodarice poznat po spužvarstvu?",
+    "o": [
+     "Zlarin",
+     "Krapanj",
+     "Prvić",
+     "Murter"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem je otoku pokopan izumitelj Faust Vrančić?",
+    "o": [
+     "Zlarin",
+     "Krapanj",
+     "Prvić",
+     "Žirje"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji grad organizira najveći karneval u Hrvatskoj?",
+    "o": [
+     "Samobor",
+     "Split",
+     "Zadar",
+     "Rijeka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove rimski slavoluk na ulazu u stari dio Pule?",
+    "o": [
+     "Slavoluk Sergijevaca",
+     "Augustov hram",
+     "Zlatna vrata",
+     "Herkulova vrata"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi galerija kipara Antuna Augustinčića?",
+    "o": [
+     "Kumrovec",
+     "Klanjec",
+     "Krapina",
+     "Zabok"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je slavonski grad poznat po toplicama i pivovari?",
+    "o": [
+     "Lipik",
+     "Pakrac",
+     "Daruvar",
+     "Našice"
+    ],
+    "a": 2
+   }
+  ],
+  "Europa": [
+   {
+    "q": "U koje se more ulijeva Rajna?",
+    "o": [
+     "Sjeverno more",
+     "Baltičko more",
+     "Crno more",
+     "Sredozemno more"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja rijeka teče kroz Firencu?",
+    "o": [
+     "Tiber",
+     "Arno",
+     "Pad",
+     "Adiđa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja rijeka teče kroz Lisabon i u njemu se ulijeva u Atlantik?",
+    "o": [
+     "Duero",
+     "Ebro",
+     "Tajo",
+     "Guadiana"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja rijeka teče kroz Varšavu?",
+    "o": [
+     "Odra",
+     "Bug",
+     "Laba",
+     "Visla"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja rijeka teče kroz Dublin?",
+    "o": [
+     "Liffey",
+     "Shannon",
+     "Severn",
+     "Tweed"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na ušću koje rijeke u Dunav leži Beograd?",
+    "o": [
+     "Morave",
+     "Save",
+     "Drine",
+     "Tise"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja rijeka teče kroz Kijev?",
+    "o": [
+     "Dnjestar",
+     "Don",
+     "Dnjepar",
+     "Volga"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja rijeka teče kroz Sevillu?",
+    "o": [
+     "Tajo",
+     "Ebro",
+     "Duero",
+     "Guadalquivir"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja rijeka teče kroz Sankt Peterburg?",
+    "o": [
+     "Neva",
+     "Volga",
+     "Moskva",
+     "Daugava"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja rijeka teče kroz Ljubljanu?",
+    "o": [
+     "Sava",
+     "Ljubljanica",
+     "Drava",
+     "Krka"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem gorju u Njemačkoj izvire Dunav?",
+    "o": [
+     "Harz",
+     "Bavarske Alpe",
+     "Schwarzwald",
+     "Rudno gorje"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje planine velikim lukom prolaze kroz Rumunjsku?",
+    "o": [
+     "Dinaridi",
+     "Balkan",
+     "Rodopi",
+     "Karpati"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se planine najčešće uzimaju kao granica Europe i Azije?",
+    "o": [
+     "Ural",
+     "Kavkaz",
+     "Karpati",
+     "Altaj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje se planine protežu duž gotovo cijele Italije?",
+    "o": [
+     "Dolomiti",
+     "Apenini",
+     "Pireneji",
+     "Dinaridi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na granici kojih se dviju država nalazi vrh Matterhorn?",
+    "o": [
+     "Austrije i Italije",
+     "Francuske i Švicarske",
+     "Švicarske i Italije",
+     "Njemačke i Austrije"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove najviši vrh Njemačke?",
+    "o": [
+     "Großglockner",
+     "Brocken",
+     "Watzmann",
+     "Zugspitze"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se vulkan uzdiže iznad Napulja?",
+    "o": [
+     "Vezuv",
+     "Etna",
+     "Stromboli",
+     "Vulcano"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Erupcija kojeg je islandskog vulkana 2010. zaustavila zračni promet u Europi?",
+    "o": [
+     "Hekla",
+     "Eyjafjallajökull",
+     "Katla",
+     "Krafla"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najveći otok u Sredozemnom moru?",
+    "o": [
+     "Sardinija",
+     "Cipar",
+     "Sicilija",
+     "Korzika"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je najveći otok u Europi?",
+    "o": [
+     "Island",
+     "Irska",
+     "Sicilija",
+     "Velika Britanija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojoj državi pripada otok Sardinija?",
+    "o": [
+     "Italiji",
+     "Francuskoj",
+     "Španjolskoj",
+     "Malti"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojoj otočnoj skupini pripada Mallorca?",
+    "o": [
+     "Kanarima",
+     "Balearima",
+     "Azorima",
+     "Kikladima"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj državi pripada otok Madeira?",
+    "o": [
+     "Španjolskoj",
+     "Francuskoj",
+     "Portugalu",
+     "Italiji"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Pod suverenitetom koje su države Farski otoci?",
+    "o": [
+     "Norveške",
+     "Islanda",
+     "Ujedinjenog Kraljevstva",
+     "Danske"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najveći grčki otok?",
+    "o": [
+     "Kreta",
+     "Rodos",
+     "Eubeja",
+     "Krf"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi Atomium, golema građevina u obliku atoma?",
+    "o": [
+     "Amsterdam",
+     "Bruxelles",
+     "Pariz",
+     "Luxembourg"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi kip Male sirene?",
+    "o": [
+     "Oslo",
+     "Stockholm",
+     "Kopenhagen",
+     "Helsinki"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu nalaze Brandenburška vrata?",
+    "o": [
+     "München",
+     "Beč",
+     "Hamburg",
+     "Berlin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem se brdu u Ateni nalazi Partenon?",
+    "o": [
+     "Akropoli",
+     "Olimpu",
+     "Parnasu",
+     "Likabetu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi poznati Kosi toranj?",
+    "o": [
+     "Bologna",
+     "Pisa",
+     "Firenca",
+     "Siena"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se državi nalazi bajkoviti dvorac Neuschwanstein?",
+    "o": [
+     "Austriji",
+     "Švicarskoj",
+     "Njemačkoj",
+     "Francuskoj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se španjolskom gradu nalazi maurska palača Alhambra?",
+    "o": [
+     "Sevilla",
+     "Córdoba",
+     "Toledo",
+     "Granada"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je kameni most s kipovima svetaca simbol Praga?",
+    "o": [
+     "Karlov most",
+     "Most uzdisaja",
+     "Rialto",
+     "Ponte Vecchio"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi Crveni trg?",
+    "o": [
+     "Sankt Peterburg",
+     "Moskva",
+     "Kijev",
+     "Minsk"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu nalazi Most uzdisaja?",
+    "o": [
+     "Firenca",
+     "Verona",
+     "Venecija",
+     "Rim"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu nalazi Fontana di Trevi?",
+    "o": [
+     "Milano",
+     "Napulj",
+     "Venecija",
+     "Rim"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Škotske?",
+    "o": [
+     "Edinburgh",
+     "Glasgow",
+     "Aberdeen",
+     "Inverness"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Walesa?",
+    "o": [
+     "Swansea",
+     "Cardiff",
+     "Bristol",
+     "Newport"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Sjeverne Irske?",
+    "o": [
+     "Dublin",
+     "Derry",
+     "Belfast",
+     "Cork"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se državi nalazi opatija Mont-Saint-Michel na plimnom otočiću?",
+    "o": [
+     "Belgiji",
+     "Ujedinjenom Kraljevstvu",
+     "Španjolskoj",
+     "Francuskoj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se državi nalaze samostani Meteora na vrhovima stijena?",
+    "o": [
+     "Grčkoj",
+     "Bugarskoj",
+     "Turskoj",
+     "Italiji"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je grad poznat po Starom mostu iz 16. stoljeća preko Neretve?",
+    "o": [
+     "Konjic",
+     "Mostar",
+     "Višegrad",
+     "Metković"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se španjolskom gradu nalazi Guggenheimov muzej Franka Gehryja?",
+    "o": [
+     "Madrid",
+     "Valencia",
+     "Bilbao",
+     "Barcelona"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je pariška katedrala 2019. teško stradala u požaru?",
+    "o": [
+     "Sacré-Cœur",
+     "Sainte-Chapelle",
+     "Saint-Denis",
+     "Notre-Dame"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem se pariškom brežuljku nalazi bazilika Sacré-Cœur?",
+    "o": [
+     "Montmartre",
+     "Montparnasse",
+     "Belleville",
+     "La Défense"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi carska palača Schönbrunn?",
+    "o": [
+     "Budimpešta",
+     "Beč",
+     "Prag",
+     "Salzburg"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je francuski kralj dao izgraditi raskošnu palaču u Versaillesu?",
+    "o": [
+     "Luj XVI.",
+     "Henrik IV.",
+     "Luj XIV.",
+     "Franjo I."
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje dvije države dijele otok Irsku?",
+    "o": [
+     "Irska i Island",
+     "UK i Danska",
+     "Irska i Norveška",
+     "Irska i UK"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se država naziva zemljom tisuću jezera?",
+    "o": [
+     "Finska",
+     "Švedska",
+     "Norveška",
+     "Estonija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je europska država jedino veliko vojvodstvo na svijetu?",
+    "o": [
+     "Lihtenštajn",
+     "Luksemburg",
+     "Monako",
+     "Andora"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Između kojih se dviju država nalazi Andora?",
+    "o": [
+     "Španjolske i Portugala",
+     "Francuske i Italije",
+     "Francuske i Španjolske",
+     "Italije i Švicarske"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je mala država sa svih strana okružena Italijom, uz Vatikan?",
+    "o": [
+     "Monako",
+     "Malta",
+     "Andora",
+     "San Marino"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Između kojih se dviju država nalazi Lihtenštajn?",
+    "o": [
+     "Švicarske i Austrije",
+     "Njemačke i Austrije",
+     "Švicarske i Italije",
+     "Francuske i Njemačke"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja dinastija stoljećima vlada Monakom?",
+    "o": [
+     "Habsburg",
+     "Grimaldi",
+     "Bourbon",
+     "Medici"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Lihtenštajna?",
+    "o": [
+     "Schaan",
+     "Monte Carlo",
+     "Vaduz",
+     "Andorra la Vella"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Malte?",
+    "o": [
+     "Mdina",
+     "Nikozija",
+     "Victoria",
+     "Valletta"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove vojska koja čuva papu u Vatikanu?",
+    "o": [
+     "Švicarska garda",
+     "Papinska legija",
+     "Rimska garda",
+     "Vatikanski karabinjeri"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko nacionalnih jezika ima Švicarska?",
+    "o": [
+     "2",
+     "4",
+     "3",
+     "5"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji jezik sa sjevera Španjolske nije srodan nijednom drugom poznatom jeziku?",
+    "o": [
+     "Katalonski",
+     "Galicijski",
+     "Baskijski",
+     "Asturski"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se europski jezik razvio iz arapskoga, a piše se latinicom?",
+    "o": [
+     "Albanski",
+     "Baskijski",
+     "Romanš",
+     "Malteški"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koju je valutu Grčka imala prije eura?",
+    "o": [
+     "Drahmu",
+     "Liru",
+     "Pezetu",
+     "Franak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvala španjolska valuta prije eura?",
+    "o": [
+     "Eskudo",
+     "Pezeta",
+     "Lira",
+     "Drahma"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je grad bio glavni grad Zapadne Njemačke?",
+    "o": [
+     "Frankfurt",
+     "Hamburg",
+     "Bonn",
+     "Köln"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje je godine otvoren tunel ispod La Manchea?",
+    "o": [
+     "1984.",
+     "1989.",
+     "2000.",
+     "1994."
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se današnjoj državi 1986. dogodila nuklearna katastrofa u Černobilu?",
+    "o": [
+     "Ukrajini",
+     "Bjelorusiji",
+     "Rusiji",
+     "Litvi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje dvije države povezuje most i tunel preko tjesnaca Øresund?",
+    "o": [
+     "Dansku i Njemačku",
+     "Dansku i Švedsku",
+     "Švedsku i Finsku",
+     "Norvešku i Švedsku"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje zemlje potječe ples flamenco?",
+    "o": [
+     "Portugala",
+     "Italije",
+     "Španjolske",
+     "Grčke"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se gradu održava Oktoberfest?",
+    "o": [
+     "Berlin",
+     "Beč",
+     "Köln",
+     "München"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se gradu za blagdan San Fermín održava trčanje s bikovima?",
+    "o": [
+     "Pamplona",
+     "Sevilla",
+     "Madrid",
+     "Valencia"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje potječe melankolična glazba fado?",
+    "o": [
+     "Španjolske",
+     "Portugala",
+     "Italije",
+     "Francuske"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji se grad naziva Vječnim gradom?",
+    "o": [
+     "Atena",
+     "Jeruzalem",
+     "Rim",
+     "Carigrad"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Prema predaji, koje je godine osnovan Rim?",
+    "o": [
+     "476. pr. Kr.",
+     "1000. pr. Kr.",
+     "44. pr. Kr.",
+     "753. pr. Kr."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Po kojim je dugim i uskim morskim zaljevima poznata Norveška?",
+    "o": [
+     "Fjordovima",
+     "Lagunama",
+     "Rijasima",
+     "Limanima"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji tjesnac povezuje Crno more s Mramornim morem?",
+    "o": [
+     "Dardaneli",
+     "Bospor",
+     "Otrantska vrata",
+     "Kerčki tjesnac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji morski prolaz dijeli Englesku od Francuske?",
+    "o": [
+     "Skagerrak",
+     "Kattegat",
+     "La Manche",
+     "Bospor"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje dvije države dijele Ženevsko jezero?",
+    "o": [
+     "Švicarska i Italija",
+     "Francuska i Italija",
+     "Švicarska i Austrija",
+     "Švicarska i Francuska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Uz koje jezero leže Njemačka, Austrija i Švicarska?",
+    "o": [
+     "Bodensko",
+     "Ženevsko",
+     "Gardsko",
+     "Comsko"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se državi nalazi jezero Balaton?",
+    "o": [
+     "Austriji",
+     "Mađarskoj",
+     "Slovačkoj",
+     "Rumunjskoj"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje dvije države dijele Ohridsko jezero?",
+    "o": [
+     "Albanija i Grčka",
+     "Srbija i S. Makedonija",
+     "S. Makedonija i Albanija",
+     "Grčka i Bugarska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se zemlji nalazi jezero Loch Ness?",
+    "o": [
+     "Irskoj",
+     "Walesu",
+     "Norveškoj",
+     "Škotskoj"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja od navedenih država NIJE baltička država?",
+    "o": [
+     "Finska",
+     "Estonija",
+     "Latvija",
+     "Litva"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem se poluotoku nalazi kopneni dio Danske?",
+    "o": [
+     "Skandinavskom",
+     "Jutlandu",
+     "Kolskom",
+     "Bretanji"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojem se grčkom poluotoku nalazila antička Sparta?",
+    "o": [
+     "Halkidiki",
+     "Atici",
+     "Peloponezu",
+     "Krimu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se grad naziva Zlatnim gradom sto tornjeva?",
+    "o": [
+     "Krakov",
+     "Beč",
+     "Budimpešta",
+     "Prag"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se državi nalazi pokrajina Transilvanija?",
+    "o": [
+     "Rumunjskoj",
+     "Mađarskoj",
+     "Bugarskoj",
+     "Moldaviji"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojoj državi pripada Gibraltar?",
+    "o": [
+     "Španjolskoj",
+     "Ujedinjenom Kraljevstvu",
+     "Portugalu",
+     "Maroku"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je europska država 2019. promijenila službeno ime?",
+    "o": [
+     "Češka",
+     "Moldavija",
+     "Sjeverna Makedonija",
+     "Bjelorusija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je ruski car 1703. osnovao Sankt Peterburg?",
+    "o": [
+     "Ivan Grozni",
+     "Nikolaj II.",
+     "Aleksandar I.",
+     "Petar Veliki"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se gradu nalazi Međunarodni sud pravde?",
+    "o": [
+     "Haag",
+     "Bruxelles",
+     "Ženeva",
+     "Strasbourg"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se državi nalazi Bledsko jezero s otočićem i crkvom?",
+    "o": [
+     "Austriji",
+     "Sloveniji",
+     "Švicarskoj",
+     "Italiji"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Uz koji se zaljev nalazi crnogorski grad Kotor?",
+    "o": [
+     "Tršćanski zaljev",
+     "Kvarner",
+     "Boku kotorsku",
+     "Jonski zaljev"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje potječe slatko vino tokajac?",
+    "o": [
+     "Austrije",
+     "Portugala",
+     "Rumunjske",
+     "Mađarske"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je najviša planina Ujedinjenog Kraljevstva?",
+    "o": [
+     "Ben Nevis",
+     "Snowdon",
+     "Scafell Pike",
+     "Ben Macdui"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je najdulja rijeka Ujedinjenog Kraljevstva?",
+    "o": [
+     "Temza",
+     "Severn",
+     "Trent",
+     "Tyne"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najdulja rijeka Francuske?",
+    "o": [
+     "Seina",
+     "Rona",
+     "Loira",
+     "Garona"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je grad 1755. razorio snažan potres i tsunami?",
+    "o": [
+     "Napulj",
+     "Atena",
+     "Messina",
+     "Lisabon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Riječ gejzir potječe od imena izvora u kojoj zemlji?",
+    "o": [
+     "Islandu",
+     "Norveškoj",
+     "Italiji",
+     "Finskoj"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja su dva glavna grada najbliža jedan drugome, ne računajući Rim i Vatikan?",
+    "o": [
+     "Prag i Beč",
+     "Beč i Bratislava",
+     "Ljubljana i Zagreb",
+     "Tallinn i Helsinki"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Moldavije?",
+    "o": [
+     "Tiraspol",
+     "Odesa",
+     "Kišinjev",
+     "Bukurešt"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Litve?",
+    "o": [
+     "Kaunas",
+     "Riga",
+     "Tallinn",
+     "Vilnius"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Estonije?",
+    "o": [
+     "Tallinn",
+     "Tartu",
+     "Riga",
+     "Vilnius"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je najveća skandinavska država po površini?",
+    "o": [
+     "Norveška",
+     "Švedska",
+     "Danska",
+     "Finska"
+    ],
+    "a": 1
+   }
+  ]
+ }
+}

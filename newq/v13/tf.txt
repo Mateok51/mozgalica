@@ -1,0 +1,189 @@
+T | Voda se sastoji od vodika i kisika.
+N | Zemlja je najveći planet Sunčeva sustava.
+T | Saturn ima prstenove.
+N | Mars ima tri mjeseca.
+T | Mars ima dva mjeseca.
+N | Sunce se okreće oko Zemlje.
+T | Zemlji treba oko 365 dana da obiđe Sunce.
+T | Mjesec uvijek pokazuje Zemlji uglavnom istu stranu.
+N | Na Mjesecu postoji atmosfera kao na Zemlji.
+T | Neptun je planet najudaljeniji od Sunca.
+N | Venera je najbliža Suncu.
+T | Zvijezda Sjevernjača nalazi se gotovo iznad Sjevernog pola.
+N | Svjetlost putuje sporije od zvuka.
+T | Zrak se najvećim dijelom sastoji od dušika.
+N | Zrak se najvećim dijelom sastoji od kisika.
+T | Led pliva na vodi jer je rjeđi od tekuće vode.
+N | Zlato je tekuće na sobnoj temperaturi.
+T | Živa je metal koji je tekuć na sobnoj temperaturi.
+T | Dijamant je najtvrđi prirodni mineral.
+N | Željezo ne hrđa u dodiru s vodom i zrakom.
+T | Biljke u fotosintezi proizvode kisik.
+N | Biljke dišu samo noću.
+T | Ljudsko tijelo ima oko 60 % vode.
+N | Odrastao čovjek ima 300 kostiju.
+T | Najmanja kost u ljudskom tijelu nalazi se u uhu.
+T | Bedrena kost najdulja je kost u ljudskom tijelu.
+N | Srce se nalazi u trbušnoj šupljini.
+T | Krvne grupe A, B, AB i 0 dio su ABO sustava.
+N | Ljudi imaju četiri pluća.
+T | Jetra je najveća unutarnja žlijezda u ljudskom tijelu.
+T | Kit ubojica (orka) pripada porodici dupina.
+N | Kit ubojica je morski pas.
+T | Pingvini su ptice.
+N | Šišmiši su slijepi i ne vide ništa.
+T | Šišmiši se orijentiraju jekom (eholokacijom).
+T | Krokodili su gmazovi.
+N | Žabe su gmazovi.
+T | Žabe su vodozemci.
+N | Delfini dišu škrgama.
+T | Pčele komuniciraju plesom.
+N | Mravi imaju osam nogu.
+T | Leptir se razvija iz gusjenice.
+T | Kameleon može mijenjati boju kože.
+N | Nojevi zabijaju glavu u pijesak kad se uplaše.
+T | Slon je najveća kopnena životinja.
+N | Žirafa ne može spavati.
+T | Kenguri nose mladunčad u tobolcu.
+N | Koala je klokan.
+T | Panda se uglavnom hrani bambusom.
+N | Lav je najbrža kopnena životinja.
+T | Bijeli medvjedi žive na Arktiku.
+N | Pingvini žive na Arktiku u divljini.
+T | Morski konjic je riba.
+N | Meduza ima mozak.
+T | Hobotnica ima plavu krv.
+T | Puževi imaju zube (radulu).
+T | Australija je i država i kontinent.
+N | Grenland je kontinent.
+T | Grenland je najveći otok na svijetu.
+N | Afrika je najveći kontinent.
+T | Azija je najveći kontinent.
+T | Amazona teče kroz Brazil.
+N | Nil teče kroz Južnu Ameriku.
+T | Rusija je najveća država na svijetu po površini.
+N | Kina graniči s Hrvatskom.
+T | Hrvatska graniči sa Slovenijom.
+N | Hrvatska graniči s Austrijom.
+T | Hrvatska graniči s Crnom Gorom.
+N | Hrvatska graniči s Italijom kopnenom granicom.
+T | Hrvatska je dio Europske unije.
+N | Hrvatska je članica Europske unije od 1995.
+T | Zagreb je glavni grad Hrvatske.
+N | Split je najveći grad u Hrvatskoj.
+T | Plitvička jezera nalaze se na UNESCO-ovu popisu svjetske baštine.
+N | Dubrovnik leži na otoku.
+T | Krk je s kopnom povezan mostom.
+N | Hvar je s kopnom povezan mostom.
+T | Pelješac je poluotok.
+N | Istra je otok.
+T | Glavni grad Istarske županije je Pazin.
+N | Glavni grad Istarske županije je Pula.
+T | Vukovar leži na Dunavu.
+N | Osijek leži na Savi.
+T | Dinara je najviši vrh Hrvatske.
+T | Jadransko more dio je Sredozemnog mora.
+T | Na hrvatskoj zastavi nalazi se šahovnica.
+N | Hrvatska himna zove se „Lijepa naša zemljo“.
+T | Nikola Tesla rođen je u Smiljanu.
+N | Nikola Tesla izumio je telefon.
+T | Ruđer Bošković rođen je u Dubrovniku.
+N | Marko Marulić napisao je „Zlatarovo zlato“.
+T | Marko Marulić napisao je „Juditu“.
+T | Miroslav Krleža napisao je „Gospodu Glembajeve“.
+N | Ivana Brlić-Mažuranić napisala je „Smogovce“.
+T | Ivan Meštrović izradio je skulpturu Grgura Ninskog u Splitu.
+N | Mona Lisa nalazi se u Britanskom muzeju u Londonu.
+T | Mona Lisa nalazi se u Louvreu.
+T | Michelangelo je oslikao strop Sikstinske kapele.
+N | Vincent van Gogh bio je Francuz.
+T | Vincent van Gogh bio je Nizozemac.
+N | Beethoven je skladao „Čarobnu frulu“.
+T | Mozart je skladao „Čarobnu frulu“.
+N | Gitara obično ima osam žica.
+T | Klavir ima 88 tipki.
+T | The Beatles su bili iz Liverpoola.
+N | ABBA je bila norveški sastav.
+T | Elvis Presley zvan je „Kraljem rock and rolla“.
+N | Harry Potter pohađa školu Hogwarts u Americi.
+T | Hogwarts je škola za vještice i čarobnjake.
+N | Gandalf je hobit.
+T | Frodo Baggins je hobit.
+T | Sherlock Holmes je izmišljeni detektiv.
+N | Shrek je zmaj.
+T | Simba je lik iz filma „Kralj lavova“.
+N | Mickey Mouse je patka.
+T | Batman nema nadljudske moći.
+N | Superman dolazi s Marsa.
+T | Superman dolazi s planeta Kriptona.
+N | Spider-Man se zove Bruce Wayne.
+T | Spider-Man se zove Peter Parker.
+T | Minecraft je napravljen od kocki.
+N | Sonic je mačka.
+T | Sonic je jež.
+N | Mario ima brata koji se zove Wario.
+T | Mario ima brata koji se zove Luigi.
+T | Tetris potječe iz Sovjetskog Saveza.
+N | Nogomet se igra s 10 igrača u svakoj momčadi.
+T | Nogometna utakmica ima dva poluvremena po 45 minuta.
+N | U košarci koš ubačen iza linije vrijedi dva boda.
+T | U tenisu postoji rezultat „deuce“.
+N | Olimpijske igre održavaju se svake godine.
+T | Moderne olimpijske igre počele su 1896. u Ateni.
+N | Hrvatska je osvojila Svjetsko prvenstvo u nogometu 2018.
+T | Hrvatska je u finalu SP-a 2018. igrala protiv Francuske.
+T | Luka Modrić osvojio je Zlatnu loptu 2018.
+N | Janica Kostelić natjecala se u plivanju.
+T | Goran Ivanišević osvojio je Wimbledon 2001.
+T | Maraton je dug nešto više od 42 kilometra.
+N | Šah se igra na ploči od 100 polja.
+T | U šahu postoji figura koja se zove skakač.
+T | Kraljica je najjača figura u šahu.
+N | Pješak u šahu može se kretati unatrag.
+T | Pizza potječe iz Italije.
+T | Sushi je tradicionalno japansko jelo.
+T | Paella je španjolsko jelo.
+N | Krumpir je voće.
+T | Med ne propada ako se pravilno čuva.
+N | Kava se dobiva iz lišća.
+T | Čaj se dobiva iz listova biljke.
+N | Bijela čokolada sadrži kakaovu masu.
+T | Bijela čokolada sadrži kakaov maslac.
+T | Rimski broj X znači 10.
+N | Rimski broj L znači 100.
+T | Rimski broj C znači 100.
+N | Broj 1 je prost broj.
+T | Broj 2 je prost broj.
+N | Kvadrat ima pet stranica.
+T | Zbroj kutova u trokutu iznosi 180°.
+N | Pravi kut ima 45°.
+T | Jedan kilometar ima 1000 metara.
+N | Jedna tona ima 100 kilograma.
+T | Jedna tona ima 1000 kilograma.
+T | Prijestupna godina ima 366 dana.
+N | Svaki mjesec ima barem 30 dana.
+T | Internet i World Wide Web nisu isto.
+N | Prva fotografija napravljena je u 20. stoljeću.
+T | Prvi iPhone predstavljen je 2007.
+N | Thomas Edison izumio je radio.
+T | Alexander Fleming otkrio je penicilin.
+N | Albert Einstein izumio je žarulju.
+T | Albert Einstein dobio je Nobelovu nagradu za fiziku.
+T | Marie Curie dobila je dvije Nobelove nagrade.
+N | Neil Armstrong bio je prvi čovjek u svemiru.
+T | Neil Armstrong bio je prvi čovjek koji je hodao po Mjesecu.
+N | Kineski zid vidljiv je golim okom s Mjeseca.
+T | Piramide u Gizi nalaze se u Egiptu.
+N | Koloseum se nalazi u Ateni.
+T | Akropola se nalazi u Ateni.
+N | Kip slobode nalazi se u Washingtonu.
+T | Kip slobode nalazi se u New Yorku.
+T | Big Ben nalazi se u Londonu.
+N | Venecija je glavni grad Italije.
+T | Beč je glavni grad Austrije.
+N | Sydney je glavni grad Australije.
+T | Canberra je glavni grad Australije.
+N | Toronto je glavni grad Kanade.
+T | Ottawa je glavni grad Kanade.
+N | Istanbul je glavni grad Turske.
+T | Ankara je glavni grad Turske.

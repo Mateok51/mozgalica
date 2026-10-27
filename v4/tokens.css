@@ -1,0 +1,51 @@
+  /* ---------- dizajn tokeni (polish B): jedan izvor boja za cijelu igru ---------- */
+  :root {
+    --bg: #1d120c;
+    --surface: #2a1a10;
+    --surface-raised: #3a2414;
+    --wood-dark: #2a170b;
+    --wood-mid: #5b3a22;
+    --parchment: #f6e7c4;
+    --parchment-ink: #3b2610;
+    --bronze: #b07a3a;
+    --amber: #e8aa50;
+    --amber-hi: #ffe2a6;
+    --text-main: #f6ead0;
+    --text-muted: rgba(243, 227, 196, 0.72);
+    --success: #7fae54;
+    --danger: #c0533c;
+    --focus: #f0b45a;
+    --shadow-soft: 0 6px 14px rgba(0, 0, 0, 0.45);
+    --radius-small: 6px;
+    --radius-medium: 12px;
+    /* stari nazivi iz neon/glass verzije: preusmjereni na novu paletu da nijedan zaostali stil ne vrati cyan/magentu/ljubičastu */
+    --abyss: var(--bg); --velvet: var(--surface); --plum: var(--surface-raised);
+    --magenta: var(--danger); --cyan: var(--amber); --good: var(--success);
+    --ink: var(--text-main); --ink-2: #e2cfaa; --ink-3: #b89c74;
+    --glass-top: rgba(74, 46, 26, 0.92); --glass-bot: rgba(42, 23, 11, 0.94);
+    --velv-top: rgba(74, 46, 26, 0.92); --velv-bot: rgba(42, 23, 11, 0.94);
+    --fab: var(--wood-mid); --fab-hi: #6e4628; --fab-lo: var(--wood-dark);
+  }
+  body { background-color: var(--bg); color: var(--text-main); }
+  /* fokus: topli amber prsten, jasno vidljiv na tamnom drvu */
+  :focus { outline: none; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-small); box-shadow: 0 0 0 6px rgba(240, 180, 90, 0.22); }
+  .form input:focus-visible, .form input:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+  /* bacanje moći: natpis i imena u stilu drva i pergamenta, bez neon ljubičaste */
+  .cast-banner { font-family: var(--font-body); font-weight: 900; color: var(--text-main); background: rgba(42, 23, 11, 0.9); border: 2px solid rgba(176, 122, 58, 0.85); box-shadow: var(--shadow-soft); }
+  .cast-banner .carr { color: var(--amber); }
+  .cnm { font-family: var(--font-body); font-weight: 900; background: rgba(42, 23, 11, 0.85); color: var(--text-main); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.6); }
+  .cbadge { font-family: var(--font-display); font-weight: 400; }
+  .b-dupli { color: var(--parchment-ink); background: linear-gradient(#ffe7a3, #e8aa50); box-shadow: 0 0 12px rgba(232, 170, 80, 0.55); }
+  .b-pola { color: var(--parchment-ink); background: linear-gradient(#fbf0d8, #e2c891); box-shadow: 0 0 10px rgba(246, 231, 196, 0.45); }
+  .csplit i { background: linear-gradient(#fbf0d8, #e2c891); border-color: var(--bronze); }
+  /* boje moći: led ostaje hladan ali prigušen; ostale moći u toplim tonovima */
+  .pw-led { color: #bcdbe6; } .pw-sluz { color: #a8c46a; } .pw-grick { color: #e0b07a; } .pw-bomba { color: #e8a55a; }
+  .pw-dupli { color: #f0c66a; } .pw-pola { color: #f1dcb0; } .pw-stit { color: #9cc7a4; }
+  .cact.frozen .cfig { filter: saturate(0.4) brightness(1.1) sepia(0.15) hue-rotate(160deg) drop-shadow(0 0 8px rgba(188, 219, 230, 0.8)); }
+  .cact.gold .cfig { filter: drop-shadow(0 0 10px rgba(232, 170, 80, 0.85)) brightness(1.06); }
+  .cshield { border-color: rgba(156, 199, 164, 0.75); box-shadow: 0 0 18px rgba(156, 199, 164, 0.4), inset 0 0 28px rgba(156, 199, 164, 0.3);
+    background: radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.4) 0 5%, transparent 14%), radial-gradient(circle at 50% 50%, rgba(156, 199, 164, 0.04) 50%, rgba(156, 199, 164, 0.24) 68%, rgba(156, 199, 164, 0) 71%); }
+  /* oznaka efekta na mobitelu (Led/Sluz…): tamno drvo umjesto tamnoplave */
+  .fx .fx-label { background: rgba(42, 23, 11, 0.9); color: var(--text-main); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.7), var(--shadow-soft); }
+  .fx-led .ice-txt { color: #2f5a6e; text-shadow: 0 2px 0 rgba(255, 255, 255, 0.85); }

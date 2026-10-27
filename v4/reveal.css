@@ -1,0 +1,42 @@
+  /* otkrivanje: ODGOVOR -> BODOVI -> POREDAK (vremena prate --el, tako da ponovni prikaz ne pokreće ispočetka) */
+  .rv { --el: 0ms; display: grid; width: 100%; flex: 1; align-content: start; }
+  .rv > .rv-a, .rv > .rv-b { grid-area: 1 / 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+  .rv-a { animation: rvOut 0.35s ease forwards; animation-delay: calc(1650ms - var(--el)); }
+  .rv-b { opacity: 0; animation: rvIn 0.4s ease forwards; animation-delay: calc(1800ms - var(--el)); align-items: stretch; }
+  @keyframes rvOut { to { opacity: 0; visibility: hidden; transform: translateY(-6px); } }
+  @keyframes rvIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .rv .p-q { animation: none; }
+  .rv-opts { display: grid; gap: 10px; }
+  .tv .rv-opts { grid-template-columns: 1fr 1fr; gap: clamp(8px, 1.4vw, 16px); }
+  .rv-opts .p-opt, .rv-opts .opt { position: relative; cursor: default; transition: none; }
+  .rv-opts .rv-dim { filter: brightness(0.55) saturate(0.6); opacity: 0.85; }
+  .rv-opts .rv-ok { box-shadow: inset 0 0 0 2px rgba(150, 210, 120, 0.9), inset 0 0 14px rgba(150, 210, 120, 0.18); }
+  .rv-opts .rv-bad { box-shadow: inset 0 0 0 2px rgba(200, 90, 70, 0.85); }
+  .rv-opts .rv-ok::after, .rv-opts .rv-bad::after { content: "✓"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 1.5em; height: 1.5em; border-radius: 50%;
+    display: grid; place-items: center; font-family: var(--font-body); font-weight: 900; font-size: 0.85rem; color: #fff; background: #3f8a3a; box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.8); text-shadow: none; }
+  .rv-opts .rv-bad::after { content: "✕"; background: #9a3b2c; }
+  .rv-opts .rv-ok.mine { animation: rvPop 0.45s ease-out both; animation-delay: calc(250ms - var(--el)); }
+  @keyframes rvPop { 50% { transform: scale(1.03); } }
+  .rv-opts .cnt { margin-left: auto; margin-right: 2em; }
+  .rv .rv-pts { display: flex; align-items: baseline; justify-content: center; gap: 8px; padding: 0; border: 0; border-image: none; background: none; box-shadow: none; filter: none;
+    font-family: var(--font-body); font-weight: 900; font-size: 1.35rem; color: #e2b764; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    opacity: 0; animation: rvPts 0.9s ease forwards; animation-delay: calc(700ms - var(--el)); }
+  .rv .rv-pts.zero { color: rgba(243, 227, 196, 0.7); }
+  .rv .rv-pts small { font-size: 0.72em; color: rgba(243, 227, 196, 0.75); font-weight: 800; }
+  .rv .rv-pts .x2 { font-size: 0.7em; padding: 0 6px; border-radius: 5px; color: #2a1606; background: #e2ac54; }
+  @keyframes rvPts { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: 1; transform: none; } 100% { opacity: 1; transform: translateY(-4px); } }
+  .rv-sum { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.95rem; color: rgba(243, 227, 196, 0.85); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .rv-sum b { color: #e2b764; }
+  .rv-lead { align-self: center; padding: 2px 10px; border-radius: 6px; font-family: var(--font-body); font-weight: 900; font-size: 0.82rem; color: #2a1606; background: #e2ac54;
+    animation: rvIn 0.3s ease both; animation-delay: calc(2500ms - var(--el)); }
+  .rv-title { text-align: center; font-family: var(--font-display); font-weight: 400; font-size: 1.4rem; color: #f3e3c4; text-shadow: 0 2px 3px rgba(0, 0, 0, 0.7); }
+  .tv .rv-b { max-width: 900px; width: 100%; justify-self: center; gap: 16px; }
+  .tv .rv-title { font-size: clamp(1.8rem, 3vw, 3rem); }
+  .tv .rv { align-content: center; }
+  @media (prefers-reduced-motion: reduce) { .rv-a, .rv-b, .rv .rv-pts, .rv-opts .rv-ok.mine, .rv-lead { animation-duration: 0.01ms; } }
+  .fresh .rv-opts .p-opt, .fresh .rv-opts .opt { animation: none; }
+  .fresh .rv-opts .rv-ok.mine { animation: rvPop 0.45s ease-out both; animation-delay: calc(250ms - var(--el)); }
+  .rv-opts .rv-ok::after, .rv-opts .rv-bad::after { opacity: 1; inset: auto; right: 8px; top: 50%; left: auto; bottom: auto; mix-blend-mode: normal; z-index: 2; }
+  .rv-opts .rv-ok, .rv-opts .rv-bad { filter: none; }
+  .rv-opts .rv-ok { filter: drop-shadow(0 0 2px rgba(150, 210, 120, 0.95)); }
+  .rv-opts .rv-bad { filter: drop-shadow(0 0 2px rgba(210, 90, 70, 0.9)); }

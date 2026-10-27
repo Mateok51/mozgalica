@@ -1,0 +1,1918 @@
+{
+ "cats": {
+  "Zastave i glavni gradovi": [
+   {
+    "q": "Koja država ima bijelu zastavu s crvenim javorovim listom između dviju crvenih pruga?",
+    "o": [
+     "Kanada",
+     "Austrija",
+     "Peru",
+     "Švicarska"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je jedina država čija zastava nije pravokutna, nego ima oblik dvaju trokuta?",
+    "o": [
+     "Butan",
+     "Nepal",
+     "Šri Lanka",
+     "Bangladeš"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima puške AK-47 na svojoj zastavi?",
+    "o": [
+     "Kenija",
+     "Angola",
+     "Mozambik",
+     "Zimbabve"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je slavni hram prikazan na zastavi Kambodže?",
+    "o": [
+     "Borobudur",
+     "Tadž Mahal",
+     "Wat Arun",
+     "Angkor Wat"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko vodoravnih pruga ima zastava Sjedinjenih Američkih Država?",
+    "o": [
+     "13",
+     "50",
+     "15",
+     "9"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Čiji križ NIJE dio britanske zastave Union Jack?",
+    "o": [
+     "Engleske",
+     "Walesa",
+     "Škotske",
+     "Irske (sv. Patrika)"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja nordijska država ima crvenu zastavu s bijelim skandinavskim križem?",
+    "o": [
+     "Finska",
+     "Norveška",
+     "Danska",
+     "Švedska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima plavu zastavu sa žutim skandinavskim križem?",
+    "o": [
+     "Ukrajina",
+     "Finska",
+     "Island",
+     "Švedska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima bijelu zastavu s plavim skandinavskim križem?",
+    "o": [
+     "Finska",
+     "Island",
+     "Estonija",
+     "Grčka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko vodoravnih plavih i bijelih pruga ima grčka zastava?",
+    "o": [
+     "5",
+     "9",
+     "13",
+     "7"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima okomite zelenu, bijelu i crvenu prugu, bez ikakvog grba?",
+    "o": [
+     "Mađarska",
+     "Irska",
+     "Italija",
+     "Bugarska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima okomite zelenu, bijelu i narančastu prugu?",
+    "o": [
+     "Nizozemska",
+     "Indija",
+     "Italija",
+     "Irska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima okomite crnu, žutu i crvenu prugu?",
+    "o": [
+     "Belgija",
+     "Uganda",
+     "Litva",
+     "Njemačka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja europska država ima okomite plavu, žutu i crvenu prugu, bez grba?",
+    "o": [
+     "Litva",
+     "Rumunjska",
+     "Belgija",
+     "Ukrajina"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima zastavu s vodoravnim prugama crvena–bijela–crvena?",
+    "o": [
+     "Danska",
+     "Poljska",
+     "Austrija",
+     "Latvija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja europska država ima zastavu od bijele gornje i crvene donje pruge?",
+    "o": [
+     "Austrija",
+     "Latvija",
+     "Monako",
+     "Poljska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Zastava koje je azijske države gotovo jednaka zastavi Monaka?",
+    "o": [
+     "Indonezije",
+     "Vijetnama",
+     "Japana",
+     "Singapura"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja država ima zastavu od plave gornje i žute donje pruge?",
+    "o": [
+     "Švedska",
+     "Ukrajina",
+     "Kazahstan",
+     "Rumunjska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Čija je zastava vrlo slična nizozemskoj, ali ima svjetliju plavu boju?",
+    "o": [
+     "Francuske",
+     "Rusije",
+     "Luksemburga",
+     "Belgije"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima vodoravne pruge bijelu, plavu i crvenu, bez grba?",
+    "o": [
+     "Slovenija",
+     "Slovačka",
+     "Srbija",
+     "Rusija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima vodoravne pruge plavu, crnu i bijelu?",
+    "o": [
+     "Estonija",
+     "Finska",
+     "Latvija",
+     "Litva"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja država ima vodoravne pruge žutu, zelenu i crvenu?",
+    "o": [
+     "Etiopija",
+     "Litva",
+     "Bolivija",
+     "Gana"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima vodoravne pruge crvenu, bijelu i zelenu?",
+    "o": [
+     "Italija",
+     "Iran",
+     "Mađarska",
+     "Bugarska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima vodoravne pruge bijelu, zelenu i crvenu?",
+    "o": [
+     "Mađarska",
+     "Irska",
+     "Libanon",
+     "Bugarska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima zelenu zastavu s crvenim krugom?",
+    "o": [
+     "Bangladeš",
+     "Pakistan",
+     "Japan",
+     "Nigerija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja država ima crvenu zastavu s pet žutih zvijezda?",
+    "o": [
+     "Vijetnam",
+     "Kina",
+     "Mongolija",
+     "Sjeverna Koreja"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima crvenu zastavu s jednom velikom žutom zvijezdom u sredini?",
+    "o": [
+     "Kuba",
+     "Kina",
+     "Vijetnam",
+     "Maroko"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima crvenu zastavu s bijelim polumjesecom i zvijezdom?",
+    "o": [
+     "Pakistan",
+     "Egipat",
+     "Alžir",
+     "Turska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima zelenu zastavu s bijelim polumjesecom, zvijezdom i bijelom prugom uz koplje?",
+    "o": [
+     "Pakistan",
+     "Turska",
+     "Alžir",
+     "Mauritanija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja država ima zelenu zastavu s ispisanim vjerskim natpisom i mačem?",
+    "o": [
+     "Iran",
+     "Saudijska Arabija",
+     "Libija",
+     "Pakistan"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima svjetloplavo-bijelu zastavu s tri pruge i suncem s licem u sredini?",
+    "o": [
+     "Honduras",
+     "Nikaragva",
+     "Argentina",
+     "Gvatemala"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čija zastava s bijelom zvijezdom na plavom kvadratu podsjeća na zastavu Teksasa?",
+    "o": [
+     "Liberije",
+     "Kube",
+     "Paname",
+     "Čilea"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima plavo-bijele pruge i crveni trokut s bijelom zvijezdom?",
+    "o": [
+     "Kuba",
+     "Filipini",
+     "Češka",
+     "Čile"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja država ima zastavu sa žutim dijagonalnim križem te zelenim i crnim poljima?",
+    "o": [
+     "Gana",
+     "Jamajka",
+     "Kenija",
+     "Brazil"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima zastavu s vodoravnim slovom Y u šest boja?",
+    "o": [
+     "Namibija",
+     "Bocvana",
+     "Južnoafrička Republika",
+     "Kenija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na čijoj su zastavi zvijezde Južnog križa crvene s bijelim rubom?",
+    "o": [
+     "Australije",
+     "Fidžija",
+     "Brazila",
+     "Novog Zelanda"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima crvenu zastavu sa žutim suncem s osam zraka?",
+    "o": [
+     "Sjeverna Makedonija",
+     "Japan",
+     "Kirgistan",
+     "Argentina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja država ima plavu zastavu sa žutim trokutom i nizom bijelih zvijezda?",
+    "o": [
+     "Kosovo",
+     "Bosna i Hercegovina",
+     "Slovenija",
+     "Crna Gora"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima crvenu zastavu sa zlatnim obrubom i zlatnim dvoglavim orlom?",
+    "o": [
+     "Srbija",
+     "Rusija",
+     "Crna Gora",
+     "Austrija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima zeleno-crvenu zastavu s armilarnom sferom?",
+    "o": [
+     "Španjolska",
+     "Brazil",
+     "Mozambik",
+     "Portugal"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na čijoj je zastavi srednja žuta pruga dvostruko šira od crvenih uz nju?",
+    "o": [
+     "Španjolske",
+     "Kolumbije",
+     "Rumunjske",
+     "Belgije"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja država ima crvenu, žutu i zelenu prugu s crnom zvijezdom u sredini?",
+    "o": [
+     "Senegal",
+     "Gana",
+     "Kamerun",
+     "Mali"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja otočna država ima glavu trozuba na zastavi?",
+    "o": [
+     "Malta",
+     "Bahami",
+     "Barbados",
+     "Jamajka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima zastavu sa zlatnim lavom koji drži mač?",
+    "o": [
+     "Butan",
+     "Nepal",
+     "Etiopija",
+     "Šri Lanka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja država ima žuto-bijelu zastavu s dva prekrižena ključa?",
+    "o": [
+     "Vatikan",
+     "Malta",
+     "Monako",
+     "San Marino"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko zlatnih zvijezda ima zastava Europske unije?",
+    "o": [
+     "27",
+     "12",
+     "10",
+     "15"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja država ima bijelu zastavu s plavom zemljovidom otoka i dvije maslinove grančice?",
+    "o": [
+     "Grčka",
+     "Island",
+     "Cipar",
+     "Malta"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država ima zastavu s tradicionalnim masajskim štitom i dvama kopljima?",
+    "o": [
+     "Uganda",
+     "Tanzanija",
+     "Etiopija",
+     "Kenija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Argentine?",
+    "o": [
+     "Buenos Aires",
+     "Mendoza",
+     "Rosario",
+     "Córdoba"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Perua?",
+    "o": [
+     "Trujillo",
+     "Lima",
+     "Cusco",
+     "Arequipa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Kolumbije?",
+    "o": [
+     "Medellín",
+     "Cartagena",
+     "Bogotá",
+     "Cali"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Venezuele?",
+    "o": [
+     "Maracaibo",
+     "Barquisimeto",
+     "Valencia",
+     "Caracas"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Ekvadora?",
+    "o": [
+     "Quito",
+     "Guayaquil",
+     "Manta",
+     "Cuenca"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Urugvaja?",
+    "o": [
+     "Salto",
+     "Montevideo",
+     "Punta del Este",
+     "Colonia"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Paragvaja?",
+    "o": [
+     "Concepción",
+     "Encarnación",
+     "Asunción",
+     "Ciudad del Este"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Kube?",
+    "o": [
+     "Holguín",
+     "Santiago de Cuba",
+     "Camagüey",
+     "Havana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Jamajke?",
+    "o": [
+     "Kingston",
+     "Negril",
+     "Montego Bay",
+     "Ocho Rios"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Kenije?",
+    "o": [
+     "Kisumu",
+     "Nairobi",
+     "Nakuru",
+     "Mombasa"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Etiopije?",
+    "o": [
+     "Bahir Dar",
+     "Dire Dawa",
+     "Adis Abeba",
+     "Gondar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Gane?",
+    "o": [
+     "Takoradi",
+     "Tamale",
+     "Kumasi",
+     "Akra"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Senegala?",
+    "o": [
+     "Dakar",
+     "Saint-Louis",
+     "Thiès",
+     "Touba"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Angole?",
+    "o": [
+     "Benguela",
+     "Luanda",
+     "Huambo",
+     "Lobito"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Madagaskara?",
+    "o": [
+     "Mahajanga",
+     "Toliara",
+     "Antananarivo",
+     "Toamasina"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Vijetnama?",
+    "o": [
+     "Da Nang",
+     "Hue",
+     "Ho Ši Min",
+     "Hanoi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Tajlanda?",
+    "o": [
+     "Bangkok",
+     "Pattaya",
+     "Phuket",
+     "Chiang Mai"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Filipina?",
+    "o": [
+     "Cebu",
+     "Manila",
+     "Davao",
+     "Iloilo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Pakistana?",
+    "o": [
+     "Lahore",
+     "Peshawar",
+     "Islamabad",
+     "Karachi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Irana?",
+    "o": [
+     "Tabriz",
+     "Širaz",
+     "Isfahan",
+     "Teheran"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Saudijske Arabije?",
+    "o": [
+     "Rijad",
+     "Džeda",
+     "Medina",
+     "Meka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Ujedinjenih Arapskih Emirata?",
+    "o": [
+     "Šardža",
+     "Abu Dhabi",
+     "Adžman",
+     "Dubai"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Katara?",
+    "o": [
+     "Muskat",
+     "Manama",
+     "Doha",
+     "Kuvajt"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Nepala?",
+    "o": [
+     "Pokhara",
+     "Biratnagar",
+     "Lalitpur",
+     "Katmandu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Uzbekistana?",
+    "o": [
+     "Taškent",
+     "Hiva",
+     "Samarkand",
+     "Buhara"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Armenije?",
+    "o": [
+     "Gjumri",
+     "Erevan",
+     "Ečmijadzin",
+     "Vanadzor"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Azerbajdžana?",
+    "o": [
+     "Lankaran",
+     "Gandža",
+     "Baku",
+     "Sumgait"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Finske?",
+    "o": [
+     "Oulu",
+     "Tampere",
+     "Turku",
+     "Helsinki"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Norveške?",
+    "o": [
+     "Oslo",
+     "Bergen",
+     "Stavanger",
+     "Trondheim"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Estonije?",
+    "o": [
+     "Narva",
+     "Tallinn",
+     "Pärnu",
+     "Tartu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Litve?",
+    "o": [
+     "Klaipėda",
+     "Šiauliai",
+     "Vilnius",
+     "Kaunas"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Malte?",
+    "o": [
+     "Sliema",
+     "Birgu",
+     "Mdina",
+     "Valletta"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je glavni grad Rumunjske?",
+    "o": [
+     "Bukurešt",
+     "Temišvar",
+     "Cluj-Napoca",
+     "Konstanca"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni grad Albanije?",
+    "o": [
+     "Valona",
+     "Tirana",
+     "Skadar",
+     "Drač"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glavni grad Sjeverne Makedonije?",
+    "o": [
+     "Ohrid",
+     "Kumanovo",
+     "Skoplje",
+     "Bitola"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glavni grad Škotske?",
+    "o": [
+     "Dundee",
+     "Aberdeen",
+     "Glasgow",
+     "Edinburgh"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je japanski grad bio carska prijestolnica od 794. do 1868.?",
+    "o": [
+     "Kyoto",
+     "Nara",
+     "Hirošima",
+     "Osaka"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je grad bio glavni grad Brazila do 1960., kad ga je zamijenila Brasília?",
+    "o": [
+     "São Paulo",
+     "Rio de Janeiro",
+     "Recife",
+     "Belo Horizonte"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojem je glavnom gradu preko rijeke Kongo nasuprot Brazzaville?",
+    "o": [
+     "Luandi",
+     "Kampali",
+     "Kinshasi",
+     "Lusaki"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Po kome je dobio ime glavni grad Sjedinjenih Američkih Država?",
+    "o": [
+     "Kristoforu Kolumbu",
+     "Abrahamu Lincolnu",
+     "Thomasu Jeffersonu",
+     "Georgeu Washingtonu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja rijeka teče kroz Varšavu?",
+    "o": [
+     "Visla",
+     "Dnjepar",
+     "Odra",
+     "Elba"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja rijeka teče kroz Berlin?",
+    "o": [
+     "Elba",
+     "Spree",
+     "Majna",
+     "Rajna"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja rijeka teče kroz Dublin?",
+    "o": [
+     "Boyne",
+     "Shannon",
+     "Liffey",
+     "Temza"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja rijeka teče kroz središte Ljubljane?",
+    "o": [
+     "Krka",
+     "Drava",
+     "Sava",
+     "Ljubljanica"
+    ],
+    "a": 3
+   }
+  ],
+  "Geografija": [
+   {
+    "q": "Na kojem se kontinentu nalazi pustinja Gobi?",
+    "o": [
+     "Azija",
+     "Australija",
+     "Afrika",
+     "Južna Amerika"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Pustinja Namib proteže se uz obalu koje države?",
+    "o": [
+     "Somalije",
+     "Namibije",
+     "Egipta",
+     "Maroka"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Pustinja Kalahari prekriva većinu teritorija koje države?",
+    "o": [
+     "Malija",
+     "Egipta",
+     "Bocvane",
+     "Sudana"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je najviši vrh kopnene Australije?",
+    "o": [
+     "Uluru",
+     "Cook",
+     "Wellington",
+     "Kosciuszko"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najviši vrh Antarktike?",
+    "o": [
+     "Vinson",
+     "Erebus",
+     "Elbrus",
+     "Kosciuszko"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je najviši vrh Pireneja?",
+    "o": [
+     "Mont Blanc",
+     "Aneto",
+     "Monte Perdido",
+     "Mulhacén"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najviši vrh Turske?",
+    "o": [
+     "Erciyes",
+     "Elbrus",
+     "Ararat",
+     "Olimp"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je drugi najviši vrh na svijetu?",
+    "o": [
+     "Lhotse",
+     "Makalu",
+     "Kangchenjunga",
+     "K2"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na granici kojih se dviju država nalazi Matterhorn?",
+    "o": [
+     "Švicarske i Italije",
+     "Njemačke i Austrije",
+     "Austrije i Švicarske",
+     "Francuske i Italije"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje se gorje uobičajeno uzima kao granica Europe i Azije?",
+    "o": [
+     "Karpati",
+     "Ural",
+     "Altaj",
+     "Kavkaz"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se dijelu svijeta nalazi gorje Atlas?",
+    "o": [
+     "Srednjoj Aziji",
+     "Južnoj Americi",
+     "Sjeverozapadnoj Africi",
+     "Skandinaviji"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje se gorje proteže istokom Sjedinjenih Američkih Država?",
+    "o": [
+     "Sierra Nevada",
+     "Ande",
+     "Stjenjak",
+     "Apalači"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje se gorje velikim lukom proteže kroz Rumunjsku?",
+    "o": [
+     "Karpati",
+     "Dinaridi",
+     "Balkan",
+     "Ural"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje se gorje proteže između Crnog i Kaspijskog mora?",
+    "o": [
+     "Altaj",
+     "Kavkaz",
+     "Pamir",
+     "Ural"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najduža rijeka Afrike?",
+    "o": [
+     "Zambezi",
+     "Kongo",
+     "Nil",
+     "Niger"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja velika rijeka dvaput presijeca ekvator?",
+    "o": [
+     "Niger",
+     "Amazona",
+     "Nil",
+     "Kongo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U koji se zaljev ulijeva Mississippi?",
+    "o": [
+     "Meksički",
+     "Hudsonov",
+     "Perzijski",
+     "Kalifornijski"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U koje se more ulijeva Rajna?",
+    "o": [
+     "Crno",
+     "Sjeverno",
+     "Baltičko",
+     "Sredozemno"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je najduža rijeka Azije?",
+    "o": [
+     "Ind",
+     "Mekong",
+     "Jangce",
+     "Gang"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U koje se more ulijeva rijeka Jordan?",
+    "o": [
+     "Galilejsko",
+     "Crveno",
+     "Sredozemno",
+     "Mrtvo"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Uz obalu kojeg se mora nalazi najniža kopnena točka na Zemlji?",
+    "o": [
+     "Mrtvog",
+     "Aralskog",
+     "Kaspijskog",
+     "Crvenog"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se državi Mekong ulijeva u more?",
+    "o": [
+     "Kambodži",
+     "Vijetnamu",
+     "Tajlandu",
+     "Laosu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na kojoj se rijeci nalaze Viktorijini slapovi?",
+    "o": [
+     "Nil",
+     "Kongo",
+     "Zambezi",
+     "Limpopo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na granici kojih se dviju država nalaze slapovi Iguazú?",
+    "o": [
+     "Kolumbije i Venezuele",
+     "Brazila i Perua",
+     "Čilea i Argentine",
+     "Argentine i Brazila"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je rijeka u hinduizmu sveta?",
+    "o": [
+     "Gang",
+     "Eufrat",
+     "Jangce",
+     "Ind"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kroz koliko država teče Dunav?",
+    "o": [
+     "6",
+     "10",
+     "12",
+     "8"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U što se ulijeva Volga?",
+    "o": [
+     "Crno more",
+     "Azovsko more",
+     "Kaspijsko jezero",
+     "Baltičko more"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U koji se ocean ulijeva Amazona?",
+    "o": [
+     "Tihi",
+     "Indijski",
+     "Sjeverni ledeni",
+     "Atlantski"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja rijeka s Nisom čini velik dio granice Njemačke i Poljske?",
+    "o": [
+     "Odra",
+     "Rajna",
+     "Elba",
+     "Visla"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja rijeka čini velik dio granice SAD-a i Meksika?",
+    "o": [
+     "Missouri",
+     "Rio Grande",
+     "Mississippi",
+     "Colorado"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je rijeka urezala Veliki kanjon u Arizoni?",
+    "o": [
+     "Mississippi",
+     "Rio Grande",
+     "Colorado",
+     "Missouri"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je najduža rijeka Italije?",
+    "o": [
+     "Adiža",
+     "Arno",
+     "Tiber",
+     "Po"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je najduža rijeka Francuske?",
+    "o": [
+     "Loira",
+     "Rona",
+     "Garona",
+     "Seina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je najveće jezero Afrike?",
+    "o": [
+     "Tanganjika",
+     "Viktorijino",
+     "Čad",
+     "Malavi"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Između kojih se dviju država nalazi jezero Titicaca?",
+    "o": [
+     "Čilea i Argentine",
+     "Brazila i Paragvaja",
+     "Perua i Bolivije",
+     "Ekvadora i Perua"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je Velikih jezera na granici SAD-a i Kanade?",
+    "o": [
+     "3",
+     "4",
+     "7",
+     "5"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Uz koje jezero leže i Njemačka, Austrija i Švicarska?",
+    "o": [
+     "Bodensko",
+     "Ženevsko",
+     "Gardsko",
+     "Comsko"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se državi nalazi jezero Balaton?",
+    "o": [
+     "Slovačkoj",
+     "Mađarskoj",
+     "Rumunjskoj",
+     "Austriji"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Ohridsko jezero dijele Sjeverna Makedonija i koja država?",
+    "o": [
+     "Grčka",
+     "Srbija",
+     "Albanija",
+     "Bugarska"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Skadarsko jezero dijele Albanija i koja država?",
+    "o": [
+     "Srbija",
+     "Grčka",
+     "Sjeverna Makedonija",
+     "Crna Gora"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje je jezero u srednjoj Aziji uvelike presušilo zbog navodnjavanja?",
+    "o": [
+     "Aralsko",
+     "Kaspijsko",
+     "Bajkalsko",
+     "Balkaš"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko država dijeli otok Borneo?",
+    "o": [
+     "4",
+     "3",
+     "1",
+     "2"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje dvije države dijele otok Hispaniolu?",
+    "o": [
+     "Trinidad i Tobago",
+     "Haiti i Kuba",
+     "Haiti i Dominikanska Rep.",
+     "Kuba i Jamajka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je najveći otok Sredozemnog mora?",
+    "o": [
+     "Cipar",
+     "Korzika",
+     "Sardinija",
+     "Sicilija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojoj državi pripada otok Korzika?",
+    "o": [
+     "Francuskoj",
+     "Grčkoj",
+     "Španjolskoj",
+     "Italiji"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je najveći grčki otok?",
+    "o": [
+     "Eubeja",
+     "Kreta",
+     "Rodos",
+     "Krf"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj državi pripada otočje Galápagos?",
+    "o": [
+     "Čileu",
+     "Kolumbiji",
+     "Ekvadoru",
+     "Peruu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojoj državi pripada otočje Azori?",
+    "o": [
+     "Španjolskoj",
+     "Francuskoj",
+     "Ujedinjenom Kraljevstvu",
+     "Portugalu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je najveći japanski otok?",
+    "o": [
+     "Honšu",
+     "Hokaido",
+     "Šikoku",
+     "Kjušu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se oceanu nalazi Madagaskar?",
+    "o": [
+     "Tihom",
+     "Indijskom",
+     "Južnom",
+     "Atlantskom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj državi pripada otok Tasmanija?",
+    "o": [
+     "Ujedinjenom Kraljevstvu",
+     "Novom Zelandu",
+     "Australiji",
+     "Papui Novoj Gvineji"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U sastavu koje se kraljevine nalazi Grenland?",
+    "o": [
+     "Švedske",
+     "Norveške",
+     "Ujedinjenog Kraljevstva",
+     "Danske"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je država potpuno okružena Južnoafričkom Republikom?",
+    "o": [
+     "Lesoto",
+     "Esvatini",
+     "Bocvana",
+     "Malavi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je država potpuno okružena Italijom, uz Vatikan?",
+    "o": [
+     "Lihtenštajn",
+     "San Marino",
+     "Monako",
+     "Andora"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je po površini najveća država bez izlaza na more?",
+    "o": [
+     "Bolivija",
+     "Mongolija",
+     "Kazahstan",
+     "Čad"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja od ovih južnoameričkih država nema izlaz na more?",
+    "o": [
+     "Peru",
+     "Ekvador",
+     "Urugvaj",
+     "Bolivija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kroz koju državu prolaze i ekvator i Jarčeva obratnica?",
+    "o": [
+     "Brazil",
+     "Peru",
+     "Ekvador",
+     "Kolumbija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je država dobila ime po ekvatoru?",
+    "o": [
+     "Gabon",
+     "Ekvador",
+     "Kenija",
+     "Kolumbija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kroz koju londonsku četvrt prolazi nulti meridijan?",
+    "o": [
+     "Westminster",
+     "Chelsea",
+     "Greenwich",
+     "Camden"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se oceanu najvećim dijelom nalazi međunarodna datumska granica?",
+    "o": [
+     "Atlantskom",
+     "Indijskom",
+     "Sjevernom ledenom",
+     "Tihom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove obratnica na sjevernoj polutki?",
+    "o": [
+     "Rakova",
+     "Polarna",
+     "Ekvatorska",
+     "Jarčeva"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojoj se geografskoj širini nalazi ekvator?",
+    "o": [
+     "90°",
+     "0°",
+     "45°",
+     "180°"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Na čemu se nalazi Sjeverni pol?",
+    "o": [
+     "Na kopnu Antarktike",
+     "Na otoku Svalbardu",
+     "Na plutajućem morskom ledu",
+     "Na kopnu Grenlanda"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove uski, duboki morski zaljev između strmih stijena, tipičan za Norvešku?",
+    "o": [
+     "Laguna",
+     "Atol",
+     "Estuarij",
+     "Fjord"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove prstenasti koraljni otok sa središnjom lagunom?",
+    "o": [
+     "Atol",
+     "Delta",
+     "Fjord",
+     "Rt"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove ušće rijeke koje se grana u više rukavaca?",
+    "o": [
+     "Meandar",
+     "Delta",
+     "Kanjon",
+     "Estuarij"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove veliki zavoj ili petlja u toku rijeke?",
+    "o": [
+     "Kaldera",
+     "Delta",
+     "Meandar",
+     "Morena"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove izvor koji povremeno izbacuje mlaz vruće vode i pare?",
+    "o": [
+     "Vrulja",
+     "Ponor",
+     "Kaldera",
+     "Gejzir"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz kojeg jezika potječe riječ tsunami?",
+    "o": [
+     "Japanskog",
+     "Kineskog",
+     "Indonezijskog",
+     "Havajskog"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojem je području dobio ime krš, tip reljefa s ponorima i špiljama?",
+    "o": [
+     "Velebitu",
+     "Krasu",
+     "Lici",
+     "Dinari"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove hladno bezdrvno područje sa stalno smrznutim tlom?",
+    "o": [
+     "Stepa",
+     "Tajga",
+     "Tundra",
+     "Savana"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove tropski travnjak s rijetkim drvećem, tipičan za istočnu Afriku?",
+    "o": [
+     "Tajga",
+     "Prerija",
+     "Tundra",
+     "Savana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove sezonski vjetar koji južnoj Aziji donosi kišno razdoblje?",
+    "o": [
+     "Monsun",
+     "Fen",
+     "Mistral",
+     "Pasat"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove golemi superkontinent koji se počeo raspadati prije oko 200 milijuna godina?",
+    "o": [
+     "Laurazija",
+     "Pangea",
+     "Rodinija",
+     "Atlantida"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Uz rubove kojeg se oceana proteže „Vatreni prsten” vulkana i potresa?",
+    "o": [
+     "Atlantskog",
+     "Južnog",
+     "Tihog",
+     "Indijskog"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je vulkan 79. godine uništio Pompeje?",
+    "o": [
+     "Etna",
+     "Stromboli",
+     "Vulcano",
+     "Vezuv"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je islandski vulkan 2010. pepelom zaustavio zračni promet u Europi?",
+    "o": [
+     "Eyjafjallajökull",
+     "Hekla",
+     "Katla",
+     "Krafla"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja dva mora povezuje tjesnac Bospor?",
+    "o": [
+     "Egejsko i Jonsko",
+     "Crno i Mramorno",
+     "Crno i Azovsko",
+     "Egejsko i Mramorno"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji tjesnac povezuje Perzijski i Omanski zaljev?",
+    "o": [
+     "Bospor",
+     "Malački",
+     "Hormuški",
+     "Bab el-Mandeb"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja dva oceana povezuje Panamski kanal?",
+    "o": [
+     "Atlantski i Indijski",
+     "Atlantski i Sjeverni",
+     "Tihi i Indijski",
+     "Atlantski i Tihi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji morski prolaz odvaja kopno Južne Amerike od Ognjene zemlje?",
+    "o": [
+     "Magellanov",
+     "Beringov",
+     "Panamski",
+     "Drakeov"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje se more u cijelosti nalazi unutar Turske?",
+    "o": [
+     "Levantsko",
+     "Mramorno",
+     "Crno",
+     "Egejsko"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje dvije države zauzimaju Iberijski poluotok, uz Andoru i Gibraltar?",
+    "o": [
+     "Švedska i Norveška",
+     "Italija i Francuska",
+     "Španjolska i Portugal",
+     "Grčka i Albanija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojoj državi pripada poluotok Jukatan?",
+    "o": [
+     "Kolumbiji",
+     "Kubi",
+     "Gvatemali",
+     "Meksiku"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojoj državi pripada poluotok Kamčatka?",
+    "o": [
+     "Rusiji",
+     "Kini",
+     "Kanadi",
+     "Japanu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem se poluotoku nalazi najveći dio Danske?",
+    "o": [
+     "Kola",
+     "Jylland",
+     "Peloponez",
+     "Krim"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se državi nalazi najveći dio amazonske prašume?",
+    "o": [
+     "Peruu",
+     "Venezueli",
+     "Brazilu",
+     "Kolumbiji"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja država preko Sinajskog poluotoka ima dio teritorija u Aziji?",
+    "o": [
+     "Libija",
+     "Sudan",
+     "Tunis",
+     "Egipat"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se država obično NE ubraja u Skandinaviju u užem smislu?",
+    "o": [
+     "Finska",
+     "Danska",
+     "Švedska",
+     "Norveška"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je savezna država SAD-a najveća po površini?",
+    "o": [
+     "Montana",
+     "Aljaska",
+     "Kalifornija",
+     "Teksas"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od koje je države SAD 1867. kupio Aljasku?",
+    "o": [
+     "Ujedinjenog Kraljevstva",
+     "Kanade",
+     "Rusije",
+     "Španjolske"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj je kanadskoj pokrajini francuski jedini službeni jezik?",
+    "o": [
+     "Albertu",
+     "Ontariju",
+     "Manitobi",
+     "Québecu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja se otočna država u Indijskom oceanu sastoji uglavnom od niskih atola?",
+    "o": [
+     "Maldivi",
+     "Mauricijus",
+     "Šri Lanka",
+     "Madagaskar"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se državi nalazi velika crvena stijena Uluru?",
+    "o": [
+     "Novom Zelandu",
+     "Australiji",
+     "JAR-u",
+     "Namibiji"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se državi nalazi drevni grad Machu Picchu?",
+    "o": [
+     "Boliviji",
+     "Čileu",
+     "Peruu",
+     "Meksiku"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se državi nalazi u stijenu uklesani grad Petra?",
+    "o": [
+     "Libanonu",
+     "Siriji",
+     "Egiptu",
+     "Jordanu"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se državi nalazi povijesni grad Timbuktu?",
+    "o": [
+     "Maliju",
+     "Nigeru",
+     "Čadu",
+     "Sudanu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se državi nalazi Nacionalni park Serengeti?",
+    "o": [
+     "Bocvani",
+     "Tanzaniji",
+     "Zambiji",
+     "Južnoafričkoj Republici"
+    ],
+    "a": 1
+   },
+   {
+    "q": "S kojom državom Hrvatska ima najdulju kopnenu granicu?",
+    "o": [
+     "Mađarskom",
+     "Slovenijom",
+     "Bosnom i Hercegovinom",
+     "Srbijom"
+    ],
+    "a": 2
+   }
+  ]
+ }
+}

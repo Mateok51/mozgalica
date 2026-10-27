@@ -1,0 +1,10 @@
+const { chromium } = require('playwright'); const http = require('http'), fs = require('fs'), path = require('path');
+const SITE = path.join(__dirname, 'site');
+const server = http.createServer((req, res) => { const p = path.join(SITE, decodeURIComponent(req.url.split('?')[0]).replace(/\/$/, '/index.html')); if (!fs.existsSync(p)) { res.writeHead(404); return res.end(); } res.writeHead(200, { 'content-type': { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.png': 'image/png', '.svg': 'image/svg+xml' }[path.extname(p)] || 'text/plain' }); fs.createReadStream(p).pipe(res); });
+(async () => { await new Promise((r) => server.listen(8766, r)); const b = await chromium.launch(); const pg = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+  const errs = []; pg.on('pageerror', (e) => errs.push(e.message)); await pg.route(/unpkg|jsdelivr|fonts\./, (r) => r.abort());
+  await pg.goto('http://localhost:8766/'); await pg.click('#demo'); await pg.waitForSelector('.lob-bots');
+  const n = () => pg.$$eval('.lob-row[data-bot]', (e) => e.length); console.log('demo botova', await n());
+  await pg.evaluate(() => document.querySelector('[data-bots="1"]').click()); await pg.waitForTimeout(200); console.log('nakon +', await n(), await pg.textContent('.lob-wait'));
+  await pg.screenshot({ path: path.join(__dirname, 'shots-bots/4-demo.png') });
+  await pg.evaluate(() => document.querySelector('#dstart').click()); await pg.waitForTimeout(3000); console.log('greške', errs.length, errs.join('|')); await b.close(); server.close(); })();

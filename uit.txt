@@ -1,0 +1,4 @@
+Došao do kraja igre: true za 402 s
+Efekti koje je igrač doživio: led, sluz
+Snimke: glasanje, tv-glasanje, moci, tv-moci, pitanje, tv-pitanje, meta, kladionica, tv-kladionica, pitanje-ulog, otkrivanje-ulog, razvrstavanje, tv-razvrstavanje, spajanje, tv-spajanje, finale, tv-finale, kraj, tv-kraj
+Greške: nema

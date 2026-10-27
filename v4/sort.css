@@ -1,0 +1,28 @@
+  /* izazov razvrstavanja: dvije tamne drvene zone i male pergamentne kartice */
+  .srt { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .srt-head { text-align: center; }
+  .srt-head .p-title { font-size: 1.6rem; }
+  .srt-head .p-sub { font-size: 0.95rem; margin-top: 2px; }
+  .srt-zones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .srt-zone { display: flex; flex-direction: column; gap: 6px; min-height: 150px; padding: 8px 7px 10px; border-radius: 10px;
+    background: linear-gradient(180deg, rgba(56, 32, 15, 0.9), rgba(34, 18, 8, 0.92)); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.6); transition: box-shadow 0.15s; }
+  .srt-zone h4 { margin: 0 0 2px; text-align: center; font-family: var(--font-display); font-weight: 400; font-size: 1.02rem; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.1;
+    color: #f3e3c4; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7); overflow-wrap: break-word; }
+  .srt-zone .srt-in { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .srt-zone.over { box-shadow: inset 0 0 0 2px rgba(222, 164, 74, 0.9), inset 0 0 16px rgba(222, 164, 74, 0.22); }
+  .srt-pool { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-height: 48px; padding: 6px; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.28); background: rgba(30, 15, 6, 0.35); }
+  .srt-pool.over { box-shadow: inset 0 0 0 1px rgba(222, 164, 74, 0.6); }
+  .srt-empty { grid-column: 1 / -1; align-self: center; text-align: center; font-weight: 800; font-size: 0.9rem; color: rgba(243, 227, 196, 0.6); }
+  .srt-card { position: relative; padding: 9px 8px; border-radius: 6px; border: 1px solid #6b4422; text-align: center; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+    background: linear-gradient(180deg, #f8ebcc, #ecd6a8); color: #3a2410; font-family: var(--font-body); font-weight: 900; font-size: 1.02rem; line-height: 1.15; overflow-wrap: anywhere;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); transition: box-shadow 0.12s, transform 0.12s; }
+  .srt-card.sel { box-shadow: 0 0 0 2px rgba(222, 164, 74, 0.95), 0 1px 2px rgba(0, 0, 0, 0.35); }
+  .srt-card.drag { z-index: 50; cursor: grabbing; transition: none; transform: translate(var(--x, 0), var(--y, 0)) scale(1.06); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45); }
+  .srt-card.ok { border-color: #4f8f45; box-shadow: 0 0 0 1.5px #4f8f45; }
+  .srt-card.bad { border-color: #a8402e; box-shadow: 0 0 0 1.5px #a8402e; }
+  .srt.sent .srt-card { cursor: default; }
+  /* TV: isti vizualni jezik */
+  .sort-col.a, .sort-col.b { border: 0; border-image: none; border-radius: 12px; background: linear-gradient(180deg, rgba(56, 32, 15, 0.9), rgba(34, 18, 8, 0.92)); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.6); filter: none; }
+  .sort-col h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; color: #f3e3c4; }
+  .chip { border-radius: 6px; border: 1px solid #6b4422; background: linear-gradient(180deg, #f8ebcc, #ecd6a8); color: #3a2410; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); filter: none; }
+  .srt-head .p-title { line-height: 1.15; } .srt-head .p-sub { margin-top: 4px; }

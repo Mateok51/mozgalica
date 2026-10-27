@@ -1,0 +1,46 @@
+Država i glavni grad (Azija) || Japan = Tokio ; Tajland = Bangkok ; Vijetnam = Hanoi ; Južna Koreja = Seul
+Država i glavni grad (Amerike) || Argentina = Buenos Aires ; Peru = Lima ; Kanada = Ottawa ; Čile = Santiago
+Država i glavni grad (Afrika) || Egipat = Kairo ; Kenija = Nairobi ; Maroko = Rabat ; Nigerija = Abuja
+Država i glavni grad (sjever Europe) || Norveška = Oslo ; Švedska = Stockholm ; Finska = Helsinki ; Danska = Kopenhagen
+Hrvatski grad i županija || Osijek = Osječko-baranjska ; Pazin = Istarska ; Gospić = Ličko-senjska ; Čakovec = Međimurska
+Hrvatski grad i rijeka || Karlovac = Kupa ; Osijek = Drava ; Vukovar = Dunav ; Slavonski Brod = Sava
+Otok i mjesto na njemu || Brač = Supetar ; Korčula = Vela Luka ; Pag = Novalja ; Lošinj = Mali Lošinj
+Nacionalni park i znamenitost || Krka = Skradinski buk ; Plitvička jezera = Veliki slap ; Paklenica = Anića kuk ; Mljet = Otočić sv. Marije
+Hrvatski izumitelj i izum || Slavoljub Penkala = Mehanička olovka ; Faust Vrančić = Padobran ; Ivan Vukić = Torpedo ; Josip Belušić = Brzinomjer
+Hrvatski znanstvenik i područje || Andrija Mohorovičić = Seizmologija ; Ruđer Bošković = Fizika i astronomija ; Lavoslav Ružička = Kemija ; Andrija Štampar = Javno zdravstvo
+Hrvatski pisac i djelo || August Šenoa = Zlatarovo zlato ; Miroslav Krleža = Gospoda Glembajevi ; Marin Držić = Dundo Maroje ; Ivana Brlić-Mažuranić = Priče iz davnine
+Hrvatski pjesnik i pjesma ili zbirka || Ivan Goran Kovačić = Jama ; Tin Ujević = Kolajna ; Antun Branko Šimić = Preobraženja ; Dobriša Cesarić = Voćka poslije kiše
+Svjetski pisac i djelo || Fjodor Dostojevski = Zločin i kazna ; Victor Hugo = Jadnici ; Ernest Hemingway = Starac i more ; Franz Kafka = Proces
+Dječja knjiga i pisac || Pinokio = Carlo Collodi ; Mali princ = Antoine de Saint-Exupéry ; Pipi Duga Čarapa = Astrid Lindgren ; Alisa u zemlji čudesa = Lewis Carroll
+Skladatelj i zemlja || Chopin = Poljska ; Verdi = Italija ; Čajkovski = Rusija ; Grieg = Norveška
+Glazbeni instrument i skupina || Truba = Limeni puhači ; Violina = Gudači ; Flauta = Drveni puhači ; Timpan = Udaraljke
+Pjevač i nadimak || Elvis Presley = Kralj rock and rolla ; Michael Jackson = Kralj popa ; Madonna = Kraljica popa ; Bruce Springsteen = The Boss
+Bend i zemlja || ABBA = Švedska ; U2 = Irska ; AC/DC = Australija ; Queen = Ujedinjeno Kraljevstvo
+Film i redatelj || Titanic = James Cameron ; Pulp Fiction = Quentin Tarantino ; Psiho = Alfred Hitchcock ; Kum = Francis Ford Coppola
+Crtani lik i životinja || Mickey = Miš ; Donald = Patka ; Goofy = Pas ; Bugs Bunny = Zec
+Superjunak i grad || Batman = Gotham ; Superman = Metropolis ; Spider-Man = New York ; Black Panther = Wakanda
+Videoigra i lik || The Legend of Zelda = Link ; Tomb Raider = Lara Croft ; Halo = Master Chief ; God of War = Kratos
+Pokémon i tip || Pikachu = Električni ; Charmander = Vatreni ; Squirtle = Vodeni ; Bulbasaur = Travnati
+Sport i rekvizit || Golf = Loptica s rupicama ; Hokej na ledu = Pak ; Badminton = Loptica s perjem ; Kuglanje = Čunjevi
+Sportaš i zemlja || Novak Đoković = Srbija ; Rafael Nadal = Španjolska ; Roger Federer = Švicarska ; Andy Murray = Ujedinjeno Kraljevstvo
+Nogometni klub i grad || Juventus = Torino ; Ajax = Amsterdam ; Benfica = Lisabon ; Celtic = Glasgow
+Hrvatski klub i stadion || Hajduk = Poljud ; Dinamo = Maksimir ; Rijeka = Rujevica ; Osijek = Opus Arena
+Olimpijske igre i grad || 2012. = London ; 2016. = Rio de Janeiro ; 2020. (2021.) = Tokio ; 2024. = Pariz
+Životinja i kontinent podrijetla || Klokan = Australija ; Lama = Južna Amerika ; Panda = Azija ; Zebra = Afrika
+Životinja i skupina || Žaba = Vodozemac ; Orao = Ptica ; Morski pas = Riba ; Krokodil = Gmaz
+Životinja i hrana || Panda = Bambus ; Koala = Eukaliptus ; Ovca = Trava ; Mravojed = Mravi
+Biljka i dio koji jedemo || Mrkva = Korijen ; Špinat = List ; Brokula = Cvijet ; Grašak = Sjemenka
+Organ i funkcija || Srce = Pumpa krv ; Pluća = Izmjena plinova ; Bubrezi = Filtriraju krv ; Želudac = Probavlja hranu
+Vitamin i izvor || Vitamin C = Naranča ; Vitamin D = Sunčeva svjetlost ; Vitamin A = Mrkva ; Vitamin B12 = Meso i jaja
+Element i simbol (2) || Željezo = Fe ; Natrij = Na ; Kalij = K ; Olovo = Pb
+Mjerni uređaj i veličina || Termometar = Temperatura ; Barometar = Tlak zraka ; Vaga = Masa ; Brzinomjer = Brzina
+Znanstvenik i jedinica || Newton = Sila ; Watt = Snaga ; Volt = Napon ; Pascal = Tlak
+Planet i osobina || Saturn = Najistaknutiji prstenovi ; Mars = Crveni planet ; Jupiter = Najveći planet ; Merkur = Najbliži Suncu
+Misija i postignuće || Apollo 11 = Prvo slijetanje ljudi na Mjesec ; Vostok 1 = Prvi čovjek u svemiru ; Sputnjik 1 = Prvi umjetni satelit ; Voyager 1 = Prva letjelica u međuzvjezdanom prostoru
+Građevina i grad || Kip Krista Otkupitelja = Rio de Janeiro ; Opera = Sydney ; Kosi toranj = Pisa ; Sagrada Família = Barcelona
+Čudo svijeta i zemlja || Machu Picchu = Peru ; Petra = Jordan ; Chichén Itzá = Meksiko ; Taj Mahal = Indija
+Rijeka i grad || Temza = London ; Seina = Pariz ; Tiber = Rim ; Vltava = Prag
+Planina i kontinent || Kilimandžaro = Afrika ; Aconcagua = Južna Amerika ; Denali = Sjeverna Amerika ; Elbrus = Europa
+Jelo i zemlja (2) || Paella = Španjolska ; Gulaš = Mađarska ; Pierogi = Poljska ; Moussaka = Grčka
+Blagdan i datum || Božić = 25. prosinca ; Nova godina = 1. siječnja ; Valentinovo = 14. veljače ; Svi sveti = 1. studenoga
+Hrvatski praznik i datum || Dan državnosti = 30. svibnja ; Dan pobjede = 5. kolovoza ; Dan antifašističke borbe = 22. lipnja ; Dan sjećanja na Vukovar = 18. studenoga

@@ -1,0 +1,1908 @@
+{
+ "cats": {
+  "Svemir": [
+   {
+    "q": "Koji je planet najmanji u Sunčevu sustavu?",
+    "o": [
+     "Merkur",
+     "Mars",
+     "Venera",
+     "Zemlja"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je planet najtopliji u Sunčevu sustavu?",
+    "o": [
+     "Merkur",
+     "Venera",
+     "Mars",
+     "Jupiter"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove golemi vulkan na Marsu, najviši poznati vulkan u Sunčevu sustavu?",
+    "o": [
+     "Valles Marineris",
+     "Mauna Kea",
+     "Olympus Mons",
+     "Elysium Planitia"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu dva Marsova mjeseca?",
+    "o": [
+     "Io i Europa",
+     "Titan i Rea",
+     "Haron i Niks",
+     "Fobos i Deimos"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji planet Sunčeva sustava ima najveću prosječnu gustoću?",
+    "o": [
+     "Zemlja",
+     "Jupiter",
+     "Saturn",
+     "Neptun"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji planet ima manju prosječnu gustoću od vode?",
+    "o": [
+     "Jupiter",
+     "Saturn",
+     "Uran",
+     "Mars"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove golema oluja na Jupiteru koja se promatra stoljećima?",
+    "o": [
+     "Velika tamna pjega",
+     "Crveni vrtlog",
+     "Velika crvena pjega",
+     "Jupiterovo oko"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je Jupiterov mjesec vulkanski najaktivnije tijelo Sunčeva sustava?",
+    "o": [
+     "Europa",
+     "Kalisto",
+     "Ganimed",
+     "Io"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je Saturnov mjesec poznat po gejzirima vode koji izbijaju s južnog pola?",
+    "o": [
+     "Enkelad",
+     "Titan",
+     "Mimas",
+     "Japet"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove najveći Neptunov mjesec?",
+    "o": [
+     "Titan",
+     "Triton",
+     "Oberon",
+     "Haron"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove najveći mjesec patuljastog planeta Plutona?",
+    "o": [
+     "Triton",
+     "Fobos",
+     "Haron",
+     "Kalisto"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je letjelica 2015. prva izbliza snimila Pluton?",
+    "o": [
+     "Voyager 2",
+     "Cassini",
+     "Juno",
+     "New Horizons"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je letjelica 2012. prva napustila Sunčevu heliosferu i ušla u međuzvjezdani prostor?",
+    "o": [
+     "Voyager 1",
+     "Voyager 2",
+     "Pioneer 10",
+     "New Horizons"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je jedina letjelica posjetila Uran i Neptun?",
+    "o": [
+     "Voyager 1",
+     "Voyager 2",
+     "Cassini",
+     "Galileo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je letjelica od 2004. do 2017. kružila oko Saturna?",
+    "o": [
+     "Juno",
+     "Galileo",
+     "Cassini",
+     "Magellan"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zvao lunarni modul Apolla 11 kojim su astronauti sletjeli na Mjesec?",
+    "o": [
+     "Columbia",
+     "Falcon",
+     "Intrepid",
+     "Eagle"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je astronaut Apolla 11 ostao u orbiti dok su druga dvojica hodala po Mjesecu?",
+    "o": [
+     "Michael Collins",
+     "Buzz Aldrin",
+     "Jim Lovell",
+     "John Glenn"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je bio drugi čovjek koji je hodao po Mjesecu?",
+    "o": [
+     "Michael Collins",
+     "Buzz Aldrin",
+     "Alan Shepard",
+     "Pete Conrad"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je godine Apollo 11 sletio na Mjesec?",
+    "o": [
+     "1965.",
+     "1972.",
+     "1969.",
+     "1961."
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je ljudi ukupno hodalo po Mjesecu?",
+    "o": [
+     "6",
+     "2",
+     "24",
+     "12"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je misija Apollo posljednja sletjela na Mjesec?",
+    "o": [
+     "Apollo 17",
+     "Apollo 13",
+     "Apollo 15",
+     "Apollo 20"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvala kuja koja je 1957. postala prva životinja u orbiti oko Zemlje?",
+    "o": [
+     "Belka",
+     "Lajka",
+     "Strelka",
+     "Zvjezdica"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zvao američki program višekratnih svemirskih letjelica (1981.–2011.)?",
+    "o": [
+     "Apollo",
+     "Gemini",
+     "Space Shuttle",
+     "Mercury"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je država 2003. postala treća koja je vlastitom letjelicom poslala čovjeka u svemir?",
+    "o": [
+     "Indija",
+     "Japan",
+     "Francuska",
+     "Kina"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zvala sovjetska, a zatim ruska svemirska postaja koja je kružila od 1986. do 2001.?",
+    "o": [
+     "Mir",
+     "Skylab",
+     "Tiangong",
+     "Sojuz"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvala prva američka svemirska postaja, lansirana 1973.?",
+    "o": [
+     "Mir",
+     "Skylab",
+     "Saljut 1",
+     "Freedom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove veliki svemirski teleskop lansiran u prosincu 2021.?",
+    "o": [
+     "Kepler",
+     "Spitzer",
+     "James Webb",
+     "Chandra"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je NASA-in teleskop od 2009. do 2018. tražio planete oko drugih zvijezda?",
+    "o": [
+     "Hubble",
+     "Chandra",
+     "Spitzer",
+     "Kepler"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako zovemo planet koji kruži oko neke druge zvijezde, a ne oko Sunca?",
+    "o": [
+     "Egzoplanet",
+     "Patuljasti planet",
+     "Planetoid",
+     "Protoplanet"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove supermasivna crna rupa u središtu Mliječnog puta?",
+    "o": [
+     "Labud X-1",
+     "Strijelac A*",
+     "M87*",
+     "Kentaur A"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je velika spiralna galaksija najbliža Mliječnom putu?",
+    "o": [
+     "Sombrero",
+     "Vrtlog",
+     "Andromeda",
+     "Kotač"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojeg je oblika naša galaksija Mliječni put?",
+    "o": [
+     "Eliptična",
+     "Nepravilna",
+     "Prstenasta",
+     "Spiralna s prečkom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je zvijezda najsjajnija na noćnom nebu?",
+    "o": [
+     "Sirijus",
+     "Sjevernjača",
+     "Vega",
+     "Betelgeuse"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se zviježđu nalazi Sjevernjača?",
+    "o": [
+     "Veliki medvjed",
+     "Mali medvjed",
+     "Kasiopeja",
+     "Orion"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je zviježđe poznato po „pojasu“ od tri sjajne zvijezde u nizu?",
+    "o": [
+     "Lav",
+     "Labud",
+     "Orion",
+     "Škorpion"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove crvena superdivovska zvijezda u zviježđu Oriona?",
+    "o": [
+     "Rigel",
+     "Sirijus",
+     "Vega",
+     "Betelgeuse"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je zviježđa službeno priznala Međunarodna astronomska unija?",
+    "o": [
+     "88",
+     "12",
+     "48",
+     "108"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se planet u narodu naziva Danica ili Večernjica?",
+    "o": [
+     "Jupiter",
+     "Venera",
+     "Mars",
+     "Merkur"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se Mjesečevoj mijeni može dogoditi pomrčina Mjeseca?",
+    "o": [
+     "Mlađak",
+     "Prva četvrt",
+     "Uštap",
+     "Zadnja četvrt"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove Mjesečeva mijena u kojoj Mjesec uopće ne vidimo?",
+    "o": [
+     "Uštap",
+     "Prva četvrt",
+     "Zadnja četvrt",
+     "Mlađak"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je Mjesec prosječno udaljen od Zemlje?",
+    "o": [
+     "Oko 384 000 km",
+     "Oko 38 000 km",
+     "Oko 3,8 milijuna km",
+     "Oko 150 milijuna km"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove jedinica jednaka prosječnoj udaljenosti Zemlje od Sunca?",
+    "o": [
+     "Parsek",
+     "Astronomska jedinica",
+     "Svjetlosna godina",
+     "Svjetlosna minuta"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je patuljasti planet ujedno i najveće tijelo u asteroidnom pojasu?",
+    "o": [
+     "Vesta",
+     "Pluton",
+     "Ceres",
+     "Eris"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove pojas ledenih tijela iza Neptuna u kojem se nalazi Pluton?",
+    "o": [
+     "Asteroidni pojas",
+     "Van Allenov pojas",
+     "Glavni pojas",
+     "Kuiperov pojas"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se poznati komet vraća u blizinu Sunca otprilike svakih 76 godina?",
+    "o": [
+     "Halleyev komet",
+     "Hale-Bopp",
+     "Enckeov komet",
+     "Shoemaker-Levy 9"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji se komet 1994. raspao i sudario s Jupiterom?",
+    "o": [
+     "Halleyev komet",
+     "Shoemaker-Levy 9",
+     "Hale-Bopp",
+     "Enckeov komet"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove svemirsko tijelo koje prođe kroz atmosferu i padne na tlo Zemlje?",
+    "o": [
+     "Meteor",
+     "Komet",
+     "Meteorit",
+     "Kvazar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove kolovoški meteorski roj, u narodu poznat kao „Suze svetog Lovre“?",
+    "o": [
+     "Leonidi",
+     "Geminidi",
+     "Orionidi",
+     "Perzeidi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što uzrokuje polarnu svjetlost (auroru)?",
+    "o": [
+     "Nabijene čestice sa Sunca",
+     "Odraz Mjesečeve svjetlosti",
+     "Odsjaj polarnog leda",
+     "Munje u visokoj atmosferi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kemijski element po zastupljenosti drugi u Suncu, odmah nakon vodika?",
+    "o": [
+     "Kisik",
+     "Helij",
+     "Ugljik",
+     "Dušik"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kakva je zvijezda Sunce?",
+    "o": [
+     "Crveni div",
+     "Bijeli patuljak",
+     "Žuti patuljak",
+     "Plavi superdiv"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko je približno staro Sunce?",
+    "o": [
+     "Oko 460 milijuna godina",
+     "Oko 13,8 milijardi godina",
+     "Oko 46 milijardi godina",
+     "Oko 4,6 milijardi godina"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je približno star svemir prema današnjim mjerenjima?",
+    "o": [
+     "Oko 13,8 milijardi godina",
+     "Oko 4,6 milijardi godina",
+     "Oko 1 milijardu godina",
+     "Oko 100 milijardi godina"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove teorija prema kojoj je svemir nastao iz iznimno gustog i vrućeg stanja?",
+    "o": [
+     "Teorija struna",
+     "Veliki prasak",
+     "Stacionarni svemir",
+     "Veliko sažimanje"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što ostaje nakon što zvijezda poput Sunca na kraju života odbaci vanjske slojeve?",
+    "o": [
+     "Crna rupa",
+     "Neutronska zvijezda",
+     "Bijeli patuljak",
+     "Smeđi patuljak"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove brzo rotirajuća neutronska zvijezda koja odašilje pravilne impulse zračenja?",
+    "o": [
+     "Kvazar",
+     "Maglica",
+     "Crveni div",
+     "Pulsar"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove snažna eksplozija masivne zvijezde na kraju njezina života?",
+    "o": [
+     "Supernova",
+     "Kvazar",
+     "Pulsar",
+     "Protozvijezda"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je bio prvi Amerikanac u svemiru?",
+    "o": [
+     "John Glenn",
+     "Alan Shepard",
+     "Neil Armstrong",
+     "Gus Grissom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je 1965. prvi izveo šetnju u svemiru?",
+    "o": [
+     "Jurij Gagarin",
+     "German Titov",
+     "Aleksej Leonov",
+     "Ed White"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je država 2023. prva meko spustila letjelicu u blizini južnog pola Mjeseca?",
+    "o": [
+     "Kina",
+     "Japan",
+     "Rusija",
+     "Indija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove NASA-in rover koji je 2021. na Mars donio mali helikopter Ingenuity?",
+    "o": [
+     "Perseverance",
+     "Curiosity",
+     "Opportunity",
+     "Spirit"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zvao prvi rover na Marsu, koji je ondje stigao 1997.?",
+    "o": [
+     "Spirit",
+     "Sojourner",
+     "Curiosity",
+     "Viking"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Zbog čega je površina Marsa crvenkasta?",
+    "o": [
+     "Zbog bakrenih spojeva",
+     "Zbog crvenih algi",
+     "Zbog željezovih oksida",
+     "Zbog užarene lave"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko otprilike traje jedan dan na Marsu?",
+    "o": [
+     "Oko 10 sati",
+     "Oko 58 dana",
+     "Oko 6 sati",
+     "Oko 24 h 40 min"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se planet sporije okrene oko svoje osi nego što obiđe Sunce?",
+    "o": [
+     "Venera",
+     "Merkur",
+     "Mars",
+     "Neptun"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji planet najbrže obiđe Sunce?",
+    "o": [
+     "Venera",
+     "Merkur",
+     "Mars",
+     "Jupiter"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji planet ima najkraći dan, odnosno najbrže se okreće oko svoje osi?",
+    "o": [
+     "Zemlja",
+     "Merkur",
+     "Jupiter",
+     "Neptun"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je planet 1781. otkrio William Herschel, prvi otkriven teleskopom?",
+    "o": [
+     "Neptun",
+     "Saturn",
+     "Pluton",
+     "Uran"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je planet otkriven 1846. na temelju matematičkih proračuna?",
+    "o": [
+     "Neptun",
+     "Uran",
+     "Saturn",
+     "Mars"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je 1930. otkrio Pluton?",
+    "o": [
+     "Percival Lowell",
+     "Clyde Tombaugh",
+     "Edwin Hubble",
+     "William Herschel"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kolikom brzinom otprilike mora letjeti tijelo da bi se oslobodilo Zemljine gravitacije?",
+    "o": [
+     "Oko 1,1 km/s",
+     "Oko 112 km/s",
+     "Oko 11,2 km/s",
+     "Oko 300 km/s"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojoj visini prema uobičajenoj definiciji počinje svemir (Kármánova linija)?",
+    "o": [
+     "10 km",
+     "1000 km",
+     "36 000 km",
+     "100 km"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove orbita na kojoj satelit iznad ekvatora stalno „stoji“ iznad iste točke?",
+    "o": [
+     "Geostacionarna",
+     "Polarna",
+     "Niska orbita",
+     "Heliocentrična"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se istarskom mjestu nalazi zvjezdarnica poznata po otkriću mnogih asteroida?",
+    "o": [
+     "Motovun",
+     "Višnjan",
+     "Grožnjan",
+     "Buzet"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove vanjski sloj Sunčeve atmosfere vidljiv tijekom potpune pomrčine Sunca?",
+    "o": [
+     "Fotosfera",
+     "Jezgra",
+     "Korona",
+     "Konvektivna zona"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu tamnija i hladnija područja na površini Sunca?",
+    "o": [
+     "Sunčeve granule",
+     "Protuberancije",
+     "Sunčeve baklje",
+     "Sunčeve pjege"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je otprilike puta promjer Sunca veći od promjera Zemlje?",
+    "o": [
+     "Oko 109 puta",
+     "Oko 10 puta",
+     "Oko 1000 puta",
+     "Oko 330 000 puta"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se nazivaju velike tamne ravnice na Mjesecu vidljive golim okom?",
+    "o": [
+     "Pustinje",
+     "Mora",
+     "Kanjoni",
+     "Ledenjaci"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove dan kad su dan i noć na cijeloj Zemlji približno jednako dugi?",
+    "o": [
+     "Suncostaj",
+     "Afel",
+     "Ravnodnevnica",
+     "Perihel"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što je glavni uzrok izmjene godišnjih doba na Zemlji?",
+    "o": [
+     "Promjena udaljenosti od Sunca",
+     "Promjena Sunčeve aktivnosti",
+     "Mjesečeve mijene",
+     "Nagib Zemljine osi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove točka Zemljine putanje u kojoj je Zemlja najbliža Suncu?",
+    "o": [
+     "Perihel",
+     "Afel",
+     "Apogej",
+     "Zenit"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem se planetu na sjevernom polu nalazi oluja u obliku šesterokuta?",
+    "o": [
+     "Jupiter",
+     "Saturn",
+     "Uran",
+     "Neptun"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji plin u atmosferi Urana i Neptuna daje tim planetima plavkastu boju?",
+    "o": [
+     "Kisik",
+     "Dušik",
+     "Metan",
+     "Neon"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Od čega se uglavnom sastoje Saturnovi prstenovi?",
+    "o": [
+     "Od plina",
+     "Od željeza",
+     "Od lave",
+     "Od vodenog leda"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji plin čini najveći dio atmosfere Venere?",
+    "o": [
+     "Ugljikov dioksid",
+     "Dušik",
+     "Kisik",
+     "Vodik"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se gradu nalazi sjedište Europske svemirske agencije (ESA)?",
+    "o": [
+     "Bruxelles",
+     "Pariz",
+     "Ženeva",
+     "Bonn"
+    ],
+    "a": 1
+   },
+   {
+    "q": "S kojeg je kozmodroma 1961. u svemir lansiran Jurij Gagarin?",
+    "o": [
+     "Pleseck",
+     "Kourou",
+     "Bajkonur",
+     "Cape Canaveral"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Na kojem se području nalazi glavni europski kozmodrom Kourou?",
+    "o": [
+     "Azorski otoci",
+     "Kanarski otoci",
+     "Island",
+     "Francuska Gvajana"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko otprilike treba svjetlosti da s Mjeseca stigne do Zemlje?",
+    "o": [
+     "Oko 1,3 sekunde",
+     "Oko 8 minuta",
+     "Oko 1 minute",
+     "Oko 1 sata"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zovu dvije patuljaste galaksije vidljive golim okom s južne polutke?",
+    "o": [
+     "Plejade",
+     "Magellanovi oblaci",
+     "Hijade",
+     "Andromedine sestre"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se u hrvatskom narodu naziva zvjezdani skup Plejade?",
+    "o": [
+     "Kumova slama",
+     "Velika kola",
+     "Vlašići",
+     "Danica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se u hrvatskoj narodnoj tradiciji naziva Mliječni put?",
+    "o": [
+     "Vlašići",
+     "Velika kola",
+     "Zvjezdani most",
+     "Kumova slama"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove skupina od sedam sjajnih zvijezda u zviježđu Velikog medvjeda?",
+    "o": [
+     "Velika kola",
+     "Mala kola",
+     "Vlašići",
+     "Kumova slama"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je boje nebo na Mjesecu danju?",
+    "o": [
+     "Plavo",
+     "Crno",
+     "Narančasto",
+     "Bijelo"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je astronom otkrio da se planeti gibaju oko Sunca po elipsama?",
+    "o": [
+     "Tycho Brahe",
+     "Galileo Galilei",
+     "Johannes Kepler",
+     "Nikola Kopernik"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove ESA-ina letjelica čiji se modul Philae 2014. spustio na komet?",
+    "o": [
+     "Giotto",
+     "Huygens",
+     "Gaia",
+     "Rosetta"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove europska sonda koja se 2005. spustila na Saturnov mjesec Titan?",
+    "o": [
+     "Huygens",
+     "Philae",
+     "Rosetta",
+     "Beagle 2"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je Amerikanac 2001. postao prvi svemirski turist?",
+    "o": [
+     "Richard Branson",
+     "Dennis Tito",
+     "Elon Musk",
+     "Mark Shuttleworth"
+    ],
+    "a": 1
+   }
+  ],
+  "Znanost": [
+   {
+    "q": "Koja je mjerna jedinica za silu?",
+    "o": [
+     "Njutn",
+     "Džul",
+     "Vat",
+     "Paskal"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je mjerna jedinica za snagu?",
+    "o": [
+     "Džul",
+     "Vat",
+     "Njutn",
+     "Volt"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojoj je fizikalnoj veličini mjerna jedinica kilovatsat?",
+    "o": [
+     "Snazi",
+     "Naponu",
+     "Energiji",
+     "Jakosti struje"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je mjerna jedinica za jakost električne struje?",
+    "o": [
+     "Volt",
+     "Om",
+     "Kulon",
+     "Amper"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je mjerna jedinica za tlak?",
+    "o": [
+     "Paskal",
+     "Njutn",
+     "Džul",
+     "Herc"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je osnovna SI jedinica za temperaturu?",
+    "o": [
+     "Celzijev stupanj",
+     "Kelvin",
+     "Fahrenheitov stupanj",
+     "Džul"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je osnovna SI jedinica za masu?",
+    "o": [
+     "Gram",
+     "Tona",
+     "Kilogram",
+     "Njutn"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je mjerna jedinica za električni naboj?",
+    "o": [
+     "Amper",
+     "Volt",
+     "Farad",
+     "Kulon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kolika je približno brzina zvuka u zraku?",
+    "o": [
+     "Oko 340 m/s",
+     "Oko 34 m/s",
+     "Oko 3400 m/s",
+     "Oko 300 000 km/s"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko približno iznosi ubrzanje slobodnog pada na Zemlji?",
+    "o": [
+     "1,62 m/s²",
+     "9,81 m/s²",
+     "98,1 m/s²",
+     "3,71 m/s²"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja boja vidljive svjetlosti ima najveću valnu duljinu?",
+    "o": [
+     "Ljubičasta",
+     "Zelena",
+     "Crvena",
+     "Plava"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Zbog čega je danju vedro nebo plavo?",
+    "o": [
+     "Odraza mora i oceana",
+     "Ozonskog omotača",
+     "Boje vodene pare",
+     "Raspršenja svjetlosti u zraku"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove razlaganje bijele svjetlosti na boje pri prolasku kroz prizmu?",
+    "o": [
+     "Disperzija",
+     "Difrakcija",
+     "Refleksija",
+     "Interferencija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je čestica atoma negativno nabijena?",
+    "o": [
+     "Proton",
+     "Elektron",
+     "Neutron",
+     "Pozitron"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja čestica u jezgri atoma nema električni naboj?",
+    "o": [
+     "Proton",
+     "Elektron",
+     "Neutron",
+     "Ion"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je 1897. otkrio elektron?",
+    "o": [
+     "Ernest Rutherford",
+     "Niels Bohr",
+     "James Chadwick",
+     "J. J. Thomson"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je pokusom sa zlatnom folijom otkrio atomsku jezgru?",
+    "o": [
+     "Ernest Rutherford",
+     "J. J. Thomson",
+     "Niels Bohr",
+     "Max Planck"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je njemački fizičar 1895. otkrio X-zrake, poslije nazvane po njemu?",
+    "o": [
+     "Max Planck",
+     "Wilhelm Röntgen",
+     "Heinrich Hertz",
+     "Robert Koch"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je francuski fizičar 1896. otkrio radioaktivnost?",
+    "o": [
+     "Pierre Curie",
+     "Louis Pasteur",
+     "Henri Becquerel",
+     "André-Marie Ampère"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je jedina osoba s Nobelovim nagradama u dvije različite znanosti?",
+    "o": [
+     "Albert Einstein",
+     "Linus Pauling",
+     "Niels Bohr",
+     "Marie Curie"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je autor teorije evolucije prirodnim odabirom?",
+    "o": [
+     "Charles Darwin",
+     "Jean-Baptiste Lamarck",
+     "Gregor Mendel",
+     "Carl Linné"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem je otočju Charles Darwin proučavao zebe i kornjače?",
+    "o": [
+     "Havaji",
+     "Galápagos",
+     "Azori",
+     "Kanarski otoci"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko se smatra ocem genetike zbog pokusa s graškom?",
+    "o": [
+     "Charles Darwin",
+     "Louis Pasteur",
+     "Gregor Mendel",
+     "Robert Hooke"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove molekula u kojoj je zapisana nasljedna uputa živih bića?",
+    "o": [
+     "Hemoglobin",
+     "Kolagen",
+     "Keratin",
+     "DNK"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se organeli biljne stanice odvija fotosinteza?",
+    "o": [
+     "U kloroplastu",
+     "U mitohondriju",
+     "U ribosomu",
+     "U lizosomu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je prvi mikroskopom opisao bakterije u 17. stoljeću?",
+    "o": [
+     "Robert Koch",
+     "Antoni van Leeuwenhoek",
+     "Louis Pasteur",
+     "Galileo Galilei"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je engleski znanstvenik 1665. prvi upotrijebio naziv „stanica“?",
+    "o": [
+     "Isaac Newton",
+     "Charles Darwin",
+     "Robert Hooke",
+     "Edward Jenner"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove znanost o potresima?",
+    "o": [
+     "Vulkanologija",
+     "Meteorologija",
+     "Speleologija",
+     "Seizmologija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove superkontinent koji se počeo raspadati prije oko 200 milijuna godina?",
+    "o": [
+     "Pangea",
+     "Atlantida",
+     "Gondvana",
+     "Lemurija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je 1912. predložio teoriju o pomicanju kontinenata?",
+    "o": [
+     "Charles Lyell",
+     "Alfred Wegener",
+     "Alexander von Humboldt",
+     "James Hutton"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove rastaljena stijena ispod Zemljine površine?",
+    "o": [
+     "Lava",
+     "Bazalt",
+     "Magma",
+     "Tuf"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se sloju atmosfere nalazi najveći dio ozona?",
+    "o": [
+     "U troposferi",
+     "U mezosferi",
+     "U termosferi",
+     "U stratosferi"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem se sloju atmosfere odvijaju gotovo sve vremenske pojave?",
+    "o": [
+     "U troposferi",
+     "U stratosferi",
+     "U mezosferi",
+     "U egzosferi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojim se instrumentom mjeri vlažnost zraka?",
+    "o": [
+     "Anemometrom",
+     "Higrometrom",
+     "Termometrom",
+     "Seizmografom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što mjeri anemometar?",
+    "o": [
+     "Vlažnost zraka",
+     "Količinu oborina",
+     "Brzinu vjetra",
+     "Tlak zraka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U koju skupinu stijena pripada mramor?",
+    "o": [
+     "Magmatske",
+     "Sedimentne",
+     "Vulkanske",
+     "Metamorfne"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove ljestvica tvrdoće minerala od 1 do 10?",
+    "o": [
+     "Mohsova",
+     "Richterova",
+     "Beaufortova",
+     "Kelvinova"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je mineral najmekši na Mohsovoj ljestvici?",
+    "o": [
+     "Gips",
+     "Talk",
+     "Kvarc",
+     "Kalcit"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojom se ljestvicom opisuje jačina vjetra?",
+    "o": [
+     "Mohsovom",
+     "Richterovom",
+     "Beaufortovom",
+     "Kelvinovom"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko Fahrenheitovih stupnjeva iznosi vrelište vode na razini mora?",
+    "o": [
+     "100 °F",
+     "180 °F",
+     "32 °F",
+     "212 °F"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Pri kojoj su temperaturi vrijednosti na Celzijevoj i Fahrenheitovoj ljestvici jednake?",
+    "o": [
+     "−40°",
+     "0°",
+     "−32°",
+     "100°"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove promjena visine zvuka sirene dok nam se vozilo približava pa udaljava?",
+    "o": [
+     "Efekt staklenika",
+     "Dopplerov efekt",
+     "Fotoelektrični efekt",
+     "Coriolisov efekt"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kroz što se zvuk ne može širiti?",
+    "o": [
+     "Kroz vodu",
+     "Kroz čelik",
+     "Kroz vakuum",
+     "Kroz drvo"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove zvuk previsoke frekvencije da bi ga čulo ljudsko uho?",
+    "o": [
+     "Infrazvuk",
+     "Supersonik",
+     "Jeka",
+     "Ultrazvuk"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Do koje frekvencije otprilike seže gornja granica ljudskog sluha?",
+    "o": [
+     "Oko 20 000 Hz",
+     "Oko 2000 Hz",
+     "Oko 200 Hz",
+     "Oko 200 000 Hz"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se još naziva prvi Newtonov zakon gibanja?",
+    "o": [
+     "Zakon akcije i reakcije",
+     "Zakon tromosti",
+     "Zakon gravitacije",
+     "Zakon očuvanja mase"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Po kojem je izumitelju nazvana mjerna jedinica vat?",
+    "o": [
+     "Alessandro Volta",
+     "André-Marie Ampère",
+     "James Watt",
+     "Thomas Edison"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je od ovih metala najbolji vodič električne struje?",
+    "o": [
+     "Bakar",
+     "Zlato",
+     "Aluminij",
+     "Srebro"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji od ovih metala privlači magnet?",
+    "o": [
+     "Željezo",
+     "Bakar",
+     "Aluminij",
+     "Zlato"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove prijelaz tvari iz plinovitog u tekuće stanje?",
+    "o": [
+     "Isparavanje",
+     "Kondenzacija",
+     "Taljenje",
+     "Sublimacija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Pri kojoj temperaturi voda ima najveću gustoću?",
+    "o": [
+     "0 °C",
+     "−4 °C",
+     "Oko 4 °C",
+     "100 °C"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Zašto led pluta na vodi?",
+    "o": [
+     "Ima veću gustoću od vode",
+     "Sadrži mjehuriće zraka",
+     "Hladniji je od vode",
+     "Ima manju gustoću od vode"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je njemački fizičar postavio načelo neodređenosti?",
+    "o": [
+     "Werner Heisenberg",
+     "Erwin Schrödinger",
+     "Max Planck",
+     "Niels Bohr"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojem fizičaru duguje ime poznata mačka iz misaonog pokusa?",
+    "o": [
+     "Werner Heisenberg",
+     "Erwin Schrödinger",
+     "Albert Einstein",
+     "Paul Dirac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je čestica 2012. potvrđena pokusima u CERN-u?",
+    "o": [
+     "Neutrino",
+     "Pozitron",
+     "Higgsov bozon",
+     "Kvark"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove antičestica elektrona?",
+    "o": [
+     "Proton",
+     "Neutron",
+     "Foton",
+     "Pozitron"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove elementarna čestica svjetlosti?",
+    "o": [
+     "Foton",
+     "Elektron",
+     "Neutrino",
+     "Gluon"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Po kojem je znanstveniku nazvana mjerna jedinica za frekvenciju?",
+    "o": [
+     "James Maxwell",
+     "Heinrich Hertz",
+     "Michael Faraday",
+     "Georg Ohm"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je dubrovački isusovac iz 18. st., fizičar i astronom, dao ime zagrebačkom institutu?",
+    "o": [
+     "Marin Getaldić",
+     "Faust Vrančić",
+     "Ruđer Bošković",
+     "Andrija Mohorovičić"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je Šibenčanin oko 1615. opisao i nacrtao jednu od prvih zamisli padobrana?",
+    "o": [
+     "Ruđer Bošković",
+     "Marin Getaldić",
+     "Juraj Dalmatinac",
+     "Faust Vrančić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Po kojem je znanstveniku nazvana SI jedinica za magnetsku indukciju?",
+    "o": [
+     "Nikola Tesla",
+     "Michael Faraday",
+     "André-Marie Ampère",
+     "Alessandro Volta"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kemičar rođen u Sarajevu, a radio u Zagrebu, dobio Nobelovu nagradu 1975.?",
+    "o": [
+     "Lavoslav Ružička",
+     "Vladimir Prelog",
+     "Fran Bošnjaković",
+     "Ivan Supek"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove znanost o vremenu i atmosferskim pojavama?",
+    "o": [
+     "Klimatologija",
+     "Geologija",
+     "Meteorologija",
+     "Hidrologija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove znanost o gljivama?",
+    "o": [
+     "Mikrobiologija",
+     "Botanika",
+     "Fitologija",
+     "Mikologija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove znanost o kukcima?",
+    "o": [
+     "Entomologija",
+     "Ornitologija",
+     "Ihtiologija",
+     "Herpetologija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove dioba stanice na dvije genetski jednake stanice?",
+    "o": [
+     "Mejoza",
+     "Mitoza",
+     "Osmoza",
+     "Fuzija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove prolazak vode kroz polupropusnu membranu?",
+    "o": [
+     "Mitoza",
+     "Fotosinteza",
+     "Osmoza",
+     "Fermentacija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje je države bio Anders Celsius, po kojemu je nazvana ljestvica temperature?",
+    "o": [
+     "Norveška",
+     "Danska",
+     "Nizozemska",
+     "Švedska"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što je teže: kilogram željeza ili kilogram perja?",
+    "o": [
+     "Jednako su teški",
+     "Kilogram željeza",
+     "Kilogram perja",
+     "Ovisi o temperaturi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Ako se u vakuumu istodobno ispuste čekić i pero, što će prije pasti?",
+    "o": [
+     "Čekić",
+     "Past će istodobno",
+     "Pero",
+     "Ništa neće pasti"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja se boja dobije miješanjem crvene, zelene i plave svjetlosti?",
+    "o": [
+     "Crna",
+     "Smeđa",
+     "Bijela",
+     "Žuta"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje su tri osnovne boje svjetlosti na zaslonima (RGB)?",
+    "o": [
+     "Crvena, žuta, plava",
+     "Žuta, zelena, plava",
+     "Crvena, žuta, zelena",
+     "Crvena, zelena, plava"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Zbog čega žlica u čaši vode izgleda prelomljeno?",
+    "o": [
+     "Zbog loma svjetlosti",
+     "Zbog odbijanja svjetlosti",
+     "Zbog upijanja svjetlosti",
+     "Zbog tlaka vode"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji uređaj pretvara mehaničku energiju u električnu?",
+    "o": [
+     "Elektromotor",
+     "Generator",
+     "Transformator",
+     "Kondenzator"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji uređaj povećava ili smanjuje napon izmjenične struje?",
+    "o": [
+     "Generator",
+     "Ispravljač",
+     "Transformator",
+     "Osigurač"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što znači predmetak „mikro“ u mjernim jedinicama?",
+    "o": [
+     "Tisućiti dio",
+     "Milijarditi dio",
+     "Stoti dio",
+     "Milijunti dio"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji predmetak označava milijardu (10⁹) jedinica?",
+    "o": [
+     "Giga",
+     "Mega",
+     "Tera",
+     "Kilo"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je starogrčki filozof poznat po zamisli da se sve sastoji od atoma?",
+    "o": [
+     "Aristotel",
+     "Demokrit",
+     "Platon",
+     "Pitagora"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove mjesto na površini Zemlje točno iznad žarišta potresa?",
+    "o": [
+     "Hipocentar",
+     "Rasjed",
+     "Epicentar",
+     "Krater"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Za što je Albert Einstein dobio Nobelovu nagradu za fiziku?",
+    "o": [
+     "Teoriju relativnosti",
+     "Formulu E = mc²",
+     "Otkriće atomske jezgre",
+     "Fotoelektrični efekt"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja vrsta energije nastaje kada se tijelo podigne na neku visinu?",
+    "o": [
+     "Potencijalna",
+     "Kinetička",
+     "Toplinska",
+     "Nuklearna"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojim se instrumentom mjeri električni napon?",
+    "o": [
+     "Ampermetrom",
+     "Voltmetrom",
+     "Barometrom",
+     "Higrometrom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Krajem kojega su geološkog razdoblja izumrli neptičji dinosauri?",
+    "o": [
+     "Jure",
+     "Trijasa",
+     "Krede",
+     "Perma"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove znanstvenik koji proučava fosile izumrlih organizama?",
+    "o": [
+     "Arheolog",
+     "Antropolog",
+     "Etnolog",
+     "Paleontolog"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se izotop koristi za određivanje starosti drevnih organskih ostataka?",
+    "o": [
+     "Ugljik-14",
+     "Uran-238",
+     "Kisik-18",
+     "Vodik-2"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako zovemo vrste koje u prirodi žive samo na jednom ograničenom području?",
+    "o": [
+     "Invazivne",
+     "Endemske",
+     "Kozmopolitske",
+     "Selidbene"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što proučava akustika?",
+    "o": [
+     "Svjetlost",
+     "Toplinu",
+     "Zvuk",
+     "Magnetizam"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je engleski znanstvenik 1831. otkrio elektromagnetsku indukciju?",
+    "o": [
+     "James Maxwell",
+     "Isaac Newton",
+     "Robert Boyle",
+     "Michael Faraday"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je talijanski fizičar oko 1800. izradio prvu električnu bateriju?",
+    "o": [
+     "Alessandro Volta",
+     "Luigi Galvani",
+     "Guglielmo Marconi",
+     "Enrico Fermi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je američki državnik pokusom sa zmajem istraživao munje?",
+    "o": [
+     "Thomas Jefferson",
+     "Benjamin Franklin",
+     "George Washington",
+     "Abraham Lincoln"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Zašto munju vidimo prije nego što čujemo grom?",
+    "o": [
+     "Munja nastaje prije groma",
+     "Oko je osjetljivije od uha",
+     "Svjetlost je brža od zvuka",
+     "Zvuk se odbija od oblaka"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu visoki olujni oblaci koji donose grmljavinu i tuču?",
+    "o": [
+     "Cirusi",
+     "Stratusi",
+     "Altostratusi",
+     "Kumulonimbusi"
+    ],
+    "a": 3
+   }
+  ]
+ }
+}

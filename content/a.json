@@ -1,0 +1,914 @@
+{
+ "cats": {
+  "Svemir": [
+   {
+    "q": "Koji je planet poznat kao „Crveni planet“?",
+    "o": [
+     "Mars",
+     "Venera",
+     "Jupiter",
+     "Merkur"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji planet ima najpoznatije i najizraženije prstenove?",
+    "o": [
+     "Mars",
+     "Uran",
+     "Neptun",
+     "Saturn"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove galaksija u kojoj se nalazi Sunčev sustav?",
+    "o": [
+     "Mliječni put",
+     "Andromeda",
+     "Sombrero",
+     "Vrtlog"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko otprilike treba Sunčevoj svjetlosti da stigne do Zemlje?",
+    "o": [
+     "8 sekundi",
+     "8 minuta",
+     "8 sati",
+     "8 dana"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je bio prvi čovjek u svemiru?",
+    "o": [
+     "Neil Armstrong",
+     "John Glenn",
+     "Buzz Aldrin",
+     "Jurij Gagarin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zvao prvi umjetni Zemljin satelit, lansiran 1957.?",
+    "o": [
+     "Explorer 1",
+     "Vostok 1",
+     "Sputnjik 1",
+     "Apollo 1"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je planet Sunčeva sustava najudaljeniji od Sunca?",
+    "o": [
+     "Neptun",
+     "Saturn",
+     "Uran",
+     "Jupiter"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je godine Pluton svrstan u patuljaste planete?",
+    "o": [
+     "1999.",
+     "2003.",
+     "2006.",
+     "2011."
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji planet rotira gotovo „ležeći na boku“, s osi nagnutom za oko 98°?",
+    "o": [
+     "Neptun",
+     "Uran",
+     "Saturn",
+     "Venera"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je najveći Jupiterov mjesec, ujedno i najveći u Sunčevu sustavu?",
+    "o": [
+     "Io",
+     "Europa",
+     "Kalisto",
+     "Ganimed"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove najveći Saturnov mjesec?",
+    "o": [
+     "Enkelad",
+     "Titan",
+     "Mimas",
+     "Rea"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je zvijezda najbliža Sunčevu sustavu?",
+    "o": [
+     "Sirius",
+     "Vega",
+     "Betelgeuse",
+     "Proksima Kentaura"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove svemirski teleskop lansiran 1990. godine?",
+    "o": [
+     "James Webb",
+     "Kepler",
+     "Hubble",
+     "Spitzer"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što je svjetlosna godina?",
+    "o": [
+     "Mjera udaljenosti",
+     "Mjera brzine",
+     "Mjera svjetline",
+     "Mjera vremena"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji kemijski element čini najveći dio mase Sunca?",
+    "o": [
+     "Helij",
+     "Kisik",
+     "Ugljik",
+     "Vodik"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove područje s mnoštvom malih tijela između orbita Marsa i Jupitera?",
+    "o": [
+     "Kuiperov pojas",
+     "Oortov oblak",
+     "Asteroidni pojas",
+     "Van Allenov pojas"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je misija Apollo 1970. prekinuta zbog eksplozije spremnika kisika?",
+    "o": [
+     "Apollo 11",
+     "Apollo 13",
+     "Apollo 15",
+     "Apollo 17"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko otprilike traje razdoblje od jednog do sljedećeg punog mjeseca?",
+    "o": [
+     "7 dana",
+     "14 dana",
+     "29,5 dana",
+     "45 dana"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je bila prva žena u svemiru?",
+    "o": [
+     "Sally Ride",
+     "Valentina Tereškova",
+     "Svetlana Savicka",
+     "Jelena Kondakova"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove granica oko crne rupe iz koje ništa ne može pobjeći?",
+    "o": [
+     "Horizont događaja",
+     "Akrecijski disk",
+     "Fotosfera",
+     "Singularitet"
+    ],
+    "a": 0
+   }
+  ],
+  "Ljudsko tijelo": [
+   {
+    "q": "Koji je najveći organ ljudskog tijela?",
+    "o": [
+     "Koža",
+     "Jetra",
+     "Pluća",
+     "Mozak"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Od koliko se šupljina (klijetki i pretklijetki) sastoji ljudsko srce?",
+    "o": [
+     "2",
+     "3",
+     "4",
+     "6"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je najmanja kost u ljudskom tijelu?",
+    "o": [
+     "Čekić",
+     "Nakovanj",
+     "Trtica",
+     "Stremen"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je najduža kost u ljudskom tijelu?",
+    "o": [
+     "Bedrena kost",
+     "Goljenična kost",
+     "Ramena kost",
+     "Lakatna kost"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko zuba ima odrasla osoba s umnjacima?",
+    "o": [
+     "28",
+     "30",
+     "32",
+     "36"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko mliječnih zuba ima dijete?",
+    "o": [
+     "16",
+     "20",
+     "24",
+     "28"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je krvna grupa „univerzalni davatelj“ crvenih krvnih zrnaca?",
+    "o": [
+     "AB pozitivna",
+     "B pozitivna",
+     "A negativna",
+     "0 negativna"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje krvne stanice prenose kisik po tijelu?",
+    "o": [
+     "Eritrociti",
+     "Trombociti",
+     "Leukociti",
+     "Limfociti"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji organ proizvodi inzulin?",
+    "o": [
+     "Jetra",
+     "Slezena",
+     "Bubreg",
+     "Gušterača"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove tetiva koja povezuje mišiće lista s petnom kosti?",
+    "o": [
+     "Ahilova",
+     "Hektorova",
+     "Odisejeva",
+     "Herkulova"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojem se dijelu tijela nalazi rožnica?",
+    "o": [
+     "U uhu",
+     "U oku",
+     "U nosu",
+     "U grlu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko pari rebara obično ima čovjek?",
+    "o": [
+     "10",
+     "11",
+     "12",
+     "14"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji vitamin tijelo stvara u koži pod utjecajem sunčeve svjetlosti?",
+    "o": [
+     "Vitamin A",
+     "Vitamin C",
+     "Vitamin K",
+     "Vitamin D"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji organi filtriraju krv i stvaraju mokraću?",
+    "o": [
+     "Bubrezi",
+     "Pluća",
+     "Slezena",
+     "Žučni mjehur"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko otprilike litara krvi ima odrasla osoba?",
+    "o": [
+     "2",
+     "5",
+     "9",
+     "12"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kolika je približno normalna tjelesna temperatura čovjeka?",
+    "o": [
+     "35 °C",
+     "37 °C",
+     "39 °C",
+     "41 °C"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je dio mozga najzaslužniji za ravnotežu i koordinaciju pokreta?",
+    "o": [
+     "Moždano deblo",
+     "Hipotalamus",
+     "Čeoni režanj",
+     "Mali mozak"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove obojeni dio oka?",
+    "o": [
+     "Zjenica",
+     "Bjeloočnica",
+     "Šarenica",
+     "Mrežnica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko kromosoma ima uobičajena ljudska tjelesna stanica?",
+    "o": [
+     "23",
+     "44",
+     "46",
+     "48"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se organu upija najveći dio hranjivih tvari iz hrane?",
+    "o": [
+     "U želucu",
+     "U tankom crijevu",
+     "U debelom crijevu",
+     "U jednjaku"
+    ],
+    "a": 1
+   }
+  ],
+  "Kemija": [
+   {
+    "q": "Koji je kemijski simbol natrija?",
+    "o": [
+     "Na",
+     "N",
+     "So",
+     "Nt"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji element ima atomski broj 1?",
+    "o": [
+     "Helij",
+     "Kisik",
+     "Litij",
+     "Vodik"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je kemijska formula kuhinjske soli?",
+    "o": [
+     "NaCl",
+     "KCl",
+     "NaOH",
+     "CaCO3"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je kemijski simbol kalija?",
+    "o": [
+     "Ka",
+     "P",
+     "K",
+     "Kl"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je od ovih metala tekuć na sobnoj temperaturi?",
+    "o": [
+     "Olovo",
+     "Kositar",
+     "Cink",
+     "Živa"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se lakši od zraka i nezapaljiv plin koristi za punjenje balona?",
+    "o": [
+     "Vodik",
+     "Helij",
+     "Neon",
+     "Argon"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliki je pH neutralne otopine pri 25 °C?",
+    "o": [
+     "0",
+     "5",
+     "7",
+     "14"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je 1869. objavio periodni sustav elemenata?",
+    "o": [
+     "Antoine Lavoisier",
+     "John Dalton",
+     "Marie Curie",
+     "Dmitrij Mendeljejev"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je kemijski element najzastupljeniji u Zemljinoj kori?",
+    "o": [
+     "Kisik",
+     "Silicij",
+     "Željezo",
+     "Aluminij"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glavni kemijski sastojak vapnenca i krede?",
+    "o": [
+     "Natrijev klorid",
+     "Kalcijev karbonat",
+     "Silicijev dioksid",
+     "Željezov oksid"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja se kiselina nalazi u želučanom soku?",
+    "o": [
+     "Sumporna",
+     "Dušična",
+     "Klorovodična",
+     "Octena"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji plemeniti plin daje crveno-narančasto svjetlo u svjetlećim reklamama?",
+    "o": [
+     "Argon",
+     "Kripton",
+     "Ksenon",
+     "Neon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je kemijska formula ozona?",
+    "o": [
+     "O2",
+     "O3",
+     "O4",
+     "H2O2"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je element, uz polonij, otkrila Marie Curie sa suprugom Pierreom?",
+    "o": [
+     "Uranij",
+     "Plutonij",
+     "Radij",
+     "Torij"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojem elementu pripada kemijski simbol W?",
+    "o": [
+     "Volfram",
+     "Vanadij",
+     "Itrij",
+     "Kositar"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je kemijska formula metana?",
+    "o": [
+     "C2H6",
+     "CH4",
+     "NH3",
+     "CO2"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Dijamant je kristalni oblik kojeg elementa?",
+    "o": [
+     "Silicija",
+     "Ugljika",
+     "Bora",
+     "Sumpora"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je kemijski simbol kositra?",
+    "o": [
+     "Ks",
+     "Ti",
+     "Sn",
+     "Co"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji plin ima miris pokvarenih jaja?",
+    "o": [
+     "Sumporovodik",
+     "Amonijak",
+     "Metan",
+     "Klor"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove izravan prijelaz tvari iz čvrstog u plinovito stanje?",
+    "o": [
+     "Isparavanje",
+     "Kondenzacija",
+     "Taljenje",
+     "Sublimacija"
+    ],
+    "a": 3
+   }
+  ],
+  "Matematika i brojevi": [
+   {
+    "q": "Koliko je 7 × 8?",
+    "o": [
+     "56",
+     "63",
+     "64",
+     "72"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliki je zbroj unutarnjih kutova trokuta?",
+    "o": [
+     "90°",
+     "180°",
+     "270°",
+     "360°"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko je drugi korijen iz 144?",
+    "o": [
+     "12",
+     "13",
+     "14",
+     "16"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko iznosi broj π zaokružen na dvije decimale?",
+    "o": [
+     "3,14",
+     "3,16",
+     "3,41",
+     "3,12"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko je 2 na desetu potenciju?",
+    "o": [
+     "512",
+     "1000",
+     "1024",
+     "2048"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji broj slijedi u Fibonaccijevu nizu 1, 1, 2, 3, 5, 8, …?",
+    "o": [
+     "11",
+     "12",
+     "13",
+     "16"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koliko bridova ima kocka?",
+    "o": [
+     "6",
+     "8",
+     "10",
+     "12"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je 5! (pet faktorijela)?",
+    "o": [
+     "25",
+     "60",
+     "120",
+     "720"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je jedini paran prost broj?",
+    "o": [
+     "2",
+     "4",
+     "6",
+     "8"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove dužina koja spaja središte kruga s točkom na kružnici?",
+    "o": [
+     "Promjer",
+     "Polumjer",
+     "Tangenta",
+     "Tetiva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko minuta ima jedan dan?",
+    "o": [
+     "960",
+     "1200",
+     "1360",
+     "1440"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko stupnjeva ima pravi kut?",
+    "o": [
+     "45°",
+     "90°",
+     "180°",
+     "360°"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove broj koji se zapisuje kao jedinica i 100 nula iza nje?",
+    "o": [
+     "Bilijun",
+     "Milijarda",
+     "Gugol",
+     "Beskonačno"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove najdulja stranica pravokutnog trokuta?",
+    "o": [
+     "Kateta",
+     "Visina",
+     "Hipotenuza",
+     "Težišnica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je starogrčki matematičar dao ime poučku a² + b² = c²?",
+    "o": [
+     "Pitagora",
+     "Euklid",
+     "Arhimed",
+     "Tales"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko nula ima jedna milijarda?",
+    "o": [
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliko je jedna četvrtina izražena u postocima?",
+    "o": [
+     "20 %",
+     "25 %",
+     "40 %",
+     "75 %"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koliko je 3 na treću potenciju?",
+    "o": [
+     "9",
+     "12",
+     "18",
+     "27"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koliki je zbroj točkica na suprotnim stranama standardne kocke za igru?",
+    "o": [
+     "6",
+     "7",
+     "8",
+     "12"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj su zemlji izvorno nastale brojke koje zovemo arapskima?",
+    "o": [
+     "Arabiji",
+     "Grčkoj",
+     "Egiptu",
+     "Indiji"
+    ],
+    "a": 3
+   }
+  ],
+  "Znanost": [
+   {
+    "q": "Koja je mjerna jedinica za električni otpor?",
+    "o": [
+     "Volt",
+     "Amper",
+     "Vat",
+     "Om"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je formulirao zakon opće gravitacije?",
+    "o": [
+     "Galileo Galilei",
+     "Isaac Newton",
+     "Albert Einstein",
+     "Johannes Kepler"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je hrvatski znanstvenik otkrio granicu između Zemljine kore i plašta?",
+    "o": [
+     "Andrija Mohorovičić",
+     "Nikola Tesla",
+     "Ruđer Bošković",
+     "Faust Vrančić"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kolika je približno apsolutna nula u Celzijevim stupnjevima?",
+    "o": [
+     "−100 °C",
+     "−173 °C",
+     "−273 °C",
+     "−373 °C"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je autor poznate formule E = mc²?",
+    "o": [
+     "Albert Einstein",
+     "Niels Bohr",
+     "Max Planck",
+     "Isaac Newton"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što mjeri Richterova ljestvica?",
+    "o": [
+     "Brzinu vjetra",
+     "Jačinu potresa",
+     "Tlak zraka",
+     "Kiselost tla"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja se stanična organela naziva „elektranom stanice“?",
+    "o": [
+     "Ribosom",
+     "Jezgra",
+     "Kloroplast",
+     "Mitohondrij"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je 1928. otkrio penicilin?",
+    "o": [
+     "Robert Koch",
+     "Louis Pasteur",
+     "Alexander Fleming",
+     "Edward Jenner"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojim se instrumentom mjeri tlak zraka?",
+    "o": [
+     "Termometrom",
+     "Barometrom",
+     "Higrometrom",
+     "Anemometrom"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je hrvatski znanstvenik 1939. dobio Nobelovu nagradu za kemiju?",
+    "o": [
+     "Vladimir Prelog",
+     "Ruđer Bošković",
+     "Lavoslav Ružička",
+     "Andrija Štampar"
+    ],
+    "a": 2
+   }
+  ]
+ }
+}

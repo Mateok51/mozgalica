@@ -1,0 +1,18 @@
+const { chromium } = require('playwright'); const path = require('path');
+(async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true })).newPage();
+  const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.route(/fonts\.|jsdelivr|unpkg/, (r) => r.abort());
+  await p.goto('file://' + path.join(__dirname, '..', 'web/site/index.html')); await p.waitForTimeout(400);
+  await p.evaluate(() => Object.assign(CFG, { intro: 0.2, vote: 0.5, voteShow: 0.2, power: 0.5, cast: 0.1, q: 0.6, reveal: 0.2, sort: 0.6, link: 0.6, chReveal: 0.2, fstart: 4, fpower: 3, fq: 6, fr: 4 }));
+  await p.click('#demo'); await p.waitForTimeout(300);
+  await p.click('#dstart');
+  const S = (n) => p.screenshot({ path: __dirname + '/tour/fn-' + n + '.png' });
+  await p.waitForFunction(() => /Krećeš s/.test(document.body.innerText), null, { timeout: 60000 }).catch(async () => { console.log('ERR', errs, (await p.evaluate(() => document.body.innerText)).slice(0, 400)); process.exit(1); }); await p.waitForTimeout(900); await S('1');
+  await p.waitForSelector('.pw-card[data-p]', { timeout: 30000 }); await p.waitForTimeout(300); await S('2'); await p.click('#nopw');
+  await p.waitForSelector('.p-opts.two .p-opt', { timeout: 30000 }); await p.waitForTimeout(600); await S('3');
+  await p.click('.p-opts.two .p-opt'); 
+  await p.waitForSelector('.rv', { timeout: 30000 }); await p.waitForTimeout(300); await S('4');
+  await p.waitForTimeout(2300); await S('5');
+  await p.setViewportSize({ width: 1280, height: 720 }); await p.click('#toTv');
+  await p.waitForSelector('.tf-row', { timeout: 30000 }); await p.waitForSelector('.tf-row .correct', { timeout: 30000 }); await p.waitForTimeout(1500); await S('tv');
+  console.log(errs); await b.close(); })();

@@ -1,0 +1,79 @@
+#Jezici i riječi
+Što znači latinska izreka „Veni, vidi, vici“? | Dođoh, vidjeh, pobijedih | Živi i pusti živjeti | Tko rano rani, dvije sreće grabi | Znanje je moć
+Što znači latinska izreka „Mens sana in corpore sano“? | Zdrav duh u zdravom tijelu | Znanje je moć | Uživaj u danu | Polako se daleko stiže
+Što znači latinska izreka „Errare humanum est“? | Griješiti je ljudski | Znanje je moć | Rat je otac svega | Vrijeme leti
+Što znači latinska izreka „Tempus fugit“? | Vrijeme leti | Uživaj u danu | Kocka je bačena | Mir s vama
+Tko je, prema predaji, izgovorio „Alea iacta est“ („Kocka je bačena“)? | Julije Cezar | Neron | August | Ciceron
+Što znači riječ „ad hoc“? | Za ovu priliku | Zauvijek | Prema zakonu | Bez razloga
+Što znači izraz „status quo“? | Postojeće stanje | Novo stanje | Društveni ugled | Pravni spor
+Što znači izraz „per aspera ad astra“? | Kroz trnje do zvijezda | Mir na zemlji | Bog je s nama | Vino je istina
+Što znači latinska izreka „In vino veritas“? | U vinu je istina | Vino je zdravlje | Pij umjereno | Istina oslobađa
+Što znači izraz „déjà vu“? | Već viđeno | Laku noć | Dobar tek | Do viđenja
+Koji je jezik službeni u Argentini? | Španjolski | Portugalski | Talijanski | Engleski
+Koji se jezik najviše govori u Meksiku? | Španjolski | Portugalski | Engleski | Nahuatl
+Koji je službeni jezik u Austriji? | Njemački | Austrijski | Češki | Talijanski
+Koji su službeni jezici Švicarske? | Njemački, francuski, talijanski i retoromanski | Samo njemački | Njemački i francuski | Švicarski i njemački
+Koji je službeni jezik Irana? | Perzijski | Arapski | Turski | Kurdski
+Koji je službeni jezik u Egiptu? | Arapski | Koptski | Egipatski | Turski
+Koji jezik se službeno govori u Angoli i Mozambiku? | Portugalski | Francuski | Engleski | Španjolski
+Na kojem se jeziku govori u Quebecu, kanadskoj pokrajini? | Francuski | Engleski | Španjolski | Nizozemski
+Kojim se pismom piše ruski jezik? | Ćirilicom | Latinicom | Glagoljicom | Grčkim pismom
+Koje pismo koristi grčki jezik? | Grčki alfabet | Ćirilicu | Latinicu | Glagoljicu
+Kako se zove kinesko pismo? | Kineski znakovi (hanzi) | Hiragana | Hangul | Devanagari
+Kako se zove korejsko pismo? | Hangul | Kanji | Hiragana | Devanagari
+U kojem se smjeru piše arapsko pismo? | S desna na lijevo | S lijeva na desno | Odozgo prema dolje | Naizmjenično
+Koji je službeni jezik Izraela? | Hebrejski | Jidiš | Aramejski | Engleski
+Iz kojeg jezika potječe riječ „kindergarten“? | Njemački | Nizozemski | Engleski | Danski
+Iz kojeg jezika potječe riječ „kajak“? | Inuitski | Finski | Japanski | Havajski
+Iz kojeg jezika potječe riječ „tsunami“? | Japanski | Kineski | Korejski | Indonezijski
+Iz kojeg jezika potječe riječ „pidžama“? | Perzijski | Francuski | Engleski | Turski
+Iz kojeg jezika potječe riječ „čokolada“? | Nahuatl (asteški jezik) | Španjolski | Francuski | Arapski
+Iz kojeg jezika potječe riječ „šampon“? | Hindski | Francuski | Engleski | Perzijski
+Iz kojeg jezika izvorno potječe riječ „kava“? | Arapski | Grčki | Talijanski | Perzijski
+Iz kojeg je jezika u hrvatski došla riječ „ćuprija“? | Turski | Mađarski | Njemački | Talijanski
+Iz kojeg je jezika u hrvatski došla riječ „šparet“ (štednjak)? | Njemački | Talijanski | Mađarski | Turski
+Iz kojeg je jezika u dalmatinske govore došla riječ „kantun“ (ugao)? | Talijanski (venecijanski) | Turski | Njemački | Grčki
+Što na hrvatskom znači riječ „ruksak“, posuđena iz njemačkog? | Naprtnjača | Kofer | Torbica | Novčanik
+Kako se po hrvatskom standardu zove „kompjuter“? | Računalo | Strojnik | Brojilo | Ekranik
+Kako se po hrvatskom standardu zove „printer“? | Pisač | Tiskar | Crtač | Kopirnik
+Koji je oblik ispravno napisan? | Uopće | U opće | Uobće | Uopče
+Koji je oblik ispravno napisan? | Nitko | Niko | Nitkoj | Ni tko
+Koji je oblik ispravno napisan? | Zadovoljan | Zadovoljian | Zadovoljn | Zadovoljam
+Koji je oblik ispravan? | Ne znam | Neznam | Neznm | Neznamo
+Koji je oblik ispravan? | Pripovijetka | Pripovjetka | Pripoviedka | Pripovijedka
+Kako se zove riječ suprotnog značenja od druge riječi? | Antonim | Sinonim | Homonim | Akronim
+Kako se zove riječ koja se isto piše, a ima različita značenja (npr. „kosa“)? | Homonim | Sinonim | Antonim | Neologizam
+Kako se zove riječ nastala od početnih slova drugih riječi (npr. NATO)? | Akronim | Homonim | Antonim | Eponim
+Kako se zove riječ koja oponaša zvuk (npr. „mijau“)? | Onomatopeja | Metafora | Aliteracija | Akronim
+Kako se zove nova, tek skovana riječ? | Neologizam | Arhaizam | Dijalektizam | Barbarizam
+Kako se zove zastarjela riječ koja se više ne koristi u svakodnevnom govoru? | Arhaizam | Neologizam | Žargon | Tuđica
+Koja je od ovih riječi palindrom? | Kajak | Kanu | Čamac | Splav
+Koja je od ovih riječi palindrom? | Radar | Sonar | Laser | Motor
+Koji je padež u hrvatskom jeziku za dozivanje? | Vokativ | Akuzativ | Lokativ | Instrumental
+Na koje pitanje odgovara instrumental? | S kim? S čim? | Koga? Čega? | O kome? O čemu? | Komu? Čemu?
+Na koja pitanja odgovara genitiv? | Koga? Čega? | Komu? Čemu? | S kim? S čim? | Tko? Što?
+Koji je prvi padež u hrvatskom jeziku? | Nominativ | Genitiv | Akuzativ | Vokativ
+Kako se zovu tri glavna narječja hrvatskog jezika? | Štokavsko, kajkavsko i čakavsko | Štokavsko, ijekavsko i ekavsko | Kajkavsko, dalmatinsko i slavonsko | Primorsko, zagorsko i slavonsko
+Kako se kaže „što“ na kajkavskom narječju? | Kaj | Ča | Što | Šta
+Kako se kaže „što“ na čakavskom narječju? | Ča | Kaj | Ki | Šta
+Koja je riječ u hrvatskom jeziku glagol? | Trčati | Brzo | Lijep | Stol
+Koja je od ovih riječi pridjev? | Zelen | Zelenilo | Zeleniti | Zeleno (prilog)
+Koliko samoglasnika ima hrvatska abeceda? | 5 | 6 | 7 | 4
+Koje slovo hrvatske abecede nije samoglasnik? | R | A | I | U
+Što je „dž“ u hrvatskoj abecedi? | Jedno slovo (dvoslov) | Dva slova | Strana kombinacija | Kratica
+Koliko je dvoslova (slova od dva znaka) u hrvatskoj abecedi? | 3 | 2 | 4 | 5
+Na kojem jeziku je napisan izvornik „Božanstvene komedije“? | Talijanskom | Latinskom | Francuskom | Grčkom
+Koji jezik pripada istoj skupini kao finski? | Estonski | Švedski | Ruski | Litavski
+Koji je od ovih jezika slavenski? | Slovački | Mađarski | Rumunjski | Albanski
+Koji je od ovih jezika romanski? | Rumunjski | Albanski | Mađarski | Grčki
+Koji je od ovih jezika germanski? | Nizozemski | Finski | Litavski | Irski
+Kojem je jeziku srodan malteški jezik? | Arapskom | Talijanskom | Grčkom | Turskom
+Koji je umjetni jezik osmislio Ludwik Zamenhof 1887.? | Esperanto | Volapük | Klingonski | Interlingva
+Za koju je izmišljenu rasu J. R. R. Tolkien osmislio jezike kvenja i sindarin? | Vilenjake | Patuljke | Hobite | Orke
+Kako se zove znakovni sustav za slijepe koji se čita dodirom? | Brajevo pismo | Morseova abeceda | Znakovni jezik | Stenografija
+Kako se Morseovom abecedom zapisuje signal SOS? | ··· ––– ··· | ––– ··· ––– | ·–·–·– | ··––··
+Kako se zove znanost o jeziku? | Lingvistika | Etimologija | Semiotika | Fonetika
+Kako se zove rječnik riječi istog ili sličnog značenja? | Rječnik sinonima | Leksikon | Pravopis | Gramatika
+Što znači engleska kratica „ASAP“? | Što prije moguće | Uskoro | Oprez | Po potrebi
+Što znači kratica „npr.“? | Na primjer | Na prijedlog | Nakon prijepodneva | Napomena
+Što znači kratica „tzv.“? | Takozvani | To znači | Tzv. vrijeme | Također

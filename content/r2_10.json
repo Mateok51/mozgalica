@@ -1,0 +1,1608 @@
+{
+ "cats": {
+  "Crtani filmovi": [
+   {
+    "q": "Kako se zove Mickeyjeva djevojka?",
+    "o": [
+     "Minnie",
+     "Daisy",
+     "Clarabelle",
+     "Betty"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Mickeyjev pas?",
+    "o": [
+     "Goofy",
+     "Pluto",
+     "Max",
+     "Bolt"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se na hrvatskom zove Disneyjev Donald Duck?",
+    "o": [
+     "Baja Patak",
+     "Pajo Patak",
+     "Paško Patak",
+     "Duško Patak"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je u izvornim crtićima prvi posuđivao glas Mickeyju Mouseu?",
+    "o": [
+     "Ub Iwerks",
+     "Mel Blanc",
+     "Roy Disney",
+     "Walt Disney"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je animator zajedno s Waltom Disneyjem stvorio Mickeyja Mousea?",
+    "o": [
+     "Ub Iwerks",
+     "Chuck Jones",
+     "Tex Avery",
+     "Max Fleischer"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što jede mornar Popaj da bi dobio snagu?",
+    "o": [
+     "Brokulu",
+     "Špinat",
+     "Mrkvu",
+     "Grah"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji su animatori stvorili Toma i Jerryja?",
+    "o": [
+     "Disney i Iwerks",
+     "Jones i Avery",
+     "Hanna i Barbera",
+     "Fleischer i Segar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se u hrvatskoj sinkronizaciji preziva Fred iz Flintstoneovih?",
+    "o": [
+     "Kamenko",
+     "Stijenić",
+     "Kamenić",
+     "Kremenko"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Tko je stvorio crtanu seriju Simpsoni?",
+    "o": [
+     "Matt Groening",
+     "Seth MacFarlane",
+     "Trey Parker",
+     "Mike Judge"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Gdje radi Homer Simpson?",
+    "o": [
+     "U tvornici čokolade",
+     "U nuklearnoj elektrani",
+     "U pivovari",
+     "U pošti"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Homerov bogati i zli šef?",
+    "o": [
+     "Mr. Smithers",
+     "Mr. Krabs",
+     "Mr. Burns",
+     "Mr. Flanders"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji instrument svira Lisa Simpson?",
+    "o": [
+     "Violinu",
+     "Klavir",
+     "Trubu",
+     "Saksofon"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove pobožni susjed obitelji Simpson?",
+    "o": [
+     "Ned Flanders",
+     "Moe Szyslak",
+     "Barney Gumble",
+     "Apu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "U kojoj se saveznoj državi SAD-a nalazi gradić South Park?",
+    "o": [
+     "Teksas",
+     "Colorado",
+     "Ohio",
+     "Kalifornija"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U čemu živi Spužva Bob?",
+    "o": [
+     "U školjki",
+     "U kamenu",
+     "U ananasu",
+     "U kokosu"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem restoranu radi Spužva Bob?",
+    "o": [
+     "Chum Bucket",
+     "Bikini Burger",
+     "Sea Shack",
+     "Krusty Krab"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Spužva Bobov najbolji prijatelj, morska zvijezda?",
+    "o": [
+     "Patrick",
+     "Squidward",
+     "Gary",
+     "Plankton"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji instrument svira Squidward iz Spužva Boba?",
+    "o": [
+     "Trubu",
+     "Klarinet",
+     "Gitaru",
+     "Bubanj"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je životinja Sandy, prijateljica Spužva Boba iz Teksasa?",
+    "o": [
+     "Hrčak",
+     "Zec",
+     "Vjeverica",
+     "Rakun"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja Bambi?",
+    "o": [
+     "Zec",
+     "Lisica",
+     "Tvor",
+     "Jelen"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove zlobnica koja želi krzno dalmatinaca u filmu 101 dalmatinac?",
+    "o": [
+     "Cruella de Vil",
+     "Ursula",
+     "Maleficent",
+     "Madame Mim"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove morska vještica u Disneyjevoj Maloj sireni?",
+    "o": [
+     "Morgana",
+     "Ursula",
+     "Cruella",
+     "Yzma"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Aladinov majmunčić?",
+    "o": [
+     "Rajah",
+     "Iago",
+     "Abu",
+     "Pascal"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja Timon iz Kralja lavova?",
+    "o": [
+     "Mungos",
+     "Lemur",
+     "Vjeverica",
+     "Merkat"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove mali zmaj koji pomaže Mulan?",
+    "o": [
+     "Mushu",
+     "Cri-Kee",
+     "Khan",
+     "Mulu"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove snjegović iz Snježnog kraljevstva?",
+    "o": [
+     "Sven",
+     "Olaf",
+     "Kristoff",
+     "Hans"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove polubog kojeg upoznaje Vaiana u istoimenom filmu?",
+    "o": [
+     "Tamatoa",
+     "Tui",
+     "Maui",
+     "Kakamora"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove vila koja prati Petra Pana?",
+    "o": [
+     "Zlatica",
+     "Iskrica",
+     "Vilinka",
+     "Zvončica"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove gusar s kukom umjesto šake, neprijatelj Petra Pana?",
+    "o": [
+     "Kapetan Kuka",
+     "Kapetan Jack",
+     "Crnobradi",
+     "Kapetan Ahab"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što Pepeljuga gubi na stubama dvorca?",
+    "o": [
+     "Krunu",
+     "Staklenu cipelicu",
+     "Ogrlicu",
+     "Rukavicu"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove zla vila iz Disneyjeve Trnoružice (Uspavane ljepotice)?",
+    "o": [
+     "Ursula",
+     "Cruella de Vil",
+     "Maleficent",
+     "Lady Tremaine"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja Shere Khan iz Knjige o džungli?",
+    "o": [
+     "Lav",
+     "Pantera",
+     "Leopard",
+     "Tigar"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje jelo zajedno jedu psi u poznatoj sceni filma Lady i Skitnica?",
+    "o": [
+     "Špagete",
+     "Pizzu",
+     "Kobasice",
+     "Hamburger"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je životinja Robin Hood u Disneyjevu filmu iz 1973.?",
+    "o": [
+     "Vuk",
+     "Lisica",
+     "Medvjed",
+     "Pas"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Tko je napisao i otpjevao pjesme za Disneyjev film Tarzan (1999.)?",
+    "o": [
+     "Elton John",
+     "Sting",
+     "Phil Collins",
+     "Bryan Adams"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je skladao pjesme za Kralja lavova (1994.)?",
+    "o": [
+     "Phil Collins",
+     "Alan Menken",
+     "Hans Zimmer",
+     "Elton John"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Na kojem se otočju odvija radnja filma Lilo i Stitch?",
+    "o": [
+     "Havaji",
+     "Galapagos",
+     "Fidži",
+     "Bahami"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove kameleon Zlatokose (Rapunzel) u Disneyjevu filmu?",
+    "o": [
+     "Maximus",
+     "Pascal",
+     "Abu",
+     "Flynn"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojoj se zemlji odvija radnja Disneyjeva filma Encanto?",
+    "o": [
+     "Meksiko",
+     "Brazil",
+     "Kolumbija",
+     "Peru"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji meksički praznik je u središtu Pixarova filma Coco?",
+    "o": [
+     "Božić",
+     "Dan neovisnosti",
+     "Karneval",
+     "Dan mrtvih"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što podiže kuću u zrak u Pixarovu filmu Gore (Up)?",
+    "o": [
+     "Baloni",
+     "Tornado",
+     "Rakete",
+     "Zmajevi"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove kauboj, Andyjeva omiljena igračka u Priči o igračkama?",
+    "o": [
+     "Jessie",
+     "Woody",
+     "Bullseye",
+     "Rex"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Što čudovišta u filmu Čudovišta iz ormara skupljaju kao izvor energije?",
+    "o": [
+     "Dječje snove",
+     "Slatkiše",
+     "Dječje vriskove",
+     "Suze"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove crveni trkaći automobil iz Pixarova filma Automobili?",
+    "o": [
+     "Mater",
+     "Doc Hudson",
+     "Chick Hicks",
+     "Lightning McQueen"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je emocija prikazana kao crveni lik u filmu Izvrnuto obrnuto (Inside Out)?",
+    "o": [
+     "Ljutnja",
+     "Strah",
+     "Gađenje",
+     "Radost"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je vrsta ribe Nemo?",
+    "o": [
+     "Kirurška riba",
+     "Riba klaun",
+     "Zlatna ribica",
+     "Morski konjic"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se gradu odvija radnja Pixarova filma Ratatouille?",
+    "o": [
+     "Rim",
+     "Lyon",
+     "Pariz",
+     "Bruxelles"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojoj se zemlji odvija radnja Pixarova filma Luca?",
+    "o": [
+     "Grčka",
+     "Španjolska",
+     "Hrvatska",
+     "Italija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojoj se zemlji odvija radnja Pixarova filma Brave (Merida hrabra)?",
+    "o": [
+     "Škotska",
+     "Irska",
+     "Norveška",
+     "Wales"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Na kojem instrumentu svira Joe Gardner u Pixarovu filmu Soul?",
+    "o": [
+     "Saksofon",
+     "Klavir",
+     "Trubu",
+     "Kontrabas"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U koju se životinju pretvara Mei u Pixarovu filmu Turning Red?",
+    "o": [
+     "Lisicu",
+     "Medvjeda",
+     "Crvenu pandu",
+     "Tigra"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove svjetiljka iz Pixarova logotipa?",
+    "o": [
+     "Lumière",
+     "Pixie",
+     "Lampy",
+     "Luxo Jr."
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je suosnivač Applea 1986. kupio studio koji je postao Pixar?",
+    "o": [
+     "Steve Jobs",
+     "Steve Wozniak",
+     "Bill Gates",
+     "Larry Ellison"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Shrekova supruga?",
+    "o": [
+     "Dragica",
+     "Fiona",
+     "Aurora",
+     "Bella"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja životinja neprestano brblja i prati Shreka?",
+    "o": [
+     "Mačak",
+     "Konj",
+     "Magarac",
+     "Zmaj"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji glumac posuđuje glas Mačku u čizmama u izvornoj verziji?",
+    "o": [
+     "Javier Bardem",
+     "Eddie Murphy",
+     "Andy García",
+     "Antonio Banderas"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je film 2002. osvojio prvog Oscara za najbolji animirani dugometražni film?",
+    "o": [
+     "Shrek",
+     "Čudovišta iz ormara",
+     "Ledeno doba",
+     "Avanture male Chihiro"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što vjeverica Scrat neprestano pokušava uhvatiti u Ledenom dobu?",
+    "o": [
+     "Orah",
+     "Žir",
+     "Lješnjak",
+     "Kesten"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je životinja Manny iz Ledenog doba?",
+    "o": [
+     "Slon",
+     "Nosorog",
+     "Mamut",
+     "Bizon"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je životinja Melman iz filma Madagaskar?",
+    "o": [
+     "Zebra",
+     "Nilski konj",
+     "Lav",
+     "Žirafa"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove panda iz filma Kung Fu Panda?",
+    "o": [
+     "Po",
+     "Shifu",
+     "Tai Lung",
+     "Oogway"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se u izvorniku zove zmaj iz filma Kako izdresirati zmaja?",
+    "o": [
+     "Stormfly",
+     "Toothless",
+     "Smaug",
+     "Hookfang"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zovu mala žuta bića koja služe Gruu?",
+    "o": [
+     "Štrumpfovi",
+     "Gremlini",
+     "Minioni",
+     "Trolovi"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji lik iz Looney Tunesa često pita „What's up, Doc?“",
+    "o": [
+     "Daffy Duck",
+     "Porky Pig",
+     "Elmer Fudd",
+     "Bugs Bunny"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji lovac neprestano lovi Bugsa Bunnyja?",
+    "o": [
+     "Elmer Fudd",
+     "Yosemite Sam",
+     "Porky Pig",
+     "Wile E. Coyote"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koja je životinja Taz iz Looney Tunesa?",
+    "o": [
+     "Vombat",
+     "Tasmanijski vrag",
+     "Rakun",
+     "Jazavac"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove „najbrži miš u cijelom Meksiku“?",
+    "o": [
+     "Mighty Mouse",
+     "Jerry",
+     "Speedy Gonzales",
+     "Gadget"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koja je ptica Woody Woodpecker?",
+    "o": [
+     "Vrana",
+     "Papiga",
+     "Kos",
+     "Djetlić"
+    ],
+    "a": 3
+   },
+   {
+    "q": "U kojem nacionalnom parku živi medvjed Yogi?",
+    "o": [
+     "Jellystone",
+     "Yellowstone",
+     "Yosemite",
+     "Greenwood"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove lijeni Majin prijatelj trut iz crtića Pčelica Maja?",
+    "o": [
+     "Bruno",
+     "Vili",
+     "Teo",
+     "Max"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove zli čarobnjak koji lovi Štrumpfove?",
+    "o": [
+     "Azrael",
+     "Merlin",
+     "Gargamel",
+     "Jafar"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koju hranu Wallace iz crtića Wallace i Gromit najviše voli?",
+    "o": [
+     "Kobasice",
+     "Pitu",
+     "Čokoladu",
+     "Sir"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Iz koje zemlje potječe crtani film o Krtici (Krtek)?",
+    "o": [
+     "Čehoslovačka",
+     "Poljska",
+     "Mađarska",
+     "Jugoslavija"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz koje zemlje potječe crtana serija Bolek i Lolek?",
+    "o": [
+     "Češka",
+     "Poljska",
+     "Rusija",
+     "Bugarska"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Iz koje zemlje potječe crtana serija Maša i medvjed?",
+    "o": [
+     "Ukrajina",
+     "Poljska",
+     "Rusija",
+     "Bjelorusija"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Iz koje zemlje potječe crtana serija Bluey?",
+    "o": [
+     "Novi Zeland",
+     "Kanada",
+     "Irska",
+     "Australija"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je japanski studio snimio film Moj susjed Totoro?",
+    "o": [
+     "Studio Ghibli",
+     "Toei Animation",
+     "Studio Pierrot",
+     "Madhouse"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove glavni junak animea Dragon Ball?",
+    "o": [
+     "Naruto",
+     "Son Goku",
+     "Vegeta",
+     "Luffy"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kakvu je životinju pretvoren šegrt Hlapić u crtanom filmu iz 1997.?",
+    "o": [
+     "Mačka",
+     "Zec",
+     "Miš",
+     "Vjeverica"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Tko je režirao prvi hrvatski dugometražni animirani film Čudesna šuma?",
+    "o": [
+     "Dušan Vukotić",
+     "Zlatko Grgić",
+     "Nedeljko Dragić",
+     "Milan Blažeković"
+    ],
+    "a": 3
+   }
+  ],
+  "Superjunaci i stripovi": [
+   {
+    "q": "U kojem gradu Superman štiti građane?",
+    "o": [
+     "Metropolis",
+     "Gotham",
+     "Smallville",
+     "Central City"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Za koje novine radi Clark Kent?",
+    "o": [
+     "Daily Bugle",
+     "Daily Planet",
+     "New York Times",
+     "Gotham Gazette"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Supermanova kolegica novinarka i velika ljubav?",
+    "o": [
+     "Lana Lang",
+     "Mary Jane",
+     "Lois Lane",
+     "Vicki Vale"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji zeleni mineral slabi Supermana?",
+    "o": [
+     "Vibranij",
+     "Adamantij",
+     "Uru",
+     "Kriptonit"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Supermanov ćelavi neprijatelj, bogati znanstvenik?",
+    "o": [
+     "Lex Luthor",
+     "Brainiac",
+     "General Zod",
+     "Darkseid"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koje je Supermanovo kriptonsko ime?",
+    "o": [
+     "Jor-El",
+     "Kal-El",
+     "Zod",
+     "Kara Zor-El"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem je gradiću odrastao Clark Kent?",
+    "o": [
+     "Riverdale",
+     "Metropolis",
+     "Smallville",
+     "Springfield"
+    ],
+    "a": 2
+   },
+   {
+    "q": "U kojem se stripu 1938. prvi put pojavio Superman?",
+    "o": [
+     "Detective Comics",
+     "Amazing Fantasy",
+     "Marvel Comics",
+     "Action Comics"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji su autori stvorili Supermana?",
+    "o": [
+     "Siegel i Shuster",
+     "Lee i Kirby",
+     "Kane i Finger",
+     "Simon i Kirby"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Što znači kratica DC u nazivu izdavača stripova?",
+    "o": [
+     "Direct Comics",
+     "Detective Comics",
+     "Daily Comics",
+     "Dynamic Cartoons"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji se crtač tradicionalno navodi kao tvorac Batmana?",
+    "o": [
+     "Jack Kirby",
+     "Frank Miller",
+     "Bob Kane",
+     "Jim Lee"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove Batmanov mladi pomoćnik?",
+    "o": [
+     "Kid Flash",
+     "Bucky",
+     "Speedy",
+     "Robin"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove umobolnica u kojoj su zatvoreni Batmanovi neprijatelji?",
+    "o": [
+     "Arkham",
+     "Blackgate",
+     "Belle Reve",
+     "Ravencroft"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove policijski komesar Gothama, Batmanov saveznik?",
+    "o": [
+     "Harvey Dent",
+     "James Gordon",
+     "Harvey Bullock",
+     "Lucius Fox"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji Batmanov neprijatelj ostavlja zagonetke na mjestu zločina?",
+    "o": [
+     "Pingvin",
+     "Bane",
+     "Riddler",
+     "Scarecrow"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove Catwoman kad nije u kostimu?",
+    "o": [
+     "Harleen Quinzel",
+     "Pamela Isley",
+     "Talia al Ghul",
+     "Selina Kyle"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Čime se Harley Quinn bavila prije nego što je postala zlikovac?",
+    "o": [
+     "Bila je psihijatrica",
+     "Bila je glumica",
+     "Bila je policajka",
+     "Bila je liječnica"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je zlikovac u stripu Knightfall slomio Batmanu kralježnicu?",
+    "o": [
+     "Joker",
+     "Bane",
+     "Ra's al Ghul",
+     "Killer Croc"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako su ubijeni roditelji Brucea Waynea?",
+    "o": [
+     "U požaru",
+     "U prometnoj nesreći",
+     "U uličnoj pljački",
+     "U eksploziji"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glumac posthumno dobio Oscara za ulogu Jokera?",
+    "o": [
+     "Jack Nicholson",
+     "Joaquin Phoenix",
+     "Jared Leto",
+     "Heath Ledger"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koje čarobno oružje Wonder Woman prisiljava ljude da govore istinu?",
+    "o": [
+     "Laso istine",
+     "Mač istine",
+     "Štit istine",
+     "Narukvica istine"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove otok Amazonki s kojeg potječe Wonder Woman?",
+    "o": [
+     "Atlantida",
+     "Themyscira",
+     "Avalon",
+     "Asgard"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je glumica glumila Wonder Woman u filmu iz 2017.?",
+    "o": [
+     "Margot Robbie",
+     "Scarlett Johansson",
+     "Gal Gadot",
+     "Brie Larson"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojim podvodnim kraljevstvom vlada Aquaman?",
+    "o": [
+     "Lemurijom",
+     "Avalonom",
+     "Themyscirom",
+     "Atlantidom"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Što daje moći Zelenoj svjetiljci (Green Lantern)?",
+    "o": [
+     "Prsten",
+     "Čekić",
+     "Amulet",
+     "Pojas"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Flash kad nije u kostimu?",
+    "o": [
+     "Hal Jordan",
+     "Barry Allen",
+     "Arthur Curry",
+     "Oliver Queen"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove DC-jev tim u kojem su Superman, Batman i Wonder Woman?",
+    "o": [
+     "Osvetnici",
+     "X-Men",
+     "Liga pravde",
+     "Čuvari galaksije"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koju čarobnu riječ izgovara Billy Batson da bi postao superjunak?",
+    "o": [
+     "Abrakadabra",
+     "Excelsior",
+     "Kimota",
+     "Shazam"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Thorov polubrat, bog prijevara?",
+    "o": [
+     "Loki",
+     "Odin",
+     "Heimdall",
+     "Balder"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Iz kojeg kraljevstva potječe Thor?",
+    "o": [
+     "Midgard",
+     "Asgard",
+     "Wakanda",
+     "Olimp"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Od kojeg je metala štit Kapetana Amerike u Marvelovim filmovima?",
+    "o": [
+     "Adamantij",
+     "Titanij",
+     "Vibranij",
+     "Uru"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zove Kapetan Amerika kad nije u kostimu?",
+    "o": [
+     "Bucky Barnes",
+     "Sam Wilson",
+     "Nick Fury",
+     "Steve Rogers"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koga Kapetan Amerika udara šakom na naslovnici svog prvog stripa (1941.)?",
+    "o": [
+     "Adolfa Hitlera",
+     "Benita Mussolinija",
+     "Josifa Staljina",
+     "Red Skulla"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kakvo je zračenje Brucea Bannera pretvorilo u Hulka?",
+    "o": [
+     "Rendgensko zračenje",
+     "Gama zračenje",
+     "Kozmičko zračenje",
+     "Mikrovalno zračenje"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koje je boje bio Hulk u svom prvom stripu iz 1962.?",
+    "o": [
+     "Zelen",
+     "Crven",
+     "Siv",
+     "Ljubičast"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Što je Peteru Parkeru dalo nadljudske moći?",
+    "o": [
+     "Gama zračenje",
+     "Serum supervojnika",
+     "Pad u kemikalije",
+     "Ugriz radioaktivnog pauka"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove teta koja je odgojila Petera Parkera?",
+    "o": [
+     "May",
+     "Martha",
+     "Anna",
+     "Edith"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Za koje novine fotografira Peter Parker?",
+    "o": [
+     "Daily Planet",
+     "Daily Bugle",
+     "New York Post",
+     "Gotham Gazette"
+    ],
+    "a": 1
+   },
+   {
+    "q": "U kojem se stripu 1962. prvi put pojavio Spider-Man?",
+    "o": [
+     "Action Comics",
+     "Tales of Suspense",
+     "Amazing Fantasy",
+     "Journey into Mystery"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je crtač sa Stanom Leejem stvorio Spider-Mana?",
+    "o": [
+     "Jack Kirby",
+     "John Romita",
+     "Todd McFarlane",
+     "Steve Ditko"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Green Goblin kad nije u kostimu?",
+    "o": [
+     "Norman Osborn",
+     "Otto Octavius",
+     "Eddie Brock",
+     "Harry Parker"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koliko mehaničkih krakova ima Doktor Octopus?",
+    "o": [
+     "Šest",
+     "Četiri",
+     "Osam",
+     "Dva"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove Spider-Man iz animiranog filma Into the Spider-Verse (2018.)?",
+    "o": [
+     "Miguel O'Hara",
+     "Ben Reilly",
+     "Miles Morales",
+     "Flash Thompson"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji je glumac glumio Spider-Mana u filmu Sama Raimija iz 2002.?",
+    "o": [
+     "Andrew Garfield",
+     "Tom Holland",
+     "Jake Gyllenhaal",
+     "Tobey Maguire"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se zove Venom kad nije u kostimu?",
+    "o": [
+     "Eddie Brock",
+     "Norman Osborn",
+     "Kraven",
+     "Wade Wilson"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove telepatski vođa X-Mena u invalidskim kolicima?",
+    "o": [
+     "Magneto",
+     "Profesor X",
+     "Cyclops",
+     "Beast"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kojom silom upravlja Magneto?",
+    "o": [
+     "Vremenom",
+     "Vatrom",
+     "Magnetizmom",
+     "Gravitacijom"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje ime koristi Wolverine?",
+    "o": [
+     "Scott",
+     "Remy",
+     "Victor",
+     "Logan"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojom pojavom upravlja Storm iz X-Mena?",
+    "o": [
+     "Vremenom (klimom)",
+     "Magnetizmom",
+     "Ledom",
+     "Mislima"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji je glumac najpoznatiji po ulozi Wolverinea u filmovima o X-Menima?",
+    "o": [
+     "Russell Crowe",
+     "Hugh Jackman",
+     "Ryan Reynolds",
+     "Chris Hemsworth"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je Marvelov plaćenik poznat po tome da se obraća izravno čitateljima?",
+    "o": [
+     "Punisher",
+     "Deathstroke",
+     "Deadpool",
+     "Bullseye"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji član Fantastične četvorke može rastezati tijelo?",
+    "o": [
+     "Stvar",
+     "Ljudska baklja",
+     "Nevidljiva žena",
+     "Mister Fantastic"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji je crtač sa Stanom Leejem stvorio Fantastičnu četvorku?",
+    "o": [
+     "Jack Kirby",
+     "Steve Ditko",
+     "Bob Kane",
+     "Neal Adams"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Black Panther kad nije u kostimu?",
+    "o": [
+     "Killmonger",
+     "T'Challa",
+     "M'Baku",
+     "Okoye"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glumac glumio Black Panthera u filmu iz 2018.?",
+    "o": [
+     "Michael B. Jordan",
+     "Idris Elba",
+     "Chadwick Boseman",
+     "Don Cheadle"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čime se bavio Doctor Strange prije nego što je postao čarobnjak?",
+    "o": [
+     "Bio je odvjetnik",
+     "Bio je fizičar",
+     "Bio je svećenik",
+     "Bio je neurokirurg"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Čime se bavi Matt Murdock, odnosno Daredevil?",
+    "o": [
+     "Odvjetnik je",
+     "Liječnik je",
+     "Novinar je",
+     "Policajac je"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Iron Manov računalni pomoćnik u prvim Marvelovim filmovima?",
+    "o": [
+     "HAL 9000",
+     "J.A.R.V.I.S.",
+     "Ultron",
+     "Vision"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koji je glumac glumio Iron Mana u Marvelovim filmovima?",
+    "o": [
+     "Chris Evans",
+     "Mark Ruffalo",
+     "Robert Downey Jr.",
+     "Jeremy Renner"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kojim je filmom 2008. započeo Marvelov filmski svemir?",
+    "o": [
+     "Hulk",
+     "Thor",
+     "Kapetan Amerika",
+     "Iron Man"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji Marvelov zlikovac skuplja Kamenje beskonačnosti?",
+    "o": [
+     "Thanos",
+     "Ultron",
+     "Loki",
+     "Galactus"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koju rečenicu neprestano ponavlja Groot?",
+    "o": [
+     "„Ja sam Rocket“",
+     "„Ja sam Groot“",
+     "„Mi smo Groot“",
+     "„Groot je ovdje“"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je životinja Rocket iz Čuvara galaksije?",
+    "o": [
+     "Lisica",
+     "Tvor",
+     "Rakun",
+     "Vidra"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koji se Marvelov junak može smanjiti na veličinu mrava?",
+    "o": [
+     "Hawkeye",
+     "Falcon",
+     "Vision",
+     "Ant-Man"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kojim se oružjem prvenstveno bori Hawkeye?",
+    "o": [
+     "Lukom i strijelom",
+     "Štitom",
+     "Bičem",
+     "Bumerangom"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Koji lik vodi organizaciju S.H.I.E.L.D. i nosi povez preko oka?",
+    "o": [
+     "Phil Coulson",
+     "Nick Fury",
+     "Maria Hill",
+     "Thaddeus Ross"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Koja je tvrtka 2009. kupila Marvel Entertainment?",
+    "o": [
+     "Warner Bros.",
+     "Sony",
+     "Disney",
+     "Universal"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Pod kojim se imenom izdavač Marvel pojavio 1939.?",
+    "o": [
+     "Atlas Comics",
+     "National Comics",
+     "Golden Comics",
+     "Timely Comics"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koji se japanski autor često naziva „bogom mange“?",
+    "o": [
+     "Osamu Tezuka",
+     "Akira Toriyama",
+     "Eiichiro Oda",
+     "Hayao Miyazaki"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kojim se smjerom tradicionalno čitaju stranice japanske mange?",
+    "o": [
+     "S lijeva na desno",
+     "S desna na lijevo",
+     "Odozdo prema gore",
+     "Spiralno"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se zove glavni lik mange One Piece?",
+    "o": [
+     "Son Goku",
+     "Naruto Uzumaki",
+     "Monkey D. Luffy",
+     "Ichigo Kurosaki"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Koje od ovih imena NE nosi nijedna Nindža kornjača?",
+    "o": [
+     "Donatello",
+     "Raphael",
+     "Michelangelo",
+     "Botticelli"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Koja je životinja Splinter, učitelj Nindža kornjača?",
+    "o": [
+     "Štakor",
+     "Kornjača",
+     "Mačka",
+     "Majmun"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Tko je crtao stripove o Asterixu?",
+    "o": [
+     "René Goscinny",
+     "Albert Uderzo",
+     "Hergé",
+     "Morris"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Kako se u francuskom izvorniku zove Obelixov psić?",
+    "o": [
+     "Milou",
+     "Pif",
+     "Idéfix",
+     "Rantanplan"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Čime se Obelix bavi u stripu?",
+    "o": [
+     "Kuje mačeve",
+     "Lovi ribu",
+     "Peče kruh",
+     "Dostavlja menhire"
+    ],
+    "a": 3
+   },
+   {
+    "q": "Kako se u francuskom izvorniku zove Tintinov pas?",
+    "o": [
+     "Milou",
+     "Idéfix",
+     "Snoopy",
+     "Rantanplan"
+    ],
+    "a": 0
+   },
+   {
+    "q": "Kako se zove Tintinov prijatelj, kapetan sklon psovkama?",
+    "o": [
+     "Nemo",
+     "Haddock",
+     "Kuka",
+     "Ahab"
+    ],
+    "a": 1
+   },
+   {
+    "q": "Za kojeg se kauboja kaže da puca brže od vlastite sjene?",
+    "o": [
+     "Tex Willer",
+     "Zagor",
+     "Lucky Luke",
+     "Blueberry"
+    ],
+    "a": 2
+   },
+   {
+    "q": "Kako se zovu braća razbojnici koje stalno hvata Lucky Luke?",
+    "o": [
+     "Jamesovi",
+     "Youngerovi",
+     "Clantoni",
+     "Daltoni"
+    ],
+    "a": 3
+   }
+  ]
+ }
+}

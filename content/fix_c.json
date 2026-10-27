@@ -1,0 +1,34 @@
+{
+ "remove": [],
+ "fix": [
+  {
+   "q": "Od koliko se disciplina sastoji atletski desetoboj?",
+   "new": {
+    "q": "Koliko dana traje natjecanje u atletskom desetoboju?",
+    "o": [
+     "1",
+     "2",
+     "3",
+     "4"
+    ],
+    "a": 1
+   },
+   "why": "Izvorno pitanje samo odaje odgovor (deset-oboj = 10); zamijenjeno činjenicom o istoj disciplini (desetoboj se održava u dva dana)."
+  },
+  {
+   "q": "Koji tradicionalni japanski sport hrvanja igraju teški borci u kružnom ringu?",
+   "new": {
+    "q": "Kako se zove tradicionalni japanski hrvački sport u kojem se teški borci natječu u kružnom ringu?",
+    "o": [
+     "Sumo",
+     "Judo",
+     "Karate",
+     "Kendo"
+    ],
+    "a": 0
+   },
+   "why": "Jezik: hrvanje se ne 'igra'; prirodnija formulacija."
+  }
+ ],
+ "notes": "Provjereno svih 90 pitanja (Nogomet 20, Olimpijske igre 20, Automobili i promet 20, Videoigre 20, Sport 10). Sva označena rješenja su točna, nema duplikata unutar datoteke ni pitanja ovisnih o vremenu. Popravljena 2 pitanja: desetoboj (pitanje je odavalo odgovor) i sumo (jezična ispravka). Ništa nije izbačeno."
+}
