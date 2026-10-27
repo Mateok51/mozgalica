@@ -3737,10 +3737,15 @@ __ENGINE__
     for (const o of (PV.rc && PV.rc.inv) || []) if (pById(d, o.f)) out.push({ key: 'r' + (o.id || o.f), k: 'rc', o });
     return out;
   }
+  // zauzet sam samo dok odgovaram; dok drugi igraju dvoboj, gledatelji su slobodni
+  const sfSpect = (d, me) => !!(d.du && me && me.id !== d.du.a && me.id !== d.du.b && (d.ph === 'duelIntro' || d.ph === 'duel' || d.ph === 'duelResult'));
+  const sfBusyMe = (d, me) => !!SF_BUSY_PH[d.ph] && !(d.ph === 'duel' && sfSpect(d, me));
   function sfUnread(d) { return sfQueue(d).filter((x) => !SF.seen.has(x.key)).length; }
   // kratka privatna obavijest + zvuk za NOVU važnu ponudu (tijekom odgovaranja čeka kraj pitanja, kao i ostale obavijesti)
   function sfNotify(d) {
     if (!sfOnPV()) return;
+    const me = meOf(d);
+    if (d.ph === 'duelIntro' && sfSpect(d, me) && PV.can && PV.cand && PV.cand.length && !SF.told.has('du' + d.s)) { SF.told.add('du' + d.s); toastHold.push(['🍻 Dok traje dvoboj, možeš potajno ponuditi pakt 🗝️', 'pact']); }
     for (const x of sfQueue(d)) {
       if (SF.told.has(x.key)) continue;
       SF.told.add(x.key);
@@ -3816,7 +3821,7 @@ __ENGINE__
   }
   // gumb 🗝️ Tajne (mirne faze) i kartica kutka; tijekom odgovaranja se zatvara (stanje ponuda ostaje)
   function sfKey(d, me) {
-    if (!phoneShown() || !me || !sfOnPV() || d.ph === 'lobby' || d.ph === 'final' || d.ph === 'deal' || SF_BUSY_PH[d.ph] || d.fin) { SF.open = false; return ''; }
+    if (!phoneShown() || !me || !sfOnPV() || d.ph === 'lobby' || d.ph === 'final' || d.ph === 'deal' || sfBusyMe(d, me) || d.fin) { SF.open = false; return ''; }
     const n = sfUnread(d);
     const btn = '<button class="sf-key' + (n ? ' new' : '') + '" data-sfk="1" aria-label="Tajne' + (n ? ', nepročitano ' + n : '') + '"><span class="sf-ki">🗝️</span><span class="sf-kt">Tajne</span>' + (n ? '<span class="sf-badge">' + n + '</span>' : PV.k ? '<span class="sf-ally-dot" title="Savez">🍻</span>' : '') + '</button>';
     if (!SF.open) return btn;
@@ -3851,6 +3856,7 @@ __ENGINE__
     let tags = '';
     if (mine && (d.ph === 'question' || RC_PH[d.ph])) tags += '<div class="rc-tag" data-bk="rctag" data-bv="1">⚔️ Obračun: <b>' + rcN(d, act.a) + ' vs ' + rcN(d, act.b) + '</b> · ulog ' + act.st + '</div>';
     if (PV && PV.tk && ((PV.tk.st === 'a' && TK_TAG[d.ph]) || (PV.tk.st === 'o' && d.ph === 'vote'))) tags += tkBar(d, me);
+    if (sfSpect(d, me) && PV && ((PV.can && PV.cand && PV.cand.length) || sfQueue(d).length)) tags += '<button class="pk-open sf-duelhint" data-sfk="1">🍻 Tajni pakt dok traje dvoboj</button>';
     return head + tags + pjChip(d, me);
   }
   function bindSf(d) {

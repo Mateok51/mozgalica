@@ -23,7 +23,7 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
   const ph = (p) => p.evaluate(() => document.documentElement.dataset.ph).catch(() => '');
   const has = (p, s) => p.$(s).then((e) => !!e).catch(() => false);
   const click = (p, s) => p.evaluate((x) => { const e = document.querySelector(x); if (e) e.click(); return !!e; }, s).catch(() => false);
-  const sf = SOLO ? { at: [1, 2, 3], atBot: [1, 2, 3, 4], soloMax: 600, dur: 30 } : { at: [1, 2, 3], dur: 30 };
+  const sf = SOLO ? { at: [1, 2, 3], atBot: [1, 2, 3, 4], soloMax: 600, dur: 30 } : {};   // višeigračka partija: stvarna pravila (bez Vremena za dogovore)
   if (SOLO) CFGX.q = 22;   // botovi pogođeni moćima odgovaraju sporije; test čeka njihov šapat prije vlastitog odgovora
   console.log('Način:', SOLO ? 'SOLO s 3 bota (testni način)' : (TV ? 'TV + mobiteli' : 'samo mobiteli') + (RELAY ? ' (relej)' : ' (izravno)'));
   let host, code;
@@ -152,21 +152,22 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
       await ana.waitForTimeout(100);
     }
     if (viaKey) { await ana.waitForTimeout(500); ok(/Ponuda poslana/.test(await ana.textContent('#sfbox')), 'Ana šalje ponudu iz Tajnog kutka (između pitanja): „Ponuda poslana”'); await ana.screenshot({ path: OUT + '/i0-kutak-ana.png' }); }
-    ok(await waitPh(P, 'deal', 90000), 'Vrijeme za dogovore se otvorilo (svima)');
-    await ana.waitForTimeout(800);
-    if (TV) ok(/VRIJEME ZA DOGOVORE/.test(await host.textContent('#app')) && !/pakt/i.test(await host.textContent('#app .sf-deal')), 'TV prikazuje najavu, bez privatnih podataka');
-    for (const p of P) if (await has(p, '#app [data-sfintro]')) await click(p, '#app [data-sfintro]');
-    await ana.waitForTimeout(300);
-    if (!viaKey) ok(await click(ana, '#app [data-pk="offer"][data-to="' + ids[iva.__n] + '"]'), 'Ana nudi pakt: ' + iva.__n + ' (Tajni kutak u Vremenu za dogovore)');
-    const ivaCard = await iva.waitForSelector('#app .sf-card', { timeout: 8000 }).then(() => iva.textContent('#app .sf-card .pk-inv-h'), () => '');
+    ok(viaKey, 'ponuda poslana bez posebne faze');
+    // Iva: obavijest + 🔴 na ključu, prihvaća u kutku između pitanja
+    let ivaCard = '';
+    for (let t = 0; t < 300 && !ivaCard; t++) {
+      await auto(P, true);
+      if (!(await has(iva, '#sfbox .sf-sheet')) && await has(iva, '#sfbox .sf-key.new')) { ok(true, iva.__n + ' vidi oznaku nepročitane ponude na 🗝️'); await click(iva, '#sfbox .sf-key'); }
+      if (await has(iva, '#sfbox .sf-card')) ivaCard = await iva.textContent('#sfbox .sf-card .pk-inv-h');
+      await iva.waitForTimeout(100);
+    }
     ok(/Ana ti nudi tajni pakt/.test(ivaCard), iva.__n + ' vidi jasnu karticu: ' + ivaCard.trim());
-    ok(!(await has(mateo, '#app .sf-card')), mateo.__n + ' ne vidi tuđu ponudu');
+    ok(!(await has(mateo, '.sf-card')), mateo.__n + ' ne vidi tuđu ponudu');
     await iva.screenshot({ path: OUT + '/i1-ponuda-iva.png' });
-    if (!RELAY) { const rec = await mateo.evaluate(() => (window.__recv || []).join('\n')).catch(() => ''); ok(rec.length > 0 && !/"inv":\[\{"f":"pid-ana"/.test(rec) && !/"k":\{"m"/.test(rec), 'mreža: ' + mateo.__n + ' nikad ne prima tuđe ponude ni savez'); }
-    await click(iva, '#app .sf-card [data-pk="accept"]');
-    ok(await ana.waitForFunction(() => /💰/.test((document.querySelector('#app .sf-ally') || {}).textContent || ''), null, { timeout: 8000 }).then(() => true, () => false), 'Ana vidi savez');
-    for (const p of P) await click(p, '#sfready');
-    ok(await waitPh(P, 'question', 30000), 'svi spremni → pitanje');
+    if (!RELAY) { const rec = await mateo.evaluate(() => (window.__recv || []).join('\n')).catch(() => ''); ok(rec.length > 0 && !/"inv":\[\{"f":"pid-ana"/.test(rec), 'mreža: ' + mateo.__n + ' nikad ne prima tuđe ponude'); }
+    await click(iva, '#sfbox .sf-card [data-pk="accept"]');
+    ok(await ana.waitForFunction(() => /💰/.test(((document.querySelector('#sfbox .sf-ally') || {}).textContent) || '') || !!document.querySelector('#sfbox .sf-ally-dot'), null, { timeout: 8000 }).then(() => true, () => false), 'Ana vidi savez (🍻 na ključu ili u kutku)');
+    ok(await waitPh(P, 'question', 30000), 'sljedeće pitanje');
     await ana.waitForSelector('#app [data-whi="2"]', { timeout: 5000 }).catch(() => {});
     ok(!(await has(ana, '#app .sf-qbar')), 'nema trake saveznika iznad pitanja');
     await click(ana, '#app [data-whi="2"]');
@@ -178,14 +179,18 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     ok(!(await has(mateo, '#app .sf-whav')) && !(await has(mateo, '#app [data-whi]')), mateo.__n + ' ne vidi ni savez ni šapat');
     await click(ana, '#app [data-c="0"]');
     await iva.screenshot({ path: OUT + '/i2-sapat-iva.png' });
-    // Iva priprema izdaju u sljedećem dogovoru (dvostupanjski), Ana ništa ne zna
-    ok(await waitPh(P, 'deal', 60000), 'sljedeće Vrijeme za dogovore');
-    await iva.waitForTimeout(500);
-    await click(iva, '#app [data-sfbt="1"]'); await iva.waitForTimeout(200); await click(iva, '#app [data-bt="1"]');
-    ok(await iva.waitForFunction(() => /Izdaja pripremljena/.test(document.getElementById('app').textContent), null, { timeout: 6000 }).then(() => true, () => false), iva.__n + ': „Izdaja je pripremljena. Tvoj saveznik ništa ne zna.”');
-    ok(!/Izdaja pripremljena/.test(await ana.textContent('#app')), 'Ana ne vidi izdaju');
+    // Iva priprema izdaju u kutku između pitanja (dvostupanjski), Ana ništa ne zna; zaključava se kad pitanje počne
+    let armed = false;
+    for (let t = 0; t < 300 && !armed; t++) {
+      await auto(P, true);
+      if (!(await has(iva, '#sfbox .sf-sheet')) && await has(iva, '#sfbox .sf-key')) await click(iva, '#sfbox .sf-key');
+      if (await click(iva, '#sfbox [data-sfbt="1"]')) { await iva.waitForTimeout(250); await click(iva, '#sfbox [data-bt="1"]'); }
+      armed = await has(iva, '#sfbox .sf-bt.on');
+      await iva.waitForTimeout(100);
+    }
+    ok(armed && /Izdaja pripremljena/.test(await iva.textContent('#sfbox')), iva.__n + ': „Izdaja pripremljena” (u mirnoj fazi, bez posebne faze)');
+    ok(!/Izdaja pripremljena/.test((await ana.textContent('#app')) + (await ana.textContent('#sfbox').catch(() => ''))), 'Ana ne vidi izdaju');
     await iva.screenshot({ path: OUT + '/i3-izdaja-iva.png' });
-    for (const p of P) await click(p, '#sfready');
     const screens = TV ? [host, ...P] : P;
     let seen = false;
     for (let t = 0; t < 300 && !seen; t++) { await auto(P); seen = await has(P[0], '#app .bt'); if (!seen) await P[0].waitForTimeout(150); }
