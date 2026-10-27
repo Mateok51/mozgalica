@@ -47,3 +47,12 @@
   .tvlob-side .tvlob-inv { gap: 0.8vh; padding: 1.6vh 2vw; } .tvlob-inv .lob-code { font-size: clamp(2.6rem, 5vw, 5rem); }
   .sf-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .sf-btask { align-self: flex-start; }
+  /* šapat na kartici odgovora */
+  .p-opt .sf-whi { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); z-index: 2; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 1.2rem;
+    background: rgba(30, 14, 40, 0.55); box-shadow: inset 0 0 0 1.5px rgba(214, 170, 255, 0.7); text-shadow: none; }
+  .p-opt .sf-whi.sent { background: rgba(120, 70, 160, 0.85); box-shadow: inset 0 0 0 2px #f0c66e, 0 0 10px rgba(200, 150, 255, 0.7); }
+  .p-opt .sf-whav { position: absolute; right: 52px; top: 50%; transform: translateY(-50%); z-index: 2; width: 34px; height: 34px; border-radius: 50%; overflow: hidden;
+    box-shadow: 0 0 0 2px #d7aaff, 0 0 12px rgba(200, 150, 255, 0.8); background: rgba(40, 20, 50, 0.6); }
+  .p-opt .sf-whav > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .p-opt:has(.sf-whi) .otxt { padding-right: 46px; }
+  .p-opt > span.sf-whi, .p-opt > span.sf-whav { position: absolute; }

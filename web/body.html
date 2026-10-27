@@ -2163,6 +2163,15 @@
   .tvlob-side .tvlob-inv { gap: 0.8vh; padding: 1.6vh 2vw; } .tvlob-inv .lob-code { font-size: clamp(2.6rem, 5vw, 5rem); }
   .sf-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .sf-btask { align-self: flex-start; }
+  /* šapat na kartici odgovora */
+  .p-opt .sf-whi { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); z-index: 2; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 1.2rem;
+    background: rgba(30, 14, 40, 0.55); box-shadow: inset 0 0 0 1.5px rgba(214, 170, 255, 0.7); text-shadow: none; }
+  .p-opt .sf-whi.sent { background: rgba(120, 70, 160, 0.85); box-shadow: inset 0 0 0 2px #f0c66e, 0 0 10px rgba(200, 150, 255, 0.7); }
+  .p-opt .sf-whav { position: absolute; right: 52px; top: 50%; transform: translateY(-50%); z-index: 2; width: 34px; height: 34px; border-radius: 50%; overflow: hidden;
+    box-shadow: 0 0 0 2px #d7aaff, 0 0 12px rgba(200, 150, 255, 0.8); background: rgba(40, 20, 50, 0.6); }
+  .p-opt .sf-whav > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .p-opt:has(.sf-whi) .otxt { padding-right: 46px; }
+  .p-opt > span.sf-whi, .p-opt > span.sf-whav { position: absolute; }
 </style>
 
 <div id="app" class="screen center"></div>
@@ -4202,7 +4211,7 @@ __ENGINE__
     let tags = '';
     if (mine && (d.ph === 'question' || RC_PH[d.ph])) tags += '<div class="rc-tag" data-bk="rctag" data-bv="1">⚔️ Obračun: <b>' + rcN(d, act.a) + ' vs ' + rcN(d, act.b) + '</b> · ulog ' + act.st + '</div>';
     if (PV && PV.tk && ((PV.tk.st === 'a' && TK_TAG[d.ph]) || (PV.tk.st === 'o' && d.ph === 'vote'))) tags += tkBar(d, me);
-    return head + sfQuestionBar(d, me) + tags + pjChip(d, me);
+    return head + tags + pjChip(d, me);
   }
   function bindSf(d) {
     sfNotify(d);
@@ -4227,12 +4236,29 @@ __ENGINE__
     document.querySelectorAll('#sfbox [data-rc]').forEach((b) => { b.onclick = () => { const k = b.dataset.rc; AUDIO.play(k === 'rcDecline' || k === 'rcCancel' ? 'tap' : 'confirm'); pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
     document.querySelectorAll('#sfbox [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); pactSend({ k, id: +b.dataset.id }); }; });
     document.querySelectorAll('#sfbox [data-bt]').forEach((b) => { b.onclick = () => { SF.btAsk = false; AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); pactSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
+    bindWhi();
     bind('sfready', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
   }
   function bsToggle(d) {
     if (!d.opt) return '';
     if (!game) return d.opt.bs ? '<div class="lob-info">🤖 Testiranje društvenih mehanika s botovima je uključeno</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l">🤖 Testiraj društvene mehanike s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušavati izdaju. Namijenjeno isprobavanju društvenih funkcionalnosti.</small></span><button class="tgl' + (d.opt.bs ? '' : ' off') + '" data-bsopt="' + (d.opt.bs ? 0 : 1) + '">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';
+  }
+  // šapat na kartici odgovora: 🔮 šalje to slovo savezniku (vlastiti odgovor se NE zaključava); primljeni šapat = mali avatar saveznika
+  function sfOptX(d, i, answered, gone) {
+    if (!PV || !PV.sf || !PV.k || d.ph !== 'question') return '';
+    const k = PV.k, m = pById(d, k.m);
+    let h = '';
+    if (k.wh === i && m) h += '<span class="sf-whav" title="Šapat saveznika">' + avSvg(m.a, 'happy') + '</span>';
+    if (k.wc === i) h += '<span class="sf-whi sent" aria-label="Šapnuto">🔮</span>';
+    else if (!answered && !gone && !k.wsent) h += '<span class="sf-whi" data-whi="' + i + '" role="button" aria-label="Šapni ' + LET[i] + ' savezniku">🔮</span>';
+    return h;
+  }
+  function bindWhi() {
+    document.querySelectorAll('#app [data-whi]').forEach((x) => {
+      x.onpointerdown = (e) => { e.stopPropagation(); };
+      x.onclick = (e) => { e.stopPropagation(); e.preventDefault(); AUDIO.play('whoosh'); pactSend({ k: 'whisper', c: +x.dataset.whi }); };
+    });
   }
   const PACT_STEAL = 0.25;
   function bindPact(d) {
@@ -5273,7 +5299,7 @@ __ENGINE__
       let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
       if (answered && !gone) cls += mine === i ? ' picked' : ' dim';
       const st = answered && !gone ? (mine === i ? 'picked' : 'dim') : '';
-      return '<button class="' + cls + '" data-c="' + i + '" data-bk="op' + i + '" data-bv="' + st + '"' + (st ? ' data-ba="' + (st === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span></button>';
+      return '<button class="' + cls + '" data-c="' + i + '" data-bk="op' + i + '" data-bv="' + st + '"' + (st ? ' data-ba="' + (st === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span>' + sfOptX(d, i, answered, gone) + '</button>';
     }).join('');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
@@ -5536,7 +5562,7 @@ __ENGINE__
         if (Date.now() < (L.lockUntil || 0) || Date.now() < (L.boomUntil || 0)) return;
         if (e && e.detail !== 0 && b.dataset.ok !== '1') return;
         HAPTIC.confirm();
-        const w = S && S.ph === 'question' && PV && PV.sf && PV.k && SF.wh && !PV.k.wsent ? { w: 1 } : {};
+        const w = {};
         sendInput(Object.assign({ c: +b.dataset.c, t: Math.max(0, Math.round(Date.now() - L.start)) }, w));
       };
     });

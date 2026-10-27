@@ -86,11 +86,9 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     ok(await ph(me) !== 'deal' && Date.now() - t0 < 3000, 'nakon „Nastavi” igra odmah nastavlja (' + (Date.now() - t0) + ' ms)');
     console.log('Test H / A — pitanje: šapat jednim dodirom, bot šapće svoj odgovor');
     ok(await waitPh([me], 'question', 30000), 'pitanje');
-    await me.waitForSelector('#app .sf-qbar', { timeout: 5000 }).catch(() => {});
-    ok(await has(me, '#app .sf-qbar .sf-whtg.on'), 'traka saveza s „🔮 Odgovori i šapni” (uključeno)');
+    await me.waitForSelector('#app [data-whi]', { timeout: 5000 }).catch(() => {});
+    ok(await has(me, '#app [data-whi]') && !(await has(me, '#app .sf-qbar')), '🔮 na karticama odgovora, bez trake saveznika');
     ok(!(await has(me, '#sfbox .sf-key')), 'gumb Tajne skriven dok se odgovara');
-    const ov = await me.evaluate(() => { const r = document.querySelector('#app .sf-qbar').getBoundingClientRect(); return [...document.querySelectorAll('#app [data-c]')].some((x) => { const q = x.getBoundingClientRect(); return !(q.bottom <= r.top || q.top >= r.bottom); }); });
-    ok(!ov, 'traka ne prekriva odgovore');
     // moći botova (led, sluz, bube, bombe) mogu prekriti odgovore — očisti ih kao igrač
     for (let k = 0; k < 6; k++) { const fx = await me.evaluate(() => { const q = (x) => document.querySelector(x), fx = q('#fx'); if (!fx) return false;
       if (fx.classList.contains('fx-led')) for (let i = 0; i < 8; i++) { const f = q('#fx.fx-led'); if (f) f.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); }
@@ -100,13 +98,15 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
         for (let y = 0; y < 8; y++) for (let x = 0; x < 6; x++) fx.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, pointerId: 1, clientX: r.left + (x + 0.5) * r.width / 6, clientY: r.top + (y + 0.5) * r.height / 8 }));
         fx.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerId: 1 })); }
       return true; }); if (!fx) break; await me.waitForTimeout(700); }
-    const whIn = await me.waitForSelector('#app .pk-whin', { timeout: 17000 }).then(() => me.textContent('#app .pk-whin'), () => '');
-    ok(/[ABCD]/.test(whIn), 'bot mi je šapnuo svoj odgovor: ' + whIn.trim());
+    const whIn = await me.waitForSelector('#app .sf-whav', { timeout: 17000 }).then(() => me.evaluate(() => 'ABCD'[+document.querySelector('#app .sf-whav').closest('[data-c]').dataset.c]), () => '');
+    ok(/[ABCD]/.test(whIn || ''), 'bot mi je šapnuo svoj odgovor (avatar na odgovoru ' + whIn + ')');
+    await click(me, '#app [data-whi="1"]');
+    ok(await me.waitForSelector('#app [data-c="1"] .sf-whi.sent', { timeout: 4000 }).then(() => true, () => false), 'moj 🔮 na B: šapat poslan bez zaključavanja odgovora');
     await me.screenshot({ path: OUT + '/5-pitanje-sapat.png' });
     for (let k = 0; k < 10 && !(await has(me, '#app .p-opt.picked')); k++) { await click(me, '#app [data-c="0"]'); await me.waitForTimeout(300); }
     // ako sam zadnji odgovorio, pitanje odmah završava (traka nestaje); dostava šapata jednim dodirom provjerava se i u testu s tri prava igrača
-    const sent = await me.waitForSelector('#app .sf-qbar .pk-sent', { timeout: 2500 }).then(() => 'Šapnuto', async () => (await ph(me)) !== 'question' ? 'pitanje je odmah završilo (zadnji odgovor)' : '');
-    ok(!!sent, 'jedan dodir zaključava odgovor: ' + sent);
+    const sent = await me.waitForSelector('#app .p-opt.picked', { timeout: 2500 }).then(() => 'odabrano', async () => (await ph(me)) !== 'question' ? 'pitanje je odmah završilo (zadnji odgovor)' : '');
+    ok(!!sent, 'odgovor zaključan zasebnim dodirom: ' + sent);
     console.log('Test C — bot priprema izdaju (prije pitanja), izvrši se nakon pitanja');
     ok(await waitPh([me], 'deal', 60000), 'sljedeće Vrijeme za dogovore');
     await me.waitForTimeout(400);
@@ -167,11 +167,16 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     ok(await ana.waitForFunction(() => /💰/.test((document.querySelector('#app .sf-ally') || {}).textContent || ''), null, { timeout: 8000 }).then(() => true, () => false), 'Ana vidi savez');
     for (const p of P) await click(p, '#sfready');
     ok(await waitPh(P, 'question', 30000), 'svi spremni → pitanje');
-    await ana.waitForSelector('#app .sf-qbar', { timeout: 5000 }).catch(() => {});
-    await click(ana, '#app [data-c="2"]');
-    const wh = await iva.waitForSelector('#app .pk-whin', { timeout: 8000 }).then(() => iva.textContent('#app .pk-whin'), () => '');
-    ok(/C/.test(wh), iva.__n + ' dobiva Anin šapat jednim dodirom: ' + wh.trim());
-    ok(!(await has(mateo, '#app .pk-whin')) && !(await has(mateo, '#app .sf-qbar')), mateo.__n + ' ne vidi ni savez ni šapat');
+    await ana.waitForSelector('#app [data-whi="2"]', { timeout: 5000 }).catch(() => {});
+    ok(!(await has(ana, '#app .sf-qbar')), 'nema trake saveznika iznad pitanja');
+    await click(ana, '#app [data-whi="2"]');
+    const sentC = await ana.waitForSelector('#app [data-c="2"] .sf-whi.sent', { timeout: 5000 }).then(() => true, () => false);
+    const freeAns = await ana.evaluate(() => [...document.querySelectorAll('#app [data-c]')].every((b) => !b.disabled));
+    ok(sentC && freeAns, 'Ana dodirne 🔮 na C: šapat poslan, vlastiti odgovor i dalje slobodan');
+    const wh = await iva.waitForSelector('#app [data-c="2"] .sf-whav', { timeout: 8000 }).then(() => true, () => false);
+    ok(wh, iva.__n + ' vidi Anin avatar na odgovoru C');
+    ok(!(await has(mateo, '#app .sf-whav')) && !(await has(mateo, '#app [data-whi]')), mateo.__n + ' ne vidi ni savez ni šapat');
+    await click(ana, '#app [data-c="0"]');
     await iva.screenshot({ path: OUT + '/i2-sapat-iva.png' });
     // Iva priprema izdaju u sljedećem dogovoru (dvostupanjski), Ana ništa ne zna
     ok(await waitPh(P, 'deal', 60000), 'sljedeće Vrijeme za dogovore');

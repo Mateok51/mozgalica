@@ -162,3 +162,19 @@
     if (!game) return d.opt.bs ? '<div class="lob-info">🤖 Testiranje društvenih mehanika s botovima je uključeno</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l">🤖 Testiraj društvene mehanike s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušavati izdaju. Namijenjeno isprobavanju društvenih funkcionalnosti.</small></span><button class="tgl' + (d.opt.bs ? '' : ' off') + '" data-bsopt="' + (d.opt.bs ? 0 : 1) + '">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';
   }
+  // šapat na kartici odgovora: 🔮 šalje to slovo savezniku (vlastiti odgovor se NE zaključava); primljeni šapat = mali avatar saveznika
+  function sfOptX(d, i, answered, gone) {
+    if (!PV || !PV.sf || !PV.k || d.ph !== 'question') return '';
+    const k = PV.k, m = pById(d, k.m);
+    let h = '';
+    if (k.wh === i && m) h += '<span class="sf-whav" title="Šapat saveznika">' + avSvg(m.a, 'happy') + '</span>';
+    if (k.wc === i) h += '<span class="sf-whi sent" aria-label="Šapnuto">🔮</span>';
+    else if (!answered && !gone && !k.wsent) h += '<span class="sf-whi" data-whi="' + i + '" role="button" aria-label="Šapni ' + LET[i] + ' savezniku">🔮</span>';
+    return h;
+  }
+  function bindWhi() {
+    document.querySelectorAll('#app [data-whi]').forEach((x) => {
+      x.onpointerdown = (e) => { e.stopPropagation(); };
+      x.onclick = (e) => { e.stopPropagation(); e.preventDefault(); AUDIO.play('whoosh'); pactSend({ k: 'whisper', c: +x.dataset.whi }); };
+    });
+  }

@@ -17,3 +17,10 @@ b = s.index("      if (left === 1) { const c = cand('PJ_LAST'")
 s = s[:a] + "      // bez komentara o projiciranim stepenicama (početne pozicije su iznenađenje piramide)\n" + s[b:]
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('UX 1 (bez projekcije) OK')
+
+# ---------- 3) šapat: igrač vidi koje je slovo šapnuo (za oznaku na kartici odgovora) ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("      if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; }",
+    "      if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; if (mate.wh && mate.wh.from === pid && mate.wh.s === G.s) o.k.wc = mate.wh.c; }")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('UX 3 (šapat: poslano slovo) OK')

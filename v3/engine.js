@@ -2124,7 +2124,7 @@ function createGame(o) {
     if (sfOn()) { o.sf = 1; if (G.ph === 'deal') o.dl = 1; if (bsOn()) o.bs = 1; }
     if (k && mate) {
       o.k = { m: mate.pid, tre: k.tre, grew: k.grew === G.s ? 1 : 0, since: k.since };
-      if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; }
+      if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; if (mate.wh && mate.wh.from === pid && mate.wh.s === G.s) o.k.wc = mate.wh.c; }
       if (sfOn() && G.ph === 'deal') { o.k.bt = p.betray ? 1 : 0; o.k.dl = 1; }
       if (sfOn() && p.betray && G.ph !== 'deal') o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)
       if (p.wh && p.wh.s === G.s) o.k.wh = p.wh.c;
