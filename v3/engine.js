@@ -1982,7 +1982,24 @@ function createGame(o) {
     if (G.ph === 'lobby' || G.ph === 'final' || G.inFinale) return { ok: 0, msg: 'Scenariji su dostupni tijekom regularnog dijela partije.' };
     const mate = partnerOf(p), botMate = mate && mate.bot;
     const left = (bsOn() ? cfg.sf.atBot : cfg.sf.at).slice(G.dealI).length;
+    const K = cfg.kr, when = (n) => ((G.bdone || 0) < n ? ' (od ' + n + '. odigranog pitanja)' : ' (na sljedećoj ploči bodova)');
     switch (k) {
+      case 'krpact':
+        if (!krFree(p)) return { ok: 0, msg: p.pact ? 'Već imaš pakt.' : 'Već si imao pakt u ovoj partiji (jedan po partiji).' };
+        if (!list().some((b) => b.bot && krFree(b))) return { ok: 0, msg: 'Nema slobodnog bota za pakt.' };
+        if (G.kpN >= K.pactOffers) return { ok: 0, msg: 'Krčmar je u ovoj partiji već ponudio sve paktove.' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će ti ponuditi pakt s botom' + when(K.pactFrom) + ' — bot će prihvatiti.' };
+      case 'challenge':
+        if (G.lcDone) return { ok: 0, msg: 'Izazov vođi već je bio u ovoj partiji (jednom po partiji).' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će te pitati da izazoveš vođu' + when(K.chFrom) + '.' };
+      case 'task': case 'fav':
+        if (k === 'task' && (p.kt || p.koGot.task)) return { ok: 0, msg: 'Tajni zadatak već si dobio u ovoj partiji.' };
+        if (k === 'fav' && (p.kf || p.koGot.fav)) return { ok: 0, msg: 'Uslugu već si dobio u ovoj partiji.' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će ti ponuditi ' + (k === 'task' ? 'tajni zadatak' : 'uslugu (biraš kategoriju)') + when(K.offFrom) + '.' };
+      case 'betray':
+        if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (scenarij „Krčmar mi nudi pakt s botom”).' };
+        mate.sfLoyal = 0; G.scn = { k, pid };
+        return { ok: 1, msg: mate.name + ' će potajno pripremiti izdaju na sljedećoj ploči bodova' + ((pactOf(p).n || 0) < (cfg.pactMinQ || 0) ? ' (kad prođu 2 zajednička pitanja)' : '') + '.' };
       case 'offer':
         if (!pactFree(p)) return { ok: 0, msg: p.pact ? 'Već imaš pakt — scenarij treba igrača bez pakta.' : 'Već si imao pakt u ovoj partiji (jedan po partiji).' };
         if (!list().some((b) => b.bot && b.on && pactFree(b))) return { ok: 0, msg: 'Nema slobodnog bota (svi su već u paktu).' };
@@ -1998,7 +2015,7 @@ function createGame(o) {
         G.scn = { k, pid }; return { ok: 1, msg: mate.name + ' će ti šapnuti svoj odgovor na sljedećem pitanju.' };
       case 'betray': case 'double': case 'loyal':
         if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (Tajni kutak → ponudi savez).' };
-        if (k === 'loyal') { mate.sfLoyal = 1; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }
+        if (k === 'loyal') { mate.sfLoyal = 1; mate.betray = false; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }
         if (!left && G.ph !== 'deal') return { ok: 0, msg: 'U ovoj partiji više nema Vremena za dogovore prije finala.' };
         G.scn = { k, pid };
         if (G.ph === 'deal') { mate.sfLoyal = 0; if (botPact(mate, { k: 'betray', on: true })) G.scn = null; }
@@ -2008,7 +2025,18 @@ function createGame(o) {
   }
   // ===================== KRČMAR 2.0 =====================
   // ploča bodova nakon pitanja: animacija (rb) pa čekanje da svi dodirnu Nastavi
+  function krBotsBoard() {
+    if (!bsOn() || !pactsOn()) return;
+    for (const b of list().filter((p) => p.bot && p.on && p.pact)) {
+      const k = pactOf(b); if (!k || (k.n || 0) < (cfg.pactMinQ || 0)) continue;
+      const sc = G.scn && G.scn.k === 'betray' && (k.a === G.scn.pid || k.b === G.scn.pid);
+      if (sc) { if (botPact(b, { k: 'betray', on: true })) G.scn = null; continue; }
+      if (b.sfLoyal || b.betray) continue;
+      if (k.tre >= cfg.sf.btMin && Math.random() < (cfg.sf.prof[G.prof[b.pid] || 'wild'] || cfg.sf.prof.wild).bt / 3) botPact(b, { k: 'betray', on: true });
+    }
+  }
   function krRevealStart(rb) {
+    krBotsBoard();
     G.revMin = G.startedAt + Math.round(rb * 1000);
     for (const p of list()) if (p.bot) p.done = true;
     const s0 = G.s;
@@ -2082,8 +2110,9 @@ function createGame(o) {
     if (!plan.slice(G.pi + 1).some((it) => it.t === 'battle')) return;   // mora postojati još pitanja nakon izazova
     const ps = active().slice().sort((a, b) => b.score - a.score);
     if (ps.length < 2) return;
-    const B = ps[0], A = ps[ps.length - 1];
     const forced = G.scn && G.scn.k === 'challenge';
+    let B = ps[0], A = ps[ps.length - 1];
+    if (forced) { A = R.get(G.scn.pid); B = ps[0] !== A ? ps[0] : ps[1]; }
     if (!A || A.bot || A === B || (!forced && B.score - A.score < K.chGap)) return;
     if (forced) G.scn = null;
     G.lcDone = true;
@@ -2150,7 +2179,7 @@ function createGame(o) {
     if (forced) G.scn = null;
     G.kpN++;
     G.kp = { id: ++G.sfSeq, a: A.pid, b: B.pid, st: 'o', ans: {} };
-    for (const p of [A, B]) if (p.bot) G.kp.ans[p.pid] = Math.random() < (cfg.sf.prof[G.prof[p.pid] || 'wild'] || cfg.sf.prof.wild).acc ? 1 : 0;
+    for (const p of [A, B]) if (p.bot) G.kp.ans[p.pid] = forced ? 1 : Math.random() < (cfg.sf.prof[G.prof[p.pid] || 'wild'] || cfg.sf.prof.wild).acc ? 1 : 0;
   }
   function krPactAnswer(p, yes) {
     const o = G.kp;
@@ -2559,6 +2588,6 @@ function createGame(o) {
 
   // samo za testove
   function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
-  return { sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
+  return { _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
 }
 //#engine-end

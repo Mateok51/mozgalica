@@ -330,3 +330,55 @@ rep("        if (!POWERS[k].atk) return { s, p: k };", "        if (!POWERS[k].a
 rep("  const PW_ACC = { led: 'Led', sluz: 'Sluz', grick: 'Grickalice',", "  const PW_ACC = { oklada: 'Okladu', led: 'Led', sluz: 'Sluz', grick: 'Grickalice',")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR 6 (Oklada) OK')
+
+# ---------- 7) testni scenariji (skriveni izbornik, samo lokalni domaćin u testnom načinu s botovima) ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("    const mate = partnerOf(p), botMate = mate && mate.bot;\n    const left = (bsOn() ? cfg.sf.atBot : cfg.sf.at).slice(G.dealI).length;\n    switch (k) {",
+    """    const mate = partnerOf(p), botMate = mate && mate.bot;
+    const left = (bsOn() ? cfg.sf.atBot : cfg.sf.at).slice(G.dealI).length;
+    const K = cfg.kr, when = (n) => ((G.bdone || 0) < n ? ' (od ' + n + '. odigranog pitanja)' : ' (na sljedećoj ploči bodova)');
+    switch (k) {
+      case 'krpact':
+        if (!krFree(p)) return { ok: 0, msg: p.pact ? 'Već imaš pakt.' : 'Već si imao pakt u ovoj partiji (jedan po partiji).' };
+        if (!list().some((b) => b.bot && krFree(b))) return { ok: 0, msg: 'Nema slobodnog bota za pakt.' };
+        if (G.kpN >= K.pactOffers) return { ok: 0, msg: 'Krčmar je u ovoj partiji već ponudio sve paktove.' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će ti ponuditi pakt s botom' + when(K.pactFrom) + ' — bot će prihvatiti.' };
+      case 'challenge':
+        if (G.lcDone) return { ok: 0, msg: 'Izazov vođi već je bio u ovoj partiji (jednom po partiji).' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će te pitati da izazoveš vođu' + when(K.chFrom) + '.' };
+      case 'task': case 'fav':
+        if (k === 'task' && (p.kt || p.koGot.task)) return { ok: 0, msg: 'Tajni zadatak već si dobio u ovoj partiji.' };
+        if (k === 'fav' && (p.kf || p.koGot.fav)) return { ok: 0, msg: 'Uslugu već si dobio u ovoj partiji.' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će ti ponuditi ' + (k === 'task' ? 'tajni zadatak' : 'uslugu (biraš kategoriju)') + when(K.offFrom) + '.' };
+      case 'betray':
+        if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (scenarij „Krčmar mi nudi pakt s botom”).' };
+        mate.sfLoyal = 0; G.scn = { k, pid };
+        return { ok: 1, msg: mate.name + ' će potajno pripremiti izdaju na sljedećoj ploči bodova' + ((pactOf(p).n || 0) < (cfg.pactMinQ || 0) ? ' (kad prođu 2 zajednička pitanja)' : '') + '.' };""")
+rep("        if (k === 'loyal') { mate.sfLoyal = 1; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }",
+    "        if (k === 'loyal') { mate.sfLoyal = 1; mate.betray = false; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }")
+# bot u izazovu (scenarij): prisilno izazivač = ti
+rep("    const B = ps[0], A = ps[ps.length - 1];\n    const forced = G.scn && G.scn.k === 'challenge';",
+    "    const forced = G.scn && G.scn.k === 'challenge';\n    let B = ps[0], A = ps[ps.length - 1];\n    if (forced) { A = R.get(G.scn.pid); B = ps[0] !== A ? ps[0] : ps[1]; }")
+# bot u ponudi pakta (scenarij): bot prihvaća
+rep("    for (const p of [A, B]) if (p.bot) G.kp.ans[p.pid] = Math.random() <", "    for (const p of [A, B]) if (p.bot) G.kp.ans[p.pid] = forced ? 1 : Math.random() <")
+# botovi odlučuju o izdaji na ploči bodova (prije sljedećeg pitanja, bez znanja o njemu); po ploči 1/3 vjerojatnosti profila
+rep("  function krRevealStart(rb) {\n", """  function krBotsBoard() {
+    if (!bsOn() || !pactsOn()) return;
+    for (const b of list().filter((p) => p.bot && p.on && p.pact)) {
+      const k = pactOf(b); if (!k || (k.n || 0) < (cfg.pactMinQ || 0)) continue;
+      const sc = G.scn && G.scn.k === 'betray' && (k.a === G.scn.pid || k.b === G.scn.pid);
+      if (sc) { if (botPact(b, { k: 'betray', on: true })) G.scn = null; continue; }
+      if (b.sfLoyal || b.betray) continue;
+      if (k.tre >= cfg.sf.btMin && Math.random() < (cfg.sf.prof[G.prof[b.pid] || 'wild'] || cfg.sf.prof.wild).bt / 3) botPact(b, { k: 'betray', on: true });
+    }
+  }
+  function krRevealStart(rb) {
+    krBotsBoard();
+""")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR 7 (testni scenariji) OK')
+# samo za testove: izravno sklapanje pakta (isti put kao krčmarova ponuda koju oboje prihvate)
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("  return { sfScenario, pactAction,", "  return { _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction,")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR test hook OK')

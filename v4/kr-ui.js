@@ -46,7 +46,8 @@
     const go = mine ? '<div class="kr-wait">Čekamo ostale… <b>' + r + '/' + n + '</b></div>'
       : priv.block ? '' : '<button class="btn win-cta kr-go" id="krok">Nastavi</button>' + (n > 1 ? '<div class="kr-wait">Spremno <b>' + r + '/' + n + '</b></div>' : '');
     const ph0 = priv && typeof priv === 'object' ? priv.html || '' : priv || '';
-    return '<div class="kr-box">' + ph0 + go + '</div>';
+    const dev = PV && PV.bs && game && mode !== 'player' ? (sfDev() ? sfScn(d) : '<button class="kr-dev" data-sfdev="1" aria-label="Testni način">🤖</button>') : '';
+    return '<div class="kr-box">' + ph0 + go + dev + '</div>';
   }
   function krTv(d) {
     if (!d.rw) return '';

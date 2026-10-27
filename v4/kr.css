@@ -20,3 +20,5 @@
   .rope-mid { position: absolute; left: 50%; top: 2px; bottom: 2px; width: 2px; background: rgba(255, 230, 190, 0.5); }
   .rope-k { position: absolute; left: calc(50% + var(--x)); top: 50%; width: 22px; height: 22px; border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle at 35% 30%, #f8d17a, #b4741e); box-shadow: 0 0 0 2px #3a2008, 0 0 10px rgba(240, 198, 110, 0.7); transition: left 0.35s cubic-bezier(0.2, 0.8, 0.3, 1); }
   .tv .rope { max-width: 900px; } .tv .rope-p .mini { width: 70px; height: 70px; } .tv .rope-p i { font-size: 2rem; } .tv .rope-p b { font-size: 1.2rem; } .tv .rope-t { height: 56px; } .tv .rope-k { width: 36px; height: 36px; }
+  .kr-dev { align-self: flex-end; width: 36px; height: 36px; border-radius: 50%; border: 0; font-size: 1rem; background: rgba(255, 255, 255, 0.06); opacity: 0.5; }
+  .kr-box .sf-scn { width: 100%; }

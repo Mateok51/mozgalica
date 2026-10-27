@@ -72,7 +72,7 @@
       R0.cand.slice().sort((x, y) => (y.rev + y.riv) - (x.rev + x.riv)).map((c) => { const p = pById(d, c.id); return p ? '<button class="pk-cand" data-rc="rcOffer" data-to="' + esc(c.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span>' + sfName(d, c.id) + (c.rev ? ' <em>🔥 osveta</em>' : c.riv ? ' <em>⚔️ rival</em>' : '') + '</span></button>' : ''; }).join('') + '</div></div>';
     return h;
   }
-  const SCN = [['offer', 'Bot mi šalje ponudu za pakt'], ['accept', 'Bot prihvaća moj pakt'], ['decline', 'Bot odbija moj pakt'], ['whisper', 'Bot mi šapne odgovor'], ['betray', 'Bot priprema izdaju'], ['loyal', 'Bot ostaje odan'], ['double', 'Oba partnera pripremaju izdaju']];
+  const SCN = [['krpact', 'Krčmar mi nudi pakt s botom'], ['betray', 'Bot (saveznik) priprema izdaju'], ['loyal', 'Bot (saveznik) ostaje odan'], ['challenge', 'Krčmar me pita da izazovem vođu'], ['task', 'Krčmar mi nudi tajni zadatak'], ['fav', 'Krčmar mi nudi uslugu (kategorija)']];
   // skriveni razvojni izbornik: 5 dodira na naslov „Tajni kutak” ili #dev u adresi (samo lokalni domaćin u testnom načinu s botovima)
   const sfDev = () => { if (SF.dev) return true; try { return /dev/.test(location.hash) || sessionStorage.getItem('mz_dev') === '1'; } catch (e) { return false; } };
   function sfScn(d) {

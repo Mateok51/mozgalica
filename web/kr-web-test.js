@@ -8,7 +8,7 @@ MOCK = MOCK.replace("else if (m.k === 'data') { const c = this.conns[m.cid]; if 
 MOCK = "window.__MQTT_URLS = ['ws://localhost:8767/mqtt'];\n" + MOCK;
 const server = http.createServer((req, res) => { const p = path.join(SITE, decodeURIComponent(req.url.split('?')[0].split('#')[0]).replace(/\/$/, '/index.html')); if (!p.startsWith(SITE) || !fs.existsSync(p)) { res.writeHead(404); return res.end(); } if (p.endsWith('index.html')) { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(fs.readFileSync(p, 'utf8').replace("connect-src 'self'", "connect-src 'self' ws://localhost:8767")); } res.writeHead(200, { 'content-type': { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.webp': 'image/webp', '.svg': 'image/svg+xml' }[path.extname(p)] || 'text/plain' }); fs.createReadStream(p).pipe(res); });
 let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails++; };
-const CH = process.env.CH === '1', OKL = process.env.OKL === '1';
+const CH = process.env.CH === '1', OKL = process.env.OKL === '1', SOLO = process.env.SOLO === '1';
 const CFGX = { kr: OKL ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0, pactMin: 3, offFrom: 99, offChance: 0, offMax: 0, chFrom: 99, chGap: 99999, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 12, ropeWin: 7, ropeN: 40 } : CH ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0, pactMin: 3, offFrom: 99, offChance: 0, offMax: 0, chFrom: 1, chGap: 0, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 12, ropeWin: 7, ropeN: 40 } : { wait: 45, pactOffers: 2, pactFrom: 1, pactChance: 1, pactMin: 3 }, duelIntro: 2, qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 0], intro: 0.4, vote: 3, voteShow: 0.5, roul: 0.3, power: 3, q: 8, reveal: 2, howto: 0.5, howtoMax: 0.5, howtoShort: 0.3, sort: 3, link: 3, chReveal: 0.5 };
 (async () => {
   const broker = require('./mini-broker').start(8767);
@@ -24,6 +24,35 @@ const CFGX = { kr: OKL ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0,
   await host.evaluate((c) => Object.assign(CFG, c), CFGX);
   await host.click('#hostp'); await host.fill('#hname', 'Mateo'); await host.click('#hform button[type=submit]');
   await host.waitForSelector('.lob-code'); const code = (await host.textContent('.lob-code')).trim();
+  if (SOLO) {
+    // solo: domaćin + 3 bota u testnom načinu; skriveni izbornik otključan (#dev)
+    await host.evaluate(() => sessionStorage.setItem('mz_dev', '1'));
+    for (let i = 0; i < 3; i++) await click(host, '[data-bots="1"]');
+    await host.waitForTimeout(300); await click(host, '[data-bsopt="1"]'); await host.waitForSelector('[data-bsopt="0"]', { timeout: 3000 });
+    await click(host, '#dstart');
+    const me = host, step = async () => { await me.evaluate(() => { const A = document.getElementById('app'); const x = A && A.querySelector('[data-v]:not([disabled]), #nopw, [data-c]:not([disabled]), #krok'); if (x) x.click(); }).catch(() => {}); await me.waitForTimeout(150); };
+    const board = async () => { for (let t = 0; t < 600; t++) { if ((await ph(me)) === 'reveal' && await has(me, '#app .kr-box')) return true; await step(); } return false; };
+    ok(await board(), 'prva ploča bodova');
+    await click(me, '#app [data-sfscnopen]'); await me.waitForTimeout(200);
+    ok(await has(me, '#app [data-scn="krpact"]'), 'skriveni izbornik na ploči: testni scenariji');
+    await me.screenshot({ path: OUT + '/s1-scenariji.png' });
+    await click(me, '#app [data-scn="krpact"]'); await me.waitForTimeout(300);
+    let card = false;
+    for (let t = 0; t < 600 && !card; t++) { card = await has(me, '#app .kr-card'); if (!card) await step(); }
+    ok(card && /pakt s/.test(await me.textContent('#app .kr-card')), 'krčmar mi nudi pakt s botom: ' + (card ? (await me.textContent('#app .kr-card .pk-inv-h')).trim() : '-'));
+    let ally = false;
+    for (let t = 0; t < 20 && !ally; t++) { await click(me, '#app [data-krp="1"]'); ally = await me.waitForSelector('#app .kr-ally', { timeout: 500 }).then(() => true, () => false); }
+    if (!ally) console.log('     dbg', await me.evaluate(() => (document.querySelector('#app .kr-box') || {}).innerHTML || 'nema').catch((e) => String(e)));
+    ok(ally, 'bot je prihvatio — vidim savez i riznicu na ploči');
+    await me.screenshot({ path: OUT + '/s2-savez-bot.png' });
+    await click(me, '#app [data-sfscnopen]'); await me.waitForTimeout(150); await click(me, '#app [data-scn="betray"]'); await me.waitForTimeout(200);
+    let bt = false;
+    for (let t = 0; t < 1500 && !bt; t++) { bt = await has(me, '#app .bt'); if (!bt) await step(); }
+    ok(bt, 'bot me izdao (postojeća animacija izdaje)');
+    if (bt) { await me.waitForTimeout(2500); await me.screenshot({ path: OUT + '/s3-izdaja-bota.png' }); }
+    ok(errors.length === 0, 'bez JS grešaka ' + errors.join(' | '));
+    await b.close(); server.close(); await broker.close(); console.log(fails ? 'NEUSPJEH ' + fails : 'SVE OK'); process.exit(fails ? 1 : 0);
+  }
   const ana = await mk('Ana', 'pid-ana'); await ana.goto(URL + '#' + code); await ana.fill('#name', 'Ana'); await ana.click('button[type=submit]');
   await ana.waitForSelector('[data-av]', { timeout: 20000 }); await ana.evaluate(() => { const x = document.querySelector('#app [data-av]:not([disabled])'); if (x) x.click(); });
   const iva = await mk('Iva', 'pid-iva'); await iva.goto(URL + '#' + code); await iva.fill('#name', 'Iva'); await iva.click('button[type=submit]');

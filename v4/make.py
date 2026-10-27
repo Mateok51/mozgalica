@@ -2533,7 +2533,7 @@ open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('KR 4 UI OK')
 # ---- Krčmar 2.0, korak 5: izazov vođi na ploči, nadvlačenje konopa (mobitel, TV), rezultat ----
 s = open(SP + '/v4/page.html', encoding='utf-8').read()
-s = rep(s, "    return '<div class=\"kr-box\">' + ph0 + go + '</div>';", "    return '<div class=\"kr-box\">' + krChallenge(d, me) + ph0 + go + '</div>';")
+s = rep(s, "    return '<div class=\"kr-box\">' + ph0 + go + dev + '</div>';", "    return '<div class=\"kr-box\">' + krChallenge(d, me) + ph0 + go + dev + '</div>';")
 s = rep(s, "    const go = mine ? '<div class=\"kr-wait\">", "    if (d.lc && d.lc.st === 'o' && d.lc.a === me.id && !priv.block) priv = { block: 1, html: priv && typeof priv === 'object' ? priv.html || '' : priv || '' };\n    const go = mine ? '<div class=\"kr-wait\">")
 s = rep(s, "    const priv = krPriv(d, me);\n", "    let priv = krPriv(d, me);\n")
 s = rep(s, "    return n ? '<div class=\"kr-wait tv\"", "    return krChallenge(d, null) + (n ? '<div class=\"kr-wait tv\"")

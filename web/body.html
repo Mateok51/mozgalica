@@ -2194,6 +2194,8 @@
   .rope-mid { position: absolute; left: 50%; top: 2px; bottom: 2px; width: 2px; background: rgba(255, 230, 190, 0.5); }
   .rope-k { position: absolute; left: calc(50% + var(--x)); top: 50%; width: 22px; height: 22px; border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle at 35% 30%, #f8d17a, #b4741e); box-shadow: 0 0 0 2px #3a2008, 0 0 10px rgba(240, 198, 110, 0.7); transition: left 0.35s cubic-bezier(0.2, 0.8, 0.3, 1); }
   .tv .rope { max-width: 900px; } .tv .rope-p .mini { width: 70px; height: 70px; } .tv .rope-p i { font-size: 2rem; } .tv .rope-p b { font-size: 1.2rem; } .tv .rope-t { height: 56px; } .tv .rope-k { width: 36px; height: 36px; }
+  .kr-dev { align-self: flex-end; width: 36px; height: 36px; border-radius: 50%; border: 0; font-size: 1rem; background: rgba(255, 255, 255, 0.06); opacity: 0.5; }
+  .kr-box .sf-scn { width: 100%; }
 </style>
 
 <div id="app" class="screen center"></div>
@@ -4178,7 +4180,7 @@ __ENGINE__
       R0.cand.slice().sort((x, y) => (y.rev + y.riv) - (x.rev + x.riv)).map((c) => { const p = pById(d, c.id); return p ? '<button class="pk-cand" data-rc="rcOffer" data-to="' + esc(c.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span>' + sfName(d, c.id) + (c.rev ? ' <em>🔥 osveta</em>' : c.riv ? ' <em>⚔️ rival</em>' : '') + '</span></button>' : ''; }).join('') + '</div></div>';
     return h;
   }
-  const SCN = [['offer', 'Bot mi šalje ponudu za pakt'], ['accept', 'Bot prihvaća moj pakt'], ['decline', 'Bot odbija moj pakt'], ['whisper', 'Bot mi šapne odgovor'], ['betray', 'Bot priprema izdaju'], ['loyal', 'Bot ostaje odan'], ['double', 'Oba partnera pripremaju izdaju']];
+  const SCN = [['krpact', 'Krčmar mi nudi pakt s botom'], ['betray', 'Bot (saveznik) priprema izdaju'], ['loyal', 'Bot (saveznik) ostaje odan'], ['challenge', 'Krčmar me pita da izazovem vođu'], ['task', 'Krčmar mi nudi tajni zadatak'], ['fav', 'Krčmar mi nudi uslugu (kategorija)']];
   // skriveni razvojni izbornik: 5 dodira na naslov „Tajni kutak” ili #dev u adresi (samo lokalni domaćin u testnom načinu s botovima)
   const sfDev = () => { if (SF.dev) return true; try { return /dev/.test(location.hash) || sessionStorage.getItem('mz_dev') === '1'; } catch (e) { return false; } };
   function sfScn(d) {
@@ -4344,7 +4346,8 @@ __ENGINE__
     const go = mine ? '<div class="kr-wait">Čekamo ostale… <b>' + r + '/' + n + '</b></div>'
       : priv.block ? '' : '<button class="btn win-cta kr-go" id="krok">Nastavi</button>' + (n > 1 ? '<div class="kr-wait">Spremno <b>' + r + '/' + n + '</b></div>' : '');
     const ph0 = priv && typeof priv === 'object' ? priv.html || '' : priv || '';
-    return '<div class="kr-box">' + krChallenge(d, me) + ph0 + go + '</div>';
+    const dev = PV && PV.bs && game && mode !== 'player' ? (sfDev() ? sfScn(d) : '<button class="kr-dev" data-sfdev="1" aria-label="Testni način">🤖</button>') : '';
+    return '<div class="kr-box">' + krChallenge(d, me) + ph0 + go + dev + '</div>';
   }
   function krTv(d) {
     if (!d.rw) return '';

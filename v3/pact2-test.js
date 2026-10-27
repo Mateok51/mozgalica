@@ -8,7 +8,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const until = async (f, ms = 8000) => { const t = Date.now(); while (Date.now() - t < ms) { if (f()) return true; await sleep(2); } return false; };
 const P0 = { n: { w: 1, s: 1, t: 0.03 }, t: { w: 1, s: 1, t: 0.03 }, d: { w: 1, s: 1, t: 0.03 } };
-const CFG = { intro: 0.02, vote: 0.3, voteShow: 0.02, roul: 0.02, power: 0.3, cast: 0.02, q: 1.2, pace: P0, paceMo: 0.01, moment: 0.02, betEvents: [0, 0], qv: { who: 0, emoji: 0 }, betrayShow: 0.05, loyalShow: 0.3, fstart: 0.3, fpower: 0.1, fq: 0.3, fr: 0.05, sf: Object.assign({}, E.CFG.sf, { dur: 3, soloMax: 30 }) };
+const CFG = { kr: { wait: 0.3, pactOffers: 0, pactFrom: 99, pactChance: 0, pactMin: 3, offFrom: 99, offChance: 0, offMax: 0, chFrom: 99, chGap: 99999, chWait: 1, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 1, ropeWin: 7, ropeN: 10 }, intro: 0.02, vote: 0.3, voteShow: 0.02, roul: 0.02, power: 0.3, cast: 0.02, q: 1.2, pace: P0, paceMo: 0.01, moment: 0.02, betEvents: [0, 0], qv: { who: 0, emoji: 0 }, betrayShow: 0.05, loyalShow: 0.3, fstart: 0.3, fpower: 0.1, fq: 0.3, fr: 0.05, sf: Object.assign({}, E.CFG.sf, { dur: 3, soloMax: 30 }) };
 const FL = { ENABLE_DUELS: false, ENABLE_SECRET_EVENTS: false };
 const plan = (n, fin) => [{ t: 'intro', title: 'R', sub: '' }].concat(Array.from({ length: n }, () => ({ t: 'battle' })), fin ? [{ t: 'finale' }] : []);
 function mk(nh, opt, bots, n, fin) {
@@ -30,8 +30,11 @@ async function Q(g, a, h) {
   if (h.q) await h.q();
   for (const [id, r] of Object.entries(a)) if (r !== null) g.setInput(id, { s, c: r ? G.q.a : (G.q.a + 1) % 4, t: 100, w: 1 });
   await until(() => G.ph === 'reveal');
+  await until(() => G.ph !== 'reveal' || g.view().rmin === 0, 4000);
+  if (h.board) await h.board();
+  if (G.ph === 'reveal') for (const p of g.view().P.filter((x) => !x.b)) g.setInput(p.id, { s: G.s, ok: 1 });
 }
-const pact = (g, a, b) => g.pactAction(a, { k: 'offer', to: b }) && g.pactAction(b, { k: 'accept', from: a });
+const pact = (g, a, b) => g._pact(a, b);   // v32: pakt nudi krčmar; test ga sklapa izravno
 
 (async () => {
   console.log('1) Riznica: +100 / +40 / 0; izdaja tek nakon dva zajednička pitanja; bez šaputanja');
@@ -96,8 +99,8 @@ const pact = (g, a, b) => g.pactAction(a, { k: 'offer', to: b }) && g.pactAction
   for (let i = 0; i < 3; i++) await Q(g, { p0: false, p1: false, p2: false });
   await Q(g, { p0: true, p1: true, p2: false }, { calm: async () => { pact(g, 'p0', 'p1'); } });
   await Q(g, { p0: true, p1: true, p2: false });
-  await Q(g, { p0: true, p1: false, p2: false });
-  const sc0 = g._p('p0').score, sc1 = g._p('p1').score;
+  let sc0, sc1;
+  await Q(g, { p0: true, p1: false, p2: false }, { board: async () => { sc0 = g._p('p0').score; sc1 = g._p('p1').score; } });
   await until(() => g._G.ph === 'loyal', 6000);
   const ly = g.view().ly.evs[0];
   ok(ly.tre === 240 && ly.bonus === 96 && ly.each === 168 && ly.ea === 168, 'riznica 240 → +40 % = 336, svakome 168');
@@ -107,11 +110,11 @@ const pact = (g, a, b) => g.pactAction(a, { k: 'offer', to: b }) && g.pactAction
   g.stop();
 
   console.log('5) Botovi (testni način): pakt s botom, riznica, izdaja bota tek nakon 2 pitanja');
-  g = mk(1, { bs: true }, 3, 10);
-  for (let i = 0; i < 3; i++) await Q(g, { p0: false });
-  const b0 = g.view().P.find((p) => p.b).id;
-  g.sfScenario('p0', 'accept');
-  await Q(g, { p0: true }, { calm: async () => { g.pactAction('p0', { k: 'offer', to: b0 }); await until(() => !!g._p('p0').pact, 4000); } });
+  g = E.createGame({ code: 'P2', cfg: Object.assign({}, CFG, { kr: Object.assign({}, CFG.kr, { pactOffers: 2, pactFrom: 3 }) }), flags: FL, plan: plan(10), pacts: true, bs: true });
+  g.addPlayer('p0', 'Ana', 0, false); g.setBots(3); g.start(); g._G.qvAt = new Map(); g._G.betAt = new Set();
+  g.sfScenario('p0', 'krpact');
+  for (let i = 0; i < 4 && !g._p('p0').pact; i++) await Q(g, { p0: false }, { board: async () => { if ((g.priv('p0') || {}).kp) g.pactAction('p0', { k: 'krPact', yes: true }); } });
+  const b0 = (g.priv('p0').k || {}).m;
   ok(!!g._p('p0').pact && g._p(b0).pact === g._p('p0').pact, 'bot je prihvatio pakt');
   ok(g.sfScenario('p0', 'whisper').ok === 0, 'scenarij šaputanja više ne postoji');
   g.sfScenario('p0', 'betray');
