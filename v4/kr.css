@@ -3,3 +3,5 @@
   .kr-go { width: 100%; min-height: 54px; }
   .kr-wait { font-weight: 800; font-size: 0.9rem; color: rgba(243, 227, 196, 0.85); text-align: center; }
   .kr-wait.tv { font-size: 1.3rem; margin-top: 1.4vh; }
+  .kr-card, .kr-ally { width: 100%; }
+  .kr-note { font-weight: 800; font-size: 0.9rem; color: #ffe2a0; text-align: center; }

@@ -4,10 +4,11 @@ const { chromium } = require('playwright'); const http = require('http'), fs = r
 const SITE = path.join(__dirname, 'site'), OUT = path.join(__dirname, 'shots-kr'); fs.mkdirSync(OUT, { recursive: true });
 const src = fs.readFileSync(path.join(__dirname, 'multi-test.js'), 'utf8');
 let MOCK = src.slice(src.indexOf('const MOCK = `') + 14, src.indexOf('`;', src.indexOf('const MOCK = `')));
+MOCK = MOCK.replace("else if (m.k === 'data') { const c = this.conns[m.cid]; if (c && c.open) c._emit('data', m.d); }", "else if (m.k === 'data') { const c = this.conns[m.cid]; if (c && c.open) { (window.__recv = window.__recv || []).push(JSON.stringify(m.d)); if (window.__recv.length > 800) window.__recv.shift(); c._emit('data', m.d); } }");
 MOCK = "window.__MQTT_URLS = ['ws://localhost:8767/mqtt'];\n" + MOCK;
 const server = http.createServer((req, res) => { const p = path.join(SITE, decodeURIComponent(req.url.split('?')[0].split('#')[0]).replace(/\/$/, '/index.html')); if (!p.startsWith(SITE) || !fs.existsSync(p)) { res.writeHead(404); return res.end(); } if (p.endsWith('index.html')) { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(fs.readFileSync(p, 'utf8').replace("connect-src 'self'", "connect-src 'self' ws://localhost:8767")); } res.writeHead(200, { 'content-type': { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.webp': 'image/webp', '.svg': 'image/svg+xml' }[path.extname(p)] || 'text/plain' }); fs.createReadStream(p).pipe(res); });
 let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails++; };
-const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 0], intro: 0.4, vote: 3, voteShow: 0.5, roul: 0.3, power: 3, q: 8, reveal: 2, howto: 0.5, howtoMax: 0.5, howtoShort: 0.3, sort: 3, link: 3, chReveal: 0.5 };
+const CFGX = { kr: { wait: 45, pactOffers: 2, pactFrom: 1, pactChance: 1, pactMin: 3 }, qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 0], intro: 0.4, vote: 3, voteShow: 0.5, roul: 0.3, power: 3, q: 8, reveal: 2, howto: 0.5, howtoMax: 0.5, howtoShort: 0.3, sort: 3, link: 3, chReveal: 0.5 };
 (async () => {
   const broker = require('./mini-broker').start(8767);
   await new Promise((r) => server.listen(8766, r)); const URL = 'http://localhost:8766/';
@@ -24,24 +25,38 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
   await host.waitForSelector('.lob-code'); const code = (await host.textContent('.lob-code')).trim();
   const ana = await mk('Ana', 'pid-ana'); await ana.goto(URL + '#' + code); await ana.fill('#name', 'Ana'); await ana.click('button[type=submit]');
   await ana.waitForSelector('[data-av]', { timeout: 20000 }); await ana.evaluate(() => { const x = document.querySelector('#app [data-av]:not([disabled])'); if (x) x.click(); });
-  await click(host, '[data-bots="1"]'); await host.waitForTimeout(600);
+  const iva = await mk('Iva', 'pid-iva'); await iva.goto(URL + '#' + code); await iva.fill('#name', 'Iva'); await iva.click('button[type=submit]');
+  await iva.waitForSelector('[data-av]', { timeout: 20000 }); await iva.evaluate(() => { const x = document.querySelector('#app [data-av]:not([disabled])'); if (x) x.click(); });
+  await host.waitForTimeout(600);
   ok(!(await has(host, '[data-rcopt]')) && !(await has(host, '[data-tkopt]')), 'predvorje: nema opcija rivalskog obračuna ni krčmarovih oklada');
   await click(host, '#dstart');
-  const P = [host, ana];
+  const P = [host, ana, iva];
   const auto = () => Promise.all(P.map((p) => p.evaluate(() => { const A = document.getElementById('app'); if (!A) return; const x = A.querySelector('[data-v]:not([disabled]), #nopw, [data-c]:not([disabled])'); if (x) x.click(); }).catch(() => {})));
   let t0 = Date.now(); while (Date.now() - t0 < 90000 && (await ph(host)) !== 'reveal') { await auto(); await host.waitForTimeout(150); }
   ok((await ph(host)) === 'reveal', 'prvo otkrivanje');
-  const btn = await host.waitForSelector('#app #krok', { timeout: 12000 }).then(() => true, () => false);
-  ok(btn, 'nakon pribrajanja bodova pojavi se „Nastavi”');
+  const btn = await host.waitForSelector('#app #krok, #app .kr-card', { timeout: 12000 }).then(() => true, () => false);
+  ok(btn, 'nakon pribrajanja bodova pojavi se „Nastavi” (ili krčmarova ponuda)');
   await host.waitForFunction(() => { const b = document.querySelector('#app #krok'); const r = b && b.closest('.rv-b'); return r && +getComputedStyle(r).opacity > 0.95; }, null, { timeout: 15000 }).catch(() => {});
   await host.waitForTimeout(800);
   ok((await ph(host)) === 'reveal', 'ploča čeka (animacija je gotova, nitko nije potvrdio)');
   ok(!(await has(host, '#sfbox .sf-key')), 'nema tipke Tajni kutak');
   await host.screenshot({ path: OUT + '/1-ploca-nastavi.png' });
-  await click(host, '#app #krok'); await host.waitForTimeout(400);
-  ok(/Čekamo ostale/.test(await host.textContent('#app')) && (await ph(host)) === 'reveal', 'Mateo potvrdio: „Čekamo ostale… 1/2”, igra još čeka Anu');
-  await ana.waitForSelector('#app #krok', { timeout: 5000 }).catch(() => {});
-  const ta = Date.now(); await click(ana, '#app #krok');
+  // krčmar nudi pakt dvojici (ovdje od 1. pitanja, za test): kartica umjesto Nastavi, treći ne vidi ništa
+  const cards = await Promise.all(P.map((p) => has(p, '#app .kr-card')));
+  ok(cards.filter(Boolean).length === 2, 'ponudu pakta vide točno dvojica (' + P.filter((_, i) => cards[i]).map((p) => p.__n).join(', ') + ')');
+  const pair = P.filter((_, i) => cards[i]), third = P.find((_, i) => !cards[i]);
+  ok(pair.every(Boolean) && !(await has(pair[0], '#app #krok')), 'izabrani nemaju Nastavi dok ne odluče');
+  ok(await has(third, '#app #krok') && !(await has(third, '#app .kr-card')), third.__n + ' vidi samo Nastavi');
+  await pair[0].screenshot({ path: OUT + '/2-ponuda-pakta.png' });
+  if (third !== ana || true) { const rec = await third.evaluate(() => (window.__recv || []).join('\n')).catch(() => ''); ok(rec.length > 0 && !/"kp":\{/.test(rec), 'mreža: ' + third.__n + ' nikad ne prima tuđu ponudu'); }
+  await click(third, '#app #krok'); await third.waitForTimeout(300);
+  ok(/Čekamo ostale/.test(await third.textContent('#app')) && (await ph(third)) === 'reveal', third.__n + ' potvrdio: „Čekamo ostale”, igra čeka');
+  for (const p of pair) await click(p, '#app [data-krp="1"]');
+  const both = await Promise.all(pair.map((p) => p.waitForSelector('#app .kr-ally', { timeout: 6000 }).then(() => true, () => false)));
+  ok(both.every(Boolean), 'oboje prihvatili → oboje vide savez (🍻 + 💰) na ploči');
+  await pair[0].screenshot({ path: OUT + '/3-savez.png' });
+  await click(pair[0], '#app #krok');
+  const ta = Date.now(); await click(pair[1], '#app #krok');
   await host.waitForFunction(() => document.documentElement.dataset.ph !== 'reveal', null, { timeout: 4000 }).catch(() => {});
   ok((await ph(host)) !== 'reveal' && Date.now() - ta < 2500, 'svi potvrdili → igra odmah nastavlja (' + (Date.now() - ta) + ' ms)');
   ok(errors.length === 0, 'bez JS grešaka ' + errors.join(' | '));
