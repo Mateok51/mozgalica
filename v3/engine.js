@@ -1437,17 +1437,7 @@ function createGame(o) {
         if (c) cands.push(c);
         return;
       }
-      if (!prev) return;
-      const ids = Object.keys(pj).filter((id) => prev[id]);
-      const top = (m) => { const mx = Math.max(...ids.map((id) => m[id][3])); const t = ids.filter((id) => m[id][3] === mx); return t.length === 1 ? t[0] : null; };
-      const t0 = top(prev), t1 = top(pj);
-      if (t1 && t1 !== t0) { const c = cand('PJ_LEAD', 7, 'pjl:' + t1 + ':' + T.turn, { X: nm(t1) }, [t1], ['happy'], { snd: 'stingLeader' }); if (c) cands.push(c); }
-      // najveći stvarni skok stepenice (ne napredak unutar iste stepenice)
-      const up = ids.filter((id) => pj[id][0] > prev[id][0] && id !== t1).sort((a, b) => (pj[b][0] - prev[b][0]) - (pj[a][0] - prev[a][0]) || (a < b ? -1 : 1))[0];
-      if (up) { const c = cand('PJ_UP', 6, 'pju:' + up + ':' + T.turn, { X: nm(up), K: pj[up][0] }, [up], ['happy'], { snd: 'stingUp' }); if (c) cands.push(c); }
-      // dvoje na vrhu projekcije postaju izjednačeni
-      const mx = Math.max(...ids.map((id) => pj[id][3])), tied = ids.filter((id) => pj[id][3] === mx);
-      if (mx > 0 && tied.length === 2 && !(prev[tied[0]][3] === prev[tied[1]][3])) { const c = cand('PJ_TIE', 5, 'pjt:' + tied.join('|') + ':' + T.turn, { A: nm(tied[0]), B: nm(tied[1]) }, tied, ['idle', 'idle'], { vs: 1, snd: 'stingRival' }); if (c) cands.push(c); }
+      // bez komentara o projiciranim stepenicama (početne pozicije su iznenađenje piramide)
       if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], [], { snd: 'stingSmall' }); if (c) cands.push(c); }
     }
     // javna izdaja (podaci postaju javni tek s izdajom): pamti za kasniji "vraća se po svoje"
@@ -2309,7 +2299,6 @@ function createGame(o) {
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
     // posljednji poziv: projekcija samo između pitanja (nikad tijekom odgovaranja)
-    if (FC_PH[ph] && fcOn()) v.pj = { P: fcProj(), left: fcLeft(), max: cfg.pyrReq.length };
     if (pactsOn() && G.ph !== 'lobby') v.pk = 1;
     if ((ph === 'reveal' || ph === 'sortReveal' || ph === 'linkReveal' || ph === 'fr') && G.pend && G.pend.mo) v.mo = G.pend.mo;
     if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {
