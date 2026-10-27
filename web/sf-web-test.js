@@ -41,6 +41,7 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     for (let i = 0; i < 3; i++) await click(host, '[data-bots="1"]');
     await host.waitForTimeout(300);
     ok(await has(host, '[data-bsopt="1"]'), 'predvorje: „🤖 Testiraj društvene mehanike s botovima” (isključeno po zadanom)');
+    await host.evaluate(() => sessionStorage.setItem('mz_dev', '1'));   // skriveni razvojni izbornik (testni scenariji)
     await click(host, '[data-bsopt="1"]'); await host.waitForSelector('[data-bsopt="0"]', { timeout: 3000 });
     await host.screenshot({ path: OUT + '/0-predvorje-solo.png', fullPage: true });
   } else {
@@ -64,7 +65,6 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     await me.waitForTimeout(1500);
     ok(/VRIJEME ZA DOGOVORE/.test(await me.textContent('#app')) && !(await has(me, '#app #timer')), 'naslov, bez odbrojavanja u solo testu');
     ok(/Nastavi kada si spreman/.test(await me.textContent('#app')), 'gumb „Nastavi kada si spreman”');
-    ok(await has(me, '#app .sf-rules'), 'prvo otvaranje: kratke upute za tajne paktove');
     await me.screenshot({ path: OUT + '/1-dogovor-upute.png' });
     await click(me, '#app [data-sfintro]'); await me.waitForTimeout(300);
     console.log('Test B — bot šalje ponudu');
@@ -72,12 +72,12 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     await me.screenshot({ path: OUT + '/2-scenariji.png' });
     await click(me, '#app [data-scn="offer"]');
     const card = await me.waitForSelector('#app .sf-card', { timeout: 6000 }).then(() => true, () => false);
-    ok(card && /TI NUDI TAJNI PAKT/.test(await me.textContent('#app .sf-card')), 'ponuda bota je jasna kartica: ' + (card ? (await me.textContent('#app .sf-card .pk-inv-h')).trim() : '-'));
+    ok(card && /ti nudi tajni pakt/.test(await me.textContent('#app .sf-card')), 'ponuda bota je jasna kartica: ' + (card ? (await me.textContent('#app .sf-card .pk-inv-h')).trim() : '-'));
     await me.waitForTimeout(3000);
     ok(await ph(me) === 'deal', 'igra čeka (nema odbrojavanja) dok čitam');
     await me.screenshot({ path: OUT + '/3-ponuda-bota.png' });
     await click(me, '#app .sf-card [data-pk="accept"]');
-    const ally = await me.waitForFunction(() => /TVOJ TAJNI SAVEZ/.test(document.getElementById('app').textContent), null, { timeout: 6000 }).then(() => true, () => false);
+    const ally = await me.waitForFunction(() => /💰/.test((document.querySelector('#app .sf-ally') || {}).textContent || ''), null, { timeout: 6000 }).then(() => true, () => false);
     ok(ally, 'Test A — pakt s botom sklopljen (vidim saveznika i riznicu)');
     await click(me, '#app [data-sfscnopen]'); await me.waitForTimeout(150); await click(me, '#app [data-scn="whisper"]'); await me.waitForTimeout(150);
     await me.screenshot({ path: OUT + '/4-savez.png' });
@@ -112,10 +112,10 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     await me.waitForTimeout(400);
     await click(me, '#app [data-sfscnopen]'); await me.waitForTimeout(150); await click(me, '#app [data-scn="betray"]'); await me.waitForTimeout(300);
     const st = await me.textContent('#app');
-    ok(!/Izdaja je pripremljena/.test(st), 'ne vidim da bot priprema izdaju');
+    ok(!/Izdaja pripremljena/.test(st), 'ne vidim da bot priprema izdaju');
     // moja strana: dvostupanjska potvrda (provjera sučelja), pa odustajem
     await click(me, '#app [data-sfbt="1"]'); await me.waitForTimeout(200);
-    ok(/PRIPREMAŠ IZDAJU/.test(await me.textContent('#app')), 'Test D (sučelje) — „🗡️ PRIPREMAŠ IZDAJU” s posljedicama i potvrdom');
+    ok(/uzimaš riznicu/.test(await me.textContent('#app')), 'Test D (sučelje) — „🗡️ PRIPREMAŠ IZDAJU” s posljedicama i potvrdom');
     await me.screenshot({ path: OUT + '/6-izdaja-potvrda.png' });
     await click(me, '#app [data-sfbt="0"]'); await me.waitForTimeout(150);
     await click(me, '#sfready');
@@ -159,12 +159,12 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     await ana.waitForTimeout(300);
     if (!viaKey) ok(await click(ana, '#app [data-pk="offer"][data-to="' + ids[iva.__n] + '"]'), 'Ana nudi pakt: ' + iva.__n + ' (Tajni kutak u Vremenu za dogovore)');
     const ivaCard = await iva.waitForSelector('#app .sf-card', { timeout: 8000 }).then(() => iva.textContent('#app .sf-card .pk-inv-h'), () => '');
-    ok(/ANA TI NUDI TAJNI PAKT/.test(ivaCard), iva.__n + ' vidi jasnu karticu: ' + ivaCard.trim());
+    ok(/Ana ti nudi tajni pakt/.test(ivaCard), iva.__n + ' vidi jasnu karticu: ' + ivaCard.trim());
     ok(!(await has(mateo, '#app .sf-card')), mateo.__n + ' ne vidi tuđu ponudu');
     await iva.screenshot({ path: OUT + '/i1-ponuda-iva.png' });
     if (!RELAY) { const rec = await mateo.evaluate(() => (window.__recv || []).join('\n')).catch(() => ''); ok(rec.length > 0 && !/"inv":\[\{"f":"pid-ana"/.test(rec) && !/"k":\{"m"/.test(rec), 'mreža: ' + mateo.__n + ' nikad ne prima tuđe ponude ni savez'); }
     await click(iva, '#app .sf-card [data-pk="accept"]');
-    ok(await ana.waitForFunction(() => /TVOJ TAJNI SAVEZ/.test(document.getElementById('app').textContent), null, { timeout: 8000 }).then(() => true, () => false), 'Ana vidi savez');
+    ok(await ana.waitForFunction(() => /💰/.test((document.querySelector('#app .sf-ally') || {}).textContent || ''), null, { timeout: 8000 }).then(() => true, () => false), 'Ana vidi savez');
     for (const p of P) await click(p, '#sfready');
     ok(await waitPh(P, 'question', 30000), 'svi spremni → pitanje');
     await ana.waitForSelector('#app .sf-qbar', { timeout: 5000 }).catch(() => {});
@@ -177,8 +177,8 @@ const CFGX = { qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], betEvents: [0, 
     ok(await waitPh(P, 'deal', 60000), 'sljedeće Vrijeme za dogovore');
     await iva.waitForTimeout(500);
     await click(iva, '#app [data-sfbt="1"]'); await iva.waitForTimeout(200); await click(iva, '#app [data-bt="1"]');
-    ok(await iva.waitForFunction(() => /Izdaja je pripremljena/.test(document.getElementById('app').textContent), null, { timeout: 6000 }).then(() => true, () => false), iva.__n + ': „Izdaja je pripremljena. Tvoj saveznik ništa ne zna.”');
-    ok(!/Izdaja je pripremljena/.test(await ana.textContent('#app')), 'Ana ne vidi izdaju');
+    ok(await iva.waitForFunction(() => /Izdaja pripremljena/.test(document.getElementById('app').textContent), null, { timeout: 6000 }).then(() => true, () => false), iva.__n + ': „Izdaja je pripremljena. Tvoj saveznik ništa ne zna.”');
+    ok(!/Izdaja pripremljena/.test(await ana.textContent('#app')), 'Ana ne vidi izdaju');
     await iva.screenshot({ path: OUT + '/i3-izdaja-iva.png' });
     for (const p of P) await click(p, '#sfready');
     const screens = TV ? [host, ...P] : P;

@@ -31,57 +31,55 @@
     if (x.k === 'tk') return tkBar(Object.assign({}, d, { ph: 'vote' }), meOf(d)).replace('<div class="pk-inv tk-inv"', '<div class="pk-inv tk-inv sf-card"');
     if (x.k === 'pk') {
       const f = pById(d, x.o.f);
-      return '<div class="pk-inv sf-card"><div class="pk-inv-h"><span class="mini">' + avSvg(f.a, 'happy') + '</span><b>🍻 ' + sfName(d, x.o.f).toUpperCase() + ' TI NUDI TAJNI PAKT!</b></div>' +
-        '<div class="pk-inv-s">„Udružite znanje, dijelite riznicu i zajedno pokušajte doći do vrha! Ali pazi — saveznik te može izdati.”</div>' +
-        '<div class="pk-row"><button class="btn pk-acc" data-pk="accept" data-f="' + esc(x.o.f) + '">Prihvati savez</button><button class="btn ghost pk-dec" data-pk="decline" data-f="' + esc(x.o.f) + '">Odbij</button></div>' +
-        '<div class="sf-exp">Ponuda vrijedi do kraja sljedećeg Vremena za dogovore.</div></div>';
+      return '<div class="pk-inv sf-card"><div class="pk-inv-h"><span class="mini">' + avSvg(f.a, 'happy') + '</span><b>🍻 ' + sfName(d, x.o.f) + ' ti nudi tajni pakt</b></div>' +
+        '<div class="pk-row"><button class="btn pk-acc" data-pk="accept" data-f="' + esc(x.o.f) + '">Prihvati</button><button class="btn ghost pk-dec" data-pk="decline" data-f="' + esc(x.o.f) + '">Odbij</button></div></div>';
     }
     const f = pById(d, x.o.f), o = x.o, st = PV.rc ? PV.rc.st : 200;
     const t = o.rev ? '🔥 ' + sfName(d, o.f) + ' traži osvetu!' : o.riv ? '⚔️ Obračun s rivalom: ' + sfName(d, o.f) + ' te izaziva!' : '⚔️ ' + sfName(d, o.f) + ' te izaziva na rivalski obračun!';
     return '<div class="pk-inv rc-inv sf-card"><div class="pk-inv-h"><span class="mini">' + avSvg(f.a, 'attack') + '</span><b>' + t + '</b></div>' +
-      '<div class="pk-inv-s">Oboje riskirate <b>' + st + ' bodova</b>. Na sljedećem pitanju: tko odgovori točno, a protivnik ne, uzima protivnikov ulog. Oboje točno ili oboje krivo — neriješeno.</div>' +
-      '<div class="pk-row"><button class="btn pk-acc" data-rc="rcAccept" data-f="' + esc(o.f) + '">Prihvati izazov</button><button class="btn ghost pk-dec" data-rc="rcDecline" data-f="' + esc(o.f) + '">Odbij</button></div>' +
-      '<div class="sf-exp">Izazov vrijedi do kraja sljedećeg Vremena za dogovore.</div></div>';
+      '<div class="pk-inv-s">Ulog <b>' + st + '</b> · sljedeće pitanje</div>' +
+      '<div class="pk-row"><button class="btn pk-acc" data-rc="rcAccept" data-f="' + esc(o.f) + '">Prihvati</button><button class="btn ghost pk-dec" data-rc="rcDecline" data-f="' + esc(o.f) + '">Odbij</button></div></div>';
   }
-  const SF_RULES = '<div class="sf-rules"><div class="sf-h">🍻 TAJNI PAKTOVI</div><ol>' +
-    '<li><b>1</b>Udruži se s drugim igračem. Ako oboje točno odgovorite, zajedno punite riznicu (+' + 75 + ').</li>' +
-    '<li><b>2</b>Tijekom pitanja možeš jednim dodirom odgovoriti i šapnuti odgovor savezniku.</li>' +
-    '<li><b>3</b>Ostanete li odani do finala, riznica se uveća i podijeli. Ili jedan od vas izda drugoga — u Vremenu za dogovore, prije pitanja.</li></ol></div>';
+  const sfRules = () => '<div class="sf-rules"><div class="sf-h">🍻 Tajni paktovi</div><ol>' +
+    '<li><b>1</b>Oboje točno → riznica +75.</li>' +
+    '<li><b>2</b>🔮 na odgovoru šapne ga savezniku.</li>' +
+    '<li><b>3</b>Odani do finala: riznica +40 %, dijeli se. Izdaja: uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</li></ol></div>';
   function sfPact(d, me) {
     if (!PV || !PV.k) return '';
     const k = PV.k, m = pById(d, k.m);
-    let h = '<div class="sf-sec"><div class="sf-h">🍻 TVOJ TAJNI SAVEZ</div><div class="sf-ally"><span class="mini">' + (m ? avSvg(m.a, 'happy') : '') + '</span><span>Partner: <b>' + sfName(d, k.m) + '</b></span>' +
-      '<span class="sf-tre">💰 Riznica: <b>' + fmtN(k.tre) + '</b></span></div><div class="sf-note">Riznica raste +75 kad oboje točno odgovorite. Odanost do finala: riznica +40 %, podijeljena.</div>';
-    if (k.dl) {
-      if (k.bt) h += '<div class="sf-bt on">🗡️ Izdaja je pripremljena. Tvoj saveznik ništa ne zna.</div><div class="pk-row"><button class="btn ghost" data-bt="0">Odustani od izdaje</button></div>';
-      else if (SF.btAsk) h += '<div class="sf-bt"><b>🗡️ PRIPREMAŠ IZDAJU</b><span>Nakon sljedećeg pitanja pokušat ćeš preuzeti zajedničku riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova. Ako i partner izda tebe, oboje gubite.</span></div>' +
-        '<div class="pk-row"><button class="btn pk-acc sf-btgo" data-bt="1">🗡️ Potvrdi izdaju</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
-      else h += '<div class="pk-row"><button class="btn pk-acc sf-loyal" data-sfloyal="1">❤️ Ostani odan</button><button class="btn ghost sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button></div>';
-    } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja je zaključana za ovo pitanje.</div>';
-    else h += '<div class="sf-note">Izdaju možeš pripremiti u Vremenu za dogovore.</div>';
+    let h = '<div class="sf-sec"><div class="sf-ally"><span class="mini">' + (m ? avSvg(m.a, 'happy') : '') + '</span><span>🍻 <b>' + sfName(d, k.m) + '</b></span>' +
+      '<span class="sf-tre">💰 <b>' + fmtN(k.tre) + '</b></span></div>';
+    if (k.dl || k.cb) {
+      if (k.bt) h += '<div class="sf-row"><span class="sf-bt on">🗡️ Izdaja pripremljena</span><button class="pk-b" data-bt="0">Odustani</button></div>';
+      else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</div>' +
+        '<div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
+      else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
+    } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja zaključana</div>';
     return h + '</div>';
   }
   function sfSend(d, me) {
     let h = '';
-    if (PV.out) h += '<div class="pk-bar out"><span class="pk-t">🍻 Ponuda poslana: <b>' + sfName(d, PV.out.t) + '</b> · čeka odgovor</span><button class="pk-b" data-pk="cancel">Povuci</button></div>';
-    else if (PV.can && PV.cand && PV.cand.length) h += '<div class="sf-sec"><div class="sf-h">🍻 Ponudi tajni savez</div><div class="pk-cands">' + PV.cand.map((id) => { const p = pById(d, id); return p ? '<button class="pk-cand" data-pk="offer" data-to="' + esc(id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span>' + sfName(d, id) + '</button>' : ''; }).join('') + '</div><div class="sf-note">Ostali neće saznati. Jedan pakt po partiji.</div></div>';
+    if (PV.out) h += '<div class="pk-bar out"><span class="pk-t">🍻 Ponuda poslana: <b>' + sfName(d, PV.out.t) + '</b></span><button class="pk-b" data-pk="cancel">Povuci</button></div>';
+    else if (PV.can && PV.cand && PV.cand.length) h += '<div class="sf-sec"><div class="sf-h">🍻 Ponudi pakt</div><div class="pk-cands">' + PV.cand.map((id) => { const p = pById(d, id); return p ? '<button class="pk-cand" data-pk="offer" data-to="' + esc(id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span>' + sfName(d, id) + '</button>' : ''; }).join('') + '</div></div>';
     const R0 = PV.rc;
-    if (R0 && R0.out) h += '<div class="pk-bar out rc-out"><span class="pk-t">⚔️ Izazov poslan: <b>' + sfName(d, R0.out.t) + '</b> · čeka odgovor</span><button class="pk-b" data-rc="rcCancel">Povuci</button></div>';
+    if (R0 && R0.out) h += '<div class="pk-bar out rc-out"><span class="pk-t">⚔️ Izazov poslan: <b>' + sfName(d, R0.out.t) + '</b></span><button class="pk-b" data-rc="rcCancel">Povuci</button></div>';
     else if (R0 && R0.can && R0.cand && R0.cand.length && !d.rc) h += '<div class="sf-sec"><div class="sf-h">⚔️ Rivalski obračun <small>ulog ' + R0.st + '</small></div><div class="pk-cands">' +
       R0.cand.slice().sort((x, y) => (y.rev + y.riv) - (x.rev + x.riv)).map((c) => { const p = pById(d, c.id); return p ? '<button class="pk-cand" data-rc="rcOffer" data-to="' + esc(c.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span>' + sfName(d, c.id) + (c.rev ? ' <em>🔥 osveta</em>' : c.riv ? ' <em>⚔️ rival</em>' : '') + '</span></button>' : ''; }).join('') + '</div></div>';
     return h;
   }
   const SCN = [['offer', 'Bot mi šalje ponudu za pakt'], ['accept', 'Bot prihvaća moj pakt'], ['decline', 'Bot odbija moj pakt'], ['whisper', 'Bot mi šapne odgovor'], ['betray', 'Bot priprema izdaju'], ['loyal', 'Bot ostaje odan'], ['double', 'Oba partnera pripremaju izdaju']];
+  // skriveni razvojni izbornik: 5 dodira na naslov „Tajni kutak” ili #dev u adresi (samo lokalni domaćin u testnom načinu s botovima)
+  const sfDev = () => { if (SF.dev) return true; try { return /dev/.test(location.hash) || sessionStorage.getItem('mz_dev') === '1'; } catch (e) { return false; } };
   function sfScn(d) {
-    if (!PV || !PV.bs || !game || !game.sfScenario || mode === 'player') return '';
+    if (!PV || !PV.bs || !game || !game.sfScenario || mode === 'player' || !sfDev()) return '';
     return '<div class="sf-sec sf-scn"><button class="pk-b" data-sfscnopen="1">🤖 Testni scenariji ' + (SF.scn ? '▴' : '▾') + '</button>' +
-      (SF.scn ? '<div class="sf-scn-l">' + SCN.map(([k, t]) => '<button class="pk-cand" data-scn="' + k + '">' + t + '</button>').join('') + '</div><div class="sf-note">Scenarij postavlja sljedeći valjan događaj prema pravilima igre — ne mijenja bodove izravno.</div>' : '') + '</div>';
+      (SF.scn ? '<div class="sf-scn-l">' + SCN.map(([k, t]) => '<button class="pk-cand" data-scn="' + k + '">' + t + '</button>').join('') + '</div>' : '') + '</div>';
   }
   // sadržaj Tajnog kutka: samo ono što je trenutačno relevantno
   function sfBody(d, me) {
     if (!PV) return '<div class="sf-empty">Trenutačno nema tajnih poslova.</div>';
     const pactsIn = PV.can || PV.k || (PV.inv || []).length || PV.out;
-    if (pactsIn && (!sfIntroSeen() || SF.rules)) return SF_RULES + '<div class="pk-row"><button class="btn pk-acc" data-sfintro="1">Razumijem</button></div>';
+    if (pactsIn && SF.rules) return sfRules() + '<div class="pk-row"><button class="btn pk-acc" data-sfintro="1">U redu</button></div>';
     const Q = sfQueue(d);
     let h = '';
     if (Q.length) {
@@ -91,8 +89,8 @@
       h += (Q.length > 1 ? '<div class="sf-qn">Odluka ' + (SF.qi + 1) + '/' + Q.length + '<button class="pk-b" data-sfq="1">Sljedeća ›</button></div>' : '') + sfCard(d, x);
     }
     h += sfPact(d, me) + (Q.length ? '' : sfSend(d, me));   // jedna važna odluka u jednom trenutku: slanje ponuda čeka
-    if (!h) h = '<div class="sf-empty">Trenutačno nema tajnih poslova. Nove ponude pojavit će se ovdje.</div>';
-    if (pactsIn) h += '<button class="sf-link" data-sfrules="1">📜 Pravila tajnih paktova</button>';
+    if (!h) h = '<div class="sf-empty">Nema tajnih poslova.</div>';
+    if (pactsIn) h += '<button class="sf-link" data-sfrules="1">📜 Pravila</button>';
     return h + sfScn(d);
   }
   // gumb 🗝️ Tajne (mirne faze) i kartica kutka; tijekom odgovaranja se zatvara (stanje ponuda ostaje)
@@ -101,7 +99,7 @@
     const n = sfUnread(d);
     const btn = '<button class="sf-key' + (n ? ' new' : '') + '" data-sfk="1" aria-label="Tajne' + (n ? ', nepročitano ' + n : '') + '"><span class="sf-ki">🗝️</span><span class="sf-kt">Tajne</span>' + (n ? '<span class="sf-badge">' + n + '</span>' : PV.k ? '<span class="sf-ally-dot" title="Savez">🍻</span>' : '') + '</button>';
     if (!SF.open) return btn;
-    return btn + '<div class="sf-sheet" role="dialog" aria-label="Tajni kutak"><div class="sf-sheet-in"><div class="sf-top"><b>🗝️ TAJNI KUTAK</b><button class="pk-l x" data-sfk="0" aria-label="Zatvori">✕</button></div>' + sfBody(d, me) + '</div></div>';
+    return btn + '<div class="sf-sheet" role="dialog" aria-label="Tajni kutak"><div class="sf-sheet-in"><div class="sf-top"><b data-sfdev="1">🗝️ Tajni kutak</b><button class="pk-l x" data-sfk="0" aria-label="Zatvori">✕</button></div>' + sfBody(d, me) + '</div></div>';
   }
   // Vrijeme za dogovore (mobitel): kutak je odmah otvoren, bez žurbe u testnom načinu
   function dealPhone(d, me) {
@@ -110,7 +108,7 @@
     // gumb za spremnost odmah ispod naslova: uvijek vidljiv bez pomicanja i ne ispod okruglih gumba za zvuk
     const go = mine ? '<div class="sf-go"><span class="ht-go">Čekamo ostale…</span><span class="ht-ready">Spremno: <b>' + ready + '/' + ps.length + '</b></span></div>'
       : '<div class="sf-go"><button class="btn win-cta sf-ok" id="sfready">' + (dl.solo ? 'Nastavi kada si spreman ✓' : 'Spreman ✓') + '</button>' + (ps.length > 1 ? '<span class="ht-ready">Spremno: <b>' + ready + '/' + ps.length + '</b></span>' : '') + '</div>';
-    return (dl.solo ? '' : timerHtml(5000)) + '<div class="sf-deal"><div class="sf-dt">🍻 VRIJEME ZA DOGOVORE</div><div class="sf-dl">' + esc(dl.t || '') + '</div><div class="sf-ds">Sklopi savez, pregledaj ponude ili pripremi sljedeći potez.</div></div>' +
+    return (dl.solo ? '' : timerHtml(5000)) + '<div class="sf-deal"><div class="sf-dt">🍻 VRIJEME ZA DOGOVORE</div><div class="sf-dl">' + esc(dl.t || '') + '</div></div>' +
       go + '<div class="sf-inline">' + sfBody(d, me) + '</div>';
   }
   // TV / javni prikaz: samo najava i koliko je spremno (nikakvi privatni podaci)
@@ -147,7 +145,7 @@
     q('[data-sfintro]').forEach((b) => { b.onclick = () => { try { localStorage.setItem('mz_sf_intro', '1'); } catch (e) {} SF.rules = false; AUDIO.play('confirm'); phoneRender(true); }; });
     q('[data-sfrules]').forEach((b) => { b.onclick = () => { SF.rules = true; phoneRender(true); }; });
     q('[data-sfbt]').forEach((b) => { b.onclick = () => { SF.btAsk = b.dataset.sfbt === '1'; AUDIO.play('tap'); phoneRender(true); }; });
-    q('[data-sfloyal]').forEach((b) => { b.onclick = () => { SF.btAsk = false; AUDIO.play('confirm'); pactSend({ k: 'betray', on: false }); phoneRender(true); }; });
+    q('[data-sfdev]').forEach((b) => { b.onclick = () => { SF.devN = (SF.devN || 0) + 1; if (SF.devN >= 5) { SF.dev = true; try { sessionStorage.setItem('mz_dev', '1'); } catch (e) {} phoneRender(true); } }; });
     q('[data-sfwh]').forEach((b) => { b.onclick = () => { SF.wh = !SF.wh; try { localStorage.setItem('mz_sf_wh', SF.wh ? '1' : '0'); } catch (e) {} AUDIO.play('tap'); phoneRender(true); }; });
     q('[data-sfscnopen]').forEach((b) => { b.onclick = () => { SF.scn = !SF.scn; phoneRender(true); }; });
     q('[data-scn]').forEach((b) => { b.onclick = () => { if (!game || !game.sfScenario) return; const r = game.sfScenario(PID, b.dataset.scn); toastHold.push([(r.ok ? '🤖 ' : '⚠️ ') + r.msg, r.ok ? 'pact' : 'no']); AUDIO.play(r.ok ? 'confirm' : 'tap'); SF.scn = false; phoneRender(true); pactToasts(S); }; });

@@ -45,3 +45,5 @@
   .tvlob-side { max-height: calc(100vh - 6vh); overflow-y: auto; overscroll-behavior: contain; }
   .tvlob-side .lob-opt.bs-tv small { display: none; }
   .tvlob-side .tvlob-inv { gap: 0.8vh; padding: 1.6vh 2vw; } .tvlob-inv .lob-code { font-size: clamp(2.6rem, 5vw, 5rem); }
+  .sf-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .sf-btask { align-self: flex-start; }
