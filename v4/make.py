@@ -2460,3 +2460,30 @@ s = rep(s, "(d.P.length ? lineup(d) : '<div class=\"tv-sub\">Čekamo prve igrač
 s = rep(s, "    bind('start', () => game.start());\n", "    bind('start', () => game.start());\n    if (d && d.ph === 'lobby' && game) bindOpt();\n")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('tajne ponude TV predvorje OK')
+
+# ---- Tavern Social Flow 2.0: Tajni kutak, Vrijeme za dogovore, šapat jednim dodirom, testni način s botovima ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/sf.css', encoding='utf-8').read() + s[i:]
+s = rep(s, "  const PACT_STEAL = 0.25;", open(SP + '/v4/sf-ui.js', encoding='utf-8').read() + "  const PACT_STEAL = 0.25;")
+# traka ispod HUD-a: u Social Flowu samo saveznik/šapat tijekom pitanja i male oznake; sve ostalo je u Tajnom kutku
+s = rep(s, "  function pactHead(d, me, head) {\n", "  function pactHead(d, me, head) {\n    if (sfOnPV() && me && d.ph !== 'lobby' && d.ph !== 'final') return sfHead(d, me, head);\n    return pactHeadOld(d, me, head);\n  }\n  function pactHeadOld(d, me, head) {\n")
+s = rep(s, "    q('[data-bt]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); pactSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });\n  }",
+           "    q('[data-bt]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); pactSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });\n    bindSf(d);\n  }")
+# faza Vrijeme za dogovore: mobitel i TV
+s = rep(s, "      case 'howto': h = center(head + howtoHtml(d)); break;", "      case 'deal': h = head + dealPhone(d, me); break;\n      case 'howto': h = center(head + howtoHtml(d)); break;")
+s = rep(s, "      case 'howto': h = tvTop(d, 'Kako se igra') + howtoHtml(d) +", "      case 'deal': h = tvTop(d, 'Vrijeme za dogovore') + dealTv(d); break;\n      case 'howto': h = tvTop(d, 'Kako se igra') + howtoHtml(d) +")
+s = rep(s, "      case 'howto': return AUDIO.play('whoosh');", "      case 'deal': case 'howto': return AUDIO.play('whoosh');", 2)
+# odgovori i šapni: ista ulazna poruka (w: 1) kad imaš saveznika i šapat je uključen
+s = rep(s, "        sendInput({ c: +b.dataset.c, t: Math.max(0, Math.round(Date.now() - L.start)) });",
+           "        const w = S && S.ph === 'question' && PV && PV.sf && PV.k && SF.wh && !PV.k.wsent ? { w: 1 } : {};\n        sendInput(Object.assign({ c: +b.dataset.c, t: Math.max(0, Math.round(Date.now() - L.start)) }, w));")
+# predvorje: testni način (domaćin s mobitela i demo)
+s = rep(s, "pactToggle(d) + rcToggle(d) + tkToggle(d) + '<button class=\"btn lob-cta\" id=\"dstart\"", "pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<button class=\"btn lob-cta\" id=\"dstart\"")
+s = rep(s, "          cta = pactToggle(d) + rcToggle(d) + tkToggle(d) + '<div class=\"lob-wait\">", "          cta = pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<div class=\"lob-wait\">")
+s = rep(s, "          cta = botStepper(d) + '<button class=\"btn lob-cta\" id=\"dstart\"' + (nb < 1", "          cta = botStepper(d) + bsToggle(d) + '<button class=\"btn lob-cta\" id=\"dstart\"' + (nb < 1")
+s = rep(s, "    document.querySelectorAll('#app [data-tkopt]').forEach(", "    document.querySelectorAll('#app [data-bsopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('bs', b.dataset.bsopt === '1'); } }; });\n    document.querySelectorAll('#app [data-tkopt]').forEach(")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('social flow UI OK')
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  function tvV(d) {\n", "  function tvV(d) {\n    { const sb = document.getElementById('sfbox'); if (sb && sb.__h) { sb.innerHTML = ''; sb.__h = ''; } }\n")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('social flow TV OK')

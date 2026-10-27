@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs');
 const dir = __dirname;
-const src = fs.readFileSync(dir + '/engine.js', 'utf8').replace('__DATA__', fs.readFileSync(dir + '/data.json', 'utf8'));
+const src = fs.readFileSync(dir + '/engine.js', 'utf8').replace('__DATA__', fs.readFileSync(dir + '/data.json', 'utf8')).replace('sf: { on: true,', 'sf: { on: false,')   /* pravila v28 (bez Social Flowa); Social Flow testira sf-test.js */;
 const E = new Function(src + '; return { createGame, PLAN, POWERS, DATA, rankBy };')();
 
 let fails = 0;

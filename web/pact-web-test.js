@@ -21,10 +21,10 @@ const CFGX = process.env.LOYAL === '1' ? { qv: { who: 0, emoji: 0 }, chal: ['sor
   let host, code;
   if (TV) {
     host = await mk('TV', 'pid-tv'); await host.setViewportSize({ width: 1280, height: 720 }); await host.goto(URL);
-    await host.evaluate((c) => Object.assign(CFG, c), CFGX); await host.click('#host'); await host.waitForSelector('.lob-code'); code = (await host.textContent('.lob-code')).trim();
+    await host.evaluate((c) => { Object.assign(CFG, c); CFG.sf = Object.assign({}, CFG.sf, { on: false }); }, CFGX);   /* pravila i sučelje v28; Social Flow testira sf-web-test.js */ await host.click('#host'); await host.waitForSelector('.lob-code'); code = (await host.textContent('.lob-code')).trim();
   } else {
     host = await mk('Mateo', 'pid-mateo'); await host.goto(URL);
-    await host.evaluate((c) => Object.assign(CFG, c), CFGX);
+    await host.evaluate((c) => { Object.assign(CFG, c); CFG.sf = Object.assign({}, CFG.sf, { on: false }); }, CFGX);   /* pravila i sučelje v28; Social Flow testira sf-web-test.js */
     await host.click('#hostp'); await host.fill('#hname', 'Mateo'); await host.click('#hform button[type=submit]');
     await host.waitForSelector('.lob-code'); code = (await host.textContent('.lob-code')).trim();
   }

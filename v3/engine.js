@@ -43,6 +43,11 @@ const CFG = {
   // krčmarove tajne ponude: dobitak / gubitak (točan odgovor vrijedi 500–1000, pa je oklada osjetna, ali ne odlučuje partiju;
   // očekivani dobitak je ≈ 0 kad meta griješi u ~40 % pitanja), od kojeg pitanja (nakon after odigranih), najviše prihvaćenih
   // po partiji, najviše ponuda po partiji, vjerojatnost ponude na prikladnom glasanju, najmanji razmak (pitanja) između ponuda
+  // Social Flow: Vrijeme za dogovore nakon tih odigranih pitanja (atBot u testnom načinu s botovima), trajanje (s),
+  // nevidljiva sigurnosna granica kad je jedini čovjek u testnom načinu (nema odbrojavanja), najviše dolaznih ponuda za pakt po igraču
+  sf: { on: true, at: [3, 6, 8], atBot: [3, 5, 7, 8], dur: 20, soloMax: 600, inMax: 2,
+    // profili botova (samo društvene odluke): prihvaćanje ponude, slanje ponude po fazi, šapat, izdaja po fazi (uz riznicu ≥ btMin)
+    prof: { loyal: { acc: 0.85, off: 0.45, wh: 0.8, bt: 0.05 }, sly: { acc: 0.7, off: 0.35, wh: 0.5, bt: 0.4 }, wild: { acc: 0.5, off: 0.4, wh: 0.5, bt: 0.2 } }, btMin: 75 },
   tk: { win: 150, loss: 100, after: 5, perGame: 2, offers: 3, chance: 0.5, gap: 2 },
   moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 8, secret2: 7, secretBonus: 200, helpBonus: 150,
 };
@@ -68,7 +73,7 @@ const PLAN = [
   { t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' },
 ];
 
-const INPUT_PHASES = { vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
+const INPUT_PHASES = { deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
 // Mini-igre: objašnjenje prije prve igre (kratak podsjetnik kad se ponovi)
 const HOWTO = {
   who: { n: 'Tko sam ja?', i: '🕵️', r: ['Tragovi se otkrivaju jedan po jedan.', 'Što prije pogodiš, to više bodova.', 'Imaš samo jedan pokušaj!'] },
@@ -120,7 +125,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: o.rc !== undefined ? !!o.rc : true, tk: o.tk !== undefined ? !!o.tk : false }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: o.rc !== undefined ? !!o.rc : true, tk: o.tk !== undefined ? !!o.tk : false, bs: o.bs !== undefined ? !!o.bs : false }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
     tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
@@ -212,6 +217,9 @@ function createGame(o) {
       case 'howto':
         if (inp.ok !== 1) return false;
         break;
+      case 'deal':
+        if (inp.ok !== 1) return false;
+        break;
       case 'vote':
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
         p.vote = inp.v; break;
@@ -237,6 +245,7 @@ function createGame(o) {
         const el = now() - G.startedAt;
         const t = Number.isFinite(inp.t) ? inp.t : el;
         p.ans = c; p.ansMs = Math.max(0, Math.min(t, el));
+        if (inp.w === 1 && G.ph === 'question') sfWhisper(p, c);   // odgovori i šapni: ista poruka, isti odgovor
         break;
       }
       case 'duel': {
@@ -331,7 +340,7 @@ function createGame(o) {
   // ----- faze -----
   function setPhase(ph, secs) {
     clear();
-    if (G.rc && !RC_WIN[ph]) { for (const o of G.rc.offers) note(R.get(o.f), '⚔️ Izazov nije prihvaćen.', 'no'); G.rc.offers = []; }
+    if (G.rc && !RC_WIN[ph] && !sfOn()) { for (const o of G.rc.offers) note(R.get(o.f), '⚔️ Izazov nije prihvaćen.', 'no'); G.rc.offers = []; }
     G.ph = ph; G.s += 1;
     G.dur = Math.round(secs * 1000);
     G.startedAt = now(); G.endsAt = G.startedAt + G.dur;
@@ -339,12 +348,14 @@ function createGame(o) {
     const s = G.s;
     later(() => { if (G.s === s) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));
     if (INPUT_PHASES[ph]) botsAct();
+    sfBotsTick();
     onChange();
   }
 
   function endPhase() {
     switch (G.ph) {
       case 'intro': return next();
+      case 'deal': return afterDeal();
       case 'vote': return resolveVote();
       case 'voteResult': return afterCategory();
       case 'howto': return afterHowto();
@@ -404,6 +415,7 @@ function createGame(o) {
     G.seenHow = new Set();
     TD.reset();
     pactReset();
+    sfReset();
     next();
   }
 
@@ -469,6 +481,10 @@ function createGame(o) {
   }
 
   function startVote() {
+    if (sfDeal()) return;
+    startVote0();
+  }
+  function startVote0() {
     const avail = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
     if (!avail.length) return next();
     G.bn = (G.bn == null ? -1 : G.bn) + 1;
@@ -1627,17 +1643,17 @@ function createGame(o) {
   };
   const pickLine = (k, map) => { const arr = PACT_LINES[k], l = arr[rnd(arr.length)]; return l.replace(/\{(\w)\}/g, (_, x) => (map && map[x] != null ? map[x] : '')); };
   let pactSeq = 0;
-  const FC_PH = { vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1, betray: 1, intro: 1, howto: 1, sortReveal: 1, linkReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1, duelResult: 1, moment: 1 };
+  const FC_PH = { deal: 1, vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1, betray: 1, intro: 1, howto: 1, sortReveal: 1, linkReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1, duelResult: 1, moment: 1 };
   function pactsOn() { return !!G.opt.pacts; }
   // ===================== RIVALSKI OBRAČUN =====================
   // Dobrovoljno, samo ljudi, najviše rcMax prihvaćenih po partiji; ponude samo između pitanja; ishod na sljedećem običnom pitanju.
-  const RC_WIN = { vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1 };
+  const RC_WIN = { deal: 1, vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1 };
   const rcOn = () => !!G.opt.rc;
   function rcClean() {
     const t = now();
     G.rc.offers = G.rc.offers.filter((o) => {
       const f = R.get(o.f), to = R.get(o.t);
-      const live = o.until > t && f && to && f.on && to.on && RC_WIN[G.ph] && !G.rc.act;
+      const live = sfOn() ? o.until > t && f && to && !G.rc.act && !G.inFinale : o.until > t && f && to && f.on && to.on && RC_WIN[G.ph] && !G.rc.act;
       if (!live && f) note(f, '⚔️ Izazov nije prihvaćen.', 'no');   // ista poruka za odbijanje, istek i prekid (nikoga ne posramljuje)
       return live;
     });
@@ -1656,7 +1672,7 @@ function createGame(o) {
       case 'rcOffer': {
         const t = R.get(a.to);
         if (!rcCanSend(p) || !rcOk(t, p)) return false;
-        G.rc.offers.push({ id: ++G.rc.seq, f: p.pid, t: t.pid, until: now() + cfg.rcOffer * 1000, rev: rcRev(p.pid, t.pid) ? 1 : 0, riv: rcRival(p.pid, t.pid) ? 1 : 0 });
+        G.rc.offers.push({ id: ++G.rc.seq, f: p.pid, t: t.pid, until: sfOn() ? Infinity : now() + cfg.rcOffer * 1000, born: G.dealN || 0, rev: rcRev(p.pid, t.pid) ? 1 : 0, riv: rcRival(p.pid, t.pid) ? 1 : 0 });
         p.rcSent = (p.rcSent || 0) + 1; return true;
       }
       case 'rcCancel': { const n = G.rc.offers.length; G.rc.offers = G.rc.offers.filter((o) => o.f !== p.pid); return G.rc.offers.length !== n; }
@@ -1738,8 +1754,9 @@ function createGame(o) {
   // poziva se odmah nakon početka glasanja; ništa ne radi ako uvjeti nisu ispunjeni (bez nove faze)
   function tkOffer() {
     const K = cfg.tk, X = G.tk;
-    if (!tkOn() || !K || G.ph !== 'vote' || G.inFinale || G.qv || X.cur) return;
-    if ((G.bdone || 0) < K.after || X.n >= K.perGame || X.offered >= K.offers || G.bn - X.lastBn < K.gap) return;
+    const nb = G.ph === 'deal' ? G.bn + 1 : G.bn, qv = G.ph === 'deal' ? !!(G.qvAt && G.qvAt.get(nb)) : !!G.qv;
+    if (!tkOn() || !K || (G.ph !== 'vote' && G.ph !== 'deal') || G.inFinale || qv || X.cur) return;
+    if ((G.bdone || 0) < K.after || X.n >= K.perGame || X.offered >= K.offers || nb - X.lastBn < K.gap) return;
     const ps = active(); if (ps.length < 2) return;
     // primatelj: čovjek, spojen, još nije dobio ponudu, može platiti gubitak
     const fs = ps.filter((p) => !p.bot && !X.got[p.pid] && p.score >= K.loss);
@@ -1752,7 +1769,7 @@ function createGame(o) {
     const nn = c.w.n || 0, a10 = nn % 100, b10 = a10 % 10, map = { X: c.t.name, K: nn + (b10 >= 2 && b10 <= 4 && (a10 < 12 || a10 > 14) ? ' točna' : ' točnih') };
     X.cur = { id: ++X.seq, f: c.f.pid, t: c.t.pid, s: G.s, bn: G.bn, k: c.w.k, n: c.w.n || 0, win: K.win, loss: K.loss, st: 'OFFERED',
       line: TK_LINE[c.w.k].replace(/\{(\w)\}/g, (_, k) => (map[k] != null ? map[k] : '')) };
-    X.got[c.f.pid] = 1; X.offered++; X.lastBn = G.bn;
+    X.got[c.f.pid] = 1; X.offered++; X.lastBn = nb;
     onChange();
   }
   // glasanje je gotovo: neodgovorena ponuda je odbijena (istekla); prihvaćena se zaključava za pitanje koje tek slijedi
@@ -1763,7 +1780,7 @@ function createGame(o) {
   function tkAction(p, a) {
     const o = G.tk.cur;
     if (!tkOn() || !o || typeof a.id !== 'number' || a.id !== o.id || o.f !== p.pid || o.st !== 'OFFERED') return false;
-    if (G.ph !== 'vote' || G.s !== o.s || now() >= G.endsAt) return false;
+    if ((G.ph !== 'vote' && G.ph !== 'deal') || now() >= G.endsAt) return false;
     if (a.k === 'tkAccept') {
       const t = R.get(o.t);
       if (!t || G.tk.n >= cfg.tk.perGame || p.score < o.loss || tkTied(p, t)) { tkSet(o, 'CANCELLED'); tkDone(o); return true; }
@@ -1802,13 +1819,164 @@ function createGame(o) {
     if (o.st === 'OFFERED') { r.ms = Math.max(0, G.endsAt - now()); r.dur = G.dur; }
     return r;
   }
+  // ===================== TAVERN SOCIAL FLOW 2.0 =====================
+  const sfOn = () => !!(cfg.sf && cfg.sf.on);
+  const bsOn = () => !!G.opt.bs;   // testni način: botovi sudjeluju u paktovima (izričito uključen u predvorju)
+  // dok se odgovara (pitanje, mini-igra, dvoboj, tajni događaj) nema slanja ni prihvaćanja ponuda
+  const SF_BUSY = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, secret: 1, secret2: 1 };
+  const sfPeople = () => list().filter((p) => !p.bot || bsOn());
+  let botCall = false;
+  function botPact(b, a) { botCall = true; try { return pactAction(b.pid, a); } finally { botCall = false; } }
+  const SF_LINES = ['🍻 Vrijeme je da vidimo tko s kim pije, a tko kome radi iza leđa!', '🍻 Krčmar briše šank i pravi se da ništa ne čuje…', '🍻 Krigle gore — i uši otvorene!'];
+  function sfReset() {
+    G.dealN = 0; G.dealI = 0; G.dl = null; G.sfSeq = G.sfSeq || 0; G.scn = null; G.prof = {};
+    // profili botova: raznoliki (krug izmiješanih profila), samo u testnom načinu
+    for (const p of list()) p.sfLoyal = 0;
+    if (bsOn()) { const P = shuffle(['loyal', 'sly', 'wild']); list().filter((p) => p.bot).forEach((b, i) => { G.prof[b.pid] = P[i % P.length]; }); }
+  }
+  function sfWhisper(p, c) {
+    const mate = partnerOf(p);
+    if (!mate || G.ph !== 'question' || p.whS === G.s || !isInt(c) || !G.q || c < 0 || c >= G.q.o.length) return false;
+    p.whS = G.s; mate.wh = { from: p.pid, c, s: G.s }; return true;
+  }
+  // ima li stvarne društvene odluke (inače se faza ne otvara)
+  function sfRelevant() {
+    const hs = list().filter((p) => !p.bot && p.on);
+    if (!hs.length) return false;
+    if (pactsOn() && G.qn >= cfg.pactAfter && sfPeople().length >= cfg.pactMin) {
+      if (hs.some((h) => pactOf(h))) return true;                                            // odluka o odanosti/izdaji
+      if (G.offers.some((o) => !o.ghost && hs.some((h) => h.pid === o.to))) return true;     // ponuda čeka odgovor
+      if (hs.some((h) => pactFree(h) && h.offersMade < cfg.pactOffersMax && sfPeople().some((q) => q !== h && q.on && pactFree(q)))) return true;
+    }
+    if (rcOn() && !G.rc.act && G.rc.n < cfg.rcMax && G.qn >= cfg.rcAfter) {
+      if (G.rc.offers.length) return true;
+      const can = hs.filter((h) => !h.rcWon && (h.rcSent || 0) < cfg.rcSends && h.score >= cfg.rcStake);
+      if (can.some((h) => list().some((q) => q !== h && !q.bot && q.on && q.score >= cfg.rcStake))) return true;
+    }
+    return false;
+  }
+  // otvara Vrijeme za dogovore kad je na redu (po rasporedu); vraća true ako je faza počela
+  function sfDeal() {
+    if (!sfOn() || G.inFinale) return false;
+    const at = bsOn() ? cfg.sf.atBot : cfg.sf.at, done = G.bdone || 0;
+    let due = false;
+    while (G.dealI < at.length && at[G.dealI] <= done) { G.dealI++; due = true; }
+    if (!due || !sfRelevant()) return false;
+    G.dealN++;
+    const solo = bsOn() && list().filter((p) => !p.bot && p.on).length === 1;
+    G.dl = { n: G.dealN, solo: solo ? 1 : 0, line: SF_LINES[(G.dealN - 1) % SF_LINES.length] };
+    setPhase('deal', solo ? cfg.sf.soloMax : cfg.sf.dur);
+    const s0 = G.s;
+    sfBotsDeal();
+    for (const p of list()) if (p.bot) p.done = true;
+    tkOffer();
+    if (G.s === s0 && allDone()) { endPhase(); return true; }
+    onChange();
+    return true;
+  }
+  // kraj faze: istječu ponude koje su čekale cijelo jedno Vrijeme za dogovore (pakt i obračun); izdaje ostaju zaključane
+  function afterDeal() {
+    const n = G.dealN;
+    for (const o of G.offers) if ((o.born || 0) < n) o.until = 0;
+    cleanOffers();
+    for (const o of G.rc.offers) if ((o.born || 0) < n) o.until = 0;
+    rcClean();
+    G.dl = null;
+    startVote0();
+  }
+  // ----- botovi u testnom načinu: iste radnje kao ljudi (pactAction), odluke po profilu -----
+  const profOf = (b) => cfg.sf.prof[G.prof[b.pid] || 'wild'] || cfg.sf.prof.wild;
+  function sfBotAnswer(b) {
+    // odgovor na dolazne ponude: profil, osim ako testni scenarij kaže drukčije (samo za ponude onoga tko je scenarij zadao)
+    for (const o of G.offers.filter((x) => x.to === b.pid && !x.ghost)) {
+      const sc = G.scn && G.scn.pid === o.from && (G.scn.k === 'accept' || G.scn.k === 'decline') ? G.scn.k : null;
+      const yes = sc ? sc === 'accept' : Math.random() < profOf(b).acc;
+      if (sc) G.scn = null;
+      botPact(b, { k: yes ? 'accept' : 'decline', from: o.from });
+      if (b.pact) break;
+    }
+  }
+  function sfBotsDeal() {
+    if (!bsOn() || !pactsOn()) return;
+    for (const b of shuffle(list().filter((p) => p.bot && p.on))) {
+      sfBotAnswer(b);
+      const k = pactOf(b), pr = profOf(b);
+      if (k) {
+        // izdaja se odlučuje SADA (prije pitanja), bez ikakvog znanja o pitanju koje dolazi
+        const sc = G.scn && k && (G.scn.k === 'betray' || G.scn.k === 'double' || G.scn.k === 'loyal') && (k.a === G.scn.pid || k.b === G.scn.pid) ? G.scn.k : null;
+        const bt = sc ? sc !== 'loyal' : !b.sfLoyal && k.tre >= cfg.sf.btMin && Math.random() < pr.bt;
+        if (sc === 'loyal') b.sfLoyal = 1;
+        if (sc && sc !== 'loyal') G.scn = null;
+        botPact(b, { k: 'betray', on: bt });
+        continue;
+      }
+      sfBotOffer(b, Math.random() < pr.off);
+    }
+  }
+  function sfBotOffer(b, want) {
+    if (!pactFree(b) || G.offers.some((o) => o.from === b.pid) || !pactWindow()) return false;
+    const sc = G.scn && G.scn.k === 'offer' ? R.get(G.scn.pid) : null;
+    if (!want && !sc) return false;
+    let ts = sfPeople().filter((q) => q !== b && q.on && pactFree(q));
+    if (sc) ts = ts.filter((q) => q === sc);
+    if (!ts.length) return false;
+    const hs = ts.filter((q) => !q.bot), t = pick(hs.length && Math.random() < 0.75 ? hs : ts);
+    const ok = botPact(b, { k: 'offer', to: t.pid });
+    if (ok && sc) G.scn = null;
+    return ok;
+  }
+  // ponuda botu izvan Vremena za dogovore: bot odgovori nakon kratke "razmišljanja" (samo u mirnim fazama)
+  function sfBotSoon() { if (bsOn() && !SF_BUSY[G.ph]) { const s0 = G.s; later(() => { if (G.s === s0 && !SF_BUSY[G.ph]) { for (const b of list().filter((p) => p.bot && p.on)) sfBotAnswer(b); onChange(); } }, Math.max(50, Math.min(1200 + rnd(1500), G.dur - 150))); } }
+  // na početku svake mirne faze: botovi odgovore na ponude koje čekaju; scenarij "bot mi šalje ponudu" se izvrši čim je dopušteno
+  function sfBotsTick() {
+    if (!bsOn() || !pactsOn() || SF_BUSY[G.ph] || G.ph === 'lobby' || G.ph === 'final') return;
+    if (G.offers.some((o) => !o.ghost && R.get(o.to) && R.get(o.to).bot)) sfBotSoon();
+    if (G.scn && G.scn.k === 'offer') { const b = list().find((p) => p.bot && p.on && pactFree(p) && !G.offers.some((o) => o.from === p.pid)); if (b && sfBotOffer(b, false)) onChange(); }
+  }
+  // šapat bota: ISTI odgovor koji je bot upravo zaključao (vlastita "procjena", može biti pogrešna); nikad naknadno
+  function sfBotWhisper(b) {
+    if (!bsOn() || !partnerOf(b) || b.ans < 0) return;
+    const sc = G.scn && G.scn.k === 'whisper' && partnerOf(b).pid === G.scn.pid;
+    if (sc || Math.random() < profOf(b).wh) { if (sfWhisper(b, b.ans) && sc) G.scn = null; }
+  }
+  // ----- testni scenariji: samo lokalni domaćin (nije dostupno preko mreže), samo u testnom načinu; postavljaju SLJEDEĆI
+  // valjan događaj kroz ista pravila (nikad ne mijenjaju bodove ni ishode izravno) -----
+  function sfScenario(pid, k) {
+    const p = R.get(pid);
+    if (!bsOn() || !pactsOn() || !p || p.bot) return { ok: 0, msg: 'Testni scenariji rade samo u testnom načinu s botovima.' };
+    if (G.ph === 'lobby' || G.ph === 'final' || G.inFinale) return { ok: 0, msg: 'Scenariji su dostupni tijekom regularnog dijela partije.' };
+    const mate = partnerOf(p), botMate = mate && mate.bot;
+    const left = (bsOn() ? cfg.sf.atBot : cfg.sf.at).slice(G.dealI).length;
+    switch (k) {
+      case 'offer':
+        if (!pactFree(p)) return { ok: 0, msg: p.pact ? 'Već imaš pakt — scenarij treba igrača bez pakta.' : 'Već si imao pakt u ovoj partiji (jedan po partiji).' };
+        if (!list().some((b) => b.bot && b.on && pactFree(b))) return { ok: 0, msg: 'Nema slobodnog bota (svi su već u paktu).' };
+        G.scn = { k, pid }; sfBotsTick();
+        if (!G.scn) return { ok: 1, msg: 'Bot ti je upravo ponudio pakt — pogledaj Tajni kutak.' };
+        return { ok: 1, msg: G.qn < cfg.pactAfter ? 'Bot će ti ponuditi pakt kad paktovi postanu dostupni (od ' + cfg.pactAfter + '. pitanja).' : 'Bot će ti ponuditi pakt čim to pravila dopuste (između pitanja).' };
+      case 'accept': case 'decline':
+        if (!pactFree(p)) return { ok: 0, msg: 'Za ovaj scenarij ne smiješ već imati pakt.' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Sada u Tajnom kutku ponudi pakt botu — ' + (k === 'accept' ? 'prihvatit će ga.' : 'odbit će ga.') };
+      case 'whisper':
+        if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (Tajni kutak → ponudi savez).' };
+        G.scn = { k, pid }; return { ok: 1, msg: mate.name + ' će ti šapnuti svoj odgovor na sljedećem pitanju.' };
+      case 'betray': case 'double': case 'loyal':
+        if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (Tajni kutak → ponudi savez).' };
+        if (k === 'loyal') { mate.sfLoyal = 1; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }
+        if (!left && G.ph !== 'deal') return { ok: 0, msg: 'U ovoj partiji više nema Vremena za dogovore prije finala.' };
+        G.scn = { k, pid };
+        if (G.ph === 'deal') { mate.sfLoyal = 0; botPact(mate, { k: 'betray', on: true }); G.scn = null; }
+        return { ok: 1, msg: (G.ph === 'deal' ? mate.name + ' je upravo potajno pripremio izdaju.' : mate.name + ' će pripremiti izdaju u sljedećem Vremenu za dogovore.') + (k === 'double' ? ' Pripremi i ti izdaju u Tajnom kutku.' : '') };
+    }
+    return { ok: 0, msg: 'Nepoznat scenarij.' };
+  }
   const humansIn = () => list().filter((p) => !p.bot);
   const pactOf = (p) => (p && p.pact ? G.pacts.find((x) => x.id === p.pact && x.on) : null);
   const partnerOf = (p) => { const k = pactOf(p); return k ? R.get(k.a === p.pid ? k.b : k.a) : null; };
   // može li igrač sudjelovati u novom paktu
-  function pactFree(p) { return !!p && !p.bot && !p.pactUsed && !p.pact; }
+  function pactFree(p) { return !!p && (!p.bot || bsOn()) && !p.pactUsed && !p.pact; }
   function pactWindow() {
-    return pactsOn() && !G.inFinale && G.ph !== 'lobby' && G.ph !== 'final' && G.qn >= cfg.pactAfter && humansIn().length >= cfg.pactMin;
+    return pactsOn() && !G.inFinale && G.ph !== 'lobby' && G.ph !== 'final' && G.qn >= cfg.pactAfter && sfPeople().length >= cfg.pactMin && (!sfOn() || !SF_BUSY[G.ph]);
   }
   function pactReset() {
     G.pacts = []; G.offers = []; G.btq = []; G.bt = null; G.ly = null; G.news = null; G.newsSeq = 0; G.pactPaid = false;
@@ -1828,7 +1996,7 @@ function createGame(o) {
   // jedina ulazna točka za akcije paktova; sve se provjerava
   function pactAction(pid, a) {
     const p = R.get(pid);
-    if (!p || p.bot || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
+    if (!p || (p.bot && !(botCall && bsOn())) || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
     if (a.k === 'tkAccept' || a.k === 'tkDecline') { const r = tkAction(p, a); if (r) { if (G.ph === 'vote' && allDone()) endPhase(); else onChange(); } return r; }
     if (a.k.slice(0, 2) === 'rc') { const r = rcAction(p, a); if (r) onChange(); return r; }
     cleanOffers();
@@ -1836,11 +2004,12 @@ function createGame(o) {
     switch (a.k) {
       case 'offer': {
         const t = R.get(a.to);
-        if (!pactWindow() || !pactFree(p) || !t || t === p || t.bot) break;
+        if (!pactWindow() || !pactFree(p) || !t || t === p || (t.bot && !bsOn())) break;
         if (p.offersMade >= cfg.pactOffersMax || G.offers.some((o) => o.from === pid)) break;
         // zauzet igrač (u paktu, već imao pakt ili ima drugu ponudu): ponuda tiho istekne, ponuditelj ne saznaje zašto
-        const ghost = !pactFree(t) || G.offers.some((o) => o.to === t.pid && !o.ghost);
-        G.offers.push({ from: pid, to: t.pid, until: now() + cfg.pactOffer * 1000, ghost });
+        const ghost = !pactFree(t) || G.offers.filter((o) => o.to === t.pid && !o.ghost).length >= (sfOn() ? cfg.sf.inMax : 1);
+        G.offers.push({ id: ++G.sfSeq, from: pid, to: t.pid, until: sfOn() ? Infinity : now() + cfg.pactOffer * 1000, born: G.dealN || 0, ghost });
+        if (t.bot && !ghost) sfBotSoon();
         p.offersMade++; ok = true; break;
       }
       case 'cancel': { const n = G.offers.length; G.offers = G.offers.filter((o) => o.from !== pid); ok = G.offers.length !== n; break; }
@@ -1869,7 +2038,7 @@ function createGame(o) {
         p.whS = G.s; mate.wh = { from: pid, c: a.c, s: G.s }; ok = true; break;
       }
       case 'betray': {
-        if (!pactOf(p) || G.ph !== 'question') break;
+        if (!pactOf(p) || G.ph !== (sfOn() ? 'deal' : 'question')) break;
         p.betray = !!a.on; ok = true; break;
       }
     }
@@ -1950,21 +2119,24 @@ function createGame(o) {
   function priv0(pid) {
     const p = R.get(pid);
     if (!p || p.bot || (!pactsOn() && !rcOn())) return null;
-    if (!pactsOn()) return Object.assign({ can: false, used: false, inv: [], out: null, note: p.note }, rcPriv(p));
+    if (!pactsOn()) return Object.assign({ can: false, used: false, inv: [], out: null, note: p.note }, sfOn() ? { sf: 1, dl: G.ph === 'deal' ? 1 : 0 } : {}, rcPriv(p));
     cleanOffers();
     const k = pactOf(p), mate = partnerOf(p);
     const o = {
       can: pactWindow() && pactFree(p) && p.offersMade < cfg.pactOffersMax,
       used: !!p.pactUsed,
-      inv: G.offers.filter((x) => x.to === pid && !x.ghost).map((x) => ({ f: x.from, ms: Math.max(0, x.until - now()), dur: cfg.pactOffer * 1000 })),
+      inv: G.offers.filter((x) => x.to === pid && !x.ghost).map((x) => (sfOn() ? { f: x.from, id: x.id, dl: 1 } : { f: x.from, ms: Math.max(0, x.until - now()), dur: cfg.pactOffer * 1000 })),
       out: (G.offers.find((x) => x.from === pid) || null) && (() => { const x = G.offers.find((y) => y.from === pid); return { t: x.to, ms: Math.max(0, x.until - now()) }; })(),
       note: p.note,
     };
     // svi ostali spojeni ljudi (ne otkriva tko je već u paktu)
-    if (o.can) o.cand = humansIn().filter((q) => q !== p && q.on).map((q) => q.pid);
+    if (o.can) o.cand = sfPeople().filter((q) => q !== p && q.on).map((q) => q.pid);
+    if (sfOn()) { o.sf = 1; if (G.ph === 'deal') o.dl = 1; if (bsOn()) o.bs = 1; }
     if (k && mate) {
       o.k = { m: mate.pid, tre: k.tre, grew: k.grew === G.s ? 1 : 0, since: k.since };
       if (G.ph === 'question') { o.k.wsent = p.whS === G.s ? 1 : 0; o.k.bt = p.betray ? 1 : 0; o.k.can = 1; }
+      if (sfOn() && G.ph === 'deal') { o.k.bt = p.betray ? 1 : 0; o.k.dl = 1; }
+      if (sfOn() && p.betray && G.ph !== 'deal') o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)
       if (p.wh && p.wh.s === G.s) o.k.wh = p.wh.c;
     }
     return Object.assign(o, rcPriv(p));
@@ -1978,13 +2150,13 @@ function createGame(o) {
       r.cand = list().filter((q) => rcOk(q, p)).map((q) => ({ id: q.pid, rev: rcRev(p.pid, q.pid) ? 1 : 0, riv: rcRival(p.pid, q.pid) ? 1 : 0 }));
       if (!r.cand.length) delete r.can;
     }
-    const inv = G.rc.offers.filter((x) => x.t === p.pid).map((x) => ({ f: x.f, ms: Math.max(0, x.until - now()), dur: cfg.rcOffer * 1000, rev: x.rev, riv: x.riv }));
+    const inv = G.rc.offers.filter((x) => x.t === p.pid).map((x) => (sfOn() ? { f: x.f, id: x.id, dl: 1, rev: x.rev, riv: x.riv } : { f: x.f, ms: Math.max(0, x.until - now()), dur: cfg.rcOffer * 1000, rev: x.rev, riv: x.riv }));
     if (inv.length) r.inv = inv;
     const out = G.rc.offers.find((x) => x.f === p.pid);
-    if (out) r.out = { t: out.t, ms: Math.max(0, out.until - now()) };
+    if (out) r.out = sfOn() ? { t: out.t, dl: 1 } : { t: out.t, ms: Math.max(0, out.until - now()) };
     return { rc: r };
   }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'rc') { G.opt.rc = !!v; onChange(); } if (k === 'tk') { G.opt.tk = !!v; onChange(); } }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'rc') { G.opt.rc = !!v; onChange(); } if (k === 'tk') { G.opt.tk = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -2035,11 +2207,14 @@ function createGame(o) {
         return { s, x: G.se && G.se.k === 'target' ? weightedPick(others, w).pid : pick(others).pid };
       }
       case 'secret2': return { s, y: Math.random() < 0.75 ? 1 : 0 };
+      case 'deal': return { s, ok: 1 };
       case 'duel':
       case 'question': case 'fq': {
         const opts = G.q.o.map((_, i) => i).filter((i) => !(b.hide && b.hide.includes(i)));
         const wrong = opts.filter((i) => i !== G.q.a);
         const right = Math.random() < (G.ph === 'fq' ? 0.7 : G.ph === 'duel' ? 0.66 : 0.62) || !wrong.length;
+        // primljeni šapat saveznika (stigao prije bototovog odgovora) bot ponekad posluša — kao čovjek; ne zna je li točan
+        if (G.ph === 'question' && b.wh && b.wh.s === G.s && opts.includes(b.wh.c) && Math.random() < 0.6) return { s, c: b.wh.c, t: now() - G.startedAt };
         return { s, c: right ? G.q.a : pick(wrong), t: now() - G.startedAt };
       }
       case 'order': return { s, r: Math.random() < 0.45 ? G.or.key.slice() : shuffle(G.or.key.slice()) };
@@ -2058,7 +2233,7 @@ function createGame(o) {
       const extra = G.ph === 'question' ? b.fx.length * 2500 : G.ph === 'fq' ? b.fx.length * 1500 : 0;
       later(() => {
         if (G.s !== s || b.done) return;
-        if (accept(b, botInput(b))) { if (allDone()) endPhase(); else onChange(); }
+        if (accept(b, botInput(b))) { if (G.ph === 'question') sfBotWhisper(b); if (allDone()) endPhase(); else onChange(); }
       }, Math.min(botDelay() + extra, G.dur - 200));
     }
   }
@@ -2100,6 +2275,8 @@ function createGame(o) {
       return e;
     });
     if (ph === 'intro') v.it = G.intro;
+    if (ph === 'deal' && G.dl) v.dl = { n: G.dl.n, solo: G.dl.solo, t: G.dl.line };
+    if (bsOn() && G.ph !== 'lobby') v.bs = 1;
     if (ph === 'vote' || ph === 'voteResult') v.cats = G.cats;
     if (ph === 'voteResult') { v.cw = G.cw; v.tie = G.tie; if (G.tb) { v.tb = G.tb; v.rd = Math.round(cfg.roul * 1000); } }
     if (ph === 'bet') { v.cats = G.cats; v.cw = G.cw; }
@@ -2127,7 +2304,7 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0, tk: G.opt.tk ? 1 : 0 };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0, tk: G.opt.tk ? 1 : 0, bs: G.opt.bs ? 1 : 0 };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
@@ -2149,6 +2326,6 @@ function createGame(o) {
 
   // samo za testove
   function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
-  return { pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
+  return { sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
 }
 //#engine-end

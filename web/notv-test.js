@@ -90,8 +90,13 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
     if (q('.rc-tag')) window.__rctag = 1;
     if (q('[data-rc="rcAccept"]') && !window.__rcShot) { window.__rcShot = 1; return 'rcinv'; }
     if (click('[data-rc="rcAccept"]')) return 'rcaccept';
+    if (click('[data-sfintro]')) return 'sfintro';
+    // v29: izazovi su u Tajnom kutku (🗝️) ili u Vremenu za dogovore
+    if (!window.__rcDone && !q('[data-rc="rcOffer"]') && !q('.sf-sheet') && click('.sf-key')) return 'rcopen';
     if (!window.__rcDone && click('[data-rcopen]')) return 'rcopen';
-    if (q('[data-rc="rcOffer"]')) { window.__rcDone = 1; click('[data-rc="rcOffer"]'); return 'rcoffer'; }
+    if (q('[data-rc="rcOffer"]') && !window.__rcDone) { window.__rcDone = 1; click('[data-rc="rcOffer"]'); return 'rcoffer'; }
+    if (q('.sf-sheet') && window.__rcDone) click('[data-sfk="0"]');
+    if (click('#sfready')) return 'sfready';
     if (click('[data-v]:not([disabled])')) return 'vote';
     if (click('[data-t]')) return 'target';
     if (click('[data-bet]:not([disabled])')) return 'bet';
@@ -125,6 +130,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
     }
     if (await host.$('#dagain')) { done = true; break; }
   }
+  console.log('     akcije: ' + [...seen].join(', '));
   ok(done, 'igra je došla do kraja za ' + Math.round((Date.now() - t0) / 1000) + ' s');
   await host.waitForTimeout(600);
   for (const [p, n] of [[host, 'Mateo'], [players[0], 'Ana'], [players[1], 'Iva']]) {

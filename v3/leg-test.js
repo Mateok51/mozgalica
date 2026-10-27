@@ -1,7 +1,7 @@
 'use strict';
 // Legende ove krčme: nagrade samo za stvarne događaje, točni iznosi, nepromjenjivo, bez utjecaja na bodove.
 const fs = require('fs');
-const src = fs.readFileSync(__dirname + '/engine.js', 'utf8').replace('__DATA__', fs.readFileSync(__dirname + '/data.json', 'utf8'));
+const src = fs.readFileSync(__dirname + '/engine.js', 'utf8').replace('__DATA__', fs.readFileSync(__dirname + '/data.json', 'utf8')).replace('sf: { on: true,', 'sf: { on: false,')   /* pravila v28 (bez Social Flowa); Social Flow testira sf-test.js */;
 const E = new Function(src + '; return { createGame, CFG };')();
 let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails++; };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
