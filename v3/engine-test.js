@@ -9,7 +9,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function until(fn, ms = 8000) { const t = Date.now(); while (Date.now() - t < ms) { if (fn()) return true; await sleep(10); } return false; }
 
-const FAST = { howto: 0.05, howtoShort: 0.05, order: 0.8, hilo: 0.8, blitz: 0.8, maj: 0.6, majReveal: 0.05, intro: 0.05, vote: 0.6, voteShow: 0.05, power: 0.6, bet: 0.6, fpower: 0.6, fstart: 0.05, cast: 0.02, q: 1, reveal: 0.05, sort: 0.8, link: 0.8, chReveal: 0.05, fq: 0.6, fr: 0.05 };
+const FAST = { howto: 0.05, howtoMax: 0.05, howtoShort: 0.05, order: 0.8, hilo: 0.8, blitz: 0.8, maj: 0.6, majReveal: 0.05, intro: 0.05, vote: 0.6, voteShow: 0.05, power: 0.6, bet: 0.6, fpower: 0.6, fstart: 0.05, cast: 0.02, q: 1, reveal: 0.05, sort: 0.8, link: 0.8, chReveal: 0.05, fq: 0.6, fr: 0.05 };
 
 (async () => {
   console.log('1) Lobby, imena, likovi');
@@ -88,7 +88,7 @@ const FAST = { howto: 0.05, howtoShort: 0.05, order: 0.8, hilo: 0.8, blitz: 0.8,
   const sizes = {};
   let maxSize = 0;
   const phases = [];
-  g = E.createGame({ code: 'BOTS', cfg: Object.assign({}, FAST, { q: 1.5, vote: 1, power: 1.2, bet: 1, fpower: 1, sort: 1.5, link: 1.5, fq: 1, howto: 0.05, howtoShort: 0.05, chal: ['sort', 'link'], qv: { who: 1, emoji: 1 } }), onChange: () => {} });
+  g = E.createGame({ code: 'BOTS', cfg: Object.assign({}, FAST, { q: 1.5, vote: 1, power: 1.2, bet: 1, fpower: 1, sort: 1.5, link: 1.5, fq: 1, howto: 0.05, howtoMax: 0.05, howtoShort: 0.05, chal: ['sort', 'link'], qv: { who: 1, emoji: 1 } }), onChange: () => {} });
   ['Aleksandrija', 'Bartolomej', 'Cvjetislava', 'Dobroslav', 'Emanuela', 'Frankopanko'].forEach((n, i) => g.addBot(n, i));
   ok(g.view().P.length === 6, '6 igrača (maksimum)');
   ok(!g.addBot('Sedmi', 6), 'sedmi igrač odbijen');

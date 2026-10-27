@@ -20,7 +20,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
   const rows = (p) => p.$$eval('#app .lob-row .nm', (e) => e.map((x) => x.textContent.replace('♛', '').replace('Ti', '').trim()));
   console.log('Način:', MODE);
   const host = await mk('Mateo', 'pid-host'); await host.goto(URL);
-  await host.evaluate(() => Object.assign(CFG, { chal: ['hilo', 'maj'], qv: { who: 0, emoji: 0 }, intro: 0.5, vote: 3, voteShow: 0.8, roul: 0.5, power: 4, q: 5, reveal: 1.2, howto: 0.8, howtoShort: 0.5, hilo: 6, maj: 3, majReveal: 1, chReveal: 1, bet: 3, fq: 3, fr: 1, fstart: 1, fpower: 3, duel: 3, secret: 3 }));
+  await host.evaluate(() => Object.assign(CFG, { chal: ['hilo', 'maj'], qv: { who: 0, emoji: 0 }, intro: 0.5, vote: 3, voteShow: 0.8, roul: 0.5, power: 4, q: 5, reveal: 1.2, howto: 0.8, howtoMax: 0.8, howtoShort: 0.5, hilo: 6, maj: 3, majReveal: 1, chReveal: 1, bet: 3, fq: 3, fr: 1, fstart: 1, fpower: 3, duel: 3, secret: 3 }));
   await host.click('#hostp'); await host.fill('#hname', 'Mateo'); await host.click('#hform button[type=submit]');
   const opened = await host.waitForSelector('.lob-code', { timeout: 15000 }).then(() => true, () => false);
   ok(opened, 'soba otvorena');

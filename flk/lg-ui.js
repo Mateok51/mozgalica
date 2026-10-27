@@ -7,14 +7,14 @@ const path = require('path'), fs = require('fs');
   const errs = []; page.on('pageerror', e => errs.push(e.message)); page.on('console', m => { if (m.type() === 'error' && !/Failed to load|ERR_/.test(m.text())) errs.push(m.text()); });
   await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr|unpkg/, r => r.abort());
   await page.goto('http://localhost:8790/out.html');
-  await page.evaluate(() => Object.assign(CFG, { intro: 0.3, vote: 1.5, voteShow: 0.5, power: 1.5, q: 2.5, bet: 1.5, fq: 3, fqCrown: 3, fpower: 1.5, fstart: 2, sort: 6, link: 6, order: 6, hilo: 6, blitz: 6, maj: 3, howto: 1, howtoShort: 1, chReveal: 1.5, majReveal: 1, duel: 3, secret: 3, secret2: 3 }));
+  await page.evaluate(() => Object.assign(CFG, { intro: 0.3, vote: 1.5, voteShow: 0.5, power: 1.5, q: 2.5, bet: 1.5, fq: 3, fqCrown: 3, fpower: 1.5, fstart: 2, sort: 6, link: 6, order: 6, hilo: 6, blitz: 6, maj: 3, howto: 1, howtoMax: 1, howtoShort: 1, chReveal: 1.5, majReveal: 1, duel: 3, secret: 3, secret2: 3 }));
   await page.click('#demo'); await page.waitForTimeout(300);
   await page.click('[data-av]:not([disabled])'); await page.waitForTimeout(200);
   await page.click('#dstart');
   const t0 = Date.now();
   while (Date.now() - t0 < 600000) {
     await page.waitForTimeout(250);
-    const done = await page.evaluate(() => { const q = (s) => document.querySelector(s); if (q('#legOpen')) return true; const c = q('[data-v]:not([disabled])') || q('#nopw') || q('[data-c]:not([disabled])') || q('#srtDone:not([disabled])'); if (c) c.click(); return false; });
+    const done = await page.evaluate(() => { const q = (s) => document.querySelector(s); if (q('#legOpen')) return true; const c = q('#htok') || q('[data-v]:not([disabled])') || q('#nopw') || q('[data-c]:not([disabled])') || q('#srtDone:not([disabled])'); if (c) c.click(); return false; });
     if (done) break;
   }
   console.log('kraj igre za', Math.round((Date.now() - t0) / 1000), 's');

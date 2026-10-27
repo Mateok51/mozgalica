@@ -8,7 +8,7 @@ const server = http.createServer((req, res) => { const p = path.join(SITE, decod
   pg.on('console', (m) => { if (/Content Security Policy|Refused to/.test(m.text())) v.push(m.text().slice(0, 200)); });
   pg.on('pageerror', (e) => errs.push(e.message));
   await pg.goto('http://localhost:8766/');
-  await pg.evaluate(() => Object.assign(CFG, { qv: { who: 1, emoji: 1 }, intro: 0.3, vote: 1, voteShow: 0.3, roul: 0.3, power: 1, q: 2, reveal: 1, howto: 0.4, howtoShort: 0.3, sort: 1.5, link: 1.5, order: 1.5, hilo: 1.5, blitz: 1.5, maj: 1, majReveal: 0.5, chReveal: 0.5, fstart: 2, fpower: 1, fq: 1.5, fqCrown: 2, fr: 1 }));
+  await pg.evaluate(() => Object.assign(CFG, { qv: { who: 1, emoji: 1 }, intro: 0.3, vote: 1, voteShow: 0.3, roul: 0.3, power: 1, q: 2, reveal: 1, howto: 0.4, howtoMax: 0.4, howtoShort: 0.3, sort: 1.5, link: 1.5, order: 1.5, hilo: 1.5, blitz: 1.5, maj: 1, majReveal: 0.5, chReveal: 0.5, fstart: 2, fpower: 1, fq: 1.5, fqCrown: 2, fr: 1 }));
   await pg.mouse.click(5, 5); await pg.click('#demo'); await pg.waitForSelector('#dstart'); await pg.evaluate(() => document.querySelector('#dstart').click());
   for (let t = 0; t < 900; t++) { if (await pg.$('#dagain')) break; await pg.evaluate(() => { const A = document.getElementById('app'); const b = A.querySelector('[data-v]:not([disabled]), #nopw, [data-c]:not([disabled]), [data-sx], [data-sy="1"], [data-hl], [data-mj], [data-bz], [data-or], [data-bet]:not([disabled])'); if (b) b.click(); }); await pg.waitForTimeout(100); }
   await pg.evaluate(() => document.getElementById('toTv') && document.getElementById('toTv').click()); await pg.waitForTimeout(800);

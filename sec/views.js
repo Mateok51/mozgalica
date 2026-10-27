@@ -4,7 +4,7 @@ const V3 = path.join(__dirname, '..', 'v3');
 const src = fs.readFileSync(V3 + '/engine.js', 'utf8').replace('__DATA__', fs.readFileSync(V3 + '/data.json', 'utf8'));
 const E = new Function(src + '; return { createGame };')();
 const out = []; const seen = new Set();
-const FAST = { intro: 0.05, vote: 0.15, voteShow: 0.05, roul: 0.05, power: 0.2, cast: 0.05, q: 0.3, reveal: 0.1, betrayShow: 0.1, loyalShow: 0.1, howto: 0.05, howtoShort: 0.05, sort: 0.2, link: 0.2, order: 0.2, hilo: 0.2, blitz: 0.2, maj: 0.1, majReveal: 0.05, chReveal: 0.05, fstart: 0.1, fpower: 0.1, fq: 0.15, fqCrown: 0.15, fr: 0.05, bet: 0.1, moment: 0.05, duel: 0.2, duelIntro: 0.05, duelRes: 0.05, secret: 0.2, secret2: 0.2, pactAfter: 1, qv: { who: 1, emoji: 1 }, chal: (process.env.CH || 'sort,link').split(','), betEvents: [1, 1] };
+const FAST = { intro: 0.05, vote: 0.15, voteShow: 0.05, roul: 0.05, power: 0.2, cast: 0.05, q: 0.3, reveal: 0.1, betrayShow: 0.1, loyalShow: 0.1, howto: 0.05, howtoMax: 0.05, howtoShort: 0.05, sort: 0.2, link: 0.2, order: 0.2, hilo: 0.2, blitz: 0.2, maj: 0.1, majReveal: 0.05, chReveal: 0.05, fstart: 0.1, fpower: 0.1, fq: 0.15, fqCrown: 0.15, fr: 0.05, bet: 0.1, moment: 0.05, duel: 0.2, duelIntro: 0.05, duelRes: 0.05, secret: 0.2, secret2: 0.2, pactAfter: 1, qv: { who: 1, emoji: 1 }, chal: (process.env.CH || 'sort,link').split(','), betEvents: [1, 1] };
 let g;
 g = E.createGame({ code: 'ABCD', cfg: FAST, onChange: () => {
   const v = g.view(), key = v.ph + (v.q && v.q.k || '') + (v.bt ? 'bt' : '') + (v.ly ? 'ly' : '') + (v.news ? 'n' : '') + (v.mo ? 'mo' : '');

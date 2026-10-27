@@ -82,7 +82,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
   const tv = await ctx.newPage(); watch(tv, 'TV');
   await tv.setViewportSize({ width: 1280, height: 720 });
   await tv.goto(URL);
-  await tv.evaluate(([ch, QV]) => Object.assign(CFG, { chal: ch, qv: JSON.parse(QV), howto: 1.5, howtoShort: 0.8, order: 12, hilo: 15, blitz: 10, maj: 6, majReveal: 1.5,  intro: 0.8, vote: 6, voteShow: 0.8, power: 8, q: 10, reveal: 1.5, sort: 20, link: 20, chReveal: 1.5, fq: 5, fr: 1.2 }), [(process.env.CHAL || 'sort,link').split(','), process.env.QV || '{"who":1,"emoji":1}']);
+  await tv.evaluate(([ch, QV]) => Object.assign(CFG, { chal: ch, qv: JSON.parse(QV), howto: 1.5, howtoMax: 1.5, howtoShort: 0.8, order: 12, hilo: 15, blitz: 10, maj: 6, majReveal: 1.5,  intro: 0.8, vote: 6, voteShow: 0.8, power: 8, q: 10, reveal: 1.5, sort: 20, link: 20, chReveal: 1.5, fq: 5, fr: 1.2 }), [(process.env.CHAL || 'sort,link').split(','), process.env.QV || '{"who":1,"emoji":1}']);
   await tv.click('#host');
   await tv.waitForSelector('.lob-code', { timeout: 5000 });
   const code = (await tv.textContent('.lob-code')).trim();
@@ -131,7 +131,8 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
         return 'fx';
       }
       const click = (s) => { const e = q(s); if (e) { e.click(); return true; } return false; };
-      if (click('[data-v]:not([disabled])')) return 'vote';
+      if (click('#htok')) return 'htok';
+    if (click('[data-v]:not([disabled])')) return 'vote';
       if (click('[data-t]')) return 'target';
       if (click('[data-bet]:not([disabled])')) return 'bet';
       if (click('[data-or]:not([disabled])')) return 'order';

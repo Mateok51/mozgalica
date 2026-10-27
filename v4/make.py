@@ -2352,3 +2352,28 @@ s = rep(s, "stroke-dasharray=\"263.9\" stroke-dashoffset=\"0\"/></svg><b id=\"tn
 s = rep(s, "      let s = e.id ? '#' + e.id : '';\n      for (const k of IDS)", "      let s = e.id ? '#' + e.id : '';\n      if (e.getAttribute && e.getAttribute('title')) s += '[t=' + e.getAttribute('title') + ']';\n      for (const k of IDS)")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('timer bez skoka OK')
+
+# ---- upute: bez odbrojavanja, svatko potvrdi da je pročitao (botovi automatski) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "      '<div class=\"ht-go\">Kreće za nekoliko sekundi…</div></div>';\n  }",
+           "      howtoReady(d) + '</div>';\n  }\n"
+           "  // tko je pročitao: mobitel ima tipku, TV i svi vide koliko je spremno\n"
+           "  function howtoReady(d) {\n"
+           "    const ps = d.P.filter((p) => p.c), ready = ps.filter((p) => p.ok).length;\n"
+           "    const me = phoneShown() ? meOf(d) : null, mine = me && (me.ok || (L && L.sent));\n"
+           "    const count = '<div class=\"ht-ready\" data-bk=\"htr\" data-bv=\"' + ready + '\">Spremno: <b>' + ready + '/' + ps.length + '</b></div>';\n"
+           "    if (me && !mine) return '<button class=\"btn win-cta ht-ok\" id=\"htok\">✔ Razumijem, idemo!</button>' + count;\n"
+           "    if (!me) return '<div class=\"ht-ready\" data-bk=\"htr\" data-bv=\"' + ready + '\">Spremno: <b>' + ready + '/' + ps.length + '</b> · igra kreće kad svi potvrde</div>';\n"
+           "    return '<div class=\"ht-go\">Čekamo ostale…</div>' + count;\n"
+           "  }")
+s = rep(s, "      case 'howto': h = tvTop(d, 'Kako se igra') + timerHtml() + howtoHtml(d) + '<div class=\"actions\"><button class=\"btn ghost\" id=\"skip\">Dalje ▶</button></div>'; break;",
+           "      case 'howto': h = tvTop(d, 'Kako se igra') + howtoHtml(d) + '<div class=\"actions\"><button class=\"btn ghost\" id=\"skip\">Dalje ▶</button></div>'; break;")
+s = rep(s, "      case 'howto': h = center(head + timerHtml() + howtoHtml(d)); break;", "      case 'howto': h = center(head + howtoHtml(d)); break;")
+s = rep(s, "    bind('dagain', () => { game.restart(); });\n", "    bind('dagain', () => { game.restart(); });\n    bind('htok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });\n")
+i = s.index('</style>'); s = s[:i] + "  /* upute: potvrda čitanja */\n  .ht-ok { min-height: 56px; width: 100%; max-width: 420px; margin: 14px auto 0; display: block; }\n  .ht-ready { margin-top: 8px; text-align: center; font-weight: 800; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); }\n  .tv .ht-ready { font-size: 1.3rem; }\n" + s[i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('upute UI OK')
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, ": ['duel', 'question', 'fq'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok]) : null;", ": ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('upute osvježavanje OK')

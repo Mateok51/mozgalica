@@ -22,7 +22,8 @@ const CFG = {
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
-  howto: 7, howtoShort: 3.5, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, hiloN: 8, blitzN: 24,
+  // upute: nema odbrojavanja, kreće kad svi potvrde; howtoMax je samo nevidljiva sigurnosna granica (npr. netko ode od mobitela)
+  howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, hiloN: 8, blitzN: 24,
   chal: null, chalN: 2, varMax: 2,
   // tajni paktovi (balans na jednom mjestu)
   pactMin: 3, pactAfter: 3, pactBonus: 75, pactSteal: 0.25, pactDouble: 0.2, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
@@ -190,6 +191,9 @@ function createGame(o) {
   function accept(p, inp) {
     if (!inp || typeof inp !== 'object' || inp.s !== G.s || p.done || !p.on) return false;
     switch (G.ph) {
+      case 'howto':
+        if (inp.ok !== 1) return false;
+        break;
       case 'vote':
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
         p.vote = inp.v; break;
@@ -278,7 +282,7 @@ function createGame(o) {
     const r = p ? accept(p, inp) : false;
     if (r === 'partial') return true;
     if (!r) return false;
-    if (INPUT_PHASES[G.ph] && allDone()) endPhase(); else onChange();
+    if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) endPhase(); else onChange();
     return true;
   }
 
@@ -302,7 +306,7 @@ function createGame(o) {
     }
     for (const p of list()) if (!p.bot && !p.local && p.on && !seen.has(p.pid)) { p.on = false; changed = true; }
     if (G.ph === 'lobby') for (const [id, p] of R) if (!p.on) { R.delete(id); changed = true; }
-    if (INPUT_PHASES[G.ph] && allDone()) return endPhase();
+    if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) return endPhase();
     if (changed) onChange();
   }
 
@@ -582,7 +586,14 @@ function createGame(o) {
     const first = !G.seenHow.has(k); G.seenHow.add(k);
     G.ht = { k, first: first ? 1 : 0, chal: CHALLENGES.includes(k) ? 1 : 0 };
     G.rl = G.ht.chal ? 'Izazov' : G.rl;
-    setPhase('howto', first ? cfg.howto : cfg.howtoShort);
+    // igra samo s botovima (npr. gleda se na TV-u): nema koga čekati, upute ostaju vidljive kao prije
+    if (!list().some((p) => !p.bot && p.on)) return setPhase('howto', first ? cfg.howto : cfg.howtoShort);
+    setPhase('howto', cfg.howtoMax || 180);
+    // botovi potvrđuju odmah; ljudi tipkom na mobitelu
+    const s0 = G.s;
+    for (const p of list()) if (p.bot) p.done = true;
+    if (G.s === s0 && allDone()) return endPhase();
+    onChange();
   }
   function afterHowto() {
     const k = G.ht.k;

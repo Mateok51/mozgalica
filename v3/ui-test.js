@@ -68,6 +68,7 @@ require('fs').mkdirSync(shots, { recursive: true });
     if (st.rvbet && !seen['otkrivanje-ulog']) { await page.waitForTimeout(2500); await shot('otkrivanje-ulog'); }
     if (st.qbet && !seen['pitanje-ulog']) { await shot('pitanje-ulog'); }
     if (st.final) { await shot('kraj'); await tvShot('kraj'); finalSeen = true; break; }
+    if (await page.$('#htok')) { await shot('upute'); await tvShot('upute'); await page.evaluate(() => document.getElementById('htok').click()); continue; }
     if (st.vote) { await shot('glasanje'); await tvShot('glasanje'); await page.evaluate(() => { const b = document.querySelector('#app [data-v]:not([disabled])'); if (b) b.click(); }); continue; }
     if (st.bet) { await page.waitForTimeout(800); await shot('kladionica'); await tvShot('kladionica'); await page.evaluate(() => { const b = document.querySelector('#app [data-bet]:not([disabled])'); if (b) b.click(); }); continue; }
     if (await page.$('[data-sx], [data-sy]')) { await shot('tajno'); await page.evaluate(() => { const b = document.querySelector('#app [data-sx], #app [data-sy="1"]'); if (b) b.click(); }); continue; }

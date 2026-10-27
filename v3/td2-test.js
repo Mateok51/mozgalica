@@ -141,7 +141,7 @@ const all = (w) => ({ p0: w, p1: w, p2: w, p3: w });
   const rv = new Map(); let err = null;
   const t0 = Date.now();
   while (Date.now() - t0 < 60000 && g._G.ph !== 'final') {
-    try { const v = g.view(); if (v.ph === 'reveal' && v.mo) rv.set(v.s, v.mo); if (v.ph === 'question') g.setInput('h', { s: v.s, c: 0, t: 300 }); } catch (x) { err = x; break; }
+    try { const v = g.view(); if (v.ph === 'reveal' && v.mo) rv.set(v.s, v.mo); if (v.ph === 'question') g.setInput('h', { s: v.s, c: 0, t: 300 }); if (v.ph === 'howto') g.setInput('h', { s: v.s, ok: 1 }); } catch (x) { err = x; break; }
     await sleep(3);
   }
   const list = [...rv.values()];

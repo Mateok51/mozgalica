@@ -2051,6 +2051,10 @@
   @keyframes lgCard { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
   @keyframes lgShine { from { background-position: -200% 0; } to { background-position: 200% 0; } }
   @media (prefers-reduced-motion: reduce) { .lg-book, .lg-story, .lg-card, .lg-card::after { animation: none !important; } }
+  /* upute: potvrda čitanja */
+  .ht-ok { min-height: 56px; width: 100%; max-width: 420px; margin: 14px auto 0; display: block; }
+  .ht-ready { margin-top: 8px; text-align: center; font-weight: 800; font-size: 0.95rem; color: var(--amber-hi, #ffe2a6); }
+  .tv .ht-ready { font-size: 1.3rem; }
 </style>
 
 <div id="app" class="screen center"></div>
@@ -2825,7 +2829,7 @@ __ENGINE__
   function phoneSig(d) {
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
-      : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok]) : null;
+      : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
     return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj]);
   }
 
@@ -3861,7 +3865,7 @@ __ENGINE__
       case 'moment': h = tvTop(d, 'Krčma pamti') + momentHtml(d, d.mo); break;
       case 'betray': h = tvTop(d, 'Krčma je vidjela sve') + betrayHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'loyal': h = tvTop(d, 'Prije finala') + loyalHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
-      case 'howto': h = tvTop(d, 'Kako se igra') + timerHtml() + howtoHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'howto': h = tvTop(d, 'Kako se igra') + howtoHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'order': h = tvTop(d, 'Poredajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">' + esc(d.or.t) + '</div><div class="mg-s">od <b>' + esc(d.or.lo) + '</b> do <b>' + esc(d.or.hi) + '</b></div><div class="chips">' + d.or.it.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
       case 'orderReveal': h = tvTop(d, 'Točan poredak') + '<div class="tv-mid"><div class="mg"><div class="mg-t">' + esc(d.or.t) + '</div>' + orderSolution(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'hilo': h = tvTop(d, 'Igrajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Više ili manje</div><div class="mg-s">Prva greška prekida niz. Tko će imati najdulji niz?</div></div></div>' + lineup(d, { check: true }); break;
@@ -4096,7 +4100,7 @@ __ENGINE__
       case 'moment': h = center(head + momentHtml(d, d.mo)); break;
       case 'betray': h = head + betrayHtml(d, false); break;
       case 'loyal': h = head + loyalHtml(d, false); break;
-      case 'howto': h = center(head + timerHtml() + howtoHtml(d)); break;
+      case 'howto': h = center(head + howtoHtml(d)); break;
       case 'order': h = head + timerHtml() + orderPhone(d, me); break;
       case 'hilo': h = head + timerHtml() + hiloPhone(d, me); break;
       case 'blitz': h = head + timerHtml() + blitzPhone(d, me); break;
@@ -4287,7 +4291,16 @@ __ENGINE__
     const h = d.ht;
     return '<div class="ht"><div class="ht-i">' + esc(h.i) + '</div><div class="ht-k">' + (h.chal ? 'Izazov' : 'Posebna bitka') + '</div><div class="ht-t">' + esc(h.n) + '</div>' +
       (h.first ? '<ol>' + h.r.map((r, i) => '<li style="--cd:' + (350 + i * 500) + 'ms"><b>' + (i + 1) + '</b>' + esc(r) + '</li>').join('') + '</ol>' : '<div class="mg-s">' + esc(h.r[0]) + '</div>') +
-      '<div class="ht-go">Kreće za nekoliko sekundi…</div></div>';
+      howtoReady(d) + '</div>';
+  }
+  // tko je pročitao: mobitel ima tipku, TV i svi vide koliko je spremno
+  function howtoReady(d) {
+    const ps = d.P.filter((p) => p.c), ready = ps.filter((p) => p.ok).length;
+    const me = phoneShown() ? meOf(d) : null, mine = me && (me.ok || (L && L.sent));
+    const count = '<div class="ht-ready" data-bk="htr" data-bv="' + ready + '">Spremno: <b>' + ready + '/' + ps.length + '</b></div>';
+    if (me && !mine) return '<button class="btn win-cta ht-ok" id="htok">✔ Razumijem, idemo!</button>' + count;
+    if (!me) return '<div class="ht-ready" data-bk="htr" data-bv="' + ready + '">Spremno: <b>' + ready + '/' + ps.length + '</b> · igra kreće kad svi potvrde</div>';
+    return '<div class="ht-go">Čekamo ostale…</div>' + count;
   }
   function sendPartial(inp) {
     inp.s = L.s;
@@ -4710,6 +4723,7 @@ __ENGINE__
     bind('dstart', () => game.start());
     if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
+    bind('htok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
     bindLeg(d);
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });
     bind('lobInv', () => { L.inv = true; phoneRender(true); });

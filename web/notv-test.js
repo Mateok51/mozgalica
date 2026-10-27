@@ -37,7 +37,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
   console.log('1) Domaćin otvara sobu na mobitelu');
   const host = await mk('Mateo', 'pid-mateo');
   await host.goto(URL);
-  await host.evaluate(([ch, QV]) => Object.assign(CFG, { chal: ch, qv: JSON.parse(QV), howto: 1.5, howtoShort: 0.8, order: 12, hilo: 15, blitz: 10, maj: 6, majReveal: 1.5,  intro: 0.8, vote: 6, voteShow: 1.2, power: 8, q: 10, reveal: 2.5, sort: 20, link: 20, chReveal: 2.5, fq: 5, fr: 2 }), [(process.env.CHAL || 'sort,link').split(','), process.env.QV || '{"who":1,"emoji":1}']);
+  await host.evaluate(([ch, QV]) => Object.assign(CFG, { chal: ch, qv: JSON.parse(QV), howto: 1.5, howtoMax: 1.5, howtoShort: 0.8, order: 12, hilo: 15, blitz: 10, maj: 6, majReveal: 1.5,  intro: 0.8, vote: 6, voteShow: 1.2, power: 8, q: 10, reveal: 2.5, sort: 20, link: 20, chReveal: 2.5, fq: 5, fr: 2 }), [(process.env.CHAL || 'sort,link').split(','), process.env.QV || '{"who":1,"emoji":1}']);
   await host.click('#hostp');
   await host.fill('#hname', 'Mateo');
   await host.click('#hform button[type=submit]');
@@ -82,6 +82,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
     }
     if (Date.now() < 0) return '';
     const click = (s) => { const e = q(s); if (e) { e.click(); return true; } return false; };
+    if (click('#htok')) return 'htok';
     if (click('[data-v]:not([disabled])')) return 'vote';
     if (click('[data-t]')) return 'target';
     if (click('[data-bet]:not([disabled])')) return 'bet';

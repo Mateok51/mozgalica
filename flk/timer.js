@@ -26,7 +26,7 @@ const path = require('path');
   const t0 = Date.now();
   while (Date.now() - t0 < 60000) {
     await page.waitForTimeout(300);
-    await page.evaluate(() => { const q = (s) => document.querySelector(s); const c = q('[data-v]:not([disabled])') || q('#nopw'); if (c) c.click(); });
+    await page.evaluate(() => { const q = (s) => document.querySelector(s); const c = q('#htok') || q('[data-v]:not([disabled])') || q('#nopw'); if (c) c.click(); });
   }
   console.log(JSON.stringify(await page.evaluate(() => window.__j)));
   await b.close();

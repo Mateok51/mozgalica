@@ -32,7 +32,7 @@ const path = require('path');
   const t0 = Date.now(); const meta = [];
   while (Date.now() - t0 < 150000) {
     await page.waitForTimeout(150);
-    const m = await page.evaluate(() => { const q = (s) => document.querySelector(s); const c = q('[data-v]:not([disabled])') || q('#nopw') || q('[data-c]:not([disabled])'); if (c) c.click(); const w = q('.rv.wheel'); if (document.documentElement.dataset.ph !== 'reveal' || !w) return null; return { s: w.getAttribute('style'), rvo: parseInt(w.style.getPropertyValue('--rvo')) }; });
+    const m = await page.evaluate(() => { const q = (s) => document.querySelector(s); const c = q('#htok') || q('[data-v]:not([disabled])') || q('#nopw') || q('[data-c]:not([disabled])'); if (c) c.click(); const w = q('.rv.wheel'); if (document.documentElement.dataset.ph !== 'reveal' || !w) return null; return { s: w.getAttribute('style'), rvo: parseInt(w.style.getPropertyValue('--rvo')) }; });
     if (m && !meta.some(x => x.s === m.s)) meta.push(m);
     if (meta.length >= 6) break;
   }

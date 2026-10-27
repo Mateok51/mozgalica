@@ -4,7 +4,7 @@ const src = fs.readFileSync(__dirname + '/engine.js', 'utf8').replace('__DATA__'
 const E = new Function(src + '; return { createGame, CFG };')();
 let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails++; };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const FAST = { intro: 0.05, vote: 0.15, voteShow: 0.05, roul: 0.05, power: 0.15, cast: 0.02, q: 0.6, reveal: 0.05, betrayShow: 0.15, loyalShow: 0.1, howto: 0.05, howtoShort: 0.05, sort: 0.2, link: 0.2, order: 0.2, hilo: 0.2, blitz: 0.2, maj: 0.1, majReveal: 0.05, chReveal: 0.05, fstart: 0.05, fpower: 0.1, fq: 0.15, fr: 0.05, bet: 0.1, moment: 0.05, betEvents: [0, 0], qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], pactOffer: 5 };
+const FAST = { intro: 0.05, vote: 0.15, voteShow: 0.05, roul: 0.05, power: 0.15, cast: 0.02, q: 0.6, reveal: 0.05, betrayShow: 0.15, loyalShow: 0.1, howto: 0.05, howtoMax: 0.05, howtoShort: 0.05, sort: 0.2, link: 0.2, order: 0.2, hilo: 0.2, blitz: 0.2, maj: 0.1, majReveal: 0.05, chReveal: 0.05, fstart: 0.05, fpower: 0.1, fq: 0.15, fr: 0.05, bet: 0.1, moment: 0.05, betEvents: [0, 0], qv: { who: 0, emoji: 0 }, chal: ['sort', 'link'], pactOffer: 5 };
 const FL = { ENABLE_DUELS: false, ENABLE_SECRET_EVENTS: false };
 function mk(names, extra) {
   const g = E.createGame(Object.assign({ code: 'PK', cfg: FAST, flags: FL }, extra || {}));

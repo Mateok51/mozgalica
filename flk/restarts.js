@@ -37,7 +37,7 @@ const file = process.argv[2], secs = +(process.argv[3] || 150);
     await page.waitForTimeout(300);
     await page.evaluate(() => {
       const q = (s) => document.querySelector(s);
-      const c = q('[data-v]:not([disabled])') || q('[data-p]') || q('[data-t]') || q('[data-c]:not([disabled])') || q('[data-bet]:not([disabled])');
+      const c = q('#htok') || q('[data-v]:not([disabled])') || q('[data-p]') || q('[data-t]') || q('[data-c]:not([disabled])') || q('[data-bet]:not([disabled])');
       if (c && Math.random() < 0.5) c.click();
     });
   }

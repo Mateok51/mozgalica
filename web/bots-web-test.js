@@ -28,7 +28,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
   console.log('1) Domaćin na mobitelu dodaje botove');
   const host = await mk('Mateo', 'pid-mateo');
   await host.goto(URL);
-  await host.evaluate(() => Object.assign(CFG, { chal: ['hilo', 'maj'], intro: 0.8, vote: 4, voteShow: 1, power: 5, q: 6, reveal: 1.5, howto: 1, howtoShort: 0.5, hilo: 10, maj: 5, majReveal: 1, chReveal: 1.5, fq: 4, fr: 1.5 }));
+  await host.evaluate(() => Object.assign(CFG, { chal: ['hilo', 'maj'], intro: 0.8, vote: 4, voteShow: 1, power: 5, q: 6, reveal: 1.5, howto: 1, howtoMax: 1, howtoShort: 0.5, hilo: 10, maj: 5, majReveal: 1, chReveal: 1.5, fq: 4, fr: 1.5 }));
   await host.click('#hostp'); await host.fill('#hname', 'Mateo'); await host.click('#hform button[type=submit]');
   await host.waitForSelector('.lob-bots', { timeout: 6000 });
   const code = (await host.textContent('.lob-code')).trim();
