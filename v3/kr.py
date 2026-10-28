@@ -619,3 +619,12 @@ rep("    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.b
 rep("      rl: G.rl, max: cfg.maxPlayers, steps: cfg.steps,", "      rl: G.rl, nr: G.nr || 3, len: G.opt.len, max: cfg.maxPlayers, steps: cfg.steps,")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR trajanje partije OK')
+
+# ---------- Piramida: izvor bonusa napretka za prikaz (pravila se ne mijenjaju) ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("      p.ch = p.ans; p.mv = 0; p.ug = 0; p.sk = 0;\n", "      p.ch = p.ans; p.mv = 0; p.ug = 0; p.sk = 0; p.fb = '';\n")
+rep("      let g = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);\n      if (p.fstr % cfg.pyrStreak === 0) { g++; p.sk = 1; }",
+    "      let g = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);\n      if (p.fstr % cfg.pyrStreak === 0) { g++; p.sk = 1; }\n      p.fb = (p === fastest ? 'f' : '') + (p.dbl ? 'd' : '') + (p.sk ? 's' : '');   // samo za prikaz: odakle je bonus")
+rep("if (ph === 'fr') { e.ug = p.ug; if (p.sk) e.sk = 1;", "if (ph === 'fr') { e.ug = p.ug; if (p.fb) e.fb = p.fb; if (p.sk) e.sk = 1;")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR piramida bonus za prikaz OK')

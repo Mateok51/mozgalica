@@ -2701,3 +2701,24 @@ s = rep(s, "<span class=\"rl\">' + esc(d.rl || '') + '</span>", "<span class=\"r
 s = rep(s, "esc(ANN_SUB[t] || d.it.sub || '')", "esc((/^Runda \\d+$/.test(t) && t !== 'Runda 1' ? (t === 'Runda ' + (d.nr || 3) ? 'Još samo jedna runda.' : 'Vrijeme je za novu rundu.') : ANN_SUB[t]) || d.it.sub || '')")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Trajanje partije UI OK')
+
+# ---- Piramida 3: vidljiv napredak za svaki točan odgovor, naglašen uspon, jasna kruna ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+_a = "  function pyramidHtml(d, rev, o) {"
+_e = "    return '<div class=\"pyramid' + (intro ? ' intro' : '') + '\">' + rows + '</div>';\n  }\n"
+assert s.count(_a) == 1 and s.count(_e) == 1
+_i = s.index(_a); _j = s.index(_e, _i) + len(_e)
+s = s[:_i] + open(SP + '/v4/pyr3.js', encoding='utf-8').read() + s[_j:]
+_i = s.index('</style>'); s = s[:_i] + open(SP + '/v4/pyr3.css', encoding='utf-8').read() + s[_i:]
+# zvuk: djelomičan napredak je točan odgovor (ne zvuk greške)
+s = rep(s, "      case 'fr': if (me.mv) { AUDIO.play('step'); HAPTIC.step(); } else AUDIO.play('wrong'); return;",
+           "      case 'fr': if (me.mv) { AUDIO.play('step'); HAPTIC.step(); } else if (me.ch === d.cor && me.ug) AUDIO.play('correct'); else AUDIO.play('wrong'); return;")
+# poruka na mobitelu: kratko, s napretkom do sljedeće stepenice
+s = rep(s, "ok ? 'Točno! +' + (me.ug || 1) + ' napretka' + (me.sk ? ' (niz od 3!)' : '') + (me.mv ? ' · stepenica ' + me.st : '') + (me.top ? ' · 👑 na vrhu!' : '')",
+           "ok ? 'Točno! +' + (me.ug || 1) + (me.fb ? ' ' + me.fb.split('').map((c) => ({ f: '⚡', d: '✖2', s: '🔥' })[c] || '').join('') : '') + (me.top ? ' · 👑 na vrhu!' : me.mv ? ' · ⬆ ' + me.st + '. stepenica' : ' · napredak ' + (me.fp || 0) + '/' + (me.fr || 1))")
+# pitanje za krunu na mobitelu: jasno tko igra za krunu i što znači točan odgovor
+s = rep(s, "(me.top ? '👑 Tvoje pitanje za krunu!' : '👑 Netko je na vrhu — pitanje za krunu')",
+           "(me.top ? '👑 Tvoje pitanje za krunu!<small>Točan odgovor osvaja krunu</small>' : '👑 Pitanje za krunu: ' + esc(d.P.filter((p) => p.top).map((p) => p.n).join(' i ')) + '<small>Ako pogriješi, utrka se nastavlja</small>')")
+s = rep(s, "  .crown-k { text-align: center;", "  .crown-k small { display: block; font-family: var(--font-body); font-weight: 800; font-size: 0.62em; color: #f3e3c4; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); margin-top: 2px; }\n  .crown-k { text-align: center;")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Piramida 3 OK')

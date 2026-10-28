@@ -1974,6 +1974,7 @@
   .pyramid .pstep.crown .lv { font-size: calc(var(--H) * 0.5); }
   .pyramid .climber.ontop > img, .pyramid .climber.ontop > svg { filter: drop-shadow(0 0 4px #ffd36a) drop-shadow(0 0 8px rgba(255, 200, 90, 0.8)); animation: topGlow 1.4s ease-in-out infinite; }
   @keyframes topGlow { 50% { transform: translateY(-3px); } }
+  .crown-k small { display: block; font-family: var(--font-body); font-weight: 800; font-size: 0.62em; color: #f3e3c4; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); margin-top: 2px; }
   .crown-k { text-align: center; font-family: var(--font-display); font-size: clamp(1.1rem, 5vw, 1.5rem); color: #ffe08a; text-shadow: 0 2px 0 #6b4310, 0 0 18px rgba(255, 210, 100, 0.6); animation: btSlam 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
   .tv .crown-k { font-size: 2rem; }
   .fin-prog { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.9rem; color: #f0c66e; }
@@ -2314,6 +2315,65 @@
   @media (max-width: 374px) { .len-c .len-n { font-size: 0.84rem; } .lob-len { gap: 4px; } }
   .tvlob-side .lob-len { gap: 0.8vw; } .tvlob-side .len-c { padding: 1vh 0.5vw; border-radius: 14px; }
   .tvlob-side .len-c .len-n { font-size: clamp(0.9rem, 0.98vw, 1.2rem); } .tvlob-side .len-c .len-m, .tvlob-side .len-c .len-r { font-size: clamp(0.75rem, 1vw, 1.05rem); }
+  /* PIRAMIDA 3: svaki točan odgovor ima vidljivu posljedicu (oznaka, traka napretka, poskok), uspon je naglašen */
+  .pyramid .climber .pb { position: absolute; left: 50%; top: calc(var(--H) * -0.5); transform: translateX(-50%); z-index: 6; display: inline-flex; align-items: center; gap: 1px; padding: 0 5px; border-radius: 99px;
+    font-family: var(--font-body); font-weight: 900; font-size: max(11px, calc(var(--H) * 0.36)); line-height: 1.25; white-space: nowrap; pointer-events: none;
+    opacity: 0; animation: pbIn 0.35s cubic-bezier(0.2, 1.5, 0.4, 1) both; animation-delay: calc(var(--cd) + 120ms - var(--el)); }
+  .pyramid .climber .pb i { font-style: normal; } .pyramid .climber .pb .bn { font-size: 0.8em; margin-left: 2px; letter-spacing: -1px; }
+  .pyramid .climber .pb-part { background: linear-gradient(180deg, #8ff0b6, #2fae67); color: #05301a; box-shadow: 0 0 0 1px #0c5a2f, 0 0 10px rgba(110, 230, 150, 0.6); }
+  .pyramid .climber .pb-lvl { background: linear-gradient(180deg, #fff1b8, #f0c66e 55%, #c4892f); color: #2a1606; box-shadow: 0 0 0 1px #7a4f17, 0 0 12px rgba(255, 210, 110, 0.85); }
+  .pyramid .climber .pb-win { background: none; font-size: max(14px, calc(var(--H) * 0.5)); filter: drop-shadow(0 0 6px #ffd36a); }
+  .pyramid .climber .pb-miss { background: rgba(40, 24, 14, 0.85); color: rgba(243, 227, 196, 0.6); box-shadow: inset 0 0 0 1px rgba(160, 120, 80, 0.5); }
+  .pyramid .climber .pb-cmiss { background: rgba(60, 20, 14, 0.9); color: #ffb3a0; box-shadow: inset 0 0 0 1px rgba(220, 120, 90, 0.7); }
+  @keyframes pbIn { from { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.6); } to { opacity: 1; transform: translateX(-50%); } }
+  /* traka napretka: koliko je skupljeno do sljedeće stepenice (npr. 1/2), puni se nakon točnog odgovora */
+  .pyramid .climber .pbar { position: absolute; left: 50%; bottom: calc(var(--H) * -0.3); transform: translateX(-50%); z-index: 4; display: flex; align-items: center; gap: 2px; pointer-events: none; }
+  .pyramid .climber .pbar i { position: relative; display: block; width: calc(var(--H) * 0.75); height: max(5px, calc(var(--H) * 0.16)); border-radius: 99px; overflow: hidden; background: rgba(20, 10, 4, 0.85); box-shadow: 0 0 0 1px rgba(240, 198, 110, 0.7); }
+  .pyramid .climber .pbar i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--b) * 100%); border-radius: inherit; background: linear-gradient(90deg, #8ff0b6, #f0c66e); }
+  .pyramid .climber .pbar.fill i::after { animation: pFill 0.6s ease-out both; animation-delay: calc(var(--cd) + 250ms - var(--el)); }
+  .pyramid .climber .pbar.fill i { animation: pGlow 0.9s ease-out both; animation-delay: calc(var(--cd) + 250ms - var(--el)); }
+  .pyramid .climber .pbar b { font-family: var(--font-body); font-weight: 900; font-size: max(9px, calc(var(--H) * 0.26)); line-height: 1; color: #ffe2a6; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); }
+  @keyframes pFill { from { width: calc(var(--a) * 100%); } }
+  @keyframes pGlow { 40% { box-shadow: 0 0 0 1px #8ff0b6, 0 0 10px rgba(143, 240, 182, 0.9); } }
+  /* djelomičan napredak: lik poskoči prema sljedećoj stepenici i vrati se */
+  .pyramid .climber.k-part > img, .pyramid .climber.k-part > svg { animation: partHop 0.7s cubic-bezier(0.3, 0.7, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes partHop { 0% { transform: none; } 40% { transform: translateY(calc(var(--H) * -0.42)) scale(1.04); } 70% { transform: translateY(calc(var(--H) * -0.08)); } 85% { transform: scale(1.04, 0.95); } 100% { transform: none; } }
+  /* netočno: kratko trzanje, lik malo izblijedi */
+  .pyramid .climber.k-miss > img, .pyramid .climber.k-miss > svg { animation: missShake 0.45s ease both; animation-delay: calc(var(--cd) - var(--el)); filter: saturate(0.7) brightness(0.85); }
+  @keyframes missShake { 25% { transform: translateX(-3px); } 50% { transform: translateX(3px); } 75% { transform: translateX(-2px); } }
+  .pyramid .climber.k-cmiss > img, .pyramid .climber.k-cmiss > svg { animation: missShake 0.45s ease both; animation-delay: calc(var(--cd) - var(--el)); }
+  /* uspon: zlatni bljesak kad lik stigne na novu stepenicu */
+  .pyramid .climber.k-lvl::after, .pyramid .climber.k-win::after { content: ""; position: absolute; left: 50%; bottom: 0; width: calc(var(--H) * 1.6); height: calc(var(--H) * 1.6); transform: translate(-50%, 30%) scale(0.2); border-radius: 50%; z-index: -1; pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 236, 170, 0.95) 0%, rgba(255, 200, 90, 0.55) 40%, rgba(255, 200, 90, 0) 70%); opacity: 0;
+    animation: lvlFlash 0.7s ease-out both; animation-delay: calc(var(--cd) + 0.42s + var(--mv) * 0.16s - var(--el)); }
+  .pyramid .climber.multi.k-lvl::after { animation-delay: calc(var(--cd) + var(--mv) * 0.3s - var(--el)); }
+  @keyframes lvlFlash { 0% { opacity: 0; transform: translate(-50%, 30%) scale(0.2); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 30%) scale(1.25); } }
+  .pyramid.res .climber.k-lvl .pb, .pyramid.res .climber.k-win .pb { animation-delay: calc(var(--cd) + 0.35s + var(--mv) * 0.16s - var(--el)); }
+  .pyramid.res .climber.multi.k-lvl .pb { animation-delay: calc(var(--cd) + var(--mv) * 0.3s - var(--el)); }
+  .pyramid .climber .prg { display: none; }
+  .tv .pyramid .climber .cn { top: calc(100% + var(--H) * 0.22); }
+  @keyframes climbM2 { 0.0% { transform: translateY(calc(2 * var(--dy))); } 30.0% { transform: translateY(calc(1 * var(--dy) - var(--H) * 0.28)); } 50.0% { transform: translateY(calc(1 * var(--dy))); } 80.0% { transform: translateY(calc(0 * var(--dy) - var(--H) * 0.28)); } 100.0% { transform: translateY(calc(0 * var(--dy))); } }
+  .pyramid .climber.go.multi.m2 { animation: climbM2 calc(2 * 0.3s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes climbM3 { 0.0% { transform: translateY(calc(3 * var(--dy))); } 20.0% { transform: translateY(calc(2 * var(--dy) - var(--H) * 0.28)); } 33.33% { transform: translateY(calc(2 * var(--dy))); } 53.33% { transform: translateY(calc(1 * var(--dy) - var(--H) * 0.28)); } 66.67% { transform: translateY(calc(1 * var(--dy))); } 86.67% { transform: translateY(calc(0 * var(--dy) - var(--H) * 0.28)); } 100.0% { transform: translateY(calc(0 * var(--dy))); } }
+  .pyramid .climber.go.multi.m3 { animation: climbM3 calc(3 * 0.3s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes climbM4 { 0.0% { transform: translateY(calc(4 * var(--dy))); } 15.0% { transform: translateY(calc(3 * var(--dy) - var(--H) * 0.28)); } 25.0% { transform: translateY(calc(3 * var(--dy))); } 40.0% { transform: translateY(calc(2 * var(--dy) - var(--H) * 0.28)); } 50.0% { transform: translateY(calc(2 * var(--dy))); } 65.0% { transform: translateY(calc(1 * var(--dy) - var(--H) * 0.28)); } 75.0% { transform: translateY(calc(1 * var(--dy))); } 90.0% { transform: translateY(calc(0 * var(--dy) - var(--H) * 0.28)); } 100.0% { transform: translateY(calc(0 * var(--dy))); } }
+  .pyramid .climber.go.multi.m4 { animation: climbM4 calc(4 * 0.3s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes climbM5 { 0.0% { transform: translateY(calc(5 * var(--dy))); } 12.0% { transform: translateY(calc(4 * var(--dy) - var(--H) * 0.28)); } 20.0% { transform: translateY(calc(4 * var(--dy))); } 32.0% { transform: translateY(calc(3 * var(--dy) - var(--H) * 0.28)); } 40.0% { transform: translateY(calc(3 * var(--dy))); } 52.0% { transform: translateY(calc(2 * var(--dy) - var(--H) * 0.28)); } 60.0% { transform: translateY(calc(2 * var(--dy))); } 72.0% { transform: translateY(calc(1 * var(--dy) - var(--H) * 0.28)); } 80.0% { transform: translateY(calc(1 * var(--dy))); } 92.0% { transform: translateY(calc(0 * var(--dy) - var(--H) * 0.28)); } 100.0% { transform: translateY(calc(0 * var(--dy))); } }
+  .pyramid .climber.go.multi.m5 { animation: climbM5 calc(5 * 0.3s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes climbM6 { 0.0% { transform: translateY(calc(6 * var(--dy))); } 10.0% { transform: translateY(calc(5 * var(--dy) - var(--H) * 0.28)); } 16.67% { transform: translateY(calc(5 * var(--dy))); } 26.67% { transform: translateY(calc(4 * var(--dy) - var(--H) * 0.28)); } 33.33% { transform: translateY(calc(4 * var(--dy))); } 43.33% { transform: translateY(calc(3 * var(--dy) - var(--H) * 0.28)); } 50.0% { transform: translateY(calc(3 * var(--dy))); } 60.0% { transform: translateY(calc(2 * var(--dy) - var(--H) * 0.28)); } 66.67% { transform: translateY(calc(2 * var(--dy))); } 76.67% { transform: translateY(calc(1 * var(--dy) - var(--H) * 0.28)); } 83.33% { transform: translateY(calc(1 * var(--dy))); } 93.33% { transform: translateY(calc(0 * var(--dy) - var(--H) * 0.28)); } 100.0% { transform: translateY(calc(0 * var(--dy))); } }
+  .pyramid .climber.go.multi.m6 { animation: climbM6 calc(6 * 0.3s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes climbM7 { 0.0% { transform: translateY(calc(7 * var(--dy))); } 8.57% { transform: translateY(calc(6 * var(--dy) - var(--H) * 0.28)); } 14.29% { transform: translateY(calc(6 * var(--dy))); } 22.86% { transform: translateY(calc(5 * var(--dy) - var(--H) * 0.28)); } 28.57% { transform: translateY(calc(5 * var(--dy))); } 37.14% { transform: translateY(calc(4 * var(--dy) - var(--H) * 0.28)); } 42.86% { transform: translateY(calc(4 * var(--dy))); } 51.43% { transform: translateY(calc(3 * var(--dy) - var(--H) * 0.28)); } 57.14% { transform: translateY(calc(3 * var(--dy))); } 65.71% { transform: translateY(calc(2 * var(--dy) - var(--H) * 0.28)); } 71.43% { transform: translateY(calc(2 * var(--dy))); } 80.0% { transform: translateY(calc(1 * var(--dy) - var(--H) * 0.28)); } 85.71% { transform: translateY(calc(1 * var(--dy))); } 94.29% { transform: translateY(calc(0 * var(--dy) - var(--H) * 0.28)); } 100.0% { transform: translateY(calc(0 * var(--dy))); } }
+  .pyramid .climber.go.multi.m7 { animation: climbM7 calc(7 * 0.3s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @keyframes climbM8 { 0.0% { transform: translateY(calc(8 * var(--dy))); } 7.5% { transform: translateY(calc(7 * var(--dy) - var(--H) * 0.28)); } 12.5% { transform: translateY(calc(7 * var(--dy))); } 20.0% { transform: translateY(calc(6 * var(--dy) - var(--H) * 0.28)); } 25.0% { transform: translateY(calc(6 * var(--dy))); } 32.5% { transform: translateY(calc(5 * var(--dy) - var(--H) * 0.28)); } 37.5% { transform: translateY(calc(5 * var(--dy))); } 45.0% { transform: translateY(calc(4 * var(--dy) - var(--H) * 0.28)); } 50.0% { transform: translateY(calc(4 * var(--dy))); } 57.5% { transform: translateY(calc(3 * var(--dy) - var(--H) * 0.28)); } 62.5% { transform: translateY(calc(3 * var(--dy))); } 70.0% { transform: translateY(calc(2 * var(--dy) - var(--H) * 0.28)); } 75.0% { transform: translateY(calc(2 * var(--dy))); } 82.5% { transform: translateY(calc(1 * var(--dy) - var(--H) * 0.28)); } 87.5% { transform: translateY(calc(1 * var(--dy))); } 95.0% { transform: translateY(calc(0 * var(--dy) - var(--H) * 0.28)); } 100.0% { transform: translateY(calc(0 * var(--dy))); } }
+  .pyramid .climber.go.multi.m8 { animation: climbM8 calc(8 * 0.3s) cubic-bezier(0.35, 0.6, 0.3, 1) both; animation-delay: calc(var(--cd) - var(--el)); }
+  @media (prefers-reduced-motion: reduce) {
+    .pyramid .climber.k-part > img, .pyramid .climber.k-part > svg, .pyramid .climber.k-miss > img, .pyramid .climber.k-miss > svg, .pyramid .climber.k-cmiss > img, .pyramid .climber.k-cmiss > svg { animation: none; }
+    .pyramid .climber.go.multi { animation: climbFade 0.4s both; } .pyramid .climber .pbar.fill i::after { animation: none; } }
+  /* gužva na stepenici: oznake naizmjenično više, broj na traci samo za mene */
+  .pyramid .here .climber:nth-child(even) .pb { top: calc(var(--H) * -0.88); }
+  .pyramid .here:has(.climber + .climber) .climber:not(.me) .pbar b { display: none; }
+  /* rezultat piramide na mobitelu bez TV-a: veća piramida da se napredak jasno vidi */
+  .phone-pyr.big .pyramid { --H: clamp(32px, 6.4vh, 58px); }
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
@@ -2996,7 +3056,7 @@ __ENGINE__
       case 'question': case 'fq': if (L.fx || (L.bombs && L.bombs.length) || L.eat) HAPTIC.impact(); if (L.fx) AUDIO.play(FX_SOUND[L.fx.k] || 'powerZap'); else if (L.bombs && L.bombs.length) AUDIO.play('powerZap'); else if (L.eat) AUDIO.play('powerBug'); return;
       case 'reveal': return wheelSound(d, () => { if (me.ch === d.cor) { AUDIO.play('correct'); HAPTIC.confirm(); } else { AUDIO.play('wrong'); HAPTIC.error(); } });
       case 'sortReveal': case 'linkReveal': return AUDIO.play(me.k ? 'correct' : 'wrong');
-      case 'fr': if (me.mv) { AUDIO.play('step'); HAPTIC.step(); } else AUDIO.play('wrong'); return;
+      case 'fr': if (me.mv) { AUDIO.play('step'); HAPTIC.step(); } else if (me.ch === d.cor && me.ug) AUDIO.play('correct'); else AUDIO.play('wrong'); return;
       case 'final': AUDIO.play('victory'); if (d.win === PID) HAPTIC.victory(); setTimeout(() => confetti(110), 350); return;
     }
   }
@@ -4783,22 +4843,39 @@ __ENGINE__
   function pyramidHtml(d, rev, o) {
     o = o || {};
     const el = Math.max(0, d.dur - d.ms), base = o.delay || 0, intro = d.ph === 'fstart';
-    let rows = '', mvIdx = 0;
+    // napredak unutar stepenice (isti izračun kao na domaćinu, iz javnog d.req)
+    const req = d.req || [];
+    const so = (u) => { let st = 0, acc = 0; while (st < req.length && acc + req[st] <= u) { acc += req[st]; st++; } return { s: st, p: u - acc, r: st < req.length ? req[st] : 0 }; };
+    const BN = { f: '⚡', d: '✖2', s: '🔥' };
+    let rows = '', idx = 0;
     for (let s = d.steps; s >= 0; s--) {
       const w = s === 0 ? 100 : 100 - (s - 1) * (59 / Math.max(1, d.steps - 1));
       const here = d.P.filter((p) => (p.st || 0) === s).map((p) => {
         // uvod: svi kreću iz podnožja i penju se stepenicu po stepenicu kad im završi brojanje bodova
-        const mv = intro ? (p.st || 0) : p.mv, go = (rev || intro) && mv;
-        const cd = intro ? fsEnd(d, p) : go ? base + (mvIdx++) * 90 : 0;
-        const mood = intro ? (el > fsEnd(d, p) + 300 && p.st ? 'happy' : 'idle') : rev ? (p.mv ? (s >= d.steps ? 'victory' : 'happy') : 'sad') : p.top ? 'victory' : '';
-        const prg = p.fr > 1 && p.fp > 0 && !p.top ? '<span class="prg">' + p.fp + '/' + p.fr + '</span>' : '';
-        return '<span class="climber' + (go ? ' go' + (intro ? ' walk' : '') : '') + (p.top ? ' ontop' : '') + (p.id === PID ? ' me' : '') + '" style="--mv:' + (mv || 0) + ';--cd:' + cd + 'ms;--el:' + (go ? el : 0) + 'ms">' +
-          (go && !intro ? '<span class="up">' + (s >= d.steps ? '👑' : '+' + p.mv) + '</span>' : '') + (o.you && p.id === PID && !go ? '<span class="tag-you">Ti</span>' : '') +
-          avSvg(p.a, mood) + prg + '<span class="cn">' + esc(p.n) + '</span></span>';
+        const mv = intro ? (p.st || 0) : (p.mv || 0), go = (rev || intro) && mv > 0;
+        // ishod pitanja piramide: uspon, djelomičan napredak, kruna izmiče, netočno
+        const ok = rev && p.ch === d.cor, ug = rev ? (p.ug || 0) : 0;
+        const kind = !rev || intro ? '' : p.st >= d.steps && mv ? 'win' : d.crown && p.top && !mv ? 'cmiss' : ok && ug > 0 && mv > 0 ? 'lvl' : ok && ug > 0 ? 'part' : 'miss';
+        const cd = intro ? fsEnd(d, p) : rev ? base + (idx++) * 90 : 0;
+        const mood = intro ? (el > fsEnd(d, p) + 300 && p.st ? 'happy' : 'idle') : rev ? (kind === 'win' ? 'victory' : kind === 'lvl' || kind === 'part' ? 'happy' : 'sad') : p.top ? 'victory' : '';
+        const bn = rev && p.fb ? '<span class="bn">' + p.fb.split('').map((c) => BN[c] || '').join('') + '</span>' : '';
+        const badge = !kind ? '' : kind === 'win' ? '<span class="pb pb-win">👑</span>' : kind === 'lvl' ? '<span class="pb pb-lvl">+' + ug + '<i>⬆</i>' + bn + '</span>'
+          : kind === 'part' ? '<span class="pb pb-part">+' + ug + bn + '</span>' : kind === 'cmiss' ? '<span class="pb pb-cmiss">👑✗</span>' : '<span class="pb pb-miss">✗</span>';
+        // traka napretka do sljedeće stepenice (puni se nakon točnog odgovora)
+        const cur = so(p.fu || 0);
+        let bar = '';
+        if (!intro && !p.top && p.st < d.steps && cur.r > 1 && (cur.p > 0 || kind === 'part')) {
+          const from = kind === 'part' ? Math.max(0, cur.p - ug) : kind === 'lvl' ? 0 : cur.p;
+          bar = '<span class="pbar' + (kind === 'part' || (kind === 'lvl' && cur.p) ? ' fill' : '') + '" style="--a:' + (from / cur.r).toFixed(3) + ';--b:' + (cur.p / cur.r).toFixed(3) + '"><i></i><b>' + cur.p + '/' + cur.r + '</b></span>';
+        }
+        const cls = 'climber' + (go ? ' go' + (intro ? ' walk' : mv > 1 ? ' multi m' + Math.min(mv, 8) : '') : '') + (kind ? ' k-' + kind : '') + (p.top ? ' ontop' : '') + (p.id === PID ? ' me' : '');
+        return '<span class="' + cls + '" style="--mv:' + (mv || 0) + ';--cd:' + cd + 'ms;--el:' + (rev || intro ? el : 0) + 'ms">' +
+          badge + (o.you && p.id === PID && !kind ? '<span class="tag-you">Ti</span>' : '') +
+          avSvg(p.a, mood) + bar + '<span class="cn">' + esc(p.n) + '</span></span>';
       }).join('');
       rows += '<div class="pstep' + (s === 0 ? ' base' : '') + (s === d.steps ? ' top crown' : '') + (s === d.steps - 1 ? ' summit' : '') + '" style="width:' + w.toFixed(1) + '%"><span class="lv">' + (s === d.steps ? '👑' : s) + '</span><span class="here">' + here + '</span></div>';
     }
-    return '<div class="pyramid' + (intro ? ' intro' : '') + '">' + rows + '</div>';
+    return '<div class="pyramid' + (intro ? ' intro' : '') + (rev && !intro ? ' res' : '') + '">' + rows + '</div>';
   }
 
   function tvLobby(d, demoBar) {
@@ -4963,7 +5040,7 @@ __ENGINE__
         const tf = '<div class="rv-opts' + (d.crown ? '' : ' two') + '">' + d.q.o.map((o, i) => '<div class="p-opt o' + (d.crown ? i : i === 0 ? 3 : 0) + (i === d.cor ? ' rv-ok' + (mine === i ? ' mine' : '') : mine === i ? ' rv-bad' : ' rv-dim') + '"><span class="otxt">' + esc(o) + '</span></div>').join('') + '</div>';
         const wasTop = d.crown && (me.top || me.st >= d.steps);
         const note = me.st >= d.steps ? '👑 KRUNA JE TVOJA!' : wasTop ? (mine >= 0 ? 'Kruna izmiče! Ostaješ na vrhu — nova prilika u sljedećem pitanju.' : 'Vrijeme je isteklo · ostaješ na vrhu') :
-          ok ? 'Točno! +' + (me.ug || 1) + ' napretka' + (me.sk ? ' (niz od 3!)' : '') + (me.mv ? ' · stepenica ' + me.st : '') + (me.top ? ' · 👑 na vrhu!' : '') : mine >= 0 ? 'Netočno · napredak ostaje' : 'Vrijeme je isteklo';
+          ok ? 'Točno! +' + (me.ug || 1) + (me.fb ? ' ' + me.fb.split('').map((c) => ({ f: '⚡', d: '✖2', s: '🔥' })[c] || '').join('') : '') + (me.top ? ' · 👑 na vrhu!' : me.mv ? ' · ⬆ ' + me.st + '. stepenica' : ' · napredak ' + (me.fp || 0) + '/' + (me.fr || 1)) : mine >= 0 ? 'Netočno · napredak ostaje' : 'Vrijeme je isteklo';
         h = head + '<div class="rv" style="--el:' + el + 'ms"><div class="rv-a"><div class="p-q">' + esc(d.q.t) + '</div>' + tf + '<div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div></div>' +
           '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' + '<div class="p-sub">' + esc(progTxt(d, me)) + '</div>' : progMeter(d, me)) + tdLine(d) + '</div></div>';
         break;
@@ -5585,7 +5662,7 @@ __ENGINE__
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
     return timerHtml(3000) + (d.ntv && !cr ? '<div class="phone-pyr compact">' + pyramidHtml(d, false, { you: true }) + '</div>' : '') +
-      (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!' : '👑 Netko je na vrhu — pitanje za krunu') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
+      (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!<small>Točan odgovor osvaja krunu</small>' : '👑 Pitanje za krunu: ' + esc(d.P.filter((p) => p.top).map((p) => p.n).join(' i ')) + '<small>Ako pogriješi, utrka se nastavlja</small>') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
       '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : '') +

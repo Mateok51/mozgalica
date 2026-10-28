@@ -39,3 +39,5 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
 - Power pick medaljon: ui/pp-medal.webp, v4/pp.css; provjera: node v3/pick-ui-test.js, node v3/pp-icon-shot.js
 - Trajanje partije (brza / standardna / duga): LENS + makePlan u v3/kr.py (standardna = dosadašnji PLAN), predvorje v4/make.py + v4/len.css + web/transform.py (TV);
   provjere: node v3/len-test.js (motor, virtualni sat), node v3/len-ui-test.js (predvorje 390/412/360, TV, demo), procjena minuta: node v3/len-time.js 4
+- Piramida 3 (vidljiv napredak: +1 i traka 1/2, uspon stepenicu po stepenicu s bljeskom, ✗, 👑✗, bonusi ⚡ ✖2 🔥): v4/pyr3.js (pyramidHtml), v4/pyr3.css, engine p.fb samo za prikaz;
+  provjere: node v3/pyr-test.js (motor, botovi), node v3/pyr-ui-test.js (mobitel 390 + TV, snimke v3/shots/pyr-*.png)

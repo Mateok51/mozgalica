@@ -1005,12 +1005,13 @@ function createGame(o) {
     const right = list().filter((p) => !crown.has(p.pid) && p.ans === G.q.a);
     const fastest = G.q.crown ? null : right.slice().sort((a, b) => a.ansMs - b.ansMs)[0];
     for (const p of list()) {
-      p.ch = p.ans; p.mv = 0; p.ug = 0; p.sk = 0;
+      p.ch = p.ans; p.mv = 0; p.ug = 0; p.sk = 0; p.fb = '';
       if (crown.has(p.pid)) { if (p.ans !== G.q.a) { p.cf++; p.fstr = 0; } continue; }
       if (p.ans !== G.q.a) { p.fstr = 0; continue; }
       p.fstr++;
       let g = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);
       if (p.fstr % cfg.pyrStreak === 0) { g++; p.sk = 1; }
+      p.fb = (p === fastest ? 'f' : '') + (p.dbl ? 'd' : '') + (p.sk ? 's' : '');   // samo za prikaz: odakle je bonus
       const before = p.fstep;
       p.fu = Math.min(TOP, p.fu + g); p.ug = g;
       p.fstep = stepOf(p.fu).s; p.mv = p.fstep - before;
@@ -2615,7 +2616,7 @@ function createGame(o) {
       if (ph === 'sortReveal' || ph === 'linkReveal' || ph === 'orderReveal' || ph === 'hiloReveal' || ph === 'blitzReveal') { e.g = p.gained; e.k = p.cnt; }
       if (ph === 'blitzReveal') e.x = p.bad;
       if (ph === 'majReveal') { e.mv = p.mjV; e.g = p.gained; }
-      if (G.inFinale) { e.st = p.fstep; const so = stepOf(p.fu || 0); e.fu = p.fu || 0; e.fp = so.p; e.fr = so.r; if ((p.fu || 0) >= pyrTop() && p.fstep < cfg.steps) e.top = 1; if (ph === 'fr') { e.ug = p.ug; if (p.sk) e.sk = 1; if (p.cf) e.cf = p.cf; } if (ph === 'fstart') e.fsc = p.fsc; }
+      if (G.inFinale) { e.st = p.fstep; const so = stepOf(p.fu || 0); e.fu = p.fu || 0; e.fp = so.p; e.fr = so.r; if ((p.fu || 0) >= pyrTop() && p.fstep < cfg.steps) e.top = 1; if (ph === 'fr') { e.ug = p.ug; if (p.fb) e.fb = p.fb; if (p.sk) e.sk = 1; if (p.cf) e.cf = p.cf; } if (ph === 'fstart') e.fsc = p.fsc; }
       if (ph === 'bet') { e.bm = p.betMul; if (p.done) e.bt = p.bet; }
       if ((ph === 'power' || ph === 'cast' || ph === 'question') && p.bet > 0) e.bt = p.bet;
       if (ph === 'reveal' && p.betRes) e.br = p.betRes;
