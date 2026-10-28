@@ -30,12 +30,13 @@ sw = """
 html = ('<!doctype html>\n<html lang="hr">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
         '<meta name="theme-color" content="#0a1433">\n'
+        '<meta name="color-scheme" content="dark only">\n'
         '<meta name="description" content="Party kviz za TV i mobitele: likovi, moći, izazovi i utrka do vrha piramide.">\n'
         '<link rel="manifest" href="manifest.webmanifest">\n'
         '<link rel="icon" href="icon.svg" type="image/svg+xml">\n'
         '<link rel="apple-touch-icon" href="icon-192.png">\n'
         + head_part.rstrip() + '\n</head>\n<body>\n' + rest.rstrip() + '\n' + sw + '</body>\n</html>\n')
-VERSION = 'v44'
+VERSION = 'v45'
 html = html.replace('MOZGALICA', '<span class="lt">Trivia</span><span class="lt">Tavern</span>').replace('<title>Mozgalica</title>', '<title>Trivia Tavern</title>')
 assert html.count('__VER__') == 1
 html = html.replace('__VER__', VERSION)

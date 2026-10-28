@@ -2,10 +2,11 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-Zl3tgS/eaxYVVpmxE8tHVTySUQ/d7DDtIubeYm/F9Uo=' 'sha256-I+TVg4yhrlsOOpfGfRumuWYNeGE1WwK1MsN3NkERkCk=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-Zl3tgS/eaxYVVpmxE8tHVTySUQ/d7DDtIubeYm/F9Uo=' 'sha256-Al6xDhirKb41WRIYybmSSGGfc+Z3RFARvlyCmPHNsHI=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
+<meta name="color-scheme" content="dark only">
 <meta name="description" content="Party kviz za TV i mobitele: likovi, moći, izazovi i utrka do vrha piramide.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -2287,13 +2288,13 @@
   .door-btns { position: relative; }
   .pp-coin { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 8; width: 64px; height: 64px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; font-size: 0; color: transparent;
     -webkit-appearance: none; appearance: none; opacity: 1; -webkit-tap-highlight-color: transparent;
-    background: url("ui/pp-medal.webp") center / contain no-repeat; filter: brightness(1.12) saturate(1.2) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 8px rgba(255, 214, 120, 0.85));
+    background: url("ui/pp-medal.webp") center / contain no-repeat; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 6px rgba(255, 214, 120, 0.55));
     animation: ppBob 2.2s ease-in-out infinite; }
   /* zlatni oreol iza medaljona: jasno daje do znanja da se može dodirnuti */
   .pp-coin::before { content: ""; position: absolute; inset: -9px; z-index: -1; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(circle, rgba(255, 226, 150, 0.75) 0%, rgba(240, 190, 90, 0.4) 45%, rgba(240, 190, 90, 0) 70%); animation: ppHalo 1.6s ease-in-out infinite alternate; }
+    background: radial-gradient(circle, rgba(255, 226, 150, 0.4) 0%, rgba(240, 190, 90, 0.2) 45%, rgba(240, 190, 90, 0) 70%); animation: ppHalo 1.6s ease-in-out infinite alternate; }
   .pp-coin:active { transform: translate(-50%, -50%) scale(0.94); }
-  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); filter: brightness(1.25) saturate(1.25) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 16px rgba(255, 230, 160, 1)); }
+  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); filter: brightness(1.1) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 16px rgba(255, 230, 160, 1)); }
   .pp-coin.on::before { inset: -14px; animation: none; opacity: 1; background: radial-gradient(circle, rgba(255, 240, 190, 0.95) 0%, rgba(255, 205, 110, 0.55) 45%, rgba(255, 205, 110, 0) 72%); }
   @keyframes ppBob { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.07); } }
   @keyframes ppHalo { from { opacity: 0.55; } to { opacity: 1; } }
@@ -6724,7 +6725,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v44</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v45</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
