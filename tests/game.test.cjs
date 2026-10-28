@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const html = fs.readFileSync(require('node:path').join(__dirname, '..', 'index.html'), 'utf8');
-const engine = html.split('//#engine-start')[1].split('//#engine-end')[0];
+const engine = fs.readFileSync(require('node:path').join(__dirname, '..', 'engine.js'), 'utf8');
 const context = vm.createContext({ setTimeout, clearTimeout, console });
 vm.runInContext(engine + '\nthis.createGame = createGame;', context);
 
