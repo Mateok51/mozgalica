@@ -2775,3 +2775,16 @@ s = rep(s, "  function avSvg(i, mood) {", "  const PRE_AV = new Set(), PRE_AV_IM
 s = rep(s, "'<div class=\"p-sub\">Moći lete po pozornici…</div>'", "'<div class=\"p-sub\">' + (d.ev && d.ev.length ? 'Moći lete po pozornici…' : 'Svi su odabrali!') + '</div>'")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Power pick stalno mjesto, poze unaprijed OK')
+
+# ---- Spoji parove 2: povlačenje konopa, drvene pločice, jače boje parova ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+_a = "  function drawLinks() {"; _e = "  function lnkHtml(d, pairs, key, sent, extra) {"
+_i = s.index(_a); _j = s.index(_e, _i); s = s[:_i] + s[_j:]
+_a = "  function bindLink(d, me) {"; _e = "  function finalePhone(d, me) {"
+_i = s.index(_a); _j = s.index(_e, _i); s = s[:_i] + open(SP + '/v4/lnk2.js', encoding='utf-8').read() + s[_j:]
+s = rep(s, "const LNK_COL = ['#b5713a', '#5f8a8b', '#8a6aa8', '#c49a3c', '#5a7aa8', '#9a6a6a', '#7a8a5a', '#a07a9a'];",
+           "const LNK_COL = ['#e0563c', '#3f93dc', '#e8b532', '#45b35e', '#a866d8', '#e47ab4', '#3fc4c4', '#e08a3c'];")
+s = rep(s, "'Odaberi pojam s lijeve strane, zatim njegov par.'", "'Povuci konop od pojma do njegova para (ili dodirni oba).'")
+_i = s.index('</style>'); s = s[:_i] + open(SP + '/v4/lnk2.css', encoding='utf-8').read() + s[_i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Spoji parove 2 OK')

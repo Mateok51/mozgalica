@@ -1,0 +1,23 @@
+  /* SPOJI PAROVE 2: drvene pločice s alkom, konop u boji para, povlačenje prstom */
+  .lnk-board { grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr); row-gap: 10px; touch-action: none; -webkit-user-select: none; user-select: none; }
+  .lnk-card { min-height: 54px; padding: 8px 12px; border: 0; border-radius: 10px; font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; line-height: 1.2; text-align: center; color: #fff3d6;
+    background: var(--woodgrain, none), linear-gradient(180deg, #8a5a2c, #5e3a1a 55%, #3e250f); box-shadow: inset 0 0 0 2px #2a1608, inset 0 2px 0 rgba(255, 220, 160, 0.25), 0 3px 0 #1e1006, 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); transition: transform 0.12s, box-shadow 0.15s, filter 0.15s; }
+  /* alka na unutarnjem rubu: odavde se vuče konop */
+  .lnk-card::before { content: ""; position: absolute; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff1b8, #d6a24a 55%, #7a4f17); box-shadow: 0 0 0 2px #2a1608, 0 1px 2px rgba(0, 0, 0, 0.6); z-index: 3; }
+  .lnk-l::before { right: -8px; } .lnk-r::before { left: -8px; }
+  .lnk-card.paired { box-shadow: inset 0 0 0 2px var(--pc), inset 0 0 14px color-mix(in srgb, var(--pc) 45%, transparent), 0 3px 0 #1e1006, 0 4px 8px rgba(0, 0, 0, 0.4); }
+  .lnk-card.paired::before { background: var(--pc); }
+  .lnk-card.paired::after { display: none; }
+  .lnk-card.sel, .lnk-card.drag { transform: scale(1.03); box-shadow: inset 0 0 0 2px #ffe08a, 0 0 0 2px #f0c66e, 0 0 16px rgba(255, 214, 120, 0.75), 0 3px 0 #1e1006; }
+  .lnk-card.sel::before, .lnk-card.drag::before { animation: lnkKnot 0.8s ease-in-out infinite alternate; }
+  .lnk-card.hov { transform: scale(1.05); box-shadow: inset 0 0 0 2px #fff3c2, 0 0 0 3px #f0c66e, 0 0 22px rgba(255, 226, 150, 0.9), 0 3px 0 #1e1006; }
+  .lnk-board.dragging .lnk-card:not(.drag):not(.hov) { filter: brightness(0.85); }
+  @keyframes lnkKnot { from { transform: scale(1); } to { transform: scale(1.35); box-shadow: 0 0 0 2px #2a1608, 0 0 10px #ffd36a; } }
+  .lnk-card.ok { box-shadow: inset 0 0 0 2px #6fd36a, 0 0 12px rgba(110, 210, 110, 0.6), 0 3px 0 #1e1006; }
+  .lnk-card.bad { box-shadow: inset 0 0 0 2px #e05a44, 0 0 12px rgba(224, 90, 68, 0.6), 0 3px 0 #1e1006; filter: saturate(0.8); }
+  .lnk-board svg .rope.live { filter: drop-shadow(0 0 6px rgba(255, 214, 120, 0.8)); }
+  .lnk-board svg .rope:not(.live) { animation: ropeIn 0.25s ease-out both; }
+  @keyframes ropeIn { from { opacity: 0; } }
+  .tv .lnk-card { font-size: clamp(1rem, 1.5vw, 1.5rem); min-height: clamp(54px, 7vh, 84px); }
+  @media (prefers-reduced-motion: reduce) { .lnk-card.sel::before, .lnk-card.drag::before, .lnk-board svg .rope { animation: none; } }

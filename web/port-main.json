@@ -236,10 +236,6 @@
 "        const scale = pointerScale();\n        dx = (e.clientX - x0) / scale; dy = (e.clientY - y0) / scale;"
 ],
 [
-"      const br = b.getBoundingClientRect(); let p = '';",
-"      const br = b.getBoundingClientRect(); let p = '';\n      svg.setAttribute('viewBox', '0 0 ' + Math.max(1, br.width) + ' ' + Math.max(1, br.height));\n      svg.setAttribute('preserveAspectRatio', 'none');"
-],
-[
 "    bind('leave2', reset);",
 "    bind('leave2', reset);\n    bind('lobAvatar', () => lobbyChange('lobAvatar', () => { L.lobPanel = L.lobPanel === 'avatar' ? null : 'avatar'; phoneRender(true); }, '.av-grid'));\n    bind('lobSettings', () => lobbyChange('lobSettings', () => { L.lobPanel = L.lobPanel === 'settings' ? null : 'settings'; phoneRender(true); }, '.lob-settings'));"
 ],
