@@ -662,3 +662,14 @@ rep("      if (sfOn() && p.betray && sfBusy(p)) o.k.btl = 1;   // zaključana pr
     "      if ((G.btq || []).some((q) => q.pact === k.id && ((q.a && k.a === p.pid) || (q.b && k.b === p.pid)))) { delete o.k.cb; o.k.bt = 0; o.k.btl = 1; }")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR izdaja zaključana OK')
+
+# ---------- Tajni događaj: poslije se svima otkrije tko je što smjerao (i kad je plan propao) ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("    if (!se || !se.x) { G.se = null; return; }", "    if (!se) return;\n    if (!se.x) { G.sxDone = Object.assign({}, se, { none: 1 }); G.se = null; return; }")
+rep("v.sxr = { k: x.k, p: x.p, x: x.x, ok: x.ok, res: x.res ? 1 : 0 };", "v.sxr = { k: x.k, p: x.p, x: x.x, ok: x.ok, res: x.res ? 1 : 0, none: x.none ? 1 : 0 };")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR tajni događaj otkrivanje OK')
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("    if (!se || !se.x) { G.se = null; return startPower(); }", "    if (!se || !se.x) { if (se) se.none = 1; else G.se = null; return startPower(); }   // neiskorišten plan otkriva se na ploči")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR neiskorišten tajni plan OK')

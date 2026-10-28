@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <title>Trivia Tavern</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Titan+One&family=Nunito:wght@600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Nunito:wght@600;800;900&display=swap">
 <style>
   /* Smjer: večernja TV emisija. Tamna pozornica s reflektorima i zlatnom piramidom u pozadini,
      staklene ploče, sjajne "slatkiš" pločice odgovora, likovi s 3D sjenčanjem.
@@ -2418,6 +2418,9 @@
   @keyframes ropeIn { from { opacity: 0; } }
   .tv .lnk-card { font-size: clamp(1rem, 1.5vw, 1.5rem); min-height: clamp(54px, 7vh, 84px); }
   @media (prefers-reduced-motion: reduce) { .lnk-card.sel::before, .lnk-card.drag::before, .lnk-board svg .rope { animation: none; } }
+  .rv-sxp { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.85rem; color: #f3e3c4; padding: 4px 10px; border-radius: 10px; background: rgba(30, 15, 6, 0.6); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.45); }
+  .rv-sxp span { color: #f0c66e; } .rv-sxp b { color: #b8e08e; }
+  html:root { --font-display: "Cinzel", "Trajan Pro", Georgia, "Times New Roman", serif; }
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
@@ -4151,7 +4154,7 @@ function createGame(o) {
   }
   function afterSecret() {
     const se = G.se;
-    if (!se || !se.x) { G.se = null; return startPower(); }
+    if (!se || !se.x) { if (se) se.none = 1; else G.se = null; return startPower(); }   // neiskorišten plan otkriva se na ploči
     if (se.k === 'help') {
       setPhase('secret2', cfg.secret2);
       for (const p of list()) if (p.pid !== se.x) p.done = true;
@@ -4165,7 +4168,8 @@ function createGame(o) {
     G.sx = null;
     for (const p of list()) p.xb = 0;
     const se = G.se;
-    if (!se || !se.x) { G.se = null; return; }
+    if (!se) return;
+    if (!se.x) { G.sxDone = Object.assign({}, se, { none: 1 }); G.se = null; return; }
     const A = R.get(se.p), X = R.get(se.x);
     if (A && X && se.k === 'target') {
       se.res = X.ans !== G.q.a ? 1 : 0;
@@ -5118,7 +5122,7 @@ function createGame(o) {
     if (ph === 'duel' || ph === 'duelResult') { v.q = { c: G.q.c, t: G.q.t, o: G.q.o, n: 0 }; if (ph === 'duelResult') v.cor = G.q.a; }
     // tajni događaj: javno se zna samo da "netko nešto planira"; tko je odabran zna samo njegov mobitel (p/x), izbor se ne šalje
     if ((ph === 'secret' || ph === 'secret2') && G.se) v.se = { k: G.se.k, p: ph === 'secret' ? G.se.p : null, x: ph === 'secret2' ? G.se.x : null, by: ph === 'secret2' ? G.se.p : null, bonus: G.se.k === 'help' ? cfg.helpBonus : cfg.secretBonus };
-    if (ph === 'reveal' && G.sxDone) { const x = G.sxDone; v.sxr = { k: x.k, p: x.p, x: x.x, ok: x.ok, res: x.res ? 1 : 0 }; }
+    if (ph === 'reveal' && G.sxDone) { const x = G.sxDone; v.sxr = { k: x.k, p: x.p, x: x.x, ok: x.ok, res: x.res ? 1 : 0, none: x.none ? 1 : 0 }; }
     return v;
   }
 
@@ -7961,8 +7965,18 @@ function createRecoverableGame(options, saved) {
     }
     return secretWait();
   }
+  // javno otkrivanje tajnog plana (za sve osim sudionika, koji vide svoj redak)
+  function secretPublicLine(d, me) {
+    const x = d.sxr; if (!x) return '';
+    if (me && !x.none && (x.p === me.id || (x.k === 'help' && x.ok && x.x === me.id))) return '';
+    const A = esc(nameOf(d, x.p)), X = x.x ? esc(nameOf(d, x.x)) : '';
+    const t = x.none ? A + ' · tajni plan ostao je neiskorišten'
+      : x.k === 'target' ? A + ' → ' + X + ' · tajna meta ' + (x.res ? '<b>pogođena</b>' : 'odgovara točno, bez bonusa')
+      : !x.ok ? A + ' → ' + X + ' · tajni savez je odbijen' : A + ' i ' + X + ' · tajni savez ' + (x.res ? '<b>uspio</b>' : 'bez bonusa');
+    return '<div class="rv-sxp">🕵️ <span>Krčma otkriva:</span> ' + t + '</div>';
+  }
   function secretRevealLine(d, me) {
-    const x = d.sxr; if (!x || !me) return '';
+    const x = d.sxr; if (!x || !me || x.none) return '';
     if (x.k === 'target' && x.p === me.id) return '<div class="rv-sx' + (x.res ? '' : ' none') + '">' + (x.res ? 'Tajna meta je pogriješila: +' + (me.xb || 0) : 'Tajna meta je odgovorila točno · bez bonusa') + '</div>';
     if (x.k === 'help' && (x.p === me.id || x.x === me.id) && x.ok) return '<div class="rv-sx' + (x.res ? '' : ' none') + '">' + (x.res ? 'Tajni savez: +' + (me.xb || 0) : 'Tajni savez · ovaj put bez bonusa') + '</div>';
     return '';
@@ -8273,7 +8287,7 @@ function createRecoverableGame(options, saved) {
     const wh = wheel(d);
     return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
-      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
+      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + secretPublicLine(d, me) + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }

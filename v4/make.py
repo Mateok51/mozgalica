@@ -2797,3 +2797,31 @@ s = rep(s, "        else h += '<button class=\"sf-link sf-btask\" data-sfbt=\"1\
 s = rep(s, "'<div class=\"sf-bt on\">🗡️ Izdaja zaključana</div>'", "'<div class=\"sf-bt on\">🗡️ Izdaja je zaključana · otkriva se odmah nakon ove ploče</div>'")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Izdaja zaključana prikaz OK')
+
+# ---- Tajni događaj: na ploči svi vide tko je što smjerao ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "  function secretRevealLine(d, me) {\n    const x = d.sxr; if (!x || !me) return '';",
+           """  // javno otkrivanje tajnog plana (za sve osim sudionika, koji vide svoj redak)
+  function secretPublicLine(d, me) {
+    const x = d.sxr; if (!x) return '';
+    if (me && !x.none && (x.p === me.id || (x.k === 'help' && x.ok && x.x === me.id))) return '';
+    const A = esc(nameOf(d, x.p)), X = x.x ? esc(nameOf(d, x.x)) : '';
+    const t = x.none ? A + ' · tajni plan ostao je neiskorišten'
+      : x.k === 'target' ? A + ' → ' + X + ' · tajna meta ' + (x.res ? '<b>pogođena</b>' : 'odgovara točno, bez bonusa')
+      : !x.ok ? A + ' → ' + X + ' · tajni savez je odbijen' : A + ' i ' + X + ' · tajni savez ' + (x.res ? '<b>uspio</b>' : 'bez bonusa');
+    return '<div class="rv-sxp">🕵️ <span>Krčma otkriva:</span> ' + t + '</div>';
+  }
+  function secretRevealLine(d, me) {
+    const x = d.sxr; if (!x || !me || x.none) return '';""")
+s = rep(s, "<div class=\"rv-b\"><div class=\"rv-sum\">' + sum + '</div>' + b.html", "<div class=\"rv-b\"><div class=\"rv-sum\">' + sum + '</div>' + secretPublicLine(d, me) + b.html")
+_i = s.index('</style>'); s = s[:_i] + "  .rv-sxp { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.85rem; color: #f3e3c4; padding: 4px 10px; border-radius: 10px; background: rgba(30, 15, 6, 0.6); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.45); }\n  .rv-sxp span { color: #f0c66e; } .rv-sxp b { color: #b8e08e; }\n" + s[_i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Tajni događaj javni redak OK')
+
+# ---- Font naslova i gumba: Cinzel (fantasy, podržava č ć đ š ž); učitava se samo jedna debljina (800) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "family=Fredoka:wght@500;600;700&family=Titan+One&family=Nunito:wght@600;800;900&display=swap",
+           "family=Cinzel:wght@800&family=Nunito:wght@600;800;900&display=swap")
+_i = s.index('</style>'); s = s[:_i] + "  html:root { --font-display: \"Cinzel\", \"Trajan Pro\", Georgia, \"Times New Roman\", serif; }\n" + s[_i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Font Cinzel OK')

@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-cFML5Xa1USSpgMSHapQAE3WQiGEUZoryVEbfgBA5rOE=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-FZq0C2aMsCHZKcyQpmCnhzx3GwkrQpKMjTQFK9CFCvA=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -12,7 +12,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Trivia Tavern</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Titan+One&family=Nunito:wght@600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Nunito:wght@600;800;900&display=swap">
 <style>
   /* Smjer: večernja TV emisija. Tamna pozornica s reflektorima i zlatnom piramidom u pozadini,
      staklene ploče, sjajne "slatkiš" pločice odgovora, likovi s 3D sjenčanjem.
@@ -2487,6 +2487,9 @@
   @keyframes ropeIn { from { opacity: 0; } }
   .tv .lnk-card { font-size: clamp(1rem, 1.5vw, 1.5rem); min-height: clamp(54px, 7vh, 84px); }
   @media (prefers-reduced-motion: reduce) { .lnk-card.sel::before, .lnk-card.drag::before, .lnk-board svg .rope { animation: none; } }
+  .rv-sxp { text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.85rem; color: #f3e3c4; padding: 4px 10px; border-radius: 10px; background: rgba(30, 15, 6, 0.6); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.45); }
+  .rv-sxp span { color: #f0c66e; } .rv-sxp b { color: #b8e08e; }
+  html:root { --font-display: "Cinzel", "Trajan Pro", Georgia, "Times New Roman", serif; }
 
   /* isti logo na početnom ekranu i ekranima za pokretanje / ulazak u igru (mobitel) */
   .phone .logo:has(.lt), .center .logo:has(.lt) { width: min(78vw, 32vh, 400px); margin: 0 auto 0.8em; }
@@ -5808,8 +5811,18 @@
     }
     return secretWait();
   }
+  // javno otkrivanje tajnog plana (za sve osim sudionika, koji vide svoj redak)
+  function secretPublicLine(d, me) {
+    const x = d.sxr; if (!x) return '';
+    if (me && !x.none && (x.p === me.id || (x.k === 'help' && x.ok && x.x === me.id))) return '';
+    const A = esc(nameOf(d, x.p)), X = x.x ? esc(nameOf(d, x.x)) : '';
+    const t = x.none ? A + ' · tajni plan ostao je neiskorišten'
+      : x.k === 'target' ? A + ' → ' + X + ' · tajna meta ' + (x.res ? '<b>pogođena</b>' : 'odgovara točno, bez bonusa')
+      : !x.ok ? A + ' → ' + X + ' · tajni savez je odbijen' : A + ' i ' + X + ' · tajni savez ' + (x.res ? '<b>uspio</b>' : 'bez bonusa');
+    return '<div class="rv-sxp">🕵️ <span>Krčma otkriva:</span> ' + t + '</div>';
+  }
   function secretRevealLine(d, me) {
-    const x = d.sxr; if (!x || !me) return '';
+    const x = d.sxr; if (!x || !me || x.none) return '';
     if (x.k === 'target' && x.p === me.id) return '<div class="rv-sx' + (x.res ? '' : ' none') + '">' + (x.res ? 'Tajna meta je pogriješila: +' + (me.xb || 0) : 'Tajna meta je odgovorila točno · bez bonusa') + '</div>';
     if (x.k === 'help' && (x.p === me.id || x.x === me.id) && x.ok) return '<div class="rv-sx' + (x.res ? '' : ' none') + '">' + (x.res ? 'Tajni savez: +' + (me.xb || 0) : 'Tajni savez · ovaj put bez bonusa') + '</div>';
     return '';
@@ -6159,7 +6172,7 @@
     const wh = wheel(d);
     return '<div class="timer spent" aria-hidden="true"><div style="width:0"></div></div><div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span aria-hidden="true">0</span></div><style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
-      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
+      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + secretPublicLine(d, me) + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
