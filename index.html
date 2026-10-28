@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-AIaX81dvNCsyAJ46kdFIGEpnJEX3hgg9hUrjRrVKtCE=' 'sha256-2SF8OcIhp+FA+eOFOFIYgjAIEovUCVrNi+GNVn2G6wk=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-52THn7SUoMf+SRAwmnovJ78ULPxQk1w88AmN2bqY0yk=' 'sha256-x/IU/zwwgVZwMf8A7ZsUnpSlCxC1imRDs0ZVsNPsvQ4=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2386,14 +2386,41 @@
   .pyramid .here:has(.climber + .climber) .climber:not(.me) .pbar b { display: none; }
   /* rezultat piramide na mobitelu bez TV-a: veća piramida da se napredak jasno vidi */
   .phone-pyr.big .pyramid { --H: clamp(32px, 6.4vh, 58px); }
+  /* Igra i zvuk zauzimaju odvojene dijelove istog zaslona. */
+  html:has(#app.phone), body:has(#app.phone) { height: 100%; overflow: hidden; }
+  #app.phone { height: auto; max-height: none; min-height: 0; padding-bottom: 8px; }
+  #app.phone > * { flex-shrink: 0; }
+  #app.phone.lobfit { min-height: 0; }
+  #app.tv { height: auto; max-height: none; min-height: 0; }
+  .audio-controls { display: contents; }
+  #app.phone + .audio-controls { position: fixed; bottom: max(8px, env(safe-area-inset-bottom, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); display: flex; gap: 8px; z-index: 60; }
+  #app.phone + .audio-controls #mute, #app.phone + .audio-controls #music { position: relative; inset: auto; width: 44px; height: 44px; flex: 0 0 44px; }
+  @media (max-height: 650px) {
+    .phone { gap: 8px; }
+    .phone .p-opt { min-height: 44px; padding-top: 4px; padding-bottom: 4px; }
+    .phone .p-q { margin-block: 0; }
+  }
+  /* Dodirne površine ostaju dostupne i na niskim zaslonima. */
+  .phone .bstep { width: 44px; height: 44px; flex: 0 0 44px; }
+  .phone .tgl, .phone .home-link, .phone .demo-bar .btn.ghost { min-height: 44px; }
+  .phone .lob-opt-l { min-width: 0; overflow-wrap: anywhere; }
+  .phone .p-opt .otxt { overflow-wrap: anywhere; }
+  @media (max-width: 360px) {
+    .phone .lob-opt { flex-wrap: wrap; }
+    .phone .lob-opt-l { flex: 1 1 100%; }
+    .phone .lob-opt .tgl { margin-left: auto; }
+  }
+
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
 </head>
 <body>
 <div id="app" class="screen center"></div>
+<div class="audio-controls" role="group" aria-label="Postavke zvuka">
 <button id="mute" type="button" aria-label="Isključi zvuk"></button>
 <button id="music" type="button" aria-label="Isključi glazbu"></button>
+</div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3c2"/><stop offset="1" stop-color="#ff9d2e"/></linearGradient></defs></svg>
 
 <script src="vendor/qrcode.js"></script>
@@ -2545,6 +2572,9 @@ function rankBy(players, key) {
 }
 
 function createGame(o) {
+  const Math = Object.create(globalThis.Math);
+  if (o.random) Math.random = o.random;
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const cfg = Object.assign({}, CFG, o.cfg || {});
   cfg.steps = cfg.pyrReq.length + 1;   // zadnji red piramide je kruna (pobjeda)
   const F = Object.assign({}, FLAGS, o.flags || {});
@@ -2579,8 +2609,8 @@ function createGame(o) {
   const pick = (a) => a[rnd(a.length)];
   const list = () => [...R.values()];
   const active = () => list().filter((p) => p.on);
-  const later = (fn, ms) => { timers.push(setTimeout(fn, ms)); };
-  const clear = () => { timers.forEach(clearTimeout); timers = []; };
+  const later = (fn, ms) => { timers.push((o.schedule || setTimeout)(fn, ms)); };
+  const clear = () => { timers.forEach(o.cancel || clearTimeout); timers = []; };
   const isInt = (n) => Number.isInteger(n);
   const tkHold = (p) => !!(G.tk && G.tk.cur && G.tk.cur.st === 'OFFERED' && G.tk.cur.f === p.pid && G.ph === 'vote');
   const allDone = () => { const a = active(); return a.length > 0 && !(G.ph === 'vote' && G.ppHeld) && a.every((p) => p.done && !tkHold(p)); };
@@ -4876,7 +4906,6 @@ function createGame(o) {
     const p = R.get(pid);
     if (!p || p.bot || (!pactsOn() && !rcOn())) return null;
     if (!pactsOn()) return Object.assign({ can: false, used: false, inv: [], out: null, note: p.note }, sfOn() ? { sf: 1, dl: G.ph === 'deal' ? 1 : 0 } : {}, rcPriv(p));
-    cleanOffers();
     const k = pactOf(p), mate = partnerOf(p);
     const o = {
       can: pactWindow() && pactFree(p) && p.offersMade < cfg.pactOffersMax,
@@ -4900,7 +4929,6 @@ function createGame(o) {
   }
   function rcPriv(p) {
     if (!rcOn()) return {};
-    rcClean();
     const r = { st: cfg.rcStake };
     if (rcCanSend(p)) {
       r.can = 1;
@@ -5090,8 +5118,53 @@ function createGame(o) {
 
   // samo za testove
   function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
-  return { _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
+  return { refresh: () => { cleanOffers(); rcClean(); }, _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
 }
+// Versioned local journal: replay restores closures, timers and seeded random choices.
+function createRecoverableGame(options, saved) {
+  if (saved && (saved.version !== 1 || !Number.isInteger(saved.seed) || !Number.isFinite(saved.created) || !Number.isFinite(saved.time) || saved.time < saved.created || !Array.isArray(saved.events) || saved.events.length > 100000)) throw new Error('Neispravan zapis partije');
+  const seed = saved ? saved.seed : crypto.getRandomValues(new Uint32Array(1))[0];
+  let randomState = seed, replaying = !!saved, logical = saved ? saved.created : Date.now();
+  let offset = Date.now() - logical, seq = 0, engine;
+  const pending = new Map(), events = saved ? saved.events.slice() : [];
+  const created = logical;
+  const random = () => { randomState = (Math.imul(randomState, 1664525) + 1013904223) >>> 0; return randomState / 4294967296; };
+  const time = () => replaying ? logical : Date.now() - offset;
+  const checkpoint = () => { if (!replaying && options.onCheckpoint) options.onCheckpoint({ version: 1, seed, created, time: time(), events }); };
+  const arm = (id, task) => { task.handle = setTimeout(() => {
+    if (!pending.has(id)) return;
+    pending.delete(id); logical = time(); events.push({ timer: id, at: logical });
+    task.fn(); checkpoint();
+  }, Math.max(0, task.at - time())); };
+  const schedule = (fn, ms) => { const id = ++seq, task = { fn, at: time() + Math.max(0, ms), handle: null }; pending.set(id, task); if (!replaying) arm(id, task); return id; };
+  const cancel = (id) => { const task = pending.get(id); if (task) clearTimeout(task.handle); pending.delete(id); };
+  engine = createGame(Object.assign({}, options, { random, now: time, schedule, cancel, onChange: () => { if (!replaying && options.onChange) options.onChange(); } }));
+  const calls = ['refresh', 'addPlayer', 'addBot', 'setBots', 'setAvatar', 'setInput', 'syncPeers', 'start', 'skip', 'restart', 'setOpt', 'pactAction', 'sfScenario'];
+  if (saved) {
+    for (const event of events) {
+      if (!Number.isFinite(event.at) || event.at < logical || event.at > saved.time) throw new Error('Neispravno vrijeme zapisa');
+      logical = event.at;
+      if (event.timer !== undefined) {
+        const task = pending.get(event.timer); if (!task) throw new Error('Nepodudaranje vremenskih događaja');
+        pending.delete(event.timer); task.fn();
+      } else {
+        if (!calls.includes(event.method) || !Array.isArray(event.args)) throw new Error('Neispravna radnja');
+        engine[event.method](...event.args);
+      }
+    }
+    logical = saved.time; offset = Date.now() - logical; replaying = false;
+    for (const [id, task] of pending) arm(id, task);
+  }
+  const api = Object.assign({}, engine);
+  for (const method of calls) api[method] = (...args) => {
+    const copy = JSON.parse(JSON.stringify(args));
+    events.push({ method, args: copy, at: time() });
+    const result = engine[method](...args); checkpoint(); return result;
+  };
+  api.checkpoint = () => ({ version: 1, seed, created, time: time(), events: JSON.parse(JSON.stringify(events)) });
+  return api;
+}
+
 //#engine-end
 
 </script>
@@ -5795,7 +5868,7 @@ function createGame(o) {
     { urls: ['turn:eu-0.turn.peerjs.com:3478', 'turn:us-0.turn.peerjs.com:3478'], username: 'peerjs', credential: 'peerjsp' },
     { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp', 'turns:openrelay.metered.ca:443'], username: 'openrelayproject', credential: 'openrelayproject' },
   ], sdpSemantics: 'unified-plan' } };
-  let hostWatch = null;
+  let hostWatch = null, hostRetryTimer = null;
   const hasPeer = () => typeof Peer === 'function';
   const appUrl = () => location.origin + location.pathname;
   let mode = 'home';            // home | join | player | host | demo
@@ -5804,7 +5877,7 @@ function createGame(o) {
   const hostConns = new Map();
   let joinTries = 0, relayTimer = null;
   let ppeer = null, pconn = null, waitTimer = null, retryTimer = null, perr = '', pcode = '', pname = '', netNote = '';
-  let S = null, lastSig = '';
+  let S = null, lastSig = '', lastStateAt = 0;
   let L = freshLocal(-1);
   let clockEnds = 0, clockDur = 0;
   let installEvt = null;
@@ -5812,11 +5885,12 @@ function createGame(o) {
 
   let PID = store.get('mz_pid');
   if (!PID) { PID = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('mz_pid', PID); }
-  let SK = store.get('mz_sk');
+  // Novi ključ: prethodni je mogao biti izložen preko javnog MQTT-a.
+  let SK = store.get('mz_sk_v2');
   if (!SK || !/^[0-9a-f]{32}$/.test(SK)) {
     const a = new Uint8Array(16);
     try { crypto.getRandomValues(a); } catch (e) { for (let i = 0; i < 16; i++) a[i] = Math.floor(Math.random() * 256); }
-    SK = Array.from(a, (b) => b.toString(16).padStart(2, '0')).join(''); store.set('mz_sk', SK);
+    SK = Array.from(a, (b) => b.toString(16).padStart(2, '0')).join(''); store.set('mz_sk_v2', SK);
   }
   const hostKeys = new Map();   // domaćin: pid → ključ (prvi koji se javio s tim pid-om)
   const okKey = (k) => typeof k === 'string' && /^[0-9a-f]{32}$/.test(k);
@@ -5850,13 +5924,14 @@ function createGame(o) {
     } catch (e) {}
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'player' || mode === 'demo')) keepAwake();
+    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'hostp' || mode === 'player' || mode === 'demo')) keepAwake();
   });
 
   // ---------- navigacija ----------
   function reset() {
+    try { sessionStorage.removeItem('mz_recovery_v1'); } catch (e) {}
     if (game) game.stop();
-    clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;
+    clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(hostRetryTimer); clearTimeout(relayTimer); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;
     for (const c of hostConns.keys()) { try { c.close(); } catch (e) {} }
     hostConns.clear();
     if (hostPeer) { try { hostPeer.destroy(); } catch (e) {} }
@@ -5871,6 +5946,8 @@ function createGame(o) {
   }
 
   // ---------- rezervni put: poruke preko javnog MQTT posrednika (WebSocket, port 443/8084...) ----------
+  // Javni MQTT nije autentificiran i izlaže ključ igrača. Ostaje isključen dok se ne uvede siguran relej.
+  const RELAY_ENABLED = false;
   // Kad su oba uređaja na mobilnim podacima (CGNAT), izravna WebRTC veza često ne uspije. Tada se
   // stanje igre i unosi šalju preko MQTT teme sobe. Minimalni MQTT 3.1.1 klijent, QoS 0.
   const RELAY_URLS = window.__MQTT_URLS || ['wss://broker.emqx.io:8084/mqtt', 'wss://broker.hivemq.com:8884/mqtt', 'wss://test.mosquitto.org:8081/mqtt'];
@@ -5931,6 +6008,7 @@ function createGame(o) {
     };
   }
   function relayReachable() {
+    if (!RELAY_ENABLED) return Promise.resolve(false);
     return new Promise((res) => {
       let left = RELAY_URLS.length, done = false;
       RELAY_URLS.forEach((u) => { const c = mqttClient(u, () => {}, () => {}); c.whenReady(6000).then((ok) => { c.close(); if (done) return; if (ok) { done = true; res(true); } else if (--left === 0) res(false); }); });
@@ -5942,6 +6020,7 @@ function createGame(o) {
   let hostRelays = [], relaySweep = null;
   const relayConns = new Map();   // pid → lažna veza
   function startHostRelay(code) {
+    if (!RELAY_ENABLED) return;
     stopHostRelay();
     hostRelays = RELAY_URLS.map((u) => {
       const c = mqttClient(u, (topic, m) => onRelayHost(c, code, m), () => {});
@@ -5982,6 +6061,7 @@ function createGame(o) {
   // igrač: spoji se na prvi posrednik koji radi i šalji preko njega
   let prelay = null, prelayPing = null, prelayHello = null;
   async function startPlayerRelay() {
+    if (!RELAY_ENABLED) return;
     if (prelay || mode !== 'player') return;
     const code = pcode;
     for (const u of RELAY_URLS) {
@@ -6000,6 +6080,7 @@ function createGame(o) {
       c.subscribe(rTopic(code, 'all')); c.subscribe(rTopic(code, 'p/' + PID + '/' + SK.slice(0, 16)));
       prelay = c;
       if (await c.whenReady(5000)) {
+        if (prelay !== c || mode !== 'player' || pcode !== code || (pconn && pconn.open)) { c.close(); return; }
         const hello = () => c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
         hello(); if (L.sent) c.publish(rTopic(code, 'h'), { t: 'in', pid: PID, sk: SK, in: L.sent });
         clearInterval(prelayHello); prelayHello = setInterval(() => { if (!S) hello(); else clearInterval(prelayHello); }, 2000);
@@ -6043,10 +6124,11 @@ function createGame(o) {
   }
   function publish() {
     if (!game) return;
+    if (game.refresh) game.refresh();
     const v = game.view(), rel = new Set();
     // javno stanje je isto za sve; privatno (paktovi) ide samo vlasniku, nikad svima
     for (const [c, x] of hostConns) {
-      if (!c.open) continue;
+      if (!c.open || !x.pid) continue;
       if (c.relay) { rel.add(c.client); if (x.pid) { try { c.send({ t: 'pv', code: v.code, s: v.s, pv: game.priv(x.pid) }); } catch (e) {} } continue; }
       try { c.send(x.pid ? Object.assign({}, v, { pv: game.priv(x.pid) }) : v); } catch (e) {}
     }
@@ -6060,23 +6142,35 @@ function createGame(o) {
     openHostPeer(0);
   }
   function openHostPeer(tries, opts) {
-    const code = makeCode();
+    const code = opts && opts.recovery ? opts.recovery.code : makeCode();
     const peer = new Peer(PEER_PREFIX + code.toLowerCase(), PEER_OPTS);
     let opened = false;
     peer.on('open', () => {
       if (hostPeer === peer) return; // ponovno spajanje s posrednikom: soba ostaje ista (ranije se tu greškom uništavala)
       if ((mode !== 'host' && mode !== 'hostp') || hostPeer || game) { try { peer.destroy(); } catch (e) {} return; }
       opened = true; hostPeer = peer;
-      openRoom(code, opts);
+      try { openRoom(code, opts); } catch (e) {
+        try { peer.destroy(); } catch (_) {}
+        hostPeer = null; game = null;
+        hostErr = 'Spremljenu partiju nije moguće obnoviti. Vrati se na početni ekran i otvori novu sobu.';
+        if (mode === 'hostp') mode = 'hostform';
+        render(); return;
+      }
       // čuvar: ako veza s posrednikom padne (mobitel u pozadini, promjena mreže), soba je nevidljiva novim igračima → stalno ponovno spajanje
       clearInterval(hostWatch);
       hostWatch = setInterval(() => hostKeepAlive(peer), 3000);
       render();
     });
     peer.on('connection', (conn) => {
+      // Ograniči istodobne veze i ne zadržavaj veze koje ne pošalju prijavu.
+      if (hostConns.size >= 24) { try { conn.close(); } catch (e) {} return; }
       hostConns.set(conn, { pid: null, name: '', av: 0, in: null });
+      const loginTimer = setTimeout(() => {
+        const x = hostConns.get(conn);
+        if (x && !x.pid) { hostConns.delete(conn); try { conn.close(); } catch (e) {} }
+      }, 10000);
       conn.on('data', (m) => onHostData(conn, m));
-      const drop = () => { if (hostConns.delete(conn)) syncConns(); };
+      const drop = () => { clearTimeout(loginTimer); if (hostConns.delete(conn)) syncConns(); };
       conn.on('close', drop);
       conn.on('error', drop);
     });
@@ -6085,18 +6179,22 @@ function createGame(o) {
     peer.on('error', (e) => {
       if (opened) { if (hostPeer === peer) setTimeout(() => hostKeepAlive(peer), 1500); return; } // gubitak veze jednog igrača ne ruši sobu
       try { peer.destroy(); } catch (er) {}
-      if (e && e.type === 'unavailable-id' && tries < 5) return openHostPeer(tries + 1, opts);
+      if (e && e.type === 'unavailable-id' && tries < 5) {
+        if (!(opts && opts.recovery)) return openHostPeer(tries + 1, opts);
+        hostRetryTimer = setTimeout(() => { if ((mode === 'host' || mode === 'hostp') && !hostPeer && !game) openHostPeer(tries + 1, opts); }, 1000);
+        return;
+      }
       // posrednik za WebRTC ne radi: otvori sobu samo preko releja ako je neki MQTT posrednik dostupan
       if ((mode === 'host' || mode === 'hostp') && !game) {
         relayReachable().then((ok) => {
-          if (!ok) return fail();
+          if (!ok) return fail(e);
           if ((mode === 'host' || mode === 'hostp') && !game) { openRoom(code, opts); render(); }
         });
         return;
       }
-      fail();
+      fail(e);
     });
-    function fail() {
+    function fail(e) {
       if (mode === 'host' || mode === 'hostp') {
         hostErr = 'Ne mogu otvoriti sobu (' + ((e && e.type) || 'greška') + '). Provjeri internet i pokušaj ponovno.';
         if (mode === 'hostp') mode = 'hostform';
@@ -6104,18 +6202,30 @@ function createGame(o) {
       }
     }
   }
+  function saveRecovery(journal) {
+    if (!game || (mode !== 'host' && mode !== 'hostp')) return;
+    try {
+      if (game.view().ph === 'final') { sessionStorage.removeItem('mz_recovery_v1'); return; }
+      sessionStorage.setItem('mz_recovery_v1', JSON.stringify({ savedAt: Date.now(), code: game.view().code, noTv: mode === 'hostp', keys: [...hostKeys], journal }));
+    } catch (e) { /* Storage may be unavailable or full; the live game continues. */ }
+  }
   function openRoom(code, opts) {
     if (opts && opts.noTv) {
       // domaćin igra s ovog mobitela; ostali se spajaju kao i inače
       pcode = code;
       hostKeys.clear(); hostKeys.set(PID, SK);
-      game = createGame({ code, noTv: true, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } });
-      game.addPlayer(PID, opts.me, myAv, false, true);
+      game = createRecoverableGame({ code, noTv: true, onCheckpoint: saveRecovery, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } }, opts.recovery && opts.recovery.journal);
+      if (!opts.recovery) game.addPlayer(PID, opts.me, myAv, false, true);
     } else {
       hostKeys.clear();
-      game = createGame({ code, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } });
+      game = createRecoverableGame({ code, onCheckpoint: saveRecovery, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } }, opts && opts.recovery && opts.recovery.journal);
     }
-    clearInterval(pubTimer); pubTimer = setInterval(publish, 1000);
+    if (opts && opts.recovery) {
+      for (const [pid, key] of opts.recovery.keys) if (typeof pid === 'string' && okKey(key)) hostKeys.set(pid, key);
+      if (opts.noTv) applyState(Object.assign(game.view(), { pv: game.priv(PID) }));
+    }
+    saveRecovery(game.checkpoint());
+    clearInterval(pubTimer); pubTimer = setInterval(() => { publish(); saveRecovery(game.checkpoint()); }, 1000);
     startHostRelay(code);
   }
 
@@ -6211,6 +6321,7 @@ function createGame(o) {
   }
   function connectHost() {
     if (!ppeer || ppeer.destroyed) return;
+    if (pconn && pconn.open) return; // ponovno otvaranje signalizacije ne zamjenjuje aktivnu vezu
     if (pconn && !pconn.open) { try { pconn.close(); } catch (e) {} }
     const conn = ppeer.connect(PEER_PREFIX + pcode.toLowerCase(), { reliable: true, serialization: 'json' });
     pconn = conn;
@@ -6245,8 +6356,28 @@ function createGame(o) {
     }, 1500);
   }
 
+  function checkConnection() {
+    if (hostPeer) hostKeepAlive(hostPeer);
+    if (mode !== 'player' || !S || document.visibilityState !== 'visible') return;
+    if (lastStateAt && Date.now() - lastStateAt > 12000) {
+      lastStateAt = Date.now();
+      const stale = pconn; pconn = null;
+      try { if (stale) stale.close(); } catch (e) {}
+      retrySoon();
+    }
+  }
+  window.addEventListener('online', checkConnection);
+  setInterval(checkConnection, 3000);
+
   // zatvaranje kartice odmah javi domaćinu (umjesto da čeka da veza istekne)
-  window.addEventListener('pagehide', () => { try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
+  window.addEventListener('beforeunload', (e) => {
+    // Stanje partije je samo u memoriji domaćina; osvježavanje ga briše.
+    if (game && (mode === 'host' || mode === 'hostp') && game.view().ph !== 'lobby' && game.view().ph !== 'final') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+  window.addEventListener('pagehide', () => { if (game && game.checkpoint) saveRecovery(game.checkpoint()); try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
 
   function sendInput(inp) {
     AUDIO.play('confirm');
@@ -6284,6 +6415,7 @@ function createGame(o) {
   }
 
   function applyState(d) {
+    lastStateAt = Date.now();
     if (d && 'pv' in d) PV = d.pv || null;
     clearTimeout(waitTimer);
     const t = Date.now();
@@ -7266,7 +7398,7 @@ function createGame(o) {
   function bsToggle(d) {
     if (!d.opt) return '';
     if (!game) return d.opt.bs ? '<div class="lob-info">🤖 Testiranje društvenih mehanika s botovima je uključeno</div>' : '';
-    return '<div class="lob-opt"><span class="lob-opt-l">🤖 Testiraj društvene mehanike s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušavati izdaju. Namijenjeno isprobavanju društvenih funkcionalnosti.</small></span><button class="tgl' + (d.opt.bs ? '' : ' off') + '" data-bsopt="' + (d.opt.bs ? 0 : 1) + '">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';
+    return '<div class="lob-opt"><span class="lob-opt-l">🤖 Paktovi s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušati izdaju.</small></span><button class="tgl' + (d.opt.bs ? '' : ' off') + '" data-bsopt="' + (d.opt.bs ? 0 : 1) + '">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';
   }
   // šapat na kartici odgovora: 🔮 šalje to slovo savezniku (vlastiti odgovor se NE zaključava); primljeni šapat = mali avatar saveznika
   function sfOptX(d, i, answered, gone) {
@@ -8384,22 +8516,35 @@ function createGame(o) {
     r.steps.forEach((t, k) => setTimeout(() => AUDIO.play('tap'), t + (k ? 0 : 10)));
     setTimeout(() => AUDIO.play('step'), r.R + 40);
   }
-  // ekran mora stati bez skrolanja: ako sadržaj prelije, cijela scena se smanji (najviše na 60 %)
+  // Mjeri puni sadržaj prije prilagodbe; kontrole zvuka imaju vlastiti prostor.
   function fitScreen() {
-    const A = $app, se = document.scrollingElement || document.documentElement;
+    const A = $app;
     if (!A || !A.firstElementChild) return;
-    const ih = innerHeight;
     A.style.zoom = '';
-    return; // namjerno: više sadržaja = pomicanje, ne smanjivanje cijelog sučelja
-    let sh = se.scrollHeight;
-    if (sh <= ih + 1) return;
-    let f = Math.max(0.6, ih / sh);
-    for (let k = 0; k < 4; k++) {
-      A.style.zoom = f.toFixed(3);
-      sh = se.scrollHeight;
-      if (sh <= ih + 1 || f <= 0.6) break;
-      f = Math.max(0.6, f * ih / sh - 0.006);
+    A.style.width = '';
+    A.style.maxWidth = '';
+    const phone = A.classList.contains('phone');
+    if (!phone && !A.classList.contains('tv')) return;
+    const bodyStyle = getComputedStyle(document.body);
+    const width = innerWidth - parseFloat(bodyStyle.paddingLeft) - parseFloat(bodyStyle.paddingRight);
+    A.style.width = Math.min(phone ? 520 : 1600, width) + 'px';
+    const top = A.getBoundingClientRect().top;
+    const controls = document.querySelector('#mute').getBoundingClientRect();
+    const available = Math.max(1, controls.top - top - 8);
+    const targetWidth = Math.min(phone ? 520 : 1600, width);
+    A.style.maxWidth = 'none';
+    const measure = (scale) => {
+      A.style.zoom = scale.toFixed(4);
+      A.style.width = (targetWidth / scale) + 'px';
+      return Math.max(A.scrollHeight * scale, A.getBoundingClientRect().height);
+    };
+    if (measure(1) <= available) return;
+    let low = 0.1, high = 1;
+    for (let i = 0; i < 10; i++) {
+      const mid = (low + high) / 2;
+      if (measure(mid) <= available) low = mid; else high = mid;
     }
+    measure(low);
   }
   let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitScreen, 120); });
   // kolo sreće za otkrivanje odgovora: vrijeme šetnje, okretanja i otkrivanja (ms od početka faze)
@@ -8831,6 +8976,15 @@ function createGame(o) {
 
   if (/^#?[A-Za-z]{4}$/.test(location.hash || '')) mode = 'join';
   render();
+  try {
+    const raw = sessionStorage.getItem('mz_recovery_v1');
+    const saved = raw && JSON.parse(raw);
+    if (saved && !location.hash && /^[A-Z]{4}$/.test(saved.code) && Array.isArray(saved.keys) && Date.now() - saved.savedAt < 6 * 60 * 60 * 1000 && saved.journal && hasPeer()) {
+      mode = saved.noTv ? 'hostp' : 'host';
+      openHostPeer(0, { noTv: saved.noTv, recovery: saved });
+      render(); keepAwake();
+    }
+  } catch (e) { try { sessionStorage.removeItem('mz_recovery_v1'); } catch (_) {} }
 })();
 </script>
 
