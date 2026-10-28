@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-aaCRg6WWyGuRYgIgpeUA9Pmp6YQui+4K2MrluBzoc0I=' 'sha256-RURJ0x4lMVbWD8RkrfZUwS6F5TLkamVFiUnPHpYKyEw=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-acWZGOSQGdgf5LgUt709XplPiq86xrOa2WigwtpmPog=' 'sha256-xeyF3uJUNMma8clgUMmdvkQtBwbyp39+IkedLurt8No=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2207,6 +2207,54 @@
   .tv .rope { max-width: 900px; } .tv .rope-p .mini { width: 70px; height: 70px; } .tv .rope-p i { font-size: 2rem; } .tv .rope-p b { font-size: 1.2rem; } .tv .rope-t { height: 56px; } .tv .rope-k { width: 36px; height: 36px; }
   .kr-dev { align-self: flex-end; width: 36px; height: 36px; border-radius: 50%; border: 0; font-size: 1rem; background: rgba(255, 255, 255, 0.06); opacity: 0.5; }
   .kr-box .sf-scn { width: 100%; }
+  /* uski ekrani: konop dobiva više mjesta (imena ispod likova) */
+  .rope-p { flex-direction: column; gap: 2px; }
+  .rope-p.a, .rope-p.b { flex-direction: column; }
+  .rope-p i { order: 3; }
+  .rope { grid-template-columns: 64px 1fr 64px; gap: 6px; }
+  .rope-p b { max-width: 64px; font-size: 0.78rem; text-align: center; }
+  .tv .rope { grid-template-columns: 140px 1fr 140px; } .tv .rope-p b { max-width: 140px; }
+  /* uski mobiteli (≤ 360 px): Točno/Netočno (konop i munjeviti krug) ne smiju izaći preko ruba */
+  @media (max-width: 360px) { .mg-tf { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; } .mg-tf .btn { min-width: 0; padding-left: 0.1em; padding-right: 0.1em; font-size: 1.1rem; border-left-width: 14px; border-right-width: 14px; } }
+  .rope-p .mini { order: 1; } .rope-p b { order: 2; } .rope-p i { order: 3; }
+  /* Razvrstavanje: jedna kartica u sredini, kategorije lijevo i desno */
+  .srt.swp { gap: 8px; }
+  .swp-prog { display: flex; align-items: center; gap: 10px; }
+  .swp-pt { font-family: var(--font-display); font-size: 0.95rem; letter-spacing: 0.04em; color: #f3e3c4; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+  .swp-bar { flex: 1; height: 8px; border-radius: 6px; background: rgba(30, 15, 6, 0.55); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.5); overflow: hidden; }
+  .swp-bar > span { display: block; height: 100%; background: linear-gradient(180deg, #f0c66a, #c4923a); transition: width 0.25s; }
+  .swp-stage { display: grid; grid-template-columns: minmax(58px, 1fr) minmax(0, 3.1fr) minmax(58px, 1fr); gap: 6px; align-items: stretch; min-height: 230px; }
+  .swp-side { --k: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 8px 4px; border-radius: 10px; text-align: center; min-width: 0;
+    background: linear-gradient(180deg, rgba(56, 32, 15, 0.9), rgba(34, 18, 8, 0.92)); box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.6), 0 0 calc(var(--k) * 18px) rgba(222, 164, 74, calc(var(--k) * 0.8));
+    transform: scale(calc(1 + var(--k) * 0.05)); transition: transform 0.1s; }
+  .swp-side b { font-family: var(--font-display); font-weight: 400; font-size: 0.86rem; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1; color: #f3e3c4; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7); overflow-wrap: anywhere; hyphens: auto; }
+  .swp-side i { font-style: normal; font-weight: 900; font-size: 0.85rem; min-width: 1.6em; padding: 1px 6px; border-radius: 10px; background: rgba(243, 227, 196, 0.16); color: #f3e3c4; }
+  .swp-arr { color: #dea44a; font-size: 1.2rem; line-height: 1; opacity: calc(0.55 + var(--k) * 0.45); }
+  .swp-mid { position: relative; display: flex; align-items: center; justify-content: center; min-width: 0; touch-action: none; }
+  .swp-card { position: relative; width: 100%; min-height: 150px; display: flex; align-items: center; justify-content: center; padding: 14px 10px; border-radius: 12px; border: 2px solid #6b4422; text-align: center; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab;
+    background: linear-gradient(180deg, #f8ebcc, #ecd6a8); color: #3a2410; font-family: var(--font-body); font-weight: 900; font-size: 1.35rem; line-height: 1.15; overflow-wrap: anywhere; hyphens: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45); will-change: transform; z-index: 2; outline: none; }
+  .swp-card[data-dir="a"]::after, .swp-card[data-dir="b"]::after { content: ''; position: absolute; inset: 0; border-radius: 10px; pointer-events: none; }
+  .swp-card[data-dir="a"]::after { background: linear-gradient(90deg, rgba(222, 164, 74, 0.38), transparent 70%); }
+  .swp-card[data-dir="b"]::after { background: linear-gradient(270deg, rgba(222, 164, 74, 0.38), transparent 70%); }
+  .swp-card.drag { cursor: grabbing; transition: none; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
+  .swp-card.snap { transition: transform 0.22s cubic-bezier(0.2, 1.3, 0.4, 1); }
+  .swp-card.fly { transition: transform 0.26s ease-in, opacity 0.26s ease-in; pointer-events: none; }
+  .swp-card.enter { animation: swp-in 0.22s ease-out; }
+  .swp-card.back-a { animation: swp-ba 0.28s ease-out; }
+  .swp-card.back-b { animation: swp-bb 0.28s ease-out; }
+  .swp-card.swp-peek { position: absolute; left: 0; top: 0; bottom: 0; z-index: 1; transform: scale(0.92) translateY(8px); opacity: 0.7; box-shadow: none; pointer-events: none; min-height: 0; }
+  .swp-card.swp-end { cursor: default; font-size: 1.1rem; }
+  @keyframes swp-in { from { transform: scale(0.9); opacity: 0.4; } to { transform: none; opacity: 1; } }
+  @keyframes swp-ba { from { transform: translateX(-120%) rotate(-24deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes swp-bb { from { transform: translateX(120%) rotate(24deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  .swp-btns { display: flex; justify-content: center; align-items: center; gap: 12px; }
+  .swp-b { min-width: 44px; min-height: 44px; padding: 0 12px; border-radius: 22px; border: 1px solid rgba(196, 146, 66, 0.7); background: rgba(34, 18, 8, 0.85); color: #f3e3c4; font-family: var(--font-body); font-weight: 900; font-size: 1rem; cursor: pointer; }
+  .swp-b.undo { font-size: 0.85rem; }
+  .swp-b:disabled { opacity: 0.35; cursor: default; }
+  .swp-b:not(:disabled):active { background: rgba(222, 164, 74, 0.35); }
+  @media (max-width: 360px) { .swp-card { font-size: 1.15rem; min-height: 130px; } .swp-side b { font-size: 0.74rem; } .swp-stage { min-height: 200px; } }
+  @media (prefers-reduced-motion: reduce) { .swp-card.enter, .swp-card.back-a, .swp-card.back-b { animation: none; } .swp-card.fly, .swp-card.snap { transition-duration: 0.01s; } }
 </style>
 </head>
 <body>
@@ -4072,7 +4120,7 @@ function createGame(o) {
   // dok se odgovara (pitanje, mini-igra, dvoboj, tajni događaj) nema slanja ni prihvaćanja ponuda
   const SF_BUSY = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, secret: 1, secret2: 1 };
   const sfPeople = () => list().filter((p) => !p.bot || bsOn());
-  const sfBusy = (p) => (G.ph === 'duel' ? !!(G.du && p && (p.pid === G.du.a || p.pid === G.du.b)) : !!SF_BUSY[G.ph]);
+  const sfBusy = (p) => (G.ph === 'duel' || G.ph === 'rope' ? !!(G.du && p && (p.pid === G.du.a || p.pid === G.du.b)) : !!SF_BUSY[G.ph]);
   let botCall = false;
   function botPact(b, a) { botCall = true; try { return pactAction(b.pid, a); } finally { botCall = false; } }
   const SF_LINES = ['🍻 Vrijeme je da vidimo tko s kim pije, a tko kome radi iza leđa!', '🍻 Krčmar briše šank i pravi se da ništa ne čuje…', '🍻 Krigle gore — i uši otvorene!'];
@@ -4262,6 +4310,7 @@ function createGame(o) {
     for (const p of list()) if (p.bot) p.done = true;
     const s0 = G.s;
     later(() => { if (G.s === s0 && krReady()) endPhase(); }, Math.round(rb * 1000) + 30);
+    if (G.lc && G.lc.st === 'o') later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round((rb + cfg.kr.chWait) * 1000));
     onChange();
   }
   // može li igrač potvrditi Nastavi (kasnije: tko ima otvorenu odluku krčmara, prvo odlučuje)
@@ -4327,7 +4376,7 @@ function createGame(o) {
   // ----- izazov vođi -----
   function krChallengeMaybe() {
     const K = cfg.kr; G.lc = null;
-    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o')) return;
+    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o') || list().some((p) => p.ko && p.ko.st === 'o')) return;
     if (!plan.slice(G.pi + 1).some((it) => it.t === 'battle')) return;   // mora postojati još pitanja nakon izazova
     const ps = active().slice().sort((a, b) => b.score - a.score);
     if (ps.length < 2) return;
@@ -4338,14 +4387,11 @@ function createGame(o) {
     if (forced) G.scn = null;
     G.lcDone = true;
     G.lc = { id: ++G.sfSeq, a: A.pid, b: B.pid, st: 'o', sa: K.chStakeA, sb: K.chStakeB, g: K.chGuard };
-    const s0 = G.s;
-    later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round(((G.revMin || now()) - now()) + K.chWait * 1000));
   }
   function krChallengeAnswer(p, yes) {
     const o = G.lc;
     if (!o || o.st !== 'o' || G.ph !== 'reveal' || o.a !== p.pid) return false;
     o.st = yes ? 'y' : 'n';
-    if (yes) news('⚔️ ' + p.name + ' izaziva vođu: ' + ((R.get(o.b) || {}).name || '?') + '!');
     return true;
   }
   function krChallengeEnd() {
@@ -5921,7 +5967,7 @@ function createGame(o) {
     S = d; document.documentElement.dataset.ph = d.ph;
     if (phoneShown()) {
       const sig = phoneSig(d);
-      if (sig !== lastSig) { lastSig = sig; phoneRender(false); }
+      if (sig !== lastSig) { lastSig = sig; phoneRender(false); } else krLive(d);
     }
   }
   function phoneSig(d) {
@@ -6458,7 +6504,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v32</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v33</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -6628,7 +6674,7 @@ function createGame(o) {
   }
   function bindRc() {
     const q = (s) => document.querySelectorAll('#app ' + s);
-    q('[data-rc]').forEach((b) => { b.onclick = () => { const k = b.dataset.rc; AUDIO.play(k === 'rcDecline' || k === 'rcCancel' ? 'tap' : 'confirm'); L.rcOpen = false; pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
+    q('[data-rc]').forEach((b) => { b.onclick = () => { const k = b.dataset.rc; AUDIO.play(k === 'rcDecline' || k === 'rcCancel' ? 'tap' : 'confirm'); L.rcOpen = false; krSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
     q('[data-rcopen]').forEach((b) => { b.onclick = () => { L.rcOpen = true; phoneRender(true); }; });
     q('[data-rcx]').forEach((b) => { b.onclick = () => { L.rcOpen = false; phoneRender(true); }; });
   }
@@ -6695,7 +6741,7 @@ function createGame(o) {
     return '';
   }
   function bindTk() {
-    document.querySelectorAll('#app [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); pactSend({ k, id: +b.dataset.id }); }; });
+    document.querySelectorAll('#app [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); krSend({ k, id: +b.dataset.id }); }; });
   }
   // ishod na otkrivanju (mobitel i TV): kratka kartica u stilu trenutka krčme; isti id → ponovno spajanje ne pokreće animaciju iznova
   function tkCard(d) {
@@ -6872,10 +6918,10 @@ function createGame(o) {
     q('[data-scn]').forEach((b) => { b.onclick = () => { if (!game || !game.sfScenario) return; const r = game.sfScenario(PID, b.dataset.scn); toastHold.push([(r.ok ? '🤖 ' : '⚠️ ') + r.msg, r.ok ? 'pact' : 'no']); AUDIO.play(r.ok ? 'confirm' : 'tap'); SF.scn = false; phoneRender(true); pactToasts(S); }; });
     q('[data-bt]').forEach((b) => { const f = b.onclick; b.onclick = () => { SF.btAsk = false; if (f) f(); }; });
     // gumbi paktova i obračuna u kartici kutka (izvan #app) — isti postupci kao u bindPact/bindRc
-    document.querySelectorAll('#sfbox [data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
-    document.querySelectorAll('#sfbox [data-rc]').forEach((b) => { b.onclick = () => { const k = b.dataset.rc; AUDIO.play(k === 'rcDecline' || k === 'rcCancel' ? 'tap' : 'confirm'); pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
-    document.querySelectorAll('#sfbox [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); pactSend({ k, id: +b.dataset.id }); }; });
-    document.querySelectorAll('#sfbox [data-bt]').forEach((b) => { b.onclick = () => { SF.btAsk = false; AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); pactSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
+    document.querySelectorAll('#sfbox [data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); krSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
+    document.querySelectorAll('#sfbox [data-rc]').forEach((b) => { b.onclick = () => { const k = b.dataset.rc; AUDIO.play(k === 'rcDecline' || k === 'rcCancel' ? 'tap' : 'confirm'); krSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
+    document.querySelectorAll('#sfbox [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); krSend({ k, id: +b.dataset.id }); }; });
+    document.querySelectorAll('#sfbox [data-bt]').forEach((b) => { b.onclick = () => { SF.btAsk = false; AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); krSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
     bindWhi();
     bindKr(d);
     bindRope(d);
@@ -6900,9 +6946,11 @@ function createGame(o) {
   function bindWhi() {
     document.querySelectorAll('#app [data-whi]').forEach((x) => {
       x.onpointerdown = (e) => { e.stopPropagation(); };
-      x.onclick = (e) => { e.stopPropagation(); e.preventDefault(); AUDIO.play('whoosh'); pactSend({ k: 'whisper', c: +x.dataset.whi }); };
+      x.onclick = (e) => { e.stopPropagation(); e.preventDefault(); AUDIO.play('whoosh'); krSend({ k: 'whisper', c: +x.dataset.whi }); };
     });
   }
+  // slanje akcija domaćinu (web: pactSend iz mrežnog sloja; samostalni demo: izravno u igru)
+  const krSend = (a) => (typeof pactSend === 'function' ? pactSend(a) : game && game.pactAction(PID, a));
   // ===================== KRČMAR 2.0: sučelje ploče bodova =====================
   // Ispod poretka: privatni dio (samo ovaj igrač) i „Nastavi”. Igra ide dalje kad svi potvrde (domaćin odlučuje).
   function krReadyCount(d) { const ps = d.P.filter((p) => p.c && !p.b); return [ps.filter((p) => p.ok).length, ps.length]; }
@@ -6949,8 +6997,8 @@ function createGame(o) {
     const [r, n] = krReadyCount(d), mine = me.ok || (L && L.sent);
     let priv = krPriv(d, me);
     if (d.lc && d.lc.st === 'o' && d.lc.a === me.id && !priv.block) priv = { block: 1, html: priv && typeof priv === 'object' ? priv.html || '' : priv || '' };
-    const go = mine ? '<div class="kr-wait">Čekamo ostale… <b>' + r + '/' + n + '</b></div>'
-      : priv.block ? '' : '<button class="btn win-cta kr-go" id="krok">Nastavi</button>' + (n > 1 ? '<div class="kr-wait">Spremno <b>' + r + '/' + n + '</b></div>' : '');
+    const go = mine ? '<div class="kr-wait">Čekamo ostale… <b class="kr-cnt">' + r + '/' + n + '</b></div>'
+      : priv.block ? '' : '<button class="btn win-cta kr-go" id="krok">Nastavi</button>' + (n > 1 ? '<div class="kr-wait">Spremno <b class="kr-cnt">' + r + '/' + n + '</b></div>' : '');
     const ph0 = priv && typeof priv === 'object' ? priv.html || '' : priv || '';
     const dev = PV && PV.bs && game && mode !== 'player' ? (sfDev() ? sfScn(d) : '<button class="kr-dev" data-sfdev="1" aria-label="Testni način">🤖</button>') : '';
     return '<div class="kr-box">' + krChallenge(d, me) + ph0 + go + dev + '</div>';
@@ -6961,8 +7009,8 @@ function createGame(o) {
     return krChallenge(d, null) + (n ? '<div class="kr-wait tv" data-bk="krr" data-bv="' + r + '">Spremno <b>' + r + '/' + n + '</b></div>' : '');
   }
   function bindKr(d) {
-    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });
-    document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krPact', yes: b.dataset.krp === '1' }); }; });
+    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });
+    document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); krSend({ k: 'krPact', yes: b.dataset.krp === '1' }); }; });
     bind('krok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
   }
   // ----- izazov vođi: javni prijedlog na ploči -----
@@ -6989,7 +7037,7 @@ function createGame(o) {
     const list = d.rp.list, st = L.rp || (L.rp = { i: 0, r: [], fb: '', last: 1 });
     const fb = st.fb ? '<div class="mg-fb ' + (st.last ? 'ok' : 'bad') + ' pop">' + esc(st.fb) + '</div>' : '<div class="mg-fb"></div>';
     if (st.i >= list.length) return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="waiting">Nema više tvrdnji — čekamo kraj!</div>';
-    return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-rpv="1">Točno</button><button class="btn ghost" data-rpv="0">Netočno</button></div>' + fb;
+    return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="mg rope-mg"><div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-rpv="1">Točno</button><button class="btn ghost" data-rpv="0">Netočno</button></div>' + fb + '</div>';
   }
   function ropeTv(d) { return '<div class="tv-mid"><div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="du-note">Točan odgovor vuče konop, netočan ga vraća.</div></div>'; }
   function ropeResult(d) {
@@ -6999,7 +7047,7 @@ function createGame(o) {
     return '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + duelVs(d, pose) + '<div class="du-res">' + res + '</div><div class="du-ms">' + (rr.pa || 0) + ' : ' + (rr.pb || 0) + '</div>' + (du.o ? '<div class="du-note">' + esc(du.o) + '</div>' : '');
   }
   function bindRope(d) {
-    document.querySelectorAll('#app [data-krc]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krc === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krCh', yes: b.dataset.krc === '1' }); }; });
+    document.querySelectorAll('#app [data-krc]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krc === '1' ? 'confirm' : 'tap'); krSend({ k: 'krCh', yes: b.dataset.krc === '1' }); }; });
     document.querySelectorAll('#app [data-rpv]').forEach((b) => { b.onclick = () => {
       const st = L.rp, list = d.rp && d.rp.list; if (!st || !list || st.i >= list.length) return;
       const v = +b.dataset.rpv, ok = v === list[st.i][1];
@@ -7007,19 +7055,25 @@ function createGame(o) {
       AUDIO.play(ok ? 'tap' : 'wrong'); sendPartial({ r: st.r.slice() }); phoneRender(true);
     }; });
   }
+  // broj spremnih mijenja se bez ponovnog crtanja ploče (da se ne ponavljaju animacije bodova)
+  function krLive(d) {
+    if (!d || !d.rw) return;
+    const [r, n] = krReadyCount(d), t = r + '/' + n;
+    document.querySelectorAll('#app .kr-cnt').forEach((e) => { if (e.textContent !== t) e.textContent = t; });
+  }
   const PACT_STEAL = 0.08;
   function bindPact(d) {
     bindRc();
     bindTk();
     bindPj();
     const q = (s) => document.querySelectorAll('#app ' + s);
-    q('[data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); L.pkOpen = false; pactSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
+    q('[data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); L.pkOpen = false; krSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
     q('[data-pkopen]').forEach((b) => { b.onclick = () => { L.pkOpen = true; phoneRender(true); }; });
     q('[data-pkx]').forEach((b) => { b.onclick = () => { L.pkOpen = false; phoneRender(true); }; });
     q('[data-whopen]').forEach((b) => { b.onclick = () => { L.whOpen = true; phoneRender(true); }; });
     q('[data-whx]').forEach((b) => { b.onclick = () => { L.whOpen = false; phoneRender(true); }; });
-    q('[data-wh]').forEach((b) => { b.onclick = () => { L.whOpen = false; AUDIO.play('whoosh'); pactSend({ k: 'whisper', c: +b.dataset.wh }); }; });
-    q('[data-bt]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); pactSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
+    q('[data-wh]').forEach((b) => { b.onclick = () => { L.whOpen = false; AUDIO.play('whoosh'); krSend({ k: 'whisper', c: +b.dataset.wh }); }; });
+    q('[data-bt]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); krSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
     bindSf(d);
   }
   // obavijesti: javne glasine (svi) i privatne poruke (samo ja); ne blokiraju ništa
@@ -7027,7 +7081,7 @@ function createGame(o) {
   function pactToasts(d) {
     const out = [];
     // tijekom pitanja ništa ne smije prekriti odgovore: obavijesti čekaju kraj pitanja
-    const busy = d.ph === 'question' || d.ph === 'fq' || d.ph === 'duel' || d.ph === 'order' || d.ph === 'hilo' || d.ph === 'blitz' || d.ph === 'sort' || d.ph === 'link' || d.ph === 'maj';
+    const busy = d.ph === 'question' || d.ph === 'fq' || d.ph === 'duel' || d.ph === 'rope' || d.ph === 'order' || d.ph === 'hilo' || d.ph === 'blitz' || d.ph === 'sort' || d.ph === 'link' || d.ph === 'maj';
     if (d.news && !toastSeen.has('n' + d.news.id)) { toastSeen.add('n' + d.news.id); out.push([d.news.t, 'pub']); }
     if (PV && PV.note && !toastSeen.has('p' + PV.note.id)) { toastSeen.add('p' + PV.note.id); out.push([PV.note.t, PV.note.k || '']); }
     if (busy) { toastHold.push(...out); return; }
@@ -8118,49 +8172,95 @@ function createGame(o) {
     const z = (k) => '<div class="srt-zone" data-z="' + k + '"><h4>' + esc(k ? d.so.b : d.so.a) + '</h4><div class="srt-in">' + d.so.it.map((_, i) => (place[i] === k ? srtCard(d, i, key, place) : '')).join('') + '</div></div>';
     return '<div class="srt-zones' + (extra || '') + '">' + z(0) + z(1) + '</div>';
   }
+  // ---- Razvrstavanje: jedna velika kartica, swipe ulijevo/udesno (ista logika slanja: niz 0/1) ----
+  const SRT_FLY = 260, SRT_COOL = 380;
+  const srtCur = () => L.sortP.findIndex((x) => x < 0);
   function sortPhone(d, me) {
     const n = d.so.it.length;
-    if (!L.sortP || L.sortP.length !== n) L.sortP = new Array(n).fill(-1);
-    const sent = !!(L.sent || me.ok), left = L.sortP.filter((x) => x < 0).length;
-    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔ Čekamo ostale…' : 'Povuci svaki pojam u odgovarajuću skupinu.') + '</div></div>';
-    const pool = sent ? '' : '<div class="srt-pool" data-z="-1">' + d.so.it.map((_, i) => (L.sortP[i] < 0 ? srtCard(d, i, null, L.sortP) : '')).join('') + (left ? '' : '<span class="srt-empty">Svi pojmovi su razvrstani</span>') + '</div>';
-    const done = sent ? '' : '<button class="btn ghost" id="srtDone"' + (left ? ' disabled' : '') + '>' + (left ? 'Razvrstaj još ' + left : 'Gotovo') + '</button>';
-    return '<div class="srt' + (sent ? ' sent' : '') + '">' + head + sortZonesHtml(d, L.sortP, null) + pool + done + '</div>';
+    if (!L.sortP || L.sortP.length !== n) { L.sortP = new Array(n).fill(-1); L.srtH = []; L.srtLock = false; L.srtCool = 0; }
+    const sent = !!(L.sent || me.ok), cur = srtCur(), got = n - L.sortP.filter((x) => x < 0).length;
+    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔ Čekamo ostale…' : 'Prevuci karticu ulijevo ili udesno.') + '</div></div>';
+    if (sent) return '<div class="srt sent">' + head + sortZonesHtml(d, L.sortP, null) + '</div>';
+    const cnt = (k) => L.sortP.filter((x) => x === k).length;
+    const anim = L.srtBack != null ? ' back-' + (L.srtBack ? 'b' : 'a') : (L.srtIn ? ' enter' : '');
+    L.srtBack = null; L.srtIn = false;
+    const card = cur >= 0 ? '<div class="swp-card' + anim + '" data-si="' + cur + '" tabindex="0" role="group" aria-label="Pojam: ' + esc(d.so.it[cur]) + '"><span>' + esc(d.so.it[cur]) + '</span></div>' : '<div class="swp-card swp-end"><span>Sve razvrstano ✔</span></div>';
+    const peek = cur >= 0 && cur < n - 1 ? '<div class="swp-card swp-peek" aria-hidden="true"></div>' : '';
+    const side = (k) => '<div class="swp-side ' + (k ? 'b' : 'a') + '" data-z="' + k + '"><span class="swp-arr">' + (k ? '▶' : '◀') + '</span><b>' + esc(k ? d.so.b : d.so.a) + '</b><i>' + cnt(k) + '</i></div>';
+    const stage = '<div class="swp-stage">' + side(0) + '<div class="swp-mid">' + peek + card + '</div>' + side(1) + '</div>';
+    const prog = '<div class="swp-prog"><span class="swp-pt">' + Math.min(n, got + (cur >= 0 ? 1 : 0)) + '/' + n + ' pojmova</span><span class="swp-bar"><span style="width:' + Math.round(got / n * 100) + '%"></span></span></div>';
+    const btns = '<div class="swp-btns"><button class="swp-b" data-go="0" aria-label="Lijevo: ' + esc(d.so.a) + '"' + (cur < 0 ? ' disabled' : '') + '>◀</button>' +
+      '<button class="swp-b undo" id="swpUndo"' + (L.srtH.length ? '' : ' disabled') + '>↶ Poništi</button>' +
+      '<button class="swp-b" data-go="1" aria-label="Desno: ' + esc(d.so.b) + '"' + (cur < 0 ? ' disabled' : '') + '>▶</button></div>';
+    const left = n - got;
+    const done = '<button class="btn' + (left ? ' ghost' : '') + '" id="srtDone"' + (left ? ' disabled' : '') + '>' + (left ? 'Razvrstaj još ' + left : 'Gotovo') + '</button>';
+    return '<div class="srt swp">' + head + prog + stage + btns + done + '</div>';
   }
   function bindSort(d, me) {
     const root = $app.querySelector('.srt');
     if (!root || root.classList.contains('sent')) return;
-    const place = (i, z) => { L.sortP[i] = z; L.srtSel = null; phoneRender(true); };
-    root.querySelectorAll('.srt-card').forEach((c) => {
-      const i = +c.dataset.si;
-      c.onclick = (e) => { e.stopPropagation(); if (c.dataset.dragged) return; L.srtSel = L.srtSel === i ? null : i; phoneRender(true); };
-      c.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.onclick(e); } };
-      c.onpointerdown = (e) => {
-        if (e.button > 0) return;
-        const x0 = e.clientX, y0 = e.clientY; let moved = false, over = null;
-        try { c.setPointerCapture(e.pointerId); } catch (er) {}
-        c.onpointermove = (ev) => {
-          const dx = ev.clientX - x0, dy = ev.clientY - y0;
-          if (!moved && Math.hypot(dx, dy) < 6) return;
-          if (!moved) { moved = true; c.classList.add('drag'); }
-          c.style.setProperty('--x', dx + 'px'); c.style.setProperty('--y', dy + 'px');
-          c.style.visibility = 'hidden';
-          const hit = document.elementFromPoint(ev.clientX, ev.clientY);
-          c.style.visibility = '';
-          const z = hit && hit.closest && hit.closest('.srt [data-z]');
-          if (z !== over) { if (over) over.classList.remove('over'); over = z || null; if (over) over.classList.add('over'); }
-        };
-        c.onpointerup = c.onpointercancel = () => {
-          c.onpointermove = c.onpointerup = c.onpointercancel = null;
-          if (!moved) return;
-          c.dataset.dragged = '1';
-          if (over) place(i, +over.dataset.z); else { L.srtSel = null; phoneRender(true); }
-        };
+    const LL = L, stage = root.querySelector('.swp-stage'), sides = root.querySelectorAll('.swp-side');
+    const card = root.querySelector('.swp-card[data-si]');
+    const width = () => (stage && stage.clientWidth) || 320;
+    const thr = () => Math.max(64, width() * 0.2);
+    const tilt = (dx) => Math.max(-20, Math.min(20, dx / width() * 40));
+    const glow = (dx) => { const k = Math.min(1, Math.abs(dx) / thr()); sides[0].style.setProperty('--k', dx < 0 ? k : 0); sides[1].style.setProperty('--k', dx > 0 ? k : 0); if (card) card.dataset.dir = k > 0.4 ? (dx < 0 ? 'a' : 'b') : ''; };
+    // jedini put zapisa odgovora: zaključavanje sprječava preskakanje i dvostruko bilježenje
+    const commit = (z, dx, dy, viaBtn) => {
+      if (LL !== L || L.sent || me.ok || L.srtLock || z !== 0 && z !== 1) return;
+      if (viaBtn && performance.now() < L.srtCool) return;
+      const i = srtCur(); if (i < 0) return;
+      L.srtLock = true; L.srtCool = performance.now() + SRT_COOL;
+      const dir = z ? 1 : -1, w = width();
+      if (card) {
+        card.classList.remove('snap'); card.classList.add('fly');
+        card.style.transform = 'translate(' + (Math.max(Math.abs(dx || 0), w * 0.55) * dir + dir * w * 0.7) + 'px,' + ((dy || 0) * 0.35 - 20) + 'px) rotate(' + dir * 26 + 'deg)';
+        card.style.opacity = '0';
+      }
+      AUDIO.play('tap');
+      setTimeout(() => {
+        if (LL !== L) return;
+        if (L.sortP[i] < 0) { L.sortP[i] = z; L.srtH.push(i); L.srtIn = true; }
+        L.srtLock = false;
+        phoneRender(true);
+      }, SRT_FLY);
+    };
+    if (card) {
+      let id = null, x0 = 0, y0 = 0, t0 = 0, dx = 0, dy = 0, moved = false;
+      card.onpointerdown = (e) => {
+        if (L.srtLock || e.button > 0 || id !== null) return;
+        id = e.pointerId; x0 = e.clientX; y0 = e.clientY; t0 = performance.now(); dx = dy = 0; moved = false;
+        try { card.setPointerCapture(id); } catch (er) {}
+        card.classList.remove('snap'); card.classList.add('drag');
       };
+      card.onpointermove = (e) => {
+        if (e.pointerId !== id) return;
+        dx = e.clientX - x0; dy = e.clientY - y0;
+        if (!moved && Math.hypot(dx, dy) < 5) return;
+        moved = true;
+        card.style.transform = 'translate(' + dx + 'px,' + dy * 0.35 + 'px) rotate(' + tilt(dx) + 'deg)';
+        glow(dx);
+      };
+      const end = (e, cancel) => {
+        if (e.pointerId !== id) return;
+        id = null; try { card.releasePointerCapture(e.pointerId); } catch (er) {}
+        card.classList.remove('drag');
+        const v = Math.abs(dx) / Math.max(1, performance.now() - t0);
+        if (!cancel && moved && (Math.abs(dx) > thr() || (v > 0.55 && Math.abs(dx) > 28))) return commit(dx > 0 ? 1 : 0, dx, dy);
+        card.classList.add('snap'); card.style.transform = ''; glow(0);
+      };
+      card.onpointerup = (e) => end(e, false);
+      card.onpointercancel = (e) => end(e, true);
+      card.onkeydown = (e) => { if (e.key === 'ArrowLeft') { e.preventDefault(); commit(0, 0, 0, true); } else if (e.key === 'ArrowRight') { e.preventDefault(); commit(1, 0, 0, true); } };
+    }
+    root.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => commit(+b.dataset.go, 0, 0, true); });
+    bind('swpUndo', () => {
+      if (L.srtLock || L.sent || !L.srtH.length) return;
+      const i = L.srtH.pop(); L.srtBack = L.sortP[i]; L.sortP[i] = -1; L.srtCool = performance.now() + 200;
+      phoneRender(true);
     });
-    root.querySelectorAll('.srt [data-z]').forEach((z) => { z.onclick = () => { if (L.srtSel == null) return; place(L.srtSel, +z.dataset.z); }; });
     bind('srtDone', () => {
-      if (L.sortP.some((x) => x < 0)) return;
+      if (L.sent || L.srtLock || L.sortP.some((x) => x < 0)) return;
       lastSort = { k: d.so.it.join('|'), p: L.sortP.slice() };
       sendInput({ r: L.sortP.slice() });
     });
