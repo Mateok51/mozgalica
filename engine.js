@@ -1721,7 +1721,7 @@ function createGame(o) {
   }
   function afterSecret() {
     const se = G.se;
-    if (!se || !se.x) { G.se = null; return startPower(); }
+    if (!se || !se.x) { if (se) se.none = 1; else G.se = null; return startPower(); }   // neiskorišten plan otkriva se na ploči
     if (se.k === 'help') {
       setPhase('secret2', cfg.secret2);
       for (const p of list()) if (p.pid !== se.x) p.done = true;
@@ -1735,7 +1735,8 @@ function createGame(o) {
     G.sx = null;
     for (const p of list()) p.xb = 0;
     const se = G.se;
-    if (!se || !se.x) { G.se = null; return; }
+    if (!se) return;
+    if (!se.x) { G.sxDone = Object.assign({}, se, { none: 1 }); G.se = null; return; }
     const A = R.get(se.p), X = R.get(se.x);
     if (A && X && se.k === 'target') {
       se.res = X.ans !== G.q.a ? 1 : 0;
@@ -2498,6 +2499,8 @@ function createGame(o) {
       if (sfOn() && !sfBusy(p) && !G.inFinale && (k.n || 0) >= (cfg.pactMinQ || 0)) { o.k.cb = 1; o.k.bt = p.betray ? 1 : 0; }
       if ((k.n || 0) < (cfg.pactMinQ || 0)) o.k.wait = (cfg.pactMinQ || 0) - (k.n || 0);
       if (sfOn() && p.betray && sfBusy(p)) o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)
+      // već zaključana (čeka izvršenje nakon ove ploče): ne nudi se ponovno, vlasnik vidi da je izdaja na putu
+      if ((G.btq || []).some((q) => q.pact === k.id && ((q.a && k.a === p.pid) || (q.b && k.b === p.pid)))) { delete o.k.cb; o.k.bt = 0; o.k.btl = 1; }
     }
     return Object.assign(o, rcPriv(p));
   }
@@ -2686,7 +2689,7 @@ function createGame(o) {
     if (ph === 'duel' || ph === 'duelResult') { v.q = { c: G.q.c, t: G.q.t, o: G.q.o, n: 0 }; if (ph === 'duelResult') v.cor = G.q.a; }
     // tajni događaj: javno se zna samo da "netko nešto planira"; tko je odabran zna samo njegov mobitel (p/x), izbor se ne šalje
     if ((ph === 'secret' || ph === 'secret2') && G.se) v.se = { k: G.se.k, p: ph === 'secret' ? G.se.p : null, x: ph === 'secret2' ? G.se.x : null, by: ph === 'secret2' ? G.se.p : null, bonus: G.se.k === 'help' ? cfg.helpBonus : cfg.secretBonus };
-    if (ph === 'reveal' && G.sxDone) { const x = G.sxDone; v.sxr = { k: x.k, p: x.p, x: x.x, ok: x.ok, res: x.res ? 1 : 0 }; }
+    if (ph === 'reveal' && G.sxDone) { const x = G.sxDone; v.sxr = { k: x.k, p: x.p, x: x.x, ok: x.ok, res: x.res ? 1 : 0, none: x.none ? 1 : 0 }; }
     return v;
   }
 
