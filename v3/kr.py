@@ -416,3 +416,33 @@ rep("    if (p.okl && !G.inFinale && (G.ph === 'cast' || G.ph === 'question')) r
 rep("any = kp || ko.ko || ko.kt || ko.kf || ko.okl;", "any = kp || ko.ko || ko.kt || ko.kf || ko.okl || ko.okr;")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR oklada ishod OK')
+
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# moći se ne nude prije prvog pitanja (nitko još nema bodova ni ishoda); Oklada se ne nudi dvaput zaredom
+rep("      p.offers = offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);\n    }\n    setPhase('power', G.inFinale ? cfg.fpower : cfg.power);",
+    "      p.lastOf = p.offers || [];\n      p.offers = firstQ ? [] : offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);\n    }\n    if (firstQ) { G.ev = []; return afterPower(); }\n    setPhase('power', G.inFinale ? cfg.fpower : cfg.power);")
+rep("    const multi = active().length > 1, st = standing();\n    for (const p of list()) {\n      p.pw = null;", "    const multi = active().length > 1, st = standing(), firstQ = !G.inFinale && !(G.bdone > 0);\n    for (const p of list()) {\n      p.pw = null;")
+rep("(k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1);", "(k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1) * (k === 'oklada' && (p.lastOf || []).includes('oklada') ? 0 : 1);")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR moći: ne prije prvog pitanja, Oklada ne dvaput OK')
+
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# POWER PICK: svaki igrač ima jedan po partiji; na glasanju bira baš svoju kategoriju. Zamjenjuje Krčmarovu uslugu „tvoj glas bira kategoriju”.
+# Ako je pick već iskorišten u ovom glasanju (prvi pobjeđuje), kasniji zahtjev vrijedi kao običan glas, a pick se ne troši.
+rep("        p.vote = inp.v; break;",
+    "        if (G.ppv && G.ppv.pid === p.pid && inp.v !== G.ppv.c) return false;\n"
+    "        if (inp.pp && p.pp !== 0 && !G.ppv && !G.inFinale) { p.pp = 0; p.ppc = inp.v; G.ppv = { pid: p.pid, c: inp.v }; }\n"
+    "        p.vote = inp.v; break;")
+rep("    for (const p of list()) p.vote = -1;\n    setPhase('vote', cfg.vote);",
+    "    for (const p of list()) { p.vote = -1; p.ppc = -1; }\n    G.ppv = null; G.ppw = null;\n    setPhase('vote', cfg.vote);")
+rep("    G.cw = pick(best);\n",
+    "    G.cw = pick(best);\n    G.ppw = null;\n    if (G.ppv && G.ppv.c >= 0 && G.ppv.c < G.cats.length) { G.cw = G.ppv.c; best.length = 0; best.push(G.cw); G.ppw = G.ppv.pid; }\n")
+rep("p.kb = 0; p.koGot = {}; }", "p.kb = 0; p.koGot = {}; p.pp = 1; p.ppc = -1; G.ppv = null; G.ppw = null; }")
+rep("      if (ph === 'reveal' && p.oq) e.oq = p.oq;",
+    "      if (ph === 'reveal' && p.oq) e.oq = p.oq;\n      e.pa = p.pp === 0 ? 0 : 1;\n      if ((ph === 'vote' || ph === 'voteResult') && p.ppc >= 0) e.pk = 1;")
+rep("      case 'vote': return { s, v: rnd(G.cats.length) };",
+    "      case 'vote': { const o = { s, v: rnd(G.cats.length) }; if (b.pp !== 0 && !G.ppv && !G.inFinale && (G.bdone || 0) >= 1 && Math.random() < 0.2) o.pp = 1; return o; }")
+rep("      if (!p.kf && !p.koGot.fav && p !== lead && (!forced || forced.k === 'fav')) cand.push([p, 'fav']);",
+    "      // usluga „tvoj glas bira kategoriju” zamijenjena je power pickom na glasanju")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR power pick OK')

@@ -1,0 +1,13 @@
+# Općenito — serija 2
+Koja je boja polja nula na kotaču rulete? | Zelena | Crvena | Crna | Bijela
+Koja se životinja nalazi na logotipu Ferrarija? | Konj | Bik | Lav | Panter
+Koja se životinja nalazi na logotipu Lamborghinija? | Bik | Konj | Orao | Jaguar
+Koji je broj na standardnoj igraćoj kocki nasuprot broja 1? | 6 | 5 | 4 | 2
+Koja je najmanja država na svijetu po površini? | Vatikan | Monako | San Marino | Lihtenštajn
+Koliko žica ima standardna klasična gitara? | 6 | 4 | 5 | 8
+Koliko igrača jedne momčadi istodobno igra na terenu u košarci? | 5 | 6 | 7 | 4
+Koliko dobivenih setova treba muškom tenisaču za pobjedu na Grand Slam turniru? | 3 | 2 | 4 | 5
+Koliko traje regularna nogometna utakmica bez produžetaka? | 90 minuta | 80 minuta | 100 minuta | 120 minuta
+Što znači kratica DNK? | Deoksiribonukleinska kiselina | Dušična nukleinska kiselina | Dvostruka nukleotidna karika | Digitalna nukleinska kodna
+Koliko godina razmaka je između dvaju ljetnih olimpijskih igara? | 4 | 2 | 3 | 5
+Koji je kemijski simbol zlata? | Au | Ag | Gd | Zn

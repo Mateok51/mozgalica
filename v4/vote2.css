@@ -9,8 +9,9 @@
     box-shadow: 0 0 0 3px rgba(255, 226, 150, 0.95), 0 0 28px 8px rgba(255, 196, 90, 0.75), inset 0 0 30px rgba(255, 230, 160, 0.55); mix-blend-mode: screen; }
   .rl-pre { animation: rlHide 0.25s ease-out both; animation-delay: calc(var(--rd) - var(--pel, 0ms)); }
   .rl-post { animation: rlShow 0.4s ease-out both; animation-delay: calc(var(--rd) + 80ms - var(--pel, 0ms)); }
-  .rl-pre + .rl-post { position: absolute; left: 0; right: 0; }
-  .p-title:has(.rl-pre), .tv-sub:has(.rl-pre) { position: relative; }
+  /* poruke prije i poslije ždrijeba dijele isto mjesto (rešetka), pa naslov koji se prelomi u dva retka gura sadržaj ispod umjesto da ga prekrije */
+  .p-title:has(.rl-pre), .tv-sub:has(.rl-pre) { display: grid; justify-items: center; }
+  .p-title:has(.rl-pre) > .rl-pre, .p-title:has(.rl-pre) > .rl-post, .tv-sub:has(.rl-pre) > .rl-pre, .tv-sub:has(.rl-pre) > .rl-post { grid-area: 1 / 1; }
   @keyframes rlHide { to { opacity: 0; visibility: hidden; } }
   @keyframes rlShow { from { opacity: 0; transform: translateY(4px); } }
   @media (prefers-reduced-motion: reduce) { .spot { display: none; } }

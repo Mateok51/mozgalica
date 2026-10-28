@@ -234,6 +234,8 @@ function createGame(o) {
         break;
       case 'vote':
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
+        if (G.ppv && G.ppv.pid === p.pid && inp.v !== G.ppv.c) return false;
+        if (inp.pp && p.pp !== 0 && !G.ppv && !G.inFinale) { p.pp = 0; p.ppc = inp.v; G.ppv = { pid: p.pid, c: inp.v }; }
         p.vote = inp.v; break;
       case 'bet': {
         if (!BET_OPTS.includes(inp.b)) return false;
@@ -516,7 +518,8 @@ function createGame(o) {
     if (G.qv) { G.cats = null; G.cw = -1; return startHowto(G.qv); }
     G.cats = shuffle(avail).slice(0, 4);
     G.cw = -1;
-    for (const p of list()) p.vote = -1;
+    for (const p of list()) { p.vote = -1; p.ppc = -1; }
+    G.ppv = null; G.ppw = null;
     setPhase('vote', cfg.vote);
     tkOffer();
   }
@@ -527,6 +530,8 @@ function createGame(o) {
     const max = Math.max(...counts);
     const best = counts.map((c, i) => (c === max ? i : -1)).filter((i) => i >= 0);
     G.cw = pick(best);
+    G.ppw = null;
+    if (G.ppv && G.ppv.c >= 0 && G.ppv.c < G.cats.length) { G.cw = G.ppv.c; best.length = 0; best.push(G.cw); G.ppw = G.ppv.pid; }
     { const fv = active().find((p) => p.kf && p.vote >= 0); if (fv) { G.cw = fv.vote; fv.kf = 0; G.tie = 0; G.tb = null; best.length = 0; best.push(fv.vote); note(fv, '🗳️ Krčmar je poslušao tvoj glas.', 'pact'); } }
     G.tie = best.length > 1 ? 1 : 0;
     // neriješeno: svjetlo kruži preko izjednačenih vrata (ruleta) prije otkrivanja
@@ -557,7 +562,7 @@ function createGame(o) {
   function offersFor(p, t, multi) {
     // u finalu (točno/netočno) pola-pola i grickalice nemaju smisla
     let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'pola' || k === 'grick' || k === 'oklada')) && !(k === 'oklada' && !multi));
-    const wf = (k) => powerWeight(k, t, p) * (k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1);
+    const wf = (k) => powerWeight(k, t, p) * (k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1) * (k === 'oklada' && (p.lastOf || []).includes('oklada') ? 0 : 1);
     const out = [];
     if (multi) { const a = weightedPick(pool.filter((k) => POWERS[k].atk), wf); if (a) out.push(a); }
     while (out.length < 3) {
@@ -584,11 +589,13 @@ function createGame(o) {
     setPhase('bet', cfg.bet);
   }
   function startPower() {
-    const multi = active().length > 1, st = standing();
+    const multi = active().length > 1, st = standing(), firstQ = !G.inFinale && !(G.bdone > 0);
     for (const p of list()) {
       p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null; p.okl = null; p.ob = 0; p.oq = 0; p.okr = null;
-      p.offers = offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);
+      p.lastOf = p.offers || [];
+      p.offers = firstQ ? [] : offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);
     }
+    if (firstQ) { G.ev = []; return afterPower(); }
     setPhase('power', G.inFinale ? cfg.fpower : cfg.power);
   }
   function resolvePower() {
@@ -2065,7 +2072,7 @@ function createGame(o) {
     for (const p of ps.filter((x) => !x.bot)) {
       if (forced && p.pid !== forced.pid) continue;
       if (!p.kt && !p.koGot.task && (!forced || forced.k === 'task')) cand.push([p, 'task']);
-      if (!p.kf && !p.koGot.fav && p !== lead && (!forced || forced.k === 'fav')) cand.push([p, 'fav']);
+      // usluga „tvoj glas bira kategoriju” zamijenjena je power pickom na glasanju
     }
     if (!cand.length) return;
     if (forced) G.scn = null;
@@ -2226,7 +2233,7 @@ function createGame(o) {
   }
   function pactReset() {
     G.kp = null; G.kpN = 0; G.koN = 0; G.lc = null; G.lcDone = false;
-    for (const p of list()) { p.ko = null; p.kt = null; p.kf = 0; p.kb = 0; p.koGot = {}; }
+    for (const p of list()) { p.ko = null; p.kt = null; p.kf = 0; p.kb = 0; p.koGot = {}; p.pp = 1; p.ppc = -1; G.ppv = null; G.ppw = null; }
     G.pacts = []; G.offers = []; G.btq = []; G.bt = null; G.ly = null; G.news = null; G.newsSeq = 0; G.pactPaid = false;
     for (const p of list()) { p.pact = null; p.pactUsed = false; p.betray = false; p.wh = null; p.whS = -1; p.offersMade = 0; p.px = 0; p.note = null; }
   }
@@ -2443,7 +2450,7 @@ function createGame(o) {
   function botInput(b) {
     const s = G.s;
     switch (G.ph) {
-      case 'vote': return { s, v: rnd(G.cats.length) };
+      case 'vote': { const o = { s, v: rnd(G.cats.length) }; if (b.pp !== 0 && !G.ppv && !G.inFinale && (G.bdone || 0) >= 1 && Math.random() < 0.2) o.pp = 1; return o; }
       case 'bet': {
         // vodeći je oprezniji, zadnji riskira
         const t = standing().get(b.pid) || 0.5, r = Math.random();
@@ -2537,6 +2544,8 @@ function createGame(o) {
       if (ph === 'reveal' && p.kb) e.kb = p.kb;
       if (ph === 'reveal' && p.ob) e.ob = p.ob;
       if (ph === 'reveal' && p.oq) e.oq = p.oq;
+      e.pa = p.pp === 0 ? 0 : 1;
+      if ((ph === 'vote' || ph === 'voteResult') && p.ppc >= 0) e.pk = 1;
       if (ph === 'duelResult' && G.du && (p.pid === G.du.a || p.pid === G.du.b)) e.ch = p.ch;
       return e;
     });

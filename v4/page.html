@@ -1764,8 +1764,9 @@
     box-shadow: 0 0 0 3px rgba(255, 226, 150, 0.95), 0 0 28px 8px rgba(255, 196, 90, 0.75), inset 0 0 30px rgba(255, 230, 160, 0.55); mix-blend-mode: screen; }
   .rl-pre { animation: rlHide 0.25s ease-out both; animation-delay: calc(var(--rd) - var(--pel, 0ms)); }
   .rl-post { animation: rlShow 0.4s ease-out both; animation-delay: calc(var(--rd) + 80ms - var(--pel, 0ms)); }
-  .rl-pre + .rl-post { position: absolute; left: 0; right: 0; }
-  .p-title:has(.rl-pre), .tv-sub:has(.rl-pre) { position: relative; }
+  /* poruke prije i poslije ždrijeba dijele isto mjesto (rešetka), pa naslov koji se prelomi u dva retka gura sadržaj ispod umjesto da ga prekrije */
+  .p-title:has(.rl-pre), .tv-sub:has(.rl-pre) { display: grid; justify-items: center; }
+  .p-title:has(.rl-pre) > .rl-pre, .p-title:has(.rl-pre) > .rl-post, .tv-sub:has(.rl-pre) > .rl-pre, .tv-sub:has(.rl-pre) > .rl-post { grid-area: 1 / 1; }
   @keyframes rlHide { to { opacity: 0; visibility: hidden; } }
   @keyframes rlShow { from { opacity: 0; transform: translateY(4px); } }
   @media (prefers-reduced-motion: reduce) { .spot { display: none; } }
@@ -2213,6 +2214,12 @@
   .mboard .rank-row .nm:has(.betb) { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.3; }
   .mboard .rank-row .nm .betb { display: inline-block; margin: 2px 6px 0 0; white-space: nowrap; }
   .mboard .rank-row .nm .you + .betb, .mboard .rank-row .nm > .betb:first-of-type { margin-left: 0; }
+
+  /* „Pripremi izdaju”: pravi drveni gumb u tamnocrvenoj boji izdaje (isti jezik kao .pk-b.bt), umjesto podcrtane poveznice */
+  .kr-ally .sf-link.sf-btask { align-self: stretch; width: 100%; min-height: 44px; margin-top: 2px; padding: 0 14px; border-radius: 10px; text-decoration: none; text-align: center;
+    font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; letter-spacing: 0.02em; color: #ffd9c9; border: 1px solid rgba(224, 120, 90, 0.75);
+    background: linear-gradient(180deg, #7a3026, #3e1610); box-shadow: inset 0 1px 0 rgba(255, 190, 160, 0.25), 0 2px 0 #1f0a07; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); cursor: pointer; }
+  .kr-ally .sf-link.sf-btask:active { transform: translateY(1px); box-shadow: inset 0 1px 0 rgba(255, 190, 160, 0.25), 0 1px 0 #1f0a07; }
   /* Razvrstavanje: jedna kartica u sredini, kategorije lijevo i desno */
   .srt.swp { gap: 8px; }
   .swp-prog { display: flex; align-items: center; gap: 10px; }
@@ -2251,8 +2258,30 @@
   .swp-b:not(:disabled):active { background: rgba(222, 164, 74, 0.35); }
   @media (max-width: 360px) { .swp-card { font-size: 1.15rem; min-height: 130px; } .swp-side b { font-size: 0.74rem; } .swp-stage { min-height: 200px; } }
   @media (prefers-reduced-motion: reduce) { .swp-card.enter, .swp-card.back-a, .swp-card.back-b { animation: none; } .swp-card.fly, .swp-card.snap { transition-duration: 0.01s; } }
+  /* POWER PICK: jednom po partiji igrač bira baš svoju kategoriju; iskorištenje je odmah vidljivo na vratima */
+  .pp-tag { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 6; display: flex; align-items: center; gap: 5px; max-width: 92%; padding: 3px 10px 3px 4px; border-radius: 999px;
+    background: linear-gradient(180deg, #f6d27c, #c4892f); color: #2a1606; font-family: var(--font-body); font-weight: 900; font-size: 0.78rem; line-height: 1; white-space: nowrap; text-shadow: none;
+    box-shadow: 0 2px 0 #7a4f17, 0 0 14px rgba(240, 198, 110, 0.75); animation: ppIn 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both; }
+  .pp-tag .pp-av { width: 22px; height: 22px; border-radius: 50%; overflow: hidden; flex: none; background: rgba(42, 22, 6, 0.35); box-shadow: 0 0 0 1px rgba(42, 22, 6, 0.55); }
+  .pp-tag .pp-av > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .pp-tag .pp-tx { overflow: hidden; text-overflow: ellipsis; }
+  .tv .pp-tag { top: 10px; font-size: clamp(0.9rem, 1.5vw, 1.4rem); padding: 4px 14px 4px 5px; gap: 8px; } .tv .pp-tag .pp-av { width: clamp(26px, 2.6vw, 44px); height: clamp(26px, 2.6vw, 44px); }
+  @keyframes ppIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px) scale(0.7); } }
+  .door-btn.pp-on:disabled, .door-btn.pp-on { opacity: 1; filter: none; box-shadow: 0 0 0 3px #f0c66e, 0 0 26px rgba(240, 198, 110, 0.85); }
+  .door.pp-on { box-shadow: 0 0 0 4px #f0c66e, 0 0 34px rgba(240, 198, 110, 0.8); }
+  .door-btn.pp-arm:not(:disabled) { animation: ppArm 0.9s ease-in-out infinite alternate; }
+  @keyframes ppArm { from { box-shadow: 0 0 0 2px rgba(240, 198, 110, 0.5), 0 0 8px rgba(240, 198, 110, 0.3); } to { box-shadow: 0 0 0 3px #f0c66e, 0 0 22px rgba(240, 198, 110, 0.8); } }
+  .pp-bar { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 10px; width: 100%; }
+  .pp-btn { width: 100%; min-height: 46px; border-radius: 12px; border: 1px solid rgba(240, 198, 110, 0.8); font-family: var(--font-body); font-weight: 900; font-size: 1rem; color: #f3e3c4;
+    background: linear-gradient(180deg, rgba(86, 52, 22, 0.95), rgba(42, 22, 8, 0.95)); box-shadow: inset 0 1px 0 rgba(255, 220, 150, 0.2), 0 2px 0 #1f0f05; cursor: pointer; }
+  .pp-btn.on { color: #2a1606; background: linear-gradient(180deg, #f6d27c, #c4892f); box-shadow: 0 2px 0 #7a4f17, 0 0 16px rgba(240, 198, 110, 0.8); }
+  .pp-sub, .pp-used { font-size: 0.8rem; line-height: 1.3; text-align: center; color: rgba(243, 227, 196, 0.8); }
+  .pp-used { font-weight: 800; color: #ffe2a0; }
+  .pp-tag .pp-lb { display: none; } .tv .pp-tag .pp-lb { display: inline; }
+  #ambient { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 </style>
 
+<canvas id="ambient" aria-hidden="true"></canvas>
 <div id="app" class="screen center"></div>
 <button id="mute" type="button" aria-label="Isključi zvuk"></button>
 <button id="music" type="button" aria-label="Isključi glazbu"></button>
@@ -2631,6 +2660,78 @@ __ENGINE__
     })(t0);
   }
 
+  // ---------- ambijent krčme: vrlo suptilne iskre iz kamina, prašina u svjetlu i lagani dim; canvas #ambient je iza sučelja (#app ima z-index 1) ----------
+  (function ambient() {
+    const c = document.getElementById('ambient');
+    if (!c || !c.getContext) return;
+    const mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    if (mq && mq.matches) { c.remove(); return; }
+    const weak = (navigator.hardwareConcurrency || 4) <= 2 || (navigator.deviceMemory || 4) <= 2;
+    const g = c.getContext('2d');
+    let W = 0, H = 0, dust = [], embers = [], haze = [], last = 0, acc = 0, slow = 0, frames = 0, lvl = weak ? 1 : 2, raf = 0, t0 = 0;
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const land = () => W > H;   // kamin postoji samo na pozadini u landscapeu (TV); u portretu je drvena stijena
+    const hearth = () => ({ x: W * 0.09, y: H * 0.6 });   // otvor kamina na slici pozadine
+    function mkDust(init) { return { x: rnd(0, W), y: init ? rnd(0, H) : H + 6, r: rnd(0.6, 1.5), vy: rnd(3, 9), ph: rnd(0, 6.28), sw: rnd(4, 14), a: rnd(0.1, 0.3), tw: rnd(0.4, 1.2) }; }
+    function mkEmber() { const h = hearth(); return { x: h.x + rnd(-W * 0.03, W * 0.03), y: h.y + rnd(-H * 0.02, H * 0.04), r: rnd(0.8, 1.7), vy: rnd(14, 30), ph: rnd(0, 6.28), sw: rnd(6, 16), life: 0, max: rnd(3, 5.5) }; }
+    function seed() {
+      const k = (W > H ? 40 : 24) * (lvl === 1 ? 0.45 : 1);
+      dust = Array.from({ length: Math.round(k) }, () => mkDust(true));
+      embers = [];
+      haze = lvl >= 2 ? Array.from({ length: 3 }, (_, i) => ({ x: rnd(0, W), y: H * (0.55 + 0.18 * i), r: Math.max(W, H) * rnd(0.3, 0.5), vx: rnd(2, 5) * (i % 2 ? -1 : 1), a: rnd(0.025, 0.045) })) : [];
+    }
+    function size() {
+      const cw = innerWidth || 360, ch = innerHeight || 640, s = Math.min(1, 900 / Math.max(cw, ch));
+      W = Math.max(2, Math.round(cw * s)); H = Math.max(2, Math.round(ch * s));
+      c.width = W; c.height = H; seed();
+    }
+    function draw(dt, t) {
+      g.clearRect(0, 0, W, H);
+      g.globalCompositeOperation = 'lighter';
+      // dim: tri vrlo blijeda, spora oblaka pri dnu
+      for (const z of haze) {
+        z.x += z.vx * dt; if (z.x < -z.r * 0.5) z.x = W + z.r * 0.5; else if (z.x > W + z.r * 0.5) z.x = -z.r * 0.5;
+        const gr = g.createRadialGradient(z.x, z.y, 0, z.x, z.y, z.r);
+        gr.addColorStop(0, 'rgba(255,196,130,' + z.a + ')'); gr.addColorStop(1, 'rgba(255,196,130,0)');
+        g.fillStyle = gr; g.fillRect(z.x - z.r, z.y - z.r, z.r * 2, z.r * 2);
+      }
+      // titranje svjetla kamina (nepravilno, vrlo blago)
+      if (land()) { const h = hearth(), fl = 0.5 + 0.5 * Math.sin(t * 1.9) * Math.sin(t * 0.7 + 1) + 0.15 * Math.sin(t * 7.3), a = 0.035 + 0.035 * Math.max(0, Math.min(1, fl)), R = H * 0.55;
+        const gr = g.createRadialGradient(h.x, h.y, 0, h.x, h.y, R); gr.addColorStop(0, 'rgba(255,150,60,' + a + ')'); gr.addColorStop(1, 'rgba(255,150,60,0)'); g.fillStyle = gr; g.fillRect(h.x - R, h.y - R, R * 2, R * 2); }
+      // prašina
+      for (let i = 0; i < dust.length; i++) {
+        const p = dust[i]; p.y -= p.vy * dt; p.ph += dt * p.tw;
+        if (p.y < -6) { dust[i] = mkDust(false); continue; }
+        const x = p.x + Math.sin(p.ph) * p.sw, a = p.a * (0.55 + 0.45 * Math.sin(p.ph * 1.7));
+        g.fillStyle = 'rgba(255,222,170,' + a.toFixed(3) + ')'; g.beginPath(); g.arc(x, p.y, p.r, 0, 6.2832); g.fill();
+      }
+      // iskre iz kamina
+      if (lvl >= 2 && land() && embers.length < 9 && Math.random() < dt * 1.3) embers.push(mkEmber());
+      for (let i = embers.length - 1; i >= 0; i--) {
+        const e = embers[i]; e.life += dt; e.y -= e.vy * dt; e.ph += dt * 2.2;
+        if (e.life > e.max || e.y < -6) { embers.splice(i, 1); continue; }
+        const k = e.life / e.max, a = 0.55 * Math.sin(Math.min(1, k * 1.15) * 3.1416), x = e.x + Math.sin(e.ph) * e.sw * (0.4 + k);
+        g.fillStyle = 'rgba(255,' + Math.round(170 - 70 * k) + ',70,' + Math.max(0, a).toFixed(3) + ')'; g.beginPath(); g.arc(x, e.y, e.r * (1 - 0.4 * k), 0, 6.2832); g.fill();
+      }
+      g.globalCompositeOperation = 'source-over';
+    }
+    function loop(ts) {
+      raf = requestAnimationFrame(loop);
+      if (!t0) t0 = ts;
+      const dtm = ts - last; if (dtm < 33) return;   // najviše ~30 sličica u sekundi
+      last = ts; const dt = Math.min(0.1, dtm / 1000);
+      const t = performance.now();
+      draw(dt, (ts - t0) / 1000);
+      // ako uređaj kasni, smanji sloj (i na kraju ugasi) — igra ima prednost
+      if (++frames > 20) { const cost = performance.now() - t; slow = cost > 9 ? slow + 1 : Math.max(0, slow - 1); if (slow > 25) { slow = 0; frames = 0; if (lvl > 1) { lvl = 1; seed(); } else { stop(); c.remove(); } } }
+    }
+    function start() { if (!raf && !document.hidden) { last = 0; raf = requestAnimationFrame(loop); } }
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    window.addEventListener('resize', () => { size(); });
+    if (mq && mq.addEventListener) mq.addEventListener('change', (e) => { if (e.matches) { stop(); c.remove(); } });
+    size(); start();
+  })();
   // ---------- pozadina: unutrašnjost krčme (drveni zid, prozor u noć, kamin, svijeće, šank na TV-u) ----------
   (function backdrop() {
     const c = document.getElementById('bg');
@@ -4485,11 +4586,12 @@ __ENGINE__
       case 'vote': case 'voteResult': {
         const counts = d.cats.map((_, i) => d.P.filter((p) => p.vt === i).length);
         const max = Math.max(0, ...counts);
-        const rl = roulette(d);
+        const rl = roulette(d), ppBy = d.P.find((p) => p.pk);
         const doors = d.cats.map((c, i) => {
           const voters = voterFaces(d.P.filter((p) => p.vt === i), 5);
           const cls = d.ph === 'voteResult' ? (i === d.cw ? ' win' : ' lose') : (max > 0 && counts[i] === max ? ' lead' : '');
-          return '<div class="door o' + i + cls + '"' + (rl ? ' style="--rd:' + rl.R + 'ms"' : '') + '>' + (rl ? rl.spot(i) : '') + '<span class="vcount' + (counts[i] ? '' : ' zero') + '" data-bk="vc' + i + '">' + counts[i] + '</span><div class="dn"><span>' + esc(c) + '</span></div><div class="voters">' + voters + '</div><span class="knob"></span></div>';
+          const ppT = ppBy && ppBy.vt === i ? '<span class="pp-tag"><span class="pp-av">' + avSvg(ppBy.a, 'happy') + '</span><span class="pp-tx">' + esc(ppBy.n) + ' ⭐<span class="pp-lb"> power pick</span></span></span>' : '';
+          return '<div class="door o' + i + cls + (ppT ? ' pp-on' : '') + '"' + (rl ? ' style="--rd:' + rl.R + 'ms"' : '') + '>' + (rl ? rl.spot(i) : '') + ppT + '<span class="vcount' + (counts[i] ? '' : ' zero') + '" data-bk="vc' + i + '">' + counts[i] + '</span><div class="dn"><span>' + esc(c) + '</span></div><div class="voters">' + voters + '</div><span class="knob"></span></div>';
         }).join('');
         const voted = d.P.filter((p) => p.vt !== undefined).length;
         const label = d.ph === 'vote' ? 'Glasajte za kategoriju! Glasalo ' + voted + ' od ' + d.P.filter((p) => p.c).length
@@ -4714,18 +4816,22 @@ __ENGINE__
       case 'vote': case 'voteResult': {
         const res = d.ph === 'voteResult', rl = roulette(d);
         const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
+        const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;
+        const ppBar = ppAvail ? '<div class="pp-bar"><button class="pp-btn' + (L.ppOn ? ' on' : '') + '" id="ppBtn">⭐ Power pick' + (L.ppOn ? ' — dodirni svoja vrata' : '') + '</button><div class="pp-sub">Jednom po igri: tvoja kategorija je sigurno odabrana.</div></div>'
+          : ppBy ? '<div class="pp-bar"><div class="pp-used">⭐ ' + (ppBy.id === PID ? 'Iskoristio si power pick' : esc(ppBy.n) + ' je iskoristio power pick') + '</div></div>' : '';
         const doorBtns = d.cats.map((c, i) => {
           const who = d.P.filter((p) => p.vt === i);
           const faces = voterFaces(who, 4);
           const cls = res ? (i === d.cw ? ' win' : ' lose') : (mine === i ? ' picked' : '');
           const dst = !res && mine !== -1 ? (mine === i ? 'picked' : 'dim') : '';
-          return '<button class="door-btn o' + i + cls + '" data-v="' + i + '" data-bk="dv' + i + '" data-bv="' + dst + '"' + (dst ? ' data-ba="' + (dst === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (rl ? ' style="--rd:' + rl.R + 'ms"' : '') + (res || mine !== -1 ? ' disabled' : '') + '>' + (rl ? rl.spot(i) : '') + '<span class="dname"><span>' + esc(c) + '</span></span>' +
+          const ppT = ppBy && ppBy.vt === i ? '<span class="pp-tag"><span class="pp-av">' + avSvg(ppBy.a, 'happy') + '</span><span class="pp-tx">' + esc(ppBy.n) + ' ⭐<span class="pp-lb"> power pick</span></span></span>' : '';
+          return '<button class="door-btn o' + i + cls + (ppT ? ' pp-on' : '') + (L.ppOn && !res && mine === -1 ? ' pp-arm' : '') + '" data-v="' + i + '" data-bk="dv' + i + '" data-bv="' + dst + '"' + (dst ? ' data-ba="' + (dst === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (rl ? ' style="--rd:' + rl.R + 'ms"' : '') + (res || mine !== -1 ? ' disabled' : '') + '>' + (rl ? rl.spot(i) : '') + ppT + '<span class="dname"><span>' + esc(c) + '</span></span>' +
             '<span class="dvoters">' + faces + '</span></button>';
         }).join('');
         const resT = 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>';
         h = (rl ? '<style>' + rl.css + '</style>' : '') + head + '<div class="vote-head"><div class="p-title">' + (res ? (rl ? '<span class="rl-pre" style="--rd:' + rl.R + 'ms">Ždrijeb bira…</span><span class="rl-post" style="--rd:' + rl.R + 'ms">' + resT + '</span>' : resT) : 'Odaberi kategoriju') + '</div>' +
           '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : 'Kreće pitanje…') : mine !== -1 ? 'Glas zaprimljen ✔' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
-          '<div class="door-btns">' + doorBtns + '</div>' +
+          '<div class="door-btns">' + doorBtns + '</div>' + ppBar +
 
           '';
         break;
@@ -5428,7 +5534,8 @@ __ENGINE__
     // predvorje: popis igrača se pomiče sam za sebe; pamti položaj i pokaži da ima još redova
     { const lp = $app.querySelector('.lob-players');
       if (lp) { const upd = () => lp.classList.toggle('more', lp.scrollTop + lp.clientHeight < lp.scrollHeight - 4); lp.scrollTop = L.lobSc || 0; lp.onscroll = () => { L.lobSc = lp.scrollTop; upd(); }; upd(); } }
-    $app.querySelectorAll('[data-v]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ v: +b.dataset.v }); }; });
+    $app.querySelectorAll('[data-v]').forEach((b) => { b.onclick = () => { if (!L.sent) { const o = { v: +b.dataset.v }; if (L.ppOn) o.pp = 1; sendInput(o); } }; });
+    { const pb = document.getElementById('ppBtn'); if (pb) pb.onclick = () => { L.ppOn = !L.ppOn; AUDIO.play('tap'); phoneRender(true); }; }
     $app.querySelectorAll('[data-p]').forEach((b) => {
       b.onclick = () => {
         const k = b.dataset.p;
