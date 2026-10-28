@@ -15,7 +15,15 @@
   /* mali okrugli Power pick na sredini između četiri vrata: ne dodaje visinu, ne prekriva tekst vrata */
   .door-btns { position: relative; }
   .pp-coin { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 8; width: 64px; height: 64px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; font-size: 0; color: transparent;
-    background: url("ui/pp-medal.webp") center / contain no-repeat; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 7px rgba(240, 198, 110, 0.55)); animation: ppBob 2.2s ease-in-out infinite; -webkit-tap-highlight-color: transparent; }
-  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 16px rgba(255, 226, 150, 0.95)); }
+    -webkit-appearance: none; appearance: none; opacity: 1; -webkit-tap-highlight-color: transparent;
+    background: url("ui/pp-medal.webp") center / contain no-repeat; filter: brightness(1.12) saturate(1.2) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 8px rgba(255, 214, 120, 0.85));
+    animation: ppBob 2.2s ease-in-out infinite; }
+  /* zlatni oreol iza medaljona: jasno daje do znanja da se može dodirnuti */
+  .pp-coin::before { content: ""; position: absolute; inset: -9px; z-index: -1; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 226, 150, 0.75) 0%, rgba(240, 190, 90, 0.4) 45%, rgba(240, 190, 90, 0) 70%); animation: ppHalo 1.6s ease-in-out infinite alternate; }
+  .pp-coin:active { transform: translate(-50%, -50%) scale(0.94); }
+  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); filter: brightness(1.25) saturate(1.25) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 16px rgba(255, 230, 160, 1)); }
+  .pp-coin.on::before { inset: -14px; animation: none; opacity: 1; background: radial-gradient(circle, rgba(255, 240, 190, 0.95) 0%, rgba(255, 205, 110, 0.55) 45%, rgba(255, 205, 110, 0) 72%); }
   @keyframes ppBob { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.07); } }
-  @media (prefers-reduced-motion: reduce) { .pp-coin { animation: none; } }
+  @keyframes ppHalo { from { opacity: 0.55; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .pp-coin, .pp-coin::before { animation: none; } }

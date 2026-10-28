@@ -21,7 +21,7 @@ fs.writeFileSync(TMP, h.replace(a, a + ' window.__t = { game: () => game, S: (v)
       const L = Math.min(...bs.map((r) => r.left)), R = Math.max(...bs.map((r) => r.right)), T = Math.min(...bs.map((r) => r.top)), B = Math.max(...bs.map((r) => r.bottom));
       const cs = getComputedStyle(document.querySelector('.pp-coin')); return { dx: (c.left + c.right) / 2 - (L + R) / 2, dy: (c.top + c.bottom) / 2 - (T + B) / 2, w: c.width, bg: cs.backgroundImage, txt: document.querySelector('.pp-coin').textContent };
     });
-    console.log(JSON.stringify(m));
+    console.log(JSON.stringify(m)); console.log(await page.evaluate(() => { const e = document.querySelector('.pp-coin'); const o = []; for (let x = e; x; x = x.parentElement) { const c = getComputedStyle(x); if (c.opacity !== '1' || c.filter !== 'none' || c.mixBlendMode !== 'normal') o.push((x.id || x.className) + ' op=' + c.opacity + ' f=' + c.filter + ' mb=' + c.mixBlendMode); } return o.join(' | '); }));
     const loaded = await page.evaluate(() => new Promise((r) => { const i = new Image(); i.onload = () => r(i.naturalWidth); i.onerror = () => r(0); i.src = 'ui/pp-medal.webp'; }));
     console.log('slika učitana, širina', loaded);
     await page.screenshot({ path: OUT + '/ppicon-390.png' });
