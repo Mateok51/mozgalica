@@ -1680,11 +1680,12 @@ function createGame(o) {
       if (!T.fcAnn) {
         // najava se ponavlja dok se stvarno ne prikaže (može je nadjačati samo veći događaj)
         const c = cand('FINAL_CALL', 9.2, 'fc', { K: numW(left) }, list().slice().sort((a, b) => b.score - a.score).slice(0, 2).map((p) => p.pid), ['idle', 'idle'], { snd: 'stingLeader', vs: 0, onShow: () => { T.fcAnn = 1; } });
+        if (c && G.opt && G.opt.end === 'throne') { c.t = '👑 Posljednji poziv!'; c.s = 'Još ' + numW(left) + ' do Krčmarova prijestolja! Svaki bod nosiš u finale.'; }
         if (c) cands.push(c);
         return;
       }
       // bez komentara o projiciranim stepenicama (početne pozicije su iznenađenje piramide)
-      if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], [], { snd: 'stingSmall' }); if (c) cands.push(c); }
+      if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], [], { snd: 'stingSmall' }); if (c && G.opt && G.opt.end === 'throne') c.s = 'Još jedno pitanje prije borbe za prijestolje!'; if (c) cands.push(c); }
     }
     // javna izdaja (podaci postaju javni tek s izdajom): pamti za kasniji "vraća se po svoje"
     function onPact(a, b) { if (T) { T.pk = T.pk || []; T.pk.push({ id: T.pk.length + 1, a, b, turn: T.turn }); } }
