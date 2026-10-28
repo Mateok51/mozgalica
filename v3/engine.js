@@ -143,6 +143,9 @@ function rankBy(players, key) {
 }
 
 function createGame(o) {
+  const Math = Object.create(globalThis.Math);
+  if (o.random) Math.random = o.random;
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const cfg = Object.assign({}, CFG, o.cfg || {});
   cfg.steps = cfg.pyrReq.length + 1;   // zadnji red piramide je kruna (pobjeda)
   const F = Object.assign({}, FLAGS, o.flags || {});
@@ -177,8 +180,8 @@ function createGame(o) {
   const pick = (a) => a[rnd(a.length)];
   const list = () => [...R.values()];
   const active = () => list().filter((p) => p.on);
-  const later = (fn, ms) => { timers.push(setTimeout(fn, ms)); };
-  const clear = () => { timers.forEach(clearTimeout); timers = []; };
+  const later = (fn, ms) => { timers.push((o.schedule || setTimeout)(fn, ms)); };
+  const clear = () => { timers.forEach(o.cancel || clearTimeout); timers = []; };
   const isInt = (n) => Number.isInteger(n);
   const tkHold = (p) => !!(G.tk && G.tk.cur && G.tk.cur.st === 'OFFERED' && G.tk.cur.f === p.pid && G.ph === 'vote');
   const allDone = () => { const a = active(); return a.length > 0 && !(G.ph === 'vote' && G.ppHeld) && a.every((p) => p.done && !tkHold(p)); };
@@ -2474,7 +2477,6 @@ function createGame(o) {
     const p = R.get(pid);
     if (!p || p.bot || (!pactsOn() && !rcOn())) return null;
     if (!pactsOn()) return Object.assign({ can: false, used: false, inv: [], out: null, note: p.note }, sfOn() ? { sf: 1, dl: G.ph === 'deal' ? 1 : 0 } : {}, rcPriv(p));
-    cleanOffers();
     const k = pactOf(p), mate = partnerOf(p);
     const o = {
       can: pactWindow() && pactFree(p) && p.offersMade < cfg.pactOffersMax,
@@ -2498,7 +2500,6 @@ function createGame(o) {
   }
   function rcPriv(p) {
     if (!rcOn()) return {};
-    rcClean();
     const r = { st: cfg.rcStake };
     if (rcCanSend(p)) {
       r.can = 1;
@@ -2688,6 +2689,51 @@ function createGame(o) {
 
   // samo za testove
   function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
-  return { _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
+  return { refresh: () => { cleanOffers(); rcClean(); }, _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
 }
+// Versioned local journal: replay restores closures, timers and seeded random choices.
+function createRecoverableGame(options, saved) {
+  if (saved && (saved.version !== 1 || !Number.isInteger(saved.seed) || !Number.isFinite(saved.created) || !Number.isFinite(saved.time) || saved.time < saved.created || !Array.isArray(saved.events) || saved.events.length > 100000)) throw new Error('Neispravan zapis partije');
+  const seed = saved ? saved.seed : crypto.getRandomValues(new Uint32Array(1))[0];
+  let randomState = seed, replaying = !!saved, logical = saved ? saved.created : Date.now();
+  let offset = Date.now() - logical, seq = 0, engine;
+  const pending = new Map(), events = saved ? saved.events.slice() : [];
+  const created = logical;
+  const random = () => { randomState = (Math.imul(randomState, 1664525) + 1013904223) >>> 0; return randomState / 4294967296; };
+  const time = () => replaying ? logical : Date.now() - offset;
+  const checkpoint = () => { if (!replaying && options.onCheckpoint) options.onCheckpoint({ version: 1, seed, created, time: time(), events }); };
+  const arm = (id, task) => { task.handle = setTimeout(() => {
+    if (!pending.has(id)) return;
+    pending.delete(id); logical = time(); events.push({ timer: id, at: logical });
+    task.fn(); checkpoint();
+  }, Math.max(0, task.at - time())); };
+  const schedule = (fn, ms) => { const id = ++seq, task = { fn, at: time() + Math.max(0, ms), handle: null }; pending.set(id, task); if (!replaying) arm(id, task); return id; };
+  const cancel = (id) => { const task = pending.get(id); if (task) clearTimeout(task.handle); pending.delete(id); };
+  engine = createGame(Object.assign({}, options, { random, now: time, schedule, cancel, onChange: () => { if (!replaying && options.onChange) options.onChange(); } }));
+  const calls = ['refresh', 'addPlayer', 'addBot', 'setBots', 'setAvatar', 'setInput', 'syncPeers', 'start', 'skip', 'restart', 'setOpt', 'pactAction', 'sfScenario'];
+  if (saved) {
+    for (const event of events) {
+      if (!Number.isFinite(event.at) || event.at < logical || event.at > saved.time) throw new Error('Neispravno vrijeme zapisa');
+      logical = event.at;
+      if (event.timer !== undefined) {
+        const task = pending.get(event.timer); if (!task) throw new Error('Nepodudaranje vremenskih događaja');
+        pending.delete(event.timer); task.fn();
+      } else {
+        if (!calls.includes(event.method) || !Array.isArray(event.args)) throw new Error('Neispravna radnja');
+        engine[event.method](...event.args);
+      }
+    }
+    logical = saved.time; offset = Date.now() - logical; replaying = false;
+    for (const [id, task] of pending) arm(id, task);
+  }
+  const api = Object.assign({}, engine);
+  for (const method of calls) api[method] = (...args) => {
+    const copy = JSON.parse(JSON.stringify(args));
+    events.push({ method, args: copy, at: time() });
+    const result = engine[method](...args); checkpoint(); return result;
+  };
+  api.checkpoint = () => ({ version: 1, seed, created, time: time(), events: JSON.parse(JSON.stringify(events)) });
+  return api;
+}
+
 //#engine-end

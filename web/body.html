@@ -2304,7 +2304,8 @@
   .len-c { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 0; padding: 6px 4px 5px; border: 2px solid rgba(196, 146, 66, 0.35); border-radius: 12px; cursor: pointer;
     background: linear-gradient(180deg, rgba(58, 32, 14, 0.92), rgba(30, 15, 6, 0.92)); color: #f3e3c4; font-family: var(--font-body); line-height: 1.15; text-align: center; -webkit-tap-highlight-color: transparent;
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s; }
-  .len-c .len-n { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
+  .len-c .len-n { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; column-gap: 3px; width: 100%; min-width: 0; font-family: var(--font-body); font-weight: 900; font-size: clamp(0.72rem, 3.2vw, 0.95rem); line-height: 1.1; }
+  .len-c .len-label { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .len-c .len-m { font-size: 0.72rem; font-weight: 800; color: rgba(243, 227, 196, 0.8); white-space: nowrap; }
   .len-c .len-r { font-size: 0.68rem; font-weight: 700; color: rgba(243, 227, 196, 0.6); white-space: nowrap; }
   .len-c.on { border-color: #f0c66e; background: linear-gradient(180deg, #6a4216, #3a210c); box-shadow: 0 0 0 1px #f0c66e, 0 0 14px rgba(240, 198, 110, 0.55); color: #fff3d6; }
@@ -2312,7 +2313,7 @@
   .len-c:active { transform: scale(0.96); }
   .len-info { font-family: var(--font-body); font-size: 0.8rem; font-weight: 800; color: #ffe2a6; text-align: center; flex: none; }
   @media (max-height: 800px) { .len-c { padding: 3px 3px; gap: 0; line-height: 1.05; } .len-c .len-m, .len-c .len-r { font-size: 0.64rem; } }
-  @media (max-width: 374px) { .len-c .len-n { font-size: 0.84rem; } .lob-len { gap: 4px; } }
+  @media (max-width: 374px) { .lob-len { gap: 4px; } }
   .tvlob-side .lob-len { gap: 0.8vw; } .tvlob-side .len-c { padding: 1vh 0.5vw; border-radius: 14px; }
   .tvlob-side .len-c .len-n { font-size: clamp(0.9rem, 0.98vw, 1.2rem); } .tvlob-side .len-c .len-m, .tvlob-side .len-c .len-r { font-size: clamp(0.75rem, 1vw, 1.05rem); }
   /* PIRAMIDA 3: svaki točan odgovor ima vidljivu posljedicu (oznaka, traka napretka, poskok), uspon je naglašen */
@@ -2374,12 +2375,71 @@
   .pyramid .here:has(.climber + .climber) .climber:not(.me) .pbar b { display: none; }
   /* rezultat piramide na mobitelu bez TV-a: veća piramida da se napredak jasno vidi */
   .phone-pyr.big .pyramid { --H: clamp(32px, 6.4vh, 58px); }
+  /* Igra i zvuk zauzimaju odvojene dijelove istog zaslona. */
+  html:has(#app.phone), body:has(#app.phone) { height: 100%; overflow: hidden; }
+  #app.phone { height: auto; max-height: none; min-height: 0; padding-bottom: 8px; }
+  #app.phone > * { flex-shrink: 0; }
+  #app.phone.lobfit { min-height: 0; }
+  #app.tv { height: auto; max-height: none; min-height: 0; }
+  .audio-controls { display: contents; }
+  #app.phone + .audio-controls { position: fixed; bottom: max(8px, env(safe-area-inset-bottom, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); display: flex; gap: 8px; z-index: 60; }
+  #app.phone + .audio-controls #mute, #app.phone + .audio-controls #music { position: relative; inset: auto; width: 44px; height: 44px; flex: 0 0 44px; }
+  @media (max-height: 650px) {
+    .phone { gap: 8px; }
+    .phone .p-opt { min-height: 44px; padding-top: 4px; padding-bottom: 4px; }
+    .phone .p-q { margin-block: 0; }
+  }
+  /* Predvorje daje prednost svim igračima; izbor lika i postavke otvaraju se po potrebi. */
+  #app.lobfit .waiting-room .lob-players { flex: none; min-height: 0; overflow: visible; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px; padding: 8px; mask-image: none; -webkit-mask-image: none; }
+  .waiting-room .lob-row { grid-template-columns: 26px minmax(0, 1fr); gap: 2px 6px; padding: 4px 0; }
+  .waiting-room .lob-row .nm { white-space: normal; overflow-wrap: anywhere; }
+  .waiting-room .lob-row .st { grid-column: 2; font-size: .7rem; }
+  .lob-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .lob-tools .btn { min-height: 44px; font-size: .88rem; }
+  .lob-count { font-size: .7em; white-space: nowrap; }
+  .lob-settings { display: flex; flex-direction: column; gap: 8px; }
+  /* Odabir mete: veće dodirne površine umjesto dugog popisa. */
+  .phone .targets.pw-step { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; }
+  .phone .targets .target { grid-template-columns: 26px minmax(0, 1fr); gap: 2px 6px; min-height: 64px; }
+  .phone .targets .target .mini { width: 26px; height: 26px; }
+  .phone .targets .target .nm { white-space: normal; overflow-wrap: anywhere; font-size: .85rem; }
+  .phone .targets .target .sc { grid-column: 2; font-size: .72rem; }
+  .phone .pw-step .pw-card { border-width: 10px 16px; padding: 2px 4px; gap: 8px; }
+  .phone .pw-step .pw-card .pw-ico { width: 44px; height: 44px; }
+  .phone .pw-step .pw-card b { font-size: 1rem; }
+  .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: transform 120ms ease-out, filter 120ms ease-out; }
+  .lob-tools .btn[aria-expanded="true"], #tvSettings[aria-expanded="true"] { filter: brightness(1.15); }
+  .lob-tools .btn:active:not(:disabled), #tvSettings:active, .tgl:active:not(:disabled) { transform: scale(.96); }
+  @media (prefers-reduced-motion: reduce) {
+    .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: none; }
+    .lob-tools .btn:active:not(:disabled), #tvSettings:active, .tgl:active:not(:disabled) { transform: none; }
+  }
+  .net-reconnecting::before { content: ''; display: inline-block; width: 14px; height: 14px; flex: 0 0 14px; margin-right: 6px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: reconnectSpin 1s linear infinite; }
+  @keyframes reconnectSpin { to { transform: rotate(360deg); } }
+  #connectionNotice { position: fixed; left: max(12px, env(safe-area-inset-left, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 65; max-width: calc(100vw - 140px); padding: 6px 8px; border-radius: 8px; color: #fff3d5; background: #324322; font-size: .8rem; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { .net-reconnecting::before { animation: none; } }
+  .phone { --question-gap: 16px; }
+  .phone .rv > .rv-a { gap: var(--question-gap); }
+  @media (max-height: 650px) { .phone { --question-gap: 8px; } }
+  /* Dodirne površine ostaju dostupne i na niskim zaslonima. */
+  .phone .bstep { width: 44px; height: 44px; flex: 0 0 44px; }
+  .phone .tgl, .phone .home-link, .phone .demo-bar .btn.ghost { min-height: 44px; }
+  .phone .lob-opt-l { min-width: 0; overflow-wrap: anywhere; }
+  .phone .p-opt .otxt { overflow-wrap: anywhere; }
+  @media (max-width: 360px) {
+    .phone .lob-opt { flex-wrap: wrap; }
+    .phone .lob-opt-l { flex: 1 1 100%; }
+    .phone .lob-opt .tgl { margin-left: auto; }
+  }
+
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
 <div id="app" class="screen center"></div>
+<div class="audio-controls" role="group" aria-label="Postavke zvuka">
 <button id="mute" type="button" aria-label="Isključi zvuk"></button>
 <button id="music" type="button" aria-label="Isključi glazbu"></button>
+</div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3c2"/><stop offset="1" stop-color="#ff9d2e"/></linearGradient></defs></svg>
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
@@ -3087,7 +3147,7 @@ __ENGINE__
     { urls: ['turn:eu-0.turn.peerjs.com:3478', 'turn:us-0.turn.peerjs.com:3478'], username: 'peerjs', credential: 'peerjsp' },
     { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp', 'turns:openrelay.metered.ca:443'], username: 'openrelayproject', credential: 'openrelayproject' },
   ], sdpSemantics: 'unified-plan' } };
-  let hostWatch = null;
+  let hostWatch = null, hostRetryTimer = null;
   const hasPeer = () => typeof Peer === 'function';
   const appUrl = () => location.origin + location.pathname;
   let mode = 'home';            // home | join | player | host | demo
@@ -3096,7 +3156,7 @@ __ENGINE__
   const hostConns = new Map();
   let joinTries = 0, relayTimer = null;
   let ppeer = null, pconn = null, waitTimer = null, retryTimer = null, perr = '', pcode = '', pname = '', netNote = '';
-  let S = null, lastSig = '';
+  let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;
   let L = freshLocal(-1);
   let clockEnds = 0, clockDur = 0;
   let installEvt = null;
@@ -3104,11 +3164,12 @@ __ENGINE__
 
   let PID = store.get('mz_pid');
   if (!PID) { PID = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('mz_pid', PID); }
-  let SK = store.get('mz_sk');
+  // Novi ključ: prethodni je mogao biti izložen preko javnog MQTT-a.
+  let SK = store.get('mz_sk_v2');
   if (!SK || !/^[0-9a-f]{32}$/.test(SK)) {
     const a = new Uint8Array(16);
     try { crypto.getRandomValues(a); } catch (e) { for (let i = 0; i < 16; i++) a[i] = Math.floor(Math.random() * 256); }
-    SK = Array.from(a, (b) => b.toString(16).padStart(2, '0')).join(''); store.set('mz_sk', SK);
+    SK = Array.from(a, (b) => b.toString(16).padStart(2, '0')).join(''); store.set('mz_sk_v2', SK);
   }
   const hostKeys = new Map();   // domaćin: pid → ključ (prvi koji se javio s tim pid-om)
   const okKey = (k) => typeof k === 'string' && /^[0-9a-f]{32}$/.test(k);
@@ -3142,13 +3203,14 @@ __ENGINE__
     } catch (e) {}
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'player' || mode === 'demo')) keepAwake();
+    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'hostp' || mode === 'player' || mode === 'demo')) keepAwake();
   });
 
   // ---------- navigacija ----------
   function reset() {
+    try { sessionStorage.removeItem('mz_recovery_v1'); } catch (e) {}
     if (game) game.stop();
-    clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;
+    clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(hostRetryTimer); clearTimeout(relayTimer); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;
     for (const c of hostConns.keys()) { try { c.close(); } catch (e) {} }
     hostConns.clear();
     if (hostPeer) { try { hostPeer.destroy(); } catch (e) {} }
@@ -3159,10 +3221,14 @@ __ENGINE__
     L = freshLocal(-1);
     try { if (location.hash) history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
     mode = 'home';
+    lastLobbyFeedback = null; connectionWasLost = false;
+    const notice = document.getElementById('connectionNotice'); if (notice) notice.remove();
     render();
   }
 
   // ---------- rezervni put: poruke preko javnog MQTT posrednika (WebSocket, port 443/8084...) ----------
+  // Javni MQTT nije autentificiran i izlaže ključ igrača. Ostaje isključen dok se ne uvede siguran relej.
+  const RELAY_ENABLED = false;
   // Kad su oba uređaja na mobilnim podacima (CGNAT), izravna WebRTC veza često ne uspije. Tada se
   // stanje igre i unosi šalju preko MQTT teme sobe. Minimalni MQTT 3.1.1 klijent, QoS 0.
   const RELAY_URLS = window.__MQTT_URLS || ['wss://broker.emqx.io:8084/mqtt', 'wss://broker.hivemq.com:8884/mqtt', 'wss://test.mosquitto.org:8081/mqtt'];
@@ -3223,6 +3289,7 @@ __ENGINE__
     };
   }
   function relayReachable() {
+    if (!RELAY_ENABLED) return Promise.resolve(false);
     return new Promise((res) => {
       let left = RELAY_URLS.length, done = false;
       RELAY_URLS.forEach((u) => { const c = mqttClient(u, () => {}, () => {}); c.whenReady(6000).then((ok) => { c.close(); if (done) return; if (ok) { done = true; res(true); } else if (--left === 0) res(false); }); });
@@ -3234,6 +3301,7 @@ __ENGINE__
   let hostRelays = [], relaySweep = null;
   const relayConns = new Map();   // pid → lažna veza
   function startHostRelay(code) {
+    if (!RELAY_ENABLED) return;
     stopHostRelay();
     hostRelays = RELAY_URLS.map((u) => {
       const c = mqttClient(u, (topic, m) => onRelayHost(c, code, m), () => {});
@@ -3274,6 +3342,7 @@ __ENGINE__
   // igrač: spoji se na prvi posrednik koji radi i šalji preko njega
   let prelay = null, prelayPing = null, prelayHello = null;
   async function startPlayerRelay() {
+    if (!RELAY_ENABLED) return;
     if (prelay || mode !== 'player') return;
     const code = pcode;
     for (const u of RELAY_URLS) {
@@ -3292,6 +3361,7 @@ __ENGINE__
       c.subscribe(rTopic(code, 'all')); c.subscribe(rTopic(code, 'p/' + PID + '/' + SK.slice(0, 16)));
       prelay = c;
       if (await c.whenReady(5000)) {
+        if (prelay !== c || mode !== 'player' || pcode !== code || (pconn && pconn.open)) { c.close(); return; }
         const hello = () => c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
         hello(); if (L.sent) c.publish(rTopic(code, 'h'), { t: 'in', pid: PID, sk: SK, in: L.sent });
         clearInterval(prelayHello); prelayHello = setInterval(() => { if (!S) hello(); else clearInterval(prelayHello); }, 2000);
@@ -3335,10 +3405,11 @@ __ENGINE__
   }
   function publish() {
     if (!game) return;
+    if (game.refresh) game.refresh();
     const v = game.view(), rel = new Set();
     // javno stanje je isto za sve; privatno (paktovi) ide samo vlasniku, nikad svima
     for (const [c, x] of hostConns) {
-      if (!c.open) continue;
+      if (!c.open || !x.pid) continue;
       if (c.relay) { rel.add(c.client); if (x.pid) { try { c.send({ t: 'pv', code: v.code, s: v.s, pv: game.priv(x.pid) }); } catch (e) {} } continue; }
       try { c.send(x.pid ? Object.assign({}, v, { pv: game.priv(x.pid) }) : v); } catch (e) {}
     }
@@ -3352,23 +3423,35 @@ __ENGINE__
     openHostPeer(0);
   }
   function openHostPeer(tries, opts) {
-    const code = makeCode();
+    const code = opts && opts.recovery ? opts.recovery.code : makeCode();
     const peer = new Peer(PEER_PREFIX + code.toLowerCase(), PEER_OPTS);
     let opened = false;
     peer.on('open', () => {
       if (hostPeer === peer) return; // ponovno spajanje s posrednikom: soba ostaje ista (ranije se tu greškom uništavala)
       if ((mode !== 'host' && mode !== 'hostp') || hostPeer || game) { try { peer.destroy(); } catch (e) {} return; }
       opened = true; hostPeer = peer;
-      openRoom(code, opts);
+      try { openRoom(code, opts); } catch (e) {
+        try { peer.destroy(); } catch (_) {}
+        hostPeer = null; game = null;
+        hostErr = 'Spremljenu partiju nije moguće obnoviti. Vrati se na početni ekran i otvori novu sobu.';
+        if (mode === 'hostp') mode = 'hostform';
+        render(); return;
+      }
       // čuvar: ako veza s posrednikom padne (mobitel u pozadini, promjena mreže), soba je nevidljiva novim igračima → stalno ponovno spajanje
       clearInterval(hostWatch);
       hostWatch = setInterval(() => hostKeepAlive(peer), 3000);
       render();
     });
     peer.on('connection', (conn) => {
+      // Ograniči istodobne veze i ne zadržavaj veze koje ne pošalju prijavu.
+      if (hostConns.size >= 24) { try { conn.close(); } catch (e) {} return; }
       hostConns.set(conn, { pid: null, name: '', av: 0, in: null });
+      const loginTimer = setTimeout(() => {
+        const x = hostConns.get(conn);
+        if (x && !x.pid) { hostConns.delete(conn); try { conn.close(); } catch (e) {} }
+      }, 10000);
       conn.on('data', (m) => onHostData(conn, m));
-      const drop = () => { if (hostConns.delete(conn)) syncConns(); };
+      const drop = () => { clearTimeout(loginTimer); if (hostConns.delete(conn)) syncConns(); };
       conn.on('close', drop);
       conn.on('error', drop);
     });
@@ -3377,18 +3460,22 @@ __ENGINE__
     peer.on('error', (e) => {
       if (opened) { if (hostPeer === peer) setTimeout(() => hostKeepAlive(peer), 1500); return; } // gubitak veze jednog igrača ne ruši sobu
       try { peer.destroy(); } catch (er) {}
-      if (e && e.type === 'unavailable-id' && tries < 5) return openHostPeer(tries + 1, opts);
+      if (e && e.type === 'unavailable-id' && tries < 5) {
+        if (!(opts && opts.recovery)) return openHostPeer(tries + 1, opts);
+        hostRetryTimer = setTimeout(() => { if ((mode === 'host' || mode === 'hostp') && !hostPeer && !game) openHostPeer(tries + 1, opts); }, 1000);
+        return;
+      }
       // posrednik za WebRTC ne radi: otvori sobu samo preko releja ako je neki MQTT posrednik dostupan
       if ((mode === 'host' || mode === 'hostp') && !game) {
         relayReachable().then((ok) => {
-          if (!ok) return fail();
+          if (!ok) return fail(e);
           if ((mode === 'host' || mode === 'hostp') && !game) { openRoom(code, opts); render(); }
         });
         return;
       }
-      fail();
+      fail(e);
     });
-    function fail() {
+    function fail(e) {
       if (mode === 'host' || mode === 'hostp') {
         hostErr = 'Ne mogu otvoriti sobu (' + ((e && e.type) || 'greška') + '). Provjeri internet i pokušaj ponovno.';
         if (mode === 'hostp') mode = 'hostform';
@@ -3396,24 +3483,37 @@ __ENGINE__
       }
     }
   }
+  function saveRecovery(journal) {
+    if (!game || (mode !== 'host' && mode !== 'hostp')) return;
+    try {
+      if (game.view().ph === 'final') { sessionStorage.removeItem('mz_recovery_v1'); return; }
+      sessionStorage.setItem('mz_recovery_v1', JSON.stringify({ savedAt: Date.now(), code: game.view().code, noTv: mode === 'hostp', keys: [...hostKeys], journal }));
+    } catch (e) { /* Storage may be unavailable or full; the live game continues. */ }
+  }
   function openRoom(code, opts) {
     if (opts && opts.noTv) {
       // domaćin igra s ovog mobitela; ostali se spajaju kao i inače
       pcode = code;
       hostKeys.clear(); hostKeys.set(PID, SK);
-      game = createGame({ code, noTv: true, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } });
-      game.addPlayer(PID, opts.me, myAv, false, true);
+      game = createRecoverableGame({ code, noTv: true, onCheckpoint: saveRecovery, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } }, opts.recovery && opts.recovery.journal);
+      if (!opts.recovery) game.addPlayer(PID, opts.me, myAv, false, true);
     } else {
       hostKeys.clear();
-      game = createGame({ code, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } });
+      game = createRecoverableGame({ code, onCheckpoint: saveRecovery, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } }, opts && opts.recovery && opts.recovery.journal);
     }
-    clearInterval(pubTimer); pubTimer = setInterval(publish, 1000);
+    if (opts && opts.recovery) {
+      for (const [pid, key] of opts.recovery.keys) if (typeof pid === 'string' && okKey(key)) hostKeys.set(pid, key);
+      if (opts.noTv) applyState(Object.assign(game.view(), { pv: game.priv(PID) }));
+    }
+    saveRecovery(game.checkpoint());
+    clearInterval(pubTimer); pubTimer = setInterval(() => { publish(); saveRecovery(game.checkpoint()); }, 1000);
     startHostRelay(code);
   }
 
   let hostOff = false;
   function hostOffline(v) {
     if (hostOff === v) return; hostOff = v;
+    if (v) connectionWasLost = true; else if (connectionWasLost) { connectionWasLost = false; connectionNotice(); }
     netNote = v ? 'Soba se ponovno povezuje… novi igrači se mogu spojiti za koju sekundu.' : '';
     if (mode === 'hostp') phoneRender(true); else if (mode === 'host') render();
   }
@@ -3503,6 +3603,7 @@ __ENGINE__
   }
   function connectHost() {
     if (!ppeer || ppeer.destroyed) return;
+    if (pconn && pconn.open) return; // ponovno otvaranje signalizacije ne zamjenjuje aktivnu vezu
     if (pconn && !pconn.open) { try { pconn.close(); } catch (e) {} }
     const conn = ppeer.connect(PEER_PREFIX + pcode.toLowerCase(), { reliable: true, serialization: 'json' });
     pconn = conn;
@@ -3527,6 +3628,7 @@ __ENGINE__
     if (mode !== 'player' || !S) return;
     if (prelay && prelay.ready) return;            // relej i dalje radi
     startPlayerRelay();
+    connectionWasLost = true;
     if (!netNote) { netNote = 'Veza je prekinuta. Spajam ponovno…'; phoneRender(true); }
     clearTimeout(retryTimer);
     retryTimer = setTimeout(() => {
@@ -3537,8 +3639,28 @@ __ENGINE__
     }, 1500);
   }
 
+  function checkConnection() {
+    if (hostPeer) hostKeepAlive(hostPeer);
+    if (mode !== 'player' || !S || document.visibilityState !== 'visible') return;
+    if (lastStateAt && Date.now() - lastStateAt > 12000) {
+      lastStateAt = Date.now();
+      const stale = pconn; pconn = null;
+      try { if (stale) stale.close(); } catch (e) {}
+      retrySoon();
+    }
+  }
+  window.addEventListener('online', checkConnection);
+  setInterval(checkConnection, 3000);
+
   // zatvaranje kartice odmah javi domaćinu (umjesto da čeka da veza istekne)
-  window.addEventListener('pagehide', () => { try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
+  window.addEventListener('beforeunload', (e) => {
+    // Stanje partije je samo u memoriji domaćina; osvježavanje ga briše.
+    if (game && (mode === 'host' || mode === 'hostp') && game.view().ph !== 'lobby' && game.view().ph !== 'final') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+  window.addEventListener('pagehide', () => { if (game && game.checkpoint) saveRecovery(game.checkpoint()); try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
 
   function sendInput(inp) {
     AUDIO.play('confirm');
@@ -3576,6 +3698,8 @@ __ENGINE__
   }
 
   function applyState(d) {
+    if (connectionWasLost) { connectionWasLost = false; netNote = ''; connectionNotice(); }
+    lastStateAt = Date.now();
     if (d && 'pv' in d) PV = d.pv || null;
     clearTimeout(waitTimer);
     const t = Date.now();
@@ -3621,9 +3745,9 @@ __ENGINE__
     L.fx = makeFx(L.fxq[0]);
     HAPTIC.impact();
     // odgovori ostaju zaključani kratko vrijeme da se zadnji dodir ne pretvori u odgovor
-    L.lockUntil = Date.now() + 900;
+    L.lockUntil = Date.now() + 1600;
     const s0 = L.s;
-    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 920);
+    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 1620);
     phoneRender(true);
   }
   const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom' };
@@ -4558,7 +4682,7 @@ __ENGINE__
   function bsToggle(d) {
     if (!d.opt) return '';
     if (!game) return d.opt.bs ? '<div class="lob-info">🤖 Testiranje društvenih mehanika s botovima je uključeno</div>' : '';
-    return '<div class="lob-opt"><span class="lob-opt-l">🤖 Testiraj društvene mehanike s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušavati izdaju. Namijenjeno isprobavanju društvenih funkcionalnosti.</small></span><button class="tgl' + (d.opt.bs ? '' : ' off') + '" data-bsopt="' + (d.opt.bs ? 0 : 1) + '">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';
+    return '<div class="lob-opt"><span class="lob-opt-l">🤖 Paktovi s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušati izdaju.</small></span><button class="tgl' + (d.opt.bs ? '' : ' off') + '" data-bsopt="' + (d.opt.bs ? 0 : 1) + '">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';
   }
   // šapat na kartici odgovora: 🔮 šalje to slovo savezniku (vlastiti odgovor se NE zaključava); primljeni šapat = mali avatar saveznika
   function sfOptX(d, i, answered, gone) {
@@ -5188,6 +5312,7 @@ __ENGINE__
     KEEP.grab(fresh);
     SCENE.swap(demoBar + h, fresh, 't:' + d.ph);
     fitScreen();
+    lobbyFeedback(d);
     pactToasts(d);
     MOTION.after('t:' + d.ph + ':' + d.s);
     KEEP.put();
@@ -5238,21 +5363,60 @@ __ENGINE__
     return '<div class="pyramid' + (intro ? ' intro' : '') + (rev && !intro ? ' res' : '') + '">' + rows + '</div>';
   }
 
+  let lastLobbyFeedback = null;
+  function feedbackPulse(el, entering) {
+    if (!el || !el.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.animate(entering ? [{ opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }] :
+      [{ filter: 'brightness(1.5)' }, { filter: 'brightness(1)' }], { duration: entering ? 230 : 260, easing: 'ease-out' });
+  }
+  function lobbyFeedback(d) {
+    if (!d || d.ph !== 'lobby') { lastLobbyFeedback = null; return; }
+    const next = { key: d.code + ':' + mode, ids: new Set(d.P.map(p => p.id)), bots: d.P.filter(p => p.b).length, len: d.len || (d.opt && d.opt.len) };
+    const prev = lastLobbyFeedback; lastLobbyFeedback = next;
+    if (!prev || prev.key !== next.key) return;
+    $app.querySelectorAll('[data-player-id]').forEach(el => { if (!prev.ids.has(el.dataset.playerId)) feedbackPulse(el, true); });
+    if (prev.bots !== next.bots) feedbackPulse($app.querySelector('.lob-bots-c b'), false);
+    if (prev.len !== next.len) feedbackPulse($app.querySelector('.len-c.on, .len-info'), false);
+  }
+  function connectionNotice() {
+    let el = document.getElementById('connectionNotice');
+    if (!el) { el = document.createElement('div'); el.id = 'connectionNotice'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.textContent = '✓ Veza obnovljena'; feedbackPulse(el, true);
+    clearTimeout(connectionNotice.timer); connectionNotice.timer = setTimeout(() => el.remove(), 2600);
+  }
+
+  // Animiraj samo izričitu radnju, ne svako mrežno osvježavanje predvorja.
+  function lobbyChange(buttonId, update, panelSelector) {
+    const focused = document.activeElement && document.activeElement.id === buttonId;
+    update();
+    const button = document.getElementById(buttonId);
+    if (focused && button) button.focus({ preventScroll: true });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (button && button.animate) button.animate([
+      { transform: 'scale(.96)' }, { transform: 'scale(1.025)', offset: .65 }, { transform: 'none' }
+    ], { duration: 190, easing: 'ease-out' });
+    const panel = $app.querySelector(panelSelector);
+    if (panel && panel.animate) panel.animate([
+      { opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }
+    ], { duration: 180, easing: 'ease-out' });
+  }
+
   function tvLobby(d, demoBar) {
     const addr = esc(location.host + location.pathname.replace(/index\.html$/, ''));
     const svg = mode === 'demo' ? '' : qrSvg(appUrl() + '#' + d.code);
     const inv = mode === 'demo'
       ? '<div class="tvlob-inv"><span class="lob-code-l">Demo</span><span class="lob-addr">Botovi igraju s tobom. U pravoj igri ovdje su kod sobe i QR kod.</span></div>'
       : '<div class="tvlob-inv"><span class="lob-code-l">Pozovi igrače</span><span class="lob-code">' + esc(d.code) + '</span>' + (svg ? '<div class="lob-qr">' + svg + '</div>' : '') +
-        '<span class="lob-addr">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span>' + (netNote ? '<span class="lob-addr" style="color:#f0b070">' + esc(netNote) + '</span>' : '') + '</div>';
+        '<span class="lob-addr">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span>' + (netNote ? '<span class="lob-addr net-reconnecting" role="status" style="color:#f0b070">' + esc(netNote) + '</span>' : '') + '</div>';
     const on = d.P.filter((p) => p.c && !p.b).length;
-    let slots = d.P.map((p) => '<div class="tvlob-slot' + (p.c ? '' : ' off') + '" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="pick-img">' + avSvg(p.a, 'idle') + '</span><span class="pick-nm">' + esc(p.n) + '</span>' + (p.b ? '<span class="pick-bot">BOT</span>' : '') + '</div>').join('');
+    let slots = d.P.map((p) => '<div class="tvlob-slot' + (p.c ? '' : ' off') + '" data-player-id="' + esc(p.id) + '" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="pick-img">' + avSvg(p.a, 'idle') + '</span><span class="pick-nm">' + esc(p.n) + '</span>' + (p.b ? '<span class="pick-bot">BOT</span>' : '') + '</div>').join('');
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
     const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
     $app.innerHTML = demoBar +
-      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? botStepper(d) + lenPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
+      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? '<button class="btn ghost" id="tvSettings" aria-expanded="' + !!L.tvSettings + '">Postavke igre</button>' + (L.tvSettings ? botStepper(d) + lenPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
       '<div class="tvlob-grid">' + slots + '</div>' +
       '<div class="tvlob-act"><button class="btn lob-cta" id="start"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="home-link" id="quit">Odustani</button></div></div></div>';
+    bind('tvSettings', () => lobbyChange('tvSettings', () => { L.tvSettings = !L.tvSettings; render(); }, L.tvSettings ? '.tvlob-act' : '.tvlob-side'));
     bind('start', () => game.start());
     if (game) { bindBots(d); bindOpt(); }
     bind('quit', reset);
@@ -5276,7 +5440,7 @@ __ENGINE__
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem">MOZGALICA</div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
-      (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
+      (netNote ? '<div class="err net-reconnecting" role="status" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
     const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
@@ -5290,7 +5454,7 @@ __ENGINE__
             '<span class="pick-img">' + avSvg(i, me.a === i ? 'happy' : 'idle') + '</span><span class="pick-nm">' + esc(a.n) + '</span>' + (tk ? '<span class="pick-tk">Zauzeto</span>' : '') + '</button>'; }).join('');
         L.popAv = null;
         const hostId = d.ntv && d.P.length ? d.P[0].id : null;
-        const rows = d.P.map((p) => '<div class="lob-row" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + (p.id === hostId ? '<span class="crown" title="Domaćin">♛</span>' : '') + (p.id === PID ? '<span class="you">Ti</span>' : '') + '</span>' +
+        const rows = d.P.map((p) => '<div class="lob-row" data-player-id="' + esc(p.id) + '" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + (p.id === hostId ? '<span class="crown" title="Domaćin">♛</span>' : '') + (p.id === PID ? '<span class="you">Ti</span>' : '') + '</span>' +
           (p.b ? '<span class="st bot">🤖 Bot</span></div>' : '<span class="st' + (p.c ? '' : ' off') + '">' + (p.c ? '✓ U sobi' : 'Nije povezan') + '</span></div>')).join('');
         let invite = '', cta = '';
         if (mode === 'hostp') {
@@ -5305,8 +5469,17 @@ __ENGINE__
         } else {
           cta = lenPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
         }
-        h = '<div class="lob"><div class="p-title lob-title">Odaberi lika</div><div class="av-grid">' + grid + '</div>' +
-          invite + cta + '<button class="home-link" id="leave">Izađi</button><div class="lob-players">' + rows + '</div></div>';
+        const startAt = cta.indexOf('<button class="btn lob-cta"');
+        const settingsAt = startAt >= 0 ? startAt : cta.indexOf('<div class="lob-wait"');
+        const settings = settingsAt >= 0 ? cta.slice(0, settingsAt) : cta;
+        const actions = settingsAt >= 0 ? cta.slice(settingsAt) : '';
+        h = '<div class="lob waiting-room"><div class="p-title lob-title">Igrači u sobi <span class="lob-count">' + d.P.length + '/' + d.max + '</span></div>' +
+          '<div class="lob-players" aria-label="Igrači u sobi">' + rows + '</div>' + invite +
+          '<div class="lob-tools"><button class="btn ghost" id="lobAvatar" aria-expanded="' + (L.lobPanel === 'avatar') + '">Promijeni lika</button>' +
+          (settings ? '<button class="btn ghost" id="lobSettings" aria-expanded="' + (L.lobPanel === 'settings') + '">Postavke igre</button>' : '') + '</div>' +
+          (L.lobPanel === 'avatar' ? '<div class="av-grid">' + grid + '</div>' : '') +
+          (L.lobPanel === 'settings' ? '<div class="lob-settings">' + settings + '</div>' : '') +
+          actions + '<button class="home-link" id="leave">Izađi</button></div>';
         break;
       }
       case 'intro':
@@ -5407,11 +5580,12 @@ __ENGINE__
         break;
     }
     if (freshP && me) { phoneStep = L.s; phoneSound(d, me); }
-    if (me && (!d.ntv || d.ph !== 'fq') && (d.ph === 'power' || d.ph === 'question' || d.ph === 'fq')) h += barRow(d);
+    if (me && (!d.ntv || d.ph !== 'fq') && (d.ph === 'power' || d.ph === 'question' || d.ph === 'reveal' || d.ph === 'fq')) h += barRow(d);
     KEEP.grab(freshP);
     SCENE.swap(demoBar + h, freshP, 'p:' + d.ph);
     $app.classList.toggle('lobfit', !!d && d.ph === 'lobby');
     fitScreen();
+    lobbyFeedback(d);
     MOTION.after('p:' + d.ph + ':' + d.s);
     KEEP.put();
     if (freshP) $app.classList.add('fresh');
@@ -5624,7 +5798,7 @@ __ENGINE__
     const cur = (d.opt && d.opt.len) || 'std', U = LEN_UI[cur] || LEN_UI.std;
     if (!game) return '<div class="len-info">' + U[0] + ' ' + U[1] + ' partija · ' + U[2] + ' · ' + rundeW(U[3]) + '</div>';
     return '<div class="lob-len" role="radiogroup" aria-label="Trajanje partije">' + ['brza', 'std', 'duga'].map((k) => { const u = LEN_UI[k];
-      return '<button class="len-c' + (k === cur ? ' on' : '') + '" data-len="' + k + '" role="radio" aria-checked="' + (k === cur) + '"><span class="len-n">' + u[0] + ' ' + u[1] + '</span><span class="len-m">' + u[2] + '</span><span class="len-r">' + rundeW(u[3]) + '</span></button>'; }).join('') + '</div>';
+      return '<button class="len-c' + (k === cur ? ' on' : '') + '" data-len="' + k + '" role="radio" aria-checked="' + (k === cur) + '"><span class="len-n"><span aria-hidden="true">' + u[0] + '</span><span class="len-label">' + u[1] + '</span></span><span class="len-m">' + u[2] + '</span><span class="len-r">' + rundeW(u[3]) + '</span></button>'; }).join('') + '</div>';
   }
   document.addEventListener('click', (e) => { const b = e.target && e.target.closest && e.target.closest('[data-len]'); if (!b || !game) return; AUDIO.play('tap'); game.setOpt('len', b.dataset.len); });
   function pactToggle(d) {
@@ -5676,22 +5850,44 @@ __ENGINE__
     r.steps.forEach((t, k) => setTimeout(() => AUDIO.play('tap'), t + (k ? 0 : 10)));
     setTimeout(() => AUDIO.play('step'), r.R + 40);
   }
-  // ekran mora stati bez skrolanja: ako sadržaj prelije, cijela scena se smanji (najviše na 60 %)
+  let questionFit = null;
+  // Mjeri puni sadržaj prije prilagodbe; kontrole zvuka imaju vlastiti prostor.
   function fitScreen() {
-    const A = $app, se = document.scrollingElement || document.documentElement;
+    const A = $app;
     if (!A || !A.firstElementChild) return;
-    const ih = innerHeight;
+
     A.style.zoom = '';
-    return; // namjerno: više sadržaja = pomicanje, ne smanjivanje cijelog sučelja
-    let sh = se.scrollHeight;
-    if (sh <= ih + 1) return;
-    let f = Math.max(0.6, ih / sh);
-    for (let k = 0; k < 4; k++) {
-      A.style.zoom = f.toFixed(3);
-      sh = se.scrollHeight;
-      if (sh <= ih + 1 || f <= 0.6) break;
-      f = Math.max(0.6, f * ih / sh - 0.006);
+    A.style.width = '';
+    A.style.maxWidth = '';
+    const phone = A.classList.contains('phone');
+    if (!phone && !A.classList.contains('tv')) return;
+    const bodyStyle = getComputedStyle(document.body);
+    const width = innerWidth - parseFloat(bodyStyle.paddingLeft) - parseFloat(bodyStyle.paddingRight);
+    A.style.width = Math.min(phone ? 520 : 1600, width) + 'px';
+    const top = A.getBoundingClientRect().top;
+    const controls = document.querySelector('#mute').getBoundingClientRect();
+    const available = Math.max(1, controls.top - top - 8);
+    const targetWidth = Math.min(phone ? 520 : 1600, width);
+    A.style.maxWidth = 'none';
+    const measure = (scale) => {
+      A.style.zoom = scale.toFixed(4);
+      A.style.width = (targetWidth / scale) + 'px';
+      // Izvanjski likovi i animacijske putanje ne mijenjaju veličinu rasporeda.
+      return A.getBoundingClientRect().height;
+    };
+    const key = phone && S && S.q ? [S.code, S.q.n, innerWidth, innerHeight].join(':') : null;
+    const finish = (scale) => {
+      if (phone && S && S.ph === 'reveal' && questionFit && questionFit.key === key) scale = Math.min(scale, questionFit.scale);
+      measure(scale);
+      if (phone && S && S.ph === 'question') questionFit = { key, scale };
+    };
+    if (measure(1) <= available) { finish(1); return; }
+    let low = 0.1, high = 1;
+    for (let i = 0; i < 10; i++) {
+      const mid = (low + high) / 2;
+      if (measure(mid) <= available) low = mid; else high = mid;
     }
+    finish(low);
   }
   let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitScreen, 120); });
   // kolo sreće za otkrivanje odgovora: vrijeme šetnje, okretanja i otkrivanja (ms od početka faze)
@@ -5830,7 +6026,7 @@ __ENGINE__
     const b = revBoard(d, el);
     const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
     const wh = wheel(d);
-    return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
+    return '<div class="timer spent" aria-hidden="true"><div style="width:0"></div></div><div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span aria-hidden="true">0</span></div><style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
       '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
   }
@@ -5876,6 +6072,7 @@ __ENGINE__
     const LL = L, stage = root.querySelector('.swp-stage'), sides = root.querySelectorAll('.swp-side');
     const card = root.querySelector('.swp-card[data-si]');
     const width = () => (stage && stage.clientWidth) || 320;
+    const pointerScale = () => stage && stage.clientWidth ? stage.getBoundingClientRect().width / stage.clientWidth : 1;
     const thr = () => Math.max(64, width() * 0.2);
     const tilt = (dx) => Math.max(-20, Math.min(20, dx / width() * 40));
     const glow = (dx) => { const k = Math.min(1, Math.abs(dx) / thr()); sides[0].style.setProperty('--k', dx < 0 ? k : 0); sides[1].style.setProperty('--k', dx > 0 ? k : 0); if (card) card.dataset.dir = k > 0.4 ? (dx < 0 ? 'a' : 'b') : ''; };
@@ -5909,7 +6106,8 @@ __ENGINE__
       };
       card.onpointermove = (e) => {
         if (e.pointerId !== id) return;
-        dx = e.clientX - x0; dy = e.clientY - y0;
+        const scale = pointerScale();
+        dx = (e.clientX - x0) / scale; dy = (e.clientY - y0) / scale;
         if (!moved && Math.hypot(dx, dy) < 5) return;
         moved = true;
         card.style.transform = 'translate(' + dx + 'px,' + dy * 0.35 + 'px) rotate(' + tilt(dx) + 'deg)';
@@ -5961,6 +6159,8 @@ __ENGINE__
     document.querySelectorAll('.lnk-board').forEach((b) => {
       const svg = b.querySelector('svg'); if (!svg) return;
       const br = b.getBoundingClientRect(); let p = '';
+      svg.setAttribute('viewBox', '0 0 ' + Math.max(1, br.width) + ' ' + Math.max(1, br.height));
+      svg.setAttribute('preserveAspectRatio', 'none');
       b.querySelectorAll('.lnk-l.paired').forEach((l) => {
         const i = +l.dataset.ll, col = getComputedStyle(l).getPropertyValue('--pc').trim();
         const rIdx = (b.dataset.pairs || '').split(',')[i]; const r = b.querySelector('[data-lr="' + rIdx + '"]'); if (!r) return;
@@ -6031,6 +6231,8 @@ __ENGINE__
     bind('toTv', () => { demoView = 'tv'; render(); });
     bind('leave', reset);
     bind('leave2', reset);
+    bind('lobAvatar', () => lobbyChange('lobAvatar', () => { L.lobPanel = L.lobPanel === 'avatar' ? null : 'avatar'; phoneRender(true); }, '.av-grid'));
+    bind('lobSettings', () => lobbyChange('lobSettings', () => { L.lobPanel = L.lobPanel === 'settings' ? null : 'settings'; phoneRender(true); }, '.lob-settings'));
     bind('dstart', () => game.start());
     if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
@@ -6038,7 +6240,7 @@ __ENGINE__
     bind('htok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
     bindLeg(d);
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });
-    bind('lobInv', () => { L.inv = true; phoneRender(true); });
+    bind('lobInv', () => lobbyChange('lobInv', () => { L.inv = true; phoneRender(true); }, '.inv-card'));
     bind('invClose', () => { L.inv = false; phoneRender(true); });
     { const m = document.getElementById('invModal'); if (m) m.onclick = (e) => { if (e.target === m) { L.inv = false; phoneRender(true); } }; }
     // predvorje: popis igrača se pomiče sam za sebe; pamti položaj i pokaži da ima još redova
@@ -6123,5 +6325,14 @@ __ENGINE__
 
   if (/^#?[A-Za-z]{4}$/.test(location.hash || '')) mode = 'join';
   render();
+  try {
+    const raw = sessionStorage.getItem('mz_recovery_v1');
+    const saved = raw && JSON.parse(raw);
+    if (saved && !location.hash && /^[A-Z]{4}$/.test(saved.code) && Array.isArray(saved.keys) && Date.now() - saved.savedAt < 6 * 60 * 60 * 1000 && saved.journal && hasPeer()) {
+      mode = saved.noTv ? 'hostp' : 'host';
+      openHostPeer(0, { noTv: saved.noTv, recovery: saved });
+      render(); keepAwake();
+    }
+  } catch (e) { try { sessionStorage.removeItem('mz_recovery_v1'); } catch (_) {} }
 })();
 </script>

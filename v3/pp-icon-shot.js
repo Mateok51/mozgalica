@@ -4,7 +4,7 @@ const { chromium } = require('playwright'); const path = require('path'); const 
 const OUT = path.join(__dirname, 'shots'); fs.mkdirSync(OUT, { recursive: true });
 const TMP = path.join(__dirname, '..', 'web', 'site', '_out-ppicon.html');
 let h = fs.readFileSync(path.join(__dirname, '..', 'web', 'site', 'index.html'), 'utf8').replace(/<meta[^>]*Content-Security-Policy[^>]*>/i, '');
-const a = "let S = null, lastSig = '';"; if (!h.includes(a)) throw new Error('sidro');
+const a = "let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;"; if (!h.includes(a)) throw new Error('sidro');
 fs.writeFileSync(TMP, h.replace(a, a + ' window.__t = { game: () => game, S: (v) => { S = v; }, L: (v) => { L = v; }, fresh: (s) => freshLocal(s), render: () => phoneRender(true) };'));
 (async () => {
   const b = await chromium.launch();
@@ -12,7 +12,7 @@ fs.writeFileSync(TMP, h.replace(a, a + ' window.__t = { game: () => game, S: (v)
     const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true }); const page = await ctx.newPage();
     await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr/, (r) => r.abort());
     await page.goto('file://' + TMP);
-    await page.click('#demo'); await page.waitForTimeout(250); await page.click('[data-av]:not([disabled])'); await page.waitForTimeout(150);
+    await page.click('#demo'); await page.waitForTimeout(250); await page.click('#lobAvatar').catch(() => {}); await page.waitForTimeout(150); await page.click('[data-av]:not([disabled])'); await page.waitForTimeout(150);
     await page.evaluate(() => { const game = __t.game(), real = game.view.bind(game);
       game.view = () => { const v = real(); const P = v.P.map((p) => Object.assign({}, p, { pa: 1, vt: undefined })); return Object.assign(v, { ph: 'vote', s: 777, ntv: false, cats: ['Dinosauri i prapovijest', 'Slavni parovi i obitelji', 'Reklame i slogani', 'Jezici i riječi'], P }); };
       __t.S(game.view()); __t.L(__t.fresh(777)); __t.render(); });

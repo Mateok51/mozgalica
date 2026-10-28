@@ -41,3 +41,7 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
   provjere: node v3/len-test.js (motor, virtualni sat), node v3/len-ui-test.js (predvorje 390/412/360, TV, demo), procjena minuta: node v3/len-time.js 4
 - Piramida 3 (vidljiv napredak: +1 i traka 1/2, uspon stepenicu po stepenicu s bljeskom, ✗, 👑✗, bonusi ⚡ ✖2 🔥): v4/pyr3.js (pyramidHtml), v4/pyr3.css, engine p.fb samo za prikaz;
   provjere: node v3/pyr-test.js (motor, botovi), node v3/pyr-ui-test.js (mobitel 390 + TV, snimke v3/shots/pyr-*.png)
+- Prijenos izmjena s grane main (v48: obnova partije, sigurnije povezivanje bez MQTT-a, novo predvorje, odabir mete, prilagodba ekrana):
+  motor v3/kr.py (zadnji blok) + v3/recover.js; sučelje web/port-main.py + web/port-main.json (parovi stari → novi, primjenjuju se na kraju web/transform.py);
+  web/assemble.py piše zaseban engine.js, README iz web/README.main.md i kopira web/main-extra (tests, docs, scripts, src, .github).
+  Provjera nakon gradnje: cd web/site && node --test tests/*.test.cjs

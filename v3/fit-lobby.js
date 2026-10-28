@@ -2,7 +2,7 @@
 // Predvorje: s 6 igrača (4+ botova) ne smije se skrolati cijela stranica; dugi popis igrača skrola se iznutra. Pokretanje: node v3/fit-lobby.js
 const { chromium } = require('playwright'); const path = require('path'); const fs = require('fs');
 const OUT = path.join(__dirname, 'shots'); const TMP = path.join(__dirname, '..', 'web', 'site', '_out-fit-lobby.html');
-{ let h = fs.readFileSync(path.join(__dirname, '..', 'web', 'site', 'index.html'), 'utf8').replace(/<meta[^>]*Content-Security-Policy[^>]*>/i, ''); const b = "let S = null, lastSig = '';"; h = h.replace(b, b + ' window.__t = { game: () => game, pid: () => PID };'); fs.writeFileSync(TMP, h); }
+{ let h = fs.readFileSync(path.join(__dirname, '..', 'web', 'site', 'index.html'), 'utf8').replace(/<meta[^>]*Content-Security-Policy[^>]*>/i, ''); const b = "let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;"; h = h.replace(b, b + ' window.__t = { game: () => game, pid: () => PID };'); fs.writeFileSync(TMP, h); }
 (async () => {
   const br = await chromium.launch(); let bad = 0;
   for (const [W, H, view] of [[390, 844, 'phone'], [412, 915, 'phone'], [360, 780, 'phone'], [1920, 1080, 'tv']]) {

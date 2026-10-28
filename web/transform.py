@@ -80,3 +80,6 @@ for bad in ['claude.use', 'roomNs', 'roomReady', 'JOIN_URL', 'mz_base', 'baseUrl
     assert bad not in s, 'ostatak: ' + bad
 open(SP + '/web/body.html', 'w', encoding='utf-8').write(s)
 print('OK', len(s))
+# izmjene napravljene izravno na grani main (v48)
+import subprocess, sys
+subprocess.run([sys.executable, SP + '/web/port-main.py'], check=True)

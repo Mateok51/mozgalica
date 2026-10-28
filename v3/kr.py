@@ -628,3 +628,18 @@ rep("      let g = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);\n      if (p.f
 rep("if (ph === 'fr') { e.ug = p.ug; if (p.sk) e.sk = 1;", "if (ph === 'fr') { e.ug = p.ug; if (p.fb) e.fb = p.fb; if (p.sk) e.sk = 1;")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR piramida bonus za prikaz OK')
+
+# ---------- Prijenos s maina (v48): ubrizgavanje slučajnosti i vremena, refresh() izvan view(), obnova partije ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("function createGame(o) {\n  const cfg = Object.assign({}, CFG, o.cfg || {});",
+    "function createGame(o) {\n  const Math = Object.create(globalThis.Math);\n  if (o.random) Math.random = o.random;\n"
+    "  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };\n"
+    "  const cfg = Object.assign({}, CFG, o.cfg || {});")
+rep("  const later = (fn, ms) => { timers.push(setTimeout(fn, ms)); };\n  const clear = () => { timers.forEach(clearTimeout); timers = []; };",
+    "  const later = (fn, ms) => { timers.push((o.schedule || setTimeout)(fn, ms)); };\n  const clear = () => { timers.forEach(o.cancel || clearTimeout); timers = []; };")
+rep("    cleanOffers();\n    const k = pactOf(p), mate = partnerOf(p);", "    const k = pactOf(p), mate = partnerOf(p);")
+rep("    rcClean();\n    const r = { st: cfg.rcStake };", "    const r = { st: cfg.rcStake };")
+rep("  return { _pact: (a, b) =>", "  return { refresh: () => { cleanOffers(); rcClean(); }, _pact: (a, b) =>")
+rep("\n//#engine-end", "\n" + open(SP + '/v3/recover.js', encoding='utf-8').read().rstrip() + "\n\n//#engine-end")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR prijenos s maina (motor) OK')

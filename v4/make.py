@@ -2722,3 +2722,10 @@ s = rep(s, "(me.top ? '👑 Tvoje pitanje za krunu!' : '👑 Netko je na vrhu �
 s = rep(s, "  .crown-k { text-align: center;", "  .crown-k small { display: block; font-family: var(--font-body); font-weight: 800; font-size: 0.62em; color: #f3e3c4; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); margin-top: 2px; }\n  .crown-k { text-align: center;")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Piramida 3 OK')
+
+# ---- Led/sluz: nakon čišćenja odgovori ostaju zaključani malo dulje (manje slučajnih dodira) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "    L.lockUntil = Date.now() + 900;\n    const s0 = L.s;\n    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 920);",
+           "    L.lockUntil = Date.now() + 1600;\n    const s0 = L.s;\n    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 1620);")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Zaključavanje nakon leda OK')

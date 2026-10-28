@@ -13,7 +13,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
       page.on('pageerror', (e) => errs.push(e.message));
       await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr/, (r) => r.abort());
       await page.goto('file://' + TMP);
-      await page.click('#demo'); await page.waitForTimeout(300);
+      await page.click('#demo'); await page.waitForTimeout(300); await page.click('#lobSettings'); await page.waitForTimeout(200);
       const n = await page.$$eval('.len-c', (x) => x.length);
       ok(n === 3, W + 'x' + H + ': tri kartice trajanja');
       ok(await page.$eval('.len-c.on', (e) => e.dataset.len) === 'std', W + ': zadano je Standardna');
@@ -26,7 +26,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
       await page.screenshot({ path: OUT + '/len-' + W + '.png' });
       if (W === 390) {
         await page.click('#toTv'); await page.waitForTimeout(300);
-        await page.setViewportSize({ width: 1920, height: 1080 }); await page.waitForTimeout(300);
+        await page.setViewportSize({ width: 1920, height: 1080 }); await page.waitForTimeout(300); await page.click('#tvSettings'); await page.waitForTimeout(200);
         ok(await page.$eval('.tvlob .len-c.on', (e) => e.dataset.len).catch(() => '') === 'brza', 'TV predvorje prikazuje odabir (Brza)');
         await page.screenshot({ path: OUT + '/len-tv.png' });
         await page.click('.tvlob .len-c[data-len="duga"]'); await page.waitForTimeout(200);

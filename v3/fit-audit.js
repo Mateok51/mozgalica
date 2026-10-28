@@ -6,7 +6,7 @@ const [W, H, VIEW = 'phone', SECS = '150'] = process.argv.slice(2); const OUT = 
 const TMP = path.join(__dirname, '..', 'web', 'site', '_out-fit-' + W + 'x' + H + VIEW + '.html');
 { let h = fs.readFileSync(path.join(__dirname, '..', 'web', 'site', 'index.html'), 'utf8').replace(/<meta[^>]*Content-Security-Policy[^>]*>/i, ''); const a = "createGame({ code: 'DEMO', noTv: true,"; if (!h.includes(a)) throw new Error('sidro1');
   h = h.replace(a, "createGame({ code: 'DEMO', noTv: true, cfg: window.__FASTCFG ? Object.assign({}, window.__FASTCFG, { kr: Object.assign({}, CFG.kr, window.__FASTCFG.kr) }) : {},");
-  const b = "let S = null, lastSig = '';"; if (!h.includes(b)) throw new Error('sidro2'); h = h.replace(b, b + ' window.__t = { game: () => game, S: () => S, pid: () => PID };'); fs.writeFileSync(TMP, h); }
+  const b = "let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;"; if (!h.includes(b)) throw new Error('sidro2'); h = h.replace(b, b + ' window.__t = { game: () => game, S: () => S, pid: () => PID };'); fs.writeFileSync(TMP, h); }
 const FAST = { intro: 1.5, vote: 1.4, voteShow: 1.2, roul: 1, power: 1.4, bet: 1.4, cast: 0.8, q: 1.6, pace: { n: { w: 1, s: 1, t: 0.4 }, t: { w: 1, s: 1, t: 0.4 }, d: { w: 1, s: 1, t: 0.4 } }, paceMo: 0.3, moment: 0.8, howto: 1.5, howtoMax: 3, howtoShort: 1.2, sort: 3, link: 3, order: 3, hilo: 3, blitz: 3, maj: 2, majReveal: 1.2, chReveal: 1.5, fstart: 2, fpower: 1.4, fq: 2, fr: 1.5, duelIntro: 1.5, duel: 3, duelRes: 1.5, secret: 2, secret2: 2, betrayShow: 1.5, loyalShow: 1.5, kr: { wait: 2.5 } };
 (async () => {
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: +W, height: +H }, hasTouch: VIEW === 'phone' });

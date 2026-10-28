@@ -1,0 +1,254 @@
+[
+[
+"  .len-c .len-n { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; white-space: nowrap; }",
+"  .len-c .len-n { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; column-gap: 3px; width: 100%; min-width: 0; font-family: var(--font-body); font-weight: 900; font-size: clamp(0.72rem, 3.2vw, 0.95rem); line-height: 1.1; }\n  .len-c .len-label { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }"
+],
+[
+"  @media (max-width: 374px) { .len-c .len-n { font-size: 0.84rem; } .lob-len { gap: 4px; } }",
+"  @media (max-width: 374px) { .lob-len { gap: 4px; } }"
+],
+[
+"  .phone-pyr.big .pyramid { --H: clamp(32px, 6.4vh, 58px); }",
+"  .phone-pyr.big .pyramid { --H: clamp(32px, 6.4vh, 58px); }\n  /* Igra i zvuk zauzimaju odvojene dijelove istog zaslona. */\n  html:has(#app.phone), body:has(#app.phone) { height: 100%; overflow: hidden; }\n  #app.phone { height: auto; max-height: none; min-height: 0; padding-bottom: 8px; }\n  #app.phone > * { flex-shrink: 0; }\n  #app.phone.lobfit { min-height: 0; }\n  #app.tv { height: auto; max-height: none; min-height: 0; }\n  .audio-controls { display: contents; }\n  #app.phone + .audio-controls { position: fixed; bottom: max(8px, env(safe-area-inset-bottom, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); display: flex; gap: 8px; z-index: 60; }\n  #app.phone + .audio-controls #mute, #app.phone + .audio-controls #music { position: relative; inset: auto; width: 44px; height: 44px; flex: 0 0 44px; }\n  @media (max-height: 650px) {\n    .phone { gap: 8px; }\n    .phone .p-opt { min-height: 44px; padding-top: 4px; padding-bottom: 4px; }\n    .phone .p-q { margin-block: 0; }\n  }\n  /* Predvorje daje prednost svim igračima; izbor lika i postavke otvaraju se po potrebi. */\n  #app.lobfit .waiting-room .lob-players { flex: none; min-height: 0; overflow: visible; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px; padding: 8px; mask-image: none; -webkit-mask-image: none; }\n  .waiting-room .lob-row { grid-template-columns: 26px minmax(0, 1fr); gap: 2px 6px; padding: 4px 0; }\n  .waiting-room .lob-row .nm { white-space: normal; overflow-wrap: anywhere; }\n  .waiting-room .lob-row .st { grid-column: 2; font-size: .7rem; }\n  .lob-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }\n  .lob-tools .btn { min-height: 44px; font-size: .88rem; }\n  .lob-count { font-size: .7em; white-space: nowrap; }\n  .lob-settings { display: flex; flex-direction: column; gap: 8px; }\n  /* Odabir mete: veće dodirne površine umjesto dugog popisa. */\n  .phone .targets.pw-step { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; }\n  .phone .targets .target { grid-template-columns: 26px minmax(0, 1fr); gap: 2px 6px; min-height: 64px; }\n  .phone .targets .target .mini { width: 26px; height: 26px; }\n  .phone .targets .target .nm { white-space: normal; overflow-wrap: anywhere; font-size: .85rem; }\n  .phone .targets .target .sc { grid-column: 2; font-size: .72rem; }\n  .phone .pw-step .pw-card { border-width: 10px 16px; padding: 2px 4px; gap: 8px; }\n  .phone .pw-step .pw-card .pw-ico { width: 44px; height: 44px; }\n  .phone .pw-step .pw-card b { font-size: 1rem; }\n  .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: transform 120ms ease-out, filter 120ms ease-out; }\n  .lob-tools .btn[aria-expanded=\"true\"], #tvSettings[aria-expanded=\"true\"] { filter: brightness(1.15); }\n  .lob-tools .btn:active:not(:disabled), #tvSettings:active, .tgl:active:not(:disabled) { transform: scale(.96); }\n  @media (prefers-reduced-motion: reduce) {\n    .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: none; }\n    .lob-tools .btn:active:not(:disabled), #tvSettings:active, .tgl:active:not(:disabled) { transform: none; }\n  }\n  .net-reconnecting::before { content: ''; display: inline-block; width: 14px; height: 14px; flex: 0 0 14px; margin-right: 6px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: reconnectSpin 1s linear infinite; }\n  @keyframes reconnectSpin { to { transform: rotate(360deg); } }\n  #connectionNotice { position: fixed; left: max(12px, env(safe-area-inset-left, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 65; max-width: calc(100vw - 140px); padding: 6px 8px; border-radius: 8px; color: #fff3d5; background: #324322; font-size: .8rem; pointer-events: none; }\n  @media (prefers-reduced-motion: reduce) { .net-reconnecting::before { animation: none; } }\n  .phone { --question-gap: 16px; }\n  .phone .rv > .rv-a { gap: var(--question-gap); }\n  @media (max-height: 650px) { .phone { --question-gap: 8px; } }\n  /* Dodirne površine ostaju dostupne i na niskim zaslonima. */\n  .phone .bstep { width: 44px; height: 44px; flex: 0 0 44px; }\n  .phone .tgl, .phone .home-link, .phone .demo-bar .btn.ghost { min-height: 44px; }\n  .phone .lob-opt-l { min-width: 0; overflow-wrap: anywhere; }\n  .phone .p-opt .otxt { overflow-wrap: anywhere; }\n  @media (max-width: 360px) {\n    .phone .lob-opt { flex-wrap: wrap; }\n    .phone .lob-opt-l { flex: 1 1 100%; }\n    .phone .lob-opt .tgl { margin-left: auto; }\n  }\n"
+],
+[
+"<div id=\"app\" class=\"screen center\"></div>",
+"<div id=\"app\" class=\"screen center\"></div>\n<div class=\"audio-controls\" role=\"group\" aria-label=\"Postavke zvuka\">"
+],
+[
+"<button id=\"music\" type=\"button\" aria-label=\"Isključi glazbu\"></button>",
+"<button id=\"music\" type=\"button\" aria-label=\"Isključi glazbu\"></button>\n</div>"
+],
+[
+"  let hostWatch = null;",
+"  let hostWatch = null, hostRetryTimer = null;"
+],
+[
+"  let S = null, lastSig = '';",
+"  let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;"
+],
+[
+"  let SK = store.get('mz_sk');",
+"  // Novi ključ: prethodni je mogao biti izložen preko javnog MQTT-a.\n  let SK = store.get('mz_sk_v2');"
+],
+[
+"    SK = Array.from(a, (b) => b.toString(16).padStart(2, '0')).join(''); store.set('mz_sk', SK);",
+"    SK = Array.from(a, (b) => b.toString(16).padStart(2, '0')).join(''); store.set('mz_sk_v2', SK);"
+],
+[
+"    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'player' || mode === 'demo')) keepAwake();",
+"    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'hostp' || mode === 'player' || mode === 'demo')) keepAwake();"
+],
+[
+"  function reset() {\n    if (game) game.stop();",
+"  function reset() {\n    try { sessionStorage.removeItem('mz_recovery_v1'); } catch (e) {}\n    if (game) game.stop();"
+],
+[
+"    clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;",
+"    clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(hostRetryTimer); clearTimeout(relayTimer); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;"
+],
+[
+"    mode = 'home';",
+"    mode = 'home';\n    lastLobbyFeedback = null; connectionWasLost = false;\n    const notice = document.getElementById('connectionNotice'); if (notice) notice.remove();"
+],
+[
+"  // ---------- rezervni put: poruke preko javnog MQTT posrednika (WebSocket, port 443/8084...) ----------",
+"  // ---------- rezervni put: poruke preko javnog MQTT posrednika (WebSocket, port 443/8084...) ----------\n  // Javni MQTT nije autentificiran i izlaže ključ igrača. Ostaje isključen dok se ne uvede siguran relej.\n  const RELAY_ENABLED = false;"
+],
+[
+"  function relayReachable() {",
+"  function relayReachable() {\n    if (!RELAY_ENABLED) return Promise.resolve(false);"
+],
+[
+"  function startHostRelay(code) {",
+"  function startHostRelay(code) {\n    if (!RELAY_ENABLED) return;"
+],
+[
+"  async function startPlayerRelay() {",
+"  async function startPlayerRelay() {\n    if (!RELAY_ENABLED) return;"
+],
+[
+"      if (await c.whenReady(5000)) {",
+"      if (await c.whenReady(5000)) {\n        if (prelay !== c || mode !== 'player' || pcode !== code || (pconn && pconn.open)) { c.close(); return; }"
+],
+[
+"    if (!game) return;\n    const v = game.view(), rel = new Set();",
+"    if (!game) return;\n    if (game.refresh) game.refresh();\n    const v = game.view(), rel = new Set();"
+],
+[
+"      if (!c.open) continue;",
+"      if (!c.open || !x.pid) continue;"
+],
+[
+"    const code = makeCode();",
+"    const code = opts && opts.recovery ? opts.recovery.code : makeCode();"
+],
+[
+"      openRoom(code, opts);",
+"      try { openRoom(code, opts); } catch (e) {\n        try { peer.destroy(); } catch (_) {}\n        hostPeer = null; game = null;\n        hostErr = 'Spremljenu partiju nije moguće obnoviti. Vrati se na početni ekran i otvori novu sobu.';\n        if (mode === 'hostp') mode = 'hostform';\n        render(); return;\n      }"
+],
+[
+"    peer.on('connection', (conn) => {",
+"    peer.on('connection', (conn) => {\n      // Ograniči istodobne veze i ne zadržavaj veze koje ne pošalju prijavu.\n      if (hostConns.size >= 24) { try { conn.close(); } catch (e) {} return; }"
+],
+[
+"      hostConns.set(conn, { pid: null, name: '', av: 0, in: null });",
+"      hostConns.set(conn, { pid: null, name: '', av: 0, in: null });\n      const loginTimer = setTimeout(() => {\n        const x = hostConns.get(conn);\n        if (x && !x.pid) { hostConns.delete(conn); try { conn.close(); } catch (e) {} }\n      }, 10000);"
+],
+[
+"      const drop = () => { if (hostConns.delete(conn)) syncConns(); };",
+"      const drop = () => { clearTimeout(loginTimer); if (hostConns.delete(conn)) syncConns(); };"
+],
+[
+"      if (e && e.type === 'unavailable-id' && tries < 5) return openHostPeer(tries + 1, opts);",
+"      if (e && e.type === 'unavailable-id' && tries < 5) {\n        if (!(opts && opts.recovery)) return openHostPeer(tries + 1, opts);\n        hostRetryTimer = setTimeout(() => { if ((mode === 'host' || mode === 'hostp') && !hostPeer && !game) openHostPeer(tries + 1, opts); }, 1000);\n        return;\n      }"
+],
+[
+"          if (!ok) return fail();",
+"          if (!ok) return fail(e);"
+],
+[
+"      fail();",
+"      fail(e);"
+],
+[
+"    function fail() {",
+"    function fail(e) {"
+],
+[
+"  }\n  function openRoom(code, opts) {",
+"  }\n  function saveRecovery(journal) {\n    if (!game || (mode !== 'host' && mode !== 'hostp')) return;\n    try {\n      if (game.view().ph === 'final') { sessionStorage.removeItem('mz_recovery_v1'); return; }\n      sessionStorage.setItem('mz_recovery_v1', JSON.stringify({ savedAt: Date.now(), code: game.view().code, noTv: mode === 'hostp', keys: [...hostKeys], journal }));\n    } catch (e) { /* Storage may be unavailable or full; the live game continues. */ }\n  }\n  function openRoom(code, opts) {"
+],
+[
+"      game = createGame({ code, noTv: true, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } });\n      game.addPlayer(PID, opts.me, myAv, false, true);",
+"      game = createRecoverableGame({ code, noTv: true, onCheckpoint: saveRecovery, pacts: opts.pacts, onChange: () => { publishSoon(); applyState(Object.assign(game.view(), { pv: game.priv(PID) })); } }, opts.recovery && opts.recovery.journal);\n      if (!opts.recovery) game.addPlayer(PID, opts.me, myAv, false, true);"
+],
+[
+"      game = createGame({ code, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } });",
+"      game = createRecoverableGame({ code, onCheckpoint: saveRecovery, pacts: opts && opts.pacts, onChange: () => { publishSoon(); render(); } }, opts && opts.recovery && opts.recovery.journal);"
+],
+[
+"    clearInterval(pubTimer); pubTimer = setInterval(publish, 1000);",
+"    if (opts && opts.recovery) {\n      for (const [pid, key] of opts.recovery.keys) if (typeof pid === 'string' && okKey(key)) hostKeys.set(pid, key);\n      if (opts.noTv) applyState(Object.assign(game.view(), { pv: game.priv(PID) }));\n    }\n    saveRecovery(game.checkpoint());\n    clearInterval(pubTimer); pubTimer = setInterval(() => { publish(); saveRecovery(game.checkpoint()); }, 1000);"
+],
+[
+"    if (hostOff === v) return; hostOff = v;",
+"    if (hostOff === v) return; hostOff = v;\n    if (v) connectionWasLost = true; else if (connectionWasLost) { connectionWasLost = false; connectionNotice(); }"
+],
+[
+"    if (!ppeer || ppeer.destroyed) return;",
+"    if (!ppeer || ppeer.destroyed) return;\n    if (pconn && pconn.open) return; // ponovno otvaranje signalizacije ne zamjenjuje aktivnu vezu"
+],
+[
+"    startPlayerRelay();\n    if (!netNote) { netNote = 'Veza je prekinuta. Spajam ponovno…'; phoneRender(true); }",
+"    startPlayerRelay();\n    connectionWasLost = true;\n    if (!netNote) { netNote = 'Veza je prekinuta. Spajam ponovno…'; phoneRender(true); }"
+],
+[
+"\n  // zatvaranje kartice odmah javi domaćinu (umjesto da čeka da veza istekne)",
+"\n  function checkConnection() {\n    if (hostPeer) hostKeepAlive(hostPeer);\n    if (mode !== 'player' || !S || document.visibilityState !== 'visible') return;\n    if (lastStateAt && Date.now() - lastStateAt > 12000) {\n      lastStateAt = Date.now();\n      const stale = pconn; pconn = null;\n      try { if (stale) stale.close(); } catch (e) {}\n      retrySoon();\n    }\n  }\n  window.addEventListener('online', checkConnection);\n  setInterval(checkConnection, 3000);\n\n  // zatvaranje kartice odmah javi domaćinu (umjesto da čeka da veza istekne)"
+],
+[
+"  window.addEventListener('pagehide', () => { try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });",
+"  window.addEventListener('beforeunload', (e) => {\n    // Stanje partije je samo u memoriji domaćina; osvježavanje ga briše.\n    if (game && (mode === 'host' || mode === 'hostp') && game.view().ph !== 'lobby' && game.view().ph !== 'final') {\n      e.preventDefault();\n      e.returnValue = '';\n    }\n  });\n  window.addEventListener('pagehide', () => { if (game && game.checkpoint) saveRecovery(game.checkpoint()); try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });"
+],
+[
+"  function applyState(d) {",
+"  function applyState(d) {\n    if (connectionWasLost) { connectionWasLost = false; netNote = ''; connectionNotice(); }\n    lastStateAt = Date.now();"
+],
+[
+"    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\">🤖 Testiraj društvene mehanike s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušavati izdaju. Namijenjeno isprobavanju društvenih funkcionalnosti.</small></span><button class=\"tgl' + (d.opt.bs ? '' : ' off') + '\" data-bsopt=\"' + (d.opt.bs ? 0 : 1) + '\">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';",
+"    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\">🤖 Paktovi s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušati izdaju.</small></span><button class=\"tgl' + (d.opt.bs ? '' : ' off') + '\" data-bsopt=\"' + (d.opt.bs ? 0 : 1) + '\">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';"
+],
+[
+"    fitScreen();\n    pactToasts(d);",
+"    fitScreen();\n    lobbyFeedback(d);\n    pactToasts(d);"
+],
+[
+"\n  function tvLobby(d, demoBar) {",
+"\n  let lastLobbyFeedback = null;\n  function feedbackPulse(el, entering) {\n    if (!el || !el.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;\n    el.animate(entering ? [{ opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }] :\n      [{ filter: 'brightness(1.5)' }, { filter: 'brightness(1)' }], { duration: entering ? 230 : 260, easing: 'ease-out' });\n  }\n  function lobbyFeedback(d) {\n    if (!d || d.ph !== 'lobby') { lastLobbyFeedback = null; return; }\n    const next = { key: d.code + ':' + mode, ids: new Set(d.P.map(p => p.id)), bots: d.P.filter(p => p.b).length, len: d.len || (d.opt && d.opt.len) };\n    const prev = lastLobbyFeedback; lastLobbyFeedback = next;\n    if (!prev || prev.key !== next.key) return;\n    $app.querySelectorAll('[data-player-id]').forEach(el => { if (!prev.ids.has(el.dataset.playerId)) feedbackPulse(el, true); });\n    if (prev.bots !== next.bots) feedbackPulse($app.querySelector('.lob-bots-c b'), false);\n    if (prev.len !== next.len) feedbackPulse($app.querySelector('.len-c.on, .len-info'), false);\n  }\n  function connectionNotice() {\n    let el = document.getElementById('connectionNotice');\n    if (!el) { el = document.createElement('div'); el.id = 'connectionNotice'; el.setAttribute('role', 'status'); document.body.appendChild(el); }\n    el.textContent = '✓ Veza obnovljena'; feedbackPulse(el, true);\n    clearTimeout(connectionNotice.timer); connectionNotice.timer = setTimeout(() => el.remove(), 2600);\n  }\n\n  // Animiraj samo izričitu radnju, ne svako mrežno osvježavanje predvorja.\n  function lobbyChange(buttonId, update, panelSelector) {\n    const focused = document.activeElement && document.activeElement.id === buttonId;\n    update();\n    const button = document.getElementById(buttonId);\n    if (focused && button) button.focus({ preventScroll: true });\n    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;\n    if (button && button.animate) button.animate([\n      { transform: 'scale(.96)' }, { transform: 'scale(1.025)', offset: .65 }, { transform: 'none' }\n    ], { duration: 190, easing: 'ease-out' });\n    const panel = $app.querySelector(panelSelector);\n    if (panel && panel.animate) panel.animate([\n      { opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }\n    ], { duration: 180, easing: 'ease-out' });\n  }\n\n  function tvLobby(d, demoBar) {"
+],
+[
+"        '<span class=\"lob-addr\">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span>' + (netNote ? '<span class=\"lob-addr\" style=\"color:#f0b070\">' + esc(netNote) + '</span>' : '') + '</div>';",
+"        '<span class=\"lob-addr\">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span>' + (netNote ? '<span class=\"lob-addr net-reconnecting\" role=\"status\" style=\"color:#f0b070\">' + esc(netNote) + '</span>' : '') + '</div>';"
+],
+[
+"    let slots = d.P.map((p) => '<div class=\"tvlob-slot' + (p.c ? '' : ' off') + '\" data-a=\"' + p.a + '\"' + (p.b ? ' data-bot=\"1\"' : '') + '><span class=\"pick-img\">' + avSvg(p.a, 'idle') + '</span><span class=\"pick-nm\">' + esc(p.n) + '</span>' + (p.b ? '<span class=\"pick-bot\">BOT</span>' : '') + '</div>').join('');",
+"    let slots = d.P.map((p) => '<div class=\"tvlob-slot' + (p.c ? '' : ' off') + '\" data-player-id=\"' + esc(p.id) + '\" data-a=\"' + p.a + '\"' + (p.b ? ' data-bot=\"1\"' : '') + '><span class=\"pick-img\">' + avSvg(p.a, 'idle') + '</span><span class=\"pick-nm\">' + esc(p.n) + '</span>' + (p.b ? '<span class=\"pick-bot\">BOT</span>' : '') + '</div>').join('');"
+],
+[
+"      '<div class=\"tvlob\"><div class=\"tvlob-side\">' + inv + (game ? botStepper(d) + lenPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class=\"lob-opt\"', 'class=\"lob-opt bs-tv\"') : '') + '</div>' + '<div class=\"tvlob-cast\"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +",
+"      '<div class=\"tvlob\"><div class=\"tvlob-side\">' + inv + (game ? '<button class=\"btn ghost\" id=\"tvSettings\" aria-expanded=\"' + !!L.tvSettings + '\">Postavke igre</button>' + (L.tvSettings ? botStepper(d) + lenPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class=\"lob-opt\"', 'class=\"lob-opt bs-tv\"') : '') : '') + '</div>' + '<div class=\"tvlob-cast\"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +"
+],
+[
+"      '<div class=\"tvlob-act\"><button class=\"btn lob-cta\" id=\"start\"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class=\"home-link\" id=\"quit\">Odustani</button></div></div></div>';",
+"      '<div class=\"tvlob-act\"><button class=\"btn lob-cta\" id=\"start\"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class=\"home-link\" id=\"quit\">Odustani</button></div></div></div>';\n    bind('tvSettings', () => lobbyChange('tvSettings', () => { L.tvSettings = !L.tvSettings; render(); }, L.tvSettings ? '.tvlob-act' : '.tvlob-side'));"
+],
+[
+"      (netNote ? '<div class=\"err\" style=\"display:flex;justify-content:space-between;align-items:center;gap:8px\">' + esc(netNote) + '<button class=\"btn ghost\" id=\"leave2\">Izađi</button></div>' : '');",
+"      (netNote ? '<div class=\"err net-reconnecting\" role=\"status\" style=\"display:flex;justify-content:space-between;align-items:center;gap:8px\">' + esc(netNote) + '<button class=\"btn ghost\" id=\"leave2\">Izađi</button></div>' : '');"
+],
+[
+"        const rows = d.P.map((p) => '<div class=\"lob-row\" data-a=\"' + p.a + '\"' + (p.b ? ' data-bot=\"1\"' : '') + '><span class=\"mini\">' + avSvg(p.a, 'idle') + '</span><span class=\"nm\">' + esc(p.n) + (p.id === hostId ? '<span class=\"crown\" title=\"Domaćin\">♛</span>' : '') + (p.id === PID ? '<span class=\"you\">Ti</span>' : '') + '</span>' +",
+"        const rows = d.P.map((p) => '<div class=\"lob-row\" data-player-id=\"' + esc(p.id) + '\" data-a=\"' + p.a + '\"' + (p.b ? ' data-bot=\"1\"' : '') + '><span class=\"mini\">' + avSvg(p.a, 'idle') + '</span><span class=\"nm\">' + esc(p.n) + (p.id === hostId ? '<span class=\"crown\" title=\"Domaćin\">♛</span>' : '') + (p.id === PID ? '<span class=\"you\">Ti</span>' : '') + '</span>' +"
+],
+[
+"        h = '<div class=\"lob\"><div class=\"p-title lob-title\">Odaberi lika</div><div class=\"av-grid\">' + grid + '</div>' +\n          invite + cta + '<button class=\"home-link\" id=\"leave\">Izađi</button><div class=\"lob-players\">' + rows + '</div></div>';",
+"        const startAt = cta.indexOf('<button class=\"btn lob-cta\"');\n        const settingsAt = startAt >= 0 ? startAt : cta.indexOf('<div class=\"lob-wait\"');\n        const settings = settingsAt >= 0 ? cta.slice(0, settingsAt) : cta;\n        const actions = settingsAt >= 0 ? cta.slice(settingsAt) : '';\n        h = '<div class=\"lob waiting-room\"><div class=\"p-title lob-title\">Igrači u sobi <span class=\"lob-count\">' + d.P.length + '/' + d.max + '</span></div>' +\n          '<div class=\"lob-players\" aria-label=\"Igrači u sobi\">' + rows + '</div>' + invite +\n          '<div class=\"lob-tools\"><button class=\"btn ghost\" id=\"lobAvatar\" aria-expanded=\"' + (L.lobPanel === 'avatar') + '\">Promijeni lika</button>' +\n          (settings ? '<button class=\"btn ghost\" id=\"lobSettings\" aria-expanded=\"' + (L.lobPanel === 'settings') + '\">Postavke igre</button>' : '') + '</div>' +\n          (L.lobPanel === 'avatar' ? '<div class=\"av-grid\">' + grid + '</div>' : '') +\n          (L.lobPanel === 'settings' ? '<div class=\"lob-settings\">' + settings + '</div>' : '') +\n          actions + '<button class=\"home-link\" id=\"leave\">Izađi</button></div>';"
+],
+[
+"    if (me && (!d.ntv || d.ph !== 'fq') && (d.ph === 'power' || d.ph === 'question' || d.ph === 'fq')) h += barRow(d);",
+"    if (me && (!d.ntv || d.ph !== 'fq') && (d.ph === 'power' || d.ph === 'question' || d.ph === 'reveal' || d.ph === 'fq')) h += barRow(d);"
+],
+[
+"    fitScreen();\n    MOTION.after('p:' + d.ph + ':' + d.s);",
+"    fitScreen();\n    lobbyFeedback(d);\n    MOTION.after('p:' + d.ph + ':' + d.s);"
+],
+[
+"      return '<button class=\"len-c' + (k === cur ? ' on' : '') + '\" data-len=\"' + k + '\" role=\"radio\" aria-checked=\"' + (k === cur) + '\"><span class=\"len-n\">' + u[0] + ' ' + u[1] + '</span><span class=\"len-m\">' + u[2] + '</span><span class=\"len-r\">' + rundeW(u[3]) + '</span></button>'; }).join('') + '</div>';",
+"      return '<button class=\"len-c' + (k === cur ? ' on' : '') + '\" data-len=\"' + k + '\" role=\"radio\" aria-checked=\"' + (k === cur) + '\"><span class=\"len-n\"><span aria-hidden=\"true\">' + u[0] + '</span><span class=\"len-label\">' + u[1] + '</span></span><span class=\"len-m\">' + u[2] + '</span><span class=\"len-r\">' + rundeW(u[3]) + '</span></button>'; }).join('') + '</div>';"
+],
+[
+"  // ekran mora stati bez skrolanja: ako sadržaj prelije, cijela scena se smanji (najviše na 60 %)",
+"  let questionFit = null;\n  // Mjeri puni sadržaj prije prilagodbe; kontrole zvuka imaju vlastiti prostor."
+],
+[
+"    const A = $app, se = document.scrollingElement || document.documentElement;",
+"    const A = $app;"
+],
+[
+"    const ih = innerHeight;",
+""
+],
+[
+"    return; // namjerno: više sadržaja = pomicanje, ne smanjivanje cijelog sučelja\n    let sh = se.scrollHeight;\n    if (sh <= ih + 1) return;\n    let f = Math.max(0.6, ih / sh);\n    for (let k = 0; k < 4; k++) {\n      A.style.zoom = f.toFixed(3);\n      sh = se.scrollHeight;\n      if (sh <= ih + 1 || f <= 0.6) break;\n      f = Math.max(0.6, f * ih / sh - 0.006);\n    }\n  }",
+"    A.style.width = '';\n    A.style.maxWidth = '';\n    const phone = A.classList.contains('phone');\n    if (!phone && !A.classList.contains('tv')) return;\n    const bodyStyle = getComputedStyle(document.body);\n    const width = innerWidth - parseFloat(bodyStyle.paddingLeft) - parseFloat(bodyStyle.paddingRight);\n    A.style.width = Math.min(phone ? 520 : 1600, width) + 'px';\n    const top = A.getBoundingClientRect().top;\n    const controls = document.querySelector('#mute').getBoundingClientRect();\n    const available = Math.max(1, controls.top - top - 8);\n    const targetWidth = Math.min(phone ? 520 : 1600, width);\n    A.style.maxWidth = 'none';\n    const measure = (scale) => {\n      A.style.zoom = scale.toFixed(4);\n      A.style.width = (targetWidth / scale) + 'px';\n      // Izvanjski likovi i animacijske putanje ne mijenjaju veličinu rasporeda.\n      return A.getBoundingClientRect().height;\n    };\n    const key = phone && S && S.q ? [S.code, S.q.n, innerWidth, innerHeight].join(':') : null;\n    const finish = (scale) => {\n      if (phone && S && S.ph === 'reveal' && questionFit && questionFit.key === key) scale = Math.min(scale, questionFit.scale);\n      measure(scale);\n      if (phone && S && S.ph === 'question') questionFit = { key, scale };\n    };\n    if (measure(1) <= available) { finish(1); return; }\n    let low = 0.1, high = 1;\n    for (let i = 0; i < 10; i++) {\n      const mid = (low + high) / 2;\n      if (measure(mid) <= available) low = mid; else high = mid;\n    }\n    finish(low);\n  }"
+],
+[
+"    return '<style>' + wh.css + '</style><div class=\"rv wheel\" style=\"--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms\">' +",
+"    return '<div class=\"timer spent\" aria-hidden=\"true\"><div style=\"width:0\"></div></div><div class=\"p-top\"><span class=\"pill\">' + esc(d.q.c) + '</span><span aria-hidden=\"true\">0</span></div><style>' + wh.css + '</style><div class=\"rv wheel\" style=\"--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms\">' +"
+],
+[
+"    const width = () => (stage && stage.clientWidth) || 320;",
+"    const width = () => (stage && stage.clientWidth) || 320;\n    const pointerScale = () => stage && stage.clientWidth ? stage.getBoundingClientRect().width / stage.clientWidth : 1;"
+],
+[
+"        dx = e.clientX - x0; dy = e.clientY - y0;",
+"        const scale = pointerScale();\n        dx = (e.clientX - x0) / scale; dy = (e.clientY - y0) / scale;"
+],
+[
+"      const br = b.getBoundingClientRect(); let p = '';",
+"      const br = b.getBoundingClientRect(); let p = '';\n      svg.setAttribute('viewBox', '0 0 ' + Math.max(1, br.width) + ' ' + Math.max(1, br.height));\n      svg.setAttribute('preserveAspectRatio', 'none');"
+],
+[
+"    bind('leave2', reset);",
+"    bind('leave2', reset);\n    bind('lobAvatar', () => lobbyChange('lobAvatar', () => { L.lobPanel = L.lobPanel === 'avatar' ? null : 'avatar'; phoneRender(true); }, '.av-grid'));\n    bind('lobSettings', () => lobbyChange('lobSettings', () => { L.lobPanel = L.lobPanel === 'settings' ? null : 'settings'; phoneRender(true); }, '.lob-settings'));"
+],
+[
+"    bind('lobInv', () => { L.inv = true; phoneRender(true); });",
+"    bind('lobInv', () => lobbyChange('lobInv', () => { L.inv = true; phoneRender(true); }, '.inv-card'));"
+],
+[
+"  render();\n})();",
+"  render();\n  try {\n    const raw = sessionStorage.getItem('mz_recovery_v1');\n    const saved = raw && JSON.parse(raw);\n    if (saved && !location.hash && /^[A-Z]{4}$/.test(saved.code) && Array.isArray(saved.keys) && Date.now() - saved.savedAt < 6 * 60 * 60 * 1000 && saved.journal && hasPeer()) {\n      mode = saved.noTv ? 'hostp' : 'host';\n      openHostPeer(0, { noTv: saved.noTv, recovery: saved });\n      render(); keepAwake();\n    }\n  } catch (e) { try { sessionStorage.removeItem('mz_recovery_v1'); } catch (_) {} }\n})();"
+]
+]

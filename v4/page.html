@@ -3271,9 +3271,9 @@ __ENGINE__
     L.fx = makeFx(L.fxq[0]);
     HAPTIC.impact();
     // odgovori ostaju zaključani kratko vrijeme da se zadnji dodir ne pretvori u odgovor
-    L.lockUntil = Date.now() + 900;
+    L.lockUntil = Date.now() + 1600;
     const s0 = L.s;
-    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 920);
+    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 1620);
     phoneRender(true);
   }
   const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom' };

@@ -8,7 +8,7 @@ const TMP = path.join(__dirname, '..', 'web', 'site', '_out-pyr.html');
 { let h = fs.readFileSync(path.join(__dirname, '..', 'web', 'site', 'index.html'), 'utf8').replace(/<meta[^>]*Content-Security-Policy[^>]*>/i, '');
   const a = "game = createGame({ code: 'DEMO', noTv: true,"; if (!h.includes(a)) throw new Error('sidro1');
   h = h.replace(a, a + " cfg: window.__FASTCFG || {},");
-  const b = "let S = null, lastSig = '';"; if (!h.includes(b)) throw new Error('sidro2');
+  const b = "let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;"; if (!h.includes(b)) throw new Error('sidro2');
   h = h.replace(b, b + ' window.__t = { game: () => game, apply: (v) => applyState(v), render: () => render(), pid: () => PID };'); fs.writeFileSync(TMP, h); }
 const FAST = { intro: 0.4, vote: 0.8, voteShow: 0.3, roul: 0.3, power: 0.6, bet: 0.6, cast: 0.3, q: 1, pace: { n: { w: 1, s: 1, t: 0.3 }, t: { w: 1, s: 1, t: 0.3 }, d: { w: 1, s: 1, t: 0.3 } }, paceMo: 0.1, moment: 0.3,
   howto: 0.5, howtoMax: 1, howtoShort: 0.4, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, majReveal: 0.5, chReveal: 0.5, fstart: 0.6, fpower: 0.6, fq: 1, fr: 60, secret: 1, secret2: 1, betrayShow: 0.5, loyalShow: 0.5,
@@ -35,6 +35,7 @@ const so = (u) => { const REQ = [1, 1, 1, 2, 2, 2, 2]; let st = 0, acc = 0; whil
     await page.addInitScript((f) => { window.__FASTCFG = f; }, FAST);
     await page.goto('file://' + TMP);
     await page.click('#demo'); await page.waitForTimeout(250);
+    await page.click('#lobSettings'); await page.waitForTimeout(150);
     await page.click('.len-c[data-len="brza"]'); await page.waitForTimeout(100);
     await page.click('#dstart');
     // automatski čovjek: odgovara i potvrđuje dok ne stigne prva piramida

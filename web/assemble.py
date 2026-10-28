@@ -6,7 +6,10 @@ os.makedirs(OUT, exist_ok=True)
 body = open(SP + '/web/body.html', encoding='utf-8').read()
 data = json.dumps(json.load(open(SP + '/v3/data.json', encoding='utf-8')), ensure_ascii=False).replace('<', '\\u003c')
 engine = open(SP + '/v3/engine.js', encoding='utf-8').read().replace('__DATA__', data)
-body = body.replace('__ENGINE__', engine)
+# motor je zasebna datoteka (engine.js), kao na grani main od v48
+assert body.count('<script>\n__ENGINE__\n</script>') == 1, 'sidro motora'
+body = body.replace('<script>\n__ENGINE__\n</script>', '<script src="engine.js"></script>')
+open(OUT + '/engine.js', 'w', encoding='utf-8').write('\n' + engine.rstrip() + '\n')
 body = body.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '')
 
 i = body.index('<div id="app"')
@@ -36,7 +39,7 @@ html = ('<!doctype html>\n<html lang="hr">\n<head>\n<meta charset="utf-8">\n'
         '<link rel="icon" href="icon.svg" type="image/svg+xml">\n'
         '<link rel="apple-touch-icon" href="icon-192.png">\n'
         + head_part.rstrip() + '\n</head>\n<body>\n' + rest.rstrip() + '\n' + sw + '</body>\n</html>\n')
-VERSION = 'v47'
+VERSION = 'v49'
 html = html.replace('MOZGALICA', '<span class="lt">Trivia</span><span class="lt">Tavern</span>').replace('<title>Mozgalica</title>', '<title>Trivia Tavern</title>')
 assert html.count('__VER__') == 1
 html = html.replace('__VER__', VERSION)
@@ -68,7 +71,7 @@ json.dump(manifest, open(OUT + '/manifest.webmanifest', 'w', encoding='utf-8'), 
 
 open(OUT + '/sw.js', 'w').write("""// Mozgalica: uvijek pokušaj mrežu, a bez interneta posluži zadnju spremljenu verziju.
 const CACHE = 'mozgalica-""" + VERSION + """';
-const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js'];
+const CORE = ['./', './index.html', './engine.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
 });
@@ -112,28 +115,8 @@ icon = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 """
 open(OUT + '/icon.svg', 'w').write(icon)
 
-open(OUT + '/README.md', 'w', encoding='utf-8').write("""# Trivia Tavern
-
-Party kviz za 2–6 igrača. TV prikazuje igru, a svi igraju s mobitela: biraju lika, glasaju za kategoriju,
-šalju moći protivnicima (led, sluz, grickalice, bomba), rješavaju izazove i utrkuju se do vrha piramide.
-
-**Igraj:** https://mateok51.github.io/mozgalica/
-
-## Kako igrati
-1. Na TV-u (ili računalu) u pregledniku otvori adresu i odaberi **Otvori igru na TV-u**.
-2. Igrači skeniraju QR kod mobitelom (ili otvore adresu i upišu kod sobe). Prijava ni instalacija nisu potrebne.
-3. Domaćin pritisne **Započni igru**.
-
-Nema TV preglednika? Otvori **Otvori igru na TV-u** na jednom mobitelu i zrcali ga na TV.
-
-## Instalacija na mobitel
-Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj kao aplikaciju* na početnom ekranu igre).
-
-## Tehnički
-- Jedna statična stranica (`index.html`), bez poslužitelja. Igru vodi uređaj domaćina.
-- Uređaji se spajaju izravno (WebRTC) preko [PeerJS](https://peerjs.com) i njegovog besplatnog javnog posrednika.
-- Pitanja su u objektu `DATA` u `index.html`.
-""")
+shutil_readme = open(SP + '/web/README.main.md', encoding='utf-8').read()
+open(OUT + '/README.md', 'w', encoding='utf-8').write(shutil_readme)
 import shutil  # slike likova
 shutil.rmtree(OUT + '/chars', ignore_errors=True)
 shutil.copytree(SP + '/chars', OUT + '/chars')
@@ -144,3 +127,8 @@ shutil.copytree(SP + '/vendor', OUT + '/vendor')
 shutil.rmtree(OUT + '/audio', ignore_errors=True)
 shutil.copytree(SP + '/audio', OUT + '/audio')
 print('OK', os.listdir(OUT))
+# datoteke koje postoje samo na grani main (testovi, dokumentacija, skripte, provjere na GitHubu) od v48
+for d in ['tests', 'docs', 'scripts', 'src', '.github']:
+    shutil.rmtree(OUT + '/' + d, ignore_errors=True)
+    shutil.copytree(SP + '/web/main-extra/' + d, OUT + '/' + d)
+print('main-extra OK')
