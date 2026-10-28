@@ -18,7 +18,7 @@ Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj k
 ## Tehnički
 - Statička stranica (`index.html` i `engine.js`), bez poslužitelja. Igru vodi uređaj domaćina.
 - Uređaji se spajaju izravno (WebRTC) preko [PeerJS](https://peerjs.com) i njegovog besplatnog javnog posrednika.
-- Rezervno povezivanje preko javnih MQTT posrednika isključeno je jer izlaže podatke i ključ igrača. Izravni WebRTC zbog mrežnih ograničenja možda neće raditi na svim mrežama; za pouzdan rezervni put potreban je siguran posrednik.
+- Rezervni put kad izravni WebRTC ne uspije: javni MQTT posrednici, ali sve poruke su šifrirane (AES-GCM) tajnim ključem sobe. Ključ putuje samo u QR kodu i poveznici (`#KOD-ključ`); posrednik vidi samo šifrirani sadržaj i temu izvedenu iz ključa. Igrači koji kod upišu ručno nemaju ključ i koriste samo izravnu vezu. Detalji: [povezivanje](docs/povezivanje.md).
 - Pitanja su u objektu `DATA` u `engine.js`; ondje se nalaze i pravila igre.
 
 ## Oporavak veze i partije

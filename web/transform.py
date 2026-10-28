@@ -83,3 +83,4 @@ print('OK', len(s))
 # izmjene napravljene izravno na grani main (v48)
 import subprocess, sys
 subprocess.run([sys.executable, SP + '/web/port-main.py'], check=True)
+subprocess.run([sys.executable, SP + '/web/relay-e2e.py'], check=True)

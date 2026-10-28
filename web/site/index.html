@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-2awgNSlhm8mrb/OHbhYFqf/bL/Y8zA8fKWTfFIhBN0Y=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-VKXYJRK96VSfOTJW0m3ry8uljOp9GSdD0/7/85q42Hs=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -3285,12 +3285,43 @@
   }
 
   // ---------- rezervni put: poruke preko javnog MQTT posrednika (WebSocket, port 443/8084...) ----------
-  // Javni MQTT nije autentificiran i izlaže ključ igrača. Ostaje isključen dok se ne uvede siguran relej.
-  const RELAY_ENABLED = false;
+  // Javni MQTT nije autentificiran, zato su sve poruke šifrirane tajnim ključem sobe (AES-GCM); bez ključa relej se ne koristi.
+  const RELAY_ENABLED = !!(window.crypto && crypto.subtle);
   // Kad su oba uređaja na mobilnim podacima (CGNAT), izravna WebRTC veza često ne uspije. Tada se
   // stanje igre i unosi šalju preko MQTT teme sobe. Minimalni MQTT 3.1.1 klijent, QoS 0.
   const RELAY_URLS = window.__MQTT_URLS || ['wss://broker.emqx.io:8084/mqtt', 'wss://broker.hivemq.com:8884/mqtt', 'wss://test.mosquitto.org:8081/mqtt'];
-  const RELAY_NS = 'mozgalica-kip/v1/';
+  const RELAY_NS = 'mozgalica-kip/v2/';
+  // ključ sobe: domaćin ga stvara; igrač ga dobiva iz poveznice/QR koda (#KOD-ključ) i pamti za tu sobu
+  let HOST_RS = null, PLAYER_RS = null;
+  const b64u = (u8) => btoa(String.fromCharCode(...u8)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const ub64u = (t) => Uint8Array.from(atob(t.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((t.length + 3) % 4)), (c) => c.charCodeAt(0));
+  const newRoomSecret = () => b64u(crypto.getRandomValues(new Uint8Array(16)));
+  const okRS = (t) => typeof t === 'string' && /^[A-Za-z0-9_-]{22}$/.test(t);
+  const joinHash = (code) => '#' + code + (HOST_RS ? '-' + HOST_RS : '');
+  function rememberRS(code, rs) { try { if (okRS(rs)) sessionStorage.setItem('mz_rs_' + code, rs); } catch (e) {} }
+  function recallRS(code) { try { const t = sessionStorage.getItem('mz_rs_' + code); return okRS(t) ? t : null; } catch (e) { return null; } }
+  const RCTX = new Map();
+  async function relayCtx(rs) {
+    if (!okRS(rs)) return null;
+    if (RCTX.has(rs)) return RCTX.get(rs);
+    const raw = ub64u(rs), base = await crypto.subtle.importKey('raw', raw, 'HKDF', false, ['deriveKey', 'deriveBits']);
+    const key = await crypto.subtle.deriveKey({ name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(0), info: enc.encode('mz-relay-key') }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+    const tb = new Uint8Array(await crypto.subtle.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(0), info: enc.encode('mz-relay-topic') }, base, 128));
+    const ctx = { key, t: Array.from(tb, (b) => b.toString(16).padStart(2, '0')).join('') };
+    RCTX.set(rs, ctx); return ctx;
+  }
+  async function rEnc(ctx, obj) {
+    const iv = crypto.getRandomValues(new Uint8Array(12)), pt = enc.encode(typeof obj === 'string' ? obj : JSON.stringify(obj));
+    const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, ctx.key, pt));
+    return JSON.stringify({ v: 2, i: b64u(iv), c: b64u(ct) });
+  }
+  async function rDec(ctx, m) {
+    if (!ctx || !m || m.v !== 2 || typeof m.i !== 'string' || typeof m.c !== 'string') return null;
+    try { return JSON.parse(dec.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64u(m.i) }, ctx.key, ub64u(m.c)))); } catch (e) { return null; }
+  }
+  // šifrirano slanje i primanje uz očuvan redoslijed poruka
+  function rPub(client, ctx, topic, obj) { client.q2 = (client.q2 || Promise.resolve()).then(() => rEnc(ctx, obj)).then((t) => client.publish(topic, t)).catch(() => {}); }
+  function rOn(ctx, fn) { let chain = Promise.resolve(); return (topic, m) => { chain = chain.then(() => rDec(ctx, m)).then((d) => { if (d) fn(topic, d); }).catch(() => {}); }; }
   const enc = new TextEncoder(), dec = new TextDecoder();
   function mqttClient(url, onMsg, onDown) {
     let ws = null, ready = false, buf = new Uint8Array(0), pid = 1, ping = null, dead = false;
@@ -3321,7 +3352,7 @@
         } else if (type === 3) {
           const tl = (body[0] << 8) | body[1], topic = dec.decode(body.subarray(2, 2 + tl));
           let off = 2 + tl; if ((flags >> 1) & 3) off += 2;
-          if (n - off <= 300000) { try { onMsg(topic, JSON.parse(dec.decode(body.subarray(off)))); } catch (e) {} }
+          if (n - off <= 700000) { try { onMsg(topic, JSON.parse(dec.decode(body.subarray(off)))); } catch (e) {} }
         }
       }
     }
@@ -3353,17 +3384,20 @@
       RELAY_URLS.forEach((u) => { const c = mqttClient(u, () => {}, () => {}); c.whenReady(6000).then((ok) => { c.close(); if (done) return; if (ok) { done = true; res(true); } else if (--left === 0) res(false); }); });
     });
   }
-  const rTopic = (code, k) => RELAY_NS + code.toLowerCase() + '/' + k;
+  const rTopic = (ctx, k) => RELAY_NS + ctx.t + '/' + k;
 
   // domaćin: sluša na svim posrednicima; igrač preko releja dobiva "virtualnu vezu"
   let hostRelays = [], relaySweep = null;
   const relayConns = new Map();   // pid → lažna veza
-  function startHostRelay(code) {
-    if (!RELAY_ENABLED) return;
+  let hostCtx = null;
+  async function startHostRelay(code) {
+    if (!RELAY_ENABLED || !HOST_RS) return;
     stopHostRelay();
+    const ctx = await relayCtx(HOST_RS); if (!ctx || !game) return;
+    hostCtx = ctx;
     hostRelays = RELAY_URLS.map((u) => {
-      const c = mqttClient(u, (topic, m) => onRelayHost(c, code, m), () => {});
-      c.subscribe(rTopic(code, 'h'));
+      const c = mqttClient(u, rOn(ctx, (topic, m) => onRelayHost(c, ctx, m)), () => {});
+      c.subscribe(rTopic(ctx, 'h'));
       return c;
     });
     relaySweep = setInterval(() => {
@@ -3374,11 +3408,11 @@
   }
   function stopHostRelay() {
     clearInterval(relaySweep); relaySweep = null;
-    hostRelays.forEach((c) => c.close()); hostRelays = [];
+    hostRelays.forEach((c) => c.close()); hostRelays = []; hostCtx = null;
     for (const conn of relayConns.values()) hostConns.delete(conn);
     relayConns.clear();
   }
-  function onRelayHost(client, code, m) {
+  function onRelayHost(client, ctx, m) {
     if (!m || typeof m !== 'object' || typeof m.pid !== 'string' || !game || !okKey(m.sk)) return;
     const pid = m.pid.slice(0, 40);
     const key = hostKeys.get(pid);
@@ -3388,7 +3422,7 @@
     if (!conn || conn.client !== client) {
       if (conn) hostConns.delete(conn);
       conn = { relay: true, open: true, client, pid, last: Date.now(),
-        send(v) { client.publish(rTopic(code, 'p/' + pid + '/' + m.sk.slice(0, 16)), v); }, close() { this.open = false; } };
+        send(v) { rPub(client, ctx, rTopic(ctx, 'p/' + pid + '/' + m.sk.slice(0, 16)), v); }, close() { this.open = false; } };
       relayConns.set(pid, conn); hostConns.set(conn, { pid: null, name: '', av: 0, in: null });
     }
     conn.last = Date.now();
@@ -3402,12 +3436,13 @@
   async function startPlayerRelay() {
     if (!RELAY_ENABLED) return;
     if (prelay || mode !== 'player') return;
-    const code = pcode;
+    const code = pcode, ctx = await relayCtx(PLAYER_RS);
+    if (!ctx) return;   // kod upisan ručno, bez ključa sobe: samo izravna veza
     for (const u of RELAY_URLS) {
       if (mode !== 'player' || pcode !== code || (pconn && pconn.open)) return;
-      const c = mqttClient(u, (topic, d) => {
+      const c = mqttClient(u, rOn(ctx, (topic, d) => {
         if (prelay !== c) return;
-        if (d && d.t === 'who') { c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv }); return; }
+        if (d && d.t === 'who') { rPub(c, ctx, rTopic(ctx, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv }); return; }
         if (d && d.t === 'pv' && d.code === pcode) { if (pconn && pconn.open) return; const ch = JSON.stringify(d.pv) !== JSON.stringify(PV); PV = d.pv; if (ch && S) phoneRender(); return; }
         if (d && d.code === pcode && Array.isArray(d.P) && d.P.length <= 12 && typeof d.ph === 'string') {
           if (pconn && pconn.open) return;           // izravna veza ima prednost
@@ -3415,15 +3450,16 @@
           if (netNote) { netNote = ''; if (S) phoneRender(true); }
           applyState(d);
         }
-      }, () => { if (prelay === c) { prelay = null; clearInterval(prelayPing); clearInterval(prelayHello); if (mode === 'player' && !(pconn && pconn.open)) setTimeout(startPlayerRelay, 1500); } });
-      c.subscribe(rTopic(code, 'all')); c.subscribe(rTopic(code, 'p/' + PID + '/' + SK.slice(0, 16)));
+      }), () => { if (prelay === c) { prelay = null; clearInterval(prelayPing); clearInterval(prelayHello); if (mode === 'player' && !(pconn && pconn.open)) setTimeout(startPlayerRelay, 1500); } });
+      c.subscribe(rTopic(ctx, 'all')); c.subscribe(rTopic(ctx, 'p/' + PID + '/' + SK.slice(0, 16)));
       prelay = c;
       if (await c.whenReady(5000)) {
         if (prelay !== c || mode !== 'player' || pcode !== code || (pconn && pconn.open)) { c.close(); return; }
-        const hello = () => c.publish(rTopic(code, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
-        hello(); if (L.sent) c.publish(rTopic(code, 'h'), { t: 'in', pid: PID, sk: SK, in: L.sent });
+        const hello = () => rPub(c, ctx, rTopic(ctx, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
+        hello(); if (L.sent) rPub(c, ctx, rTopic(ctx, 'h'), { t: 'in', pid: PID, sk: SK, in: L.sent });
         clearInterval(prelayHello); prelayHello = setInterval(() => { if (!S) hello(); else clearInterval(prelayHello); }, 2000);
-        clearInterval(prelayPing); prelayPing = setInterval(() => c.publish(rTopic(code, 'h'), { t: 'ping', pid: PID, sk: SK }), 3000);
+        clearInterval(prelayPing); prelayPing = setInterval(() => rPub(c, ctx, rTopic(ctx, 'h'), { t: 'ping', pid: PID, sk: SK }), 3000);
+        c.ctx = ctx;
         return;
       }
       if (prelay === c) prelay = null;
@@ -3432,12 +3468,12 @@
   }
   function stopPlayerRelay() {
     clearInterval(prelayPing); clearInterval(prelayHello);
-    if (prelay) { try { prelay.publish(rTopic(pcode, 'h'), { t: 'bye', pid: PID, sk: SK }); } catch (e) {} const c = prelay; prelay = null; setTimeout(() => c.close(), 200); }
+    if (prelay) { const c = prelay; prelay = null; try { if (c.ctx) rPub(c, c.ctx, rTopic(c.ctx, 'h'), { t: 'bye', pid: PID, sk: SK }); } catch (e) {} setTimeout(() => c.close(), 300); }
   }
   // jedno mjesto za slanje domaćinu: izravna veza ako je otvorena, inače relej
   function netSend(m) {
     if (pconn && pconn.open) { try { pconn.send(m); return; } catch (e) {} }
-    if (prelay) prelay.publish(rTopic(pcode, 'h'), Object.assign({}, m, { pid: PID, sk: SK }));
+    if (prelay && prelay.ctx) rPub(prelay, prelay.ctx, rTopic(prelay.ctx, 'h'), Object.assign({}, m, { pid: PID, sk: SK }));
   }
 
   // ---------- domaćin (TV) ----------
@@ -3471,7 +3507,7 @@
       if (c.relay) { rel.add(c.client); if (x.pid) { try { c.send({ t: 'pv', code: v.code, s: v.s, pv: game.priv(x.pid) }); } catch (e) {} } continue; }
       try { c.send(x.pid ? Object.assign({}, v, { pv: game.priv(x.pid) }) : v); } catch (e) {}
     }
-    if (rel.size) { const js = JSON.stringify(v); rel.forEach((cl) => cl.publish(rTopic(v.code, 'all'), js)); }
+    if (rel.size && hostCtx) { const js = JSON.stringify(v), ctx = hostCtx; rel.forEach((cl) => rPub(cl, ctx, rTopic(ctx, 'all'), js)); }
   }
   function publishSoon() { if (pubPending) return; pubPending = true; setTimeout(() => { pubPending = false; publish(); }, 30); }
 
@@ -3545,10 +3581,11 @@
     if (!game || (mode !== 'host' && mode !== 'hostp')) return;
     try {
       if (game.view().ph === 'final') { sessionStorage.removeItem('mz_recovery_v1'); return; }
-      sessionStorage.setItem('mz_recovery_v1', JSON.stringify({ savedAt: Date.now(), code: game.view().code, noTv: mode === 'hostp', keys: [...hostKeys], journal }));
+      sessionStorage.setItem('mz_recovery_v1', JSON.stringify({ savedAt: Date.now(), code: game.view().code, noTv: mode === 'hostp', keys: [...hostKeys], rs: HOST_RS, journal }));
     } catch (e) { /* Storage may be unavailable or full; the live game continues. */ }
   }
   function openRoom(code, opts) {
+    HOST_RS = opts && opts.recovery && okRS(opts.recovery.rs) ? opts.recovery.rs : RELAY_ENABLED ? newRoomSecret() : null;
     if (opts && opts.noTv) {
       // domaćin igra s ovog mobitela; ostali se spajaju kao i inače
       pcode = code;
@@ -3630,6 +3667,7 @@
   // ---------- igrač (mobitel) ----------
   function joinGame(code, name) {
     pcode = code; pname = name; perr = ''; netNote = ''; S = null; lastSig = ''; L = freshLocal(-1);
+    PLAYER_RS = recallRS(code);
     store.set('mz_name', name);
     mode = 'player'; render(); keepAwake();
     if (!hasPeer()) { startPlayerRelay(); waitTimer = setTimeout(() => { if (!S && mode === 'player') failJoin('Spajanje nije uspjelo. Provjeri kod sobe i internet.'); }, 20000); return; }
@@ -4314,7 +4352,7 @@
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v49</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v50</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -4328,7 +4366,7 @@
 
   function joinV() {
     $app.className = 'screen phone';
-    const m = (location.hash || '').match(/^#?([A-Za-z]{4})$/);
+    const m = (location.hash || '').match(/^#?([A-Za-z]{4})(?:-[A-Za-z0-9_-]{22})?$/);
     const code = pcode || (m ? m[1].toUpperCase() : '');
     const name = pname || store.get('mz_name') || '';
     $app.innerHTML =
@@ -5466,7 +5504,7 @@
 
   function tvLobby(d, demoBar) {
     const addr = esc(location.host + location.pathname.replace(/index\.html$/, ''));
-    const svg = mode === 'demo' ? '' : qrSvg(appUrl() + '#' + d.code);
+    const svg = mode === 'demo' ? '' : qrSvg(appUrl() + joinHash(d.code));
     const inv = mode === 'demo'
       ? '<div class="tvlob-inv"><span class="lob-code-l">Demo</span><span class="lob-addr">Botovi igraju s tobom. U pravoj igri ovdje su kod sobe i QR kod.</span></div>'
       : '<div class="tvlob-inv"><span class="lob-code-l">Pozovi igrače</span><span class="lob-code">' + esc(d.code) + '</span>' + (svg ? '<div class="lob-qr">' + svg + '</div>' : '') +
@@ -5521,7 +5559,7 @@
           (p.b ? '<span class="st bot">🤖 Bot</span></div>' : '<span class="st' + (p.c ? '' : ' off') + '">' + (p.c ? '✓ U sobi' : 'Nije povezan') + '</span></div>')).join('');
         let invite = '', cta = '';
         if (mode === 'hostp') {
-          const open = !!L.inv, qr = open ? qrSvg(appUrl() + '#' + d.code) : '';
+          const open = !!L.inv, qr = open ? qrSvg(appUrl() + joinHash(d.code)) : '';
           invite = '<button class="btn ghost lob-toggle" id="lobInv" aria-haspopup="dialog" aria-expanded="' + open + '">Pozovi igrače <span class="lob-chip">Kod <b class="lob-code">' + esc(d.code) + '</b></span></button>' +
             (open ? '<div class="inv-modal" id="invModal" role="dialog" aria-modal="true" aria-label="Pozivnica"><div class="inv-card"><span class="lob-code-l">Kod sobe</span><span class="inv-code">' + esc(d.code) + '</span>' + (qr ? '<div class="lob-qr inv-qr">' + qr + '</div>' : '') +
               '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span><button class="btn lob-cta" id="invClose">Zatvori</button></div></div>' : '');
@@ -6435,7 +6473,7 @@
   }
   setInterval(tick, 100);
 
-  if (/^#?[A-Za-z]{4}$/.test(location.hash || '')) mode = 'join';
+  { const hm = (location.hash || '').match(/^#?([A-Za-z]{4})(?:-([A-Za-z0-9_-]{22}))?$/); if (hm) { mode = 'join'; if (hm[2]) rememberRS(hm[1].toUpperCase(), hm[2]); } }
   render();
   try {
     const raw = sessionStorage.getItem('mz_recovery_v1');
