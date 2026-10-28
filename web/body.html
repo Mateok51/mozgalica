@@ -2482,7 +2482,7 @@
   .throne-hall { --TH: 150px; position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; flex: none; }
   .throne-hall.mini { --TH: 92px; gap: 2px; }
   .tv .throne-hall { --TH: clamp(180px, 26vh, 300px); }
-  .th-stage { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .th-stage { position: relative; display: flex; flex-direction: column; align-items: center; padding-top: calc(var(--TH) * 0.2); }
   .th-glow { position: absolute; left: 50%; top: 40%; width: calc(var(--TH) * 2.2); height: calc(var(--TH) * 1.6); transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
     background: radial-gradient(closest-side, rgba(255, 196, 90, 0.45), rgba(255, 160, 60, 0.15) 55%, transparent); animation: thGlow 3s ease-in-out infinite alternate; }
   @keyframes thGlow { to { opacity: 0.65; transform: translate(-50%, -50%) scale(1.06); } }
@@ -2543,6 +2543,31 @@
   .risk-c.on { box-shadow: inset 0 0 0 2px #fff3c2, 0 0 0 2px #f0c66e, 0 0 18px rgba(255, 214, 120, 0.8), 0 3px 0 #1e1006; transform: scale(1.02); }
   .risk-c.dim { filter: brightness(0.55) saturate(0.6); }
   @media (prefers-reduced-motion: reduce) { .th-glow, .th-crown, .th-crown.th-drop, .th-king.th-new, .th-ch, .th-ch.th-old { animation: none !important; } }
+  html .p-opts.two .p-opt, html .rv-opts.two .p-opt { font-size: clamp(0.95rem, 4.8vw, 1.3rem); letter-spacing: 0; padding-left: 6px; padding-right: 6px; }
+  html .p-opts.two .p-opt .otxt, html .rv-opts.two .p-opt .otxt { white-space: nowrap; }
+  /* RAZVRSTAVANJE 2: velika kartica gore, dvije jasne „košare” ispod (dodir ili povlačenje), bez uskih bočnih stupaca */
+  html .swp-stage { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+  html .swp-mid { height: clamp(140px, 25vh, 210px); width: 100%; }
+  html .swp-card { height: 100%; min-height: 0; border: 0; border-radius: 16px; padding: 14px 16px; color: #fff3d6; font-family: var(--font-body); font-weight: 900; font-size: 1.5rem; line-height: 1.2; hyphens: manual; overflow-wrap: break-word;
+    background: var(--woodgrain, none), linear-gradient(180deg, #8a5a2c, #5e3a1a 55%, #3e250f); text-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 0 2px #2a1608, inset 0 0 0 4px rgba(240, 198, 110, 0.55), inset 0 3px 0 rgba(255, 220, 160, 0.25), 0 6px 14px rgba(0, 0, 0, 0.5); }
+  html .swp-card.swp-peek { transform: scale(0.94) translateY(10px); opacity: 0.55; }
+  html .swp-card[data-dir="a"]::after { border-radius: 16px; background: linear-gradient(90deg, rgba(80, 150, 230, 0.55), transparent 70%); }
+  html .swp-card[data-dir="b"]::after { border-radius: 16px; background: linear-gradient(270deg, rgba(230, 90, 60, 0.55), transparent 70%); }
+  html .swp-bins { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  html .swp-side { flex-direction: column; gap: 4px; min-height: 76px; padding: 10px 8px; border-radius: 14px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    box-shadow: inset 0 0 0 2px #2a1608, inset 0 2px 0 rgba(255, 220, 160, 0.25), 0 3px 0 #1e1006, 0 0 calc(var(--k) * 22px) rgba(255, 214, 120, calc(var(--k) * 0.9)); }
+  html .swp-side.a { background: linear-gradient(180deg, #3a6aa0, #1c3a5e); }
+  html .swp-side.b { background: linear-gradient(180deg, #b8482a, #6a2210); }
+  html .swp-side .swp-arr { font-size: 1rem; color: #ffe2a6; opacity: 1; }
+  html .swp-side b { font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; letter-spacing: 0; text-transform: none; line-height: 1.15; color: #fff3d6; hyphens: manual; overflow-wrap: normal; word-break: normal; }
+  html .swp-side i { font-size: 0.8rem; background: rgba(0, 0, 0, 0.3); color: #ffe2a6; }
+  html .swp-side:active { transform: scale(0.97); }
+  html .swp-btns { margin-top: -2px; }
+  html .swp-b.undo { background: none; border: 0; color: #f0c66e; text-decoration: underline; text-underline-offset: 3px; min-height: 36px; }
+  @media (max-width: 360px) { html .swp-card { font-size: 1.3rem; } html .swp-side b { font-size: 0.85rem; } }
+  /* tamni način preglednika: stranica je već tamna (signal za preglednike koji inače same zatamnjuju) */
+  @media (prefers-color-scheme: dark) { :root { color-scheme: dark; } }
 
   /* isti logo na početnom ekranu i ekranima za pokretanje / ulazak u igru (mobitel) */
   .phone .logo:has(.lt), .center .logo:has(.lt) { width: min(78vw, 32vh, 400px); margin: 0 auto 0.8em; }
@@ -6311,19 +6336,17 @@ __ENGINE__
     const n = d.so.it.length;
     if (!L.sortP || L.sortP.length !== n) { L.sortP = new Array(n).fill(-1); L.srtH = []; L.srtLock = false; L.srtCool = 0; }
     const sent = !!(L.sent || me.ok), cur = srtCur(), got = n - L.sortP.filter((x) => x < 0).length;
-    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔ Čekamo ostale…' : 'Prevuci karticu ulijevo ili udesno.') + '</div></div>';
+    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔ Čekamo ostale…' : 'Povuci karticu u košaru ili dodirni košaru.') + '</div></div>';
     if (sent) return '<div class="srt sent">' + head + sortZonesHtml(d, L.sortP, null) + '</div>';
     const cnt = (k) => L.sortP.filter((x) => x === k).length;
     const anim = L.srtBack != null ? ' back-' + (L.srtBack ? 'b' : 'a') : (L.srtIn ? ' enter' : '');
     L.srtBack = null; L.srtIn = false;
     const card = cur >= 0 ? '<div class="swp-card' + anim + '" data-si="' + cur + '" tabindex="0" role="group" aria-label="Pojam: ' + esc(d.so.it[cur]) + '"><span>' + esc(d.so.it[cur]) + '</span></div>' : '<div class="swp-card swp-end"><span>Sve razvrstano ✔</span></div>';
     const peek = cur >= 0 && cur < n - 1 ? '<div class="swp-card swp-peek" aria-hidden="true"></div>' : '';
-    const side = (k) => '<div class="swp-side ' + (k ? 'b' : 'a') + '" data-z="' + k + '"><span class="swp-arr">' + (k ? '▶' : '◀') + '</span><b>' + esc(k ? d.so.b : d.so.a) + '</b><i>' + cnt(k) + '</i></div>';
-    const stage = '<div class="swp-stage">' + side(0) + '<div class="swp-mid">' + peek + card + '</div>' + side(1) + '</div>';
+    const side = (k) => '<div class="swp-side ' + (k ? 'b' : 'a') + '" data-z="' + k + '" data-go="' + k + '" role="button" tabindex="0" aria-label="' + esc(k ? d.so.b : d.so.a) + '"><span class="swp-arr">' + (k ? 'udesno ▶' : '◀ ulijevo') + '</span><b>' + esc(k ? d.so.b : d.so.a) + '</b><i>' + cnt(k) + '</i></div>';
+    const stage = '<div class="swp-stage"><div class="swp-mid">' + peek + card + '</div><div class="swp-bins">' + side(0) + side(1) + '</div></div>';
     const prog = '<div class="swp-prog"><span class="swp-pt">' + Math.min(n, got + (cur >= 0 ? 1 : 0)) + '/' + n + ' pojmova</span><span class="swp-bar"><span style="width:' + Math.round(got / n * 100) + '%"></span></span></div>';
-    const btns = '<div class="swp-btns"><button class="swp-b" data-go="0" aria-label="Lijevo: ' + esc(d.so.a) + '"' + (cur < 0 ? ' disabled' : '') + '>◀</button>' +
-      '<button class="swp-b undo" id="swpUndo"' + (L.srtH.length ? '' : ' disabled') + '>↶ Poništi</button>' +
-      '<button class="swp-b" data-go="1" aria-label="Desno: ' + esc(d.so.b) + '"' + (cur < 0 ? ' disabled' : '') + '>▶</button></div>';
+    const btns = '<div class="swp-btns"><button class="swp-b undo" id="swpUndo"' + (L.srtH.length ? '' : ' disabled') + '>↶ Poništi zadnje</button></div>';
     const left = n - got;
     const done = '<button class="btn' + (left ? ' ghost' : '') + '" id="srtDone"' + (left ? ' disabled' : '') + '>' + (left ? 'Razvrstaj još ' + left : 'Gotovo') + '</button>';
     return '<div class="srt swp">' + head + prog + stage + btns + done + '</div>';
@@ -6522,7 +6545,7 @@ __ENGINE__
     const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dodatni napredak</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';
-    return timerHtml(3000) + (d.ntv && !cr ? '<div class="phone-pyr compact">' + pyramidHtml(d, false, { you: true }) + '</div>' : '') +
+    return timerHtml(3000) +
       (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!<small>Točan odgovor osvaja krunu</small>' : '👑 Pitanje za krunu: ' + esc(d.P.filter((p) => p.top).map((p) => p.n).join(' i ')) + '<small>Ako pogriješi, utrka se nastavlja</small>') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
       '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +

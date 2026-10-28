@@ -847,3 +847,10 @@ rep("const tight2 = G.crownWin === W || (sec2 && wp.fstep - sec2.fstep <= 1);",
 rep("    // kratka priča iz odabranih događaja", "    if (wp && G.throne) wl = G.tieWin === W ? 'Osvaja prijestolje u izjednačenju!' : (wp.tq0r || 1) > 1 ? 'Preuzima Krčmarovo prijestolje u završnom obračunu!' : 'Čuva Krčmarovo prijestolje do kraja!';\n    // kratka priča iz odabranih događaja")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR prijestolje legende OK')
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# posljednji poziv: tekst prema odabranom završetku (prijestolje ne spominje piramidu)
+rep("{ snd: 'stingLeader', vs: 0, onShow: () => { T.fcAnn = 1; } });\n", "{ snd: 'stingLeader', vs: 0, onShow: () => { T.fcAnn = 1; } });\n        if (c && G.opt && G.opt.end === 'throne') { c.t = '👑 Posljednji poziv!'; c.s = 'Još ' + numW(left) + ' do Krčmarova prijestolja! Svaki bod nosiš u finale.'; }\n")
+rep("      if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], [], { snd: 'stingSmall' });",
+    "      if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], [], { snd: 'stingSmall' }); if (c && G.opt && G.opt.end === 'throne') c.s = 'Još jedno pitanje prije borbe za prijestolje!';")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR posljednji poziv prema završetku OK')

@@ -2863,3 +2863,18 @@ s = rep(s, "return timerHtml(3000) + (d.ntv && !cr ? '<div class=\"phone-pyr com
 _i = s.index('</style>'); s = s[:_i] + "  html .p-opts.two .p-opt, html .rv-opts.two .p-opt { font-size: clamp(0.95rem, 4.8vw, 1.3rem); letter-spacing: 0; padding-left: 6px; padding-right: 6px; }\n  html .p-opts.two .p-opt .otxt, html .rv-opts.two .p-opt .otxt { white-space: nowrap; }\n" + s[_i:]
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Piramida odgovaranje OK')
+
+# ---- Razvrstavanje 2: kartica gore, dvije košare ispod (dodir = razvrstaj), poništi kao poveznica ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "    const side = (k) => '<div class=\"swp-side ' + (k ? 'b' : 'a') + '\" data-z=\"' + k + '\"><span class=\"swp-arr\">' + (k ? '▶' : '◀') + '</span><b>' + esc(k ? d.so.b : d.so.a) + '</b><i>' + cnt(k) + '</i></div>';\n"
+           "    const stage = '<div class=\"swp-stage\">' + side(0) + '<div class=\"swp-mid\">' + peek + card + '</div>' + side(1) + '</div>';",
+           "    const side = (k) => '<div class=\"swp-side ' + (k ? 'b' : 'a') + '\" data-z=\"' + k + '\" data-go=\"' + k + '\" role=\"button\" tabindex=\"0\" aria-label=\"' + esc(k ? d.so.b : d.so.a) + '\"><span class=\"swp-arr\">' + (k ? 'udesno ▶' : '◀ ulijevo') + '</span><b>' + esc(k ? d.so.b : d.so.a) + '</b><i>' + cnt(k) + '</i></div>';\n"
+           "    const stage = '<div class=\"swp-stage\"><div class=\"swp-mid\">' + peek + card + '</div><div class=\"swp-bins\">' + side(0) + side(1) + '</div></div>';")
+s = rep(s, "    const btns = '<div class=\"swp-btns\"><button class=\"swp-b\" data-go=\"0\" aria-label=\"Lijevo: ' + esc(d.so.a) + '\"' + (cur < 0 ? ' disabled' : '') + '>◀</button>' +\n"
+           "      '<button class=\"swp-b undo\" id=\"swpUndo\"' + (L.srtH.length ? '' : ' disabled') + '>↶ Poništi</button>' +\n"
+           "      '<button class=\"swp-b\" data-go=\"1\" aria-label=\"Desno: ' + esc(d.so.b) + '\"' + (cur < 0 ? ' disabled' : '') + '>▶</button></div>';",
+           "    const btns = '<div class=\"swp-btns\"><button class=\"swp-b undo\" id=\"swpUndo\"' + (L.srtH.length ? '' : ' disabled') + '>↶ Poništi zadnje</button></div>';")
+s = rep(s, "'Prevuci karticu ulijevo ili udesno.'", "'Povuci karticu u košaru ili dodirni košaru.'")
+_i = s.index('</style>'); s = s[:_i] + open(SP + '/v4/swp2.css', encoding='utf-8').read() + s[_i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Razvrstavanje 2 OK')
