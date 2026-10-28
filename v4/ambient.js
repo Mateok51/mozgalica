@@ -16,7 +16,7 @@
       const k = (W > H ? 60 : 36) * (lvl === 1 ? 0.45 : 1);
       dust = Array.from({ length: Math.round(k) }, () => mkDust(true));
       embers = [];
-      haze = lvl >= 2 ? Array.from({ length: 3 }, (_, i) => ({ x: rnd(0, W), y: H * (0.55 + 0.18 * i), r: Math.max(W, H) * rnd(0.3, 0.5), vx: rnd(2, 5) * (i % 2 ? -1 : 1), a: rnd(0.045, 0.075) })) : [];
+      haze = lvl >= 2 ? Array.from({ length: 4 }, (_, i) => ({ x: rnd(0, W), by: H * rnd(0.2, 0.85), amp: H * rnd(0.12, 0.22), ph: rnd(0, 6.28), sp: rnd(0.05, 0.11), r: Math.max(W, H) * rnd(0.26, 0.42), br: rnd(0.04, 0.09), vx: rnd(7, 15) * (i % 2 ? -1 : 1), a: rnd(0.03, 0.05) })) : [];
     }
     function size() {
       const cw = innerWidth || 360, ch = innerHeight || 640, s = Math.min(1, 900 / Math.max(cw, ch));
@@ -28,10 +28,11 @@
       g.globalCompositeOperation = 'lighter';
       // dim: tri vrlo blijeda, spora oblaka pri dnu
       for (const z of haze) {
-        z.x += z.vx * dt; if (z.x < -z.r * 0.5) z.x = W + z.r * 0.5; else if (z.x > W + z.r * 0.5) z.x = -z.r * 0.5;
-        const gr = g.createRadialGradient(z.x, z.y, 0, z.x, z.y, z.r);
+        z.x += z.vx * dt; if (z.x < -z.r * 0.6) z.x = W + z.r * 0.6; else if (z.x > W + z.r * 0.6) z.x = -z.r * 0.6;
+        z.y = z.by + Math.sin(t * z.sp * 6.2832 + z.ph) * z.amp;   // dim lebdi i gore-dolje, ne samo ulijevo/udesno
+        const zr = z.r * (1 + 0.08 * Math.sin(t * z.br * 6.2832 + z.ph)), gr = g.createRadialGradient(z.x, z.y, 0, z.x, z.y, zr);
         gr.addColorStop(0, 'rgba(255,196,130,' + z.a + ')'); gr.addColorStop(1, 'rgba(255,196,130,0)');
-        g.fillStyle = gr; g.fillRect(z.x - z.r, z.y - z.r, z.r * 2, z.r * 2);
+        g.fillStyle = gr; g.fillRect(z.x - zr, z.y - zr, zr * 2, zr * 2);
       }
       // titranje svjetla kamina (nepravilno, vrlo blago)
       if (land()) { const h = hearth(), fl = 0.5 + 0.5 * Math.sin(t * 1.9) * Math.sin(t * 0.7 + 1) + 0.15 * Math.sin(t * 7.3), a = 0.06 + 0.07 * Math.max(0, Math.min(1, fl)), R = H * 0.55;

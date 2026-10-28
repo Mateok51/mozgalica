@@ -446,3 +446,23 @@ rep("      if (!p.kf && !p.koGot.fav && p !== lead && (!forced || forced.k === '
     "      // usluga „tvoj glas bira kategoriju” zamijenjena je power pickom na glasanju")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR power pick OK')
+
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# Power pick: kad je iskorišten, glasanje se zaustavlja uz kratku pauzu da svi vide što se dogodilo; ostali ne moraju birati
+rep("  const allDone = () => { const a = active(); return a.length > 0 && a.every((p) => p.done && !tkHold(p)); };",
+    "  const allDone = () => { const a = active(); return a.length > 0 && !(G.ph === 'vote' && G.ppHeld) && a.every((p) => p.done && !tkHold(p)); };")
+rep("        if (G.ppv && G.ppv.pid === p.pid && inp.v !== G.ppv.c) return false;\n",
+    "        if (G.ppv && G.ppv.pid !== p.pid) break;   // pick je već iskorišten: ostali više ne biraju\n        if (G.ppv && G.ppv.pid === p.pid && inp.v !== G.ppv.c) return false;\n")
+rep("G.ppv = { pid: p.pid, c: inp.v }; }", "G.ppv = { pid: p.pid, c: inp.v }; ppLock(); }")
+rep("  function startVote() {\n    if (sfDeal()) return;",
+    "  function ppLock() {\n    const s0 = G.s, hold = Math.round((cfg.ppHold || 2.6) * 1000);\n    G.ppHeld = 1; G.dur = hold; G.startedAt = now(); G.endsAt = G.startedAt + hold;\n    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, hold);\n  }\n  function startVote() {\n    if (sfDeal()) return;")
+rep("    G.ppv = null; G.ppw = null;\n    setPhase('vote', cfg.vote);", "    G.ppv = null; G.ppw = null; G.ppHeld = 0;\n    setPhase('vote', cfg.vote);")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR power pick: pauza i kraj glasanja OK')
+
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# produljena faza (npr. pauza nakon power picka) ne smije završiti prvotnim, ranijim satom
+rep("    later(() => { if (G.s === s) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));",
+    "    later(() => { if (G.s === s && now() >= G.endsAt - 5) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR produljena faza OK')

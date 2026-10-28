@@ -2625,3 +2625,17 @@ i = s.index('</style>'); s = s[:i] + "  #ambient { position: fixed; inset: 0; wi
 s = rep(s, "  // ---------- pozadina: unutrašnjost krčme (drveni zid, prozor u noć, kamin, svijeće, šank na TV-u) ----------", open(SP + '/v4/ambient.js', encoding='utf-8').read() + "  // ---------- pozadina: unutrašnjost krčme (drveni zid, prozor u noć, kamin, svijeće, šank na TV-u) ----------")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Ambijent OK')
+
+# ---- Power pick: zvuk (kovanica + drveni udarac + lutnja), ostali ne biraju, poruka tko bira ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "      tap: () => { noise(0, 0.035, 0.05, 1400, 'bandpass');",
+  "      pick: () => { tone(120, 0, 0.2, 'sine', 0.3, 60); noise(0, 0.05, 0.1, 2600, 'highpass'); tone(1319, 0.03, 0.5, 'sine', 0.12); tone(1976, 0.08, 0.6, 'sine', 0.09); [392, 523, 659, 784].forEach((f, k) => tone(f, 0.22 + k * 0.09, 0.28, 'triangle', 0.11)); },\n"
+  "      tap: () => { noise(0, 0.035, 0.05, 1400, 'bandpass');")
+# mobitel: jednom po koraku glasanja zvuk; vrata onemogućena, podnaslov
+s = rep(s, "        const ppBar = ppAvail ?", "        if (ppBy && !res && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }\n        const ppBar = ppAvail ?")
+s = rep(s, "(res || mine !== -1 ? ' disabled' : '')", "(res || mine !== -1 || ppBy ? ' disabled' : '')")
+s = rep(s, "mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ?", "ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ?")
+# TV: zvuk jednom po koraku
+s = rep(s, "        const rl = roulette(d), ppBy = d.P.find((p) => p.pk);\n", "        const rl = roulette(d), ppBy = d.P.find((p) => p.pk);\n        if (ppBy && d.ph === 'vote' && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }\n")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Power pick zvuk i pauza UI OK')

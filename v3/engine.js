@@ -146,7 +146,7 @@ function createGame(o) {
   const clear = () => { timers.forEach(clearTimeout); timers = []; };
   const isInt = (n) => Number.isInteger(n);
   const tkHold = (p) => !!(G.tk && G.tk.cur && G.tk.cur.st === 'OFFERED' && G.tk.cur.f === p.pid && G.ph === 'vote');
-  const allDone = () => { const a = active(); return a.length > 0 && a.every((p) => p.done && !tkHold(p)); };
+  const allDone = () => { const a = active(); return a.length > 0 && !(G.ph === 'vote' && G.ppHeld) && a.every((p) => p.done && !tkHold(p)); };
 
   // ----- igrači -----
   function cleanName(raw) { return String(raw || '').replace(/[\u0000-\u001f]/g, '').replace(/\s+/g, ' ').trim().slice(0, cfg.nameMax); }
@@ -234,8 +234,9 @@ function createGame(o) {
         break;
       case 'vote':
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
+        if (G.ppv && G.ppv.pid !== p.pid) break;   // pick je već iskorišten: ostali više ne biraju
         if (G.ppv && G.ppv.pid === p.pid && inp.v !== G.ppv.c) return false;
-        if (inp.pp && p.pp !== 0 && !G.ppv && !G.inFinale) { p.pp = 0; p.ppc = inp.v; G.ppv = { pid: p.pid, c: inp.v }; }
+        if (inp.pp && p.pp !== 0 && !G.ppv && !G.inFinale) { p.pp = 0; p.ppc = inp.v; G.ppv = { pid: p.pid, c: inp.v }; ppLock(); }
         p.vote = inp.v; break;
       case 'bet': {
         if (!BET_OPTS.includes(inp.b)) return false;
@@ -371,7 +372,7 @@ function createGame(o) {
     G.startedAt = now(); G.endsAt = G.startedAt + G.dur;
     for (const p of list()) p.done = false;
     const s = G.s;
-    later(() => { if (G.s === s) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));
+    later(() => { if (G.s === s && now() >= G.endsAt - 5) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));
     if (INPUT_PHASES[ph]) botsAct();
     sfBotsTick();
     onChange();
@@ -506,6 +507,11 @@ function createGame(o) {
     return next();
   }
 
+  function ppLock() {
+    const s0 = G.s, hold = Math.round((cfg.ppHold || 2.6) * 1000);
+    G.ppHeld = 1; G.dur = hold; G.startedAt = now(); G.endsAt = G.startedAt + hold;
+    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, hold);
+  }
   function startVote() {
     if (sfDeal()) return;
     startVote0();
@@ -519,7 +525,7 @@ function createGame(o) {
     G.cats = shuffle(avail).slice(0, 4);
     G.cw = -1;
     for (const p of list()) { p.vote = -1; p.ppc = -1; }
-    G.ppv = null; G.ppw = null;
+    G.ppv = null; G.ppw = null; G.ppHeld = 0;
     setPhase('vote', cfg.vote);
     tkOffer();
   }

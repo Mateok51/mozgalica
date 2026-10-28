@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-bE4kcOtkSbtR8vE11v3Ivq/IkmsTCdZsUfX3Qilj/TE=' 'sha256-NCucw4tWUOrvI02WyVPaVY2DsYNys5OThbflI1++PLI=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-RJAOt/6BRPp3iLsrEaDAQnxS8eYT0ZGy8pqFo5rAxc0=' 'sha256-hmfTafj0EUWh7QQD+LMZ0yuDK0S0qQiXmEfpfTyGBTM=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2454,7 +2454,7 @@ function createGame(o) {
   const clear = () => { timers.forEach(clearTimeout); timers = []; };
   const isInt = (n) => Number.isInteger(n);
   const tkHold = (p) => !!(G.tk && G.tk.cur && G.tk.cur.st === 'OFFERED' && G.tk.cur.f === p.pid && G.ph === 'vote');
-  const allDone = () => { const a = active(); return a.length > 0 && a.every((p) => p.done && !tkHold(p)); };
+  const allDone = () => { const a = active(); return a.length > 0 && !(G.ph === 'vote' && G.ppHeld) && a.every((p) => p.done && !tkHold(p)); };
 
   // ----- igrači -----
   function cleanName(raw) { return String(raw || '').replace(/[\u0000-\u001f]/g, '').replace(/\s+/g, ' ').trim().slice(0, cfg.nameMax); }
@@ -2542,8 +2542,9 @@ function createGame(o) {
         break;
       case 'vote':
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
+        if (G.ppv && G.ppv.pid !== p.pid) break;   // pick je već iskorišten: ostali više ne biraju
         if (G.ppv && G.ppv.pid === p.pid && inp.v !== G.ppv.c) return false;
-        if (inp.pp && p.pp !== 0 && !G.ppv && !G.inFinale) { p.pp = 0; p.ppc = inp.v; G.ppv = { pid: p.pid, c: inp.v }; }
+        if (inp.pp && p.pp !== 0 && !G.ppv && !G.inFinale) { p.pp = 0; p.ppc = inp.v; G.ppv = { pid: p.pid, c: inp.v }; ppLock(); }
         p.vote = inp.v; break;
       case 'bet': {
         if (!BET_OPTS.includes(inp.b)) return false;
@@ -2679,7 +2680,7 @@ function createGame(o) {
     G.startedAt = now(); G.endsAt = G.startedAt + G.dur;
     for (const p of list()) p.done = false;
     const s = G.s;
-    later(() => { if (G.s === s) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));
+    later(() => { if (G.s === s && now() >= G.endsAt - 5) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));
     if (INPUT_PHASES[ph]) botsAct();
     sfBotsTick();
     onChange();
@@ -2814,6 +2815,11 @@ function createGame(o) {
     return next();
   }
 
+  function ppLock() {
+    const s0 = G.s, hold = Math.round((cfg.ppHold || 2.6) * 1000);
+    G.ppHeld = 1; G.dur = hold; G.startedAt = now(); G.endsAt = G.startedAt + hold;
+    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, hold);
+  }
   function startVote() {
     if (sfDeal()) return;
     startVote0();
@@ -2827,7 +2833,7 @@ function createGame(o) {
     G.cats = shuffle(avail).slice(0, 4);
     G.cw = -1;
     for (const p of list()) { p.vote = -1; p.ppc = -1; }
-    G.ppv = null; G.ppw = null;
+    G.ppv = null; G.ppw = null; G.ppHeld = 0;
     setPhase('vote', cfg.vote);
     tkOffer();
   }
@@ -5097,6 +5103,7 @@ function createGame(o) {
       src.connect(flt); flt.connect(g); g.connect(c.destination); src.start(s); src.stop(s + dur);
     }
     const P = {
+      pick: () => { tone(120, 0, 0.2, 'sine', 0.3, 60); noise(0, 0.05, 0.1, 2600, 'highpass'); tone(1319, 0.03, 0.5, 'sine', 0.12); tone(1976, 0.08, 0.6, 'sine', 0.09); [392, 523, 659, 784].forEach((f, k) => tone(f, 0.22 + k * 0.09, 0.28, 'triangle', 0.11)); },
       tap: () => { noise(0, 0.035, 0.05, 1400, 'bandpass'); tone(330, 0, 0.05, 'triangle', 0.045, 220); },
       confirm: () => { noise(0, 0.05, 0.08, 900, 'bandpass'); tone(523, 0, 0.09, 'triangle', 0.11); tone(784, 0.05, 0.12, 'triangle', 0.08); },
       score: () => { tone(880, 0, 0.08, 'triangle', 0.08); tone(1175, 0.06, 0.12, 'triangle', 0.07); },
@@ -5301,7 +5308,7 @@ function createGame(o) {
       const k = (W > H ? 60 : 36) * (lvl === 1 ? 0.45 : 1);
       dust = Array.from({ length: Math.round(k) }, () => mkDust(true));
       embers = [];
-      haze = lvl >= 2 ? Array.from({ length: 3 }, (_, i) => ({ x: rnd(0, W), y: H * (0.55 + 0.18 * i), r: Math.max(W, H) * rnd(0.3, 0.5), vx: rnd(2, 5) * (i % 2 ? -1 : 1), a: rnd(0.045, 0.075) })) : [];
+      haze = lvl >= 2 ? Array.from({ length: 4 }, (_, i) => ({ x: rnd(0, W), by: H * rnd(0.2, 0.85), amp: H * rnd(0.12, 0.22), ph: rnd(0, 6.28), sp: rnd(0.05, 0.11), r: Math.max(W, H) * rnd(0.26, 0.42), br: rnd(0.04, 0.09), vx: rnd(7, 15) * (i % 2 ? -1 : 1), a: rnd(0.03, 0.05) })) : [];
     }
     function size() {
       const cw = innerWidth || 360, ch = innerHeight || 640, s = Math.min(1, 900 / Math.max(cw, ch));
@@ -5313,10 +5320,11 @@ function createGame(o) {
       g.globalCompositeOperation = 'lighter';
       // dim: tri vrlo blijeda, spora oblaka pri dnu
       for (const z of haze) {
-        z.x += z.vx * dt; if (z.x < -z.r * 0.5) z.x = W + z.r * 0.5; else if (z.x > W + z.r * 0.5) z.x = -z.r * 0.5;
-        const gr = g.createRadialGradient(z.x, z.y, 0, z.x, z.y, z.r);
+        z.x += z.vx * dt; if (z.x < -z.r * 0.6) z.x = W + z.r * 0.6; else if (z.x > W + z.r * 0.6) z.x = -z.r * 0.6;
+        z.y = z.by + Math.sin(t * z.sp * 6.2832 + z.ph) * z.amp;   // dim lebdi i gore-dolje, ne samo ulijevo/udesno
+        const zr = z.r * (1 + 0.08 * Math.sin(t * z.br * 6.2832 + z.ph)), gr = g.createRadialGradient(z.x, z.y, 0, z.x, z.y, zr);
         gr.addColorStop(0, 'rgba(255,196,130,' + z.a + ')'); gr.addColorStop(1, 'rgba(255,196,130,0)');
-        g.fillStyle = gr; g.fillRect(z.x - z.r, z.y - z.r, z.r * 2, z.r * 2);
+        g.fillStyle = gr; g.fillRect(z.x - zr, z.y - zr, zr * 2, zr * 2);
       }
       // titranje svjetla kamina (nepravilno, vrlo blago)
       if (land()) { const h = hearth(), fl = 0.5 + 0.5 * Math.sin(t * 1.9) * Math.sin(t * 0.7 + 1) + 0.15 * Math.sin(t * 7.3), a = 0.06 + 0.07 * Math.max(0, Math.min(1, fl)), R = H * 0.55;
@@ -6634,7 +6642,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v37</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v38</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -7573,6 +7581,7 @@ function createGame(o) {
         const counts = d.cats.map((_, i) => d.P.filter((p) => p.vt === i).length);
         const max = Math.max(0, ...counts);
         const rl = roulette(d), ppBy = d.P.find((p) => p.pk);
+        if (ppBy && d.ph === 'vote' && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
         const doors = d.cats.map((c, i) => {
           const voters = voterFaces(d.P.filter((p) => p.vt === i), 5);
           const cls = d.ph === 'voteResult' ? (i === d.cw ? ' win' : ' lose') : (max > 0 && counts[i] === max ? ' lead' : '');
@@ -7800,6 +7809,7 @@ function createGame(o) {
         const res = d.ph === 'voteResult', rl = roulette(d);
         const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
         const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;
+        if (ppBy && !res && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
         const ppBar = ppAvail ? '<button class="pp-coin' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-label="Power pick: biraš baš svoju kategoriju" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><b>⭐</b><small>PICK</small></button>' : '';
         const doorBtns = d.cats.map((c, i) => {
           const who = d.P.filter((p) => p.vt === i);
@@ -7807,12 +7817,12 @@ function createGame(o) {
           const cls = res ? (i === d.cw ? ' win' : ' lose') : (mine === i ? ' picked' : '');
           const dst = !res && mine !== -1 ? (mine === i ? 'picked' : 'dim') : '';
           const ppT = ppBy && ppBy.vt === i ? '<span class="pp-tag"><span class="pp-av">' + avSvg(ppBy.a, 'happy') + '</span><span class="pp-tx">' + esc(ppBy.n) + ' ⭐<span class="pp-lb"> power pick</span></span></span>' : '';
-          return '<button class="door-btn o' + i + cls + (ppT ? ' pp-on' : '') + (L.ppOn && !res && mine === -1 ? ' pp-arm' : '') + '" data-v="' + i + '" data-bk="dv' + i + '" data-bv="' + dst + '"' + (dst ? ' data-ba="' + (dst === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (rl ? ' style="--rd:' + rl.R + 'ms"' : '') + (res || mine !== -1 ? ' disabled' : '') + '>' + (rl ? rl.spot(i) : '') + ppT + '<span class="dname"><span>' + esc(c) + '</span></span>' +
+          return '<button class="door-btn o' + i + cls + (ppT ? ' pp-on' : '') + (L.ppOn && !res && mine === -1 ? ' pp-arm' : '') + '" data-v="' + i + '" data-bk="dv' + i + '" data-bv="' + dst + '"' + (dst ? ' data-ba="' + (dst === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (rl ? ' style="--rd:' + rl.R + 'ms"' : '') + (res || mine !== -1 || ppBy ? ' disabled' : '') + '>' + (rl ? rl.spot(i) : '') + ppT + '<span class="dname"><span>' + esc(c) + '</span></span>' +
             '<span class="dvoters">' + faces + '</span></button>';
         }).join('');
         const resT = 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>';
         h = (rl ? '<style>' + rl.css + '</style>' : '') + head + '<div class="vote-head"><div class="p-title">' + (res ? (rl ? '<span class="rl-pre" style="--rd:' + rl.R + 'ms">Ždrijeb bira…</span><span class="rl-post" style="--rd:' + rl.R + 'ms">' + resT + '</span>' : resT) : 'Odaberi kategoriju') + '</div>' +
-          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : 'Kreće pitanje…') : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
+          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
           '<div class="door-btns">' + doorBtns + ppBar + '</div>' +
 
           '';
