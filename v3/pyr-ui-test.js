@@ -33,7 +33,7 @@ const so = (u) => { const REQ = [1, 1, 1, 2, 2, 2, 2]; let st = 0, acc = 0; whil
     page.on('pageerror', (e) => errs.push(e.message));
     await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr/, (r) => r.abort());
     await page.addInitScript((f) => { window.__FASTCFG = f; }, FAST);
-    await page.goto('file://' + TMP);
+    await page.goto('file://' + TMP + '?demotv=1');
     await page.click('#demo'); await page.waitForTimeout(250);
     await page.click('#lobSettings'); await page.waitForTimeout(150);
     await page.click('.len-c[data-len="brza"]'); await page.waitForTimeout(100);

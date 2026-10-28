@@ -16,7 +16,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
     for (const view of ['phone', 'tv']) {
       const page = await (await b.newContext({ viewport: view === 'tv' ? { width: 1920, height: 1080 } : { width: 390, height: 844 }, hasTouch: view !== 'tv' })).newPage();
       await page.route(/fonts|jsdelivr|unpkg/, (r) => r.abort()); await page.addInitScript((f) => { window.__FASTCFG = f; }, FAST);
-      await page.goto('file://' + TMP); await page.click('#demo'); await page.waitForTimeout(250);
+      await page.goto('file://' + TMP + '?demotv=1'); await page.click('#demo'); await page.waitForTimeout(250);
       await page.click('#lobSettings'); await page.click('.len-c[data-len="brza"]'); await page.click('#dstart');
       if (view === 'tv') { await page.click('#toTv').catch(() => {}); }
       // do pitanja "Tko sam ja?" (čovjek ne odgovara, da se pitanje ne zatvori ranije)

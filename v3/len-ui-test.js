@@ -12,7 +12,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
       const ctx = await b.newContext({ viewport: { width: W, height: H }, hasTouch: true }); const page = await ctx.newPage(); const errs = [];
       page.on('pageerror', (e) => errs.push(e.message));
       await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr/, (r) => r.abort());
-      await page.goto('file://' + TMP);
+      await page.goto('file://' + TMP + '?demotv=1');
       await page.click('#demo'); await page.waitForTimeout(300); await page.click('#lobSettings'); await page.waitForTimeout(200);
       const n = await page.$$eval('.len-c', (x) => x.length);
       ok(n === 3, W + 'x' + H + ': tri kartice trajanja');

@@ -2475,6 +2475,14 @@
   @keyframes ropeIn { from { opacity: 0; } }
   .tv .lnk-card { font-size: clamp(1rem, 1.5vw, 1.5rem); min-height: clamp(54px, 7vh, 84px); }
   @media (prefers-reduced-motion: reduce) { .lnk-card.sel::before, .lnk-card.drag::before, .lnk-board svg .rope { animation: none; } }
+
+  /* isti logo na početnom ekranu i ekranima za pokretanje / ulazak u igru (mobitel) */
+  .phone .logo:has(.lt), .center .logo:has(.lt) { width: min(78vw, 32vh, 400px); margin: 0 auto 0.8em; }
+  @media (max-height: 700px) { .phone .logo:has(.lt), .center .logo:has(.lt) { width: min(66vw, 28vh, 340px); } }
+  /* stalni elementi zadržavaju veličinu i kad se ostatak ekrana smanji da sve stane */
+  #app > .p-top, #app > .timer, #app > .bar-row { zoom: calc(1 / var(--fitz, 1)); }
+  /* likovi u otkrivanju kreću s vlastitog mjesta u redu likova (vidljivi od prvog trenutka) */
+  @keyframes walkIn { from { transform: translate(var(--wx), var(--wy, 70vh)); opacity: var(--wo, 0); } 12% { opacity: 1; } }
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
@@ -3616,7 +3624,7 @@ __ENGINE__
   function hostFormV() {
     $app.className = 'screen phone';
     const name = store.get('mz_name') || '';
-    $app.innerHTML = '<div class="logo" style="font-size:2.6rem;text-align:center">MOZGALICA</div>' +
+    $app.innerHTML = '<div class="logo">MOZGALICA</div>' +
       '<form class="form" id="hform" autocomplete="off">' + (hostErr ? '<div class="err">' + esc(hostErr) + '</div>' : '') +
       '<div class="p-title" style="font-size:1.5rem">Igra bez TV-a</div>' +
       '<div class="p-sub">Ti otvaraš sobu i igraš kao i ostali. Svatko na svom mobitelu vidi pitanja, glasove, moći, poredak i piramidu.</div>' +
@@ -4357,7 +4365,7 @@ __ENGINE__
     const code = pcode || (m ? m[1].toUpperCase() : '');
     const name = pname || store.get('mz_name') || '';
     $app.innerHTML =
-      '<div class="logo" style="font-size:2.4rem;text-align:center">MOZGALICA</div>' +
+      '<div class="logo">MOZGALICA</div>' +
       '<form class="form" id="form" autocomplete="off">' + (perr ? '<div class="err">' + esc(perr) + '</div>' : '') +
       '<div><label for="code">Kod sobe</label><input id="code" class="code" maxlength="4" value="' + esc(code) + '" autocapitalize="characters" autocomplete="off"></div>' +
       '<div><label for="name">Tvoje ime</label><input id="name" maxlength="12" value="' + esc(name) + '" placeholder="npr. Mateo" autocomplete="off"></div>' +
@@ -5273,7 +5281,7 @@ __ENGINE__
     if (fresh) { tvStep = d.s; lastTickSec = -1; tvSound(d); }
     $app.className = 'screen tv' + (fresh ? ' fresh' : '');
     let h = '';
-    const demoBar = mode === 'demo' ? '<div class="demo-bar"><span class="pill">Demo</span><button class="btn ghost" id="toPhone">Natrag na mobitel</button></div>' : '';
+    const demoBar = mode === 'demo' && /demotv/.test(location.search) ? '<div class="demo-bar"><button class="btn ghost" id="toPhone">Mobitel</button></div>' : '';
     switch (d.ph) {
       case 'lobby': return tvLobby(d, demoBar);
       case 'intro':
@@ -5527,7 +5535,7 @@ __ENGINE__
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem">MOZGALICA</div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
-    const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
+    const demoBar = (mode === 'demo' && /demotv/.test(location.search) ? '<div class="demo-bar"><button class="btn ghost" id="toTv">TV</button></div>' : '') +
       (netNote ? '<div class="err net-reconnecting" role="status" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
     const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
@@ -5676,6 +5684,7 @@ __ENGINE__
     SCENE.swap(demoBar + h, freshP, 'p:' + d.ph);
     $app.classList.toggle('lobfit', !!d && d.ph === 'lobby');
     fitScreen();
+    walkFromRow();
     lobbyFeedback(d);
     MOTION.after('p:' + d.ph + ':' + d.s);
     KEEP.put();
@@ -5688,7 +5697,7 @@ __ENGINE__
 
   function barRow(d) {
     const mood = (p) => (d.ph === 'question' || d.ph === 'fq') && p.fx ? 'shocked' : p.ok ? 'happy' : 'idle';
-    return '<div class="bar-row' + (d.ph === 'reveal' ? ' rv-hold' : '') + '">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" aria-label="' + esc(p.n) + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + (d.rc && (d.rc.a === p.id || d.rc.b === p.id) ? '<span class="rc-mk" title="Rivalski obračun">⚔️</span>' : '') + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1">✓</span>' : '') + '</div>').join('') + '</div>';
+    return '<div class="bar-row' + (d.ph === 'reveal' ? ' rv-hold' : '') + '">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" data-pid="' + esc(p.id) + '" title="' + esc(p.n) + '" aria-label="' + esc(p.n) + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + (d.rc && (d.rc.a === p.id || d.rc.b === p.id) ? '<span class="rc-mk" title="Rivalski obračun">⚔️</span>' : '') + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1">✓</span>' : '') + '</div>').join('') + '</div>';
   }
   function hudRound(rl, nr) { const m = /^Runda (\d+)$/.exec(rl || ''); return m ? 'Runda ' + m[1] + '/' + (nr || 3) : (rl || ''); }
   const ANN_SUB = { 'Runda 1': 'Avantura počinje.', 'Runda 2': 'Vrijeme je za novu rundu.', 'Runda 3': 'Još samo jedna runda.', 'Veliko finale': 'Sve se odlučuje sada.' };
@@ -5942,12 +5951,25 @@ __ENGINE__
     setTimeout(() => AUDIO.play('step'), r.R + 40);
   }
   let questionFit = null, phaseFit = null;
+  // hodači u otkrivanju: početak = položaj istog lika u (nevidljivom) redu likova
+  function walkFromRow() {
+    const ws = $app.querySelectorAll('.walker[data-pid]'); if (!ws.length) return;
+    const z = parseFloat($app.style.zoom || '1') || 1;
+    ws.forEach((w) => {
+      const b = $app.querySelector('.bar-row .bw[data-pid="' + (window.CSS && CSS.escape ? CSS.escape(w.dataset.pid) : w.dataset.pid) + '"]'); if (!b) return;
+      const an = w.style.animation; w.style.animation = 'none';
+      const wr = w.getBoundingClientRect(), img = b.querySelector('.av, svg') || b, br = img.getBoundingClientRect();
+      w.style.animation = an;
+      const dx = (br.left + br.width / 2 - (wr.left + wr.width / 2)) / z, dy = (br.bottom - wr.bottom) / z;
+      w.style.setProperty('--wx', Math.round(dx) + 'px'); w.style.setProperty('--wy', Math.round(dy) + 'px'); w.style.setProperty('--wo', '1');
+    });
+  }
   // Mjeri puni sadržaj prije prilagodbe; kontrole zvuka imaju vlastiti prostor.
   function fitScreen() {
     const A = $app;
     if (!A || !A.firstElementChild) return;
 
-    A.style.zoom = '';
+    A.style.zoom = ''; A.style.removeProperty('--fitz');
     A.style.width = '';
     A.style.maxWidth = '';
     const phone = A.classList.contains('phone');
@@ -5961,7 +5983,7 @@ __ENGINE__
     const targetWidth = Math.min(phone ? 520 : 1600, width);
     A.style.maxWidth = 'none';
     const measure = (scale) => {
-      A.style.zoom = scale.toFixed(4);
+      A.style.zoom = scale.toFixed(4); A.style.setProperty('--fitz', scale.toFixed(4));
       A.style.width = (targetWidth / scale) + 'px';
       // Izvanjski likovi i animacijske putanje ne mijenjaju veličinu rasporeda.
       return A.getBoundingClientRect().height;
@@ -6015,7 +6037,7 @@ __ENGINE__
     if (!who.length) return '';
     return '<span class="rv-who">' + who.map((p) => {
       const k = d.P.indexOf(p), wx = Math.round((k - (d.P.length - 1) / 2) * (tv ? 140 : 60));
-      return '<span class="walker' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" style="--wx:' + wx + 'px;--wd:' + (k * 90) + 'ms"><span class="wbob">' + avSvg(p.a, 'idle') + '</span></span>';
+      return '<span class="walker' + (p.id === PID ? ' me' : '') + '" data-pid="' + esc(p.id) + '" title="' + esc(p.n) + '" style="--wx:' + wx + 'px;--wd:' + (k * 90) + 'ms"><span class="wbob">' + avSvg(p.a, 'idle') + '</span></span>';
     }).join('') + '</span>';
   }
   let wheelStep = -1;
