@@ -2563,3 +2563,26 @@ for v in ['a', 'b', 'me', 'p']:
 s = rep(s, "(gain && p.kb ? '<span class=\"betb krb'", "(gain && p.ob ? '<span class=\"betb krb\">🎲 +' + p.ob + '</span>' : '') + (gain && p.kb ? '<span class=\"betb krb'")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('KR 6 UI OK')
+# ---- popravak: broj spremnih na ploči se osvježava bez ponovnog crtanja ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "      if (sig !== lastSig) { lastSig = sig; phoneRender(false); }", "      if (sig !== lastSig) { lastSig = sig; phoneRender(false); } else krLive(d);")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR popravak broja OK')
+# ---- popravak: obavijesti ne prekrivaju kontrole tijekom nadvlačenja konopa ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "const busy = d.ph === 'question' || d.ph === 'fq' || d.ph === 'duel' ||", "const busy = d.ph === 'question' || d.ph === 'fq' || d.ph === 'duel' || d.ph === 'rope' ||")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR popravak obavijesti OK')
+# ---- popravak: samostalni demo nema mrežni sloj (pactSend) — sve društvene akcije idu kroz krSend ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = s.replace("typeof pactSend === 'function' ? pactSend(a)", "typeof pactSend === 'function' ? pactSend__(a)")
+n = s.count("pactSend(")
+s = s.replace("pactSend(", "krSend(").replace("pactSend__(a)", "pactSend(a)")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('KR krSend OK', n)
+# ---- razvrstavanje: jedna kartica, swipe ulijevo/udesno (v4/swipe-sort.js, swipe-sort.css); slanje i bodovanje nepromijenjeni ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + open(SP + '/v4/swipe-sort.css', encoding='utf-8').read() + s[i:]
+s = cut(s, '  function sortPhone(d, me) {', '  let lastLink = null;', open(SP + '/v4/swipe-sort.js', encoding='utf-8').read())
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('razvrstavanje swipe OK')

@@ -1,0 +1,18 @@
+engine-test: SVE PROVJERE PROŠLE ✔ 
+bots-test: BOT TESTOVI OK 
+pact-test: SVE PROVJERE PROŠLE ✔ 
+pyr-test: SVE PROVJERE PROŠLE ✔ 
+pace-test: TEMPO OK 
+td2-test:   ✘ partija s botovima do kraja (3 trenutaka krčme) 
+leg-test: LEGENDE OK 
+howto-test: UPUTE OK 
+rc-test: OBRAČUN OK 
+fc-test: POSLJEDNJI POZIV OK 
+tk-test: TAJNE PONUDE OK 
+sf-test: SOCIAL FLOW OK 
+sgd-test: SMART GAME DIRECTOR OK 
+web/multi-test.js => SVE PROVJERE PROŠLE ✔ 
+web/notv-test.js => SVE PROVJERE PROŠLE ✔ 
+web/bots-web-test.js => SVE OK 
+web/net-test.js => SVE OK 
+web/relay-test.js => SVE OK 

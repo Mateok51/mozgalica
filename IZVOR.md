@@ -29,3 +29,5 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
 - Cijeli demo u pregledniku: node v3/ui-test.js (~9 min)
 - Sigurnost: sec/attack.js, sec/impersonate.js, sec/csp-check.js
 - Titranje animacija: node flk/restarts.js v3/out.html 150 (treba ispisati {})
+
+- Razvrstavanje (mobitel): jedna kartica + swipe (v4/swipe-sort.js/.css, zadnji korak make.py); kratka provjera: node v3/swipe-test.js

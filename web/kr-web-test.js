@@ -13,7 +13,9 @@ const CFGX = { kr: OKL ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0,
 (async () => {
   const broker = require('./mini-broker').start(8767);
   await new Promise((r) => server.listen(8766, r)); const URL = 'http://localhost:8766/';
-  const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 360, height: 740 }, hasTouch: true });
+  const b = await chromium.launch(); const VW = +process.env.W || 360, VH = +process.env.H || 740;
+  const ctx = await b.newContext({ viewport: { width: VW, height: VH }, hasTouch: true });
+  const fits = async (p, what) => { const r = await p.evaluate(() => [document.documentElement.scrollWidth, innerWidth, [...document.querySelectorAll('#app button')].filter((b) => { const q = b.getBoundingClientRect(); return q.width && !b.closest('.scene-ghost') && (q.right > innerWidth + 1 || q.left < -1); }).map((b) => b.className + ':' + b.textContent.trim().slice(0, 20) + '@' + Math.round(b.getBoundingClientRect().left) + '-' + Math.round(b.getBoundingClientRect().right))]); ok(r[0] <= r[1] + 1 && r[2].length === 0, what + ': stane u ' + r[1] + ' px (scrollWidth ' + r[0] + ', gumbi izvan: ' + (r[2].join(', ') || 0) + ')'); };
   await ctx.addInitScript(MOCK); await ctx.route(/unpkg\.com|jsdelivr|fonts\./, (r) => r.abort());
   const errors = [];
   const mk = async (name, seed) => { const p = await ctx.newPage(); p.on('pageerror', (e) => errors.push(name + ': ' + e.message)); await p.addInitScript((sd) => { const real = localStorage.getItem.bind(localStorage); localStorage.getItem = (k) => k === 'mz_pid' ? sd : (k === 'mz_name' ? null : real(k)); }, seed); p.__n = name; return p; };
@@ -99,7 +101,7 @@ const CFGX = { kr: OKL ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0,
     const chal = P.find((_, i) => chs[i]);
     const others = P.filter((p) => p !== chal);
     ok((await Promise.all(others.map((p) => p.textContent('#app .kr-ch')))).every((t) => /odlučuje/.test(t)), 'ostali vide „… odlučuje…”');
-    await chal.screenshot({ path: OUT + '/c1-izazov.png' }); await others[0].screenshot({ path: OUT + '/c1-ostali.png' });
+    await chal.screenshot({ path: OUT + '/c1-izazov.png' }); await fits(chal, 'izazov vođi'); await others[0].screenshot({ path: OUT + '/c1-ostali.png' });
     await click(chal, '#app [data-krc="1"]'); await chal.waitForTimeout(400);
     for (const p of P) await click(p, '#app #krok');
     const rp = await chal.waitForFunction(() => document.documentElement.dataset.ph === 'rope', null, { timeout: 15000 }).then(() => true, () => false);
@@ -108,7 +110,7 @@ const CFGX = { kr: OKL ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0,
     await others[0].waitForFunction(() => { const k = document.querySelector('#app .rope-k'); return k && !/^-?0(\.0)?%$/.test(getComputedStyle(k).getPropertyValue('--x').trim()); }, null, { timeout: 4000 }).catch(() => {});
     const x = await others[0].evaluate(() => { const k = document.querySelector('#app .rope-k'); return k ? getComputedStyle(k).getPropertyValue('--x').trim() : 'nema'; });
     ok(x !== 'nema' && x !== '0.0%' && x !== '-0.0%', 'gledatelj vidi kako se konop pomiče (--x ' + x + ')');
-    await chal.screenshot({ path: OUT + '/c2-konop-igrac.png' }); await others[0].screenshot({ path: OUT + '/c2-konop-gledatelj.png' });
+    await chal.screenshot({ path: OUT + '/c2-konop-igrac.png' }); await fits(chal, 'konop (igrač)'); await fits(others[0], 'konop (gledatelj)'); await others[0].screenshot({ path: OUT + '/c2-konop-gledatelj.png' });
     const res = await chal.waitForSelector('#app .du-res', { timeout: 20000 }).then(() => chal.textContent('#app .du-res'), () => '');
     ok(/ruši vođu|brani krunu|Neriješeno/.test(res), 'rezultat: ' + res.trim());
     await chal.screenshot({ path: OUT + '/c3-rezultat.png' });
@@ -121,15 +123,18 @@ const CFGX = { kr: OKL ? { wait: 45, pactOffers: 0, pactFrom: 99, pactChance: 0,
   const pair = P.filter((_, i) => cards[i]), third = P.find((_, i) => !cards[i]);
   ok(pair.every(Boolean) && !(await has(pair[0], '#app #krok')), 'izabrani nemaju Nastavi dok ne odluče');
   ok(await has(third, '#app #krok') && !(await has(third, '#app .kr-card')), third.__n + ' vidi samo Nastavi');
-  await pair[0].screenshot({ path: OUT + '/2-ponuda-pakta.png' });
+  await pair[0].screenshot({ path: OUT + '/2-ponuda-pakta.png' }); await fits(pair[0], 'kartica pakta');
   if (third !== ana || true) { const rec = await third.evaluate(() => (window.__recv || []).join('\n')).catch(() => ''); ok(rec.length > 0 && !/"kp":\{/.test(rec), 'mreža: ' + third.__n + ' nikad ne prima tuđu ponudu'); }
   await click(third, '#app #krok'); await third.waitForTimeout(300);
   ok(/Čekamo ostale/.test(await third.textContent('#app')) && (await ph(third)) === 'reveal', third.__n + ' potvrdio: „Čekamo ostale”, igra čeka');
+  { const t = await pair[0].evaluate(() => { const e = document.querySelector('#app .kr-cnt'); return e ? e.textContent : ''; }); ok(t === '' || /^1\//.test(t), 'broj spremnih se osvježio kod drugih: ' + (t || '(nema brojača dok odlučuje)')); }
   for (const p of pair) await click(p, '#app [data-krp="1"]');
   const both = await Promise.all(pair.map((p) => p.waitForSelector('#app .kr-ally', { timeout: 6000 }).then(() => true, () => false)));
   ok(both.every(Boolean), 'oboje prihvatili → oboje vide savez (🍻 + 💰) na ploči');
   await pair[0].screenshot({ path: OUT + '/3-savez.png' });
   await click(pair[0], '#app #krok');
+  await pair[1].waitForTimeout(600);
+  { const t = await pair[1].evaluate(() => { const e = document.querySelector('#app .kr-cnt'); return e ? e.textContent : '?'; }); ok(t === '2/3', 'broj spremnih uživo kod ' + pair[1].__n + ': ' + t); }
   const ta = Date.now(); await click(pair[1], '#app #krok');
   await host.waitForFunction(() => document.documentElement.dataset.ph !== 'reveal', null, { timeout: 4000 }).catch(() => {});
   ok((await ph(host)) !== 'reveal' && Date.now() - ta < 2500, 'svi potvrdili → igra odmah nastavlja (' + (Date.now() - ta) + ' ms)');

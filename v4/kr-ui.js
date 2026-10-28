@@ -1,3 +1,5 @@
+  // slanje akcija domaćinu (web: pactSend iz mrežnog sloja; samostalni demo: izravno u igru)
+  const krSend = (a) => (typeof pactSend === 'function' ? pactSend(a) : game && game.pactAction(PID, a));
   // ===================== KRČMAR 2.0: sučelje ploče bodova =====================
   // Ispod poretka: privatni dio (samo ovaj igrač) i „Nastavi”. Igra ide dalje kad svi potvrde (domaćin odlučuje).
   function krReadyCount(d) { const ps = d.P.filter((p) => p.c && !p.b); return [ps.filter((p) => p.ok).length, ps.length]; }
@@ -43,8 +45,8 @@
     if (!d.rw || !me) return '';
     const [r, n] = krReadyCount(d), mine = me.ok || (L && L.sent);
     const priv = krPriv(d, me);
-    const go = mine ? '<div class="kr-wait">Čekamo ostale… <b>' + r + '/' + n + '</b></div>'
-      : priv.block ? '' : '<button class="btn win-cta kr-go" id="krok">Nastavi</button>' + (n > 1 ? '<div class="kr-wait">Spremno <b>' + r + '/' + n + '</b></div>' : '');
+    const go = mine ? '<div class="kr-wait">Čekamo ostale… <b class="kr-cnt">' + r + '/' + n + '</b></div>'
+      : priv.block ? '' : '<button class="btn win-cta kr-go" id="krok">Nastavi</button>' + (n > 1 ? '<div class="kr-wait">Spremno <b class="kr-cnt">' + r + '/' + n + '</b></div>' : '');
     const ph0 = priv && typeof priv === 'object' ? priv.html || '' : priv || '';
     const dev = PV && PV.bs && game && mode !== 'player' ? (sfDev() ? sfScn(d) : '<button class="kr-dev" data-sfdev="1" aria-label="Testni način">🤖</button>') : '';
     return '<div class="kr-box">' + ph0 + go + dev + '</div>';
@@ -55,8 +57,8 @@
     return n ? '<div class="kr-wait tv" data-bk="krr" data-bv="' + r + '">Spremno <b>' + r + '/' + n + '</b></div>' : '';
   }
   function bindKr(d) {
-    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });
-    document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krPact', yes: b.dataset.krp === '1' }); }; });
+    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });
+    document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); krSend({ k: 'krPact', yes: b.dataset.krp === '1' }); }; });
     bind('krok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
   }
   // ----- izazov vođi: javni prijedlog na ploči -----
@@ -83,7 +85,7 @@
     const list = d.rp.list, st = L.rp || (L.rp = { i: 0, r: [], fb: '', last: 1 });
     const fb = st.fb ? '<div class="mg-fb ' + (st.last ? 'ok' : 'bad') + ' pop">' + esc(st.fb) + '</div>' : '<div class="mg-fb"></div>';
     if (st.i >= list.length) return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="waiting">Nema više tvrdnji — čekamo kraj!</div>';
-    return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-rpv="1">Točno</button><button class="btn ghost" data-rpv="0">Netočno</button></div>' + fb;
+    return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="mg rope-mg"><div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-rpv="1">Točno</button><button class="btn ghost" data-rpv="0">Netočno</button></div>' + fb + '</div>';
   }
   function ropeTv(d) { return '<div class="tv-mid"><div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="du-note">Točan odgovor vuče konop, netočan ga vraća.</div></div>'; }
   function ropeResult(d) {
@@ -93,11 +95,17 @@
     return '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + duelVs(d, pose) + '<div class="du-res">' + res + '</div><div class="du-ms">' + (rr.pa || 0) + ' : ' + (rr.pb || 0) + '</div>' + (du.o ? '<div class="du-note">' + esc(du.o) + '</div>' : '');
   }
   function bindRope(d) {
-    document.querySelectorAll('#app [data-krc]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krc === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krCh', yes: b.dataset.krc === '1' }); }; });
+    document.querySelectorAll('#app [data-krc]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krc === '1' ? 'confirm' : 'tap'); krSend({ k: 'krCh', yes: b.dataset.krc === '1' }); }; });
     document.querySelectorAll('#app [data-rpv]').forEach((b) => { b.onclick = () => {
       const st = L.rp, list = d.rp && d.rp.list; if (!st || !list || st.i >= list.length) return;
       const v = +b.dataset.rpv, ok = v === list[st.i][1];
       st.r.push(v); st.i++; st.last = ok ? 1 : 0; st.fb = ok ? '✓ Vuci!' : '✗ Konop klizi';
       AUDIO.play(ok ? 'tap' : 'wrong'); sendPartial({ r: st.r.slice() }); phoneRender(true);
     }; });
+  }
+  // broj spremnih mijenja se bez ponovnog crtanja ploče (da se ne ponavljaju animacije bodova)
+  function krLive(d) {
+    if (!d || !d.rw) return;
+    const [r, n] = krReadyCount(d), t = r + '/' + n;
+    document.querySelectorAll('#app .kr-cnt').forEach((e) => { if (e.textContent !== t) e.textContent = t; });
   }

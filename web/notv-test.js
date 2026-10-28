@@ -110,7 +110,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
     if (click('.p-opts.two [data-c]:not([disabled])')) return 'fq';
     if (click('[data-c]:not([disabled]):not(.locked)')) return 'q';
     if (click('#srtDone:not([disabled])')) return 'sort';
-      if (q('.srt-pool .srt-card')) { click('.srt-pool .srt-card'); click('.srt-zone'); return 'sort'; }
+      if (q('.swp-card[data-si]')) { click('[data-go="' + (Math.random() < 0.5 ? 0 : 1) + '"]'); return 'sort'; }
     if (click('#lnkDone:not([disabled])')) return 'link';
       if (q('.lnk:not(.sent) [data-ll]:not(.paired)')) { click('.lnk [data-ll]:not(.paired)'); click('.lnk [data-lr]:not(.paired)'); return 'link'; }
     if (q('.mboard') && (q('.result') || q('.rv'))) return q('.sort-cols') ? 'sortsol' : q('.pairs') ? 'linksol' : 'board';

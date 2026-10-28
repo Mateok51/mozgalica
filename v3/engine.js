@@ -1851,7 +1851,7 @@ function createGame(o) {
   // dok se odgovara (pitanje, mini-igra, dvoboj, tajni događaj) nema slanja ni prihvaćanja ponuda
   const SF_BUSY = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, secret: 1, secret2: 1 };
   const sfPeople = () => list().filter((p) => !p.bot || bsOn());
-  const sfBusy = (p) => (G.ph === 'duel' ? !!(G.du && p && (p.pid === G.du.a || p.pid === G.du.b)) : !!SF_BUSY[G.ph]);
+  const sfBusy = (p) => (G.ph === 'duel' || G.ph === 'rope' ? !!(G.du && p && (p.pid === G.du.a || p.pid === G.du.b)) : !!SF_BUSY[G.ph]);
   let botCall = false;
   function botPact(b, a) { botCall = true; try { return pactAction(b.pid, a); } finally { botCall = false; } }
   const SF_LINES = ['🍻 Vrijeme je da vidimo tko s kim pije, a tko kome radi iza leđa!', '🍻 Krčmar briše šank i pravi se da ništa ne čuje…', '🍻 Krigle gore — i uši otvorene!'];
@@ -2041,6 +2041,7 @@ function createGame(o) {
     for (const p of list()) if (p.bot) p.done = true;
     const s0 = G.s;
     later(() => { if (G.s === s0 && krReady()) endPhase(); }, Math.round(rb * 1000) + 30);
+    if (G.lc && G.lc.st === 'o') later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round((rb + cfg.kr.chWait) * 1000));
     onChange();
   }
   // može li igrač potvrditi Nastavi (kasnije: tko ima otvorenu odluku krčmara, prvo odlučuje)
@@ -2106,7 +2107,7 @@ function createGame(o) {
   // ----- izazov vođi -----
   function krChallengeMaybe() {
     const K = cfg.kr; G.lc = null;
-    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o')) return;
+    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o') || list().some((p) => p.ko && p.ko.st === 'o')) return;
     if (!plan.slice(G.pi + 1).some((it) => it.t === 'battle')) return;   // mora postojati još pitanja nakon izazova
     const ps = active().slice().sort((a, b) => b.score - a.score);
     if (ps.length < 2) return;
@@ -2117,14 +2118,11 @@ function createGame(o) {
     if (forced) G.scn = null;
     G.lcDone = true;
     G.lc = { id: ++G.sfSeq, a: A.pid, b: B.pid, st: 'o', sa: K.chStakeA, sb: K.chStakeB, g: K.chGuard };
-    const s0 = G.s;
-    later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round(((G.revMin || now()) - now()) + K.chWait * 1000));
   }
   function krChallengeAnswer(p, yes) {
     const o = G.lc;
     if (!o || o.st !== 'o' || G.ph !== 'reveal' || o.a !== p.pid) return false;
     o.st = yes ? 'y' : 'n';
-    if (yes) news('⚔️ ' + p.name + ' izaziva vođu: ' + ((R.get(o.b) || {}).name || '?') + '!');
     return true;
   }
   function krChallengeEnd() {

@@ -382,3 +382,27 @@ s = open(SP + '/v3/engine.js', encoding='utf-8').read()
 rep("  return { sfScenario, pactAction,", "  return { _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction,")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR test hook OK')
+
+# ---------- popravci nakon testiranja ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# BUG: rok od 12 s za odluku o izazovu postavljao se prije početka ploče, pa ga je setPhase odmah poništavao
+# (izazivač je mogao blokirati igru do sigurnosne granice od 45 s). Rok se sada postavlja kad ploča počne.
+rep("    const s0 = G.s;\n    later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round(((G.revMin || now()) - now()) + K.chWait * 1000));\n", "")
+rep("    later(() => { if (G.s === s0 && krReady()) endPhase(); }, Math.round(rb * 1000) + 30);\n",
+    "    later(() => { if (G.s === s0 && krReady()) endPhase(); }, Math.round(rb * 1000) + 30);\n"
+    "    if (G.lc && G.lc.st === 'o') later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round((rb + cfg.kr.chWait) * 1000));\n")
+# dvobojaši u nadvlačenju konopa su zauzeti (ne mogu pripremati izdaju), gledatelji nisu
+rep("  const sfBusy = (p) => (G.ph === 'duel' ?", "  const sfBusy = (p) => (G.ph === 'duel' || G.ph === 'rope' ?")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR popravci 1 OK')
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# jedna odluka u jednom trenutku: izazov vođi ne dolazi na ploču na kojoj je već tajna ponuda (pakt, zadatak, usluga)
+rep("    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o')) return;",
+    "    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o') || list().some((p) => p.ko && p.ko.st === 'o')) return;")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR popravci 2 OK')
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# najava izazova već je na ploči i u uvodu dvoboja; obavijest bi prekrila kontrole konopa
+rep("    if (yes) news('⚔️ ' + p.name + ' izaziva vođu: ' + ((R.get(o.b) || {}).name || '?') + '!');\n", "")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR popravci 3 OK')

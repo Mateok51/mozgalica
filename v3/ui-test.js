@@ -57,7 +57,7 @@ require('fs').mkdirSync(shots, { recursive: true });
       fx: document.querySelector('#fx') ? document.querySelector('#fx').className : '',
       opt: !!document.querySelector('[data-c]:not([disabled])'),
       two: !!document.querySelector('.p-opts.two [data-c]:not([disabled])'),
-      sort: !!document.querySelector('.srt-pool .srt-card, #srtDone:not([disabled])'),
+      sort: !!document.querySelector('.swp-card[data-si], #srtDone:not([disabled])'),
       link: !!document.querySelector('.lnk:not(.sent) [data-ll]:not(.paired), #lnkDone:not([disabled])'),
       rvbet: !!document.querySelector('.rv-bet'),
       qbet: !!document.querySelector('.betag'),
@@ -68,6 +68,10 @@ require('fs').mkdirSync(shots, { recursive: true });
     if (st.rvbet && !seen['otkrivanje-ulog']) { await page.waitForTimeout(2500); await shot('otkrivanje-ulog'); }
     if (st.qbet && !seen['pitanje-ulog']) { await shot('pitanje-ulog'); }
     if (st.final) { await shot('kraj'); await tvShot('kraj'); finalSeen = true; break; }
+    // v32: ploča bodova — krčmarove ponude (prihvati), izazov vođi (izazovi), konop (vuci), zatim Nastavi
+    if (await page.$('#app [data-krp], #app [data-kro], #app [data-krc]')) { await shot('krcmar'); await page.evaluate(() => { const b = document.querySelector('#app [data-krp="1"], #app [data-kro="1"], #app [data-krc="1"]'); if (b) b.click(); }); continue; }
+    if (await page.$('#app [data-rpv]')) { await shot('konop'); await page.evaluate(() => { const b = document.querySelector('#app [data-rpv="1"]'); if (b) b.click(); }); continue; }
+    if (await page.$('#app #krok')) { await shot('ploca'); await page.evaluate(() => document.getElementById('krok').click()); continue; }
     if (await page.$('#htok')) { await shot('upute'); await tvShot('upute'); await page.evaluate(() => document.getElementById('htok').click()); continue; }
     if (st.vote) { await shot('glasanje'); await tvShot('glasanje'); await page.evaluate(() => { const b = document.querySelector('#app [data-v]:not([disabled])'); if (b) b.click(); }); continue; }
     if (st.bet) { await page.waitForTimeout(800); await shot('kladionica'); await tvShot('kladionica'); await page.evaluate(() => { const b = document.querySelector('#app [data-bet]:not([disabled])'); if (b) b.click(); }); continue; }
@@ -97,7 +101,7 @@ require('fs').mkdirSync(shots, { recursive: true });
     }
     if (st.two) { await shot('finale'); await tvShot('finale'); await page.evaluate(() => { const b = document.querySelector('#app .p-opts.two [data-c]:not([disabled])'); if (b) b.click(); }); continue; }
     if (st.opt) { await shot('pitanje'); await tvShot('pitanje'); await page.evaluate(() => { const b = document.querySelector('#app [data-c]:not([disabled])'); if (b) b.click(); }); continue; }
-    if (st.sort) { await shot('razvrstavanje'); await tvShot('razvrstavanje'); await page.evaluate(() => { const d = document.querySelector('#srtDone:not([disabled])'); if (d) return d.click(); document.querySelector('.srt-pool .srt-card').click(); document.querySelector('.srt-zone').click(); }); continue; }
+    if (st.sort) { await shot('razvrstavanje'); await tvShot('razvrstavanje'); await page.evaluate(() => { const d = document.querySelector('#srtDone:not([disabled])'); if (d) return d.click(); const g = document.querySelector('[data-go="0"]'); if (g) g.click(); }); continue; }
     if (st.link) { await shot('spajanje'); await tvShot('spajanje'); await page.evaluate(() => { const d = document.querySelector('#lnkDone:not([disabled])'); if (d) return d.click(); document.querySelector('.lnk [data-ll]:not(.paired)').click(); document.querySelector('.lnk [data-lr]:not(.paired)').click(); }); continue; }
     if (/Točno!|Netočno|isteklo/.test(st.title) && !seen.otkrivanje) { await shot('otkrivanje'); await tvShot('otkrivanje'); }
   }

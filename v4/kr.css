@@ -22,3 +22,13 @@
   .tv .rope { max-width: 900px; } .tv .rope-p .mini { width: 70px; height: 70px; } .tv .rope-p i { font-size: 2rem; } .tv .rope-p b { font-size: 1.2rem; } .tv .rope-t { height: 56px; } .tv .rope-k { width: 36px; height: 36px; }
   .kr-dev { align-self: flex-end; width: 36px; height: 36px; border-radius: 50%; border: 0; font-size: 1rem; background: rgba(255, 255, 255, 0.06); opacity: 0.5; }
   .kr-box .sf-scn { width: 100%; }
+  /* uski ekrani: konop dobiva više mjesta (imena ispod likova) */
+  .rope-p { flex-direction: column; gap: 2px; }
+  .rope-p.a, .rope-p.b { flex-direction: column; }
+  .rope-p i { order: 3; }
+  .rope { grid-template-columns: 64px 1fr 64px; gap: 6px; }
+  .rope-p b { max-width: 64px; font-size: 0.78rem; text-align: center; }
+  .tv .rope { grid-template-columns: 140px 1fr 140px; } .tv .rope-p b { max-width: 140px; }
+  /* uski mobiteli (≤ 360 px): Točno/Netočno (konop i munjeviti krug) ne smiju izaći preko ruba */
+  @media (max-width: 360px) { .mg-tf { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; } .mg-tf .btn { min-width: 0; padding-left: 0.1em; padding-right: 0.1em; font-size: 1.1rem; border-left-width: 14px; border-right-width: 14px; } }
+  .rope-p .mini { order: 1; } .rope-p b { order: 2; } .rope-p i { order: 3; }
