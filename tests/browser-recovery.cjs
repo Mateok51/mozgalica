@@ -19,6 +19,7 @@ await page.addInitScript(()=>{ window.Peer=class {
 await page.goto('http://game.test/');
 await page.locator('#hostp').click(); await page.locator('#hname').fill('Ana'); await page.locator('#hform button[type=submit]').click();
 await page.waitForTimeout(400);
+await page.locator('#lobSettings').click();
 await page.locator('[data-bots="1"]').click();
 await page.locator('#dstart').click();
 await page.waitForTimeout(100);

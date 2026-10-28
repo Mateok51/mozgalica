@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-52THn7SUoMf+SRAwmnovJ78ULPxQk1w88AmN2bqY0yk=' 'sha256-x/IU/zwwgVZwMf8A7ZsUnpSlCxC1imRDs0ZVsNPsvQ4=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-52THn7SUoMf+SRAwmnovJ78ULPxQk1w88AmN2bqY0yk=' 'sha256-6SgMG8t4Bp1P7oGwHhY/TuZCgfxOUlQMj3LVRFEv468=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2400,6 +2400,15 @@
     .phone .p-opt { min-height: 44px; padding-top: 4px; padding-bottom: 4px; }
     .phone .p-q { margin-block: 0; }
   }
+  /* Predvorje daje prednost svim igračima; izbor lika i postavke otvaraju se po potrebi. */
+  #app.lobfit .waiting-room .lob-players { flex: none; min-height: 0; overflow: visible; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px; padding: 8px; mask-image: none; -webkit-mask-image: none; }
+  .waiting-room .lob-row { grid-template-columns: 26px minmax(0, 1fr); gap: 2px 6px; padding: 4px 0; }
+  .waiting-room .lob-row .nm { white-space: normal; overflow-wrap: anywhere; }
+  .waiting-room .lob-row .st { grid-column: 2; font-size: .7rem; }
+  .lob-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .lob-tools .btn { min-height: 44px; font-size: .88rem; }
+  .lob-count { font-size: .7em; white-space: nowrap; }
+  .lob-settings { display: flex; flex-direction: column; gap: 8px; }
   /* Dodirne površine ostaju dostupne i na niskim zaslonima. */
   .phone .bstep { width: 44px; height: 44px; flex: 0 0 44px; }
   .phone .tgl, .phone .home-link, .phone .demo-bar .btn.ghost { min-height: 44px; }
@@ -8090,9 +8099,10 @@ function createRecoverableGame(options, saved) {
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
     const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
     $app.innerHTML = demoBar +
-      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? botStepper(d) + lenPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
+      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? '<button class="btn ghost" id="tvSettings" aria-expanded="' + !!L.tvSettings + '">Postavke igre</button>' + (L.tvSettings ? botStepper(d) + lenPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
       '<div class="tvlob-grid">' + slots + '</div>' +
       '<div class="tvlob-act"><button class="btn lob-cta" id="start"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="home-link" id="quit">Odustani</button></div></div></div>';
+    bind('tvSettings', () => { L.tvSettings = !L.tvSettings; render(); });
     bind('start', () => game.start());
     if (game) { bindBots(d); bindOpt(); }
     bind('quit', reset);
@@ -8145,8 +8155,17 @@ function createRecoverableGame(options, saved) {
         } else {
           cta = lenPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
         }
-        h = '<div class="lob"><div class="p-title lob-title">Odaberi lika</div><div class="av-grid">' + grid + '</div>' +
-          invite + cta + '<button class="home-link" id="leave">Izađi</button><div class="lob-players">' + rows + '</div></div>';
+        const startAt = cta.indexOf('<button class="btn lob-cta"');
+        const settingsAt = startAt >= 0 ? startAt : cta.indexOf('<div class="lob-wait"');
+        const settings = settingsAt >= 0 ? cta.slice(0, settingsAt) : cta;
+        const actions = settingsAt >= 0 ? cta.slice(settingsAt) : '';
+        h = '<div class="lob waiting-room"><div class="p-title lob-title">Igrači u sobi <span class="lob-count">' + d.P.length + '/' + d.max + '</span></div>' +
+          '<div class="lob-players" aria-label="Igrači u sobi">' + rows + '</div>' + invite +
+          '<div class="lob-tools"><button class="btn ghost" id="lobAvatar" aria-expanded="' + (L.lobPanel === 'avatar') + '">Promijeni lika</button>' +
+          (settings ? '<button class="btn ghost" id="lobSettings" aria-expanded="' + (L.lobPanel === 'settings') + '">Postavke igre</button>' : '') + '</div>' +
+          (L.lobPanel === 'avatar' ? '<div class="av-grid">' + grid + '</div>' : '') +
+          (L.lobPanel === 'settings' ? '<div class="lob-settings">' + settings + '</div>' : '') +
+          actions + '<button class="home-link" id="leave">Izađi</button></div>';
         break;
       }
       case 'intro':
@@ -8729,6 +8748,7 @@ function createRecoverableGame(options, saved) {
     const LL = L, stage = root.querySelector('.swp-stage'), sides = root.querySelectorAll('.swp-side');
     const card = root.querySelector('.swp-card[data-si]');
     const width = () => (stage && stage.clientWidth) || 320;
+    const pointerScale = () => stage && stage.clientWidth ? stage.getBoundingClientRect().width / stage.clientWidth : 1;
     const thr = () => Math.max(64, width() * 0.2);
     const tilt = (dx) => Math.max(-20, Math.min(20, dx / width() * 40));
     const glow = (dx) => { const k = Math.min(1, Math.abs(dx) / thr()); sides[0].style.setProperty('--k', dx < 0 ? k : 0); sides[1].style.setProperty('--k', dx > 0 ? k : 0); if (card) card.dataset.dir = k > 0.4 ? (dx < 0 ? 'a' : 'b') : ''; };
@@ -8762,7 +8782,8 @@ function createRecoverableGame(options, saved) {
       };
       card.onpointermove = (e) => {
         if (e.pointerId !== id) return;
-        dx = e.clientX - x0; dy = e.clientY - y0;
+        const scale = pointerScale();
+        dx = (e.clientX - x0) / scale; dy = (e.clientY - y0) / scale;
         if (!moved && Math.hypot(dx, dy) < 5) return;
         moved = true;
         card.style.transform = 'translate(' + dx + 'px,' + dy * 0.35 + 'px) rotate(' + tilt(dx) + 'deg)';
@@ -8814,6 +8835,8 @@ function createRecoverableGame(options, saved) {
     document.querySelectorAll('.lnk-board').forEach((b) => {
       const svg = b.querySelector('svg'); if (!svg) return;
       const br = b.getBoundingClientRect(); let p = '';
+      svg.setAttribute('viewBox', '0 0 ' + Math.max(1, br.width) + ' ' + Math.max(1, br.height));
+      svg.setAttribute('preserveAspectRatio', 'none');
       b.querySelectorAll('.lnk-l.paired').forEach((l) => {
         const i = +l.dataset.ll, col = getComputedStyle(l).getPropertyValue('--pc').trim();
         const rIdx = (b.dataset.pairs || '').split(',')[i]; const r = b.querySelector('[data-lr="' + rIdx + '"]'); if (!r) return;
@@ -8884,6 +8907,8 @@ function createRecoverableGame(options, saved) {
     bind('toTv', () => { demoView = 'tv'; render(); });
     bind('leave', reset);
     bind('leave2', reset);
+    bind('lobAvatar', () => { L.lobPanel = L.lobPanel === 'avatar' ? null : 'avatar'; phoneRender(true); });
+    bind('lobSettings', () => { L.lobPanel = L.lobPanel === 'settings' ? null : 'settings'; phoneRender(true); });
     bind('dstart', () => game.start());
     if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
