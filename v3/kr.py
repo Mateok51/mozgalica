@@ -466,3 +466,11 @@ rep("    later(() => { if (G.s === s) endPhase(); }, G.dur + (INPUT_PHASES[ph] ?
     "    later(() => { if (G.s === s && now() >= G.endsAt - 5) endPhase(); }, G.dur + (INPUT_PHASES[ph] ? 400 : 0));")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR produljena faza OK')
+
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+# Power pick: kategorija je odmah odabrana (glasanje se zatvara), a ekran s rezultatom traje malo duže da svi vide što se dogodilo
+rep("    const s0 = G.s, hold = Math.round((cfg.ppHold || 2.6) * 1000);\n    G.ppHeld = 1; G.dur = hold; G.startedAt = now(); G.endsAt = G.startedAt + hold;\n    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, hold);",
+    "    const s0 = G.s;\n    G.ppHeld = 1;\n    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, 40);")
+rep("    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0));", "    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0) + (G.ppw ? (cfg.ppShow === undefined ? 2.4 : cfg.ppShow) : 0));")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR power pick: odmah odabir, duži rezultat OK')

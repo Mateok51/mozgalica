@@ -2284,7 +2284,7 @@
   html, body { overscroll-behavior: none; overscroll-behavior-y: none; }
   /* stranica se nikad ne skrola ni ne povlači; dekorativne animacije izvan ekrana ne produljuju stranicu */
   html, body { height: 100%; overflow: hidden; }
-  #app { height: 100vh; height: 100dvh; max-height: 100dvh; overflow: hidden; overscroll-behavior: contain; }
+  #app { height: 100vh; height: 100dvh; max-height: 100dvh; overscroll-behavior: contain; }   /* bez overflow: hidden, da se sjaj i sjene ne odsijecaju; stranicu zaključavaju html i body */
   #app.fit-scroll { overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   /* predvorje na nižim ekranima: popis igrača je skrolabilan i manji, pojašnjenje testnog načina se skriva, avatari su kompaktniji */
   #app.lobfit .lob-players { min-height: 72px; }
@@ -4987,7 +4987,7 @@ __ENGINE__
         const counts = d.cats.map((_, i) => d.P.filter((p) => p.vt === i).length);
         const max = Math.max(0, ...counts);
         const rl = roulette(d), ppBy = d.P.find((p) => p.pk);
-        if (ppBy && d.ph === 'vote' && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
+        if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
         const doors = d.cats.map((c, i) => {
           const voters = voterFaces(d.P.filter((p) => p.vt === i), 5);
           const cls = d.ph === 'voteResult' ? (i === d.cw ? ' win' : ' lose') : (max > 0 && counts[i] === max ? ' lead' : '');
@@ -5215,7 +5215,7 @@ __ENGINE__
         const res = d.ph === 'voteResult', rl = roulette(d);
         const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
         const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;
-        if (ppBy && !res && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
+        if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
         const ppBar = ppAvail ? '<button class="pp-coin' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-label="Power pick: biraš baš svoju kategoriju" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><b>⭐</b><small>PICK</small></button>' : '';
         const doorBtns = d.cats.map((c, i) => {
           const who = d.P.filter((p) => p.vt === i);
@@ -5228,7 +5228,7 @@ __ENGINE__
         }).join('');
         const resT = 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>';
         h = (rl ? '<style>' + rl.css + '</style>' : '') + head + '<div class="vote-head"><div class="p-title">' + (res ? (rl ? '<span class="rl-pre" style="--rd:' + rl.R + 'ms">Ždrijeb bira…</span><span class="rl-post" style="--rd:' + rl.R + 'ms">' + resT + '</span>' : resT) : 'Odaberi kategoriju') + '</div>' +
-          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
+          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
           '<div class="door-btns">' + doorBtns + ppBar + '</div>' +
 
           '';

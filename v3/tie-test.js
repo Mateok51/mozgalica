@@ -35,6 +35,8 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
       for (const t of r.texts) ok(t.r[1] <= r.doors[0] + 1, W + ' ' + name + ': "' + t.t + '" ne prekriva vrata (' + t.r[1] + ' <= ' + r.doors[0] + ')');
       await page.screenshot({ path: OUT + '/tie-' + W + '-' + name + '.png' });
     }
+    const clip = await page.evaluate(() => { const bad = []; for (let e = document.querySelector('.door-btn.win'); e && e !== document.body && e !== document.documentElement; e = e.parentElement) { const cs = getComputedStyle(e); if (e.classList.contains('door-btn')) continue; if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') bad.push(e.tagName + '.' + String(e.className) + '#' + e.id + ' ' + cs.overflowX + '/' + cs.overflowY); } return bad; });
+    ok(clip.length === 0, W + ': nijedan roditelj vrata ne odsijeca sjaj ' + clip.join(' | '));
     ok(!errs.length, 'bez grešaka u konzoli ' + errs.join('|'));
     await ctx.close();
   }

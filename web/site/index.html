@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-RJAOt/6BRPp3iLsrEaDAQnxS8eYT0ZGy8pqFo5rAxc0=' 'sha256-WQ5rMYvh7s55h2bm0EOA55kLyWrRcJbn+Z3oO4xc48s=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-sMZvWggNkwYC3T9OGYq5s+tB9ZKqSia6trxDdVG+gos=' 'sha256-B0VXOjdyY+dy9af1ErW2RJPyNBx047WdZlwg8aPgOvY=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2295,7 +2295,7 @@
   html, body { overscroll-behavior: none; overscroll-behavior-y: none; }
   /* stranica se nikad ne skrola ni ne povlači; dekorativne animacije izvan ekrana ne produljuju stranicu */
   html, body { height: 100%; overflow: hidden; }
-  #app { height: 100vh; height: 100dvh; max-height: 100dvh; overflow: hidden; overscroll-behavior: contain; }
+  #app { height: 100vh; height: 100dvh; max-height: 100dvh; overscroll-behavior: contain; }   /* bez overflow: hidden, da se sjaj i sjene ne odsijecaju; stranicu zaključavaju html i body */
   #app.fit-scroll { overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   /* predvorje na nižim ekranima: popis igrača je skrolabilan i manji, pojašnjenje testnog načina se skriva, avatari su kompaktniji */
   #app.lobfit .lob-players { min-height: 72px; }
@@ -2825,9 +2825,9 @@ function createGame(o) {
   }
 
   function ppLock() {
-    const s0 = G.s, hold = Math.round((cfg.ppHold || 2.6) * 1000);
-    G.ppHeld = 1; G.dur = hold; G.startedAt = now(); G.endsAt = G.startedAt + hold;
-    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, hold);
+    const s0 = G.s;
+    G.ppHeld = 1;
+    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, 40);
   }
   function startVote() {
     if (sfDeal()) return;
@@ -2860,7 +2860,7 @@ function createGame(o) {
     // neriješeno: svjetlo kruži preko izjednačenih vrata (ruleta) prije otkrivanja
     G.tb = best.length > 1 ? best : null;
     TD.onVote();
-    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0));
+    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0) + (G.ppw ? (cfg.ppShow === undefined ? 2.4 : cfg.ppShow) : 0));
   }
 
   // Pravedna podjela moći: tko zaostaje češće dobiva štit, dupli i pola-pola, a vodeći ih dobiva rijetko.
@@ -6677,7 +6677,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v40</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v42</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -7616,7 +7616,7 @@ function createGame(o) {
         const counts = d.cats.map((_, i) => d.P.filter((p) => p.vt === i).length);
         const max = Math.max(0, ...counts);
         const rl = roulette(d), ppBy = d.P.find((p) => p.pk);
-        if (ppBy && d.ph === 'vote' && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
+        if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
         const doors = d.cats.map((c, i) => {
           const voters = voterFaces(d.P.filter((p) => p.vt === i), 5);
           const cls = d.ph === 'voteResult' ? (i === d.cw ? ' win' : ' lose') : (max > 0 && counts[i] === max ? ' lead' : '');
@@ -7844,7 +7844,7 @@ function createGame(o) {
         const res = d.ph === 'voteResult', rl = roulette(d);
         const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
         const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;
-        if (ppBy && !res && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
+        if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
         const ppBar = ppAvail ? '<button class="pp-coin' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-label="Power pick: biraš baš svoju kategoriju" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><b>⭐</b><small>PICK</small></button>' : '';
         const doorBtns = d.cats.map((c, i) => {
           const who = d.P.filter((p) => p.vt === i);
@@ -7857,7 +7857,7 @@ function createGame(o) {
         }).join('');
         const resT = 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>';
         h = (rl ? '<style>' + rl.css + '</style>' : '') + head + '<div class="vote-head"><div class="p-title">' + (res ? (rl ? '<span class="rl-pre" style="--rd:' + rl.R + 'ms">Ždrijeb bira…</span><span class="rl-post" style="--rd:' + rl.R + 'ms">' + resT + '</span>' : resT) : 'Odaberi kategoriju') + '</div>' +
-          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
+          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
           '<div class="door-btns">' + doorBtns + ppBar + '</div>' +
 
           '';

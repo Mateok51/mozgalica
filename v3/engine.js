@@ -508,9 +508,9 @@ function createGame(o) {
   }
 
   function ppLock() {
-    const s0 = G.s, hold = Math.round((cfg.ppHold || 2.6) * 1000);
-    G.ppHeld = 1; G.dur = hold; G.startedAt = now(); G.endsAt = G.startedAt + hold;
-    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, hold);
+    const s0 = G.s;
+    G.ppHeld = 1;
+    later(() => { if (G.s === s0 && G.ph === 'vote') endPhase(); }, 40);
   }
   function startVote() {
     if (sfDeal()) return;
@@ -543,7 +543,7 @@ function createGame(o) {
     // neriješeno: svjetlo kruži preko izjednačenih vrata (ruleta) prije otkrivanja
     G.tb = best.length > 1 ? best : null;
     TD.onVote();
-    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0));
+    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0) + (G.ppw ? (cfg.ppShow === undefined ? 2.4 : cfg.ppShow) : 0));
   }
 
   // Pravedna podjela moći: tko zaostaje češće dobiva štit, dupli i pola-pola, a vodeći ih dobiva rijetko.
