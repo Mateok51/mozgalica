@@ -643,3 +643,13 @@ rep("  return { _pact: (a, b) =>", "  return { refresh: () => { cleanOffers(); r
 rep("\n//#engine-end", "\n" + open(SP + '/v3/recover.js', encoding='utf-8').read().rstrip() + "\n\n//#engine-end")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR prijenos s maina (motor) OK')
+
+# ---------- Bacanje moći: dovoljno vremena da se vidi što se dogodilo ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("    if (!G.ev.length || cfg.cast <= 0) return afterPower();\n    setPhase('cast', Math.min(10, 1.3 + G.ev.length * cfg.cast));",
+    "    if (cfg.cast <= 0) return afterPower();\n"
+    "    // svi su odabrali prije isteka vremena, a nema vidljivih moći: kratki predah umjesto naglog prijelaza\n"
+    "    if (!G.ev.length) return now() < G.endsAt - 800 ? setPhase('cast', 1.2) : afterPower();\n"
+    "    setPhase('cast', Math.min(10, 2 + G.ev.length * cfg.cast));")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR bacanje moći OK')

@@ -2756,3 +2756,22 @@ s = rep(s, "return '<div class=\"bar-row\">' + d.P.map(", "return '<div class=\"
 _i = s.index('</style>'); s = s[:_i] + "  .bar-row.rv-hold { visibility: hidden; }\n" + s[_i:]
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Popravci tragova, otkrivanja i reda likova OK')
+
+# ---- Power pick uvijek na istom mjestu (siv kad nije dostupan), bez treptanja likova, kraći prijelaz bez moći ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;",
+           "ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin, ppShow = !!ppMe && !d.fin;")
+s = rep(s, """        const ppBar = ppAvail ? '<button class="pp-bar' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><span class="pp-med" aria-hidden="true"></span><span class="pp-txt"><b>POWER PICK</b><small>' + (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju · jednom po igri') + '</small></span></button>' : '';""",
+           """        // gumb je uvijek na istom mjestu (ekran se ne pomiče); kad se ne može iskoristiti, siv je i kaže zašto
+        const ppWhy = ppAvail ? (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju · jednom po igri') : ppMe && ppMe.pa === 0 ? 'Već iskorišten u ovoj igri' : ppBy ? 'U ovoj rundi: ' + esc(ppBy.n) : res ? 'Ti biraš kategoriju · jednom po igri' : 'Glas je predan';
+        const ppBar = ppShow ? (ppAvail ? '<button class="pp-bar' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '">'
+          : '<div class="pp-bar off" aria-disabled="true">') + '<span class="pp-med" aria-hidden="true"></span><span class="pp-txt"><b>POWER PICK</b><small>' + ppWhy + '</small></span>' + (ppAvail ? '</button>' : '</div>') : '';""")
+_i = s.index('</style>'); s = s[:_i] + "  .pp-bar.off { animation: none; cursor: default; filter: grayscale(0.9) brightness(0.7); box-shadow: 0 3px 0 #2a1608; border-color: rgba(196, 146, 66, 0.4); }\n  .pp-bar.off .pp-med { filter: none; }\n" + s[_i:]
+# likovi: sve poze se učitaju unaprijed (promjena izraza ne treperi), slika se crta odmah
+s = rep(s, "      return '<img class=\"av spr spr-' + A.spr + ' m-' + pose + '\" src=\"chars/' + A.spr + '/' + pose + '.webp\" alt=\"\" draggable=\"false\">';",
+           "      if (!PRE_AV.has(A.spr)) { PRE_AV.add(A.spr); for (const ps of SPR_POSES) { const im = new Image(); im.src = 'chars/' + A.spr + '/' + ps + '.webp'; PRE_AV_IMG.push(im); } }\n"
+           "      return '<img class=\"av spr spr-' + A.spr + ' m-' + pose + '\" src=\"chars/' + A.spr + '/' + pose + '.webp\" alt=\"\" draggable=\"false\" decoding=\"sync\">';")
+s = rep(s, "  function avSvg(i, mood) {", "  const PRE_AV = new Set(), PRE_AV_IMG = [];\n  function avSvg(i, mood) {")
+s = rep(s, "'<div class=\"p-sub\">Moći lete po pozornici…</div>'", "'<div class=\"p-sub\">' + (d.ev && d.ev.length ? 'Moći lete po pozornici…' : 'Svi su odabrali!') + '</div>'")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Power pick stalno mjesto, poze unaprijed OK')

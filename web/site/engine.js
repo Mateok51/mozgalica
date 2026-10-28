@@ -668,8 +668,10 @@ function createGame(o) {
     // prikaz bacanja: prvo štitovi, zatim ostale pomoći, zatim napadi
     const rank = (e) => (e.p === 'stit' ? 0 : e.t ? 2 : 1);
     G.ev.sort((a, b) => rank(a) - rank(b));
-    if (!G.ev.length || cfg.cast <= 0) return afterPower();
-    setPhase('cast', Math.min(10, 1.3 + G.ev.length * cfg.cast));
+    if (cfg.cast <= 0) return afterPower();
+    // svi su odabrali prije isteka vremena, a nema vidljivih moći: kratki predah umjesto naglog prijelaza
+    if (!G.ev.length) return now() < G.endsAt - 800 ? setPhase('cast', 1.2) : afterPower();
+    setPhase('cast', Math.min(10, 2 + G.ev.length * cfg.cast));
   }
 
   function afterPower() { return G.inFinale ? beginFinaleQ() : startQuestion(); }

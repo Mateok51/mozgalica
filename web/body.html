@@ -2450,6 +2450,8 @@
   @media (max-height: 700px) { .pp-bar { margin-top: 6px; padding-top: 3px; padding-bottom: 3px; } .pp-bar .pp-med { width: 38px; height: 38px; } .pp-bar b { font-size: 0.98rem; } }
   @media (prefers-reduced-motion: reduce) { .pp-bar, .pp-bar.on .pp-med { animation: none; } }
   .bar-row.rv-hold { visibility: hidden; }
+  .pp-bar.off { animation: none; cursor: default; filter: grayscale(0.9) brightness(0.7); box-shadow: 0 3px 0 #2a1608; border-color: rgba(196, 146, 66, 0.4); }
+  .pp-bar.off .pp-med { filter: none; }
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
@@ -2537,11 +2539,13 @@ __ENGINE__
     return '#' + ((1 << 24) + (f(n >> 16) << 16) + (f((n >> 8) & 255) << 8) + f(n & 255)).toString(16).slice(1);
   }
   const avCache = {};
+  const PRE_AV = new Set(), PRE_AV_IMG = [];
   function avSvg(i, mood) {
     const A = AV[i] || AV[0];
     if (A.spr) {
       const pose = SPR_POSES.includes(mood) ? mood : mood === 'dizzy' ? 'sad' : 'idle';
-      return '<img class="av spr spr-' + A.spr + ' m-' + pose + '" src="chars/' + A.spr + '/' + pose + '.webp" alt="" draggable="false">';
+      if (!PRE_AV.has(A.spr)) { PRE_AV.add(A.spr); for (const ps of SPR_POSES) { const im = new Image(); im.src = 'chars/' + A.spr + '/' + ps + '.webp'; PRE_AV_IMG.push(im); } }
+      return '<img class="av spr spr-' + A.spr + ' m-' + pose + '" src="chars/' + A.spr + '/' + pose + '.webp" alt="" draggable="false" decoding="sync">';
     }
     if (mood in OLD_MOOD) mood = OLD_MOOD[mood];
     const k = i + ':' + (mood || '');
@@ -5511,9 +5515,12 @@ __ENGINE__
       case 'vote': case 'voteResult': {
         const res = d.ph === 'voteResult', rl = roulette(d);
         const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
-        const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;
+        const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin, ppShow = !!ppMe && !d.fin;
         if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
-        const ppBar = ppAvail ? '<button class="pp-bar' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><span class="pp-med" aria-hidden="true"></span><span class="pp-txt"><b>POWER PICK</b><small>' + (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju · jednom po igri') + '</small></span></button>' : '';
+        // gumb je uvijek na istom mjestu (ekran se ne pomiče); kad se ne može iskoristiti, siv je i kaže zašto
+        const ppWhy = ppAvail ? (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju · jednom po igri') : ppMe && ppMe.pa === 0 ? 'Već iskorišten u ovoj igri' : ppBy ? 'U ovoj rundi: ' + esc(ppBy.n) : res ? 'Ti biraš kategoriju · jednom po igri' : 'Glas je predan';
+        const ppBar = ppShow ? (ppAvail ? '<button class="pp-bar' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '">'
+          : '<div class="pp-bar off" aria-disabled="true">') + '<span class="pp-med" aria-hidden="true"></span><span class="pp-txt"><b>POWER PICK</b><small>' + ppWhy + '</small></span>' + (ppAvail ? '</button>' : '</div>') : '';
         const doorBtns = d.cats.map((c, i) => {
           const who = d.P.filter((p) => p.vt === i);
           const faces = voterFaces(who, 4);
@@ -5535,7 +5542,7 @@ __ENGINE__
         if (d.ntv) { h = head + '<div class="p-title">Bacanje moći!</div>' + castHtml(d); break; }
         const hits = d.ev.filter((e) => e.t === PID);
         h = center(head + '<div class="p-title" style="color:var(--gold)">Gledaj TV!</div><div class="p-cast-me bob">' + avSvg(me.a, hits.some((e) => !e.b) ? 'shocked' : 'idle') + '</div>' +
-          (hits.length ? '<div class="p-sub">' + hits.map((e) => esc(nameOf(d, e.f)) + ' ti šalje: ' + POWERS[e.p].n + (e.b ? ' (štit ga odbija)' : '')).join('<br>') + '</div>' : '<div class="p-sub">Moći lete po pozornici…</div>'));
+          (hits.length ? '<div class="p-sub">' + hits.map((e) => esc(nameOf(d, e.f)) + ' ti šalje: ' + POWERS[e.p].n + (e.b ? ' (štit ga odbija)' : '')).join('<br>') + '</div>' : '<div class="p-sub">' + (d.ev && d.ev.length ? 'Moći lete po pozornici…' : 'Svi su odabrali!') + '</div>'));
         break;
       }
       case 'bet': h = head + betPhone(d, me); break;
@@ -5873,7 +5880,7 @@ __ENGINE__
     r.steps.forEach((t, k) => setTimeout(() => AUDIO.play('tap'), t + (k ? 0 : 10)));
     setTimeout(() => AUDIO.play('step'), r.R + 40);
   }
-  let questionFit = null;
+  let questionFit = null, phaseFit = null;
   // Mjeri puni sadržaj prije prilagodbe; kontrole zvuka imaju vlastiti prostor.
   function fitScreen() {
     const A = $app;
@@ -5899,10 +5906,14 @@ __ENGINE__
       return A.getBoundingClientRect().height;
     };
     const key = phone && S && S.q ? [S.code, S.q.n, innerWidth, innerHeight].join(':') : null;
+    const pk = S ? [S.s, S.ph, innerWidth, innerHeight].join(':') : null;
     const finish = (scale) => {
+      // ista faza: ne raste natrag, a sitna razlika (do 3 %) ne mijenja mjerilo; jače smanjenje samo ako sadržaj stvarno ne stane
+      if (phaseFit && phaseFit.key === pk) scale = scale >= phaseFit.scale * 0.97 ? phaseFit.scale : scale;
       if (phone && S && S.ph === 'reveal' && questionFit && questionFit.key === key) scale = scale >= questionFit.scale * 0.98 ? questionFit.scale : Math.min(scale, questionFit.scale);
       measure(scale);
       if (phone && S && S.ph === 'question') questionFit = { key, scale };
+      phaseFit = { key: pk, scale };
     };
     if (measure(1) <= available) { finish(1); return; }
     let low = 0.1, high = 1;
