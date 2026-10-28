@@ -1,0 +1,25 @@
+{
+ "started": true,
+ "samples": 1010,
+ "seen": {
+  "intro": 29,
+  "vote": 76,
+  "voteResult": 53,
+  "question": 62,
+  "reveal": 118,
+  "bet": 12,
+  "power": 99,
+  "cast": 339,
+  "howto": 2,
+  "blitz": 17,
+  "blitzReveal": 8,
+  "link": 14,
+  "linkReveal": 3,
+  "secret": 9,
+  "fstart": 11,
+  "fq": 84,
+  "fr": 74
+ },
+ "bad": {},
+ "errs": []
+}

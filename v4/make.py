@@ -2639,3 +2639,24 @@ s = rep(s, "mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ?", "ppBy ? '⭐ Power 
 s = rep(s, "        const rl = roulette(d), ppBy = d.P.find((p) => p.pk);\n", "        const rl = roulette(d), ppBy = d.P.find((p) => p.pk);\n        if (ppBy && d.ph === 'vote' && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }\n")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Power pick zvuk i pauza UI OK')
+
+# ---- zabrana „povuci za osvježavanje” (pull-to-refresh) i odskakanja cijele stranice; unutarnje pomicanje radi kao prije ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + "  html, body { overscroll-behavior: none; overscroll-behavior-y: none; }\n" + s[i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Bez pull-to-refresh OK')
+
+# ---- sve stane na ekran: bez skrolanja cijele stranice; zaštita ako pravi sadržaj pređe visinu (v4/fit.js) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+i = s.index('</style>'); s = s[:i] + """  /* stranica se nikad ne skrola ni ne povlači; dekorativne animacije izvan ekrana ne produljuju stranicu */
+  html, body { height: 100%; overflow: hidden; }
+  #app { height: 100vh; height: 100dvh; max-height: 100dvh; overflow: hidden; overscroll-behavior: contain; }
+  #app.fit-scroll { overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  /* predvorje na nižim ekranima: popis igrača je skrolabilan i manji, pojašnjenje testnog načina se skriva, avatari su kompaktniji */
+  #app.lobfit .lob-players { min-height: 72px; }
+  @media (max-height: 880px) { .lob-opt-l small { display: none; } }
+  @media (max-height: 800px) { .av-pick .pick-img { height: 56px; } .av-pick { min-height: 0; } .lob-title { font-size: 1.5rem; } #app.lobfit .lob-players { min-height: 40px; } .lob-bots-l small { display: none; } .lob-cta { min-height: 52px; } .home-link { min-height: 34px; } .lob-wait { padding-top: 0; padding-bottom: 0; } }
+""" + s[i:]
+s = rep(s, "  // ---------- pozadina: unutrašnjost krčme (drveni zid, prozor u noć, kamin, svijeće, šank na TV-u) ----------", open(SP + '/v4/fit.js', encoding='utf-8').read() + "  // ---------- pozadina: unutrašnjost krčme (drveni zid, prozor u noć, kamin, svijeće, šank na TV-u) ----------")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Fit guard OK')

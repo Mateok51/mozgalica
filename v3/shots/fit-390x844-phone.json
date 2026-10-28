@@ -1,0 +1,26 @@
+{
+ "started": true,
+ "samples": 967,
+ "seen": {
+  "intro": 33,
+  "vote": 88,
+  "voteResult": 61,
+  "question": 68,
+  "reveal": 27,
+  "bet": 20,
+  "power": 98,
+  "cast": 328,
+  "howto": 3,
+  "link": 20,
+  "linkReveal": 9,
+  "secret": 11,
+  "hilo": 19,
+  "hiloReveal": 9,
+  "fstart": 11,
+  "fq": 70,
+  "fr": 67,
+  "final": 25
+ },
+ "bad": {},
+ "errs": []
+}

@@ -31,6 +31,7 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
 - Titranje animacija: node flk/restarts.js v3/out.html 150 (treba ispisati {})
 
 - Razvrstavanje (mobitel): jedna kartica + swipe (v4/swipe-sort.js/.css, zadnji korak make.py); kratka provjera: node v3/swipe-test.js
+- Sve stane na ekran (stranica se ne skrola; v4/fit.js + zaključavanje u make.py; ako pravi sadržaj pređe visinu, skrola se samo #app): provjere node v3/fit-lobby.js i node v3/fit-audit.js <š> <v> <phone|tv> <s> (koriste web/site, pokrenuti nakon web/assemble.py)
 - Power pick (jedan po igraču po partiji, bira kategoriju na glasanju; zamijenio Krčmarovu uslugu): motor v3/kr.py (zadnji korak), sučelje v4/make.py + v4/pp.css; provjere: node v3/pick-test.js, node v3/pick-ui-test.js
 - Moći: bez faze moći prije prvog pitanja, Oklada se ne nudi dvaput zaredom: node v3/pw-test.js; poruka ždrijeba ne prekriva sadržaj: node v3/tie-test.js
 - Ambijent (iskre, prašina, dim iza sučelja; v4/ambient.js, canvas #ambient): node v3/ambient-test.js (nakon web/assemble.py)
