@@ -2497,6 +2497,8 @@ function createGame(o) {
       if (sfOn() && !sfBusy(p) && !G.inFinale && (k.n || 0) >= (cfg.pactMinQ || 0)) { o.k.cb = 1; o.k.bt = p.betray ? 1 : 0; }
       if ((k.n || 0) < (cfg.pactMinQ || 0)) o.k.wait = (cfg.pactMinQ || 0) - (k.n || 0);
       if (sfOn() && p.betray && sfBusy(p)) o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)
+      // već zaključana (čeka izvršenje nakon ove ploče): ne nudi se ponovno, vlasnik vidi da je izdaja na putu
+      if ((G.btq || []).some((q) => q.pact === k.id && ((q.a && k.a === p.pid) || (q.b && k.b === p.pid)))) { delete o.k.cb; o.k.bt = 0; o.k.btl = 1; }
     }
     return Object.assign(o, rcPriv(p));
   }

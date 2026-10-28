@@ -653,3 +653,12 @@ rep("    if (!G.ev.length || cfg.cast <= 0) return afterPower();\n    setPhase('
     "    setPhase('cast', Math.min(10, 2 + G.ev.length * cfg.cast));")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR bacanje moći OK')
+
+# ---------- Izdaja: zaključana izdaja se ne nudi ponovno dok se ne izvrši ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("      if (sfOn() && p.betray && sfBusy(p)) o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)",
+    "      if (sfOn() && p.betray && sfBusy(p)) o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)\n"
+    "      // već zaključana (čeka izvršenje nakon ove ploče): ne nudi se ponovno, vlasnik vidi da je izdaja na putu\n"
+    "      if ((G.btq || []).some((q) => q.pact === k.id && ((q.a && k.a === p.pid) || (q.b && k.b === p.pid)))) { delete o.k.cb; o.k.bt = 0; o.k.btl = 1; }")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR izdaja zaključana OK')

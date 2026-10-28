@@ -2512,8 +2512,8 @@ __ENGINE__
 
   // ---------- likovi (originalni, sjenčani) ----------
   const AV = [
-    { n: 'Vila',   spr: 'vila' },
-    { n: 'Ovan',   spr: 'ovan' },
+    { n: 'Mačak',  spr: 'macak' },
+    { n: 'Kuhar',  spr: 'kuhar' },
     { n: 'Zlata',  spr: 'zlata' },
     { n: 'Kovač',  spr: 'kovac' },
     { n: 'Žar',    spr: 'zar' },
@@ -4662,7 +4662,7 @@ __ENGINE__
       else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div>' +
         '<div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
       else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
-    } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja zaključana</div>';
+    } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja je zaključana · otkriva se odmah nakon ove ploče</div>';
     return h + '</div>';
   }
   function sfSend(d, me) {
@@ -4837,6 +4837,7 @@ __ENGINE__
         else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div><div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
         else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
       }
+      else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja je zaključana · otkriva se odmah nakon ove ploče</div>';
       return h + '</div>' + mine;
     }
     return mine;

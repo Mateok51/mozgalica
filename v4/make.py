@@ -1539,8 +1539,8 @@ open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 # ---- novi naslikani likovi: svih 8 likova ima 6 poza (stari SVG likovi više se ne nude) ----
 s = open(SP + '/v4/page.html', encoding='utf-8').read()
 s = cut(s, "  const AV = [\n", "  ];\n", """  const AV = [
-    { n: 'Vila',   spr: 'vila' },
-    { n: 'Ovan',   spr: 'ovan' },
+    { n: 'Mačak',  spr: 'macak' },
+    { n: 'Kuhar',  spr: 'kuhar' },
     { n: 'Zlata',  spr: 'zlata' },
     { n: 'Kovač',  spr: 'kovac' },
     { n: 'Žar',    spr: 'zar' },
@@ -2788,3 +2788,12 @@ s = rep(s, "'Odaberi pojam s lijeve strane, zatim njegov par.'", "'Povuci konop 
 _i = s.index('</style>'); s = s[:_i] + open(SP + '/v4/lnk2.css', encoding='utf-8').read() + s[_i:]
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Spoji parove 2 OK')
+
+# ---- Izdaja: na ploči se vidi da je već zaključana (ne nudi se ponovno) ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "        else h += '<button class=\"sf-link sf-btask\" data-sfbt=\"1\">🗡️ Pripremi izdaju</button>';\n      }\n      return h + '</div>' + mine;",
+           "        else h += '<button class=\"sf-link sf-btask\" data-sfbt=\"1\">🗡️ Pripremi izdaju</button>';\n      }\n"
+           "      else if (k.btl) h += '<div class=\"sf-bt on\">🗡️ Izdaja je zaključana · otkriva se odmah nakon ove ploče</div>';\n      return h + '</div>' + mine;")
+s = rep(s, "'<div class=\"sf-bt on\">🗡️ Izdaja zaključana</div>'", "'<div class=\"sf-bt on\">🗡️ Izdaja je zaključana · otkriva se odmah nakon ove ploče</div>'")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Izdaja zaključana prikaz OK')

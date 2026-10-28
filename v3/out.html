@@ -4928,6 +4928,8 @@ function createGame(o) {
       if (sfOn() && !sfBusy(p) && !G.inFinale && (k.n || 0) >= (cfg.pactMinQ || 0)) { o.k.cb = 1; o.k.bt = p.betray ? 1 : 0; }
       if ((k.n || 0) < (cfg.pactMinQ || 0)) o.k.wait = (cfg.pactMinQ || 0) - (k.n || 0);
       if (sfOn() && p.betray && sfBusy(p)) o.k.btl = 1;   // zaključana pripremljena izdaja (samo vlasnik)
+      // već zaključana (čeka izvršenje nakon ove ploče): ne nudi se ponovno, vlasnik vidi da je izdaja na putu
+      if ((G.btq || []).some((q) => q.pact === k.id && ((q.a && k.a === p.pid) || (q.b && k.b === p.pid)))) { delete o.k.cb; o.k.bt = 0; o.k.btl = 1; }
     }
     return Object.assign(o, rcPriv(p));
   }
@@ -5188,8 +5190,8 @@ function createRecoverableGame(options, saved) {
 
   // ---------- likovi (originalni, sjenčani) ----------
   const AV = [
-    { n: 'Vila',   spr: 'vila' },
-    { n: 'Ovan',   spr: 'ovan' },
+    { n: 'Mačak',  spr: 'macak' },
+    { n: 'Kuhar',  spr: 'kuhar' },
     { n: 'Zlata',  spr: 'zlata' },
     { n: 'Kovač',  spr: 'kovac' },
     { n: 'Žar',    spr: 'zar' },
@@ -6874,7 +6876,7 @@ function createRecoverableGame(options, saved) {
       else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div>' +
         '<div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
       else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
-    } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja zaključana</div>';
+    } else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja je zaključana · otkriva se odmah nakon ove ploče</div>';
     return h + '</div>';
   }
   function sfSend(d, me) {
@@ -7049,6 +7051,7 @@ function createRecoverableGame(options, saved) {
         else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div><div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
         else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
       }
+      else if (k.btl) h += '<div class="sf-bt on">🗡️ Izdaja je zaključana · otkriva se odmah nakon ove ploče</div>';
       return h + '</div>' + mine;
     }
     return mine;
