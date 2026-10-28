@@ -2729,3 +2729,30 @@ s = rep(s, "    L.lockUntil = Date.now() + 900;\n    const s0 = L.s;\n    setTim
            "    L.lockUntil = Date.now() + 1600;\n    const s0 = L.s;\n    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 1620);")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Zaključavanje nakon leda OK')
+
+# ---- Power pick: jasan pulsirajući gumb ispod vrata (medaljon + natpis) umjesto samog medaljona između vrata ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+_i = s.index('</style>'); s = s[:_i] + open(SP + '/v4/ppbar.css', encoding='utf-8').read() + s[_i:]
+s = rep(s, """        const ppBar = ppAvail ? '<button class="pp-coin' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-label="Power pick: biraš baš svoju kategoriju" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"></button>' : '';""",
+           """        const ppBar = ppAvail ? '<button class="pp-bar' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><span class="pp-med" aria-hidden="true"></span><span class="pp-txt"><b>POWER PICK</b><small>' + (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju · jednom po igri') + '</small></span></button>' : '';""")
+s = rep(s, "          '<div class=\"door-btns\">' + doorBtns + ppBar + '</div>' +", "          '<div class=\"door-btns\">' + doorBtns + '</div>' + ppBar +")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Power pick gumb ispod vrata OK')
+
+# ---- Popravci: tragovi „Tko sam ja?” ne smiju se otkriti ranije pri osvježavanju; otkrivanje ne pomiče odgovore; likovi nisu dvaput ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+# zadržavanje animacija pri ponovnom iscrtavanju: odgoda koja već računa proteklo vrijeme (--pel) ne smije se još jednom pomaknuti
+s = rep(s, "        saved.set(k, { ct, fin: a.playState === 'finished' });",
+           "        saved.set(k, { ct, fin: a.playState === 'finished', dl: a.effect && a.effect.getTiming ? +a.effect.getTiming().delay || 0 : 0 });")
+s = rep(s, "          if (o.fin) a.finish();\n          else a.currentTime = o.ct + dt;",
+           "          if (o.fin) a.finish();\n          else {\n            const dn = a.effect && a.effect.getTiming ? +a.effect.getTiming().delay || 0 : 0, pg = o.ct - o.dl;\n"
+           "            if (dn === o.dl) a.currentTime = o.ct + dt;\n            else if (pg >= 0) a.currentTime = dn + pg + dt;   // već pokrenuta: isti napredak\n"
+           "            // još u odgodi: nova odgoda (iz --pel) već uključuje proteklo vrijeme, ništa se ne mijenja\n          }")
+# „Vrijeme je isteklo” ispod odgovora, da se pitanje i odgovori ne pomaknu kad istekne vrijeme
+s = rep(s, "qTextHtml(d, false) + (none ? '<div class=\"rv-sum\">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts",
+           "qTextHtml(d, false) + revOpts(d, me.ch, false) + (none ? '<div class=\"rv-sum\">Vrijeme je isteklo</div>' : '') + pts")
+# red likova ostaje kao mjesto (isti raspored), ali likovi u otkrivanju hodaju do odgovora i nisu i dolje
+s = rep(s, "return '<div class=\"bar-row\">' + d.P.map(", "return '<div class=\"bar-row' + (d.ph === 'reveal' ? ' rv-hold' : '') + '\">' + d.P.map(")
+_i = s.index('</style>'); s = s[:_i] + "  .bar-row.rv-hold { visibility: hidden; }\n" + s[_i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Popravci tragova, otkrivanja i reda likova OK')

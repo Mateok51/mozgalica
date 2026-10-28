@@ -9,7 +9,7 @@ fs.writeFileSync(TMP, h.replace(a, a + ' window.__t = { game: () => game, S: (v)
 (async () => {
   const b = await chromium.launch();
   try {
-    const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true }); const page = await ctx.newPage();
+    const ctx = await b.newContext({ viewport: { width: +(process.env.W || 390), height: +(process.env.H || 844) }, hasTouch: true }); const page = await ctx.newPage();
     await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr/, (r) => r.abort());
     await page.goto('file://' + TMP);
     await page.click('#demo'); await page.waitForTimeout(250); await page.click('#lobAvatar').catch(() => {}); await page.waitForTimeout(150); await page.click('[data-av]:not([disabled])'); await page.waitForTimeout(150);
@@ -17,15 +17,15 @@ fs.writeFileSync(TMP, h.replace(a, a + ' window.__t = { game: () => game, S: (v)
       game.view = () => { const v = real(); const P = v.P.map((p) => Object.assign({}, p, { pa: 1, vt: undefined })); return Object.assign(v, { ph: 'vote', s: 777, ntv: false, cats: ['Dinosauri i prapovijest', 'Slavni parovi i obitelji', 'Reklame i slogani', 'Jezici i riječi'], P }); };
       __t.S(game.view()); __t.L(__t.fresh(777)); __t.render(); });
     await page.waitForTimeout(600);
-    const m = await page.evaluate(() => { const c = document.querySelector('.pp-coin').getBoundingClientRect(), bs = [...document.querySelectorAll('.door-btn')].map((e) => e.getBoundingClientRect());
-      const L = Math.min(...bs.map((r) => r.left)), R = Math.max(...bs.map((r) => r.right)), T = Math.min(...bs.map((r) => r.top)), B = Math.max(...bs.map((r) => r.bottom));
-      const cs = getComputedStyle(document.querySelector('.pp-coin')); return { dx: (c.left + c.right) / 2 - (L + R) / 2, dy: (c.top + c.bottom) / 2 - (T + B) / 2, w: c.width, bg: cs.backgroundImage, txt: document.querySelector('.pp-coin').textContent };
+    const m = await page.evaluate(() => { const c = document.querySelector('#ppBtn').getBoundingClientRect(), bs = [...document.querySelectorAll('.door-btn')].map((e) => e.getBoundingClientRect());
+      const B = Math.max(...bs.map((r) => r.bottom)); const z = parseFloat(document.getElementById('app').style.zoom || '1');
+      return { below: c.top >= B - 1, inView: c.bottom * z <= innerHeight, h: c.height, txt: document.querySelector('#ppBtn').textContent, zoom: z };
     });
-    console.log(JSON.stringify(m)); console.log(await page.evaluate(() => { const e = document.querySelector('.pp-coin'); const o = []; for (let x = e; x; x = x.parentElement) { const c = getComputedStyle(x); if (c.opacity !== '1' || c.filter !== 'none' || c.mixBlendMode !== 'normal') o.push((x.id || x.className) + ' op=' + c.opacity + ' f=' + c.filter + ' mb=' + c.mixBlendMode); } return o.join(' | '); }));
-    const loaded = await page.evaluate(() => new Promise((r) => { const i = new Image(); i.onload = () => r(i.naturalWidth); i.onerror = () => r(0); i.src = 'ui/pp-medal.webp'; }));
-    console.log('slika učitana, širina', loaded);
+    console.log(JSON.stringify(m));
     await page.screenshot({ path: OUT + '/ppicon-390.png' });
-    await page.click('#ppBtn', { force: true }); await page.waitForTimeout(150); await page.screenshot({ path: OUT + '/ppicon-390-on.png' });
-    console.log(Math.abs(m.dx) < 3 && Math.abs(m.dy) < 3 && loaded > 0 && m.txt.trim() === '' ? 'OK' : 'NEUSPJEH');
+    await page.click('#ppBtn', { force: true }); await page.waitForTimeout(250); await page.screenshot({ path: OUT + '/ppicon-390-on.png' });
+    const on = await page.evaluate(() => ({ txt: document.querySelector('#ppBtn').textContent, arm: document.querySelectorAll('.door-btn.pp-arm').length }));
+    console.log(JSON.stringify(on));
+    console.log(m.below && m.inView && /POWER PICK/.test(m.txt) && on.arm === 4 ? 'OK' : 'NEUSPJEH');
   } finally { await b.close(); fs.unlinkSync(TMP); }
 })();

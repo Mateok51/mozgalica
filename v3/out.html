@@ -2375,6 +2375,24 @@
   .pyramid .here:has(.climber + .climber) .climber:not(.me) .pbar b { display: none; }
   /* rezultat piramide na mobitelu bez TV-a: veća piramida da se napredak jasno vidi */
   .phone-pyr.big .pyramid { --H: clamp(32px, 6.4vh, 58px); }
+  /* POWER PICK kao jasan gumb ispod vrata: medaljon + natpis, pulsira dok je dostupan */
+  .pp-bar { display: flex; align-items: center; gap: 10px; align-self: center; width: min(100%, 330px); margin: 12px auto 0; padding: 5px 16px 5px 6px; border: 2px solid #f0c66e; border-radius: 999px; cursor: pointer; text-align: left;
+    background: linear-gradient(180deg, #6a4216, #2e1a09); color: #fff3d6; font-family: var(--font-body); box-shadow: 0 3px 0 #3a210c, 0 0 0 1px #7a4f17, 0 0 14px rgba(240, 198, 110, 0.45);
+    -webkit-tap-highlight-color: transparent; animation: ppPulse 1.5s ease-in-out infinite; flex: none; }
+  .pp-bar .pp-med { width: 48px; height: 48px; flex: none; background: url("ui/pp-medal.webp") center / contain no-repeat; filter: drop-shadow(0 0 6px rgba(255, 214, 120, 0.7)); }
+  .pp-bar .pp-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
+  .pp-bar b { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.04em; color: #ffe08a; text-shadow: 0 1px 0 #3a210c; }
+  .pp-bar small { font-size: 0.78rem; font-weight: 800; color: #f3e3c4; }
+  .pp-bar.on { animation: none; border-color: #fff3c2; background: linear-gradient(180deg, #9a6a1e, #5a3712); box-shadow: 0 3px 0 #3a210c, 0 0 0 2px #fff3c2, 0 0 24px rgba(255, 226, 150, 0.9); }
+  .pp-bar.on .pp-med { animation: ppSpin 1.2s ease-in-out infinite alternate; }
+  .pp-bar:active { transform: translateY(2px) scale(0.98); }
+  @keyframes ppPulse { 0%, 100% { transform: scale(1); box-shadow: 0 3px 0 #3a210c, 0 0 0 1px #7a4f17, 0 0 10px rgba(240, 198, 110, 0.35); }
+    50% { transform: scale(1.04); box-shadow: 0 3px 0 #3a210c, 0 0 0 2px #f0c66e, 0 0 24px rgba(255, 214, 120, 0.85); } }
+  @keyframes ppSpin { from { transform: rotate(-8deg) scale(1); } to { transform: rotate(8deg) scale(1.08); } }
+  .tv .pp-bar { display: none; }
+  @media (max-height: 700px) { .pp-bar { margin-top: 6px; padding-top: 3px; padding-bottom: 3px; } .pp-bar .pp-med { width: 38px; height: 38px; } .pp-bar b { font-size: 0.98rem; } }
+  @media (prefers-reduced-motion: reduce) { .pp-bar, .pp-bar.on .pp-med { animation: none; } }
+  .bar-row.rv-hold { visibility: hidden; }
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
@@ -7377,7 +7395,7 @@ function createRecoverableGame(options, saved) {
       for (const [k, a] of list()) {
         const ct = a.currentTime;
         if (ct === null) continue;
-        saved.set(k, { ct, fin: a.playState === 'finished' });
+        saved.set(k, { ct, fin: a.playState === 'finished', dl: a.effect && a.effect.getTiming ? +a.effect.getTiming().delay || 0 : 0 });
       }
     }
     function put() {
@@ -7387,7 +7405,12 @@ function createRecoverableGame(options, saved) {
         const o = saved.get(k); if (!o) continue;
         try {
           if (o.fin) a.finish();
-          else a.currentTime = o.ct + dt;
+          else {
+            const dn = a.effect && a.effect.getTiming ? +a.effect.getTiming().delay || 0 : 0, pg = o.ct - o.dl;
+            if (dn === o.dl) a.currentTime = o.ct + dt;
+            else if (pg >= 0) a.currentTime = dn + pg + dt;   // već pokrenuta: isti napredak
+            // još u odgodi: nova odgoda (iz --pel) već uključuje proteklo vrijeme, ništa se ne mijenja
+          }
         } catch (e) {}
       }
       saved = null;
@@ -7700,7 +7723,7 @@ function createRecoverableGame(options, saved) {
         const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
         const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;
         if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
-        const ppBar = ppAvail ? '<button class="pp-coin' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-label="Power pick: biraš baš svoju kategoriju" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"></button>' : '';
+        const ppBar = ppAvail ? '<button class="pp-bar' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><span class="pp-med" aria-hidden="true"></span><span class="pp-txt"><b>POWER PICK</b><small>' + (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju · jednom po igri') + '</small></span></button>' : '';
         const doorBtns = d.cats.map((c, i) => {
           const who = d.P.filter((p) => p.vt === i);
           const faces = voterFaces(who, 4);
@@ -7713,7 +7736,7 @@ function createRecoverableGame(options, saved) {
         const resT = 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>';
         h = (rl ? '<style>' + rl.css + '</style>' : '') + head + '<div class="vote-head"><div class="p-title">' + (res ? (rl ? '<span class="rl-pre" style="--rd:' + rl.R + 'ms">Ždrijeb bira…</span><span class="rl-post" style="--rd:' + rl.R + 'ms">' + resT + '</span>' : resT) : 'Odaberi kategoriju') + '</div>' +
           '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
-          '<div class="door-btns">' + doorBtns + ppBar + '</div>' +
+          '<div class="door-btns">' + doorBtns + '</div>' + ppBar +
 
           '';
         break;
@@ -7806,7 +7829,7 @@ function createRecoverableGame(options, saved) {
 
   function barRow(d) {
     const mood = (p) => (d.ph === 'question' || d.ph === 'fq') && p.fx ? 'shocked' : p.ok ? 'happy' : 'idle';
-    return '<div class="bar-row">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" aria-label="' + esc(p.n) + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + (d.rc && (d.rc.a === p.id || d.rc.b === p.id) ? '<span class="rc-mk" title="Rivalski obračun">⚔️</span>' : '') + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1">✓</span>' : '') + '</div>').join('') + '</div>';
+    return '<div class="bar-row' + (d.ph === 'reveal' ? ' rv-hold' : '') + '">' + d.P.map((p) => '<div class="bw' + (p.id === PID ? ' me' : '') + '" title="' + esc(p.n) + '" aria-label="' + esc(p.n) + '"><span class="glow"></span>' + avSvg(p.a, mood(p)) + (d.rc && (d.rc.a === p.id || d.rc.b === p.id) ? '<span class="rc-mk" title="Rivalski obračun">⚔️</span>' : '') + (p.ok ? '<span class="ok" data-bk="bw' + esc(p.id) + '" data-bv="1">✓</span>' : '') + '</div>').join('') + '</div>';
   }
   function hudRound(rl, nr) { const m = /^Runda (\d+)$/.exec(rl || ''); return m ? 'Runda ' + m[1] + '/' + (nr || 3) : (rl || ''); }
   const ANN_SUB = { 'Runda 1': 'Avantura počinje.', 'Runda 2': 'Vrijeme je za novu rundu.', 'Runda 3': 'Još samo jedna runda.', 'Veliko finale': 'Sve se odlučuje sada.' };
@@ -8214,7 +8237,7 @@ function createRecoverableGame(options, saved) {
     const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
     const wh = wheel(d);
     return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
-      '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
+      '<div class="rv-a">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
       '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
   }
 

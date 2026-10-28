@@ -26,8 +26,8 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
     ok(await page.$('#ppBtn') !== null, W + ': gumb Power pick se vidi dok je pick dostupan');
     await page.click('#ppBtn', { force: true }); await page.waitForTimeout(100);
     ok(await page.$('.door-btn.pp-arm') !== null, W + ': nakon dodira vrata svijetle (spremno za pick)');
-    const g = await page.evaluate(() => { const c = document.querySelector('.pp-coin').getBoundingClientRect(), r = (e) => e.getBoundingClientRect(); const txt = [...document.querySelectorAll('.door-btn .dname')].map((e) => { const x = r(e); return x.left < c.right && x.right > c.left && x.top < c.bottom && x.bottom > c.top; }); return { w: Math.round(c.width), over: txt.some(Boolean), doc: document.documentElement.scrollHeight, ih: innerHeight }; });
-    ok(g.w <= 73 && !g.over, W + ': kovanica ' + g.w + ' px, ne prekriva tekst vrata');
+    const g = await page.evaluate(() => { const c = document.querySelector('#ppBtn').getBoundingClientRect(), r = (e) => e.getBoundingClientRect(); const txt = [...document.querySelectorAll('.door-btn .dname')].map((e) => { const x = r(e); return x.left < c.right && x.right > c.left && x.top < c.bottom && x.bottom > c.top; }); return { w: Math.round(c.width), over: txt.some(Boolean), doc: document.documentElement.scrollHeight, ih: innerHeight }; });
+    ok(!g.over, W + ': gumb Power pick ne prekriva tekst vrata');
     ok(g.doc <= g.ih + 1, W + ': sve staje na ekran bez skrolanja (' + g.doc + ' <= ' + g.ih + ')');
     await page.screenshot({ path: OUT + '/pick-' + W + '-a.png' });
     await page.click('.door-btn.o1'); await page.waitForTimeout(100);
@@ -42,7 +42,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
     ok(await page.$('#ppBtn') === null, W + ': kad je pick iskorišten, gumba nema');
     const tag = await page.evaluate(() => { const t = document.querySelector('.door-btn.o2 .pp-tag'); return t ? t.textContent : null; });
     ok(!!tag && /power pick/.test(tag), W + ': značka na tuđim vratima: "' + tag + '"');
-    const cb = await page.evaluate(() => { const c = document.querySelector('.pp-coin'); return c ? 1 : 0; }); ok(cb === 0, W + ': nakon iskorištenja nema kovanice');
+    const cb = await page.evaluate(() => { const c = document.querySelector('#ppBtn'); return c ? 1 : 0; }); ok(cb === 0, W + ': nakon iskorištenja nema kovanice');
     await page.screenshot({ path: OUT + '/pick-' + W + '-b.png' });
     ok((await page.evaluate(() => document.documentElement.scrollWidth)) <= W + 1, W + ': bez vodoravnog skrola');
     ok(!errs.length, W + ': bez grešaka ' + errs.join('|'));
