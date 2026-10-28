@@ -54,3 +54,41 @@ rep("""    $app.innerHTML = '<div class="logo" style="font-size:2.6rem;text-alig
 rep("""      '<div class="logo" style="font-size:2.4rem;text-align:center">MOZGALICA</div>' +""", """      '<div class="logo">MOZGALICA</div>' +""")
 open(SP + '/web/body.html', 'w', encoding='utf-8').write(s)
 print('ui-fixes OK')
+
+# ---- Početni ekran: glavna tipka „Igraj”, TV način u drugom planu ----
+s = open(SP + '/web/body.html', encoding='utf-8').read()
+rep("""          '<button class="btn home-cta" id="hostp"><span class="hb-t">Igraj bez TV-a</span><span class="hb-s">Svi na mobitelima</span></button>' +
+          '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
+          '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +""",
+    """          '<button class="btn home-cta" id="hostp"><span class="hb-t">Igraj</span><span class="hb-s">Otvori sobu i pozovi društvo</span></button>' +
+          '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
+          '<div class="home-try"><span class="home-sep">Još</span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +""")
+rep("""      '<div class="p-title" style="font-size:1.5rem">Igra bez TV-a</div>' +""", """      '<div class="p-title" style="font-size:1.5rem">Nova igra</div>' +""")
+# ---- Ploča bodova s puno igrača: skrola se samo popis, ostatak ostaje iste veličine ----
+rep("    if (measure(1) <= available) { finish(1); return; }", r"""    if (phone) {
+      const mb = A.querySelector('.mboard');
+      if (mb) {
+        mb.style.maxHeight = ''; mb.classList.remove('mb-scroll');
+        const over = measure(1) - available;
+        if (over > 1) {
+          const row = mb.querySelector('.rank-row'), minH = row ? row.getBoundingClientRect().height * 2.6 : 100;
+          let mh = mb.getBoundingClientRect().height - over - 4;
+          for (let k = 0; k < 3; k++) {   // visina popisa tako da sve ostalo stane bez smanjivanja
+            mh = Math.max(minH, Math.floor(mh)); mb.style.maxHeight = mh + 'px'; mb.classList.add('mb-scroll');
+            const o2 = measure(1) - available; if (o2 <= 0 || mh <= minH) break; mh -= o2 + 2;
+          }
+          // moj red ostaje vidljiv (dok igrač sam ne pomakne popis)
+          if (!mb.__user) { mb.onscroll = () => { if (mb.__auto) { mb.__auto = 0; return; } mb.__user = 1; };
+            // poredak se presloži animacijom: moj red (prema stvarnom, vidljivom položaju) ostaje u vidu
+            const keep = () => { if (mb.__user || !mb.isConnected) return false; const me = mb.querySelector('.rank-row.me'); if (!me) return false;
+              const z = parseFloat(A.style.zoom || '1') || 1, a = mb.getBoundingClientRect(), c = me.getBoundingClientRect();
+              const st = Math.max(0, Math.min(mb.scrollHeight - mb.clientHeight, mb.scrollTop + ((c.top + c.height / 2) - (a.top + a.height / 2)) / z));
+              if (Math.abs(mb.scrollTop - st) > 2) { mb.__auto = 1; mb.scrollTop = st; } return true; };
+            keep(); clearInterval(mb.__kt); let n = 0; mb.__kt = setInterval(() => { if (!keep() || ++n > 30) clearInterval(mb.__kt); }, 300); }
+        }
+      }
+    }
+    if (measure(1) <= available) { finish(1); return; }""")
+i = s.index('</style>'); s = s[:i] + "  .mboard.mb-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-right: 2px; mask-image: linear-gradient(180deg, transparent 0, #000 10px, #000 calc(100% - 14px), transparent 100%); }\n" + s[i:]
+open(SP + '/web/body.html', 'w', encoding='utf-8').write(s)
+print('ui-fixes 2 OK')

@@ -113,7 +113,10 @@ icon = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   </g>
 </svg>
 """
-open(OUT + '/icon.svg', 'w').write(icon)
+import shutil
+# ikone (Trivia Tavern): web/icons → site (stara ikona Mozgalice više se ne koristi)
+for f in ['icon.svg', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png']:
+    shutil.copy(SP + '/web/icons/' + f, OUT + '/' + f)
 
 shutil_readme = open(SP + '/web/README.main.md', encoding='utf-8').read()
 open(OUT + '/README.md', 'w', encoding='utf-8').write(shutil_readme)
