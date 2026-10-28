@@ -549,3 +549,73 @@ rep(r"""    return {
       id: G.s, kl, w: wp ? { pid: W, line: wl, num: bodN(wp.score) } : null,""")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR krčmar osobnost OK')
+
+# ---------- Trajanje partije: brza / standardna / duga (raspored se generira; standardna = dosadašnji PLAN) ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("""  { t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' },
+];
+""", """  { t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' },
+];
+// Trajanje partije: runde (r), obična pitanja po rundi (q), posebni izazovi (c, nakon prvih c rundi) i prilagodbe mehanika.
+// Standardna nema prilagodbi: raspored i pravila su točno dosadašnji. Pojedinačni timeri, bodovanje, moći i mini-igre se ne mijenjaju.
+const LENS = {
+  brza: { r: 2, q: 2, c: 1, betEvents: [1, 1], fcLast: 2, secretMax: 1, sgd: { varMin: 0, varMax: 1 },
+    kr: { pactOffers: 1, pactFrom: 1, offFrom: 1, offMax: 2, chFrom: 2 } },
+  std: { r: 3, q: 3, c: 2 },
+  duga: { r: 4, q: 4, c: 3, betEvents: [3, 4], secretMax: 3, sgd: { varMin: 2, varMax: 3 },
+    kr: { pactOffers: 3, pactFrom: 4, offFrom: 3, offMax: 5, chFrom: 7 } },
+};
+const NUM_W = ['', 'Jedno', 'Dva', 'Tri', 'Četiri', 'Pet'];
+function makePlan(k) {
+  const L = LENS[k] || LENS.std, out = [];
+  for (let r = 1; r <= L.r; r++) {
+    const sub = r === 1 ? 'Glasajte za kategoriju i bacajte moći!' : r === L.r ? 'Zadnja prilika za bodove prije finala' : (NUM_W[L.q] || L.q) + ' nova pitanja';
+    out.push({ t: 'intro', title: 'Runda ' + r, sub });
+    for (let i = 0; i < L.q; i++) out.push({ t: 'battle' });
+    if (r <= L.c && r < L.r) out.push({ t: 'challenge' });
+  }
+  // više izazova nego međurundi (ne događa se u zadanim načinima): ostatak prije zadnje runde
+  for (let n = out.filter((x) => x.t === 'challenge').length; n < L.c; n++) out.splice(out.map((x) => x.title).lastIndexOf('Runda ' + L.r), 0, { t: 'challenge' });
+  out.push({ t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' });
+  return out;
+}
+""")
+rep("  const planBase = (o.plan || PLAN).slice(), plan = planBase.slice();",
+    """  const planBase = (o.plan || PLAN).slice(), plan = planBase.slice();
+  // trajanje: zadani raspored testova (o.plan) se ne dira; vrijednosti iz o.cfg uvijek imaju prednost pred prilagodbom načina
+  const fixedPlan = !!o.plan, oc = o.cfg || {}, CB = { betEvents: cfg.betEvents, fcLast: cfg.fcLast, secretMax: cfg.secretMax, sgd: cfg.sgd, kr: cfg.kr };
+  function applyLen(k) {
+    const L = fixedPlan ? {} : LENS[k] || LENS.std;
+    if (!fixedPlan) planBase.splice(0, planBase.length, ...makePlan(k));
+    plan.splice(0, plan.length, ...planBase);
+    for (const key of ['betEvents', 'fcLast', 'secretMax']) cfg[key] = oc[key] !== undefined || L[key] === undefined ? CB[key] : L[key];
+    // načinske vrijednosti preko zadanih, a ono što test/poziv izričito zada (o.cfg) ima prednost po ključu
+    cfg.sgd = L.sgd ? Object.assign({}, CFG.sgd, L.sgd, oc.sgd || {}) : CB.sgd;
+    cfg.kr = L.kr ? Object.assign({}, CFG.kr, L.kr, oc.kr || {}) : CB.kr;
+    G.nr = planBase.filter((it) => it.t === 'intro' && /^Runda \\d+$/.test(it.title)).length || 1;
+  }""")
+rep("opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false },",
+    "opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std' },")
+# početak partije: raspored prema odabranom trajanju; kladionica po stvarnoj veličini runde
+rep("""    G.bn = -1; G.betAt = new Set();
+    const nb = plan.filter((it) => it.t === 'battle').length, rounds = Math.ceil(nb / 3);""",
+    """    G.bn = -1; G.betAt = new Set();
+    applyLen(G.opt.len);
+    const nb = plan.filter((it) => it.t === 'battle').length, rounds = G.nr, qpr = Math.max(1, Math.round(nb / rounds));""")
+rep("G.betAt.add(Math.min(nb - 1, r ? r * 3 + rnd(3) : 1 + rnd(2)));", "G.betAt.add(Math.min(nb - 1, r ? r * qpr + rnd(qpr) : 1 + rnd(Math.max(1, qpr - 1))));")
+# SGD: raspored se slaže iz trenutnog (već generiranog) rasporeda
+rep("    plan.splice(0, plan.length, ...planBase);\n    for (let i = 2; i < plan.length; i++) if (plan[i].t === 'challenge'",
+    "    plan.splice(0, plan.length, ...planBase);   // planBase je već raspored odabranog trajanja\n    for (let i = 2; i < plan.length; i++) if (plan[i].t === 'challenge'")
+rep("T.secretTotal >= 2 ||", "T.secretTotal >= (cfg.secretMax || 2) || fcLeft() < 1 ||")
+# ponude se nude samo ako se mogu pošteno dovršiti prije piramide
+rep("    if (!pactsOn() || G.inFinale || G.kpN >= K.pactOffers || (G.bdone || 0) < K.pactFrom) return;",
+    "    if (!pactsOn() || G.inFinale || G.kpN >= K.pactOffers || (G.bdone || 0) < K.pactFrom) return;\n    if (fcLeft() < (cfg.pactMinQ || 2)) return;   // pakt mora imati barem toliko zajedničkih pitanja prije piramide")
+rep("    if (G.inFinale || (G.kp && G.kp.st === 'o') || G.koN >= K.offMax || (G.bdone || 0) < K.offFrom) return;",
+    "    if (G.inFinale || (G.kp && G.kp.st === 'o') || G.koN >= K.offMax || (G.bdone || 0) < K.offFrom || fcLeft() < 1) return;")
+rep("    const kind = vs && Math.random() < 0.5 ? 'fast' : 'st3';", "    const kind = vs && (Math.random() < 0.5 || fcLeft() < 3) ? 'fast' : fcLeft() < 3 ? null : 'st3';\n    if (!kind) { p.koGot[k] = 0; G.koN--; return; }   // zadatak od 3 pitanja ne stane prije piramide")
+# opcija u predvorju (samo domaćin ima objekt igre) i prikaz za sve
+rep("  function setOpt(k, v) { if (G.ph !== 'lobby') return;", "  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; }")
+rep("    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0 };", "    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, len: G.opt.len };")
+rep("      rl: G.rl, max: cfg.maxPlayers, steps: cfg.steps,", "      rl: G.rl, nr: G.nr || 3, len: G.opt.len, max: cfg.maxPlayers, steps: cfg.steps,")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR trajanje partije OK')

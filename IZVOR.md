@@ -35,3 +35,7 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
 - Power pick (jedan po igraču po partiji, bira kategoriju na glasanju; zamijenio Krčmarovu uslugu): motor v3/kr.py (zadnji korak), sučelje v4/make.py + v4/pp.css; provjere: node v3/pick-test.js, node v3/pick-ui-test.js
 - Moći: bez faze moći prije prvog pitanja, Oklada se ne nudi dvaput zaredom: node v3/pw-test.js; poruka ždrijeba ne prekriva sadržaj: node v3/tie-test.js
 - Ambijent (iskre, prašina, dim iza sučelja; v4/ambient.js, canvas #ambient): node v3/ambient-test.js (nakon web/assemble.py)
+- Krčmar kao osobnost (replike, pamćenje pakta/izdaje, završna riječ): v3/kr.py; provjera: node v3/kr-test.js
+- Power pick medaljon: ui/pp-medal.webp, v4/pp.css; provjera: node v3/pick-ui-test.js, node v3/pp-icon-shot.js
+- Trajanje partije (brza / standardna / duga): LENS + makePlan u v3/kr.py (standardna = dosadašnji PLAN), predvorje v4/make.py + v4/len.css + web/transform.py (TV);
+  provjere: node v3/len-test.js (motor, virtualni sat), node v3/len-ui-test.js (predvorje 390/412/360, TV, demo), procjena minuta: node v3/len-time.js 4

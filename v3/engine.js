@@ -81,6 +81,29 @@ const PLAN = [
   { t: 'intro', title: 'Runda 3', sub: 'Zadnja prilika za bodove prije finala' }, { t: 'battle' }, { t: 'battle' }, { t: 'battle' },
   { t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' },
 ];
+// Trajanje partije: runde (r), obična pitanja po rundi (q), posebni izazovi (c, nakon prvih c rundi) i prilagodbe mehanika.
+// Standardna nema prilagodbi: raspored i pravila su točno dosadašnji. Pojedinačni timeri, bodovanje, moći i mini-igre se ne mijenjaju.
+const LENS = {
+  brza: { r: 2, q: 2, c: 1, betEvents: [1, 1], fcLast: 2, secretMax: 1, sgd: { varMin: 0, varMax: 1 },
+    kr: { pactOffers: 1, pactFrom: 1, offFrom: 1, offMax: 2, chFrom: 2 } },
+  std: { r: 3, q: 3, c: 2 },
+  duga: { r: 4, q: 4, c: 3, betEvents: [3, 4], secretMax: 3, sgd: { varMin: 2, varMax: 3 },
+    kr: { pactOffers: 3, pactFrom: 4, offFrom: 3, offMax: 5, chFrom: 7 } },
+};
+const NUM_W = ['', 'Jedno', 'Dva', 'Tri', 'Četiri', 'Pet'];
+function makePlan(k) {
+  const L = LENS[k] || LENS.std, out = [];
+  for (let r = 1; r <= L.r; r++) {
+    const sub = r === 1 ? 'Glasajte za kategoriju i bacajte moći!' : r === L.r ? 'Zadnja prilika za bodove prije finala' : (NUM_W[L.q] || L.q) + ' nova pitanja';
+    out.push({ t: 'intro', title: 'Runda ' + r, sub });
+    for (let i = 0; i < L.q; i++) out.push({ t: 'battle' });
+    if (r <= L.c && r < L.r) out.push({ t: 'challenge' });
+  }
+  // više izazova nego međurundi (ne događa se u zadanim načinima): ostatak prije zadnje runde
+  for (let n = out.filter((x) => x.t === 'challenge').length; n < L.c; n++) out.splice(out.map((x) => x.title).lastIndexOf('Runda ' + L.r), 0, { t: 'challenge' });
+  out.push({ t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' });
+  return out;
+}
 
 const INPUT_PHASES = { rope: 1, deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
 // Mini-igre: objašnjenje prije prve igre (kratak podsjetnik kad se ponovi)
@@ -124,6 +147,18 @@ function createGame(o) {
   cfg.steps = cfg.pyrReq.length + 1;   // zadnji red piramide je kruna (pobjeda)
   const F = Object.assign({}, FLAGS, o.flags || {});
   const planBase = (o.plan || PLAN).slice(), plan = planBase.slice();
+  // trajanje: zadani raspored testova (o.plan) se ne dira; vrijednosti iz o.cfg uvijek imaju prednost pred prilagodbom načina
+  const fixedPlan = !!o.plan, oc = o.cfg || {}, CB = { betEvents: cfg.betEvents, fcLast: cfg.fcLast, secretMax: cfg.secretMax, sgd: cfg.sgd, kr: cfg.kr };
+  function applyLen(k) {
+    const L = fixedPlan ? {} : LENS[k] || LENS.std;
+    if (!fixedPlan) planBase.splice(0, planBase.length, ...makePlan(k));
+    plan.splice(0, plan.length, ...planBase);
+    for (const key of ['betEvents', 'fcLast', 'secretMax']) cfg[key] = oc[key] !== undefined || L[key] === undefined ? CB[key] : L[key];
+    // načinske vrijednosti preko zadanih, a ono što test/poziv izričito zada (o.cfg) ima prednost po ključu
+    cfg.sgd = L.sgd ? Object.assign({}, CFG.sgd, L.sgd, oc.sgd || {}) : CB.sgd;
+    cfg.kr = L.kr ? Object.assign({}, CFG.kr, L.kr, oc.kr || {}) : CB.kr;
+    G.nr = planBase.filter((it) => it.t === 'intro' && /^Runda \d+$/.test(it.title)).length || 1;
+  }
   const D = o.data || DATA;
   const now = o.now || (() => Date.now());
   const onChange = o.onChange || (() => {});
@@ -134,7 +169,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std' }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
     tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
@@ -421,9 +456,10 @@ function createGame(o) {
     G.pi = -1; G.qn = 0; G.inFinale = false; G.win = null; G.leg = null; G.crownWin = null; G.bdone = 0;
     // kladionica: nasumično 2-3 puta po igri, najviše jednom po rundi (nikad u finalu)
     G.bn = -1; G.betAt = new Set();
-    const nb = plan.filter((it) => it.t === 'battle').length, rounds = Math.ceil(nb / 3);
+    applyLen(G.opt.len);
+    const nb = plan.filter((it) => it.t === 'battle').length, rounds = G.nr, qpr = Math.max(1, Math.round(nb / rounds));
     const want = Math.min(rounds, cfg.betEvents[0] + rnd(cfg.betEvents[1] - cfg.betEvents[0] + 1));
-    for (const r of shuffle(Array.from({ length: rounds }, (_, i) => i)).slice(0, want)) G.betAt.add(Math.min(nb - 1, r ? r * 3 + rnd(3) : 1 + rnd(2)));
+    for (const r of shuffle(Array.from({ length: rounds }, (_, i) => i)).slice(0, want)) G.betAt.add(Math.min(nb - 1, r ? r * qpr + rnd(qpr) : 1 + rnd(Math.max(1, qpr - 1))));
     for (const p of list()) { p.bet = 0; p.betRes = 0; p.xb = 0; p.rx = 0; p.rcSent = 0; p.rcWon = false; p.tb = 0; }
     G.tk = { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] };
     G.rc = { offers: [], act: null, res: null, n: 0, seq: 0 };
@@ -452,7 +488,7 @@ function createGame(o) {
   function sgdPlan(nb, pool) {
     const SG = cfg.sgd, W = SG.w || {};
     // 1) izazovi nisu uvijek nakon istih pitanja: unutar runde mogu doći pitanje ranije (nikad na početku runde)
-    plan.splice(0, plan.length, ...planBase);
+    plan.splice(0, plan.length, ...planBase);   // planBase je već raspored odabranog trajanja
     for (let i = 2; i < plan.length; i++) if (plan[i].t === 'challenge' && plan[i - 1].t === 'battle' && plan[i - 2].t === 'battle' && Math.random() < SG.moveChal) { const t = plan[i]; plan[i] = plan[i - 1]; plan[i - 1] = t; }
     // redoslijed mjesta regularnog dijela: B = obično pitanje (bitka), C = izazov
     const slots = []; let bn = 0;
@@ -1595,7 +1631,7 @@ function createGame(o) {
       if (F.ENABLE_SECRET_TARGET) kinds.push('target');
       if (F.ENABLE_SECRET_HELP) kinds.push('help');
       const ps = active();
-      if (!kinds.length || ps.length < 3 || G.bn < 2 || T.secretTotal >= 2 || G.bn - T.lastSecretBn < 2) return null;
+      if (!kinds.length || ps.length < 3 || G.bn < 2 || T.secretTotal >= (cfg.secretMax || 2) || fcLeft() < 1 || G.bn - T.lastSecretBn < 2) return null;
       if (Math.random() > (cfg.secretChance != null ? cfg.secretChance : 0.3)) return null;
       const kind = pick(kinds);
       const { r } = ranks();
@@ -2109,7 +2145,7 @@ function createGame(o) {
   function krOfferMaybe() {
     const K = cfg.kr;
     for (const p of list()) p.ko = null;
-    if (G.inFinale || (G.kp && G.kp.st === 'o') || G.koN >= K.offMax || (G.bdone || 0) < K.offFrom) return;
+    if (G.inFinale || (G.kp && G.kp.st === 'o') || G.koN >= K.offMax || (G.bdone || 0) < K.offFrom || fcLeft() < 1) return;
     const forced = G.scn && (G.scn.k === 'task' || G.scn.k === 'fav') ? G.scn : null;
     if (!forced && Math.random() >= K.offChance) return;
     const ps = active(), lead = ps.slice().sort((a, b) => b.score - a.score)[0];
@@ -2126,7 +2162,8 @@ function createGame(o) {
     if (k === 'fav') { p.ko = { id: ++G.sfSeq, k, st: 'o', line: 'Sljedeću kategoriju biraš ti — tvoj glas tajno odlučuje.' }; return; }
     // zadatak: 3 točna zaredom ili brži točan odgovor od vođe (vođi: od drugog) na sljedećem pitanju
     const others = ps.filter((x) => x !== p).sort((a, b) => b.score - a.score), vs = others[0];
-    const kind = vs && Math.random() < 0.5 ? 'fast' : 'st3';
+    const kind = vs && (Math.random() < 0.5 || fcLeft() < 3) ? 'fast' : fcLeft() < 3 ? null : 'st3';
+    if (!kind) { p.koGot[k] = 0; G.koN--; return; }   // zadatak od 3 pitanja ne stane prije piramide
     const line = kind === 'st3' ? 'Odgovori točno na sljedeća 3 pitanja zaredom.' : 'Na sljedećem pitanju odgovori točno i brže od: ' + vs.name + '.';
     p.ko = { id: ++G.sfSeq, k, st: 'o', kind, vs: kind === 'fast' ? vs.pid : null, line, win: K.taskWin, loss: K.taskLoss };
   }
@@ -2225,6 +2262,7 @@ function createGame(o) {
     G.kp = null;
     const K = cfg.kr;
     if (!pactsOn() || G.inFinale || G.kpN >= K.pactOffers || (G.bdone || 0) < K.pactFrom) return;
+    if (fcLeft() < (cfg.pactMinQ || 2)) return;   // pakt mora imati barem toliko zajedničkih pitanja prije piramide
     if (sfPeople().length < K.pactMin) return;
     const c = list().filter(krFree);
     if (!c.some((p) => !p.bot) || c.length < 2) return;
@@ -2472,7 +2510,7 @@ function createGame(o) {
     if (out) r.out = sfOn() ? { t: out.t, dl: 1 } : { t: out.t, ms: Math.max(0, out.until - now()) };
     return { rc: r };
   }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; } if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -2558,7 +2596,7 @@ function createGame(o) {
     const ph = G.ph;
     const v = {
       v: 3, code: G.code, ph, s: G.s, ms: Math.max(0, G.endsAt - now()), dur: G.dur,
-      rl: G.rl, max: cfg.maxPlayers, steps: cfg.steps,
+      rl: G.rl, nr: G.nr || 3, len: G.opt.len, max: cfg.maxPlayers, steps: cfg.steps,
     };
     if (o.noTv) v.ntv = 1;
     v.P = list().map((p) => {
@@ -2624,7 +2662,7 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0 };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, len: G.opt.len };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;

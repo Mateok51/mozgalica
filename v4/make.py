@@ -2676,3 +2676,28 @@ s = rep(s, "'</div></div>' + '</div>' + act".replace("'</div></div>' + '</div>' 
 _i = s.index("</style>"); s = s[:_i] + ".win-kl { margin: 6px 8px; font-style: italic; font-weight: 800; font-size: .9rem; line-height: 1.3; color: #ffe2a6; text-align: center; text-wrap: balance; } .tv .win-kl, .win-right .win-kl { font-size: 1.3rem; }\n" + s[_i:]
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Krčmar završna riječ UI OK')
+
+# ---- Trajanje partije: odabir u predvorju (domaćin), prikaz za ostale, runde 1/N ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+_i = s.index('</style>'); s = s[:_i] + open(SP + '/v4/len.css', encoding='utf-8').read() + s[_i:]
+s = rep(s, "  function pactToggle(d) {", """  const LEN_UI = { brza: ['⚡', 'Brza', '8–10 min', 2], std: ['⚔️', 'Standardna', '13–17 min', 3], duga: ['👑', 'Duga', '20–25 min', 4] };
+  const rundeW = (n) => n + (n === 1 ? ' runda' : n < 5 ? ' runde' : ' rundi');
+  function lenPick(d) {
+    const cur = (d.opt && d.opt.len) || 'std', U = LEN_UI[cur] || LEN_UI.std;
+    if (!game) return '<div class="len-info">' + U[0] + ' ' + U[1] + ' partija · ' + U[2] + ' · ' + rundeW(U[3]) + '</div>';
+    return '<div class="lob-len" role="radiogroup" aria-label="Trajanje partije">' + ['brza', 'std', 'duga'].map((k) => { const u = LEN_UI[k];
+      return '<button class="len-c' + (k === cur ? ' on' : '') + '" data-len="' + k + '" role="radio" aria-checked="' + (k === cur) + '"><span class="len-n">' + u[0] + ' ' + u[1] + '</span><span class="len-m">' + u[2] + '</span><span class="len-r">' + rundeW(u[3]) + '</span></button>'; }).join('') + '</div>';
+  }
+  document.addEventListener('click', (e) => { const b = e.target && e.target.closest && e.target.closest('[data-len]'); if (!b || !game) return; AUDIO.play('tap'); game.setOpt('len', b.dataset.len); });
+  function pactToggle(d) {""")
+s = rep(s, "          cta = botStepper(d) + pactToggle(d) + rcToggle(d)", "          cta = botStepper(d) + lenPick(d) + pactToggle(d) + rcToggle(d)")
+s = rep(s, "          cta = botStepper(d) + bsToggle(d) + '<button class=\"btn lob-cta\" id=\"dstart\"", "          cta = botStepper(d) + lenPick(d) + bsToggle(d) + '<button class=\"btn lob-cta\" id=\"dstart\"")
+s = rep(s, "          cta = pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<div class=\"lob-wait\">Soba ", "          cta = lenPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<div class=\"lob-wait\">Soba ")
+# runde: 1/2, 1/3 ili 1/4 (mobitel i TV), najava zadnje runde prema stvarnom broju rundi
+s = rep(s, "  function hudRound(rl) { const m = /^Runda (\\d+)$/.exec(rl || ''); return m ? 'Runda ' + m[1] + '/3' : (rl || ''); }",
+           "  function hudRound(rl, nr) { const m = /^Runda (\\d+)$/.exec(rl || ''); return m ? 'Runda ' + m[1] + '/' + (nr || 3) : (rl || ''); }")
+s = rep(s, "esc(hudRound(d.rl))", "esc(hudRound(d.rl, d.nr))")
+s = rep(s, "<span class=\"rl\">' + esc(d.rl || '') + '</span>", "<span class=\"rl\">' + esc(hudRound(d.rl, d.nr)) + '</span>")
+s = rep(s, "esc(ANN_SUB[t] || d.it.sub || '')", "esc((/^Runda \\d+$/.test(t) && t !== 'Runda 1' ? (t === 'Runda ' + (d.nr || 3) ? 'Još samo jedna runda.' : 'Vrijeme je za novu rundu.') : ANN_SUB[t]) || d.it.sub || '')")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Trajanje partije UI OK')
