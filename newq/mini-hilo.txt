@@ -1,0 +1,14 @@
+Koji je dinosaur bio dulji? | Diplodocus=~25 m | Tyrannosaurus=~12 m
+Koji je dinosaur bio dulji? | Tyrannosaurus=~12 m | Triceratops=~9 m
+Koji je dinosaur bio dulji? | Triceratops=~9 m | Velociraptor=~2 m
+Koja država ima više pobjeda na Eurosongu? | Švedska=7 | Francuska=5
+Koja država ima više pobjeda na Eurosongu? | Irska=7 | Ujedinjeno Kraljevstvo=5
+Koja država ima više pobjeda na Eurosongu? | Francuska=5 | Njemačka=2
+Što je pokrenuto ranije? | Facebook=2004. | Twitter=2006.
+Što je pokrenuto ranije? | YouTube=2005. | Instagram=2010.
+Što je pokrenuto ranije? | Twitter=2006. | Snapchat=2011.
+Koji je film ranije izašao? | Moj susjed Totoro=1988. | Spirited Away=2001.
+Koji je film ranije izašao? | Princess Mononoke=1997. | Howlov pokretni dvorac=2004.
+Što je ranije počelo? | Astro Boy=1963. | Dragon Ball=1986.
+Što je ranije počelo? | Dragon Ball=1986. | Naruto=2002.
+Koja država proizvodi više kave? | Brazil=~3 mil. t | Vijetnam=~1,8 mil. t

@@ -1,0 +1,7 @@
+Osoba | Rođen sam 1941. u Tokiju. ; Osnovao sam Studio Ghibli. ; Režirao sam film Spirited Away. ; Moj susjed Totoro moje je djelo. | Hayao Miyazaki | Isao Takahata | Akira Toriyama | Makoto Shinkai
+Osoba | Rođena sam 1799. u Lyme Regisu. ; Tražila sam fosile uz obalu Engleske. ; Kao dijete pronašla sam prvi poznati kostur ihtiosaura. ; Kao ženu nisu me primili u Geološko društvo. | Mary Anning | Marie Curie | Jane Goodall | Ada Lovelace
+Osoba | Rođen sam 1986. u Minsku. ; Odrastao sam u Norveškoj. ; Sviram violinu. ; Na Eurosongu 2009. osvojio sam 387 bodova. | Alexander Rybak | Salvador Sobral | Duncan Laurence | Måns Zelmerlöw
+Osoba | Rođen sam 1856. u Zagrebu. ; Bio sam paleontolog i geolog. ; Istraživao sam nalazište kod Krapine. ; Otkrio sam krapinskog pračovjeka. | Dragutin Gorjanović-Kramberger | Mirko Malez | Spiridion Brusina | Ruđer Bošković
+Osoba | Rođen sam 1969. u Salzburgu. ; Skočio sam iz stratosfere. ; Na Zemlju sam pao brzinom većom od brzine zvuka. ; Skok je 2012. sponzorirao Red Bull. | Felix Baumgartner | Alan Eustace | Joe Kittinger | Yves Rossy
+Osoba | Rođen sam 1928. u Japanu. ; Zovu me bogom mange. ; Stvorio sam Astro Boya. ; Po obrazovanju sam liječnik. | Osamu Tezuka | Akira Toriyama | Hayao Miyazaki | Eiichiro Oda
+Osoba | Rođen sam u Australiji, ali predstavljam Irsku. ; Na Eurosongu sam pobijedio 1980. i 1987. ; Napisao sam i pobjedničku pjesmu iz 1992. ; Moj je hit What's Another Year. | Johnny Logan | Paul Harrington | Charlie McGettigan | Ronan Keating

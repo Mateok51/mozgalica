@@ -1,0 +1,30 @@
+T | Ptice su živi potomci dinosaura.
+T | Između Stegosaura i Tyrannosaurusa rexa prošlo je više vremena nego između Tyrannosaurusa rexa i današnjih ljudi.
+T | Kleopatra je živjela bliže slijetanju na Mjesec nego izgradnji Velike piramide u Gizi.
+T | Studio Ghibli osnovan je 1985. godine.
+T | Pobjednik prvog Eurosonga 1956. bila je Švicarska.
+T | Naziv Studio Ghibli potječe od talijanske riječi za vrući pustinjski vjetar.
+T | Cedevita je izvorno nastala u Hrvatskoj.
+T | Mnogi restorani umjesto pravog wasabija poslužuju mješavinu hrena i boje.
+T | Hashtag je prvi put predložen na Twitteru 2007. godine.
+T | Halloween vuče korijene iz keltskog blagdana Samhain.
+T | Prvi SMS poslan je 1992. godine.
+T | Hanuka traje osam dana.
+T | Mamuti su na Wrangelovu otoku preživjeli i nakon izgradnje Velike piramide.
+T | Latimerija je riba koju su znanstvenici dugo smatrali izumrlom, a 1938. otkrivena je živa.
+T | Većina današnjeg šafrana dolazi iz Irana.
+N | Dinosauri su istrijebljeni prije pojave prvih ptica.
+N | Velociraptor je bio velik kao konj.
+N | Tyrannosaurus rex i Stegosaurus živjeli su u isto doba.
+N | Mamuti su živjeli u doba dinosaura.
+N | Neandertalci su izravni preci svih današnjih ljudi.
+N | Kolačići sreće (fortune cookies) izvorno potječu iz Kine.
+N | Facebook je kupio Snapchat 2013. godine.
+N | Twitter je osnovan 2010. godine.
+N | Nemo, pobjednik Eurosonga 2024., predstavljao je Njemačku.
+N | Hrvatska je kao samostalna država pobijedila na Eurosongu.
+N | Božić se u svim zemljama slavi 25. prosinca.
+N | Hanuka traje sedam dana.
+N | Diwali je kineski blagdan.
+N | Halloween potječe iz Sjedinjenih Država.
+N | Prva reklama na američkoj televiziji emitirana je 1995. godine.
