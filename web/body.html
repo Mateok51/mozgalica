@@ -2274,10 +2274,9 @@
   .pp-tag .pp-lb { display: none; } .tv .pp-tag .pp-lb { display: inline; }
   /* mali okrugli Power pick na sredini između četiri vrata: ne dodaje visinu, ne prekriva tekst vrata */
   .door-btns { position: relative; }
-  .pp-coin { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 8; width: 54px; height: 54px; padding: 0; border-radius: 50%; display: grid; place-content: center; justify-items: center; gap: 0; cursor: pointer;
-    border: 2px solid #7a4f17; background: radial-gradient(circle at 35% 30%, #fff1b8, #f0c66e 45%, #b97a24); color: #2a1606; box-shadow: 0 3px 0 #5a3810, 0 0 0 3px rgba(42, 22, 6, 0.55), 0 0 16px rgba(240, 198, 110, 0.7); animation: ppBob 2.2s ease-in-out infinite; }
-  .pp-coin b { font-size: 1.25rem; line-height: 1; } .pp-coin small { font-size: 0.5rem; font-weight: 900; letter-spacing: 0.08em; line-height: 1; margin-top: 1px; }
-  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 3px 0 #5a3810, 0 0 0 3px #fff, 0 0 26px rgba(255, 226, 150, 0.95); }
+  .pp-coin { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 8; width: 64px; height: 64px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; font-size: 0; color: transparent;
+    background: url("ui/pp-medal.webp") center / contain no-repeat; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 7px rgba(240, 198, 110, 0.55)); animation: ppBob 2.2s ease-in-out infinite; -webkit-tap-highlight-color: transparent; }
+  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 16px rgba(255, 226, 150, 0.95)); }
   @keyframes ppBob { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.07); } }
   @media (prefers-reduced-motion: reduce) { .pp-coin { animation: none; } }
   #ambient { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
@@ -2290,6 +2289,7 @@
   #app.lobfit .lob-players { min-height: 72px; }
   @media (max-height: 880px) { .lob-opt-l small { display: none; } }
   @media (max-height: 800px) { .av-pick .pick-img { height: 56px; } .av-pick { min-height: 0; } .lob-title { font-size: 1.5rem; } #app.lobfit .lob-players { min-height: 40px; } .lob-bots-l small { display: none; } .lob-cta { min-height: 52px; } .home-link { min-height: 34px; } .lob-wait { padding-top: 0; padding-bottom: 0; } }
+.win-kl { margin: 6px 8px; font-style: italic; font-weight: 800; font-size: .9rem; line-height: 1.3; color: #ffe2a6; text-align: center; text-wrap: balance; } .tv .win-kl, .win-right .win-kl { font-size: 1.3rem; }
 </style>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
@@ -5216,7 +5216,7 @@ __ENGINE__
         const mine = L.sent ? L.sent.v : (me.vt !== undefined ? me.vt : (me.ok ? -2 : -1));
         const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;
         if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
-        const ppBar = ppAvail ? '<button class="pp-coin' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-label="Power pick: biraš baš svoju kategoriju" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"><b>⭐</b><small>PICK</small></button>' : '';
+        const ppBar = ppAvail ? '<button class="pp-coin' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-label="Power pick: biraš baš svoju kategoriju" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '"></button>' : '';
         const doorBtns = d.cats.map((c, i) => {
           const who = d.P.filter((p) => p.vt === i);
           const faces = voterFaces(who, 4);
@@ -5349,8 +5349,9 @@ __ENGINE__
       : '<div class="win-act">' + legBtn + (isLocalHost() ? '<button class="btn win-cta" id="dagain">Igraj ponovno</button>' : '<div class="win-wait">Domaćin može pokrenuti novu igru.</div>') + '<button class="btn ghost" id="leave">Početni ekran</button></div>';
     const name = '<div class="win-name">' + esc(w.n) + '</div><div class="win-sub">' + sub + '</div>';
     const lgo = d.lg && LEGV.open === d.lg.id ? legHtml(d, tv) : '';
-    if (tv) return '<div class="winscr"><div class="win-t">Pobjednik!</div><div class="win-left">' + hero + name + '</div><div class="win-right">' + board + fact + '</div>' + act + '</div>' + lgo;
-    return '<div class="winscr"><div class="win-t">Pobjednik!</div>' + hero + name + board + fact + act + '</div>' + lgo;
+    const klh = d.lg && d.lg.kl ? '<div class="win-kl">🍺 ' + esc(d.lg.kl) + '</div>' : '';
+    if (tv) return '<div class="winscr"><div class="win-t">Pobjednik!</div><div class="win-left">' + hero + name + '</div><div class="win-right">' + klh + board + fact + '</div>' + act + '</div>' + lgo;
+    return '<div class="winscr"><div class="win-t">Pobjednik!</div>' + hero + name + klh + board + fact + act + '</div>' + lgo;
   }
   // ---------- Tavern Director ----------
   const pById = (d, id) => d.P.find((p) => p.id === id);

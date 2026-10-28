@@ -474,3 +474,78 @@ rep("    const s0 = G.s, hold = Math.round((cfg.ppHold || 2.6) * 1000);\n    G.p
 rep("    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0));", "    setPhase('voteResult', cfg.voteShow + (G.tb ? cfg.roul : 0) + (G.ppw ? (cfg.ppShow === undefined ? 2.4 : cfg.ppShow) : 0));")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR power pick: odmah odabir, duži rezultat OK')
+
+# ---------- Krčmar kao osobnost: replike, pamćenje odnosa, završna riječ ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep(r"""      PJ_LAST: [['⚔️ Posljednja prilika!', 'Još jedno pitanje prije završnog uspona!']],
+    };""", r"""      PJ_LAST: [['⚔️ Posljednja prilika!', 'Još jedno pitanje prije završnog uspona!']],
+    };
+    // Krčmar 3.0: duhovit, malo sarkastičan; nove replike dolaze ispred starih, sve bez padeža i roda
+    { const N = {
+      STREAK3: [['🎯 {X} ne griješi', 'Krčmar sumnjičavo provjerava ima li špijunke u rukavu']],
+      STREAK5: [['📚 {X} zna cijelu enciklopediju', 'Pet zaredom. Krčmar više ne nudi pomoć, nego se boji']],
+      WRONG3: [['🍺 {X} danas pije za hrabrost', 'Tri pogrešna zaredom. Krčma suosjeća, ali ne previše'], ['🫗 {X} pije za utjehu', 'Tri pogrešna zaredom. Krčmar već priprema račun za žalovanje']],
+      STREAK_BROKEN: [['🧊 {X} spušten na zemlju', 'Niz od {K} prekinut. Žao nam je. Zapravo ne baš']],
+      NEW_LEADER: [['👑 Stolica je promijenila stražnjicu', '{N} sjeda na vrh, a prethodno sjedenje se još hladi']],
+      THRONE: [['👑 Stolica je promijenila stražnjicu', '{N} sjeda na vrh, a {O} se još grije od prethodnog sjedenja']],
+      RIVAL_SWAP: [['⚔️ {A} opet pretiče {B}', 'Već {K}. put ove večeri. {B} počinje to shvaćati osobno']],
+      COMEBACK_BIG: [['🧟 Mrtvi su ustali', 'Dno je ostalo iza, a {X} je na vrhu. Krčmar je upravo promijenio okladu']],
+      COMEBACK: [['🧟 Mrtvi su ustali', '{X} skače s {L}. na {R}. mjesto. Krčmar je upravo promijenio okladu']],
+      RIVALRY: [['⚔️ {A} i {B} imaju stari račun', 'Krčma je prestala brojati. Računi ne staju']],
+      PACT_SEEN: [['🤝 Krčmar je vidio rukovanje', '{A} i {B} imaju dogovor. Detalji su, naravno, tajna']],
+      BETRAYED: [['🗡️ Nož u leđa, uz pivo', '{T} je izdao partnera i uzeo {K}. {V} ostaje s poukom'], ['🗡️ Pakt je pukao', '{T} odlazi s {K}, a {V} s lekcijom o povjerenju']],
+      BETRAY_REVENGE: [['🍺 Krčma pamti', '{V} je opet ispred, a {T} još čuje onu staru izdaju']],
+    }; for (const k in N) TL[k] = N[k].concat(TL[k] || []); }""")
+# wrong streak 3
+rep(r"""          const had = T.streak[k] || 0; T.streak[k] = 0; inc(T.wrongStreak, k);
+""", r"""          const had = T.streak[k] || 0; T.streak[k] = 0; const wsN = inc(T.wrongStreak, k);
+          if (wsN === 3) { const wc = cand('WRONG3', 4, 'w3:' + k + ':' + T.turn, { X: p.name }, [k], ['sad'], { snd: 'stingSmall' }); if (wc) cands.push(wc); }
+""")
+# pakt i izdaja: javno se zna samo da pakt postoji (nikad namjera izdaje)
+rep(r"""      powerCands(cands);
+      updateRanks(cands);
+      fcCands(cands);""", r"""      pactCands(cands);
+      powerCands(cands);
+      updateRanks(cands);
+      fcCands(cands);""")
+rep(r"""    function onBetray(e) {
+      if (!T) return;""", r"""    function onPact(a, b) { if (T) { T.pk = T.pk || []; T.pk.push({ id: T.pk.length + 1, a, b, turn: T.turn }); } }
+    function pactCands(cands) {
+      T.pk = (T.pk || []).filter((x) => T.turn - x.turn <= 2); T.bq = (T.bq || []).filter((x) => T.turn - x.turn <= 2);
+      for (const x of T.pk) if (R.get(x.a) && R.get(x.b)) { const c = cand('PACT_SEEN', 5, 'pk:' + x.id, { A: nm(x.a), B: nm(x.b) }, [x.a, x.b], ['happy', 'happy'], { vs: 1, snd: 'stingSmall' }); if (c) cands.push(c); }
+      for (const x of T.bq) if (R.get(x.t) && R.get(x.v)) { const c = cand('BETRAYED', 8.5, 'bd:' + x.id, { T: nm(x.t), V: nm(x.v), K: bodN(x.gain || 0) }, [x.t, x.v], ['victory', 'sad'], { vs: 1, snd: 'stingRival' }); if (c) cands.push(c); }
+    }
+    function onBetray(e) {
+      if (!T) return;
+      if (e.k === 'betray') { T.bq = T.bq || []; T.bq.push({ id: (T.bqN = (T.bqN || 0) + 1), t: e.t, v: e.v, gain: e.gain || 0, turn: T.turn }); }""")
+rep("return { reset, onTk, onVote, onPower,", "return { reset, onPact, onTk, onVote, onPower,")
+rep(r"""    note(A, '🍻 Pakt s ' + B.name + ' je sklopljen!', 'pact'); note(B, '🍻 Pakt s ' + A.name + ' je sklopljen!', 'pact');
+    news(pickLine('rumor'));""", r"""    note(A, '🍻 Pakt s ' + B.name + ' je sklopljen!', 'pact'); note(B, '🍻 Pakt s ' + A.name + ' je sklopljen!', 'pact');
+    news(pickLine('rumor')); TD.onPact(A.pid, B.pid);""")
+rep(r"""        note(f, '🍻 ' + p.name + ' je prihvatio tvoj pakt!', 'pact'); note(p, '🍻 Pakt s ' + f.name + ' je sklopljen!', 'pact');
+        news(pickLine('rumor'));""", r"""        note(f, '🍻 ' + p.name + ' je prihvatio tvoj pakt!', 'pact'); note(p, '🍻 Pakt s ' + f.name + ' je sklopljen!', 'pact');
+        news(pickLine('rumor')); TD.onPact(f.pid, p.pid);""")
+# dvoboj: pamti staru izdaju; inače kratka porugljiva napomena
+rep(r"""      if (T.activeRival === pairKey(a, b)) return 'Rivalstvo dobiva novo poglavlje.';
+      return '';""", r"""      if ((T.betr || []).some((b) => b.v === w && b.t === l)) return '🍺 Krčma pamti: ' + nm(w) + ' vraća staru izdaju!';
+      if (T.activeRival === pairKey(a, b)) return 'Rivalstvo dobiva novo poglavlje.';
+      return T.turn % 2 ? '🪢 Konop je pao, ponos nije: ' + nm(l) + ' traži alibi u nogama.' : '';""")
+# završna riječ prema načinu pobjede
+rep(r"""    return {
+      id: G.s, w: wp ? { pid: W, line: wl, num: bodN(wp.score) } : null,""", r"""    let kl = '';
+    if (wp) {
+      const sec2 = sorted.find((p) => p.pid !== W), v2 = (T.turn + n) % 2;
+      const bet2 = (S.bt || []).some((b) => b.k === 'betray' && b.t === W && (b.gain || 0) >= 400);
+      const cb2 = n >= 3 && T.lowRank[W] === n && (T.worst[W] || 0) >= 800;
+      const tight2 = G.crownWin === W || (sec2 && wp.fstep - sec2.fstep <= 1);
+      const dom2 = (T.leadTurns[W] || 0) >= Math.max(3, T.turn * 0.7);
+      kl = (bet2 ? ['Kruna je došla s nožem u leđa. Krčma to ne zaboravlja, ali plaća.', 'Prijateljstvo je izgubilo, kruna je dobila. Krčmar sve bilježi u knjigu računa.']
+        : cb2 ? ['S dna do krune. Ovo će se prepričavati uz pivo.', 'Krčmar je otpisao ovu pobjedu prije polovice večeri. Ispričava se, ali ne u novcu.']
+        : tight2 ? ['Razlika je bila tanja od pjene na pivu. Krčmar još broji, za svaki slučaj.', 'Kruna je pala za dlaku. Krčma još hvata dah.']
+        : dom2 ? ['Vodstvo je cijelu večer ostalo na istom mjestu. Krčmar je prestao pratiti da ne ispadne pristran.', 'Večer je bila monolog, a ostali su bili publika s pivom.']
+        : ['Kruna je pronašla vlasnika. Krčmar je već naručio sljedeću turu.', 'Večer je gotova, kruna ima novog vlasnika, a šank je ostao pun.'])[v2];
+    }
+    return {
+      id: G.s, kl, w: wp ? { pid: W, line: wl, num: bodN(wp.score) } : null,""")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR krčmar osobnost OK')

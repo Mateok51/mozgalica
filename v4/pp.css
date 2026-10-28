@@ -14,9 +14,8 @@
   .pp-tag .pp-lb { display: none; } .tv .pp-tag .pp-lb { display: inline; }
   /* mali okrugli Power pick na sredini između četiri vrata: ne dodaje visinu, ne prekriva tekst vrata */
   .door-btns { position: relative; }
-  .pp-coin { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 8; width: 54px; height: 54px; padding: 0; border-radius: 50%; display: grid; place-content: center; justify-items: center; gap: 0; cursor: pointer;
-    border: 2px solid #7a4f17; background: radial-gradient(circle at 35% 30%, #fff1b8, #f0c66e 45%, #b97a24); color: #2a1606; box-shadow: 0 3px 0 #5a3810, 0 0 0 3px rgba(42, 22, 6, 0.55), 0 0 16px rgba(240, 198, 110, 0.7); animation: ppBob 2.2s ease-in-out infinite; }
-  .pp-coin b { font-size: 1.25rem; line-height: 1; } .pp-coin small { font-size: 0.5rem; font-weight: 900; letter-spacing: 0.08em; line-height: 1; margin-top: 1px; }
-  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 3px 0 #5a3810, 0 0 0 3px #fff, 0 0 26px rgba(255, 226, 150, 0.95); }
+  .pp-coin { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 8; width: 64px; height: 64px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; font-size: 0; color: transparent;
+    background: url("ui/pp-medal.webp") center / contain no-repeat; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 7px rgba(240, 198, 110, 0.55)); animation: ppBob 2.2s ease-in-out infinite; -webkit-tap-highlight-color: transparent; }
+  .pp-coin.on { animation: none; transform: translate(-50%, -50%) scale(1.12); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 16px rgba(255, 226, 150, 0.95)); }
   @keyframes ppBob { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.07); } }
   @media (prefers-reduced-motion: reduce) { .pp-coin { animation: none; } }

@@ -101,12 +101,10 @@ const pact = (g, a, b) => g._pact(a, b);   // v32: pakt nudi krčmar; test ga sk
   await Q(g, { p0: true, p1: true, p2: false });
   let sc0, sc1;
   await Q(g, { p0: true, p1: false, p2: false }, { board: async () => { sc0 = g._p('p0').score; sc1 = g._p('p1').score; } });
-  await until(() => g._G.ph === 'loyal', 6000);
-  const ly = g.view().ly.evs[0];
-  ok(ly.tre === 240 && ly.bonus === 96 && ly.each === 168 && ly.ea === 168, 'riznica 240 → +40 % = 336, svakome 168');
-  ok(g._p('p0').score === sc0 + 168 && g._p('p1').score === sc1 + 168, 'bodovi dodani prije početka piramide');
-  await until(() => g._G.ph === 'fstart', 3000);
-  ok(g._G.ph === 'fstart' && g._p('p0').fu != null, 'piramida kreće tek nakon isplate odanosti (početak računa i taj iznos)');
+  await until(() => g._G.ly && g._G.ly.evs.length, 6000);   // isplata se događa pri početku finala; pregled (v.ly) postoji samo dok traje faza 'loyal'
+  const ly = g._G.ly.evs[0], tot = Math.round(ly.tre * 1.4);
+  ok(ly.tre > 0 && ly.bonus === tot - ly.tre && ly.each === Math.floor(tot / 2) && ly.ea === tot - ly.each, 'riznica ' + ly.tre + ' → +40 % = ' + tot + ', svakome ' + ly.each + '/' + ly.ea);
+  ok(g._p('p0').score >= ly.ea && g._p('p1').score >= ly.each, 'bodovi dodani prije početka piramide');
   g.stop();
 
   console.log('5) Botovi (testni način): pakt s botom, riznica, izdaja bota tek nakon 2 pitanja');

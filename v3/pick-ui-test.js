@@ -7,7 +7,7 @@ const TMP = path.join(OUT, 'out-pick.html');
 let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails++; };
 (async () => {
   const b = await chromium.launch();
-  for (const W of [360, 320]) {
+  for (const W of [390, 360, 320]) {
     const ctx = await b.newContext({ viewport: { width: W, height: 740 }, hasTouch: true });
     const page = await ctx.newPage(); const errs = [];
     page.on('pageerror', (e) => errs.push(e.message));
@@ -27,7 +27,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
     await page.click('#ppBtn', { force: true }); await page.waitForTimeout(100);
     ok(await page.$('.door-btn.pp-arm') !== null, W + ': nakon dodira vrata svijetle (spremno za pick)');
     const g = await page.evaluate(() => { const c = document.querySelector('.pp-coin').getBoundingClientRect(), r = (e) => e.getBoundingClientRect(); const txt = [...document.querySelectorAll('.door-btn .dname')].map((e) => { const x = r(e); return x.left < c.right && x.right > c.left && x.top < c.bottom && x.bottom > c.top; }); return { w: Math.round(c.width), over: txt.some(Boolean), doc: document.documentElement.scrollHeight, ih: innerHeight }; });
-    ok(g.w <= 62 && !g.over, W + ': kovanica ' + g.w + ' px, ne prekriva tekst vrata');
+    ok(g.w <= 73 && !g.over, W + ': kovanica ' + g.w + ' px, ne prekriva tekst vrata');
     ok(g.doc <= g.ih + 1, W + ': sve staje na ekran bez skrolanja (' + g.doc + ' <= ' + g.ih + ')');
     await page.screenshot({ path: OUT + '/pick-' + W + '-a.png' });
     await page.click('.door-btn.o1'); await page.waitForTimeout(100);

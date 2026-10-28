@@ -2598,7 +2598,7 @@ i = s.index('</style>'); s = s[:i] + open(SP + '/v4/pp.css', encoding='utf-8').r
 # mobitel: značka na vratima + traka s gumbom
 s = rep(s, "        const doorBtns = d.cats.map((c, i) => {",
   "        const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;\n"
-  "        const ppBar = ppAvail ? '<button class=\"pp-coin' + (L.ppOn ? ' on' : '') + '\" id=\"ppBtn\" aria-label=\"Power pick: biraš baš svoju kategoriju\" aria-pressed=\"' + (L.ppOn ? 'true' : 'false') + '\"><b>⭐</b><small>PICK</small></button>' : '';\n        const doorBtns = d.cats.map((c, i) => {")
+  "        const ppBar = ppAvail ? '<button class=\"pp-coin' + (L.ppOn ? ' on' : '') + '\" id=\"ppBtn\" aria-label=\"Power pick: biraš baš svoju kategoriju\" aria-pressed=\"' + (L.ppOn ? 'true' : 'false') + '\"></button>' : '';\n        const doorBtns = d.cats.map((c, i) => {")
 s = rep(s, "          return '<button class=\"door-btn o' + i + cls + '\" data-v=\"' + i + '\"",
   "          const ppT = ppBy && ppBy.vt === i ? '<span class=\"pp-tag\"><span class=\"pp-av\">' + avSvg(ppBy.a, 'happy') + '</span><span class=\"pp-tx\">' + esc(ppBy.n) + ' ⭐<span class=\"pp-lb\"> power pick</span></span></span>' : '';\n"
   "          return '<button class=\"door-btn o' + i + cls + (ppT ? ' pp-on' : '') + (L.ppOn && !res && mine === -1 ? ' pp-arm' : '') + '\" data-v=\"' + i + '\"")
@@ -2666,3 +2666,13 @@ s = open(SP + '/v4/page.html', encoding='utf-8').read()
 s = rep(s, ": 'Kreće pitanje…') :", ": ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') :")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Power pick rezultat tekst OK')
+
+# ---- Krčmar: završna riječ na ekranu pobjednika ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "    const lgo = d.lg && LEGV.open === d.lg.id ? legHtml(d, tv) : '';",
+        "    const lgo = d.lg && LEGV.open === d.lg.id ? legHtml(d, tv) : '';\n    const klh = d.lg && d.lg.kl ? '<div class=\"win-kl\">🍺 ' + esc(d.lg.kl) + '</div>' : '';")
+s = rep(s, "hero + name + board + fact + act", "hero + name + klh + board + fact + act")
+s = rep(s, "'</div></div>' + '</div>' + act".replace("'</div></div>' + '</div>' + act", "board + fact + '</div>' + act"), "klh + board + fact + '</div>' + act")
+_i = s.index("</style>"); s = s[:_i] + ".win-kl { margin: 6px 8px; font-style: italic; font-weight: 800; font-size: .9rem; line-height: 1.3; color: #ffe2a6; text-align: center; text-wrap: balance; } .tv .win-kl, .win-right .win-kl { font-size: 1.3rem; }\n" + s[_i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Krčmar završna riječ UI OK')
