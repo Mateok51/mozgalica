@@ -586,7 +586,7 @@ function createGame(o) {
   function startPower() {
     const multi = active().length > 1, st = standing();
     for (const p of list()) {
-      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null; p.okl = null; p.ob = 0;
+      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null; p.okl = null; p.ob = 0; p.oq = 0; p.okr = null;
       p.offers = offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);
     }
     setPhase('power', G.inFinale ? cfg.fpower : cfg.power);
@@ -662,7 +662,14 @@ function createGame(o) {
       if (p.bet > 0) { p.betRes = p.ans === G.q.a ? Math.round(p.bet * p.betMul) : -p.bet; p.score = Math.max(0, p.score + p.betRes); }
       p.bet = 0;
     }
-    for (const p of list()) { p.ob = 0; const X = p.okl && R.get(p.okl); if (X && p.ans === G.q.a && X.ans === G.q.a && X.gained > 0) { p.ob = X.gained; p.score += p.ob; } }
+    for (const p of list()) {
+      p.ob = 0; p.oq = 0; p.okr = null;
+      if (!p.okl) continue;
+      const X = R.get(p.okl), mine = p.ans === G.q.a, theirs = !!X && X.ans === G.q.a && X.gained > 0;
+      if (X && mine && theirs) { p.ob = X.gained; p.score += p.ob; p.oq = 1; }
+      else p.oq = -1;
+      p.okr = { t: p.okl, w: p.ob, why: p.oq > 0 ? '' : (!mine ? 'me' : 'x') };
+    }
     resolveSecret();
     rcResolve();
     tkResolve();
@@ -2102,6 +2109,7 @@ function createGame(o) {
     if (p.kt) r.kt = { line: p.kt.line, n: p.kt.n, kind: p.kt.kind, win: p.kt.win };
     if (p.kf) r.kf = 1;
     if (p.okl && !G.inFinale && (G.ph === 'cast' || G.ph === 'question')) r.okl = p.okl;
+    if (p.okr && G.ph === 'reveal') r.okr = p.okr;
     return r;
   }
   // ----- izazov vođi -----
@@ -2360,7 +2368,7 @@ function createGame(o) {
   // privatno stanje: samo za tog igrača
   function priv(pid) {
     const p = R.get(pid), b0 = priv0(pid), t = p && !p.bot ? tkPriv(p) : null, kp = p && !p.bot ? krPriv(p) : null;
-    const ko = p && !p.bot ? krOfferPriv(p) : {}, any = kp || ko.ko || ko.kt || ko.kf || ko.okl;
+    const ko = p && !p.bot ? krOfferPriv(p) : {}, any = kp || ko.ko || ko.kt || ko.kf || ko.okl || ko.okr;
     const b = any ? Object.assign(b0 || { can: false, used: false, inv: [], out: null, note: p.note }, kp ? { kp } : {}, ko) : b0;
     if (!t) return b;
     return Object.assign(b || { can: false, used: false, inv: [], out: null, note: p.note }, { tk: t });
@@ -2528,6 +2536,7 @@ function createGame(o) {
       if (ph === 'reveal' && p.tb) e.tb = p.tb;
       if (ph === 'reveal' && p.kb) e.kb = p.kb;
       if (ph === 'reveal' && p.ob) e.ob = p.ob;
+      if (ph === 'reveal' && p.oq) e.oq = p.oq;
       if (ph === 'duelResult' && G.du && (p.pid === G.du.a || p.pid === G.du.b)) e.ch = p.ch;
       return e;
     });

@@ -2586,3 +2586,8 @@ i = s.index('</style>'); s = s[:i] + open(SP + '/v4/swipe-sort.css', encoding='u
 s = cut(s, '  function sortPhone(d, me) {', '  let lastLink = null;', open(SP + '/v4/swipe-sort.js', encoding='utf-8').read())
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('razvrstavanje swipe OK')
+# ---- Oklada: vidljiv ishod na ploči (uspjeh +N, promašaj) za sve; razlog privatno u krPriv ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "(gain && p.ob ? '<span class=\"betb krb\">🎲 +' + p.ob + '</span>' : '')", "(gain && p.ob ? '<span class=\"betb krb\">🎲 +' + p.ob + '</span>' : '') + (gain && p.oq < 0 ? '<span class=\"betb krb neg\">🎲 promašaj</span>' : '')")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Oklada ishod UI OK')

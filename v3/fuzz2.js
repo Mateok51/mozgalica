@@ -15,7 +15,7 @@ const bad = []; let uncaught = []; const ST = { kp: 0, pakt: 0, izdaja: 0, dvost
 process.on('uncaughtException', (e) => { uncaught.push(String(e.stack).split('\n').slice(0, 4).join(' | ')); });
 const rnd = (n) => Math.floor(Math.random() * n), pick = (a) => a[rnd(a.length)];
 const PUB_BAN = ['kp', 'ko', 'kt', 'kf', 'okl', 'pacts', 'offers', 'scn', 'prof'];
-const P_BAN = ['okl', 'pact', 'betray', 'kt', 'ko', 'kf', 'koGot', 'wh', 'rpA'];
+const P_BAN = ['okl', 'pact', 'betray', 'kt', 'ko', 'kf', 'koGot', 'wh', 'rpA', 'okr', 'oq_'];
 function runOne(i) {
   return new Promise((res) => {
     const nh = 1 + rnd(5), nb = rnd(Math.max(1, 6 - nh)), opt = { pacts: Math.random() < 0.85, bs: Math.random() < 0.5 };

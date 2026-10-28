@@ -4,7 +4,20 @@
   // Ispod poretka: privatni dio (samo ovaj igrač) i „Nastavi”. Igra ide dalje kad svi potvrde (domaćin odlučuje).
   function krReadyCount(d) { const ps = d.P.filter((p) => p.c && !p.b); return [ps.filter((p) => p.ok).length, ps.length]; }
   // privatni dio ploče: ponuda pakta (blokira Nastavi dok ne odlučiš), savez + izdaja
+  // ishod Oklade (samo bettor): tko je meta i zašto nije uspjela
+  function krOkr(d) {
+    const o = PV && PV.okr; if (!o) return '';
+    const t = pById(d, o.t), nm = '<b>' + esc(t ? t.n : '?') + '</b>';
+    const msg = o.why === '' ? 'Oklada na ' + nm + ' je uspjela! <span class="up">+' + o.w + '</span>'
+      : 'Oklada na ' + nm + ' nije uspjela — ' + (o.why === 'me' ? 'tvoj odgovor nije bio točan.' : 'odgovor mete nije bio točan.');
+    return '<div class="kr-note kr-okr' + (o.why === '' ? ' win' : '') + '">🎲 ' + msg + '</div>';
+  }
   function krPriv(d, me) {
+    const r = krPriv0(d, me), n = krOkr(d);
+    if (!n) return r;
+    return r && typeof r === 'object' ? Object.assign({}, r, { html: n + (r.html || '') }) : n + (r || '');
+  }
+  function krPriv0(d, me) {
     if (!PV) return '';
     if (PV.ko) {
       const o = PV.ko;
