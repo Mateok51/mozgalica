@@ -45,3 +45,4 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
   motor v3/kr.py (zadnji blok) + v3/recover.js; sučelje web/port-main.py + web/port-main.json (parovi stari → novi, primjenjuju se na kraju web/transform.py);
   web/assemble.py piše zaseban engine.js, README iz web/README.main.md i kopira web/main-extra (tests, docs, scripts, src, .github).
   Provjera nakon gradnje: cd web/site && node --test tests/*.test.cjs
+- Brzi rad: ./build.sh (cijela izgradnja, jedan redak), ./check.sh (motor + testovi s maina), ./check.sh ui (i kratki preglednik-testovi)
