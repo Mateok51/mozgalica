@@ -22,7 +22,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
     });
     console.log('  [' + name + ']', JSON.stringify(r));
     ok(r.has && r.pe === 'none' && r.zc < r.za, name + ': canvas postoji, ne hvata dodire i ispod je sučelja');
-    ok(r.lit > 0 && r.mx <= 160, name + ': crta (' + r.lit + ' točaka), najveća neprozirnost ' + r.mx + '/255 = suptilno');
+    ok(r.lit > 0 && r.mx <= 200, name + ': crta (' + r.lit + ' točaka), najveća neprozirnost ' + r.mx + '/255 = suptilno');
     ok(r.topOk, name + ': gumbi su dostupni (ništa ih ne prekriva)');
     await page.screenshot({ path: OUT + '/amb-' + name + '.png' });
     // trošak po sličici

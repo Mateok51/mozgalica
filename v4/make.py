@@ -2598,17 +2598,17 @@ i = s.index('</style>'); s = s[:i] + open(SP + '/v4/pp.css', encoding='utf-8').r
 # mobitel: značka na vratima + traka s gumbom
 s = rep(s, "        const doorBtns = d.cats.map((c, i) => {",
   "        const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin;\n"
-  "        const ppBar = ppAvail ? '<div class=\"pp-bar\"><button class=\"pp-btn' + (L.ppOn ? ' on' : '') + '\" id=\"ppBtn\">⭐ Power pick' + (L.ppOn ? ' — dodirni svoja vrata' : '') + '</button><div class=\"pp-sub\">Jednom po igri: tvoja kategorija je sigurno odabrana.</div></div>'\n"
-  "          : ppBy ? '<div class=\"pp-bar\"><div class=\"pp-used\">⭐ ' + (ppBy.id === PID ? 'Iskoristio si power pick' : esc(ppBy.n) + ' je iskoristio power pick') + '</div></div>' : '';\n        const doorBtns = d.cats.map((c, i) => {")
+  "        const ppBar = ppAvail ? '<button class=\"pp-coin' + (L.ppOn ? ' on' : '') + '\" id=\"ppBtn\" aria-label=\"Power pick: biraš baš svoju kategoriju\" aria-pressed=\"' + (L.ppOn ? 'true' : 'false') + '\"><b>⭐</b><small>PICK</small></button>' : '';\n        const doorBtns = d.cats.map((c, i) => {")
 s = rep(s, "          return '<button class=\"door-btn o' + i + cls + '\" data-v=\"' + i + '\"",
   "          const ppT = ppBy && ppBy.vt === i ? '<span class=\"pp-tag\"><span class=\"pp-av\">' + avSvg(ppBy.a, 'happy') + '</span><span class=\"pp-tx\">' + esc(ppBy.n) + ' ⭐<span class=\"pp-lb\"> power pick</span></span></span>' : '';\n"
   "          return '<button class=\"door-btn o' + i + cls + (ppT ? ' pp-on' : '') + (L.ppOn && !res && mine === -1 ? ' pp-arm' : '') + '\" data-v=\"' + i + '\"")
 s = rep(s, "' + (rl ? rl.spot(i) : '') + '<span class=\"dname\"><span>' + esc(c) + '</span></span>' +",
   "' + (rl ? rl.spot(i) : '') + ppT + '<span class=\"dname\"><span>' + esc(c) + '</span></span>' +")
-s = rep(s, "          '<div class=\"door-btns\">' + doorBtns + '</div>' +", "          '<div class=\"door-btns\">' + doorBtns + '</div>' + ppBar +")
+s = rep(s, "          '<div class=\"door-btns\">' + doorBtns + '</div>' +", "          '<div class=\"door-btns\">' + doorBtns + ppBar + '</div>' +")
 s = rep(s, "b.onclick = () => { if (!L.sent) sendInput({ v: +b.dataset.v }); }; });",
   "b.onclick = () => { if (!L.sent) { const o = { v: +b.dataset.v }; if (L.ppOn) o.pp = 1; sendInput(o); } }; });\n"
   "    { const pb = document.getElementById('ppBtn'); if (pb) pb.onclick = () => { L.ppOn = !L.ppOn; AUDIO.play('tap'); phoneRender(true); }; }")
+s = rep(s, "mine !== -1 ? 'Glas zaprimljen ✔' : 'Glasaj za pitanje koje želiš.'", "mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.'")
 # TV: značka na vratima
 s = rep(s, "        const rl = roulette(d);\n        const doors = d.cats.map((c, i) => {",
   "        const rl = roulette(d), ppBy = d.P.find((p) => p.pk);\n        const doors = d.cats.map((c, i) => {")
