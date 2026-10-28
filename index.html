@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-qO8ER/HBTewp0khS/84hw9c/13+UB8QM8b+h/j3OtCw=' 'sha256-S07Owd8fwxg3Wp9EaVoxphY32lJIQbaGmhXPf2JtikA=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-aaCRg6WWyGuRYgIgpeUA9Pmp6YQui+4K2MrluBzoc0I=' 'sha256-RURJ0x4lMVbWD8RkrfZUwS6F5TLkamVFiUnPHpYKyEw=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2183,6 +2183,30 @@
   .p-opt .sf-whav > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
   .p-opt:has(.sf-whi) .otxt { padding-right: 46px; }
   .p-opt > span.sf-whi, .p-opt > span.sf-whav { position: absolute; }
+  /* Krčmar 2.0: ploča bodova s Nastavi */
+  .kr-box { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; max-width: 480px; margin: 6px auto 0; padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  .kr-go { width: 100%; min-height: 54px; }
+  .kr-wait { font-weight: 800; font-size: 0.9rem; color: rgba(243, 227, 196, 0.85); text-align: center; }
+  .kr-wait.tv { font-size: 1.3rem; margin-top: 1.4vh; }
+  .kr-card, .kr-ally { width: 100%; }
+  .kr-note { font-weight: 800; font-size: 0.9rem; color: #ffe2a0; text-align: center; }
+  .kr-off .up { color: #a9e07a; font-weight: 800; } .kr-off .dn { color: #f0937a; font-weight: 800; }
+  .kr-tag { width: 100%; padding: 6px 10px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; color: #ffe2a6; text-align: center; background: rgba(70, 42, 14, 0.6); box-shadow: inset 0 0 0 1px rgba(232, 184, 90, 0.7); }
+  .mboard .rank-row .betb.krb { color: #ffe2a0; }
+  /* nadvlačenje konopa */
+  .rope { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; width: 100%; max-width: 520px; margin: 10px auto; font-family: var(--font-body); color: #f3e3c4; }
+  .rope-p { display: flex; align-items: center; gap: 6px; font-weight: 900; }
+  .rope-p .mini { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px rgba(224, 160, 96, 0.8); }
+  .rope-p .mini > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
+  .rope-p i { font-style: normal; font-size: 1.2rem; color: #ffe2a0; min-width: 1.4em; text-align: center; }
+  .rope-p b { font-size: 0.85rem; max-width: 5.5em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rope-t { position: relative; height: 36px; }
+  .rope-line { position: absolute; left: 0; right: 0; top: 50%; height: 8px; transform: translateY(-50%); border-radius: 4px; background: repeating-linear-gradient(60deg, #c89a5a 0 8px, #8a6232 8px 14px); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+  .rope-mid { position: absolute; left: 50%; top: 2px; bottom: 2px; width: 2px; background: rgba(255, 230, 190, 0.5); }
+  .rope-k { position: absolute; left: calc(50% + var(--x)); top: 50%; width: 22px; height: 22px; border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle at 35% 30%, #f8d17a, #b4741e); box-shadow: 0 0 0 2px #3a2008, 0 0 10px rgba(240, 198, 110, 0.7); transition: left 0.35s cubic-bezier(0.2, 0.8, 0.3, 1); }
+  .tv .rope { max-width: 900px; } .tv .rope-p .mini { width: 70px; height: 70px; } .tv .rope-p i { font-size: 2rem; } .tv .rope-p b { font-size: 1.2rem; } .tv .rope-t { height: 56px; } .tv .rope-k { width: 36px; height: 36px; }
+  .kr-dev { align-self: flex-end; width: 36px; height: 36px; border-radius: 50%; border: 0; font-size: 1rem; background: rgba(255, 255, 255, 0.06); opacity: 0.5; }
+  .kr-box .sf-scn { width: 100%; }
 </style>
 </head>
 <body>
@@ -2207,6 +2231,7 @@ const POWERS = {
   dupli: { n: 'Dupli bodovi', atk: false, d: 'Točan odgovor vrijedi dvostruko.' },
   pola:  { n: 'Pola-pola',    atk: false, d: 'Uklanja dva netočna odgovora s tvog ekrana.' },
   stit:  { n: 'Štit',         atk: false, d: 'Odbija sve napade na tebe u ovom pitanju.' },
+  oklada: { n: 'Oklada',      atk: false, tg: true, d: 'Kladi se na igrača. Ako oboje točno odgovorite, dobivaš i njegove bodove.' },
 };
 const POWER_KEYS = Object.keys(POWERS);
 const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
@@ -2243,7 +2268,14 @@ const CFG = {
   // Social Flow: Vrijeme za dogovore nakon tih odigranih pitanja (atBot u testnom načinu s botovima), trajanje (s),
   // nevidljiva sigurnosna granica kad je jedini čovjek u testnom načinu (nema odbrojavanja), najviše dolaznih ponuda za pakt po igraču
   // offerQ: koliko odigranih običnih pitanja ponuda (pakt, obračun) čeka odgovor — dovoljno mirnog vremena između pitanja
-  sf: { on: true, at: [], atBot: [3, 5, 7], dur: 20, soloMax: 600, inMax: 2, offerQ: 2,
+  // Krčmar 2.0: sigurnosna granica čekanja na ploči bodova (s)
+  // pakt: najviše ponuda po partiji, od kojeg odigranog pitanja, vjerojatnost na pogodnoj ploči, najmanje igrača
+  kr: { wait: 45, pactOffers: 2, pactFrom: 3, pactChance: 0.45, pactMin: 3,
+    // ponude: od kojeg pitanja, vjerojatnost po ploči (kad nema ponude pakta), najviše po partiji; zadatak: dobitak / gubitak
+    offFrom: 2, offChance: 0.35, offMax: 4, taskWin: 400, taskLoss: 200,
+    // izazov vođi: od kojeg odigranog pitanja, najmanji zaostatak, vrijeme za odluku (s), ulozi, obrana krune, trajanje konopa (s), prednost za pobjedu prije kraja
+    chFrom: 5, chGap: 800, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 20, ropeWin: 7, ropeN: 40 },
+  sf: { on: true, at: [], atBot: [], dur: 20, soloMax: 600, inMax: 2, offerQ: 2,
     // profili botova (samo društvene odluke): prihvaćanje ponude, slanje ponude po fazi, šapat, izdaja po fazi (uz riznicu ≥ btMin)
     prof: { loyal: { acc: 0.85, off: 0.45, wh: 0.8, bt: 0.05 }, sly: { acc: 0.7, off: 0.35, wh: 0.5, bt: 0.4 }, wild: { acc: 0.5, off: 0.4, wh: 0.5, bt: 0.2 } }, btMin: 75 },
   tk: { win: 150, loss: 100, after: 5, perGame: 2, offers: 3, chance: 0.5, gap: 2 },
@@ -2254,7 +2286,7 @@ const CFG = {
 const FLAGS = {
   ENABLE_TAVERN_DIRECTOR: true,
   ENABLE_RIVALRIES: true,
-  ENABLE_DUELS: true,
+  ENABLE_DUELS: false,   // krčmar više ne nameće dvoboje rivalima; dvoboj postoji samo kao izazov vođi
   ENABLE_SECRET_EVENTS: true,
   ENABLE_SECRET_TARGET: true,
   ENABLE_SECRET_HELP: false,
@@ -2271,7 +2303,7 @@ const PLAN = [
   { t: 'intro', title: 'Veliko finale', sub: 'Utrka do vrha piramide' }, { t: 'finale' },
 ];
 
-const INPUT_PHASES = { deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
+const INPUT_PHASES = { rope: 1, deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
 // Mini-igre: objašnjenje prije prve igre (kratak podsjetnik kad se ponovi)
 const HOWTO = {
   who: { n: 'Tko sam ja?', i: '🕵️', r: ['Tragovi se otkrivaju jedan po jedan.', 'Što prije pogodiš, to više bodova.', 'Imaš samo jedan pokušaj!'] },
@@ -2323,7 +2355,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: o.rc !== undefined ? !!o.rc : true, tk: o.tk !== undefined ? !!o.tk : false, bs: o.bs !== undefined ? !!o.bs : false }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
     tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
@@ -2418,6 +2450,9 @@ function createGame(o) {
       case 'deal':
         if (inp.ok !== 1) return false;
         break;
+      case 'reveal':
+        if (inp.ok !== 1 || !krCanGo(p)) return false;
+        break;
       case 'vote':
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.cats.length) return false;
         p.vote = inp.v; break;
@@ -2429,7 +2464,7 @@ function createGame(o) {
       case 'power': {
         if (inp.p === '' || inp.p == null) { p.pw = null; break; }
         if (!p.offers.includes(inp.p)) return false;
-        if (POWERS[inp.p].atk) {
+        if (POWERS[inp.p].atk || POWERS[inp.p].tg) {
           const t = R.get(inp.t);
           if (!t || t.pid === p.pid) return false;
           p.pw = { k: inp.p, t: t.pid };
@@ -2474,6 +2509,17 @@ function createGame(o) {
         if (!Array.isArray(a) || a.length > G.hl.list.length || !a.every((x) => x === 0 || x === 1)) return false;
         p.hlA = a.slice(); break;
       }
+      case 'rope': {
+        // nadvlačenje konopa: odgovori stižu usput; domaćin broji (točno vuče, netočno vraća)
+        if (!G.du || (p.pid !== G.du.a && p.pid !== G.du.b)) return false;
+        const a = inp.r;
+        if (!Array.isArray(a) || a.length > G.rp.list.length || !a.every((x) => x === 0 || x === 1)) return false;
+        if (!p.rpA || a.length >= p.rpA.length) p.rpA = a.slice();
+        ropeTally();
+        if (Math.abs(G.rp.pa - G.rp.pb) >= cfg.kr.ropeWin) { const s0 = G.s; later(() => { if (G.s === s0) endPhase(); }, 0); }
+        onChange();
+        p.lastIn = ''; return 'partial';
+      }
       case 'blitz': {
         // munjeviti krug: mobitel šalje odgovore usput; konačno tek kad su svi odgovoreni ili je stiglo f
         const a = inp.r;
@@ -2506,7 +2552,7 @@ function createGame(o) {
     const r = p ? accept(p, inp) : false;
     if (r === 'partial') return true;
     if (!r) return false;
-    if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) endPhase(); else onChange();
+    if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) endPhase(); else if (krReady()) endPhase(); else onChange();
     return true;
   }
 
@@ -2531,6 +2577,7 @@ function createGame(o) {
     for (const p of list()) if (!p.bot && !p.local && p.on && !seen.has(p.pid)) { p.on = false; changed = true; tkGone(p); }
     if (G.ph === 'lobby') for (const [id, p] of R) if (!p.on) { R.delete(id); changed = true; }
     if ((INPUT_PHASES[G.ph] || G.ph === 'howto') && allDone()) return endPhase();
+    if (krReady()) return endPhase();
     if (changed) onChange();
   }
 
@@ -2567,13 +2614,14 @@ function createGame(o) {
       case 'cast': return afterPower();
       case 'fstart': return startFinaleQ();
       case 'question': return scoreQuestion();
-      case 'reveal': return afterReveal();
+      case 'reveal': krPactSettle(true); krOfferEnd(); krChallengeEnd(); return afterReveal();
       case 'sort': return scoreSort();
       case 'link': return scoreLink();
       case 'sortReveal': case 'linkReveal': return afterReveal();
       case 'moment': return afterMoment();
       case 'duelIntro': return startDuel();
       case 'duel': return scoreDuel();
+      case 'rope': return scoreRope();
       case 'duelResult': return next();
       case 'secret': return afterSecret();
       case 'secret2': return startPower();
@@ -2700,6 +2748,7 @@ function createGame(o) {
     const max = Math.max(...counts);
     const best = counts.map((c, i) => (c === max ? i : -1)).filter((i) => i >= 0);
     G.cw = pick(best);
+    { const fv = active().find((p) => p.kf && p.vote >= 0); if (fv) { G.cw = fv.vote; fv.kf = 0; G.tie = 0; G.tb = null; best.length = 0; best.push(fv.vote); note(fv, '🗳️ Krčmar je poslušao tvoj glas.', 'pact'); } }
     G.tie = best.length > 1 ? 1 : 0;
     // neriješeno: svjetlo kruži preko izjednačenih vrata (ruleta) prije otkrivanja
     G.tb = best.length > 1 ? best : null;
@@ -2728,7 +2777,7 @@ function createGame(o) {
   }
   function offersFor(p, t, multi) {
     // u finalu (točno/netočno) pola-pola i grickalice nemaju smisla
-    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'pola' || k === 'grick')));
+    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'pola' || k === 'grick' || k === 'oklada')) && !(k === 'oklada' && !multi));
     const wf = (k) => powerWeight(k, t, p) * (k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1);
     const out = [];
     if (multi) { const a = weightedPick(pool.filter((k) => POWERS[k].atk), wf); if (a) out.push(a); }
@@ -2758,7 +2807,7 @@ function createGame(o) {
   function startPower() {
     const multi = active().length > 1, st = standing();
     for (const p of list()) {
-      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null;
+      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null; p.okl = null; p.ob = 0;
       p.offers = offersFor(p, st.has(p.pid) ? st.get(p.pid) : 0.5, multi);
     }
     setPhase('power', G.inFinale ? cfg.fpower : cfg.power);
@@ -2779,6 +2828,7 @@ function createGame(o) {
       } else {
         if (k === 'dupli') p.dbl = true;
         if (k === 'pola') p.pola = true;
+        if (k === 'oklada') p.okl = p.pw.t;
         G.ev.push({ f: p.pid, p: k });
       }
     }
@@ -2833,18 +2883,25 @@ function createGame(o) {
       if (p.bet > 0) { p.betRes = p.ans === G.q.a ? Math.round(p.bet * p.betMul) : -p.bet; p.score = Math.max(0, p.score + p.betRes); }
       p.bet = 0;
     }
+    for (const p of list()) { p.ob = 0; const X = p.okl && R.get(p.okl); if (X && p.ans === G.q.a && X.ans === G.q.a && X.gained > 0) { p.ob = X.gained; p.score += p.ob; } }
     resolveSecret();
     rcResolve();
     tkResolve();
     pactAfterQuestion();
     sfExpireQ();
+    krTaskSettle();
+    krPactMaybe();
+    krOfferMaybe();
+    krChallengeMaybe();
     TD.afterQuestion();
     // tempo: domaćin procijeni važnost iz javnih rezultata ovog pitanja (koji se upravo otkrivaju)
     G.pace = paceOf(before);
     const pc = cfg.pace && cfg.pace[G.pace];
     // trenutak iz krčme prikazuje se ispod poretka, pa otkrivanje traje malo dulje
     const mo = G.pend && G.pend.mo ? (cfg.paceMo != null ? cfg.paceMo : 1) : 0;
-    setPhase('reveal', (pc ? pc.t : cfg.reveal != null ? cfg.reveal : 10.5) + mo);
+    const rb = (pc ? pc.t : cfg.reveal != null ? cfg.reveal : 10.5) + mo;
+    setPhase('reveal', rb + (cfg.kr ? cfg.kr.wait : 0));
+    krRevealStart(rb);
   }
   // ----- tempo otkrivanja: jednostavna pravila, najviša razina pobjeđuje (ne zbrajaju se) -----
   function paceSnap() { return list().filter((p) => p.on !== false).map((p) => ({ pid: p.pid, sc: p.score })); }
@@ -3070,6 +3127,7 @@ function createGame(o) {
     }
   }
   function startFinale() {
+    for (const p of list()) { p.kt = null; p.kf = 0; p.ko = null; }   // nedovršeni zadaci i usluge prestaju (bez promjene bodova)
     rcCancelAll('počinje veliko finale.');
     G.inFinale = true; G.fqn = 0;
     const ly = payLoyalty(); G.ly = ly.length ? { id: G.s + 1, evs: ly } : null;
@@ -3273,7 +3331,7 @@ function createGame(o) {
   // ===================== TAVERN DIRECTOR =====================
   // Prati što se događa u partiji i povremeno pretvara zanimljive trenutke u kratki "show" (bez promjene pravila igre).
   // Sve je lokalno i determinističko iz stanja igre; pamti se samo unutar trenutne partije.
-  const PW_ACC = { led: 'Led', sluz: 'Sluz', grick: 'Grickalice', bomba: 'Bombu', dupli: 'Dupli bodove', pola: 'Pola-pola', stit: 'Štit' };
+  const PW_ACC = { oklada: 'Okladu', led: 'Led', sluz: 'Sluz', grick: 'Grickalice', bomba: 'Bombu', dupli: 'Dupli bodove', pola: 'Pola-pola', stit: 'Štit' };
   const TD = (() => {
     let T = null;
     const pairKey = (a, b) => (a < b ? a + '|' + b : b + '|' + a);
@@ -3726,12 +3784,12 @@ function createGame(o) {
       const evs = runBetrayals();
       if (evs.length) { G.bt = { id: G.s + 1, evs }; G.afterBt = pd; return setPhase('betray', cfg.betrayShow + (evs.length - 1) * 3); }
     }
-    if (pd && pd.duel) return startDuelIntro(pd.duel);
+    if (pd && pd.duel) return startDuelIntro(pd.duel, pd.rope);
     next();
   }
   function afterBetray() {
     const pd = G.afterBt; G.afterBt = null; G.bt = null;
-    if (pd && pd.duel) return startDuelIntro(pd.duel);
+    if (pd && pd.duel) return startDuelIntro(pd.duel, pd.rope);
     next();
   }
   function afterMoment() {
@@ -3740,11 +3798,12 @@ function createGame(o) {
     next();
   }
   // ----- dvoboj: samo dva igrača odgovaraju, brži točan dobiva bonus, nitko ne gubi bodove -----
-  function startDuelIntro(pair) {
-    G.du = { a: pair[0], b: pair[1], w: null, n: TD.duelNote(pair[0], pair[1]) };
+  function startDuelIntro(pair, rope) {
+    G.du = { a: pair[0], b: pair[1], w: null, n: TD.duelNote(pair[0], pair[1]), rope: rope ? 1 : 0 };
     setPhase('duelIntro', cfg.duelIntro);
   }
   function startDuel() {
+    if (G.du && G.du.rope) return startRope();
     const cats = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
     if (!cats.length) { G.du = null; return next(); }
     const cat = pick(cats);
@@ -4144,7 +4203,24 @@ function createGame(o) {
     if (G.ph === 'lobby' || G.ph === 'final' || G.inFinale) return { ok: 0, msg: 'Scenariji su dostupni tijekom regularnog dijela partije.' };
     const mate = partnerOf(p), botMate = mate && mate.bot;
     const left = (bsOn() ? cfg.sf.atBot : cfg.sf.at).slice(G.dealI).length;
+    const K = cfg.kr, when = (n) => ((G.bdone || 0) < n ? ' (od ' + n + '. odigranog pitanja)' : ' (na sljedećoj ploči bodova)');
     switch (k) {
+      case 'krpact':
+        if (!krFree(p)) return { ok: 0, msg: p.pact ? 'Već imaš pakt.' : 'Već si imao pakt u ovoj partiji (jedan po partiji).' };
+        if (!list().some((b) => b.bot && krFree(b))) return { ok: 0, msg: 'Nema slobodnog bota za pakt.' };
+        if (G.kpN >= K.pactOffers) return { ok: 0, msg: 'Krčmar je u ovoj partiji već ponudio sve paktove.' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će ti ponuditi pakt s botom' + when(K.pactFrom) + ' — bot će prihvatiti.' };
+      case 'challenge':
+        if (G.lcDone) return { ok: 0, msg: 'Izazov vođi već je bio u ovoj partiji (jednom po partiji).' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će te pitati da izazoveš vođu' + when(K.chFrom) + '.' };
+      case 'task': case 'fav':
+        if (k === 'task' && (p.kt || p.koGot.task)) return { ok: 0, msg: 'Tajni zadatak već si dobio u ovoj partiji.' };
+        if (k === 'fav' && (p.kf || p.koGot.fav)) return { ok: 0, msg: 'Uslugu već si dobio u ovoj partiji.' };
+        G.scn = { k, pid }; return { ok: 1, msg: 'Krčmar će ti ponuditi ' + (k === 'task' ? 'tajni zadatak' : 'uslugu (biraš kategoriju)') + when(K.offFrom) + '.' };
+      case 'betray':
+        if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (scenarij „Krčmar mi nudi pakt s botom”).' };
+        mate.sfLoyal = 0; G.scn = { k, pid };
+        return { ok: 1, msg: mate.name + ' će potajno pripremiti izdaju na sljedećoj ploči bodova' + ((pactOf(p).n || 0) < (cfg.pactMinQ || 0) ? ' (kad prođu 2 zajednička pitanja)' : '') + '.' };
       case 'offer':
         if (!pactFree(p)) return { ok: 0, msg: p.pact ? 'Već imaš pakt — scenarij treba igrača bez pakta.' : 'Već si imao pakt u ovoj partiji (jedan po partiji).' };
         if (!list().some((b) => b.bot && b.on && pactFree(b))) return { ok: 0, msg: 'Nema slobodnog bota (svi su već u paktu).' };
@@ -4160,7 +4236,7 @@ function createGame(o) {
         G.scn = { k, pid }; return { ok: 1, msg: mate.name + ' će ti šapnuti svoj odgovor na sljedećem pitanju.' };
       case 'betray': case 'double': case 'loyal':
         if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (Tajni kutak → ponudi savez).' };
-        if (k === 'loyal') { mate.sfLoyal = 1; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }
+        if (k === 'loyal') { mate.sfLoyal = 1; mate.betray = false; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }
         if (!left && G.ph !== 'deal') return { ok: 0, msg: 'U ovoj partiji više nema Vremena za dogovore prije finala.' };
         G.scn = { k, pid };
         if (G.ph === 'deal') { mate.sfLoyal = 0; if (botPact(mate, { k: 'betray', on: true })) G.scn = null; }
@@ -4168,6 +4244,193 @@ function createGame(o) {
     }
     return { ok: 0, msg: 'Nepoznat scenarij.' };
   }
+  // ===================== KRČMAR 2.0 =====================
+  // ploča bodova nakon pitanja: animacija (rb) pa čekanje da svi dodirnu Nastavi
+  function krBotsBoard() {
+    if (!bsOn() || !pactsOn()) return;
+    for (const b of list().filter((p) => p.bot && p.on && p.pact)) {
+      const k = pactOf(b); if (!k || (k.n || 0) < (cfg.pactMinQ || 0)) continue;
+      const sc = G.scn && G.scn.k === 'betray' && (k.a === G.scn.pid || k.b === G.scn.pid);
+      if (sc) { if (botPact(b, { k: 'betray', on: true })) G.scn = null; continue; }
+      if (b.sfLoyal || b.betray) continue;
+      if (k.tre >= cfg.sf.btMin && Math.random() < (cfg.sf.prof[G.prof[b.pid] || 'wild'] || cfg.sf.prof.wild).bt / 3) botPact(b, { k: 'betray', on: true });
+    }
+  }
+  function krRevealStart(rb) {
+    krBotsBoard();
+    G.revMin = G.startedAt + Math.round(rb * 1000);
+    for (const p of list()) if (p.bot) p.done = true;
+    const s0 = G.s;
+    later(() => { if (G.s === s0 && krReady()) endPhase(); }, Math.round(rb * 1000) + 30);
+    onChange();
+  }
+  // može li igrač potvrditi Nastavi (kasnije: tko ima otvorenu odluku krčmara, prvo odlučuje)
+  function krCanGo(p) { return !(G.lc && G.lc.st === 'o' && G.lc.a === p.pid) && !(p.ko && p.ko.st === 'o') && !(G.kp && G.kp.st === 'o' && (G.kp.a === p.pid || G.kp.b === p.pid) && G.kp.ans[p.pid] == null); }
+  // ----- krčmarove ponude -----
+  function krOfferMaybe() {
+    const K = cfg.kr;
+    for (const p of list()) p.ko = null;
+    if (G.inFinale || (G.kp && G.kp.st === 'o') || G.koN >= K.offMax || (G.bdone || 0) < K.offFrom) return;
+    const forced = G.scn && (G.scn.k === 'task' || G.scn.k === 'fav') ? G.scn : null;
+    if (!forced && Math.random() >= K.offChance) return;
+    const ps = active(), lead = ps.slice().sort((a, b) => b.score - a.score)[0];
+    const cand = [];
+    for (const p of ps.filter((x) => !x.bot)) {
+      if (forced && p.pid !== forced.pid) continue;
+      if (!p.kt && !p.koGot.task && (!forced || forced.k === 'task')) cand.push([p, 'task']);
+      if (!p.kf && !p.koGot.fav && p !== lead && (!forced || forced.k === 'fav')) cand.push([p, 'fav']);
+    }
+    if (!cand.length) return;
+    if (forced) G.scn = null;
+    const [p, k] = pick(cand);
+    p.koGot[k] = 1; G.koN++;
+    if (k === 'fav') { p.ko = { id: ++G.sfSeq, k, st: 'o', line: 'Sljedeću kategoriju biraš ti — tvoj glas tajno odlučuje.' }; return; }
+    // zadatak: 3 točna zaredom ili brži točan odgovor od vođe (vođi: od drugog) na sljedećem pitanju
+    const others = ps.filter((x) => x !== p).sort((a, b) => b.score - a.score), vs = others[0];
+    const kind = vs && Math.random() < 0.5 ? 'fast' : 'st3';
+    const line = kind === 'st3' ? 'Odgovori točno na sljedeća 3 pitanja zaredom.' : 'Na sljedećem pitanju odgovori točno i brže od: ' + vs.name + '.';
+    p.ko = { id: ++G.sfSeq, k, st: 'o', kind, vs: kind === 'fast' ? vs.pid : null, line, win: K.taskWin, loss: K.taskLoss };
+  }
+  function krOfferAnswer(p, yes) {
+    const o = p.ko;
+    if (!o || o.st !== 'o' || G.ph !== 'reveal') return false;
+    o.st = yes ? 'a' : 'n';
+    if (yes && o.k === 'fav') p.kf = 1;
+    if (yes && o.k === 'task') p.kt = { kind: o.kind, vs: o.vs, n: 0, line: o.line, win: o.win, loss: o.loss, from: G.bdone || 0 };
+    return true;
+  }
+  function krOfferEnd() { for (const p of list()) if (p.ko && p.ko.st === 'o') p.ko.st = 'n'; }
+  // obračun zadataka nakon redovnog bodovanja pitanja (samo pitanja nakon prihvaćanja)
+  function krTaskSettle() {
+    for (const p of list()) p.kb = 0;
+    for (const p of list()) {
+      const t = p.kt; if (!t || (G.bdone || 0) <= t.from) continue;
+      if (!p.on && p.ans < 0) { p.kt = null; note(p, '📜 Zadatak je poništen (prekid veze).', 'no'); continue; }
+      const right = p.ans === G.q.a;
+      let done = null;
+      if (t.kind === 'st3') { if (!right) done = false; else if (++t.n >= 3) done = true; }
+      else { const X = R.get(t.vs); done = right && (!X || X.ans !== G.q.a || p.ansMs < X.ansMs); }
+      if (done === null) continue;
+      p.kt = null;
+      if (done) { p.score += t.win; p.kb = t.win; note(p, '📜 Zadatak izvršen! +' + t.win, 'tre'); }
+      else { const d = Math.min(t.loss, Math.max(0, p.score)); p.score -= d; p.kb = -d; note(p, '📜 Zadatak nije uspio. −' + d, 'no'); }
+    }
+  }
+  function krOfferPriv(p) {
+    const r = {};
+    if (p.ko && p.ko.st === 'o' && G.ph === 'reveal') r.ko = { id: p.ko.id, k: p.ko.k, line: p.ko.line, win: p.ko.win, loss: p.ko.loss };
+    if (p.kt) r.kt = { line: p.kt.line, n: p.kt.n, kind: p.kt.kind, win: p.kt.win };
+    if (p.kf) r.kf = 1;
+    if (p.okl && !G.inFinale && (G.ph === 'cast' || G.ph === 'question')) r.okl = p.okl;
+    return r;
+  }
+  // ----- izazov vođi -----
+  function krChallengeMaybe() {
+    const K = cfg.kr; G.lc = null;
+    if (G.lcDone || G.inFinale || (G.bdone || 0) < K.chFrom || (G.kp && G.kp.st === 'o')) return;
+    if (!plan.slice(G.pi + 1).some((it) => it.t === 'battle')) return;   // mora postojati još pitanja nakon izazova
+    const ps = active().slice().sort((a, b) => b.score - a.score);
+    if (ps.length < 2) return;
+    const forced = G.scn && G.scn.k === 'challenge';
+    let B = ps[0], A = ps[ps.length - 1];
+    if (forced) { A = R.get(G.scn.pid); B = ps[0] !== A ? ps[0] : ps[1]; }
+    if (!A || A.bot || A === B || (!forced && B.score - A.score < K.chGap)) return;
+    if (forced) G.scn = null;
+    G.lcDone = true;
+    G.lc = { id: ++G.sfSeq, a: A.pid, b: B.pid, st: 'o', sa: K.chStakeA, sb: K.chStakeB, g: K.chGuard };
+    const s0 = G.s;
+    later(() => { if (G.s === s0 && G.lc && G.lc.st === 'o') { G.lc.st = 'n'; G.lc.auto = 1; if (krReady()) endPhase(); else onChange(); } }, Math.round(((G.revMin || now()) - now()) + K.chWait * 1000));
+  }
+  function krChallengeAnswer(p, yes) {
+    const o = G.lc;
+    if (!o || o.st !== 'o' || G.ph !== 'reveal' || o.a !== p.pid) return false;
+    o.st = yes ? 'y' : 'n';
+    if (yes) news('⚔️ ' + p.name + ' izaziva vođu: ' + ((R.get(o.b) || {}).name || '?') + '!');
+    return true;
+  }
+  function krChallengeEnd() {
+    const o = G.lc; if (!o) return;
+    if (o.st === 'o') o.st = 'n';
+    if (o.st === 'y') G.pend = Object.assign(G.pend || {}, { duel: [o.a, o.b], rope: 1 });
+  }
+  function startRope() {
+    const set = G.used.tf, list0 = [];
+    for (let i = 0; i < cfg.kr.ropeN && i < D.tf.length; i++) { const t = D.tf[unusedIndex(D.tf, set)]; list0.push([t[0], t[1] ? 1 : 0]); }
+    G.rp = { list: list0, pa: 0, pb: 0 };
+    for (const p of list()) p.rpA = null;
+    setPhase('rope', cfg.kr.rope);
+    for (const p of list()) if (p.pid !== G.du.a && p.pid !== G.du.b) p.done = true;
+    // bot u dvoboju: odgovara redom, ~72 % točno (isto kao u munjevitom krugu)
+    for (const id of [G.du.a, G.du.b]) {
+      const b = R.get(id); if (!b || !b.bot) continue;
+      const s0 = G.s, r = [];
+      const step = () => { if (G.s !== s0 || r.length >= G.rp.list.length) return; r.push(Math.random() < 0.72 ? G.rp.list[r.length][1] : 1 - G.rp.list[r.length][1]); accept(b, { s: s0, r: r.slice() }); later(step, 900 + rnd(700)); };
+      later(step, 1200 + rnd(600));
+    }
+  }
+  function ropeTally() {
+    const L0 = G.rp.list, f = (p) => { const a = (p && p.rpA) || []; let n = 0; a.forEach((x, i) => { n += x === L0[i][1] ? 1 : -1; }); return n; };
+    G.rp.pa = f(R.get(G.du.a)); G.rp.pb = f(R.get(G.du.b));
+  }
+  function scoreRope() {
+    ropeTally();
+    const A = R.get(G.du.a), B = R.get(G.du.b), K = cfg.kr, d = G.rp.pa - G.rp.pb;
+    G.du.w = d > 0 ? G.du.a : d < 0 ? G.du.b : null; G.du.bonus = 0; G.du.ms = null;
+    G.du.rr = { pa: G.rp.pa, pb: G.rp.pb, t: 0, g: 0 };
+    if (A && B && G.du.w === G.du.a) { const t = Math.min(K.chStakeB, Math.max(0, B.score)); B.score -= t; A.score += t; G.du.rr.t = t; }
+    else if (A && B && G.du.w === G.du.b) { const t = Math.min(K.chStakeA, Math.max(0, A.score)); A.score -= t; B.score += t + K.chGuard; G.du.rr.t = t; G.du.rr.g = K.chGuard; }
+    G.du.o = TD.duelOut(G.du.w, G.du.a, G.du.b);
+    setPhase('duelResult', cfg.duelRes + 1);
+  }
+  const krFree = (p) => !!p && p.on && (!p.bot || bsOn()) && !p.pact && !p.pactUsed;
+  // nakon obračuna pitanja: možda ponuda pakta za dvojicu (nasumično; samo podaci partije, nikad pitanje)
+  function krPactMaybe() {
+    G.kp = null;
+    const K = cfg.kr;
+    if (!pactsOn() || G.inFinale || G.kpN >= K.pactOffers || (G.bdone || 0) < K.pactFrom) return;
+    if (sfPeople().length < K.pactMin) return;
+    const c = list().filter(krFree);
+    if (!c.some((p) => !p.bot) || c.length < 2) return;
+    const forced = G.scn && G.scn.k === 'krpact';
+    if (!forced && Math.random() >= K.pactChance) return;
+    const hs = c.filter((p) => !p.bot);
+    const A = forced ? R.get(G.scn.pid) : pick(hs), rest = c.filter((p) => p !== A);
+    if (!A || !krFree(A) || !rest.length) return;
+    const B = pick(forced ? rest.filter((p) => p.bot).concat(rest).slice(0, 1) : rest);
+    if (forced) G.scn = null;
+    G.kpN++;
+    G.kp = { id: ++G.sfSeq, a: A.pid, b: B.pid, st: 'o', ans: {} };
+    for (const p of [A, B]) if (p.bot) G.kp.ans[p.pid] = forced ? 1 : Math.random() < (cfg.sf.prof[G.prof[p.pid] || 'wild'] || cfg.sf.prof.wild).acc ? 1 : 0;
+  }
+  function krPactAnswer(p, yes) {
+    const o = G.kp;
+    if (!o || o.st !== 'o' || G.ph !== 'reveal' || (o.a !== p.pid && o.b !== p.pid) || o.ans[p.pid] != null) return false;
+    o.ans[p.pid] = yes ? 1 : 0;
+    krPactSettle(false);
+    return true;
+  }
+  // kad su oba odgovorila (ili ploča završi): sklopi ili odustani
+  function krPactSettle(end) {
+    const o = G.kp; if (!o || o.st !== 'o') return;
+    const A = R.get(o.a), B = R.get(o.b), ya = o.ans[o.a], yb = o.ans[o.b];
+    if (ya === 0 || yb === 0 || end || !A || !B) {
+      if (ya === 1 && yb === 1 && A && B) return krPactMake(o, A, B);
+      o.st = 'x';
+      for (const q of [A, B]) if (q && o.ans[q.pid] === 1) note(q, '🍺 Krčmar je odustao od ponude.', 'no');
+      return;
+    }
+    if (ya === 1 && yb === 1) krPactMake(o, A, B);
+  }
+  function krPactMake(o, A, B) {
+    o.st = 'y';
+    if (!krFree(A) || !krFree(B)) { o.st = 'x'; return; }
+    const k = { id: 'k' + (++pactSeq), a: A.pid, b: B.pid, tre: 0, on: true, since: G.qn, rich: false, n: 0 };
+    G.pacts.push(k);
+    for (const q of [A, B]) { q.pact = k.id; q.pactUsed = true; q.betray = false; q.wh = null; }
+    note(A, '🍻 Pakt s ' + B.name + ' je sklopljen!', 'pact'); note(B, '🍻 Pakt s ' + A.name + ' je sklopljen!', 'pact');
+    news(pickLine('rumor'));
+  }
+  const krReady = () => G.ph === 'reveal' && G.revMin && now() >= G.revMin && allDone();
   const humansIn = () => list().filter((p) => !p.bot);
   const pactOf = (p) => (p && p.pact ? G.pacts.find((x) => x.id === p.pact && x.on) : null);
   const partnerOf = (p) => { const k = pactOf(p); return k ? R.get(k.a === p.pid ? k.b : k.a) : null; };
@@ -4177,6 +4440,8 @@ function createGame(o) {
     return pactsOn() && !G.inFinale && G.ph !== 'lobby' && G.ph !== 'final' && G.qn >= cfg.pactAfter && sfPeople().length >= cfg.pactMin && (!sfOn() || !SF_BUSY[G.ph] || G.ph === 'duel');
   }
   function pactReset() {
+    G.kp = null; G.kpN = 0; G.koN = 0; G.lc = null; G.lcDone = false;
+    for (const p of list()) { p.ko = null; p.kt = null; p.kf = 0; p.kb = 0; p.koGot = {}; }
     G.pacts = []; G.offers = []; G.btq = []; G.bt = null; G.ly = null; G.news = null; G.newsSeq = 0; G.pactPaid = false;
     for (const p of list()) { p.pact = null; p.pactUsed = false; p.betray = false; p.wh = null; p.whS = -1; p.offersMade = 0; p.px = 0; p.note = null; }
   }
@@ -4196,6 +4461,10 @@ function createGame(o) {
     const p = R.get(pid);
     if (!p || (p.bot && !(botCall && bsOn())) || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
     if (sfOn() && sfBusy(p) && a.k !== 'whisper' && a.k.slice(0, 2) !== 'tk') return false;   // nitko ne odlučuje dok odgovara
+    if (a.k === 'krCh') { const r = krChallengeAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }
+    if (a.k === 'krOff') { const r = krOfferAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }
+    if (a.k === 'krPact') { const r = krPactAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }
+    if (a.k === 'offer' || a.k === 'accept' || a.k === 'decline' || a.k === 'cancel' || a.k.slice(0, 2) === 'rc' || a.k.slice(0, 2) === 'tk') return false;
     if (a.k === 'tkAccept' || a.k === 'tkDecline') { const r = tkAction(p, a); if (r) { if (G.ph === 'vote' && allDone()) endPhase(); else onChange(); } return r; }
     if (a.k.slice(0, 2) === 'rc') { const r = rcAction(p, a); if (r) onChange(); return r; }
     cleanOffers();
@@ -4313,9 +4582,17 @@ function createGame(o) {
   }
   // privatno stanje: samo za tog igrača
   function priv(pid) {
-    const p = R.get(pid), b = priv0(pid), t = p && !p.bot ? tkPriv(p) : null;
+    const p = R.get(pid), b0 = priv0(pid), t = p && !p.bot ? tkPriv(p) : null, kp = p && !p.bot ? krPriv(p) : null;
+    const ko = p && !p.bot ? krOfferPriv(p) : {}, any = kp || ko.ko || ko.kt || ko.kf || ko.okl;
+    const b = any ? Object.assign(b0 || { can: false, used: false, inv: [], out: null, note: p.note }, kp ? { kp } : {}, ko) : b0;
     if (!t) return b;
     return Object.assign(b || { can: false, used: false, inv: [], out: null, note: p.note }, { tk: t });
+  }
+  function krPriv(p) {
+    const o = G.kp;
+    if (!o || o.st !== 'o' || G.ph !== 'reveal' || (o.a !== p.pid && o.b !== p.pid)) return null;
+    const m = R.get(o.a === p.pid ? o.b : o.a);
+    return { id: o.id, m: m ? m.pid : '', x: m ? m.name : '?', ans: o.ans[p.pid] };
   }
   function priv0(pid) {
     const p = R.get(pid);
@@ -4331,7 +4608,7 @@ function createGame(o) {
       note: p.note,
     };
     // svi ostali spojeni ljudi (ne otkriva tko je već u paktu)
-    if (o.can) o.cand = sfPeople().filter((q) => q !== p && q.on).map((q) => q.pid);
+    o.can = false;   // igrači više ne šalju ponude; pakt nudi krčmar
     if (sfOn()) { o.sf = 1; if (G.ph === 'deal') o.dl = 1; if (bsOn()) o.bs = 1; }
     if (k && mate) {
       o.k = { m: mate.pid, tre: k.tre, grew: k.grew === G.s ? 1 : 0, since: k.since };
@@ -4358,7 +4635,7 @@ function createGame(o) {
     if (out) r.out = sfOn() ? { t: out.t, dl: 1 } : { t: out.t, ms: Math.max(0, out.until - now()) };
     return { rc: r };
   }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'rc') { G.opt.rc = !!v; onChange(); } if (k === 'tk') { G.opt.tk = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -4394,7 +4671,7 @@ function createGame(o) {
       case 'power': {
         if (Math.random() < 0.15) return { s, p: '' };
         const k = pick(b.offers);
-        if (!POWERS[k].atk) return { s, p: k };
+        if (!POWERS[k].atk && !POWERS[k].tg) return { s, p: k };
         const others = active().filter((p) => p.pid !== b.pid);
         if (!others.length) return { s, p: '' };
         const leader = others.slice().sort((x, y) => y.score - x.score)[0];
@@ -4472,6 +4749,8 @@ function createGame(o) {
       if (ph === 'reveal' && p.xb) e.xb = p.xb;
       if (ph === 'reveal' && p.rx) e.rx = p.rx;
       if (ph === 'reveal' && p.tb) e.tb = p.tb;
+      if (ph === 'reveal' && p.kb) e.kb = p.kb;
+      if (ph === 'reveal' && p.ob) e.ob = p.ob;
       if (ph === 'duelResult' && G.du && (p.pid === G.du.a || p.pid === G.du.b)) e.ch = p.ch;
       return e;
     });
@@ -4505,15 +4784,19 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, rc: G.opt.rc ? 1 : 0, tk: G.opt.tk ? 1 : 0, bs: G.opt.bs ? 1 : 0 };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0 };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
+    if (ph === 'reveal' && G.lc) v.lc = { a: G.lc.a, b: G.lc.b, st: G.lc.st, sa: G.lc.sa, sb: G.lc.sb, g: G.lc.g };
+    if (ph === 'rope' && G.rp) v.rp = { pa: G.rp.pa, pb: G.rp.pb, m: cfg.kr.ropeWin, list: G.rp.list };
+    if (ph === 'reveal' && G.revMin) { v.rw = 1; v.rmin = Math.max(0, G.revMin - now()); }
     // posljednji poziv: projekcija samo između pitanja (nikad tijekom odgovaranja)
     if (pactsOn() && G.ph !== 'lobby') v.pk = 1;
     if ((ph === 'reveal' || ph === 'sortReveal' || ph === 'linkReveal' || ph === 'fr') && G.pend && G.pend.mo) v.mo = G.pend.mo;
-    if ((ph === 'duelIntro' || ph === 'duel' || ph === 'duelResult') && G.du) {
+    if ((ph === 'duelIntro' || ph === 'duel' || ph === 'rope' || ph === 'duelResult') && G.du) {
       v.du = { a: G.du.a, b: G.du.b, bonus: cfg.duelBonus };
+      if (G.du.rope) { v.du.rope = 1; v.du.sa = cfg.kr.chStakeA; v.du.sb = cfg.kr.chStakeB; v.du.g = cfg.kr.chGuard; if (G.du.rr) v.du.rr = G.du.rr; }
       if (G.du.n) v.du.n = G.du.n;
       if (ph === 'duelResult') { v.du.w = G.du.w; v.du.ms = G.du.ms; if (G.du.o) v.du.o = G.du.o; }
     }
@@ -4526,7 +4809,7 @@ function createGame(o) {
 
   // samo za testove
   function _score(pid, n) { const p = R.get(pid); if (p) p.score = n; }
-  return { sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
+  return { _pact: (a, b) => { const A = R.get(a), B = R.get(b); if (!A || !B || !krFree(A) || !krFree(B)) return false; krPactMake({}, A, B); return true; }, sfScenario, pactAction, priv, setOpt, addPlayer, addBot, setBots, setAvatar, setInput, syncPeers, start, skip, restart, view, stop: clear, _score, _td: () => TD.state, _tdf: () => TD, _p: (pid) => R.get(pid), _pyrUnits: (sc) => pyrUnitsOf(sc), _plan: () => plan.slice(), _G: G };
 }
 //#engine-end
 
@@ -4679,6 +4962,7 @@ function createGame(o) {
     pola: svgIc('<defs><linearGradient id="icp" x1="0" x2="1"><stop offset=".5" stop-color="#ffffff"/><stop offset=".5" stop-color="#e2c891"/></linearGradient></defs><circle cx="24" cy="24" r="21" fill="url(#icp)" stroke="#1a6f8a" stroke-width="2"/><path d="M24 3v42" stroke="#1a6f8a" stroke-width="2" stroke-dasharray="4 3"/><text x="13.5" y="30" text-anchor="middle" font-family="Fredoka, Arial Rounded MT Bold, sans-serif" font-weight="700" font-size="15" fill="#1a1530">50</text><text x="34.5" y="30" text-anchor="middle" font-family="Fredoka, Arial Rounded MT Bold, sans-serif" font-weight="700" font-size="15" fill="#06344a">50</text>'),
     stit: svgIc('<defs><linearGradient id="ict" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8f4ff"/><stop offset=".5" stop-color="#4a8dff"/><stop offset="1" stop-color="#1b3fa8"/></linearGradient></defs><path d="M24 3l17 6v12c0 11-7.5 20-17 24C14.5 41 7 32 7 21V9z" fill="url(#ict)" stroke="#e8f4ff" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 24l6 6 11-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'),
   };
+  ICON.oklada = '';
   for (const k in ICON) ICON[k] = '<img class="ic pw-img" src="ui/pw-' + k + '.webp" alt="" draggable="false">';
   const bugSvg = '<svg viewBox="0 0 60 60" aria-hidden="true"><defs><radialGradient id="bgb" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#e0a86a"/><stop offset="1" stop-color="#6b3f17"/></radialGradient></defs><path d="M12 30l-9-4M12 38l-10 2M48 30l9-4M48 38l10 2M14 45l-6 6M46 45l6 6" stroke="#4a2b10" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="30" cy="36" rx="20" ry="16" fill="url(#bgb)"/><path d="M30 22v30" stroke="#4a2b10" stroke-width="1.6" opacity=".5"/><circle cx="22" cy="34" r="3" fill="#f2c48d" opacity=".6"/><circle cx="30" cy="20" r="11" fill="#5a3412"/><circle cx="25" cy="18" r="4.2" fill="#fff"/><circle cx="35" cy="18" r="4.2" fill="#fff"/><circle cx="26" cy="19" r="2" fill="#000"/><circle cx="36" cy="19" r="2" fill="#000"/><path d="M24 26q6 5 12 0" stroke="#fff" stroke-width="2" fill="none"/><path d="M26 27v3M34 27v3" stroke="#fff" stroke-width="2"/></svg>';
   const bombSvg = '<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="bbg" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#70708c"/><stop offset=".55" stop-color="#23232f"/><stop offset="1" stop-color="#08080d"/></radialGradient></defs><circle cx="46" cy="60" r="34" fill="url(#bbg)"/><ellipse cx="33" cy="46" rx="9" ry="6" fill="#fff" opacity=".3"/><rect x="58" y="16" width="18" height="16" rx="3" fill="#555" transform="rotate(35 67 24)"/><path d="M72 18q10-13 19-6" stroke="#d99a35" stroke-width="4.5" fill="none"/><path d="M91 3l2.6 6.4L100 12l-6.4 2.6L91 21l-2.6-6.4L82 12l6.4-2.6z" fill="#ffcf4a"><animateTransform attributeName="transform" type="rotate" from="0 91 12" to="360 91 12" dur=".6s" repeatCount="indefinite"/></path></svg>';
@@ -5608,9 +5892,9 @@ function createGame(o) {
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
   function miniBoard(d, gain) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc);
-    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0))).map((p) => p.id) : [];
-    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
-      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
+    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0))).map((p) => p.id) : [];
+    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.ob ? '<span class="betb krb">🎲 +' + p.ob + '</span>' : '') + (gain && p.kb ? '<span class="betb krb' + (p.kb < 0 ? ' neg' : '') + '">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
+      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0) - (p.ob || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
   }
   function phoneEvents(d) {
     if (!d.ev || !d.ev.length) return '';
@@ -5644,7 +5928,7 @@ function createGame(o) {
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
       : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
-    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.opt || 0, d.pj || 0]);
+    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0, d.opt || 0, d.pj || 0]);
   }
 
   // ---------- efekti moći ----------
@@ -5862,8 +6146,8 @@ function createGame(o) {
 
   const CAST = (() => {
     let run = 0, fx = [], cv = null, ctx = null, stage = null, W = 1, H = 1, last = 0, looping = false;
-    const SND = { led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };
-    const COL = { led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };
+    const SND = { oklada: 'correct', led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };
+    const COL = { oklada: '#f0c66a', led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };
     const S = () => W / 960;
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -6174,7 +6458,7 @@ function createGame(o) {
           '<div class="home-sec"><button class="btn ghost" id="host">Otvori na TV-u</button><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Isprobaj igru</span><button class="home-link" id="demo">Igraj protiv botova</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v31</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v32</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -6360,6 +6644,7 @@ function createGame(o) {
     return '<div class="tdl lv2 rcx" data-mo="rc' + (+r.id || 0) + '" style="--el:' + el + 'ms"><span class="figs rc-figs">' + fig(A) + '<span class="rc-vs">VS</span>' + fig(B) + '</span><span class="tx"><b>' + (r.rev ? '🔥 Osveta' : '⚔️ Rivalski obračun') + '</b>' + res + '<span>' + esc(r.line || '') + '</span></span></div>';
   }
   function rcToggle(d) {
+    return '';   // rivalski obračun je uklonjen
     if (!d.opt) return '';
     if (!game) return d.opt.rc ? '<div class="lob-info">⚔️ Rivalski obračuni su uključeni</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l">⚔️ Rivalski obračuni<small>Dobrovoljni izazovi s malim ulogom (od 5. pitanja)</small></span><button class="tgl' + (d.opt.rc ? '' : ' off') + '" data-rcopt="' + (d.opt.rc ? 0 : 1) + '">' + (d.opt.rc ? 'Uključeno' : 'Isključeno') + '</button></div>';
@@ -6422,6 +6707,7 @@ function createGame(o) {
       (win ? '<span class="bt-coins tk-coins">' + '<i>🪙</i>'.repeat(3) + '</span>' : '') + '</span><span class="tx"><b class="tk-h">' + esc(r.h || '') + '</b>' + pts + '<span>' + esc(r.line || '') + '</span></span></div>';
   }
   function tkToggle(d) {
+    return '';   // krčmarove tajne oklade su uklonjene (oklada je sada moć)
     if (!d.opt) return '';
     if (!game) return d.opt.tk ? '<div class="lob-info">🍺 Krčmarove tajne ponude su uključene</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l">🍺 Krčmarove tajne ponude<small>Krčmar povremeno nudi igračima tajne oklade na uspjeh njihovih protivnika.</small></span><button class="tgl' + (d.opt.tk ? '' : ' off') + '" data-tkopt="' + (d.opt.tk ? 0 : 1) + '">' + (d.opt.tk ? 'Uključeno' : 'Isključeno') + '</button></div>';
@@ -6500,7 +6786,7 @@ function createGame(o) {
       R0.cand.slice().sort((x, y) => (y.rev + y.riv) - (x.rev + x.riv)).map((c) => { const p = pById(d, c.id); return p ? '<button class="pk-cand" data-rc="rcOffer" data-to="' + esc(c.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span>' + sfName(d, c.id) + (c.rev ? ' <em>🔥 osveta</em>' : c.riv ? ' <em>⚔️ rival</em>' : '') + '</span></button>' : ''; }).join('') + '</div></div>';
     return h;
   }
-  const SCN = [['offer', 'Bot mi šalje ponudu za pakt'], ['accept', 'Bot prihvaća moj pakt'], ['decline', 'Bot odbija moj pakt'], ['whisper', 'Bot mi šapne odgovor'], ['betray', 'Bot priprema izdaju'], ['loyal', 'Bot ostaje odan'], ['double', 'Oba partnera pripremaju izdaju']];
+  const SCN = [['krpact', 'Krčmar mi nudi pakt s botom'], ['betray', 'Bot (saveznik) priprema izdaju'], ['loyal', 'Bot (saveznik) ostaje odan'], ['challenge', 'Krčmar me pita da izazovem vođu'], ['task', 'Krčmar mi nudi tajni zadatak'], ['fav', 'Krčmar mi nudi uslugu (kategorija)']];
   // skriveni razvojni izbornik: 5 dodira na naslov „Tajni kutak” ili #dev u adresi (samo lokalni domaćin u testnom načinu s botovima)
   const sfDev = () => { if (SF.dev) return true; try { return /dev/.test(location.hash) || sessionStorage.getItem('mz_dev') === '1'; } catch (e) { return false; } };
   function sfScn(d) {
@@ -6528,6 +6814,7 @@ function createGame(o) {
   }
   // gumb 🗝️ Tajne (mirne faze) i kartica kutka; tijekom odgovaranja se zatvara (stanje ponuda ostaje)
   function sfKey(d, me) {
+    SF.open = false; return '';   // tipka Tajni kutak je uklonjena (Krčmar 2.0: sve se događa na ploči bodova)
     if (!phoneShown() || !me || !sfOnPV() || d.ph === 'lobby' || d.ph === 'final' || d.ph === 'deal' || sfBusyMe(d, me) || d.fin) { SF.open = false; return ''; }
     const n = sfUnread(d);
     const btn = '<button class="sf-key' + (n ? ' new' : '') + '" data-sfk="1" aria-label="Tajne' + (n ? ', nepročitano ' + n : '') + '"><span class="sf-ki">🗝️</span><span class="sf-kt">Tajne</span>' + (n ? '<span class="sf-badge">' + n + '</span>' : PV.k ? '<span class="sf-ally-dot" title="Savez">🍻</span>' : '') + '</button>';
@@ -6590,6 +6877,8 @@ function createGame(o) {
     document.querySelectorAll('#sfbox [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); pactSend({ k, id: +b.dataset.id }); }; });
     document.querySelectorAll('#sfbox [data-bt]').forEach((b) => { b.onclick = () => { SF.btAsk = false; AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); pactSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
     bindWhi();
+    bindKr(d);
+    bindRope(d);
     bind('sfready', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
   }
   function bsToggle(d) {
@@ -6613,6 +6902,110 @@ function createGame(o) {
       x.onpointerdown = (e) => { e.stopPropagation(); };
       x.onclick = (e) => { e.stopPropagation(); e.preventDefault(); AUDIO.play('whoosh'); pactSend({ k: 'whisper', c: +x.dataset.whi }); };
     });
+  }
+  // ===================== KRČMAR 2.0: sučelje ploče bodova =====================
+  // Ispod poretka: privatni dio (samo ovaj igrač) i „Nastavi”. Igra ide dalje kad svi potvrde (domaćin odlučuje).
+  function krReadyCount(d) { const ps = d.P.filter((p) => p.c && !p.b); return [ps.filter((p) => p.ok).length, ps.length]; }
+  // privatni dio ploče: ponuda pakta (blokira Nastavi dok ne odlučiš), savez + izdaja
+  function krPriv(d, me) {
+    if (!PV) return '';
+    if (PV.ko) {
+      const o = PV.ko;
+      const t = o.k === 'fav' ? '🗳️ Krčmarova usluga' : '📜 Tajni zadatak';
+      const sub = o.k === 'fav' ? esc(o.line) : esc(o.line) + '<br><span class="up">Uspjeh +' + o.win + '</span> · <span class="dn">neuspjeh −' + o.loss + '</span>';
+      return { block: 1, html: '<div class="pk-inv kr-card kr-off"><div class="pk-inv-h"><b>🍺 ' + t + '</b></div><div class="pk-inv-s">' + sub + '</div>' +
+        '<div class="pk-row"><button class="btn pk-acc" data-kro="1">Prihvati</button><button class="btn ghost pk-dec" data-kro="0">Odbij</button></div></div>' + krMine() };
+    }
+    const mine = krMine();
+    if (PV.kp) {
+      const o = PV.kp, m = pById(d, o.m);
+      if (o.ans == null) return { block: 1, html: '<div class="pk-inv kr-card"><div class="pk-inv-h"><span class="mini">' + (m ? avSvg(m.a, 'happy') : '') + '</span><b>🍺 Krčmar ti nudi tajni pakt s: ' + esc(o.x) + '</b></div>' +
+        '<div class="pk-inv-s">Oboje točno → riznica +100, jedan točno → +40. Pakt nastaje samo ako oboje prihvatite.</div>' +
+        '<div class="pk-row"><button class="btn pk-acc" data-krp="1">Prihvati</button><button class="btn ghost pk-dec" data-krp="0">Odbij</button></div></div>' };
+      return '<div class="kr-note">🍺 Čekamo krčmarov odgovor…</div>' + mine;
+    }
+    if (PV.k) {
+      const k = PV.k, m = pById(d, k.m);
+      let h = '<div class="sf-sec kr-ally"><div class="sf-ally"><span class="mini">' + (m ? avSvg(m.a, 'happy') : '') + '</span><span>🍻 <b>' + esc(m ? m.n : '?') + '</b></span><span class="sf-tre">💰 <b>' + fmtN(k.tre) + '</b></span></div>';
+      if (k.wait) h += '<div class="sf-note">Izdaja je moguća za ' + k.wait + (k.wait === 1 ? ' pitanje' : ' pitanja') + '.</div>';
+      else if (k.cb) {
+        if (k.bt) h += '<div class="sf-row"><span class="sf-bt on">🗡️ Izdaja pripremljena</span><button class="pk-b" data-bt="0">Odustani</button></div>';
+        else if (SF.btAsk) h += '<div class="sf-bt">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div><div class="pk-row"><button class="btn pk-acc" data-bt="1">Potvrdi</button><button class="btn ghost" data-sfbt="0">Odustani</button></div>';
+        else h += '<button class="sf-link sf-btask" data-sfbt="1">🗡️ Pripremi izdaju</button>';
+      }
+      return h + '</div>' + mine;
+    }
+    return mine;
+  }
+  // aktivni zadatak / usluga (mala oznaka)
+  function krMine() {
+    let h = '';
+    if (PV.kt) h += '<div class="kr-tag">📜 ' + esc(PV.kt.line) + (PV.kt.kind === 'st3' ? ' <b>' + PV.kt.n + '/3</b>' : '') + '</div>';
+    if (PV.kf) h += '<div class="kr-tag">🗳️ Tvoj glas bira sljedeću kategoriju</div>';
+    return h;
+  }
+  function krBox(d, me) {
+    if (!d.rw || !me) return '';
+    const [r, n] = krReadyCount(d), mine = me.ok || (L && L.sent);
+    let priv = krPriv(d, me);
+    if (d.lc && d.lc.st === 'o' && d.lc.a === me.id && !priv.block) priv = { block: 1, html: priv && typeof priv === 'object' ? priv.html || '' : priv || '' };
+    const go = mine ? '<div class="kr-wait">Čekamo ostale… <b>' + r + '/' + n + '</b></div>'
+      : priv.block ? '' : '<button class="btn win-cta kr-go" id="krok">Nastavi</button>' + (n > 1 ? '<div class="kr-wait">Spremno <b>' + r + '/' + n + '</b></div>' : '');
+    const ph0 = priv && typeof priv === 'object' ? priv.html || '' : priv || '';
+    const dev = PV && PV.bs && game && mode !== 'player' ? (sfDev() ? sfScn(d) : '<button class="kr-dev" data-sfdev="1" aria-label="Testni način">🤖</button>') : '';
+    return '<div class="kr-box">' + krChallenge(d, me) + ph0 + go + dev + '</div>';
+  }
+  function krTv(d) {
+    if (!d.rw) return '';
+    const [r, n] = krReadyCount(d);
+    return krChallenge(d, null) + (n ? '<div class="kr-wait tv" data-bk="krr" data-bv="' + r + '">Spremno <b>' + r + '/' + n + '</b></div>' : '');
+  }
+  function bindKr(d) {
+    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });
+    document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krPact', yes: b.dataset.krp === '1' }); }; });
+    bind('krok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
+  }
+  // ----- izazov vođi: javni prijedlog na ploči -----
+  function krChallenge(d, me) {
+    const o = d.lc; if (!o) return '';
+    const A = pById(d, o.a), B = pById(d, o.b), mine = me && me.id === o.a;
+    const head = '<div class="pk-inv kr-card kr-ch"><div class="pk-inv-h"><span class="mini">' + (A ? avSvg(A.a, 'attack') : '') + '</span><b>⚔️ ' + esc(A ? A.n : '?') + ', izazivaš li vođu ' + esc(B ? B.n : '?') + '?</b></div>' +
+      '<div class="pk-inv-s">Nadvlačenje konopa · ulog ' + o.sa + ' protiv ' + o.sb + ' · obrana krune +' + o.g + '</div>';
+    if (o.st === 'o') return head + (mine ? '<div class="pk-row"><button class="btn pk-acc" data-krc="1">Izazovi</button><button class="btn ghost pk-dec" data-krc="0">Ne ovaj put</button></div>' : '<div class="kr-note">' + esc(A ? A.n : '?') + ' odlučuje…</div>') + '</div>';
+    if (o.st === 'y') return head + '<div class="kr-note">⚔️ Izazov prihvaćen! Dvoboj kreće nakon ploče.</div></div>';
+    return head + '<div class="kr-note">🍺 Možda drugi put…</div></div>';
+  }
+  // ----- nadvlačenje konopa -----
+  function ropeBar(d) {
+    const r = d.rp || { pa: 0, pb: 0, m: 7 }, du = d.du, A = pById(d, du.a), B = pById(d, du.b);
+    const x = Math.max(-1, Math.min(1, (r.pa - r.pb) / r.m));
+    return '<div class="rope"><span class="rope-p a"><span class="mini">' + (A ? avSvg(A.a, x > 0 ? 'happy' : 'attack') : '') + '</span><b>' + esc(A ? A.n : '') + '</b><i>' + r.pa + '</i></span>' +
+      '<span class="rope-t"><span class="rope-line"></span><span class="rope-k" style="--x:' + (-x * 50).toFixed(1) + '%"></span><span class="rope-mid"></span></span>' +
+      '<span class="rope-p b"><i>' + r.pb + '</i><b>' + esc(B ? B.n : '') + '</b><span class="mini">' + (B ? avSvg(B.a, x < 0 ? 'happy' : 'attack') : '') + '</span></span></div>';
+  }
+  function ropePhone(d, me) {
+    const du = d.du, mine = me && (me.id === du.a || me.id === du.b);
+    if (!mine) return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="waiting">Gledaš dvoboj. Točno vuče, netočno vraća!</div>';
+    const list = d.rp.list, st = L.rp || (L.rp = { i: 0, r: [], fb: '', last: 1 });
+    const fb = st.fb ? '<div class="mg-fb ' + (st.last ? 'ok' : 'bad') + ' pop">' + esc(st.fb) + '</div>' : '<div class="mg-fb"></div>';
+    if (st.i >= list.length) return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="waiting">Nema više tvrdnji — čekamo kraj!</div>';
+    return timerHtml() + '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-rpv="1">Točno</button><button class="btn ghost" data-rpv="0">Netočno</button></div>' + fb;
+  }
+  function ropeTv(d) { return '<div class="tv-mid"><div class="du-k">⚔️ Nadvlačenje konopa</div>' + ropeBar(d) + '<div class="du-note">Točan odgovor vuče konop, netočan ga vraća.</div></div>'; }
+  function ropeResult(d) {
+    const du = d.du, rr = du.rr || {}, W = du.w ? pById(d, du.w) : null, Lp = du.w ? pById(d, du.w === du.a ? du.b : du.a) : null;
+    const pose = (id) => (!du.w ? 'idle' : id === du.w ? 'victory' : 'sad');
+    const res = !W ? 'Neriješeno — nitko ne gubi bodove.' : du.w === du.a ? '🏆 <b>' + esc(W.n) + '</b> ruši vođu! +' + rr.t + ' od ' + esc(Lp ? Lp.n : '') : '🛡️ <b>' + esc(W.n) + '</b> brani krunu! +' + rr.t + ' od ' + esc(Lp ? Lp.n : '') + ' · obrana krune +' + rr.g;
+    return '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + duelVs(d, pose) + '<div class="du-res">' + res + '</div><div class="du-ms">' + (rr.pa || 0) + ' : ' + (rr.pb || 0) + '</div>' + (du.o ? '<div class="du-note">' + esc(du.o) + '</div>' : '');
+  }
+  function bindRope(d) {
+    document.querySelectorAll('#app [data-krc]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krc === '1' ? 'confirm' : 'tap'); pactSend({ k: 'krCh', yes: b.dataset.krc === '1' }); }; });
+    document.querySelectorAll('#app [data-rpv]').forEach((b) => { b.onclick = () => {
+      const st = L.rp, list = d.rp && d.rp.list; if (!st || !list || st.i >= list.length) return;
+      const v = +b.dataset.rpv, ok = v === list[st.i][1];
+      st.r.push(v); st.i++; st.last = ok ? 1 : 0; st.fb = ok ? '✓ Vuci!' : '✗ Konop klizi';
+      AUDIO.play(ok ? 'tap' : 'wrong'); sendPartial({ r: st.r.slice() }); phoneRender(true);
+    }; });
   }
   const PACT_STEAL = 0.08;
   function bindPact(d) {
@@ -7015,7 +7408,8 @@ function createGame(o) {
         h = tvTop(d, 'Dvoboj') + timerHtml() + '<div class="tv-mid">' + duelVs(d) + '<div class="q-text">' + esc(d.q.t) + '</div><div class="opts">' +
           d.q.o.map((o, i) => '<div class="opt o' + i + '"><span class="shape">' + SHAPES[i] + '</span><span class="txt">' + esc(o) + '</span></div>').join('') + '</div></div>';
         break;
-      case 'duelResult': h = tvTop(d, 'Dvoboj') + '<div class="tv-mid">' + duelResultHtml(d, true) + '</div>'; break;
+      case 'rope': h = tvTop(d, 'Izazov vođi') + timerHtml() + ropeTv(d); break;
+      case 'duelResult': h = tvTop(d, 'Dvoboj') + '<div class="tv-mid">' + (d.du && d.du.rope ? ropeResult(d) : duelResultHtml(d, true)) + '</div>'; break;
       case 'secret': case 'secret2': h = tvTop(d, 'Pst…') + secretWait(d); break;
       case 'bet':
         h = tvTop(d, 'Kladionica je otvorena!') + timerHtml() + '<div class="tv-mid bet-mid"><div class="bet-t">Kladionica</div><div class="bet-sub">' + (d.cats && d.cw >= 0 ? 'Kategorija: <b>' + esc(d.cats[d.cw]) + '</b> · ' : '') + 'odaberite ulog na mobitelu</div><div class="bet-sub">Točan odgovor na sljedeće pitanje osvaja ulog, netočan ga gubi.</div></div>' + lineup(d, { check: true });
@@ -7041,7 +7435,7 @@ function createGame(o) {
           const el = Math.max(0, d.dur - d.ms), b = revBoard(d, el);
           h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
             '<div class="rv-a">' + qTextHtml(d, true) + revOpts(d, -1, true) + '</div>' +
-            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.pj ? '<div class="pj-cap">🏆 Utrka prema piramidi · 🪜 projekcija prema trenutačnim bodovima</div>' : '') + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + '</div></div></div>';
+            '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.pj ? '<div class="pj-cap">🏆 Utrka prema piramidi · 🪜 projekcija prema trenutačnim bodovima</div>' : '') + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + krTv(d) + '</div></div></div>';
           h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
           break;
         }
@@ -7169,7 +7563,7 @@ function createGame(o) {
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
       (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -7252,7 +7646,8 @@ function createGame(o) {
       }
       case 'duelIntro': h = center(head + momentHtml(d, duelIntroMo(d))); break;
       case 'duel': h = head + duelPhone(d, me); break;
-      case 'duelResult': h = head + duelResultHtml(d, false); break;
+      case 'rope': h = head + ropePhone(d, me); break;
+      case 'duelResult': h = head + (d.du && d.du.rope ? ropeResult(d) : duelResultHtml(d, false)); break;
       case 'secret': case 'secret2': h = head + secretPhone(d, me); break;
       case 'power': h = head + timerHtml() + powerPhone(d, me); break;
       case 'question': h = head + questionPhone(d, me); break;
@@ -7361,7 +7756,8 @@ function createGame(o) {
     return '<div class="tdl' + (m.t === 'Krčma pamti' ? ' mem' : '') + lv + '" data-mo="' + (+m.id || 0) + '" style="--el:' + el + 'ms"><span class="figs">' + figs + '</span><span class="tx"><b>' + esc(m.t) + '</b><span>' + esc(m.s || '') + '</span></span></div>';
   }
   function tdSting(d) { if (!d.mo && !d.rcr && !d.tkr) return; const at = 2700 + (d.ph === 'reveal' ? whT(d).end : 0), el0 = Math.max(0, d.dur - d.ms); if (el0 > at + 800) return; const s0 = d.s, wait = Math.max(0, at - el0); setTimeout(() => { if (s0 === d.s) AUDIO.play(d.mo ? d.mo.snd || 'stingSmall' : d.rcr ? 'stingRival' : d.tkr.k === 'win' ? 'stingUp' : 'stingSmall'); }, wait); }
-  function duelIntroMo(d) { return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 }; }
+  function duelIntroMo(d) { if (d.du.rope) return { t: '⚔️ Izazov vođi!', s: 'Nadvlačenje konopa: točno vuče, netočno vraća · ulog ' + d.du.sa + ' protiv ' + d.du.sb, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 };
+    return { t: 'Dvoboj!', s: (d.du.n ? d.du.n + ' ' : '') + 'Brži točan odgovor osvaja +' + d.du.bonus, a: [d.du.a, d.du.b], pose: ['attack', 'attack'], vs: 1 }; }
   function duelVs(d, pose) {
     const du = d.du, st = (id) => (pById(d, id) || {}).ok ? ' ok' : '';
     return '<div class="du-vs">' + tmFig(d, du.a, pose ? pose(du.a) : 'idle', d.ph === 'duel' ? st(du.a) : '') + '<span class="tm-vs">VS</span>' + tmFig(d, du.b, pose ? pose(du.b) : 'idle', d.ph === 'duel' ? st(du.b) : '') + '</div>';
@@ -7613,7 +8009,7 @@ function createGame(o) {
   }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
-    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0);
+    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0);
     return '<div class="statline"><div class="stat"><b data-bk="pos" data-bv="' + pos + '">' + pos + '.</b><span>mjesto</span></div><div class="stat"><b data-ck="mysc" data-cu="' + from + '" data-to="' + me.sc + '" data-cud="500" data-cdur="900">' + me.sc + '</b><span>bodova</span></div></div>';
   }
   function stepMeter(d, me) {
@@ -7635,7 +8031,7 @@ function createGame(o) {
     }
     if (L.pw) {
       const others = d.P.filter((p) => p.id !== PID && p.c);
-      return headH('Odaberi metu', 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
+      return headH(L.pw === 'oklada' ? 'Na koga se kladiš?' : 'Odaberi metu', L.pw === 'oklada' ? 'Ako oboje točno odgovorite, dobivaš i njegove bodove. Nitko neće znati na koga.' : 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
         '<div class="targets pw-step">' + others.map((p) => '<button class="target" data-t="' + esc(p.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + '</span></button>').join('') + '</div>' +
         '<button class="btn ghost" id="pwback">Natrag</button>';
     }
@@ -7647,7 +8043,7 @@ function createGame(o) {
     const mine = L.sent ? L.sent.c : -1;
     const hide = me.h || [];
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
-    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class="tag betag">Ulog ' + me.bt + '</span>' : '');
+    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class="tag betag">Ulog ' + me.bt + '</span>' : '') + (PV && PV.okl ? '<span class="tag">🎲 Oklada: ' + esc(nameOf(d, PV.okl)) + '</span>' : '');
     const opts = d.q.o.map((o, i) => {
       const gone = hide.includes(i);
       let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
@@ -7671,7 +8067,7 @@ function createGame(o) {
     }).join('') + '</div>';
   }
   function revBoard(d, el) {
-    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0)));
+    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0)));
     const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
     const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;
     return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
@@ -7708,7 +8104,7 @@ function createGame(o) {
     const wh = wheel(d);
     return '<style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
-      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + '</div></div>';
+      '<div class="rv-b"><div class="rv-sum">' + sum + '</div>' + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
   }
 
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
@@ -7878,7 +8274,7 @@ function createGame(o) {
     $app.querySelectorAll('[data-p]').forEach((b) => {
       b.onclick = () => {
         const k = b.dataset.p;
-        if (POWERS[k].atk) { L.pw = k; phoneRender(true); } else sendInput({ p: k });
+        if (POWERS[k].atk || POWERS[k].tg) { L.pw = k; phoneRender(true); } else sendInput({ p: k });
       };
     });
     $app.querySelectorAll('[data-t]').forEach((b) => { b.onclick = () => sendInput({ p: L.pw, t: b.dataset.t }); });
