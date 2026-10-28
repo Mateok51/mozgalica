@@ -48,3 +48,5 @@ Objava: sadržaj `web/site` kopira se u korijen grane `main`.
 - Brzi rad: ./build.sh (cijela izgradnja, jedan redak), ./check.sh (motor + testovi s maina), ./check.sh ui (i kratki preglednik-testovi)
 - Šifrirani rezervni relej (MQTT, AES-GCM, ključ sobe u QR/poveznici #KOD-ključ): web/relay-e2e.py (nakon port-main u web/transform.py);
   provjera: node web/relay-test.js (lokalni posrednik web/tools/mini-mqtt.js)
+- Krčmarovo prijestolje (alternativni završetak): motor v3/kr.py (blok „Krčmarovo prijestolje”), sučelje v4/throne-ui.js + v4/throne.css (make.py), TV predvorje u web/ui-fixes.py;
+  provjere: node v3/throne-test.js (motor), node v3/throne-ui-test.js (demo, mobitel + TV, ~3 min)

@@ -2825,3 +2825,34 @@ s = rep(s, "family=Fredoka:wght@500;600;700&family=Titan+One&family=Nunito:wght@
 _i = s.index('</style>'); s = s[:_i] + "  html:root { --font-display: \"Cinzel\", \"Trajan Pro\", Georgia, \"Times New Roman\", serif; }\n" + s[_i:]
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Font Cinzel OK')
+
+# ---- Krčmarovo prijestolje: dvorana, odabir završetka, posljednji rizik, ploča i pobjednik ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+_i = s.index('</style>'); s = s[:_i] + open(SP + '/v4/throne.css', encoding='utf-8').read() + s[_i:]
+s = rep(s, "  function lenPick(d) {", open(SP + '/v4/throne-ui.js', encoding='utf-8').read() + "  function lenPick(d) {")
+# predvorje: odabir završetka uz trajanje (mobitel: domaćin i ostali, demo)
+s = rep(s, "botStepper(d) + lenPick(d) + pactToggle(d) + rcToggle(d)", "botStepper(d) + lenPick(d) + endPick(d) + pactToggle(d) + rcToggle(d)")
+s = rep(s, "botStepper(d) + lenPick(d) + bsToggle(d) + '<button class=\"btn lob-cta\" id=\"dstart\"", "botStepper(d) + lenPick(d) + endPick(d) + bsToggle(d) + '<button class=\"btn lob-cta\" id=\"dstart\"")
+s = rep(s, "          cta = lenPick(d) + pactToggle(d) + rcToggle(d)", "          cta = lenPick(d) + endPick(d) + pactToggle(d) + rcToggle(d)")
+# mobitel: uvod u prijestolje i posljednji rizik
+s = rep(s, "      case 'fstart': {\n        const el = Math.max(0, d.dur - d.ms);",
+           "      case 'tstart': h = head + '<div class=\"th-intro\"><div class=\"p-title\">Krčmarovo prijestolje</div><div class=\"p-sub\">Svi bodovi ostaju. ' + ((d.th && d.th.n) || 5) + ' pitanja, zadnje vrijedi dvostruko. Pobjeđuje najbogatiji.</div>' + throneHtml(d) + '</div>'; break;\n"
+           "      case 'trisk': h = head + riskPhone(d, me); break;\n"
+           "      case 'fstart': {\n        const el = Math.max(0, d.dur - d.ms);")
+# TV
+s = rep(s, "      case 'fstart': {\n        h = tvTop(d, 'Bodovi iz kviza određuju početak') +",
+           "      case 'tstart': h = tvTop(d, 'Svi bodovi ostaju · pobjeđuje najbogatiji') + '<div class=\"tv-mid\" style=\"justify-content:center\"><div class=\"tv-title\">Krčmarovo prijestolje</div>' + throneHtml(d) + '<div class=\"actions\"><button class=\"btn ghost\" id=\"skip\">Dalje ▶</button></div></div>'; break;\n"
+           "      case 'trisk': h = tvTop(d, 'Tajni ulog prije zadnjeg pitanja') + riskTv(d); break;\n"
+           "      case 'fstart': {\n        h = tvTop(d, 'Bodovi iz kviza određuju početak') +")
+# ploča nakon pitanja u prijestolju: mala dvorana iznad poretka
+s = rep(s, "<div class=\"rv-b\"><div class=\"rv-sum\">' + sum + '</div>' + secretPublicLine(d, me) + b.html", "<div class=\"rv-b\">' + (d.th ? throneHtml(d, { mini: 1 }) : '') + '<div class=\"rv-sum\">' + sum + '</div>' + secretPublicLine(d, me) + b.html")
+# pobjednik: poredak po bodovima (prijestolje), u ploči bodovi umjesto stepenica
+s = rep(s, "    const ranked = d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);\n    const w = d.P.find((p) => p.id === d.win) || ranked[0];",
+           "    const ranked = d.th ? d.P.slice().sort((a, b) => (b.id === d.win) - (a.id === d.win) || b.sc - a.sc) : d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);\n    const w = d.P.find((p) => p.id === d.win) || ranked[0];")
+s = rep(s, "'</span><span class=\"sc\">' + (p.st || 0) + '/' + d.steps + '</span></div>').join('') + '</div>';", "'</span><span class=\"sc\">' + (d.th ? fmtN(p.sc) : (p.st || 0) + '/' + d.steps) + '</span></div>').join('') + '</div>';")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Prijestolje UI OK')
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "    if (d.ph === 'link') bindLink(d, me);", "    if (d.ph === 'link') bindLink(d, me);\n    if (d.ph === 'trisk') bindRisk();")
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Prijestolje bind OK')

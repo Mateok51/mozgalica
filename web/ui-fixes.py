@@ -92,3 +92,9 @@ rep("    if (measure(1) <= available) { finish(1); return; }", r"""    if (phone
 i = s.index('</style>'); s = s[:i] + "  .mboard.mb-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-right: 2px; mask-image: linear-gradient(180deg, transparent 0, #000 10px, #000 calc(100% - 14px), transparent 100%); }\n" + s[i:]
 open(SP + '/web/body.html', 'w', encoding='utf-8').write(s)
 print('ui-fixes 2 OK')
+
+# ---- TV predvorje: odabir završetka u postavkama ----
+s = open(SP + '/web/body.html', encoding='utf-8').read()
+rep("(L.tvSettings ? botStepper(d) + lenPick(d) + pactToggle(d)", "(L.tvSettings ? botStepper(d) + lenPick(d) + endPick(d) + pactToggle(d)")
+open(SP + '/web/body.html', 'w', encoding='utf-8').write(s)
+print('ui-fixes 3 OK')
