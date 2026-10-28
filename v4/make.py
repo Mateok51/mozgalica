@@ -2856,3 +2856,10 @@ s = open(SP + '/v4/page.html', encoding='utf-8').read()
 s = rep(s, "    if (d.ph === 'link') bindLink(d, me);", "    if (d.ph === 'link') bindLink(d, me);\n    if (d.ph === 'trisk') bindRisk();")
 open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
 print('Prijestolje bind OK')
+
+# ---- Piramida: tijekom odgovaranja bez stisnute piramide; „Točno / Netočno” stanu u okvir ----
+s = open(SP + '/v4/page.html', encoding='utf-8').read()
+s = rep(s, "return timerHtml(3000) + (d.ntv && !cr ? '<div class=\"phone-pyr compact\">' + pyramidHtml(d, false, { you: true }) + '</div>' : '') +", "return timerHtml(3000) +")
+_i = s.index('</style>'); s = s[:_i] + "  html .p-opts.two .p-opt, html .rv-opts.two .p-opt { font-size: clamp(0.95rem, 4.8vw, 1.3rem); letter-spacing: 0; padding-left: 6px; padding-right: 6px; }\n  html .p-opts.two .p-opt .otxt, html .rv-opts.two .p-opt .otxt { white-space: nowrap; }\n" + s[_i:]
+open(SP + '/v4/page.html', 'w', encoding='utf-8').write(s)
+print('Piramida odgovaranje OK')
