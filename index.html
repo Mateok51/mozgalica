@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-52THn7SUoMf+SRAwmnovJ78ULPxQk1w88AmN2bqY0yk=' 'sha256-6SgMG8t4Bp1P7oGwHhY/TuZCgfxOUlQMj3LVRFEv468=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-52THn7SUoMf+SRAwmnovJ78ULPxQk1w88AmN2bqY0yk=' 'sha256-7lZBqTaUEfew+Ug1ZyftKkXn1aDPkbPIiuIt2M98shY=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2409,6 +2409,26 @@
   .lob-tools .btn { min-height: 44px; font-size: .88rem; }
   .lob-count { font-size: .7em; white-space: nowrap; }
   .lob-settings { display: flex; flex-direction: column; gap: 8px; }
+  /* Odabir mete: veće dodirne površine umjesto dugog popisa. */
+  .phone .targets.pw-step { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; }
+  .phone .targets .target { grid-template-columns: 26px minmax(0, 1fr); gap: 2px 6px; min-height: 64px; }
+  .phone .targets .target .mini { width: 26px; height: 26px; }
+  .phone .targets .target .nm { white-space: normal; overflow-wrap: anywhere; font-size: .85rem; }
+  .phone .targets .target .sc { grid-column: 2; font-size: .72rem; }
+  .phone .pw-step .pw-card { border-width: 10px 16px; padding: 2px 4px; gap: 8px; }
+  .phone .pw-step .pw-card .pw-ico { width: 44px; height: 44px; }
+  .phone .pw-step .pw-card b { font-size: 1rem; }
+  .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: transform 120ms ease-out, filter 120ms ease-out; }
+  .lob-tools .btn[aria-expanded="true"], #tvSettings[aria-expanded="true"] { filter: brightness(1.15); }
+  .lob-tools .btn:active:not(:disabled), #tvSettings:active, .tgl:active:not(:disabled) { transform: scale(.96); }
+  @media (prefers-reduced-motion: reduce) {
+    .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: none; }
+    .lob-tools .btn:active:not(:disabled), #tvSettings:active, .tgl:active:not(:disabled) { transform: none; }
+  }
+  .net-reconnecting::before { content: ''; display: inline-block; width: 14px; height: 14px; flex: 0 0 14px; margin-right: 6px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: reconnectSpin 1s linear infinite; }
+  @keyframes reconnectSpin { to { transform: rotate(360deg); } }
+  #connectionNotice { position: fixed; left: max(12px, env(safe-area-inset-left, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 65; max-width: calc(100vw - 140px); padding: 6px 8px; border-radius: 8px; color: #fff3d5; background: #324322; font-size: .8rem; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { .net-reconnecting::before { animation: none; } }
   /* Dodirne površine ostaju dostupne i na niskim zaslonima. */
   .phone .bstep { width: 44px; height: 44px; flex: 0 0 44px; }
   .phone .tgl, .phone .home-link, .phone .demo-bar .btn.ghost { min-height: 44px; }
@@ -5886,7 +5906,7 @@ function createRecoverableGame(options, saved) {
   const hostConns = new Map();
   let joinTries = 0, relayTimer = null;
   let ppeer = null, pconn = null, waitTimer = null, retryTimer = null, perr = '', pcode = '', pname = '', netNote = '';
-  let S = null, lastSig = '', lastStateAt = 0;
+  let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;
   let L = freshLocal(-1);
   let clockEnds = 0, clockDur = 0;
   let installEvt = null;
@@ -5951,6 +5971,8 @@ function createRecoverableGame(options, saved) {
     L = freshLocal(-1);
     try { if (location.hash) history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
     mode = 'home';
+    lastLobbyFeedback = null; connectionWasLost = false;
+    const notice = document.getElementById('connectionNotice'); if (notice) notice.remove();
     render();
   }
 
@@ -6241,6 +6263,7 @@ function createRecoverableGame(options, saved) {
   let hostOff = false;
   function hostOffline(v) {
     if (hostOff === v) return; hostOff = v;
+    if (v) connectionWasLost = true; else if (connectionWasLost) { connectionWasLost = false; connectionNotice(); }
     netNote = v ? 'Soba se ponovno povezuje… novi igrači se mogu spojiti za koju sekundu.' : '';
     if (mode === 'hostp') phoneRender(true); else if (mode === 'host') render();
   }
@@ -6355,6 +6378,7 @@ function createRecoverableGame(options, saved) {
     if (mode !== 'player' || !S) return;
     if (prelay && prelay.ready) return;            // relej i dalje radi
     startPlayerRelay();
+    connectionWasLost = true;
     if (!netNote) { netNote = 'Veza je prekinuta. Spajam ponovno…'; phoneRender(true); }
     clearTimeout(retryTimer);
     retryTimer = setTimeout(() => {
@@ -6424,6 +6448,7 @@ function createRecoverableGame(options, saved) {
   }
 
   function applyState(d) {
+    if (connectionWasLost) { connectionWasLost = false; netNote = ''; connectionNotice(); }
     lastStateAt = Date.now();
     if (d && 'pv' in d) PV = d.pv || null;
     clearTimeout(waitTimer);
@@ -8037,6 +8062,7 @@ function createRecoverableGame(options, saved) {
     KEEP.grab(fresh);
     SCENE.swap(demoBar + h, fresh, 't:' + d.ph);
     fitScreen();
+    lobbyFeedback(d);
     pactToasts(d);
     MOTION.after('t:' + d.ph + ':' + d.s);
     KEEP.put();
@@ -8087,22 +8113,60 @@ function createRecoverableGame(options, saved) {
     return '<div class="pyramid' + (intro ? ' intro' : '') + (rev && !intro ? ' res' : '') + '">' + rows + '</div>';
   }
 
+  let lastLobbyFeedback = null;
+  function feedbackPulse(el, entering) {
+    if (!el || !el.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.animate(entering ? [{ opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }] :
+      [{ filter: 'brightness(1.5)' }, { filter: 'brightness(1)' }], { duration: entering ? 230 : 260, easing: 'ease-out' });
+  }
+  function lobbyFeedback(d) {
+    if (!d || d.ph !== 'lobby') { lastLobbyFeedback = null; return; }
+    const next = { key: d.code + ':' + mode, ids: new Set(d.P.map(p => p.id)), bots: d.P.filter(p => p.b).length, len: d.len || (d.opt && d.opt.len) };
+    const prev = lastLobbyFeedback; lastLobbyFeedback = next;
+    if (!prev || prev.key !== next.key) return;
+    $app.querySelectorAll('[data-player-id]').forEach(el => { if (!prev.ids.has(el.dataset.playerId)) feedbackPulse(el, true); });
+    if (prev.bots !== next.bots) feedbackPulse($app.querySelector('.lob-bots-c b'), false);
+    if (prev.len !== next.len) feedbackPulse($app.querySelector('.len-c.on, .len-info'), false);
+  }
+  function connectionNotice() {
+    let el = document.getElementById('connectionNotice');
+    if (!el) { el = document.createElement('div'); el.id = 'connectionNotice'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.textContent = '✓ Veza obnovljena'; feedbackPulse(el, true);
+    clearTimeout(connectionNotice.timer); connectionNotice.timer = setTimeout(() => el.remove(), 2600);
+  }
+
+  // Animiraj samo izričitu radnju, ne svako mrežno osvježavanje predvorja.
+  function lobbyChange(buttonId, update, panelSelector) {
+    const focused = document.activeElement && document.activeElement.id === buttonId;
+    update();
+    const button = document.getElementById(buttonId);
+    if (focused && button) button.focus({ preventScroll: true });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (button && button.animate) button.animate([
+      { transform: 'scale(.96)' }, { transform: 'scale(1.025)', offset: .65 }, { transform: 'none' }
+    ], { duration: 190, easing: 'ease-out' });
+    const panel = $app.querySelector(panelSelector);
+    if (panel && panel.animate) panel.animate([
+      { opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }
+    ], { duration: 180, easing: 'ease-out' });
+  }
+
   function tvLobby(d, demoBar) {
     const addr = esc(location.host + location.pathname.replace(/index\.html$/, ''));
     const svg = mode === 'demo' ? '' : qrSvg(appUrl() + '#' + d.code);
     const inv = mode === 'demo'
       ? '<div class="tvlob-inv"><span class="lob-code-l">Demo</span><span class="lob-addr">Botovi igraju s tobom. U pravoj igri ovdje su kod sobe i QR kod.</span></div>'
       : '<div class="tvlob-inv"><span class="lob-code-l">Pozovi igrače</span><span class="lob-code">' + esc(d.code) + '</span>' + (svg ? '<div class="lob-qr">' + svg + '</div>' : '') +
-        '<span class="lob-addr">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span>' + (netNote ? '<span class="lob-addr" style="color:#f0b070">' + esc(netNote) + '</span>' : '') + '</div>';
+        '<span class="lob-addr">Skeniraj QR kod ili otvori <b>' + addr + '</b> i upiši kod sobe.</span>' + (netNote ? '<span class="lob-addr net-reconnecting" role="status" style="color:#f0b070">' + esc(netNote) + '</span>' : '') + '</div>';
     const on = d.P.filter((p) => p.c && !p.b).length;
-    let slots = d.P.map((p) => '<div class="tvlob-slot' + (p.c ? '' : ' off') + '" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="pick-img">' + avSvg(p.a, 'idle') + '</span><span class="pick-nm">' + esc(p.n) + '</span>' + (p.b ? '<span class="pick-bot">BOT</span>' : '') + '</div>').join('');
+    let slots = d.P.map((p) => '<div class="tvlob-slot' + (p.c ? '' : ' off') + '" data-player-id="' + esc(p.id) + '" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="pick-img">' + avSvg(p.a, 'idle') + '</span><span class="pick-nm">' + esc(p.n) + '</span>' + (p.b ? '<span class="pick-bot">BOT</span>' : '') + '</div>').join('');
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
     const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
     $app.innerHTML = demoBar +
       '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? '<button class="btn ghost" id="tvSettings" aria-expanded="' + !!L.tvSettings + '">Postavke igre</button>' + (L.tvSettings ? botStepper(d) + lenPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
       '<div class="tvlob-grid">' + slots + '</div>' +
       '<div class="tvlob-act"><button class="btn lob-cta" id="start"' + (on < 1 ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="home-link" id="quit">Odustani</button></div></div></div>';
-    bind('tvSettings', () => { L.tvSettings = !L.tvSettings; render(); });
+    bind('tvSettings', () => lobbyChange('tvSettings', () => { L.tvSettings = !L.tvSettings; render(); }, L.tvSettings ? '.tvlob-act' : '.tvlob-side'));
     bind('start', () => game.start());
     if (game) { bindBots(d); bindOpt(); }
     bind('quit', reset);
@@ -8126,7 +8190,7 @@ function createRecoverableGame(options, saved) {
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem"><span class="lt">Trivia</span><span class="lt">Tavern</span></div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
     const demoBar = (mode === 'demo' ? '<div class="demo-bar"><span class="pill">DEMO</span><button class="btn ghost" id="toTv">Pogledaj TV</button></div>' : '') +
-      (netNote ? '<div class="err" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
+      (netNote ? '<div class="err net-reconnecting" role="status" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
     const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
@@ -8140,7 +8204,7 @@ function createRecoverableGame(options, saved) {
             '<span class="pick-img">' + avSvg(i, me.a === i ? 'happy' : 'idle') + '</span><span class="pick-nm">' + esc(a.n) + '</span>' + (tk ? '<span class="pick-tk">Zauzeto</span>' : '') + '</button>'; }).join('');
         L.popAv = null;
         const hostId = d.ntv && d.P.length ? d.P[0].id : null;
-        const rows = d.P.map((p) => '<div class="lob-row" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + (p.id === hostId ? '<span class="crown" title="Domaćin">♛</span>' : '') + (p.id === PID ? '<span class="you">Ti</span>' : '') + '</span>' +
+        const rows = d.P.map((p) => '<div class="lob-row" data-player-id="' + esc(p.id) + '" data-a="' + p.a + '"' + (p.b ? ' data-bot="1"' : '') + '><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + (p.id === hostId ? '<span class="crown" title="Domaćin">♛</span>' : '') + (p.id === PID ? '<span class="you">Ti</span>' : '') + '</span>' +
           (p.b ? '<span class="st bot">🤖 Bot</span></div>' : '<span class="st' + (p.c ? '' : ' off') + '">' + (p.c ? '✓ U sobi' : 'Nije povezan') + '</span></div>')).join('');
         let invite = '', cta = '';
         if (mode === 'hostp') {
@@ -8271,6 +8335,7 @@ function createRecoverableGame(options, saved) {
     SCENE.swap(demoBar + h, freshP, 'p:' + d.ph);
     $app.classList.toggle('lobfit', !!d && d.ph === 'lobby');
     fitScreen();
+    lobbyFeedback(d);
     MOTION.after('p:' + d.ph + ':' + d.s);
     KEEP.put();
     if (freshP) $app.classList.add('fresh');
@@ -8907,8 +8972,8 @@ function createRecoverableGame(options, saved) {
     bind('toTv', () => { demoView = 'tv'; render(); });
     bind('leave', reset);
     bind('leave2', reset);
-    bind('lobAvatar', () => { L.lobPanel = L.lobPanel === 'avatar' ? null : 'avatar'; phoneRender(true); });
-    bind('lobSettings', () => { L.lobPanel = L.lobPanel === 'settings' ? null : 'settings'; phoneRender(true); });
+    bind('lobAvatar', () => lobbyChange('lobAvatar', () => { L.lobPanel = L.lobPanel === 'avatar' ? null : 'avatar'; phoneRender(true); }, '.av-grid'));
+    bind('lobSettings', () => lobbyChange('lobSettings', () => { L.lobPanel = L.lobPanel === 'settings' ? null : 'settings'; phoneRender(true); }, '.lob-settings'));
     bind('dstart', () => game.start());
     if (d && d.ph === 'lobby' && game) { bindBots(d); bindOpt(); }
     bind('dagain', () => { game.restart(); });
@@ -8916,7 +8981,7 @@ function createRecoverableGame(options, saved) {
     bind('htok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
     bindLeg(d);
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });
-    bind('lobInv', () => { L.inv = true; phoneRender(true); });
+    bind('lobInv', () => lobbyChange('lobInv', () => { L.inv = true; phoneRender(true); }, '.inv-card'));
     bind('invClose', () => { L.inv = false; phoneRender(true); });
     { const m = document.getElementById('invModal'); if (m) m.onclick = (e) => { if (e.target === m) { L.inv = false; phoneRender(true); } }; }
     // predvorje: popis igrača se pomiče sam za sebe; pamti položaj i pokaži da ima još redova
