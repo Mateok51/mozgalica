@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-TsWqgUmsGVoWXO+rljR1zWKSnSLUpLDxEEk0gG/d6FM=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-b3hz1m6oKr0ROZvTD4v9f4IcXVXu5h/06ky7W7yjvWk=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -107,6 +107,23 @@
   .o3 { --c1: #4ff0a0; --c2: #10a35c; --c3: #075c33; }
   .av { display: block; width: 100%; height: auto; overflow: visible; }
   .av.spr { aspect-ratio: 1; object-fit: contain; transform-origin: 50% 100%; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35)); -webkit-user-drag: none; user-select: none; }
+  /* Njuško: animirani sloj ima isti kvadrat kao original; ako nije učitan, ostaje statična slika. */
+  .dog-avatar { position: relative; aspect-ratio: 1; }
+  .dog-avatar .dog-still { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .dog-avatar .dog-anim { display: none; position: absolute; inset: 0; background: 0 0 / 200% 200% no-repeat; pointer-events: none; }
+  .dog-avatar.m-idle .dog-anim { background-image: url("chars/njusko/idle-anim.webp"); --dog-duration: 2.4s; }
+  .dog-avatar.m-happy .dog-anim { background-image: url("chars/njusko/happy-anim.webp"); --dog-duration: 1.8s; }
+  .dog-avatar.m-sad .dog-anim { background-image: url("chars/njusko/sad-anim.webp"); --dog-duration: 3s; }
+  .dog-avatar.m-shocked .dog-anim { background-image: url("chars/njusko/shocked-anim.webp"); --dog-duration: 2s; }
+  .dog-avatar.m-attack .dog-anim { background-image: url("chars/njusko/attack-anim.webp"); --dog-duration: 1.5s; }
+  .dog-avatar.m-victory .dog-anim { background-image: url("chars/njusko/victory-anim.webp"); --dog-duration: 1.8s; }
+  @media (prefers-reduced-motion: no-preference) {
+    html.dog-ready-idle .dog-avatar.m-idle .dog-still, html.dog-ready-happy .dog-avatar.m-happy .dog-still, html.dog-ready-sad .dog-avatar.m-sad .dog-still, html.dog-ready-shocked .dog-avatar.m-shocked .dog-still, html.dog-ready-attack .dog-avatar.m-attack .dog-still, html.dog-ready-victory .dog-avatar.m-victory .dog-still { visibility: hidden; }
+    html.dog-ready-idle .dog-avatar.m-idle .dog-anim, html.dog-ready-happy .dog-avatar.m-happy .dog-anim, html.dog-ready-sad .dog-avatar.m-sad .dog-anim, html.dog-ready-shocked .dog-avatar.m-shocked .dog-anim, html.dog-ready-attack .dog-avatar.m-attack .dog-anim, html.dog-ready-victory .dog-avatar.m-victory .dog-anim { display: block; animation: dogIdleFrames var(--dog-duration) steps(1, end) infinite; animation-delay: calc(-1 * var(--pel, 0ms)); }
+    .mini .dog-avatar .dog-still, .lob .pick-img .dog-avatar .dog-still { visibility: visible !important; }
+    .mini .dog-avatar .dog-anim, .lob .pick-img .dog-avatar .dog-anim { display: none !important; }
+  }
+  @keyframes dogIdleFrames { 0%, 100% { background-position: 0% 0%; } 25% { background-position: 100% 0%; } 50% { background-position: 0% 100%; } 75% { background-position: 100% 100%; } }
   .spr-vila.m-idle { animation: sprHover 2.8s ease-in-out infinite; }
   .spr-ovan.m-idle { animation: sprBreath 2.4s ease-in-out infinite; }
   .spr.m-happy { animation: sprJump 1.1s cubic-bezier(0.3, 0, 0.4, 1) infinite; }
@@ -1206,6 +1223,7 @@
     box-shadow: inset 0 0 0 1px rgba(196, 146, 66, 0.5); transition: box-shadow 0.15s, filter 0.15s; }
   .lob .av-pick .pick-img { position: relative; aspect-ratio: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
   .lob .av-pick .pick-img > img, .lob .av-pick .pick-img > svg { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; animation: none; filter: none; transform: none; }
+  .lob .av-pick .pick-img > .dog-avatar { width: 100%; height: 100%; animation: none; filter: none; transform: none; }
   .lob .av-pick .pick-img > svg { width: 80%; height: 80%; }
   .lob .av-pick .pick-nm { display: block; text-align: center; font-family: var(--font-body); font-weight: 900; font-size: 0.84rem; color: #f3e3c4; text-shadow: none; line-height: 1.2; letter-spacing: 0; }
   .lob .av-pick .pick-tk { display: block; text-align: center; font-family: var(--font-body); font-weight: 800; font-size: 0.68rem; color: rgba(243, 227, 196, 0.65); line-height: 1.1; }
@@ -2717,11 +2735,23 @@
   }
   const avCache = {};
   const PRE_AV = new Set(), PRE_AV_IMG = [];
+  const dogSheetsRequested = new Set();
+  function preloadDogSheet(pose) {
+    if (dogSheetsRequested.has(pose) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    dogSheetsRequested.add(pose);
+    const im = new Image();
+    im.onload = () => { if (im.naturalWidth > 0 && im.naturalHeight > 0) document.documentElement.classList.add('dog-ready-' + pose); };
+    im.src = 'chars/njusko/' + pose + '-anim.webp';
+  }
   function avSvg(i, mood) {
     const A = AV[i] || AV[0];
     if (A.spr) {
       const pose = SPR_POSES.includes(mood) ? mood : mood === 'dizzy' ? 'sad' : 'idle';
       if (!PRE_AV.has(A.spr)) { PRE_AV.add(A.spr); for (const ps of SPR_POSES) { const im = new Image(); im.src = 'chars/' + A.spr + '/' + ps + '.webp'; PRE_AV_IMG.push(im); } }
+      if (A.spr === 'njusko') {
+        preloadDogSheet(pose);
+        return '<span class="av spr spr-njusko m-' + pose + ' dog-avatar" aria-hidden="true"><img class="dog-still" src="chars/njusko/' + pose + '.webp" alt="" draggable="false" decoding="sync"><span class="dog-anim"></span></span>';
+      }
       return '<img class="av spr spr-' + A.spr + ' m-' + pose + '" src="chars/' + A.spr + '/' + pose + '.webp" alt="" draggable="false" decoding="sync">';
     }
     if (mood in OLD_MOOD) mood = OLD_MOOD[mood];
