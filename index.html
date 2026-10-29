@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-XEeBIIIcvJaqmXqQmHnWhPeV0FDHAkORzlQHBEieIEU=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-y4tLS1tBWYjnhXH7zSkYg4JIKQvjNCH5DeVsfCFUT7A=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2410,6 +2410,7 @@
   .lob-tools .btn { min-height: 44px; font-size: .88rem; }
   .lob-count { font-size: .7em; white-space: nowrap; }
   .lob-settings { display: flex; flex-direction: column; gap: 8px; }
+  #app.lobfit .waiting-room .lob-players.lob-scroll, #app.lobfit .waiting-room .lob-panel-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; flex: none; }
   /* Odabir mete: veće dodirne površine umjesto dugog popisa. */
   .phone .targets.pw-step { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; }
   .phone .targets .target { grid-template-columns: 26px minmax(0, 1fr); gap: 2px 6px; min-height: 64px; }
@@ -2554,6 +2555,20 @@
   .risk-c .risk-i { font-size: 1.8rem; line-height: 1; } .risk-c b { display: block; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; } .risk-c small { font-size: 0.85rem; font-weight: 800; color: #ffe2a6; }
   .risk-c.on { box-shadow: inset 0 0 0 2px #fff3c2, 0 0 0 2px #f0c66e, 0 0 18px rgba(255, 214, 120, 0.8), 0 3px 0 #1e1006; transform: scale(1.02); }
   .risk-c.dim { filter: brightness(0.55) saturate(0.6); }
+  /* Dugi popisi u završnici imaju vlastiti prostor; ostatak zaslona ostaje čitljiv. */
+  .phone .fs-rows, .phone .th-court { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .phone .fs-rows { max-height: clamp(90px, 18vh, 160px); flex: none; }
+  .phone .th-court { max-height: clamp(75px, 16vh, 145px); }
+  .phone .fs-row .nm, .phone .th-ch b { white-space: normal; overflow-wrap: anywhere; line-height: 1.15; }
+  @media (max-height: 700px) {
+    .phone .throne-hall { --TH: 115px; }
+    .phone .throne-hall.mini { --TH: 60px; }
+    .phone .risk { gap: 6px; }
+    .phone .fs .phone-pyr.big .pyramid { --H: clamp(26px, 5vh, 35px); }
+    .phone .winscr { padding-bottom: 0; }
+    .phone .win-hero { max-width: 220px; }
+    .phone.final-question > .q-area { max-height: 32vh; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  }
   @media (prefers-reduced-motion: reduce) { .th-glow, .th-crown, .th-crown.th-drop, .th-king.th-new, .th-ch, .th-ch.th-old { animation: none !important; } }
   html .p-opts.two .p-opt, html .rv-opts.two .p-opt { font-size: clamp(0.95rem, 4.8vw, 1.3rem); letter-spacing: 0; padding-left: 6px; padding-right: 6px; }
   html .p-opts.two .p-opt .otxt, html .rv-opts.two .p-opt .otxt { white-space: nowrap; }
@@ -2572,7 +2587,7 @@
   html .swp-side.a { background: linear-gradient(180deg, #3a6aa0, #1c3a5e); }
   html .swp-side.b { background: linear-gradient(180deg, #b8482a, #6a2210); }
   html .swp-side .swp-arr { font-size: 1rem; color: #ffe2a6; opacity: 1; }
-  html .swp-side b { font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; letter-spacing: 0; text-transform: none; line-height: 1.15; color: #fff3d6; hyphens: manual; overflow-wrap: normal; word-break: normal; }
+  html .swp-side b { font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; letter-spacing: 0; text-transform: none; line-height: 1.15; color: #fff3d6; hyphens: manual; overflow-wrap: anywhere; word-break: normal; }
   html .swp-side i { font-size: 0.8rem; background: rgba(0, 0, 0, 0.3); color: #ffe2a6; }
   html .swp-side:active { transform: scale(0.97); }
   html .swp-btns { margin-top: -2px; }
@@ -2586,6 +2601,10 @@
   @media (max-height: 700px) { .phone .logo:has(.lt), .center .logo:has(.lt) { width: min(66vw, 28vh, 340px); } }
   /* stalni elementi zadržavaju veličinu i kad se ostatak ekrana smanji da sve stane */
   #app > .p-top, #app > .timer, #app > .bar-row { zoom: calc(1 / var(--fitz, 1)); }
+  /* Glavne tipke ostaju jednake veličine i kada se prilagođava sadržaj faze. */
+  #app.phone > button.btn { zoom: calc(1 / var(--fitz, 1)); }
+  .phone .pw-cards.fit-scroll, .phone .targets.fit-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; flex: none; }
+  .phone.final-question .q-area.more-answers::after { content: '↓ Povuci za ostale odgovore'; position: sticky; bottom: 0; display: block; height: 24px; margin-top: -24px; pointer-events: none; text-align: center; font: 800 12px/24px var(--font-body); color: #fff3d6; background: linear-gradient(90deg, transparent, rgba(35, 18, 7, .95) 20%, rgba(35, 18, 7, .95) 80%, transparent); text-shadow: 0 1px 2px #000; }
   /* likovi u otkrivanju kreću s vlastitog mjesta u redu likova (vidljivi od prvog trenutka) */
   @keyframes walkIn { from { transform: translate(var(--wx), var(--wy, 70vh)); opacity: var(--wo, 0); } 12% { opacity: 1; } }
   .mboard.mb-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-right: 2px; mask-image: linear-gradient(180deg, transparent 0, #000 10px, #000 calc(100% - 14px), transparent 100%); }
@@ -5795,7 +5814,16 @@
     KEEP.grab(freshP);
     SCENE.swap(demoBar + h, freshP, 'p:' + d.ph);
     $app.classList.toggle('lobfit', !!d && d.ph === 'lobby');
+    $app.classList.toggle('final-question', !!d && d.ph === 'fq');
     fitScreen();
+    if (d.ph === 'fq') {
+      const area = $app.querySelector('.q-area');
+      if (area) {
+        const hint = () => area.classList.toggle('more-answers', area.scrollHeight > area.clientHeight + 1 && area.scrollTop + area.clientHeight < area.scrollHeight - 2);
+        area.addEventListener('scroll', hint, { passive: true });
+        hint();
+      }
+    }
     walkFromRow();
     lobbyFeedback(d);
     MOTION.after('p:' + d.ph + ':' + d.s);
@@ -6149,7 +6177,7 @@
       return A.getBoundingClientRect().height;
     };
     const key = phone && S && S.q ? [S.code, S.q.n, innerWidth, innerHeight].join(':') : null;
-    const pk = S ? [S.s, S.ph, innerWidth, innerHeight].join(':') : null;
+    const pk = S ? [S.s, S.ph, S.ph === 'power' ? (L.pw || '') : S.ph === 'lobby' ? (L.lobPanel || '') : '', innerWidth, innerHeight].join(':') : null;
     const finish = (scale) => {
       // ista faza: ne raste natrag, a sitna razlika (do 3 %) ne mijenja mjerilo; jače smanjenje samo ako sadržaj stvarno ne stane
       if (phaseFit && phaseFit.key === pk) scale = scale >= phaseFit.scale * 0.97 ? phaseFit.scale : scale;
@@ -6159,6 +6187,30 @@
       phaseFit = { key: pk, scale };
     };
     if (phone) {
+      if (S && S.ph === 'lobby') {
+        const players = A.querySelector('.waiting-room .lob-players');
+        const panel = A.querySelector('.waiting-room .lob-settings, .waiting-room .av-grid');
+        for (const [el, minH, cls] of [[players, 60, 'lob-scroll'], [panel, 96, 'lob-panel-scroll']]) {
+          if (!el) continue;
+          el.style.maxHeight = ''; el.classList.remove(cls);
+          const over = measure(1) - available;
+          if (over > 1) {
+            el.style.maxHeight = Math.max(minH, Math.floor(el.getBoundingClientRect().height - over - 4)) + 'px';
+            el.classList.add(cls);
+          }
+        }
+      }
+      // Dugačak izbor moći ili igrača skrola se unutar popisa, umjesto da smanji cijeli ekran.
+      const choices = S && S.ph === 'power' && A.querySelector(L.pw ? '.targets' : '.pw-cards');
+      if (choices) {
+        choices.style.maxHeight = ''; choices.classList.remove('fit-scroll');
+        const over = measure(1) - available;
+        if (over > 1) {
+          const minH = L.pw ? 140 : 150;
+          const height = Math.max(minH, Math.floor(choices.getBoundingClientRect().height - over - 4));
+          choices.style.maxHeight = height + 'px'; choices.classList.add('fit-scroll');
+        }
+      }
       const mb = A.querySelector('.mboard');
       if (mb) {
         mb.style.maxHeight = ''; mb.classList.remove('mb-scroll');
@@ -6327,7 +6379,7 @@
     const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
     const wh = wheel(d);
     return '<div class="timer spent" aria-hidden="true"><div style="width:0"></div></div><div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span aria-hidden="true">0</span></div><style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
-      '<div class="rv-a">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + (none ? '<div class="rv-sum">Vrijeme je isteklo</div>' : '') + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
+      '<div class="rv-a">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
       '<div class="rv-b">' + (d.th ? throneHtml(d, { mini: 1 }) : '') + '<div class="rv-sum">' + sum + '</div>' + secretPublicLine(d, me) + b.html + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.id === PID ? 'ti' : b.lead.n) + '!</div>' : '') + krBox(d, me) + '</div></div>';
   }
 
@@ -6408,13 +6460,15 @@
         dx = (e.clientX - x0) / scale; dy = (e.clientY - y0) / scale;
         if (!moved && Math.hypot(dx, dy) < 5) return;
         moved = true;
-        card.style.transform = 'translate(' + dx + 'px,' + dy * 0.35 + 'px) rotate(' + tilt(dx) + 'deg)';
+        card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + tilt(dx) + 'deg)';
         glow(dx);
       };
       const end = (e, cancel) => {
         if (e.pointerId !== id) return;
         id = null; try { card.releasePointerCapture(e.pointerId); } catch (er) {}
         card.classList.remove('drag');
+        const bin = [...sides].find((side) => { const r = side.getBoundingClientRect(); return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom; });
+        if (!cancel && moved && bin) return commit(+bin.dataset.go, dx, dy);
         const v = Math.abs(dx) / Math.max(1, performance.now() - t0);
         if (!cancel && moved && (Math.abs(dx) > thr() || (v > 0.55 && Math.abs(dx) > 28))) return commit(dx > 0 ? 1 : 0, dx, dy);
         card.classList.add('snap'); card.style.transform = ''; glow(0);
