@@ -24,7 +24,8 @@ const poses = ['idle', 'happy', 'sad', 'shocked', 'attack', 'victory'];
         const fixture = document.createElement('div'); fixture.id = 'dog-fixture';
         fixture.innerHTML = poses.map(p => '<div id="dog-' + p + '" style="width:150px">' + dogTest.avatar(7, p) + '</div>').join('') +
           '<div class="mini" style="width:40px;height:40px">' + dogTest.avatar(7, 'idle') + '</div>' +
-          '<div class="lob"><div class="av-pick"><div class="pick-img" style="width:80px;height:80px">' + dogTest.avatar(7, 'happy') + '</div></div></div>';
+          '<div class="lob"><div class="av-pick"><div class="pick-img" style="width:80px;height:80px">' + dogTest.avatar(7, 'happy') + '</div></div>' +
+          '<div class="av-pick me"><div class="pick-img" style="width:80px;height:80px">' + dogTest.avatar(7, 'happy') + '</div></div></div>';
         document.body.append(fixture);
       }, poses);
       if (reducedMotion === 'no-preference') {
@@ -40,17 +41,19 @@ const poses = ['idle', 'happy', 'sad', 'shocked', 'attack', 'victory'];
             await anim.evaluate(e => getComputedStyle(e).display) !== (active ? 'block' : 'none')) throw Error(pose + ': incorrect animated or fallback state');
         if (active) {
           const positions = await anim.evaluate(e => {
-            const a = e.getAnimations().find(x => x.animationName === 'dogIdleFrames');
+            const a = e.getAnimations().find(x => /^dog(?:Idle|Happy|Sad)?Frames$/.test(x.animationName));
             const duration = a.effect.getTiming().duration; a.pause();
-            return [0, .26, .51, .76].map(t => { a.currentTime = duration * t; return getComputedStyle(e).backgroundPosition; });
+            return Array.from({ length: 100 }, (_, i) => { a.currentTime = duration * i / 100; return getComputedStyle(e).backgroundPosition; });
           });
           if (new Set(positions).size !== 4) throw Error(pose + ': not all four frames are displayed');
         }
       }
-      for (const target of [page.locator('.mini .dog-avatar'), page.locator('.lob .pick-img .dog-avatar')]) {
+      for (const target of [page.locator('.mini .dog-avatar'), page.locator('.lob .av-pick:not(.me) .dog-avatar')]) {
         if (await target.locator('.dog-still').evaluate(e => getComputedStyle(e).visibility) !== 'visible' ||
             await target.locator('.dog-anim').evaluate(e => getComputedStyle(e).display) !== 'none') throw Error('Small avatar must remain static');
       }
+      const selected = page.locator('.lob .av-pick.me .dog-avatar');
+      if (await selected.locator('.dog-anim').evaluate(e => getComputedStyle(e).display) !== (reducedMotion === 'reduce' ? 'none' : 'block')) throw Error('Selected lobby avatar has incorrect motion');
       console.log(reducedMotion + ': six poses, fallback, geometry and reduced motion OK');
       await page.close();
     }
