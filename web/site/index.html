@@ -409,6 +409,8 @@
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    /* Ne stvaraj prijelaz za zoom/širinu: fitScreen ih mjeri odmah nakon promjene. */
+    #app { transition-property: none !important; }
   }
   /* ---------- prikaz bacanja moći ---------- */
   .cast-mid { justify-content: center; }
@@ -767,11 +769,12 @@
   .bar-row { margin-top: auto; position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 4px; padding: 0 6px 0; z-index: 0; }
   .bar-row::after { content: ""; position: absolute; left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); bottom: -26px; height: 34px; z-index: -1;
     background: var(--woodgrain), linear-gradient(180deg, #a8743f 0, #8a5a30 5px, #6e4424 12px, #4a2c17 100%); box-shadow: 0 -2px 0 rgba(255, 220, 170, 0.35), 0 -10px 20px rgba(0, 0, 0, 0.35); }
-  .bar-row .bw { width: min(19%, 78px); display: flex; flex-direction: column; align-items: center; position: relative; }
+  /* Stalno mjesto za status čuva položaj i veličinu lika prije i nakon odgovora. */
+  .bar-row .bw { width: min(19%, 78px); display: flex; flex-direction: column; align-items: center; position: relative; padding-bottom: 20px; }
   .bar-row .bw .nm { font: 900 0.72rem var(--font-body); color: var(--ink); background: var(--woodgrain), linear-gradient(180deg, var(--wood-hi), var(--wood) 60%, var(--wood-lo)); border-radius: 6px; padding: 0 6px; margin-top: -4px; box-shadow: inset 0 0 0 1px rgba(255, 210, 140, 0.4); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; position: relative; z-index: 1; }
   .bar-row .bw.me .nm { box-shadow: inset 0 0 0 1.5px #ffd27a, 0 0 10px rgba(255, 180, 70, 0.5); }
-  .bar-row .bw .ok { position: absolute; top: -4px; right: 0; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 900; color: #17360c; background: radial-gradient(circle at 35% 30%, #d9f7a6, #9be36a 50%, #4f8f45); }
-  .bar-row .bw .glow { position: absolute; left: 10%; right: 10%; bottom: 6px; height: 10px; border-radius: 50%; background: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%); }
+  .bar-row .bw .ok { position: absolute; bottom: 1px; left: calc(50% - 8px); width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 900; color: #17360c; background: radial-gradient(circle at 35% 30%, #d9f7a6, #9be36a 50%, #4f8f45); }
+  .bar-row .bw .glow { position: absolute; left: 10%; right: 10%; bottom: 26px; height: 10px; border-radius: 50%; background: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%); }
   .phone .bar-row { justify-content: flex-start; padding-right: 108px; gap: 2px; }
   .phone .bar-row .bw { width: min(16%, 62px); }
   /* ===================== TRIVIA TAVERN: naslikani elementi =====================
@@ -2325,7 +2328,7 @@
   /* predvorje na nižim ekranima: popis igrača je skrolabilan i manji, pojašnjenje testnog načina se skriva, avatari su kompaktniji */
   #app.lobfit .lob-players { min-height: 72px; }
   @media (max-height: 880px) { .lob-opt-l small { display: none; } }
-  @media (max-height: 800px) { .av-pick .pick-img { height: 56px; } .av-pick { min-height: 0; } .lob-title { font-size: 1.5rem; } #app.lobfit .lob-players { min-height: 40px; } .lob-bots-l small { display: none; } .lob-cta { min-height: 52px; } .home-link { min-height: 34px; } .lob-wait { padding-top: 0; padding-bottom: 0; } }
+  @media (max-height: 800px) { .av-pick .pick-img { height: 56px; } .lob .av-pick .pick-img { width: min(100%, 56px); height: auto; align-self: center; flex: none; } .av-pick { min-height: 0; } .lob-title { font-size: 1.5rem; } #app.lobfit .lob-players { min-height: 40px; } .lob-bots-l small { display: none; } .lob-cta { min-height: 52px; } .home-link { min-height: 34px; } .lob-wait { padding-top: 0; padding-bottom: 0; } }
 .win-kl { margin: 6px 8px; font-style: italic; font-weight: 800; font-size: .9rem; line-height: 1.3; color: #ffe2a6; text-align: center; text-wrap: balance; } .tv .win-kl, .win-right .win-kl { font-size: 1.3rem; }
   /* TRAJANJE PARTIJE: tri kompaktne kartice u predvorju (bira samo domaćin) */
   .lob-len { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; flex: none; }

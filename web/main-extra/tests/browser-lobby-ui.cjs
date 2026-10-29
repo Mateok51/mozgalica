@@ -28,6 +28,10 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
       for (const k of ['brza','std','duga']) { await p.locator(`[data-len="${k}"]`).scrollIntoViewIfNeeded(); await p.locator(`[data-len="${k}"]`).click(); if (await p.locator(`[data-len="${k}"]`).getAttribute('aria-checked') !== 'true') throw Error('Duration selection failed'); }
       for (const state of ['settings', 'avatar']) {
         if (state === 'avatar') { await p.locator('#lobAvatar').click(); await p.waitForTimeout(350); }
+        if (state === 'avatar') {
+          const portraits = await p.locator('.lob .av-pick .pick-img').evaluateAll(es => es.map(e => ({ width: e.offsetWidth, height: e.offsetHeight })));
+          if (!portraits.length || portraits.some(r => Math.abs(r.width - r.height) > 1)) throw Error(`Avatar portrait distorted at ${width}: ${JSON.stringify(portraits)}`);
+        }
         const data = await p.evaluate(() => {
           const rect = e => e.getBoundingClientRect(); const app = document.querySelector('#app');
           const controls = ['#lobInv','#lobAvatar','#lobSettings','#dstart','#leave'].map(s => rect(document.querySelector(s)));
