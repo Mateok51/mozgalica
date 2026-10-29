@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-zLWAH/vdzRUkD30aKRERCNpOzqLUCyo2WD/GderVonM=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-nx3iqh98UQ5QnI9X7Jb7Xag2FcD7RbLR9lbBnaubI1A=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -5694,7 +5694,7 @@
     } catch (e) { crash(e); }
   }
   function phoneV() {
-    const d = S;
+    const d = S && typeof S.ms === 'number' && lastStateAt ? Object.assign({}, S, { ms: Math.max(0, S.ms - (Date.now() - lastStateAt)) }) : S;
     const freshP = !!d && L.s !== phoneStep;
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');

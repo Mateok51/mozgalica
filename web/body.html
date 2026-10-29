@@ -5681,7 +5681,7 @@ __ENGINE__
     } catch (e) { crash(e); }
   }
   function phoneV() {
-    const d = S;
+    const d = S && typeof S.ms === 'number' && lastStateAt ? Object.assign({}, S, { ms: Math.max(0, S.ms - (Date.now() - lastStateAt)) }) : S;
     const freshP = !!d && L.s !== phoneStep;
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');
