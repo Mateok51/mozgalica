@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-tLhyW/W6AOVU1TSReJ7DDACxWDS1Y1oQqNQ9Bie5eR4=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-kFCcO4s/LoUwGE8PrnjxCQIBvLTUrqCcAMfvlXyNMTU=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -2791,6 +2791,7 @@
     stit: svgIc('<defs><linearGradient id="ict" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8f4ff"/><stop offset=".5" stop-color="#4a8dff"/><stop offset="1" stop-color="#1b3fa8"/></linearGradient></defs><path d="M24 3l17 6v12c0 11-7.5 20-17 24C14.5 41 7 32 7 21V9z" fill="url(#ict)" stroke="#e8f4ff" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 24l6 6 11-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'),
   };
   ICON.oklada = '';
+  ICON.utjeha = '';
   for (const k in ICON) ICON[k] = '<img class="ic pw-img" src="ui/pw-' + k + '.webp" alt="" draggable="false">';
   const bugSvg = '<img src="ui/bug-effect.webp" alt="" aria-hidden="true" draggable="false">';
   const bombSvg = '<img src="ui/bomb-effect.webp" alt="" aria-hidden="true" draggable="false">';
@@ -3914,16 +3915,16 @@
   }
 
   const meOf = (d) => d && d.P.find((p) => p.id === PID);
-  const PW_SHORT = { led: 'Protivnik tapkanjem razbija led.', sluz: 'Protivnik mora obrisati sluz.', grick: 'Protivniku nestaje dio slova.', bomba: 'Dodir bombe zaklanja pogled na 2 sekunde.', dupli: 'Točan odgovor vrijedi dvostruko.', pola: 'Ukloni dva netočna odgovora.', stit: 'Odbij sve napade u ovom pitanju.' };
+  const PW_SHORT = { led: 'Protivnik tapkanjem razbija led.', sluz: 'Protivnik mora obrisati sluz.', grick: 'Protivniku nestaje dio slova.', bomba: 'Dodir bombe zaklanja pogled na 2 sekunde.', dupli: 'Točan odgovor vrijedi dvostruko.', pola: 'Ukloni dva netočna odgovora.', stit: 'Odbij sve napade u ovom pitanju.', utjeha: 'Netočan odgovor: +250 bodova. Bez odgovora: +0.' };
   const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? 'Točan odgovor: dodatni napredak.' : PW_SHORT[k] || POWERS[k].d);
   const stepTxt = (n) => (n ? n + '. stepenice' : 'dna piramide');
   const isLocalHost = () => mode === 'demo' || mode === 'hostp';
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
   function miniBoard(d, gain) {
     const r = d.P.slice().sort((a, b) => b.sc - a.sc);
-    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0))).map((p) => p.id) : [];
-    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.ob ? '<span class="betb krb">🎲 +' + p.ob + '</span>' : '') + (gain && p.oq < 0 ? '<span class="betb krb neg">🎲 promašaj</span>' : '') + (gain && p.kb ? '<span class="betb krb' + (p.kb < 0 ? ' neg' : '') + '">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
-      (gain ? '<span class="gain' + (p.g ? '' : ' zero') + '">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0) - (p.ob || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
+    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.ub || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.ub || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0))).map((p) => p.id) : [];
+    return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.ub ? '<span class="betb">Utjeha +' + p.ub + '</span>' : '') + (gain && p.ob ? '<span class="betb krb">🎲 +' + p.ob + '</span>' : '') + (gain && p.oq < 0 ? '<span class="betb krb neg">🎲 promašaj</span>' : '') + (gain && p.kb ? '<span class="betb krb' + (p.kb < 0 ? ' neg' : '') + '">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
+      (gain ? '<span class="gain' + ((p.g || p.ub) ? '' : ' zero') + '">+' + ((p.g || 0) + (p.ub || 0)) + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.ub || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0) - (p.ob || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
   }
   function phoneEvents(d) {
     if (!d.ev || !d.ev.length) return '';
@@ -4150,13 +4151,13 @@
     return '<div class="lineup">' + d.P.map((p) => {
       let badge = '';
       if (opts.check && p.ok) badge = '<span class="badge" data-bk="ok' + esc(p.id) + '" data-bv="1">✓</span>';
-      if (opts.gain && p.g) badge = '<span class="badge gain">+' + p.g + '</span>';
+      if (opts.gain && (p.g || p.ub)) badge = '<span class="badge gain">+' + ((p.g || 0) + (p.ub || 0)) + '</span>';
       const fx = opts.fx && p.fx ? p.fx.map((k) => ICON[k]).join('') : '';
-      const extra = (opts.fx && p.sh ? '🛡️' : '') + (opts.fx && p.d ? '✖️2' : '');
+      const extra = (opts.fx && p.sh ? '🛡️' : '') + (opts.fx && p.d ? '✖️2' : '') + (opts.fx && p.uc ? ICON.utjeha : '');
       const mood = opts.mood ? opts.mood(p) : (p.fx && opts.fx ? 'shocked' : '');
       return '<div class="who' + (p.c ? '' : ' off') + '">' + badge +
         '<div class="fxrow">' + fx + extra + '</div><div class="bob" style="width:100%">' + avSvg(p.a, mood) + '</div>' +
-        '<div class="nm">' + esc(p.n) + '</div><div class="sc"' + (opts.gain && p.g ? ' data-ck="lu' + esc(p.id) + '" data-cu="' + (p.sc - p.g) + '" data-to="' + p.sc + '" data-cud="700" data-cdur="900"' : '') + '>' + p.sc + '</div></div>';
+        '<div class="nm">' + esc(p.n) + '</div><div class="sc"' + (opts.gain && (p.g || p.ub) ? ' data-ck="lu' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.ub || 0)) + '" data-to="' + p.sc + '" data-cud="700" data-cdur="900"' : '') + '>' + p.sc + '</div></div>';
     }).join('') + '</div>';
   }
   function evHtml(d) {
@@ -4177,8 +4178,8 @@
 
   const CAST = (() => {
     let run = 0, fx = [], cv = null, ctx = null, stage = null, W = 1, H = 1, last = 0, looping = false;
-    const SND = { oklada: 'correct', led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };
-    const COL = { oklada: '#f0c66a', led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };
+    const SND = { utjeha: 'correct', oklada: 'correct', led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };
+    const COL = { utjeha: '#f0c66a', oklada: '#f0c66a', led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };
     const S = () => W / 960;
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -4376,6 +4377,7 @@
           snd(SND[e.p]);
           if (e.p === 'stit') { fa.querySelector('.cshield').classList.add('on'); burst(core.x, core.y, 20, { color: COL.stit, v: 6, shape: 'spark' }); }
           if (e.p === 'dupli') { fa.classList.add('gold'); burst(core.x, core.y - 20 * S(), 26, { color: '#ffd23c', v: 6, up: 3, g: 0.12, shape: 'star' }); badge(fa, '×2', 'b-dupli'); }
+          if (e.p === 'utjeha') { burst(core.x, core.y - 20 * S(), 18, { color: '#ffd36a', v: 5, up: 2, g: 0.12, shape: 'star' }); badge(fa, 'UTJEHA', 'b-dupli'); }
           if (e.p === 'pola') { burst(core.x, core.y - 30 * S(), 18, { color: '#f1dcb0', v: 5, shape: 'spark' }); badge(fa, '50:50', 'b-pola'); fa.insertAdjacentHTML('beforeend', '<span class="csplit"><i></i><i></i></span>'); }
           await sleep(per * 0.55); if (my !== run) return;
           pose(fa, fp.a, 'idle');
@@ -5492,7 +5494,7 @@
         h = tvTop(d, 'Bacanje moći!') + '<div class="tv-mid cast-mid">' + castHtml(d) + '</div>';
         break;
       case 'power': {
-        const legend = Object.keys(POWERS).filter((k) => !(d.fin && (k === 'pola' || k === 'grick'))).map((k) => '<div class="pw-mini ' + (POWERS[k].atk ? 'atk' : 'buff') + '"><span class="pw-ico">' + ICON[k] + '</span><div><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + '</span></div></div>').join('');
+        const legend = Object.keys(POWERS).filter((k) => !(d.fin && (k === 'pola' || k === 'grick')) && !((d.fin || d.th) && k === 'utjeha')).map((k) => '<div class="pw-mini ' + (POWERS[k].atk ? 'atk' : 'buff') + '"><span class="pw-ico">' + ICON[k] + '</span><div><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + '</span></div></div>').join('');
         if (d.fin) {
           h = tvTop(d, 'Finale · odaberite moć na mobitelu') + timerHtml() +
             '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Moći prije pitanja!</div><div class="powers-legend">' + legend + '</div>' + lineup(d, { check: true }) + '</div>' + pyramidHtml(d, false) + '</div>';
@@ -5696,7 +5698,7 @@
     const me = meOf(d);
     const demoBar = (mode === 'demo' && /demotv/.test(location.search) ? '<div class="demo-bar"><button class="btn ghost" id="toTv">TV</button></div>' : '') +
       (netNote ? '<div class="err net-reconnecting" role="status" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck="hud" data-cu="' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && ((me.g || 0) + (me.ub || 0)) > 0 ? ' data-ck="hud" data-cu="' + (me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -5873,7 +5875,7 @@
     if (freshP) $app.classList.add('fresh');
     if (d.ph === 'cast' && d.ntv) CAST.start(document.getElementById('castStage'), d, true);
     bindPhone(d, me);
-    if (freshP && me && d.ph === 'reveal' && me.g > 0) flyPoints(L.s, me.g, d);
+    if (freshP && me && d.ph === 'reveal' && ((me.g || 0) + (me.ub || 0)) > 0) flyPoints(L.s, (me.g || 0) + (me.ub || 0), d);
     tick();
   }
 
@@ -6339,7 +6341,7 @@
   }
   function rankStat(d, me) {
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
-    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0);
+    const from = me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0);
     return '<div class="statline"><div class="stat"><b data-bk="pos" data-bv="' + pos + '">' + pos + '.</b><span>mjesto</span></div><div class="stat"><b data-ck="mysc" data-cu="' + from + '" data-to="' + me.sc + '" data-cud="500" data-cdur="900">' + me.sc + '</b><span>bodova</span></div></div>';
   }
   function stepMeter(d, me) {
@@ -6373,7 +6375,7 @@
     const mine = L.sent ? L.sent.c : -1;
     const hide = me.h || [];
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
-    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class="tag betag">Ulog ' + me.bt + '</span>' : '') + (PV && PV.okl ? '<span class="tag">🎲 Oklada: ' + esc(nameOf(d, PV.okl)) + '</span>' : '');
+    const buffs = (me.uc ? '<span class="tag">Novčić utjehe</span>' : '') + (me.d ? '<span class="tag">×2 Dupli bodovi</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '') + (hide.length ? '<span class="tag">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class="tag betag">Ulog ' + me.bt + '</span>' : '') + (PV && PV.okl ? '<span class="tag">🎲 Oklada: ' + esc(nameOf(d, PV.okl)) + '</span>' : '');
     const opts = d.q.o.map((o, i) => {
       const gone = hide.includes(i);
       let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
@@ -6397,8 +6399,8 @@
     }).join('') + '</div>';
   }
   function revBoard(d, el) {
-    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0)));
-    const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;
+    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.ub || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.ub || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0)));
+    const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && (r[0].g || r[0].ub) > 0 ? r[0] : null;
     const off = d.ph === 'reveal' ? whT(d).end : 0, done = el > 2550 + off, delay = done ? 'x' : 1950 + off - el;
     return { html: miniBoard(d, done ? true : 2000 + off).replace('<div class="mboard', '<div data-delay="' + delay + '" class="mboard'), lead: newLead };
   }
@@ -6428,9 +6430,9 @@
   }
   function revealPhone(d, me) {
     const el = Math.max(0, d.dur - d.ms), ok = me.ch === d.cor, none = me.ch < 0;
-    const pts = '<div class="rv-pts' + (me.g ? '' : ' zero') + '">+' + (me.g || 0) + ' <small>bodova</small>' + (me.d && me.g ? '<span class="x2">×2</span>' : '') + '</div>';
+    const pts = '<div class="rv-pts' + ((me.g || me.ub) ? '' : ' zero') + '">+' + ((me.g || 0) + (me.ub || 0)) + ' <small>bodova</small>' + (me.d && me.g ? '<span class="x2">×2</span>' : '') + (me.ub ? '<span class="x2"> Novčić utjehe</span>' : '') + '</div>';
     const b = revBoard(d, el);
-    const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
+    const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : me.ub ? 'Netočno · <b>+' + me.ub + '</b> (Novčić utjehe)' : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');
     const wh = wheel(d);
     return '<div class="timer spent" aria-hidden="true"><div style="width:0"></div></div><div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span aria-hidden="true">0</span></div><style>' + wh.css + '</style><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
       '<div class="rv-a">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + pts + (me.br ? '<div class="rv-bet' + (me.br < 0 ? ' neg' : '') + '">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +
@@ -6663,7 +6665,7 @@
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
     const cr = !!d.crown;
     const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (cr ? i : i === 0 ? 3 : 0) + (locked ? ' locked' : '') + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '>' + (cr ? '<span class="shape">' + SHAPES[i] + '</span>' : '') + '<span class="otxt">' + optText(o, i) + '</span></button>').join('');
-    const buffs = (me.d ? '<span class="tag" style="background:var(--gold);color:#2b1a00">✖️2 Dodatni napredak</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
+    const buffs = (me.uc ? '<span class="tag">Novčić utjehe</span>' : '') + (me.d ? '<span class="tag">×2 Dodatni napredak</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';
     return timerHtml(3000) +
