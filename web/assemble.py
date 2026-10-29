@@ -71,7 +71,7 @@ json.dump(manifest, open(OUT + '/manifest.webmanifest', 'w', encoding='utf-8'), 
 
 open(OUT + '/sw.js', 'w').write("""// Mozgalica: uvijek pokušaj mrežu, a bez interneta posluži zadnju spremljenu verziju.
 const CACHE = 'mozgalica-""" + VERSION + """';
-const CORE = ['./', './index.html', './engine.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js'];
+const CORE = ['./', './index.html', './engine.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js', './ui/challenge-medal.webp', './ui/bomb-effect.webp', './ui/bug-effect.webp', './ui/bot-medal.webp', './ui/pw-utjeha.webp'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
 });

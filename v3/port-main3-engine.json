@@ -1,0 +1,70 @@
+[
+[
+"  oklada: { n: 'Oklada',      atk: false, tg: true, d: 'Kladi se na igrača. Ako oboje točno odgovorite, dobivaš i njegove bodove.' },\n};\n",
+"  oklada: { n: 'Oklada',      atk: false, tg: true, d: 'Kladi se na igrača. Ako oboje točno odgovorite, dobivaš i njegove bodove.' },\n  utjeha: { n: 'Novčić utjehe', atk: false, d: 'Za pogrešan odgovor dobivaš 250 bodova. Bez odgovora nema bonusa.' },\n};\n"
+],
+[
+"    win: null, fact: '', inFinale: false, fqn: 0,\n",
+"    win: null, finalRank: null, fact: '', inFinale: false, fqn: 0,\n"
+],
+[
+"      vote: -1, offers: [], pw: null, fx: [], dbl: false, pola: false, sh: false, hide: null,\n",
+"      vote: -1, offers: [], pw: null, fx: [], dbl: false, pola: false, sh: false, uc: false, ub: 0, hide: null,\n"
+],
+[
+"    for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; }\n",
+"    for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; p.uc = false; p.ub = 0; }\n"
+],
+[
+"    G.pi = -1; G.qn = 0; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.leg = null; G.crownWin = null; G.bdone = 0;\n",
+"    G.pi = -1; G.qn = 0; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.finalRank = null; G.leg = null; G.crownWin = null; G.bdone = 0;\n"
+],
+[
+"  // Ista moć se ne nudi dvaput zaredom, a u finalu dupli ne dobiva vodeći ni tko je blizu vrha.\n",
+"  // Posljednja korištena moć rjeđe se ponavlja, a u finalu dupli ne dobiva vodeći ni tko je blizu vrha.\n"
+],
+[
+"    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (G.throne ? k === 'oklada' : k === 'pola' || k === 'grick' || k === 'oklada')) && !(k === 'oklada' && !multi));\n",
+"    let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'utjeha' || (G.throne ? k === 'oklada' : k === 'pola' || k === 'grick' || k === 'oklada'))) && !(k === 'oklada' && !multi));\n"
+],
+[
+"    if (multi) { const a = weightedPick(pool.filter((k) => POWERS[k].atk), wf); if (a) out.push(a); }\n    while (out.length < 3) {\n",
+"    if (multi) { const a = weightedPick(pool.filter((k) => POWERS[k].atk), wf); if (a) out.push(a); }\n    // Uvijek ponudi i osobnu korist ili obranu kad je dostupna.\n    const b = weightedPick(pool.filter((k) => !POWERS[k].atk), wf); if (b) out.push(b);\n    while (out.length < 3) {\n"
+],
+[
+"      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.hide = null; p.okl = null; p.ob = 0; p.oq = 0; p.okr = null;\n",
+"      p.pw = null; p.fx = []; p.dbl = false; p.pola = false; p.sh = false; p.uc = false; p.ub = 0; p.hide = null; p.okl = null; p.ob = 0; p.oq = 0; p.okr = null;\n"
+],
+[
+"        if (k === 'pola') p.pola = true;\n        if (k === 'oklada') p.okl = p.pw.t;\n",
+"        if (k === 'pola') p.pola = true;\n        if (k === 'utjeha') p.uc = true;\n        if (k === 'oklada') p.okl = p.pw.t;\n"
+],
+[
+"        p.score += p.gained;\n      } else p.gained = 0;\n      p.betRes = 0;\n      if (p.bet > 0) { p.betRes = p.ans === G.q.a ? Math.round(p.bet * p.betMul) : -p.bet; p.score = Math.max(0, p.score + p.betRes); }\n",
+"        p.score += p.gained;\n      } else p.gained = 0;\n      // Utjeha nije točan odgovor ni osnovna nagrada za pitanje.\n      p.ub = p.uc && p.ans >= 0 && p.ans !== G.q.a ? 250 : 0;\n      p.score += p.ub;\n      p.betRes = 0;\n      if (p.bet > 0) { p.betRes = p.ans === G.q.a ? Math.round(p.bet * p.betMul) : -p.bet; p.score = Math.max(0, p.score + p.betRes); }\n"
+],
+[
+"      : list().slice().sort((a, b) => b.fstep - a.fstep || (b.fu || 0) - (a.fu || 0) || b.score - a.score);\n    G.win = ranked.length ? ranked[0].pid : null;\n",
+"      : list().slice().sort((a, b) => b.fstep - a.fstep || (b.fu || 0) - (a.fu || 0) || b.score - a.score);\n    G.finalRank = ranked.map((p) => p.pid);\n    G.win = ranked.length ? ranked[0].pid : null;\n"
+],
+[
+"    for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; p.done = false; }\n    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.rl = ''; G.leg = null; G.crownWin = null; TD.reset(); pactReset();\n",
+"    for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; p.done = false; p.uc = false; p.ub = 0; }\n    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.finalRank = null; G.rl = ''; G.leg = null; G.crownWin = null; TD.reset(); pactReset();\n"
+],
+[
+"  const PW_ACC = { oklada: 'Okladu', led: 'Led', sluz: 'Sluz', grick: 'Grickalice', bomba: 'Bombu', dupli: 'Dupli bodove', pola: 'Pola-pola', stit: 'Štit' };\n",
+"  const PW_ACC = { oklada: 'Okladu', led: 'Led', sluz: 'Sluz', grick: 'Grickalice', bomba: 'Bombu', dupli: 'Dupli bodove', pola: 'Pola-pola', stit: 'Štit', utjeha: 'Novčić utjehe' };\n"
+],
+[
+"        if (p.sh) e.sh = 1;\n        if (p.hide) e.h = p.hide;\n",
+"        if (p.sh) e.sh = 1;\n        if (p.uc) e.uc = 1;\n        if (p.hide) e.h = p.hide;\n"
+],
+[
+"      if (ph === 'reveal') { e.ch = p.ch; e.g = p.gained; if (p.dbl) e.d = 1; }\n",
+"      if (ph === 'reveal') { e.ch = p.ch; e.g = p.gained; if (p.dbl) e.d = 1; if (p.ub) e.ub = p.ub; }\n"
+],
+[
+"    if (ph === 'final') { v.win = G.win; v.fact = G.fact; if (G.leg) v.lg = G.leg; }\n",
+"    if (ph === 'final') { v.win = G.win; v.rank = G.finalRank; v.fact = G.fact; if (G.leg) v.lg = G.leg; }\n"
+]
+]

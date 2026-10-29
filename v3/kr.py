@@ -861,3 +861,9 @@ for _o, _n in _json.load(open(SP + '/v3/port-main2-engine.json', encoding='utf-8
     rep(_o, _n)
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR izmjene s maina (moći, tekstovi) OK')
+# izmjene s grane main (v55 → f2d0ede): Novčić utjehe, uvijek ponuđena obrana ili korist, završni poredak iz motora
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+for _o, _n in _json.load(open(SP + '/v3/port-main3-engine.json', encoding='utf-8')):
+    rep(_o, _n)
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR izmjene s maina (utjeha, poredak) OK')

@@ -16,6 +16,6 @@ await p.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname!=='gam
 await p.goto('http://game.test/');let seq=10;
 for(const k of ['sort','link','hilo','maj']) { Object.assign(box.game._G,{ph:'howto',s:++seq,ht:{k,first:true},dur:180000,endsAt:Date.now()+180000});const d=JSON.parse(JSON.stringify(box.game.view()));await p.evaluate(d=>testUI(d),d);await p.waitForTimeout(200);
 const result=await p.evaluate(()=>{const rect=e=>e.getBoundingClientRect(),ht=document.querySelector('.ht'),button=document.querySelector('#htok'),sound=document.querySelector('#mute');return {text:ht.innerText,buttonBottom:rect(button).bottom,soundTop:rect(sound).top,scroll:document.documentElement.scrollHeight,view:innerHeight, clipped:[...ht.querySelectorAll('li')].some(e=>e.scrollHeight>e.clientHeight+1||e.scrollWidth>e.clientWidth+1)}});
-if(result.scroll>result.view||result.buttonBottom>result.soundTop||result.clipped)throw Error(JSON.stringify({w,k,result}));
+if(result.scroll>result.view||result.buttonBottom>result.soundTop||result.clipped)throw Error(JSON.stringify({w,k,result})); const icon=p.locator('.ht-i img');await icon.waitFor();if(!(await icon.evaluate(e=>e.complete&&e.naturalWidth>0)))throw Error('Challenge image missing');
 const expected={sort:'dodirni košaru',link:'Povuci konop',hilo:'Pročitaj pitanje',maj:'većina izabrati'}[k];if(!result.text.includes(expected))throw Error('Missing instruction '+k);
 } console.log(w,'instructions OK');await p.close();} } finally {await b.close();box.game.stop();} })();

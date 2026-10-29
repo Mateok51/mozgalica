@@ -1,0 +1,142 @@
+[
+[
+"  .fly-bomb svg { width: 100%; height: 100%; }\n  .boom-cover { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; pointer-events: auto;\n",
+"  .fly-bomb svg { width: 100%; height: 100%; }\n  .fly-bomb img, .eater img, .bug img, .bomb-btn img, .cbomb img { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }\n  .boom-cover { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; pointer-events: auto;\n"
+],
+[
+"  .ht-i { font-size: clamp(3rem, 16vw, 5rem); line-height: 1; animation: htPop 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }\n  .ht-k { font-family: var(--font-body); font-weight: 900; font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); }\n",
+"  .ht-i { font-size: clamp(3rem, 16vw, 5rem); line-height: 1; animation: htPop 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }\n  .tavern-bot { display: inline-block; width: 1.25em; height: 1.25em; object-fit: contain; vertical-align: -0.2em; }\n  .ht-i img { display: block; width: clamp(54px, 15vw, 80px); height: auto; aspect-ratio: 1; object-fit: contain; }\n  .tv .ht-i img { width: clamp(80px, 9vw, 120px); }\n  .ht-k { font-family: var(--font-body); font-weight: 900; font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); }\n"
+],
+[
+"  .lg-head { text-align: center; }\n  .lg-t { font-family: var(--font-display); font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1.05; color: #ffcf6e; text-shadow: 0 2px 0 rgba(70, 36, 10, 0.95), 0 0 18px rgba(255, 190, 80, 0.35); }\n",
+"  .lg-head { text-align: center; }\n  .lg-sticky { position: sticky; top: 0; z-index: 5; display: flex; justify-content: center; margin: 0 auto 8px; max-width: 560px; }\n  .lg-sticky .btn { min-height: 44px; }\n  .lg-t { font-family: var(--font-display); font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1.05; color: #ffcf6e; text-shadow: 0 2px 0 rgba(70, 36, 10, 0.95), 0 0 18px rgba(255, 190, 80, 0.35); }\n"
+],
+[
+"  ICON.oklada = '';\n  for (const k in ICON) ICON[k] = '<img class=\"ic pw-img\" src=\"ui/pw-' + k + '.webp\" alt=\"\" draggable=\"false\">';\n",
+"  ICON.oklada = '';\n  ICON.utjeha = '';\n  for (const k in ICON) ICON[k] = '<img class=\"ic pw-img\" src=\"ui/pw-' + k + '.webp\" alt=\"\" draggable=\"false\">';\n"
+],
+[
+"  const bugSvg = '<svg viewBox=\"0 0 60 60\" aria-hidden=\"true\"><defs><radialGradient id=\"bgb\" cx=\"40%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#e0a86a\"/><stop offset=\"1\" stop-color=\"#6b3f17\"/></radialGradient></defs><path d=\"M12 30l-9-4M12 38l-10 2M48 30l9-4M48 38l10 2M14 45l-6 6M46 45l6 6\" stroke=\"#4a2b10\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><ellipse cx=\"30\" cy=\"36\" rx=\"20\" ry=\"16\" fill=\"url(#bgb)\"/><path d=\"M30 22v30\" stroke=\"#4a2b10\" stroke-width=\"1.6\" opacity=\".5\"/><circle cx=\"22\" cy=\"34\" r=\"3\" fill=\"#f2c48d\" opacity=\".6\"/><circle cx=\"30\" cy=\"20\" r=\"11\" fill=\"#5a3412\"/><circle cx=\"25\" cy=\"18\" r=\"4.2\" fill=\"#fff\"/><circle cx=\"35\" cy=\"18\" r=\"4.2\" fill=\"#fff\"/><circle cx=\"26\" cy=\"19\" r=\"2\" fill=\"#000\"/><circle cx=\"36\" cy=\"19\" r=\"2\" fill=\"#000\"/><path d=\"M24 26q6 5 12 0\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\"/><path d=\"M26 27v3M34 27v3\" stroke=\"#fff\" stroke-width=\"2\"/></svg>';\n  const bombSvg = '<svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><defs><radialGradient id=\"bbg\" cx=\"35%\" cy=\"30%\" r=\"75%\"><stop offset=\"0\" stop-color=\"#70708c\"/><stop offset=\".55\" stop-color=\"#23232f\"/><stop offset=\"1\" stop-color=\"#08080d\"/></radialGradient></defs><circle cx=\"46\" cy=\"60\" r=\"34\" fill=\"url(#bbg)\"/><ellipse cx=\"33\" cy=\"46\" rx=\"9\" ry=\"6\" fill=\"#fff\" opacity=\".3\"/><rect x=\"58\" y=\"16\" width=\"18\" height=\"16\" rx=\"3\" fill=\"#555\" transform=\"rotate(35 67 24)\"/><path d=\"M72 18q10-13 19-6\" stroke=\"#d99a35\" stroke-width=\"4.5\" fill=\"none\"/><path d=\"M91 3l2.6 6.4L100 12l-6.4 2.6L91 21l-2.6-6.4L82 12l6.4-2.6z\" fill=\"#ffcf4a\"><animateTransform attributeName=\"transform\" type=\"rotate\" from=\"0 91 12\" to=\"360 91 12\" dur=\".6s\" repeatCount=\"indefinite\"/></path></svg>';\n",
+"  const bugSvg = '<img src=\"ui/bug-effect.webp\" alt=\"\" aria-hidden=\"true\" draggable=\"false\">';\n  const bombSvg = '<img src=\"ui/bomb-effect.webp\" alt=\"\" aria-hidden=\"true\" draggable=\"false\">';\n"
+],
+[
+"  const PW_SHORT = { led: 'Protivnik tapkanjem razbija led.', sluz: 'Protivnik mora obrisati sluz.', grick: 'Protivniku nestaje dio slova.', bomba: 'Dodir bombe zaklanja pogled na 2 sekunde.', dupli: 'Točan odgovor vrijedi dvostruko.', pola: 'Ukloni dva netočna odgovora.', stit: 'Odbij sve napade u ovom pitanju.' };\n",
+"  const PW_SHORT = { led: 'Protivnik tapkanjem razbija led.', sluz: 'Protivnik mora obrisati sluz.', grick: 'Protivniku nestaje dio slova.', bomba: 'Dodir bombe zaklanja pogled na 2 sekunde.', dupli: 'Točan odgovor vrijedi dvostruko.', pola: 'Ukloni dva netočna odgovora.', stit: 'Odbij sve napade u ovom pitanju.', utjeha: 'Netočan odgovor: +250 bodova. Bez odgovora: +0.' };\n"
+],
+[
+"    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0))).map((p) => p.id) : [];\n    return '<div class=\"mboard' + (gain ? '' : ' wide') + '\">' + r.map((p, i) => '<div class=\"rank-row' + (p.id === PID ? ' me' : '') + '\" data-id=\"' + esc(p.id) + '\" data-prev=\"' + (gain ? before.indexOf(p.id) : i) + '\"><span class=\"pos\">' + (i + 1) + '.</span><span class=\"mini\">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class=\"nm\">' + esc(p.n) + (p.id === PID ? '<span class=\"you\">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.ob ? '<span class=\"betb krb\">🎲 +' + p.ob + '</span>' : '') + (gain && p.oq < 0 ? '<span class=\"betb krb neg\">🎲 promašaj</span>' : '') + (gain && p.kb ? '<span class=\"betb krb' + (p.kb < 0 ? ' neg' : '') + '\">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class=\"betb tkb' + (p.tb < 0 ? ' neg' : '') + '\">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class=\"betb rcb' + (p.rx < 0 ? ' neg' : '') + '\">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class=\"betb' + (p.br < 0 ? ' neg' : '') + '\">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +\n      (gain ? '<span class=\"gain' + (p.g ? '' : ' zero') + '\">' + (p.g ? '+' + p.g : '+0') + '</span>' : '') + '<span class=\"sc\"' + (gain ? ' data-ck=\"mb' + esc(p.id) + '\" data-cu=\"' + (p.sc - (p.g || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0) - (p.ob || 0)) + '\" data-to=\"' + p.sc + '\" data-cud=\"' + (gain === true ? 450 : gain) + '\" data-cdur=\"900\"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';\n",
+"    const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.ub || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.ub || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0))).map((p) => p.id) : [];\n    return '<div class=\"mboard' + (gain ? '' : ' wide') + '\">' + r.map((p, i) => '<div class=\"rank-row' + (p.id === PID ? ' me' : '') + '\" data-id=\"' + esc(p.id) + '\" data-prev=\"' + (gain ? before.indexOf(p.id) : i) + '\"><span class=\"pos\">' + (i + 1) + '.</span><span class=\"mini\">' + avSvg(p.a, gain && p.g ? 'happy' : '') + '</span><span class=\"nm\">' + esc(p.n) + (p.id === PID ? '<span class=\"you\">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.ub ? '<span class=\"betb\">Utjeha +' + p.ub + '</span>' : '') + (gain && p.ob ? '<span class=\"betb krb\">🎲 +' + p.ob + '</span>' : '') + (gain && p.oq < 0 ? '<span class=\"betb krb neg\">🎲 promašaj</span>' : '') + (gain && p.kb ? '<span class=\"betb krb' + (p.kb < 0 ? ' neg' : '') + '\">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class=\"betb tkb' + (p.tb < 0 ? ' neg' : '') + '\">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class=\"betb rcb' + (p.rx < 0 ? ' neg' : '') + '\">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class=\"betb' + (p.br < 0 ? ' neg' : '') + '\">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +\n      (gain ? '<span class=\"gain' + ((p.g || p.ub) ? '' : ' zero') + '\">+' + ((p.g || 0) + (p.ub || 0)) + '</span>' : '') + '<span class=\"sc\"' + (gain ? ' data-ck=\"mb' + esc(p.id) + '\" data-cu=\"' + (p.sc - (p.g || 0) - (p.ub || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0) - (p.ob || 0)) + '\" data-to=\"' + p.sc + '\" data-cud=\"' + (gain === true ? 450 : gain) + '\" data-cdur=\"900\"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';\n"
+],
+[
+"      if (opts.gain && p.g) badge = '<span class=\"badge gain\">+' + p.g + '</span>';\n",
+"      if (opts.gain && (p.g || p.ub)) badge = '<span class=\"badge gain\">+' + ((p.g || 0) + (p.ub || 0)) + '</span>';\n"
+],
+[
+"      const extra = (opts.fx && p.sh ? '🛡️' : '') + (opts.fx && p.d ? '✖️2' : '');\n",
+"      const extra = (opts.fx && p.sh ? '🛡️' : '') + (opts.fx && p.d ? '✖️2' : '') + (opts.fx && p.uc ? ICON.utjeha : '');\n"
+],
+[
+"        '<div class=\"nm\">' + esc(p.n) + '</div><div class=\"sc\"' + (opts.gain && p.g ? ' data-ck=\"lu' + esc(p.id) + '\" data-cu=\"' + (p.sc - p.g) + '\" data-to=\"' + p.sc + '\" data-cud=\"700\" data-cdur=\"900\"' : '') + '>' + p.sc + '</div></div>';\n",
+"        '<div class=\"nm\">' + esc(p.n) + '</div><div class=\"sc\"' + (opts.gain && (p.g || p.ub) ? ' data-ck=\"lu' + esc(p.id) + '\" data-cu=\"' + (p.sc - (p.g || 0) - (p.ub || 0)) + '\" data-to=\"' + p.sc + '\" data-cud=\"700\" data-cdur=\"900\"' : '') + '>' + p.sc + '</div></div>';\n"
+],
+[
+"    const SND = { oklada: 'correct', led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };\n    const COL = { oklada: '#f0c66a', led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };\n",
+"    const SND = { utjeha: 'correct', oklada: 'correct', led: 'freeze', sluz: 'splat', grick: 'squish', bomba: 'zap', dupli: 'correct', pola: 'pop', stit: 'step' };\n    const COL = { utjeha: '#f0c66a', oklada: '#f0c66a', led: '#bcdbe6', sluz: '#a8c46a', grick: '#e0b07a', bomba: '#e8a55a', dupli: '#f0c66a', pola: '#f1dcb0', stit: '#9cc7a4' };\n"
+],
+[
+"          if (e.p === 'dupli') { fa.classList.add('gold'); burst(core.x, core.y - 20 * S(), 26, { color: '#ffd23c', v: 6, up: 3, g: 0.12, shape: 'star' }); badge(fa, '×2', 'b-dupli'); }\n          if (e.p === 'pola') { burst(core.x, core.y - 30 * S(), 18, { color: '#f1dcb0', v: 5, shape: 'spark' }); badge(fa, '50:50', 'b-pola'); fa.insertAdjacentHTML('beforeend', '<span class=\"csplit\"><i></i><i></i></span>'); }\n",
+"          if (e.p === 'dupli') { fa.classList.add('gold'); burst(core.x, core.y - 20 * S(), 26, { color: '#ffd23c', v: 6, up: 3, g: 0.12, shape: 'star' }); badge(fa, '×2', 'b-dupli'); }\n          if (e.p === 'utjeha') { burst(core.x, core.y - 20 * S(), 18, { color: '#ffd36a', v: 5, up: 2, g: 0.12, shape: 'star' }); badge(fa, 'UTJEHA', 'b-dupli'); }\n          if (e.p === 'pola') { burst(core.x, core.y - 30 * S(), 18, { color: '#f1dcb0', v: 5, shape: 'spark' }); badge(fa, '50:50', 'b-pola'); fa.insertAdjacentHTML('beforeend', '<span class=\"csplit\"><i></i><i></i></span>'); }\n"
+],
+[
+"  const sfName = (d, id) => { const p = pById(d, id); return p ? esc(p.n) + (p.b ? ' 🤖' : '') : '?'; };\n",
+"  const sfName = (d, id) => { const p = pById(d, id); return p ? esc(p.n) + (p.b ? ' <img class=\"tavern-bot\" src=\"ui/bot-medal.webp\" alt=\"\" aria-hidden=\"true\">' : '') : '?'; };\n"
+],
+[
+"    return '<div class=\"sf-sec sf-scn\"><button class=\"pk-b\" data-sfscnopen=\"1\">🤖 Testni scenariji ' + (SF.scn ? '▴' : '▾') + '</button>' +\n",
+"    return '<div class=\"sf-sec sf-scn\"><button class=\"pk-b\" data-sfscnopen=\"1\"><img class=\"tavern-bot\" src=\"ui/bot-medal.webp\" alt=\"\" aria-hidden=\"true\"> Testni scenariji ' + (SF.scn ? '▴' : '▾') + '</button>' +\n"
+],
+[
+"    if (!game) return d.opt.bs ? '<div class=\"lob-info\">🤖 Testiranje društvenih mehanika s botovima je uključeno</div>' : '';\n    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\">🤖 Paktovi s botovima<small>Botovi mogu sklapati paktove i pokušati izdaju.</small></span><button class=\"tgl' + (d.opt.bs ? '' : ' off') + '\" data-bsopt=\"' + (d.opt.bs ? 0 : 1) + '\">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';\n",
+"    if (!game) return d.opt.bs ? '<div class=\"lob-info\"><img class=\"tavern-bot\" src=\"ui/bot-medal.webp\" alt=\"\" aria-hidden=\"true\"> Testiranje društvenih mehanika s botovima je uključeno</div>' : '';\n    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\"><img class=\"tavern-bot\" src=\"ui/bot-medal.webp\" alt=\"\" aria-hidden=\"true\"> Paktovi s botovima<small>Botovi mogu sklapati paktove i pokušati izdaju.</small></span><button class=\"tgl' + (d.opt.bs ? '' : ' off') + '\" data-bsopt=\"' + (d.opt.bs ? 0 : 1) + '\">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';\n"
+],
+[
+"    const dev = PV && PV.bs && game && mode !== 'player' ? (sfDev() ? sfScn(d) : '<button class=\"kr-dev\" data-sfdev=\"1\" aria-label=\"Testni način\">🤖</button>') : '';\n",
+"    const dev = PV && PV.bs && game && mode !== 'player' ? (sfDev() ? sfScn(d) : '<button class=\"kr-dev\" data-sfdev=\"1\" aria-label=\"Testni način\"><img class=\"tavern-bot\" src=\"ui/bot-medal.webp\" alt=\"\" aria-hidden=\"true\"></button>') : '';\n"
+],
+[
+"  const legRank = (d) => d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);\n",
+"  function legRank(d) {\n    const ids = d.P.map((p) => p.id), rank = d.rank;\n    if (Array.isArray(rank) && rank.length === ids.length && new Set(rank).size === ids.length && rank.every((id) => ids.includes(id))) {\n      const byId = new Map(d.P.map((p) => [p.id, p]));\n      return rank.map((id) => byId.get(id));\n    }\n    return d.P.slice().sort((a, b) => (b.id === d.win) - (a.id === d.win) || (d.th ? b.sc - a.sc : (b.st || 0) - (a.st || 0) || (b.fu || 0) - (a.fu || 0) || b.sc - a.sc));\n  }\n  const finalPosition = (d, p) => d.th ? fmtN(p.sc) + ' b' : (p.st || 0) >= d.steps ? 'Kruna' : 'step. ' + (p.st || 0) + '/' + (d.steps - 1);\n"
+],
+[
+"    return '<div class=\"lg-wrap' + (tv ? ' tv-lg' : '') + instant + '\" id=\"legWrap\"><div class=\"lg-book\" id=\"legBook\">' +\n      '<div class=\"lg-head\"><div class=\"lg-t\">📜 Legende ove krčme</div><div class=\"lg-sub\">Svaka večer u krčmi stvara nove legende…</div></div>' +\n",
+"    return '<div class=\"lg-wrap' + (tv ? ' tv-lg' : '') + instant + '\" id=\"legWrap\"><div class=\"lg-sticky\"><button class=\"btn ghost\" id=\"legClose\">Natrag na poredak</button></div><div class=\"lg-book\" id=\"legBook\">' +\n      '<div class=\"lg-head\"><div class=\"lg-t\">📜 Legende ove krčme</div><div class=\"lg-sub\">Počasna priznanja ne donose dodatne bodove.</div></div>' +\n"
+],
+[
+"      '<div class=\"lg-act\">' + share + '<div class=\"lg-note\" role=\"status\">' + esc(LEGV.note) + '</div><button class=\"btn ghost\" id=\"legClose\">Natrag na poredak</button></div>' +\n",
+"      '<div class=\"lg-act\">' + share + '<div class=\"lg-note\" role=\"status\">' + esc(LEGV.note) + '</div></div>' +\n"
+],
+[
+"      c.textAlign = 'right'; c.fillStyle = '#ffe2a6'; c.font = '900 36px ' + BODY; c.fillText(d.steps ? (p.st || 0) + '/' + d.steps : String(p.sc), W - 110, ry + 44);\n",
+"      c.textAlign = 'right'; c.fillStyle = '#ffe2a6'; c.font = '900 36px ' + BODY; c.fillText(finalPosition(d, p), W - 110, ry + 44);\n"
+],
+[
+"        const legend = Object.keys(POWERS).filter((k) => !(d.fin && (k === 'pola' || k === 'grick'))).map((k) => '<div class=\"pw-mini ' + (POWERS[k].atk ? 'atk' : 'buff') + '\"><span class=\"pw-ico\">' + ICON[k] + '</span><div><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + '</span></div></div>').join('');\n",
+"        const legend = Object.keys(POWERS).filter((k) => !(d.fin && (k === 'pola' || k === 'grick')) && !((d.fin || d.th) && k === 'utjeha')).map((k) => '<div class=\"pw-mini ' + (POWERS[k].atk ? 'atk' : 'buff') + '\"><span class=\"pw-ico\">' + ICON[k] + '</span><div><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + '</span></div></div>').join('');\n"
+],
+[
+"    const head = pactHead(d, me, me ? '<div class=\"p-top\"><span class=\"p-me\"><span class=\"mini\">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk=\"hud\"' + (d.ph === 'reveal' && me.g > 0 ? ' data-ck=\"hud\" data-cu=\"' + (me.sc - me.g - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '\" data-to=\"' + me.sc + '\" data-suf=\" b\" data-cud=\"' + (2150 + whT(d).end) + '\" data-cdur=\"500\"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');\n",
+"    const head = pactHead(d, me, me ? '<div class=\"p-top\"><span class=\"p-me\"><span class=\"mini\">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk=\"hud\"' + (d.ph === 'reveal' && ((me.g || 0) + (me.ub || 0)) > 0 ? ' data-ck=\"hud\" data-cu=\"' + (me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '\" data-to=\"' + me.sc + '\" data-suf=\" b\" data-cud=\"' + (2150 + whT(d).end) + '\" data-cdur=\"500\"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');\n"
+],
+[
+"          (p.b ? '<span class=\"st bot\">🤖 Bot</span></div>' : '<span class=\"st' + (p.c ? '' : ' off') + '\">' + (p.c ? '✓ U sobi' : 'Nije povezan') + '</span></div>')).join('');\n",
+"          (p.b ? '<span class=\"st bot\"><img class=\"tavern-bot\" src=\"ui/bot-medal.webp\" alt=\"\" aria-hidden=\"true\"> Bot</span></div>' : '<span class=\"st' + (p.c ? '' : ' off') + '\">' + (p.c ? '✓ U sobi' : 'Nije povezan') + '</span></div>')).join('');\n"
+],
+[
+"    if (freshP && me && d.ph === 'reveal' && me.g > 0) flyPoints(L.s, me.g, d);\n",
+"    if (freshP && me && d.ph === 'reveal' && ((me.g || 0) + (me.ub || 0)) > 0) flyPoints(L.s, (me.g || 0) + (me.ub || 0), d);\n"
+],
+[
+"    const ranked = d.th ? d.P.slice().sort((a, b) => (b.id === d.win) - (a.id === d.win) || b.sc - a.sc) : d.P.slice().sort((a, b) => (b.st || 0) - (a.st || 0) || b.sc - a.sc);\n",
+"    const ranked = legRank(d);\n"
+],
+[
+"    const board = '<div class=\"mboard wide\">' + ranked.map((p, i) => '<div class=\"rank-row' + (p.id === PID ? ' me' : '') + '\"><span class=\"pos\">' + (i + 1) + '.</span><span class=\"mini\">' + avSvg(p.a) + '</span><span class=\"nm\">' + esc(p.n) + (!tv && p.id === PID ? '<span class=\"you\">Ti</span>' : '') + '</span><span class=\"sc\">' + (d.th ? fmtN(p.sc) : (p.st || 0) + '/' + d.steps) + '</span></div>').join('') + '</div>';\n    const fact = d.fact && (tv || (me && w.id === PID)) ? '<div class=\"win-fact\"><b>Nagrada za pobjednika:</b> ' + esc(d.fact) + '</div>' : '';\n",
+"    const board = '<div class=\"mboard wide\">' + ranked.map((p, i) => '<div class=\"rank-row' + (p.id === PID ? ' me' : '') + '\"><span class=\"pos\">' + (i + 1) + '.</span><span class=\"mini\">' + avSvg(p.a) + '</span><span class=\"nm\">' + esc(p.n) + (!tv && p.id === PID ? '<span class=\"you\">Ti</span>' : '') + '</span><span class=\"sc\">' + esc(finalPosition(d, p)) + '</span></div>').join('') + '</div>';\n    const fact = d.fact && (tv || (me && w.id === PID)) ? '<div class=\"win-fact\"><b>Zanimljivost za pobjednika:</b> ' + esc(d.fact) + '</div>' : '';\n"
+],
+[
+"  const HT_KICK = { fast: '⚡ Vrijeme je da vidimo tko najbrže razmišlja!', social: '🍻 Koliko se zapravo poznajete?', logic: '🧠 Malo logike — bez žurbe, ali i bez greške!', assoc: '🔎 Tko će prvi prepoznati?' };\n",
+"  const HT_KICK = { fast: 'Vrijeme je da vidimo tko najbrže razmišlja!', social: 'Koliko se zapravo poznajete?', logic: 'Malo logike — bez žurbe, ali i bez greške!', assoc: 'Tko će prvi prepoznati?' };\n"
+],
+[
+"    return '<div class=\"ht\"><div class=\"ht-i\">' + esc(h.i) + '</div><div class=\"ht-k\">' + (h.chal ? 'Izazov' : 'Posebna bitka') + '</div><div class=\"ht-t\">' + esc(h.n) + '</div>' +\n",
+"    return '<div class=\"ht\"><div class=\"ht-i\"><img src=\"ui/challenge-medal.webp\" alt=\"\" aria-hidden=\"true\"></div><div class=\"ht-k\">' + (h.chal ? 'Izazov' : 'Posebna bitka') + '</div><div class=\"ht-t\">' + esc(h.n) + '</div>' +\n"
+],
+[
+"    return '<div class=\"lob-bots\"><span class=\"lob-bots-l\">🤖 Botovi<small>Pravi igrači imaju prednost pri odabiru likova</small></span>' +\n",
+"    return '<div class=\"lob-bots\"><span class=\"lob-bots-l\"><img class=\"tavern-bot\" src=\"ui/bot-medal.webp\" alt=\"\" aria-hidden=\"true\"> Botovi<small>Pravi igrači imaju prednost pri odabiru likova</small></span>' +\n"
+],
+[
+"    const from = me.sc - (me.g || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0);\n",
+"    const from = me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0);\n"
+],
+[
+"    const buffs = (me.d ? '<span class=\"tag\" style=\"background:var(--gold);color:#2b1a00\">✖️2 Dupli bodovi</span>' : '') + (me.sh ? '<span class=\"tag\">🛡️ Štit</span>' : '') + (hide.length ? '<span class=\"tag\">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class=\"tag betag\">Ulog ' + me.bt + '</span>' : '') + (PV && PV.okl ? '<span class=\"tag\">🎲 Oklada: ' + esc(nameOf(d, PV.okl)) + '</span>' : '');\n",
+"    const buffs = (me.uc ? '<span class=\"tag\">Novčić utjehe</span>' : '') + (me.d ? '<span class=\"tag\">×2 Dupli bodovi</span>' : '') + (me.sh ? '<span class=\"tag\">🛡️ Štit</span>' : '') + (hide.length ? '<span class=\"tag\">✂️ Pola-pola</span>' : '') + (me.bt ? '<span class=\"tag betag\">Ulog ' + me.bt + '</span>' : '') + (PV && PV.okl ? '<span class=\"tag\">🎲 Oklada: ' + esc(nameOf(d, PV.okl)) + '</span>' : '');\n"
+],
+[
+"    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0)));\n    const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && r[0].g > 0 ? r[0] : null;\n",
+"    const r = d.P.slice().sort((a, b) => b.sc - a.sc), before = d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.ub || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.ub || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0)));\n    const newLead = r.length > 1 && before[0] && r[0].id !== before[0].id && (r[0].g || r[0].ub) > 0 ? r[0] : null;\n"
+],
+[
+"    const pts = '<div class=\"rv-pts' + (me.g ? '' : ' zero') + '\">+' + (me.g || 0) + ' <small>bodova</small>' + (me.d && me.g ? '<span class=\"x2\">×2</span>' : '') + '</div>';\n",
+"    const pts = '<div class=\"rv-pts' + ((me.g || me.ub) ? '' : ' zero') + '\">+' + ((me.g || 0) + (me.ub || 0)) + ' <small>bodova</small>' + (me.d && me.g ? '<span class=\"x2\">×2</span>' : '') + (me.ub ? '<span class=\"x2\"> Novčić utjehe</span>' : '') + '</div>';\n"
+],
+[
+"    const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');\n",
+"    const sum = (none ? 'Vrijeme je isteklo · <b>+0</b>' : ok ? 'Točno! <b>+' + me.g + '</b>' + (me.d ? ' (×2)' : '') : me.ub ? 'Netočno · <b>+' + me.ub + '</b> (Novčić utjehe)' : 'Netočno · <b>+0</b>') + (me.br ? ' · ulog <b>' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</b>' : '');\n"
+],
+[
+"    const buffs = (me.d ? '<span class=\"tag\" style=\"background:var(--gold);color:#2b1a00\">✖️2 Dodatni napredak</span>' : '') + (me.sh ? '<span class=\"tag\">🛡️ Štit</span>' : '');\n",
+"    const buffs = (me.uc ? '<span class=\"tag\">Novčić utjehe</span>' : '') + (me.d ? '<span class=\"tag\">×2 Dodatni napredak</span>' : '') + (me.sh ? '<span class=\"tag\">🛡️ Štit</span>' : '');\n"
+]
+]
