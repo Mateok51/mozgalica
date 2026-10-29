@@ -85,3 +85,4 @@ import subprocess, sys
 subprocess.run([sys.executable, SP + '/web/port-main.py'], check=True)
 subprocess.run([sys.executable, SP + '/web/relay-e2e.py'], check=True)
 subprocess.run([sys.executable, SP + '/web/ui-fixes.py'], check=True)
+subprocess.run([sys.executable, SP + '/web/port-main2.py'], check=True)

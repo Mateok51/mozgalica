@@ -854,3 +854,10 @@ rep("      if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], []
     "      if (left === 1) { const c = cand('PJ_LAST', 4.5, 'pjlast', {}, [], [], { snd: 'stingSmall' }); if (c && G.opt && G.opt.end === 'throne') c.s = 'Još jedno pitanje prije borbe za prijestolje!';")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR posljednji poziv prema završetku OK')
+# izmjene s grane main (v54 → 98dee1a): nasumičan redoslijed napada, limit napada u svim načinima, jasniji tekstovi
+import json as _json
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+for _o, _n in _json.load(open(SP + '/v3/port-main2-engine.json', encoding='utf-8')):
+    rep(_o, _n)
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR izmjene s maina (moći, tekstovi) OK')

@@ -2636,12 +2636,12 @@ const INPUT_PHASES = { trisk: 1, rope: 1, deal: 1, vote: 1, bet: 1, power: 1, qu
 const HOWTO = {
   who: { n: 'Tko sam ja?', i: '🕵️', r: ['Tragovi se otkrivaju jedan po jedan.', 'Što prije pogodiš, to više bodova.', 'Imaš samo jedan pokušaj!'] },
   emoji: { n: 'Emoji zagonetka', i: '🤔', r: ['Emojiji opisuju film, seriju, bajku ili nešto drugo.', 'Odaberi točan odgovor od četiri ponuđena.', 'Brži točan odgovor nosi više bodova.'] },
-  sort: { n: 'Razvrstavanje', i: '🗂️', r: ['Svaki pojam povuci u jednu od dvije skupine.', 'Svaki točno razvrstan pojam donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },
-  link: { n: 'Spajanje parova', i: '🔗', r: ['Dodirni pojam lijevo, pa njegov par desno.', 'Svaki točan par donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },
+  sort: { n: 'Razvrstavanje', i: '🗂️', r: ['Povuci karticu u košaru ili dodirni košaru.', 'Svaki točno razvrstan pojam donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },
+  link: { n: 'Spajanje parova', i: '🔗', r: ['Povuci konop do para ili dodirni oba pojma.', 'Svaki točan par donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },
   order: { n: 'Poredaj', i: '🔢', r: ['Dodiruj pojmove redom, od prvog prema zadnjem.', 'Svaki pojam na pravom mjestu donosi bodove.', 'Sve točno = dodatni bonus!'] },
-  hilo: { n: 'Više ili manje', i: '⚖️', r: ['Dvije stvari: odaberi onu koja ima više.', 'Svaki točan odgovor produljuje tvoj niz.', 'Prva greška prekida niz!'] },
+  hilo: { n: 'Više ili manje', i: '⚖️', r: ['Pročitaj pitanje i odaberi točan odgovor.', 'Svaki točan odgovor produljuje tvoj niz.', 'Prva greška prekida niz!'] },
   blitz: { n: 'Munjeviti krug', i: '⚡', r: ['Točno ili netočno, što brže možeš.', 'Točan odgovor +100, netočan −50.', 'Imaš 30 sekundi!'] },
-  maj: { n: 'Što misli većina?', i: '🗳️', r: ['Nema točnog odgovora – glasaj po svom.', 'Bodove dobiva tko odabere isto kao većina.', 'Pogodi što misle ostali!'] },
+  maj: { n: 'Što misli većina?', i: '🗳️', r: ['Odaberi odgovor koji će većina izabrati.', 'Bodove dobiva tko odabere isto kao većina.', 'Pogodi što misle ostali!'] },
 };
 const CHALLENGES = ['sort', 'link', 'order', 'hilo', 'blitz', 'maj'];
 // skupine izazova po osjećaju igre (Smart Game Director izmjenjuje skupine)
@@ -3178,7 +3178,9 @@ function createGame(o) {
   function resolvePower() {
     G.ev = [];
     for (const p of list()) if (p.pw && p.pw.k === 'stit') p.sh = true;
-    for (const p of list()) {
+    // Nasumičan redoslijed napada sprječava prednost ranijeg pridruživanja.
+    const ps = list(), attackers = shuffle(ps.filter((p) => p.pw && POWERS[p.pw.k].atk));
+    for (const p of ps.filter((p) => !p.pw || !POWERS[p.pw.k].atk).concat(attackers)) {
       p.lastPw = p.pw ? p.pw.k : '';
       if (!p.pw) continue;
       const k = p.pw.k;
@@ -3186,7 +3188,7 @@ function createGame(o) {
         const t = R.get(p.pw.t);
         if (!t) continue;
         if (t.sh) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1 });
-        else if (G.inFinale && !G.throne && t.fx.length >= cfg.pyrFxCap) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1, cap: 1 });   // nitko ne može biti beskonačno blokiran
+        else if (t.fx.length >= cfg.pyrFxCap) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1, cap: 1 });   // najviše dva napada na igrača u svim načinima
         else { t.fx.push(k); G.ev.push({ f: p.pid, p: k, t: t.pid }); }
       } else {
         if (k === 'dupli') p.dbl = true;
@@ -4814,7 +4816,7 @@ function createGame(o) {
     const others = ps.filter((x) => x !== p).sort((a, b) => b.score - a.score), vs = others[0];
     const kind = vs && (Math.random() < 0.5 || fcLeft() < 3) ? 'fast' : fcLeft() < 3 ? null : 'st3';
     if (!kind) { p.koGot[k] = 0; G.koN--; return; }   // zadatak od 3 pitanja ne stane prije piramide
-    const line = kind === 'st3' ? 'Odgovori točno na sljedeća 3 pitanja zaredom.' : 'Na sljedećem pitanju odgovori točno i brže od: ' + vs.name + '.';
+    const line = kind === 'st3' ? 'Odgovori točno na sljedeća 3 pitanja zaredom.' : 'Odgovori točno. Ako ' + vs.name + ' pogodi, odgovori brže.';
     p.ko = { id: ++G.sfSeq, k, st: 'o', kind, vs: kind === 'fast' ? vs.pid : null, line, win: K.taskWin, loss: K.taskLoss };
   }
   function krOfferAnswer(p, yes) {
@@ -4941,7 +4943,7 @@ function createGame(o) {
     if (ya === 0 || yb === 0 || end || !A || !B) {
       if (ya === 1 && yb === 1 && A && B) return krPactMake(o, A, B);
       o.st = 'x';
-      for (const q of [A, B]) if (q && o.ans[q.pid] === 1) note(q, '🍺 Krčmar je odustao od ponude.', 'no');
+      for (const q of [A, B]) if (q && o.ans[q.pid] === 1) note(q, '🍺 Pakt nije sklopljen.', 'no');
       return;
     }
     if (ya === 1 && yb === 1) krPactMake(o, A, B);

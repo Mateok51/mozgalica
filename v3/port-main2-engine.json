@@ -1,0 +1,30 @@
+[
+[
+"  sort: { n: 'Razvrstavanje', i: '🗂️', r: ['Svaki pojam povuci u jednu od dvije skupine.', 'Svaki točno razvrstan pojam donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },\n  link: { n: 'Spajanje parova', i: '🔗', r: ['Dodirni pojam lijevo, pa njegov par desno.', 'Svaki točan par donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },\n",
+"  sort: { n: 'Razvrstavanje', i: '🗂️', r: ['Povuci karticu u košaru ili dodirni košaru.', 'Svaki točno razvrstan pojam donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },\n  link: { n: 'Spajanje parova', i: '🔗', r: ['Povuci konop do para ili dodirni oba pojma.', 'Svaki točan par donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },\n"
+],
+[
+"  hilo: { n: 'Više ili manje', i: '⚖️', r: ['Dvije stvari: odaberi onu koja ima više.', 'Svaki točan odgovor produljuje tvoj niz.', 'Prva greška prekida niz!'] },\n",
+"  hilo: { n: 'Više ili manje', i: '⚖️', r: ['Pročitaj pitanje i odaberi točan odgovor.', 'Svaki točan odgovor produljuje tvoj niz.', 'Prva greška prekida niz!'] },\n"
+],
+[
+"  maj: { n: 'Što misli većina?', i: '🗳️', r: ['Nema točnog odgovora – glasaj po svom.', 'Bodove dobiva tko odabere isto kao većina.', 'Pogodi što misle ostali!'] },\n",
+"  maj: { n: 'Što misli većina?', i: '🗳️', r: ['Odaberi odgovor koji će većina izabrati.', 'Bodove dobiva tko odabere isto kao većina.', 'Pogodi što misle ostali!'] },\n"
+],
+[
+"    for (const p of list()) if (p.pw && p.pw.k === 'stit') p.sh = true;\n    for (const p of list()) {\n      p.lastPw = p.pw ? p.pw.k : '';\n",
+"    for (const p of list()) if (p.pw && p.pw.k === 'stit') p.sh = true;\n    // Nasumičan redoslijed napada sprječava prednost ranijeg pridruživanja.\n    const ps = list(), attackers = shuffle(ps.filter((p) => p.pw && POWERS[p.pw.k].atk));\n    for (const p of ps.filter((p) => !p.pw || !POWERS[p.pw.k].atk).concat(attackers)) {\n      p.lastPw = p.pw ? p.pw.k : '';\n"
+],
+[
+"        else if (G.inFinale && !G.throne && t.fx.length >= cfg.pyrFxCap) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1, cap: 1 });   // nitko ne može biti beskonačno blokiran\n",
+"        else if (t.fx.length >= cfg.pyrFxCap) G.ev.push({ f: p.pid, p: k, t: t.pid, b: 1, cap: 1 });   // najviše dva napada na igrača u svim načinima\n"
+],
+[
+"    const line = kind === 'st3' ? 'Odgovori točno na sljedeća 3 pitanja zaredom.' : 'Na sljedećem pitanju odgovori točno i brže od: ' + vs.name + '.';\n",
+"    const line = kind === 'st3' ? 'Odgovori točno na sljedeća 3 pitanja zaredom.' : 'Odgovori točno. Ako ' + vs.name + ' pogodi, odgovori brže.';\n"
+],
+[
+"      for (const q of [A, B]) if (q && o.ans[q.pid] === 1) note(q, '🍺 Krčmar je odustao od ponude.', 'no');\n",
+"      for (const q of [A, B]) if (q && o.ans[q.pid] === 1) note(q, '🍺 Pakt nije sklopljen.', 'no');\n"
+]
+]

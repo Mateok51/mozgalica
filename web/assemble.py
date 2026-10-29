@@ -135,3 +135,6 @@ for d in ['tests', 'docs', 'scripts', 'src', '.github']:
     shutil.rmtree(OUT + '/' + d, ignore_errors=True)
     shutil.copytree(SP + '/web/main-extra/' + d, OUT + '/' + d)
 print('main-extra OK')
+# smjernice projekta s grane main (od 78477b3)
+shutil.copy(SP + '/web/main-extra/AGENTS.md', OUT + '/AGENTS.md')
+print('AGENTS.md OK')

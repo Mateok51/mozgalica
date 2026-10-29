@@ -21,6 +21,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
       if (how === 'glas') await page.click('.door-btn.o1', { force: true });
       if (how === 'pick') { await page.click('#ppBtn', { force: true }); await page.waitForTimeout(150); await page.click('.door-btn.o2', { force: true }); }
       for (let i = 0; i < (how === 'isteklo' ? 40 : 14); i++) { await page.waitForTimeout(150); seen.push(await pos()); }
+      if (process.env.DBG) console.log(seen.map((x) => x.ph + ":" + x.z + ":" + x.top).join(" "));
       const moved = Math.max(...seen.map((x) => Math.max(Math.abs(x.top - p0.top), Math.abs(x.left - p0.left)))), zs = [...new Set(seen.map((x) => x.z))];
       ok(moved <= 1 && zs.length === 1, W + ' (' + how + '): vrata ostaju na mjestu (pomak ' + moved + ' px, mjerilo ' + zs.join(',') + ', faze ' + [...new Set(seen.map((x) => x.ph))].join('→') + ')');
       ok(seen.every((x) => x.pp !== 'nema') && /off/.test(seen[seen.length - 1].pp), W + ' (' + how + '): power pick ostaje, poslije siv (' + seen[seen.length - 1].pp + ')');

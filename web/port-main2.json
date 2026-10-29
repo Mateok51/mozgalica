@@ -1,0 +1,206 @@
+[
+[
+"  .kr-card, .kr-ally { width: 100%; }\n  .kr-note { font-weight: 800; font-size: 0.9rem; color: #ffe2a0; text-align: center; }\n",
+"  .kr-card, .kr-ally { width: 100%; }\n  .phone .kr-card { zoom: calc(1 / var(--fitz, 1)); width: auto; }\n  .phone .kr-box { padding-bottom: 0; }\n  .pact-rules-modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 16px; background: rgba(10, 5, 2, .85); }\n  .pact-rules-modal .sf-rules { width: min(100%, 400px); max-height: 70vh; overflow-y: auto; overscroll-behavior: contain; }\n  .pact-rules-modal .sf-rules .btn { width: 100%; margin-top: 8px; }\n  .kr-note { font-weight: 800; font-size: 0.9rem; color: #ffe2a0; text-align: center; }\n"
+],
+[
+"  .lob-settings { display: flex; flex-direction: column; gap: 8px; }\n  /* Odabir mete: veće dodirne površine umjesto dugog popisa. */\n",
+"  .lob-settings { display: flex; flex-direction: column; gap: 8px; }\n  #app.lobfit .waiting-room .lob-players.lob-scroll, #app.lobfit .waiting-room .lob-panel-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; flex: none; }\n  /* Odabir mete: veće dodirne površine umjesto dugog popisa. */\n"
+],
+[
+"  .phone .pw-step .pw-card b { font-size: 1rem; }\n  .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: transform 120ms ease-out, filter 120ms ease-out; }\n",
+"  .phone .pw-step .pw-card b { font-size: 1rem; }\n  @media (max-width: 374px) { .phone .pw-card > span:last-child { top: 10%; bottom: 10%; } }\n  .lob-tools .btn, #tvSettings, .tgl, .bstep { transition: transform 120ms ease-out, filter 120ms ease-out; }\n"
+],
+[
+"  .risk-c.dim { filter: brightness(0.55) saturate(0.6); }\n  @media (prefers-reduced-motion: reduce) { .th-glow, .th-crown, .th-crown.th-drop, .th-king.th-new, .th-ch, .th-ch.th-old { animation: none !important; } }\n",
+"  .risk-c.dim { filter: brightness(0.55) saturate(0.6); }\n  /* Dugi popisi u završnici imaju vlastiti prostor; ostatak zaslona ostaje čitljiv. */\n  .phone .fs-rows, .phone .th-court { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }\n  .phone .fs-rows { max-height: clamp(90px, 18vh, 160px); flex: none; }\n  .phone .th-court { max-height: clamp(75px, 16vh, 145px); }\n  .phone .fs-row .nm, .phone .th-ch b { white-space: normal; overflow-wrap: anywhere; line-height: 1.15; }\n  @media (max-height: 700px) {\n    .phone .throne-hall { --TH: 115px; }\n    .phone .throne-hall.mini { --TH: 60px; }\n    .phone .risk { gap: 6px; }\n    .phone .fs .phone-pyr.big .pyramid { --H: clamp(22px, 4.2vh, 31px); }\n    .phone .winscr { padding-bottom: 0; }\n    .phone .win-hero { max-width: 220px; }\n    .phone.final-question > .q-area { max-height: 32vh; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }\n  }\n  @media (prefers-reduced-motion: reduce) { .th-glow, .th-crown, .th-crown.th-drop, .th-king.th-new, .th-ch, .th-ch.th-old { animation: none !important; } }\n"
+],
+[
+"  html .swp-side b { font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; letter-spacing: 0; text-transform: none; line-height: 1.15; color: #fff3d6; hyphens: manual; overflow-wrap: normal; word-break: normal; }\n",
+"  html .swp-side b { font-family: var(--font-body); font-weight: 900; font-size: 0.95rem; letter-spacing: 0; text-transform: none; line-height: 1.15; color: #fff3d6; hyphens: manual; overflow-wrap: anywhere; word-break: normal; }\n"
+],
+[
+"  #app > .p-top, #app > .timer, #app > .bar-row { zoom: calc(1 / var(--fitz, 1)); }\n  /* likovi u otkrivanju kreću s vlastitog mjesta u redu likova (vidljivi od prvog trenutka) */\n",
+"  #app > .p-top, #app > .timer, #app > .bar-row { zoom: calc(1 / var(--fitz, 1)); }\n  /* Glavne tipke ostaju jednake veličine i kada se prilagođava sadržaj faze. */\n  #app.phone > button.btn { zoom: calc(1 / var(--fitz, 1)); }\n  .phone .pw-cards.fit-scroll, .phone .targets.fit-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; flex: none; }\n  .score-detail { text-align: center; color: #ffe2a6; font: 800 0.8rem/1.25 var(--font-body); }\n  .phone .solution-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; flex: none; }\n  .phone.final-question .q-area.more-answers::after { content: '↓ Povuci za ostale odgovore'; position: sticky; bottom: 0; display: block; height: 24px; margin-top: -24px; pointer-events: none; text-align: center; font: 800 12px/24px var(--font-body); color: #fff3d6; background: linear-gradient(90deg, transparent, rgba(35, 18, 7, .95) 20%, rgba(35, 18, 7, .95) 80%, transparent); text-shadow: 0 1px 2px #000; }\n  /* likovi u otkrivanju kreću s vlastitog mjesta u redu likova (vidljivi od prvog trenutka) */\n"
+],
+[
+"  const PW_SHORT = { led: 'Zamrzni protivnikove odgovore.', sluz: 'Prekrij protivniku ekran sluzi.', grick: 'Bube pojedu slova u odgovorima.', bomba: 'Bombe lete preko protivnikovih odgovora.', dupli: 'Udvostruči bodove za ovo pitanje.', pola: 'Ukloni dva netočna odgovora.', stit: 'Odbij sve napade u ovom pitanju.' };\n  const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? 'Točan odgovor: stepenica više.' : PW_SHORT[k] || POWERS[k].d);\n",
+"  const PW_SHORT = { led: 'Protivnik tapkanjem razbija led.', sluz: 'Protivnik mora obrisati sluz.', grick: 'Protivniku nestaje dio slova.', bomba: 'Dodir bombe zaklanja pogled na 2 sekunde.', dupli: 'Točan odgovor vrijedi dvostruko.', pola: 'Ukloni dva netočna odgovora.', stit: 'Odbij sve napade u ovom pitanju.' };\n  const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? 'Točan odgovor: dodatni napredak.' : PW_SHORT[k] || POWERS[k].d);\n"
+],
+[
+"      if (e.t) return '<span class=\"ev' + (e.b ? ' blocked' : '') + '\"><span class=\"mini\">' + avSvg(avOf(d, e.f), 'attack') + '</span>' + esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + ' ' + esc(nameOf(d, e.t)) + (e.b ? ' 🛡️' : '') + '</span>';\n",
+"      if (e.t) return '<span class=\"ev' + (e.b ? ' blocked' : '') + '\"><span class=\"mini\">' + avSvg(avOf(d, e.f), 'attack') + '</span>' + esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + ' ' + esc(nameOf(d, e.t)) + (e.cap ? ' (limit napada)' : e.b ? ' 🛡️' : '') + '</span>';\n"
+],
+[
+"          const sh = ta.querySelector('.cshield'); sh.classList.remove('hit'); void sh.offsetWidth; sh.classList.add('hit');\n",
+"          if (!e.cap) { const sh = ta.querySelector('.cshield'); sh.classList.remove('hit'); void sh.offsetWidth; sh.classList.add('hit'); }\n"
+],
+[
+"          banner('<b class=\"pw-stit\">Odbijeno!</b> ' + esc(tp.n) + ' ima štit');\n",
+"          banner(e.cap ? '<b>Zaustavljeno!</b> ' + esc(tp.n) + ' već ima najviše napada' : '<b class=\"pw-stit\">Odbijeno!</b> ' + esc(tp.n) + ' ima štit');\n"
+],
+[
+"          '<div class=\"pk-inv-s\">„Udružite znanje, šapćite odgovore i zajedno punite riznicu. Ali pripazi — tvoj saveznik može te izdati i ukrasti tvoje bodove!”</div>' +\n",
+"          '<div class=\"pk-inv-s\">„Zajednički odgovori pune riznicu. Saveznik te kasnije može izdati i uzeti bodove.”</div>' +\n"
+],
+[
+"      '<div class=\"pk-inv-s\">Ulog <b>' + st + '</b> · sljedeće pitanje</div>' +\n",
+"      '<div class=\"pk-inv-s\">Ulog <b>' + st + '</b>. Tko jedini odgovori točno, uzima do iznosa uloga od protivnika; u suprotnom je neriješeno.</div>' +\n"
+],
+[
+"      else if (SF.btAsk) h += '<div class=\"sf-bt\">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div>' +\n",
+"      else if (SF.btAsk) h += '<div class=\"sf-bt\">🗡️ Ako samo ti izdaš, uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300). Ako oboje izdate, riznica propada.</div>' +\n"
+],
+[
+"    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\">🤖 Paktovi s botovima<small>Botovi mogu sklapati paktove, šaputati odgovore i pokušati izdaju.</small></span><button class=\"tgl' + (d.opt.bs ? '' : ' off') + '\" data-bsopt=\"' + (d.opt.bs ? 0 : 1) + '\">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';\n",
+"    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\">🤖 Paktovi s botovima<small>Botovi mogu sklapati paktove i pokušati izdaju.</small></span><button class=\"tgl' + (d.opt.bs ? '' : ' off') + '\" data-bsopt=\"' + (d.opt.bs ? 0 : 1) + '\">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';\n"
+],
+[
+"        '<div class=\"pk-inv-s\">Oboje točno → riznica +100, jedan točno → +40. Pakt nastaje samo ako oboje prihvatite.</div>' +\n",
+"        '<div class=\"pk-inv-s\">Oboje točno → riznica +100, jedan točno → +40. Odanost donosi podjelu; nakon 2 pitanja moguća je izdaja. Jedan pakt po igri; oboje morate prihvatiti.</div><button class=\"sf-link\" data-pactrules=\"1\">📜 Pravila i posljedice</button>' +\n"
+],
+[
+"      return '<div class=\"kr-note\">🍺 Čekamo krčmarov odgovor…</div>' + mine;\n",
+"      return '<div class=\"kr-note\">🍺 Čekamo odgovor drugog igrača…</div>' + mine;\n"
+],
+[
+"        else if (SF.btAsk) h += '<div class=\"sf-bt\">🗡️ Nakon sljedećeg pitanja uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300).</div><div class=\"pk-row\"><button class=\"btn pk-acc\" data-bt=\"1\">Potvrdi</button><button class=\"btn ghost\" data-sfbt=\"0\">Odustani</button></div>';\n",
+"        else if (SF.btAsk) h += '<div class=\"sf-bt\">🗡️ Ako samo ti izdaš, uzimaš riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova (najviše 300). Ako oboje izdate, riznica propada.</div><div class=\"pk-row\"><button class=\"btn pk-acc\" data-bt=\"1\">Potvrdi</button><button class=\"btn ghost\" data-sfbt=\"0\">Odustani</button></div>';\n"
+],
+[
+"  function bindKr(d) {\n    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });\n",
+"  function bindKr(d) {\n    document.querySelectorAll('#app [data-pactrules]').forEach((b) => { b.onclick = () => {\n      if (document.getElementById('pactRulesModal')) return;\n      const modal = document.createElement('div'); modal.id = 'pactRulesModal'; modal.className = 'pact-rules-modal'; modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Pravila tajnog pakta');\n      modal.innerHTML = '<div class=\"sf-rules\"><div class=\"sf-h\">🍻 Pravila tajnog pakta</div><ol><li>Oboje točno: riznica +100; jedan točno: +40.</li><li>Odanost do finala: riznica raste 40 % i dijeli se.</li><li>Nakon 2 pitanja moguća je izdaja: riznica i 8 % partnerovih bodova (najviše 300). Ako oboje izdate, riznica propada.</li><li>U partiji možeš sklopiti jedan pakt. Pakt nastaje tek kad oboje prihvatite.</li></ol><button class=\"btn ghost\" type=\"button\">Zatvori</button></div>';\n      document.body.appendChild(modal); const close = () => { modal.remove(); if (b.isConnected) b.focus(); }; modal.querySelector('button').onclick = close; modal.onclick = (e) => { if (e.target === modal) close(); }; modal.onkeydown = (e) => { if (e.key === 'Escape') close(); }; modal.querySelector('button').focus();\n    }; });\n    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });\n"
+],
+[
+"      '<div class=\"pk-inv-s\">Nadvlačenje konopa · ulog ' + o.sa + ' protiv ' + o.sb + ' · obrana krune +' + o.g + '</div>';\n",
+"      '<div class=\"pk-inv-s\">Točno vuče konop, netočno vraća. Pobjeda izazivača: uzima do ' + fmtN(o.sb) + ' od vođe. Pobjeda vođe: uzima do ' + fmtN(o.sa) + ' i bonus ' + fmtN(o.g) + '. Neriješeno: bez prijenosa.</div>';\n"
+],
+[
+"        const ppWhy = ppAvail ? (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju · jednom po igri') : ppMe && ppMe.pa === 0 ? 'Već iskorišten u ovoj igri' : ppBy ? 'U ovoj rundi: ' + esc(ppBy.n) : res ? 'Ti biraš kategoriju · jednom po igri' : 'Glas je predan';\n",
+"        const ppWhy = ppAvail ? (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Odaberi kategoriju bez glasanja · jednom po igri') : ppMe && ppMe.pa === 0 ? 'Već iskorišten u ovoj igri' : ppBy ? 'U ovoj rundi: ' + esc(ppBy.n) : res ? 'Odaberi kategoriju bez glasanja · jednom po igri' : 'Glas je predan';\n"
+],
+[
+"          '<div class=\"p-sub\" data-bk=\"vwait\" data-ba=\"subIn\">' + (res ? (d.tie ? '<span' + (rl ? ' class=\"rl-post\" style=\"--rd:' + rl.R + 'ms\"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za pitanje koje želiš.') + '</div></div>' + (res ? '<div class=\"timer spent\" aria-hidden=\"true\"><div></div></div>' : timerHtml()) +\n",
+"          '<div class=\"p-sub\" data-bk=\"vwait\" data-ba=\"subIn\">' + (res ? (d.tie ? '<span' + (rl ? ' class=\"rl-post\" style=\"--rd:' + rl.R + 'ms\"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Dodirni kategoriju za svoj glas.') + '</div></div>' + (res ? '<div class=\"timer spent\" aria-hidden=\"true\"><div></div></div>' : timerHtml()) +\n"
+],
+[
+"          (hits.length ? '<div class=\"p-sub\">' + hits.map((e) => esc(nameOf(d, e.f)) + ' ti šalje: ' + POWERS[e.p].n + (e.b ? ' (štit ga odbija)' : '')).join('<br>') + '</div>' : '<div class=\"p-sub\">' + (d.ev && d.ev.length ? 'Moći lete po pozornici…' : 'Svi su odabrali!') + '</div>'));\n",
+"          (hits.length ? '<div class=\"p-sub\">' + hits.map((e) => esc(nameOf(d, e.f)) + ' ti šalje: ' + POWERS[e.p].n + (e.cap ? ' (dosegnut limit napada)' : e.b ? ' (štit ga odbija)' : '')).join('<br>') + '</div>' : '<div class=\"p-sub\">' + (d.ev && d.ev.length ? 'Moći lete po pozornici…' : 'Svi su odabrali!') + '</div>'));\n"
+],
+[
+"      case 'orderReveal': h = head + chalReveal(d, me, 'Točan poredak', orderSolution(d), 'Točno ' + (me.k || 0) + ' od 4'); break;\n      case 'hiloReveal': h = head + chalReveal(d, me, 'Više ili manje', '', 'Niz: ' + (me.k || 0) + ' točnih'); break;\n      case 'blitzReveal': h = head + chalReveal(d, me, 'Munjeviti krug', '', '✓ ' + (me.k || 0) + ' · ✗ ' + (me.x || 0)); break;\n",
+"      case 'orderReveal': h = head + chalReveal(d, me, 'Točan poredak', orderSolution(d), 'Točno ' + (me.k || 0) + ' od 4', (me.k || 0) + ' × 150' + (me.k === 4 ? ' + 200 bonus' : '')); break;\n      case 'hiloReveal': h = head + chalReveal(d, me, 'Više ili manje', '', 'Niz: ' + (me.k || 0) + ' točnih', (me.k || 0) + ' × 120' + (d.hl && me.k === d.hl.list.length && me.k > 0 ? ' + 200 bonus' : '')); break;\n      case 'blitzReveal': h = head + chalReveal(d, me, 'Munjeviti krug', '', '✓ ' + (me.k || 0) + ' · ✗ ' + (me.x || 0), (me.k || 0) + ' × 100 − ' + (me.x || 0) + ' × 50' + ((me.k || 0) * 100 - (me.x || 0) * 50 < 0 ? ' · najmanje 0' : '')); break;\n"
+],
+[
+"          '<div class=\"mg-fb ' + (inW ? 'ok' : 'bad') + '\">' + (none ? 'Nema većine – svatko je za sebe!' : inW ? 'S većinom si! +300' : me.mv >= 0 ? 'Ovaj put nisi s većinom.' : 'Nisi glasao.') + '</div></div>' +\n",
+"          '<div class=\"mg-fb ' + (inW ? 'ok' : 'bad') + '\">' + (none ? 'Nema većine – svatko je za sebe!' : inW ? 'S većinom si! +300 za ovo pitanje' : me.mv >= 0 ? 'Ovaj put nisi s većinom.' : 'Nisi glasao.') + '</div></div>' +\n"
+],
+[
+"        let sol = '';\n",
+"        let sol = '', personal = false;\n"
+],
+[
+"        if (!sol && d.ntv && d.ph === 'sortReveal') sol = '<div class=\"sort-cols\" style=\"width:100%\">' + [0, 1].map((k) => '<div class=\"sort-col ' + (k ? 'b' : 'a') + '\" style=\"padding:10px\"><h3 style=\"font-size:1.1rem\">' + esc(k ? d.so.b : d.so.a) + '</h3><div class=\"chips\">' + d.so.it.filter((_, i) => d.so.key[i] === k).map((x) => '<span class=\"chip\" style=\"font-size:.9rem\">' + esc(x) + '</span>').join('') + '</div></div>').join('') + '</div>';\n",
+"        if (sol) personal = true;\n        if (!sol && d.ph === 'sortReveal') sol = '<div class=\"sort-cols\" style=\"width:100%\">' + [0, 1].map((k) => '<div class=\"sort-col ' + (k ? 'b' : 'a') + '\" style=\"padding:10px\"><h3 style=\"font-size:1.1rem\">' + esc(k ? d.so.b : d.so.a) + '</h3><div class=\"chips\">' + d.so.it.filter((_, i) => d.so.key[i] === k).map((x) => '<span class=\"chip\" style=\"font-size:.9rem\">' + esc(x) + '</span>').join('') + '</div></div>').join('') + '</div>';\n"
+],
+[
+"        if (!sol && d.ntv && d.ph === 'linkReveal') sol = '<div class=\"pairs\" style=\"width:100%\">' + d.li.L.map((l, i) => '<div class=\"pair\" style=\"font-size:1rem\"><span>' + esc(l) + '</span><span class=\"arrow\">→</span><span>' + esc(d.li.R[d.li.key[i]]) + '</span></div>').join('') + '</div>';\n        h = (d.ntv ? '' : '') + head + '<div class=\"result ' + (me.k ? 'ok' : 'none') + '\"><div class=\"p-title\">Točno ' + me.k + ' od ' + tot + '</div><div class=\"pts\">+' + (me.g || 0) + '</div></div>' +\n          (d.ntv ? sol + miniBoard(d, true) : sol + rankStat(d, me)) + tdLine(d);\n",
+"        if (d.ph === 'linkReveal' && sol) personal = true;\n        if (!sol && d.ph === 'linkReveal') sol = '<div class=\"pairs\" style=\"width:100%\">' + d.li.L.map((l, i) => '<div class=\"pair\" style=\"font-size:1rem\"><span>' + esc(l) + '</span><span class=\"arrow\">→</span><span>' + esc(d.li.R[d.li.key[i]]) + '</span></div>').join('') + '</div>';\n        h = head + '<div class=\"result ' + (me.k ? 'ok' : 'none') + '\"><div class=\"p-title\">Točno ' + (me.k || 0) + ' od ' + tot + '</div><div class=\"pts\">+' + (me.g || 0) + '</div><div class=\"score-detail\">' + (me.k || 0) + ' × ' + (d.ph === 'sortReveal' ? 150 : 200) + ' bodova</div></div>' +\n          '<div class=\"score-detail\">' + (personal ? 'Tvoji odabiri: zeleno ✓ točno · crveno ✕ netočno' : 'Točno rješenje') + '</div>' + sol + (d.ntv ? miniBoard(d, true) : rankStat(d, me)) + tdLine(d);\n"
+],
+[
+"          '<div class=\"fs-me\">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class=\"phone-pyr big\">' + pyramidHtml(d, false, { you: true }) + '</div></div>';\n",
+"          '<div class=\"fs-me\">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class=\"p-sub fs-rule\">Točnim odgovorima napreduješ. Na vrhu te čeka pitanje za krunu.</div><div class=\"phone-pyr big\">' + pyramidHtml(d, false, { you: true }) + '</div></div>';\n"
+],
+[
+"    $app.classList.toggle('lobfit', !!d && d.ph === 'lobby');\n    fitScreen();\n",
+"    $app.classList.toggle('lobfit', !!d && d.ph === 'lobby');\n    $app.classList.toggle('final-question', !!d && d.ph === 'fq');\n    fitScreen();\n"
+],
+[
+"    fitScreen();\n    walkFromRow();\n",
+"    fitScreen();\n    if (d.ph === 'fq') {\n      const area = $app.querySelector('.q-area');\n      if (area) {\n        const hint = () => {\n          const scrollable = /^(auto|scroll)$/.test(getComputedStyle(area).overflowY) && area.scrollHeight > area.clientHeight + 1;\n          const bottom = area.getBoundingClientRect().bottom;\n          // Efekti, sjene i animacije mogu povećati scrollHeight i kada su svi odgovori vidljivi.\n          const hiddenAnswer = [...area.querySelectorAll('.p-opts .p-opt')].some((answer) => {\n            const text = answer.querySelector('.otxt') || answer;\n            return text.getBoundingClientRect().bottom > bottom + 2;\n          });\n          area.classList.toggle('more-answers', scrollable && hiddenAnswer);\n        };\n        area.addEventListener('scroll', hint, { passive: true });\n        area.addEventListener('animationend', hint);\n        hint();\n      }\n    }\n    walkFromRow();\n"
+],
+[
+"    target: { k: 'Tajna meta', d: (b) => 'Odaberi igrača. Ako on sljedeće pitanje odgovori <b>netočno</b>, dobivaš <b>+' + b + '</b>.' },\n",
+"    target: { k: 'Tajna meta', d: (b) => 'Odaberi igrača. Ako na sljedeće pitanje odgovori <b>netočno ili ne odgovori</b>, dobivaš <b>+' + b + '</b>.' },\n"
+],
+[
+"    if (x.k === 'target' && x.p === me.id) return '<div class=\"rv-sx' + (x.res ? '' : ' none') + '\">' + (x.res ? 'Tajna meta je pogriješila: +' + (me.xb || 0) : 'Tajna meta je odgovorila točno · bez bonusa') + '</div>';\n",
+"    if (x.k === 'target' && x.p === me.id) return '<div class=\"rv-sx' + (x.res ? '' : ' none') + '\">' + (x.res ? 'Tajna meta nije odgovorila točno: +' + (me.xb || 0) : 'Tajna meta je odgovorila točno · bez bonusa') + '</div>';\n"
+],
+[
+"    return '<div class=\"mg\"><div class=\"mg-t\">Što misli većina?</div><div class=\"mg-s\">Pitanje ' + (m.i + 1) + '/' + m.n + ' · bodove dobiva većina</div><div class=\"mg-q\">' + esc(m.q.q) + '</div><div class=\"mg-list\">' +\n",
+"    return '<div class=\"mg\"><div class=\"mg-t\">Što misli većina?</div><div class=\"mg-s\">Pitanje ' + (m.i + 1) + '/' + m.n + ' · pogodi što će većina izabrati</div><div class=\"mg-q\">' + esc(m.q.q) + '</div><div class=\"mg-list\">' +\n"
+],
+[
+"  function chalReveal(d, me, title, sol, res) {\n    return '<div class=\"mg\"><div class=\"mg-t\">' + title + '</div>' + (sol || '') + '<div class=\"result ' + (me.g ? 'ok' : 'none') + '\"><div class=\"p-title\">' + res + '</div><div class=\"pts\">+' + (me.g || 0) + '</div></div></div>' +\n",
+"  function chalReveal(d, me, title, sol, res, detail) {\n    return '<div class=\"mg\"><div class=\"mg-t\">' + title + '</div>' + (sol || '') + '<div class=\"result ' + (me.g ? 'ok' : 'none') + '\"><div class=\"p-title\">' + res + '</div><div class=\"pts\">+' + (me.g || 0) + '</div><div class=\"score-detail\">' + detail + ' bodova</div></div></div>' +\n"
+],
+[
+"    return '<div class=\"risk\"><div class=\"p-title\">Posljednji rizik</div><div class=\"p-sub\">Biraš tajno. Točno: +ulog. Netočno: −ulog.</div>' + throneHtml(d, { mini: 1, noq: 1 }) +\n",
+"    return '<div class=\"risk\"><div class=\"p-title\">Posljednji rizik</div><div class=\"p-sub\">Biraš tajno. Točno: +ulog. Netočno ili bez odgovora: −ulog.</div>' + throneHtml(d, { mini: 1, noq: 1 }) +\n"
+],
+[
+"    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\">🍻 Tajni paktovi<small>Savezi, šaputanje i izdaje (od 3 prava igrača)</small></span><button class=\"tgl' + (d.opt.pacts ? '' : ' off') + '\" data-popt=\"' + (d.opt.pacts ? 0 : 1) + '\">' + (d.opt.pacts ? 'Uključeno' : 'Isključeno') + '</button></div>';\n",
+"    return '<div class=\"lob-opt\"><span class=\"lob-opt-l\">🍻 Tajni paktovi<small>Savezi, zajednička riznica i izdaje (od 3 prava igrača)</small></span><button class=\"tgl' + (d.opt.pacts ? '' : ' off') + '\" data-popt=\"' + (d.opt.pacts ? 0 : 1) + '\">' + (d.opt.pacts ? 'Uključeno' : 'Isključeno') + '</button></div>';\n"
+],
+[
+"    const pk = S ? [S.s, S.ph, innerWidth, innerHeight].join(':') : null;\n",
+"    const pk = S ? [S.s, S.ph, S.ph === 'power' ? (L.pw || '') : S.ph === 'lobby' ? (L.lobPanel || '') : '', innerWidth, innerHeight].join(':') : null;\n"
+],
+[
+"    if (phone) {\n      const mb = A.querySelector('.mboard');\n",
+"    if (phone) {\n      if (S && ['sortReveal', 'linkReveal', 'orderReveal'].includes(S.ph)) {\n        const solution = A.querySelector(S.ph === 'orderReveal' ? '.mg-list' : S.ph === 'linkReveal' ? '.pairs' : '.sort-cols');\n        if (solution) {\n          solution.style.maxHeight = ''; solution.classList.remove('solution-scroll');\n          const over = measure(1) - available;\n          if (over > 1) {\n            solution.style.maxHeight = Math.max(88, Math.floor(solution.getBoundingClientRect().height - over - 4)) + 'px';\n            solution.classList.add('solution-scroll');\n            solution.setAttribute('aria-label', 'Rješenje, pomakni za pregled');\n          }\n        }\n      }\n      if (S && S.ph === 'lobby') {\n        const players = A.querySelector('.waiting-room .lob-players');\n        const panel = A.querySelector('.waiting-room .lob-settings, .waiting-room .av-grid');\n        for (const [el, minH, cls] of [[players, 60, 'lob-scroll'], [panel, 96, 'lob-panel-scroll']]) {\n          if (!el) continue;\n          el.style.maxHeight = ''; el.classList.remove(cls);\n          const over = measure(1) - available;\n          if (over > 1) {\n            el.style.maxHeight = Math.max(minH, Math.floor(el.getBoundingClientRect().height - over - 4)) + 'px';\n            el.classList.add(cls);\n          }\n        }\n      }\n      // Dugačak izbor moći ili igrača skrola se unutar popisa, umjesto da smanji cijeli ekran.\n      const choices = S && S.ph === 'power' && A.querySelector(L.pw ? '.targets' : '.pw-cards');\n      if (choices) {\n        choices.style.maxHeight = ''; choices.classList.remove('fit-scroll');\n        const over = measure(1) - available;\n        if (over > 1) {\n          const minH = L.pw ? 140 : 150;\n          const height = Math.max(minH, Math.floor(choices.getBoundingClientRect().height - over - 4));\n          choices.style.maxHeight = height + 'px'; choices.classList.add('fit-scroll');\n        }\n      }\n      const mb = A.querySelector('.mboard');\n"
+],
+[
+"          const row = mb.querySelector('.rank-row'), minH = row ? row.getBoundingClientRect().height * 2.6 : 100;\n",
+"          const row = mb.querySelector('.rank-row'), minH = row ? row.getBoundingClientRect().height * (A.querySelector('.kr-card') ? 1.3 : 2.6) : 100;\n"
+],
+[
+"  let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitScreen, 120); });\n",
+"  let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(() => { fitScreen(); const area = $app.querySelector('.final-question .q-area'); if (area) area.dispatchEvent(new Event('scroll')); }, 120); });\n"
+],
+[
+"      const note = !k ? 'Bez moći u ovom pitanju · čekamo ostale…'\n",
+"      const note = !L.sent ? 'Odabir zaprimljen · čekamo ostale…' : !k ? 'Bez moći u ovom pitanju · čekamo ostale…'\n"
+],
+[
+"      return headH('Odaberi moć', 'Moć je odabrana.') + '<div class=\"pw-cards\">' + offers.map((o) => card(o, o === k ? ' sel' : ' dim', 'div')).join('') + '</div><div class=\"pw-note\">' + note + '</div>';\n",
+"      return headH('Odaberi moć', 'Odabir je zaprimljen.') + '<div class=\"pw-cards\">' + offers.map((o) => card(o, !L.sent ? '' : o === k ? ' sel' : ' dim', 'div')).join('') + '</div><div class=\"pw-note\">' + note + '</div>';\n"
+],
+[
+"    const attackers = (d.ev || []).filter((e) => e.t === PID);\n    const hit = attackers.length ? '<div class=\"p-sub\">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';\n    return timerHtml() + '<div class=\"p-top\"><span class=\"pill\">' + esc(d.q.c) + '</span><span id=\"tnum\">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +\n",
+"    const attackers = (d.ev || []).filter((e) => e.t === PID);\n    const hit = attackers.length ? '<div class=\"p-sub\">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';\n    return timerHtml() + '<div class=\"p-top\"><span class=\"pill\">' + esc(d.q.c) + '</span><span id=\"tnum\">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +\n"
+],
+[
+"      '<div class=\"waiting\" data-bk=\"qwait\" data-ba=\"subIn\">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : 'Brže = više bodova!') + '</div>';\n",
+"      '<div class=\"waiting\" data-bk=\"qwait\" data-ba=\"subIn\">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Izbjegni bombe!' : 'Brže = više bodova!') + '</div>';\n"
+],
+[
+"      '<div class=\"rv-a\">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + (none ? '<div class=\"rv-sum\">Vrijeme je isteklo</div>' : '') + pts + (me.br ? '<div class=\"rv-bet' + (me.br < 0 ? ' neg' : '') + '\">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +\n",
+"      '<div class=\"rv-a\">' + qTextHtml(d, false) + revOpts(d, me.ch, false) + pts + (me.br ? '<div class=\"rv-bet' + (me.br < 0 ? ' neg' : '') + '\">Ulog: ' + (me.br > 0 ? '+' : '−') + Math.abs(me.br) + '</div>' : '') + secretRevealLine(d, me) + '</div>' +\n"
+],
+[
+"    return '<div class=\"srt-card' + fb + (!key && L.srtSel === i ? ' sel' : '') + '\" data-si=\"' + i + '\"' + (key ? '' : ' role=\"button\" tabindex=\"0\"') + '>' + esc(d.so.it[i]) + '</div>';\n",
+"    return '<div class=\"srt-card' + fb + (!key && L.srtSel === i ? ' sel' : '') + '\" data-si=\"' + i + '\"' + (key ? '' : ' role=\"button\" tabindex=\"0\"') + '>' + (key ? (fb === ' ok' ? '✓ ' : '✕ ') : '') + esc(d.so.it[i]) + (fb === ' bad' ? ' → ' + esc(key[i] ? d.so.b : d.so.a) : '') + '</div>';\n"
+],
+[
+"        card.style.transform = 'translate(' + dx + 'px,' + dy * 0.35 + 'px) rotate(' + tilt(dx) + 'deg)';\n",
+"        card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + tilt(dx) + 'deg)';\n"
+],
+[
+"        card.classList.remove('drag');\n        const v = Math.abs(dx) / Math.max(1, performance.now() - t0);\n",
+"        card.classList.remove('drag');\n        const bin = [...sides].find((side) => { const r = side.getBoundingClientRect(); return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom; });\n        if (!cancel && moved && bin) return commit(+bin.dataset.go, dx, dy);\n        const v = Math.abs(dx) / Math.max(1, performance.now() - t0);\n"
+],
+[
+"        h += '<div class=\"lnk-card lnk-l' + (j >= 0 ? ' paired' : '') + (sel === k ? ' sel' : '') + fb + '\" data-ll=\"' + k + '\" style=\"grid-row:' + (k + 1) + (j >= 0 ? ';--pc:' + LNK_COL[k % LNK_COL.length] : '') + '\"' + (key ? '' : ' role=\"button\" tabindex=\"0\"') + '>' + esc(d.li.L[k]) + '</div>';\n",
+"        h += '<div class=\"lnk-card lnk-l' + (j >= 0 ? ' paired' : '') + (sel === k ? ' sel' : '') + fb + '\" data-ll=\"' + k + '\" style=\"grid-row:' + (k + 1) + (j >= 0 ? ';--pc:' + LNK_COL[k % LNK_COL.length] : '') + '\"' + (key ? '' : ' role=\"button\" tabindex=\"0\"') + '>' + (key && j >= 0 ? (fb === ' ok' ? '✓ ' : '✕ ') : '') + esc(d.li.L[k]) + (fb === ' bad' ? '<small> → ' + esc(d.li.R[key[k]]) + '</small>' : '') + '</div>';\n"
+],
+[
+"    const attackers = (d.ev || []).filter((e) => e.t === PID);\n    const hit = attackers.length ? '<div class=\"p-sub\">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.b ? ' (odbijeno)' : '')).join(' · ') + '</div>' : '';\n    return timerHtml(3000) +\n",
+"    const attackers = (d.ev || []).filter((e) => e.t === PID);\n    const hit = attackers.length ? '<div class=\"p-sub\">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';\n    return timerHtml(3000) +\n"
+],
+[
+"      (!answered && locked ? '<div class=\"waiting\">Očišćeno! Odgovori se otključavaju…</div>' : '') +\n",
+"      (!answered && locked ? '<div class=\"waiting\">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class=\"waiting\">💣 Izbjegni bombe!</div>' : '') +\n"
+]
+]
