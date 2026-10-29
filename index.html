@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-kFCcO4s/LoUwGE8PrnjxCQIBvLTUrqCcAMfvlXyNMTU=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js 'sha256-qvyGrg5P+0fH60OJcMBTGy7LaH3c14UKgzm4FHZO86E=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -1031,6 +1031,10 @@
   .pw-mini b { font-size: clamp(1rem, 1.4vw, 1.4rem); }
   .pw-mini span { font-size: clamp(0.72rem, 0.95vw, 0.95rem); }
   .pw-card > span:last-child, .pw-mini > div { left: 31.5%; right: 8.5%; }
+  .pw-utjeha { color: #f0c66a; }
+  .ccoin { position: absolute; left: 80%; top: 22%; width: 28%; z-index: 4; pointer-events: none; transform: translateX(-50%); filter: drop-shadow(0 0 12px rgba(255, 205, 90, 0.85)); animation: ccoinPop 1.5s ease-out both; }
+  @keyframes ccoinPop { 0% { opacity: 0; transform: translate(-50%, 45%) scale(0.3) rotateY(0deg); } 30% { opacity: 1; transform: translate(-50%, -18%) scale(1.12) rotateY(360deg); } 75% { opacity: 1; transform: translate(-50%, -12%) scale(1) rotateY(720deg); } 100% { opacity: 0; transform: translate(-50%, -30%) scale(0.9) rotateY(720deg); } }
+  @media (prefers-reduced-motion: reduce) { .ccoin { animation: ccoinFade 1.5s ease-out both; } @keyframes ccoinFade { 0%, 100% { opacity: 0; } 20%, 75% { opacity: 1; } } }
   .pw-img { object-fit: contain; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45)); }
   .pw-ico .pw-img { width: 78%; height: 78%; }
   .pw-card .pw-ico, .pw-mini .pw-ico { background: radial-gradient(circle, rgba(255, 220, 150, 0.35), transparent 70%); }
@@ -4377,7 +4381,7 @@
           snd(SND[e.p]);
           if (e.p === 'stit') { fa.querySelector('.cshield').classList.add('on'); burst(core.x, core.y, 20, { color: COL.stit, v: 6, shape: 'spark' }); }
           if (e.p === 'dupli') { fa.classList.add('gold'); burst(core.x, core.y - 20 * S(), 26, { color: '#ffd23c', v: 6, up: 3, g: 0.12, shape: 'star' }); badge(fa, '×2', 'b-dupli'); }
-          if (e.p === 'utjeha') { burst(core.x, core.y - 20 * S(), 18, { color: '#ffd36a', v: 5, up: 2, g: 0.12, shape: 'star' }); badge(fa, 'UTJEHA', 'b-dupli'); }
+          if (e.p === 'utjeha') { burst(core.x, core.y - 20 * S(), 18, { color: '#ffd36a', v: 5, up: 2, g: 0.12, shape: 'star' }); badge(fa, 'UTJEHA', 'b-dupli'); fa.insertAdjacentHTML('beforeend', '<img class="ccoin" src="ui/pw-utjeha.webp" alt="" aria-hidden="true" draggable="false">'); const cc = fa.querySelector('.ccoin:last-of-type'); cc.addEventListener('animationend', () => cc.remove()); }
           if (e.p === 'pola') { burst(core.x, core.y - 30 * S(), 18, { color: '#f1dcb0', v: 5, shape: 'spark' }); badge(fa, '50:50', 'b-pola'); fa.insertAdjacentHTML('beforeend', '<span class="csplit"><i></i><i></i></span>'); }
           await sleep(per * 0.55); if (my !== run) return;
           pose(fa, fp.a, 'idle');
@@ -4491,7 +4495,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep">Još</span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v55</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v56</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -5690,7 +5694,7 @@
     } catch (e) { crash(e); }
   }
   function phoneV() {
-    const d = S;
+    const d = S && typeof S.ms === 'number' && lastStateAt ? Object.assign({}, S, { ms: Math.max(0, S.ms - (Date.now() - lastStateAt)) }) : S;
     const freshP = !!d && L.s !== phoneStep;
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');
