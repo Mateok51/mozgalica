@@ -20,7 +20,7 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
       await p.evaluate(() => reviewHost());
       await p.locator('#lobInv').click(); await p.locator('#invModal').waitFor(); await p.locator('#invClose').click();
       const base = await p.locator('#dstart').boundingBox();
-      await p.locator('#lobSettings').click(); await p.waitForTimeout(350);
+      await p.locator('#lobSettings').click(); await p.waitForTimeout(350); const botIcon=p.locator('.lob-bots .tavern-bot');if(!(await botIcon.count())||!(await botIcon.evaluate(e=>e.complete&&e.naturalWidth>0)))throw Error('Bot icon missing');
       for (let i = 0; i < 3; i++) { const add = p.locator('[data-bots="1"]'); if (await add.isDisabled()) break; await add.click(); await p.waitForTimeout(100); }
       for (const label of await p.locator('.len-label').all()) {
         if (await label.evaluate(e => e.scrollWidth > e.clientWidth + 1)) throw Error('Duration label clipped');

@@ -173,7 +173,7 @@ function createGame(o) {
   const G = {
     code: o.code, ph: 'lobby', s: 0, endsAt: 0, dur: 0, startedAt: 0, pi: -1, rl: '',
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
-    win: null, fact: '', inFinale: false, fqn: 0,
+    win: null, finalRank: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
     opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr' }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
@@ -465,7 +465,7 @@ function createGame(o) {
     if (G.ph !== 'lobby' || active().length < 1) return;
     for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; }
     for (const k in G.used) G.used[k].clear();
-    G.pi = -1; G.qn = 0; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.leg = null; G.crownWin = null; G.bdone = 0;
+    G.pi = -1; G.qn = 0; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.finalRank = null; G.leg = null; G.crownWin = null; G.bdone = 0;
     // kladionica: nasumično 2-3 puta po igri, najviše jednom po rundi (nikad u finalu)
     G.bn = -1; G.betAt = new Set();
     applyLen(G.opt.len);
@@ -1283,6 +1283,7 @@ function createGame(o) {
     payLoyalty();
     const ranked = G.throne ? list().slice().sort((a, b) => (b.pid === G.tieWin) - (a.pid === G.tieWin) || b.score - a.score || (b.tok || 0) - (a.tok || 0) || (b.tq0 || 0) - (a.tq0 || 0) || (a.name < b.name ? -1 : 1))
       : list().slice().sort((a, b) => b.fstep - a.fstep || (b.fu || 0) - (a.fu || 0) || b.score - a.score);
+    G.finalRank = ranked.map((p) => p.pid);
     G.win = ranked.length ? ranked[0].pid : null;
     G.fact = pick(D.facts);
     // legende: sastave se jednom i ne mijenjaju se do nove partije (isti pregled pri ponovnom otvaranju i spajanju)
@@ -1296,7 +1297,7 @@ function createGame(o) {
     clear();
     for (const [id, p] of R) if (!p.on) R.delete(id);
     for (const p of list()) { p.score = 0; p.gained = 0; p.fstep = 0; p.done = false; }
-    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.rl = ''; G.leg = null; G.crownWin = null; TD.reset(); pactReset();
+    G.ph = 'lobby'; G.s += 1; G.pi = -1; G.inFinale = false; G.throne = false; G.tq = 0; G.tieP = null; G.tieWin = null; G.thRiskDone = 0; G.thLastDone = 0; G.tLead = null; G.tChg = null; G.win = null; G.finalRank = null; G.rl = ''; G.leg = null; G.crownWin = null; TD.reset(); pactReset();
     onChange();
   }
   function skip() { if (SKIPPABLE[G.ph]) endPhase(); }
@@ -2795,7 +2796,7 @@ function createGame(o) {
     if (ph === 'sortReveal') v.so.key = G.so.key;
     if (ph === 'link' || ph === 'linkReveal') v.li = { t: G.li.t, L: G.li.L, R: G.li.R };
     if (ph === 'linkReveal') v.li.key = G.li.key;
-    if (ph === 'final') { v.win = G.win; v.fact = G.fact; if (G.leg) v.lg = G.leg; }
+    if (ph === 'final') { v.win = G.win; v.rank = G.finalRank; v.fact = G.fact; if (G.leg) v.lg = G.leg; }
     if (ph === 'moment' && G.mo) v.mo = G.mo;
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
