@@ -2699,7 +2699,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, finalRank: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr' }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr', off: [] }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
     tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
@@ -3089,7 +3089,7 @@ function createGame(o) {
     startVote0();
   }
   function startVote0() {
-    const avail = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
+    const avail = enabledCats().filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
     if (!avail.length) return next();
     G.bn = (G.bn == null ? -1 : G.bn) + 1;
     G.qv = G.qvAt && G.qvAt.get(G.bn) || null;
@@ -3526,7 +3526,7 @@ function createGame(o) {
   function beginFinaleQ() {
     G.crown = list().filter((p) => p.fu >= pyrTop()).map((p) => p.pid);
     if (G.crown.length) {
-      const cats = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
+      const cats = enabledCats().filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
       if (cats.length) {
         const cat = pick(cats), qi = pick(D.cats[cat].map((_, i) => i).filter((i) => !G.used.q.has(cat + '|' + i)));
         G.used.q.add(cat + '|' + qi);
@@ -3730,7 +3730,7 @@ function createGame(o) {
     throneQ(false);
   }
   function throneQ(tie) {
-    const cats = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
+    const cats = enabledCats().filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
     if (!cats.length) return finish();
     const cat = pick(cats), qi = pick(D.cats[cat].map((_, i) => i).filter((i) => !G.used.q.has(cat + '|' + i)));
     G.used.q.add(cat + '|' + qi);
@@ -4337,7 +4337,7 @@ function createGame(o) {
   }
   function startDuel() {
     if (G.du && G.du.rope) return startRope();
-    const cats = Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
+    const cats = enabledCats().filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)));
     if (!cats.length) { G.du = null; return next(); }
     const cat = pick(cats);
     const pool = D.cats[cat].map((q, i) => i).filter((i) => !G.used.q.has(cat + '|' + i));
@@ -5175,7 +5175,8 @@ function createGame(o) {
     if (out) r.out = sfOn() ? { t: out.t, dl: 1 } : { t: out.t, ms: Math.max(0, out.until - now()) };
     return { rc: r };
   }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'end' && (v === 'pyr' || v === 'throne')) { G.opt.end = v; applyLen(G.opt.len); onChange(); return; } if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; } if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
+  function enabledCats() { const all = Object.keys(D.cats), off = G.opt && G.opt.off ? G.opt.off : []; const on = all.filter((c) => off.indexOf(c) < 0); return on.length >= 4 ? on : all; }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'cats') { if (!Array.isArray(v)) return; const off = Object.keys(D.cats).filter((c) => v.indexOf(c) >= 0); G.opt.off = off; onChange(); return; } if (k === 'end' && (v === 'pyr' || v === 'throne')) { G.opt.end = v; applyLen(G.opt.len); onChange(); return; } if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; } if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -5332,7 +5333,7 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, len: G.opt.len, end: G.opt.end };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, len: G.opt.len, end: G.opt.end, off: G.opt.off.slice(), all: Object.keys(D.cats) };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;

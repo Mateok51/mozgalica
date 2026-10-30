@@ -867,3 +867,13 @@ for _o, _n in _json.load(open(SP + '/v3/port-main3-engine.json', encoding='utf-8
     rep(_o, _n)
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR izmjene s maina (utjeha, poredak) OK')
+# ---------- odabir kategorija (v59+): domaćin u predvorju isključuje kategorije koje ne želi (najmanje 4 ostaju uključene) ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("Object.keys(D.cats).filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)))", "enabledCats().filter((c) => D.cats[c].some((_, i) => !G.used.q.has(c + '|' + i)))", 4)
+rep("len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr' },", "len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr', off: [] },")
+rep("len: G.opt.len, end: G.opt.end };", "len: G.opt.len, end: G.opt.end, off: G.opt.off.slice(), all: Object.keys(D.cats) };")
+rep("  function setOpt(k, v) { if (G.ph !== 'lobby') return;",
+    "  function enabledCats() { const all = Object.keys(D.cats), off = G.opt && G.opt.off ? G.opt.off : []; const on = all.filter((c) => off.indexOf(c) < 0); return on.length >= 4 ? on : all; }\n"
+    "  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'cats') { if (!Array.isArray(v)) return; const off = Object.keys(D.cats).filter((c) => v.indexOf(c) >= 0); G.opt.off = off; onChange(); return; }")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR odabir kategorija (motor) OK')
