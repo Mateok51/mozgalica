@@ -187,7 +187,7 @@ const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m); if (!c) fails
       await ana.screenshot({ path: SHOTS + '/mt-ana-kraj.png' });
       const aEnd = await ana.textContent('body');
       const mEnd = await markoPage.textContent('body');
-      ok(/Pobijedio si!|je pobijedio!/.test(aEnd) && /Pobijedio si!|je pobijedio!/.test(mEnd), 'oba mobitela prikazuju kraj igre');
+      ok(/Tvoja je kruna!|Vladar Trivia Taverna!/.test(aEnd) && /Tvoja je kruna!|Vladar Trivia Taverna!/.test(mEnd), 'oba mobitela prikazuju kraj igre');
       finalOk = true;
       break;
     }

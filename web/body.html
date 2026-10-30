@@ -3984,9 +3984,9 @@ __ENGINE__
     L.fx = makeFx(L.fxq[0]);
     HAPTIC.impact();
     // odgovori ostaju zaključani kratko vrijeme da se zadnji dodir ne pretvori u odgovor
-    L.lockUntil = Date.now() + 1600;
+    L.lockUntil = Date.now() + 400;
     const s0 = L.s;
-    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 1620);
+    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 420);
     phoneRender(true);
   }
   const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom' };
@@ -4085,22 +4085,28 @@ __ENGINE__
       };
     } else if (fx.k === 'sluz') {
       const cells = el.querySelectorAll('.cell');
-      const wipe = (e) => {
-        const r = el.getBoundingClientRect();
-        const cx = Math.floor(((e.clientX - r.left) / r.width) * 6), cy = Math.floor(((e.clientY - r.top) / r.height) * 8);
+      let lx = null, ly = null;
+      const hit = (px, py) => {
+        const cx = Math.floor(px), cy = Math.floor(py);
         for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
-          if (Math.abs(dx) + Math.abs(dy) > 1) continue;
           const x = cx + dx, y = cy + dy;
           if (x < 0 || x > 5 || y < 0 || y > 7) continue;
           const i = y * 6 + x;
           if (fx.cells[i]) { fx.cells[i] = 0; fx.left--; if (cells[i]) cells[i].classList.add('gone'); if (fx.left % 7 === 0) SFX.play('splat'); }
         }
-        if (fx.left <= 5) fxDone();
+      };
+      const wipe = (e) => {
+        const r = el.getBoundingClientRect();
+        const px = ((e.clientX - r.left) / r.width) * 6, py = ((e.clientY - r.top) / r.height) * 8;
+        if (lx === null) hit(px, py);
+        else { const n = Math.max(1, Math.ceil(Math.hypot(px - lx, py - ly) / 0.5)); for (let k = 1; k <= n; k++) hit(lx + (px - lx) * k / n, ly + (py - ly) * k / n); }
+        lx = px; ly = py;
+        if (fx.left <= 10) { fx.cells.fill(0); fx.left = 0; cells.forEach((c) => c.classList.add('gone')); fxDone(); }
       };
       let down = false;
-      el.onpointerdown = (e) => { e.preventDefault(); down = true; try { el.setPointerCapture(e.pointerId); } catch (er) {} wipe(e); };
+      el.onpointerdown = (e) => { e.preventDefault(); down = true; lx = ly = null; try { el.setPointerCapture(e.pointerId); } catch (er) {} wipe(e); };
       el.onpointermove = (e) => { if (down) wipe(e); };
-      el.onpointerup = el.onpointercancel = () => { down = false; };
+      el.onpointerup = el.onpointercancel = () => { down = false; lx = ly = null; };
     } else if (fx.k === 'grick') {
       el.querySelectorAll('.bug').forEach((b) => {
         b.onpointerdown = (e) => {
@@ -5906,7 +5912,7 @@ __ENGINE__
     const fig = (p, cls, pose, lab) => p ? '<div class="win-fig ' + cls + '" data-pose="' + pose + '"><span class="pic">' + avSvg(p.a, pose) + '</span>' + (lab ? '<span class="pl">' + lab + '</span>' : '') + '</div>' : '<div class="win-fig ' + cls + '"></div>';
     const hero = '<div class="win-hero">' + fig(others[0], 'side', 'idle', others[0] ? '2. ' + esc(others[0].n) : '') + fig(w, 'main', 'victory', '') + fig(others[1], 'side', 'idle', others[1] ? '3. ' + esc(others[1].n) : '') + '</div>';
     const me = d.P.find((p) => p.id === PID);
-    const sub = !tv && me ? (w.id === PID ? 'Pobijedio si! Vladar Trivia Taverna!' : esc(w.n) + ' je pobijedio!') : 'Vladar Trivia Taverna!';
+    const sub = !tv && me ? (w.id === PID ? 'Tvoja je kruna! Vladar Trivia Taverna!' : 'Vladar Trivia Taverna!') : 'Vladar Trivia Taverna!';
     const board = '<div class="mboard wide">' + ranked.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + avSvg(p.a) + '</span><span class="nm">' + esc(p.n) + (!tv && p.id === PID ? '<span class="you">Ti</span>' : '') + '</span><span class="sc">' + esc(finalPosition(d, p)) + '</span></div>').join('') + '</div>';
     const fact = d.fact && (tv || (me && w.id === PID)) ? '<div class="win-fact"><b>Zanimljivost za pobjednika:</b> ' + esc(d.fact) + '</div>' : '';
     const act = tv ? '<div class="win-act">' + legBtn + '<button class="btn win-cta" id="again">Igraj ponovno</button><button class="btn ghost" id="quit">Početni ekran</button></div>'
