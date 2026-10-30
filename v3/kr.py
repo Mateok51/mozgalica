@@ -877,3 +877,107 @@ rep("  function setOpt(k, v) { if (G.ph !== 'lobby') return;",
     "  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'cats') { if (!Array.isArray(v)) return; const off = Object.keys(D.cats).filter((c) => v.indexOf(c) >= 0); G.opt.off = off; onChange(); return; }")
 open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
 print('KR odabir kategorija (motor) OK')
+# ---------- nova mini-igra "Uljez u krčmi" + odabir mini-igara u predvorju (v61) ----------
+s = open(SP + '/v3/engine.js', encoding='utf-8').read()
+rep("maj: 10, majReveal: 4, majN: 3,", "maj: 10, majReveal: 4, majN: 3, ulj: 18, uljVote: 14, uljReveal: 7,")
+rep("blitz: 1, maj: 1 } },", "blitz: 1, maj: 1, uljez: 1 } },")
+rep("secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };", "secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1, uljez: 1, uljezVote: 1 };")
+rep("const SKIPPABLE = {",
+    "HOWTO.uljez = { n: 'Uljez u krčmi', i: '🎭', r: ['Jedna osoba ne zna temu, a ostali znaju.', 'Odaberi dva pojma koji najbolje pašu uz temu.', 'Zatim glasajte tko je uljez.'] };\n"
+    "KIND.uljez = 'social'; DATA_KEY.uljez = 'ulj'; CHALLENGES.push('uljez');\n"
+    "const MG_ALL = CHALLENGES.concat(['who', 'emoji']);\n"
+    "const SKIPPABLE = {")
+rep("blitzReveal: 1, majReveal: 1, duelResult: 1, moment: 1 };", "blitzReveal: 1, majReveal: 1, uljezReveal: 1, duelResult: 1, moment: 1 };")
+rep("blitz: 1, maj: 1, secret: 1, secret2: 1 };", "blitz: 1, maj: 1, uljez: 1, uljezVote: 1, secret: 1, secret2: 1 };")
+rep("hiloReveal: 1, blitzReveal: 1, majReveal: 1 };", "hiloReveal: 1, blitzReveal: 1, majReveal: 1, uljezReveal: 1 };")
+# unos
+rep("      case 'maj': {\n        if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.mj.q.o.length) return false;",
+    "      case 'uljez': {\n        const a = inp.v, n = G.ul.terms.length;\n"
+    "        if (!Array.isArray(a) || a.length !== 2 || !a.every((x) => isInt(x) && x >= 0 && x < n) || a[0] === a[1]) return false;\n"
+    "        p.ulP = a.slice(); break;\n      }\n"
+    "      case 'uljezVote': {\n        if (typeof inp.v !== 'string' || inp.v === p.pid || !active().some((q) => q.pid === inp.v)) return false;\n"
+    "        p.ulV = inp.v; break;\n      }\n"
+    "      case 'maj': {\n        if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.mj.q.o.length) return false;")
+rep("      case 'maj': return scoreMaj();\n", "      case 'maj': return scoreMaj();\n      case 'uljez': return startUljezVote();\n      case 'uljezVote': return scoreUljez();\n      case 'uljezReveal': return afterReveal();\n")
+rep("    if (k === 'maj') return startMaj();\n    return next();", "    if (k === 'maj') return startMaj();\n    if (k === 'uljez') return startUljez();\n    return next();")
+# pool i varijante prema odabiru mini-igara
+rep("    const pool = CHALLENGES.filter((k) => (k !== 'maj' || active().length >= 3) && (D[DATA_KEY[k]] || []).length);",
+    "    const pool0 = CHALLENGES.filter((k) => ((k !== 'maj' && k !== 'uljez') || active().length >= 3) && (D[DATA_KEY[k]] || []).length);\n"
+    "    const pool = pool0.filter(mgOn).length ? pool0.filter(mgOn) : pool0;")
+rep("if ((D[DATA_KEY[k]] || []).length) G.qvAt.set(slots.shift(), k);", "if ((D[DATA_KEY[k]] || []).length && mgOn(k)) G.qvAt.set(slots.shift(), k);")
+rep("const vars = ['who', 'emoji'].filter((k) => (D[DATA_KEY[k]] || []).length);", "const vars = ['who', 'emoji'].filter((k) => (D[DATA_KEY[k]] || []).length && mgOn(k));")
+# mini-igra
+rep("  function startMaj() {",
+"""  // ----- Uljez u krčmi: jedna osoba ne zna temu; svi biraju dva pojma, zatim glasaju tko je uljez -----
+  function startUljez() {
+    const set = G.used.uljez || (G.used.uljez = new Set());
+    const it = D.ulj[unusedIndex(D.ulj, set)];
+    const terms = shuffle(it.y.map((w) => ({ w, ok: 1 })).concat(it.n.map((w) => ({ w, ok: 0 }))));
+    const act = active();
+    G.ul = { th: it.t, terms, imp: act[rnd(act.length)].pid, cnt: {}, caught: false };
+    for (const p of list()) { p.gained = 0; p.ulP = null; p.ulV = null; }
+    setPhase('uljez', cfg.ulj);
+  }
+  function startUljezVote() { setPhase('uljezVote', cfg.uljVote); }
+  function scoreUljez() {
+    const cnt = {}, imp = G.ul.imp;
+    for (const p of list()) cnt[p.pid] = 0;
+    for (const p of active()) if (p.ulV && cnt[p.ulV] !== undefined) cnt[p.ulV]++;
+    const ic = cnt[imp] || 0;
+    const caught = ic > 0 && Object.keys(cnt).every((k) => k === imp || cnt[k] < ic);
+    G.ul.cnt = cnt; G.ul.caught = caught;
+    for (const p of list()) {
+      p.gained = p.pid === imp ? (caught ? 0 : 400) : (p.ulV === imp ? 250 : 0);
+      p.score += p.gained;
+    }
+    TD.afterScores();
+    setPhase('uljezReveal', cfg.uljReveal);
+  }
+  function ulPriv(pid) {
+    const p = R.get(pid);
+    if (!p || p.bot || !G.ul || (G.ph !== 'uljez' && G.ph !== 'uljezVote')) return null;
+    return G.ul.imp === pid ? { imp: 1 } : { th: G.ul.th };
+  }
+  function ulBotPick(b) {
+    const T = G.ul.terms, idx = T.map((_, i) => i);
+    if (b.pid === G.ul.imp) { const f = rnd(2); const same = shuffle(idx.filter((i) => T[i].ok === f)); return same.slice(0, 2); }
+    const good = shuffle(idx.filter((i) => T[i].ok)), bad = shuffle(idx.filter((i) => !T[i].ok));
+    return Math.random() < 0.1 ? [good[0], bad[0]] : good.slice(0, 2);
+  }
+  function ulBotVote(b) {
+    const others = active().filter((q) => q.pid !== b.pid);
+    if (b.pid !== G.ul.imp) {
+      const sus = others.filter((q) => q.ulP && q.ulP.some((i) => !G.ul.terms[i].ok));
+      if (sus.length) return pick(sus).pid;
+    }
+    return pick(others).pid;
+  }
+  function startMaj() {""")
+# botovi
+rep("      case 'maj': return 1500 + rnd(cfg.maj * 600);\n", "      case 'maj': return 1500 + rnd(cfg.maj * 600);\n      case 'uljez': return 2500 + rnd(cfg.ulj * 500);\n      case 'uljezVote': return 1500 + rnd(cfg.uljVote * 500);\n")
+rep("      case 'maj': return { s, v: rnd(G.mj.q.o.length) };\n", "      case 'maj': return { s, v: rnd(G.mj.q.o.length) };\n      case 'uljez': return { s, v: ulBotPick(b) };\n      case 'uljezVote': return { s, v: ulBotVote(b) };\n")
+# pogled
+rep("      if (ph === 'majReveal') { e.mv = p.mjV; e.g = p.gained; }", "      if (ph === 'majReveal') { e.mv = p.mjV; e.g = p.gained; }\n      if (ph === 'uljezReveal') e.g = p.gained;")
+rep("    if (ph === 'maj' || ph === 'majReveal') v.mj =",
+"""    if (G.ul && (ph === 'uljez' || ph === 'uljezVote' || ph === 'uljezReveal')) {
+      v.ul = { t: G.ul.terms.map((x) => x.w) };
+      if (ph !== 'uljez') { v.ul.pk = {}; for (const p of list()) if (p.ulP) v.ul.pk[p.pid] = p.ulP; }
+      if (ph === 'uljezReveal') {
+        v.ul.th = G.ul.th; v.ul.ok = G.ul.terms.map((x) => x.ok); v.ul.imp = G.ul.imp; v.ul.caught = G.ul.caught ? 1 : 0; v.ul.cnt = G.ul.cnt; v.ul.vt = {};
+        for (const p of list()) if (p.ulV) v.ul.vt[p.pid] = p.ulV;
+      }
+    }
+    if (ph === 'maj' || ph === 'majReveal') v.mj =""")
+rep("  function priv(pid) {\n    const pr = privBase(pid), p0 = R.get(pid);",
+    "  function priv(pid) {\n    const pr0 = privBase(pid), p0 = R.get(pid), ul = ulPriv(pid);\n"
+    "    const pr = ul ? Object.assign(pr0 || { can: false, used: false, inv: [], out: null, note: p0.note }, { ul }) : pr0;")
+# odabir mini-igara
+rep("off: [] },", "off: [], offMg: [] },")
+rep("off: G.opt.off.slice(), all: Object.keys(D.cats) };",
+    "off: G.opt.off.slice(), all: Object.keys(D.cats), mgOff: G.opt.offMg.slice(), mg: MG_ALL.filter((k) => (D[DATA_KEY[k]] || []).length).map((k) => [k, HOWTO[k].i, HOWTO[k].n, CHALLENGES.indexOf(k) >= 0 ? 1 : 0]) };")
+rep("  function enabledCats() {",
+    "  function mgOn(k) { return !(G.opt && G.opt.offMg && G.opt.offMg.indexOf(k) >= 0); }\n  function enabledCats() {")
+rep("if (k === 'cats') { if (!Array.isArray(v)) return;",
+    "if (k === 'mg') { if (!Array.isArray(v)) return; const off = MG_ALL.filter((c) => v.indexOf(c) >= 0); if (!CHALLENGES.some((c) => off.indexOf(c) < 0 && (D[DATA_KEY[c]] || []).length)) return; G.opt.offMg = off; onChange(); return; } if (k === 'cats') { if (!Array.isArray(v)) return;")
+open(SP + '/v3/engine.js', 'w', encoding='utf-8').write(s)
+print('KR uljez + odabir mini-igara (motor) OK')

@@ -25,12 +25,12 @@ const CFG = {
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
   // upute: nema odbrojavanja, kreće kad svi potvrde; howtoMax je samo nevidljiva sigurnosna granica (npr. netko ode od mobitela)
-  howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, hiloN: 8, blitzN: 24,
+  howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, ulj: 18, uljVote: 14, uljReveal: 7, hiloN: 8, blitzN: 24,
   chal: null, chalN: 2, varMax: 2,
   // Smart Game Director (raspored, nikad ishod): udio mini-igara u regularnom dijelu, početak bez posebnih bitaka (udio),
   // najviše posebnih u zadnjih fcLast, broj posebnih bitaka, pomak izazova unutar runde, slabije ponavljanje iste skupine/vrste, težine vrsta
   sgd: { on: true, share: 0.3, open: 0.2, finalMax: 1, varMin: 1, varMax: 2, moveChal: 0.5, sameCat: 0.35, sameType: 0.1,
-    w: { who: 1, emoji: 1, order: 1, hilo: 1, sort: 1, link: 1, blitz: 1, maj: 1 } },
+    w: { who: 1, emoji: 1, order: 1, hilo: 1, sort: 1, link: 1, blitz: 1, maj: 1, uljez: 1 } },
   // tajni paktovi (balans na jednom mjestu)
   pactMin: 3, pactAfter: 3, pactBonus: 100, pactOne: 40, pactMinQ: 2, pactSteal: 0.08, pactStealMax: 300, pactDouble: 0, pactLoyal: 0.4, pactOffer: 25, pactOffersMax: 3, pactRich: 600, betrayShow: 6.5, loyalShow: 6,
   // tempo otkrivanja odgovora (jedno mjesto za podešavanje): w = šetnja likova, s = kolo, t = cijela faza (s)
@@ -108,7 +108,7 @@ function makePlan(k) {
   return out;
 }
 
-const INPUT_PHASES = { trisk: 1, rope: 1, deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1 };
+const INPUT_PHASES = { trisk: 1, rope: 1, deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1, uljez: 1, uljezVote: 1 };
 // Mini-igre: objašnjenje prije prve igre (kratak podsjetnik kad se ponovi)
 const HOWTO = {
   who: { n: 'Tko sam ja?', i: '🕵️', r: ['Tragovi se otkrivaju jedan po jedan.', 'Što prije pogodiš, to više bodova.', 'Imaš samo jedan pokušaj!'] },
@@ -124,7 +124,10 @@ const CHALLENGES = ['sort', 'link', 'order', 'hilo', 'blitz', 'maj'];
 // skupine izazova po osjećaju igre (Smart Game Director izmjenjuje skupine)
 const KIND = { who: 'assoc', emoji: 'assoc', order: 'logic', hilo: 'logic', sort: 'logic', link: 'logic', blitz: 'fast', maj: 'social' };
 const DATA_KEY = { who: 'who', emoji: 'emoji', order: 'order', hilo: 'hilo', blitz: 'tf', maj: 'maj', sort: 'sort', link: 'link' };
-const SKIPPABLE = { betray: 1, loyal: 1, fstart: 1, tstart: 1, intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1, moment: 1, duelIntro: 1, duelResult: 1, howto: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1 };
+HOWTO.uljez = { n: 'Uljez u krčmi', i: '🎭', r: ['Jedna osoba ne zna temu, a ostali znaju.', 'Odaberi dva pojma koji najbolje pašu uz temu.', 'Zatim glasajte tko je uljez.'] };
+KIND.uljez = 'social'; DATA_KEY.uljez = 'ulj'; CHALLENGES.push('uljez');
+const MG_ALL = CHALLENGES.concat(['who', 'emoji']);
+const SKIPPABLE = { betray: 1, loyal: 1, fstart: 1, tstart: 1, intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1, moment: 1, duelIntro: 1, duelResult: 1, howto: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1, uljezReveal: 1 };
 
 function shuffle(a) {
   a = a.slice();
@@ -175,7 +178,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, finalRank: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr', off: [] }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr', off: [], offMg: [] }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
     tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
@@ -355,6 +358,15 @@ function createGame(o) {
         if (!(inp.f || a.length >= G.bz.list.length)) { p.lastIn = ''; return 'partial'; }
         break;
       }
+      case 'uljez': {
+        const a = inp.v, n = G.ul.terms.length;
+        if (!Array.isArray(a) || a.length !== 2 || !a.every((x) => isInt(x) && x >= 0 && x < n) || a[0] === a[1]) return false;
+        p.ulP = a.slice(); break;
+      }
+      case 'uljezVote': {
+        if (typeof inp.v !== 'string' || inp.v === p.pid || !active().some((q) => q.pid === inp.v)) return false;
+        p.ulV = inp.v; break;
+      }
       case 'maj': {
         if (!isInt(inp.v) || inp.v < 0 || inp.v >= G.mj.q.o.length) return false;
         p.mjV = inp.v; break;
@@ -434,6 +446,9 @@ function createGame(o) {
       case 'hilo': return scoreHilo();
       case 'blitz': return scoreBlitz();
       case 'maj': return scoreMaj();
+      case 'uljez': return startUljezVote();
+      case 'uljezVote': return scoreUljez();
+      case 'uljezReveal': return afterReveal();
       case 'majReveal': return nextMaj();
       case 'orderReveal': case 'hiloReveal': case 'blitzReveal': return afterReveal();
       case 'bet': return startPower();
@@ -477,7 +492,8 @@ function createGame(o) {
     G.rc = { offers: [], act: null, res: null, n: 0, seq: 0 };
     // mini-igre: nasumično koji izazovi i koje posebne bitke, da nije svaka partija ista
     const nCh = plan.filter((it) => it.t === 'challenge').length;
-    const pool = CHALLENGES.filter((k) => (k !== 'maj' || active().length >= 3) && (D[DATA_KEY[k]] || []).length);
+    const pool0 = CHALLENGES.filter((k) => ((k !== 'maj' && k !== 'uljez') || active().length >= 3) && (D[DATA_KEY[k]] || []).length);
+    const pool = pool0.filter(mgOn).length ? pool0.filter(mgOn) : pool0;
     G.qvAt = new Map(); G.ci = 0;
     if (cfg.sgd && cfg.sgd.on && !cfg.chal && !cfg.qv) sgdPlan(nb, pool);
     else {
@@ -485,7 +501,7 @@ function createGame(o) {
       G.chal = (cfg.chal || shuffle(pool)).slice(0, Math.max(nCh, cfg.chal ? cfg.chal.length : 0));
       const slots = shuffle(Array.from({ length: Math.max(0, nb - 1) }, (_, i) => i + 1)).filter((i) => !G.betAt.has(i));
       const wantV = [['who', cfg.qv ? cfg.qv.who : rnd(cfg.varMax + 1)], ['emoji', cfg.qv ? cfg.qv.emoji : rnd(cfg.varMax + 1)]];
-      for (const [k, n] of wantV) for (let j = 0; j < n && slots.length; j++) if ((D[DATA_KEY[k]] || []).length) G.qvAt.set(slots.shift(), k);
+      for (const [k, n] of wantV) for (let j = 0; j < n && slots.length; j++) if ((D[DATA_KEY[k]] || []).length && mgOn(k)) G.qvAt.set(slots.shift(), k);
     }
     G.seenHow = new Set();
     TD.reset();
@@ -506,7 +522,7 @@ function createGame(o) {
     const slots = []; let bn = 0;
     for (const it of plan) { if (it.t === 'battle') slots.push({ k: 'B', bn: bn++ }); else if (it.t === 'challenge') slots.push({ k: 'C' }); }
     const nC = slots.filter((x) => x.k === 'C').length;
-    const vars = ['who', 'emoji'].filter((k) => (D[DATA_KEY[k]] || []).length);
+    const vars = ['who', 'emoji'].filter((k) => (D[DATA_KEY[k]] || []).length && mgOn(k));
     // 2) koliko posebnih bitaka: ciljani udio mini-igara ± 1, u granicama
     let nV = Math.round(slots.length * SG.share) - nC + rnd(3) - 1;
     nV = vars.length ? Math.max(SG.varMin, Math.min(SG.varMax, nV)) : 0;
@@ -822,6 +838,7 @@ function createGame(o) {
     if (k === 'hilo') return startHilo();
     if (k === 'blitz') return startBlitz();
     if (k === 'maj') return startMaj();
+    if (k === 'uljez') return startUljez();
     return next();
   }
   function startVariantQ() {
@@ -890,6 +907,50 @@ function createGame(o) {
       p.cnt = a.filter((x, i) => x === G.bz.list[i][1]).length; p.bad = a.length - p.cnt;
       return Math.max(0, p.cnt * 100 - p.bad * 50);
     });
+  }
+  // ----- Uljez u krčmi: jedna osoba ne zna temu; svi biraju dva pojma, zatim glasaju tko je uljez -----
+  function startUljez() {
+    const set = G.used.uljez || (G.used.uljez = new Set());
+    const it = D.ulj[unusedIndex(D.ulj, set)];
+    const terms = shuffle(it.y.map((w) => ({ w, ok: 1 })).concat(it.n.map((w) => ({ w, ok: 0 }))));
+    const act = active();
+    G.ul = { th: it.t, terms, imp: act[rnd(act.length)].pid, cnt: {}, caught: false };
+    for (const p of list()) { p.gained = 0; p.ulP = null; p.ulV = null; }
+    setPhase('uljez', cfg.ulj);
+  }
+  function startUljezVote() { setPhase('uljezVote', cfg.uljVote); }
+  function scoreUljez() {
+    const cnt = {}, imp = G.ul.imp;
+    for (const p of list()) cnt[p.pid] = 0;
+    for (const p of active()) if (p.ulV && cnt[p.ulV] !== undefined) cnt[p.ulV]++;
+    const ic = cnt[imp] || 0;
+    const caught = ic > 0 && Object.keys(cnt).every((k) => k === imp || cnt[k] < ic);
+    G.ul.cnt = cnt; G.ul.caught = caught;
+    for (const p of list()) {
+      p.gained = p.pid === imp ? (caught ? 0 : 400) : (p.ulV === imp ? 250 : 0);
+      p.score += p.gained;
+    }
+    TD.afterScores();
+    setPhase('uljezReveal', cfg.uljReveal);
+  }
+  function ulPriv(pid) {
+    const p = R.get(pid);
+    if (!p || p.bot || !G.ul || (G.ph !== 'uljez' && G.ph !== 'uljezVote')) return null;
+    return G.ul.imp === pid ? { imp: 1 } : { th: G.ul.th };
+  }
+  function ulBotPick(b) {
+    const T = G.ul.terms, idx = T.map((_, i) => i);
+    if (b.pid === G.ul.imp) { const f = rnd(2); const same = shuffle(idx.filter((i) => T[i].ok === f)); return same.slice(0, 2); }
+    const good = shuffle(idx.filter((i) => T[i].ok)), bad = shuffle(idx.filter((i) => !T[i].ok));
+    return Math.random() < 0.1 ? [good[0], bad[0]] : good.slice(0, 2);
+  }
+  function ulBotVote(b) {
+    const others = active().filter((q) => q.pid !== b.pid);
+    if (b.pid !== G.ul.imp) {
+      const sus = others.filter((q) => q.ulP && q.ulP.some((i) => !G.ul.terms[i].ok));
+      if (sus.length) return pick(sus).pid;
+    }
+    return pick(others).pid;
   }
   function startMaj() {
     const set = G.used.maj || (G.used.maj = new Set());
@@ -1900,7 +1961,7 @@ function createGame(o) {
   };
   const pickLine = (k, map) => { const arr = PACT_LINES[k], l = arr[rnd(arr.length)]; return l.replace(/\{(\w)\}/g, (_, x) => (map && map[x] != null ? map[x] : '')); };
   let pactSeq = 0;
-  const FC_PH = { deal: 1, vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1, betray: 1, intro: 1, howto: 1, sortReveal: 1, linkReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1, duelResult: 1, moment: 1 };
+  const FC_PH = { deal: 1, vote: 1, voteResult: 1, power: 1, cast: 1, reveal: 1, bet: 1, betray: 1, intro: 1, howto: 1, sortReveal: 1, linkReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1, uljezReveal: 1, duelResult: 1, moment: 1 };
   function pactsOn() { return !!G.opt.pacts; }
   // ===================== RIVALSKI OBRAČUN =====================
   // Dobrovoljno, samo ljudi, najviše rcMax prihvaćenih po partiji; ponude samo između pitanja; ishod na sljedećem običnom pitanju.
@@ -2080,7 +2141,7 @@ function createGame(o) {
   const sfOn = () => !!(cfg.sf && cfg.sf.on);
   const bsOn = () => !!G.opt.bs;   // testni način: botovi sudjeluju u paktovima (izričito uključen u predvorju)
   // dok se odgovara (pitanje, mini-igra, dvoboj, tajni događaj) nema slanja ni prihvaćanja ponuda
-  const SF_BUSY = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, secret: 1, secret2: 1 };
+  const SF_BUSY = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, uljez: 1, uljezVote: 1, secret: 1, secret2: 1 };
   const sfPeople = () => list().filter((p) => !p.bot || bsOn());
   const sfBusy = (p) => (G.ph === 'duel' || G.ph === 'rope' ? !!(G.du && p && (p.pid === G.du.a || p.pid === G.du.b)) : !!SF_BUSY[G.ph]);
   let botCall = false;
@@ -2593,7 +2654,8 @@ function createGame(o) {
   }
   // privatno stanje: samo za tog igrača
   function priv(pid) {
-    const pr = privBase(pid), p0 = R.get(pid);
+    const pr0 = privBase(pid), p0 = R.get(pid), ul = ulPriv(pid);
+    const pr = ul ? Object.assign(pr0 || { can: false, used: false, inv: [], out: null, note: p0.note }, { ul }) : pr0;
     if (p0 && G.throne && G.ph === 'trisk') return Object.assign(pr || { can: false, used: false, inv: [], out: null, note: p0.note }, { trk: p0.trk || 0 });
     return pr;
   }
@@ -2651,8 +2713,9 @@ function createGame(o) {
     if (out) r.out = sfOn() ? { t: out.t, dl: 1 } : { t: out.t, ms: Math.max(0, out.until - now()) };
     return { rc: r };
   }
+  function mgOn(k) { return !(G.opt && G.opt.offMg && G.opt.offMg.indexOf(k) >= 0); }
   function enabledCats() { const all = Object.keys(D.cats), off = G.opt && G.opt.off ? G.opt.off : []; const on = all.filter((c) => off.indexOf(c) < 0); return on.length >= 4 ? on : all; }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'cats') { if (!Array.isArray(v)) return; const off = Object.keys(D.cats).filter((c) => v.indexOf(c) >= 0); G.opt.off = off; onChange(); return; } if (k === 'end' && (v === 'pyr' || v === 'throne')) { G.opt.end = v; applyLen(G.opt.len); onChange(); return; } if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; } if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'mg') { if (!Array.isArray(v)) return; const off = MG_ALL.filter((c) => v.indexOf(c) >= 0); if (!CHALLENGES.some((c) => off.indexOf(c) < 0 && (D[DATA_KEY[c]] || []).length)) return; G.opt.offMg = off; onChange(); return; } if (k === 'cats') { if (!Array.isArray(v)) return; const off = Object.keys(D.cats).filter((c) => v.indexOf(c) >= 0); G.opt.off = off; onChange(); return; } if (k === 'end' && (v === 'pyr' || v === 'throne')) { G.opt.end = v; applyLen(G.opt.len); onChange(); return; } if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; } if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -2667,6 +2730,8 @@ function createGame(o) {
       case 'hilo': return 8000 + rnd(cfg.hilo * 500);
       case 'blitz': return Math.max(500, cfg.blitz * 1000 - 1500);
       case 'maj': return 1500 + rnd(cfg.maj * 600);
+      case 'uljez': return 2500 + rnd(cfg.ulj * 500);
+      case 'uljezVote': return 1500 + rnd(cfg.uljVote * 500);
       case 'fq': return 900 + rnd(cfg.fq * 450);
       case 'duel': return 1500 + rnd(cfg.duel * 500);
       case 'secret': case 'secret2': return 1200 + rnd(2500);
@@ -2718,6 +2783,8 @@ function createGame(o) {
       case 'hilo': { const r = []; for (const x of G.hl.list) { const ok = Math.random() < 0.72; r.push(ok ? x.w : 1 - x.w); if (!ok) break; } return { s, r }; }
       case 'blitz': { const n = Math.min(G.bz.list.length, 9 + rnd(10)); return { s, f: 1, r: G.bz.list.slice(0, n).map((x) => (Math.random() < 0.72 ? x[1] : 1 - x[1])) }; }
       case 'maj': return { s, v: rnd(G.mj.q.o.length) };
+      case 'uljez': return { s, v: ulBotPick(b) };
+      case 'uljezVote': return { s, v: ulBotVote(b) };
       case 'sort': return { s, r: G.so.key.map((k) => (Math.random() < 0.75 ? k : 1 - k)) };
       case 'link': return { s, r: G.li.key.map((k) => (Math.random() < 0.7 ? k : rnd(4))) };
     }
@@ -2760,6 +2827,7 @@ function createGame(o) {
       if (ph === 'sortReveal' || ph === 'linkReveal' || ph === 'orderReveal' || ph === 'hiloReveal' || ph === 'blitzReveal') { e.g = p.gained; e.k = p.cnt; }
       if (ph === 'blitzReveal') e.x = p.bad;
       if (ph === 'majReveal') { e.mv = p.mjV; e.g = p.gained; }
+      if (ph === 'uljezReveal') e.g = p.gained;
       if (G.throne && (ph === 'reveal' || ph === 'final') && p.tst != null && G.thLastDone) { e.tsk = p.tst; }
       if (G.inFinale && !G.throne) { e.st = p.fstep; const so = stepOf(p.fu || 0); e.fu = p.fu || 0; e.fp = so.p; e.fr = so.r; if ((p.fu || 0) >= pyrTop() && p.fstep < cfg.steps) e.top = 1; if (ph === 'fr') { e.ug = p.ug; if (p.fb) e.fb = p.fb; if (p.sk) e.sk = 1; if (p.cf) e.cf = p.cf; } if (ph === 'fstart') e.fsc = p.fsc; }
       if (ph === 'bet') { e.bm = p.betMul; if (p.done) e.bt = p.bet; }
@@ -2793,6 +2861,14 @@ function createGame(o) {
     if (ph === 'orderReveal') { v.or.key = G.or.key; if (G.or.v) v.or.v = G.or.v; }
     if (ph === 'hilo' || ph === 'hiloReveal') v.hl = { list: G.hl.list };
     if (ph === 'blitz' || ph === 'blitzReveal') v.bz = { list: G.bz.list };
+    if (G.ul && (ph === 'uljez' || ph === 'uljezVote' || ph === 'uljezReveal')) {
+      v.ul = { t: G.ul.terms.map((x) => x.w) };
+      if (ph !== 'uljez') { v.ul.pk = {}; for (const p of list()) if (p.ulP) v.ul.pk[p.pid] = p.ulP; }
+      if (ph === 'uljezReveal') {
+        v.ul.th = G.ul.th; v.ul.ok = G.ul.terms.map((x) => x.ok); v.ul.imp = G.ul.imp; v.ul.caught = G.ul.caught ? 1 : 0; v.ul.cnt = G.ul.cnt; v.ul.vt = {};
+        for (const p of list()) if (p.ulV) v.ul.vt[p.pid] = p.ulV;
+      }
+    }
     if (ph === 'maj' || ph === 'majReveal') v.mj = { q: G.mj.q, i: G.mj.i, n: G.mj.qs.length };
     if (ph === 'majReveal') { v.mj.cnt = G.mj.cnt; v.mj.win = G.mj.win; v.mj.last = G.mj.last ? 1 : 0; }
     if (ph === 'cast' || ph === 'question' || ph === 'reveal' || ph === 'fq') v.ev = G.ev;
@@ -2809,7 +2885,7 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, len: G.opt.len, end: G.opt.end, off: G.opt.off.slice(), all: Object.keys(D.cats) };
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, len: G.opt.len, end: G.opt.end, off: G.opt.off.slice(), all: Object.keys(D.cats), mgOff: G.opt.offMg.slice(), mg: MG_ALL.filter((k) => (D[DATA_KEY[k]] || []).length).map((k) => [k, HOWTO[k].i, HOWTO[k].n, CHALLENGES.indexOf(k) >= 0 ? 1 : 0]) };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;

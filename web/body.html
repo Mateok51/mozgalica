@@ -1721,6 +1721,28 @@
   .mg-s { text-align: center; font-weight: 800; color: var(--text-muted); font-size: 0.92rem; }
   .mg-s b { color: var(--amber); }
   .mg-list { display: flex; flex-direction: column; gap: 10px; }
+  .ul-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ul-t { min-height: 56px; padding: 8px 10px; border-radius: var(--radius-medium); text-align: center; font-weight: 900; font-size: 1.05rem; color: var(--parchment-ink); overflow-wrap: anywhere;
+    background: linear-gradient(#f6e7c4, #e2c891); box-shadow: inset 0 0 0 2px rgba(176, 122, 58, 0.8), 0 3px 0 rgba(90, 50, 20, 0.8); display: grid; place-items: center; }
+  .ul-t.on { background: linear-gradient(#f0c66e, #c4892f); box-shadow: inset 0 0 0 3px #7a4f17, 0 3px 0 rgba(90, 50, 20, 0.8); }
+  .ul-t:disabled { opacity: 0.85; }
+  .ul-role { text-align: center; padding: 8px 12px; border-radius: 12px; background: rgba(42, 23, 11, 0.85); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.6); color: var(--text-main); font-weight: 900; font-size: 1.1rem; }
+  .ul-role small { display: block; font-size: 0.78rem; font-weight: 800; color: var(--text-muted); } .ul-role b { color: var(--amber-hi); font-family: var(--font-display); font-size: 1.4rem; text-transform: uppercase; }
+  .ul-role.imp { box-shadow: inset 0 0 0 2px #e0644a; }
+  .ul-rows { display: flex; flex-direction: column; gap: 8px; }
+  .ul-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; text-align: left; color: var(--text-main); background: rgba(42, 23, 11, 0.85); box-shadow: inset 0 0 0 1px rgba(176, 122, 58, 0.5); }
+  button.ul-row { color: var(--parchment-ink); background: linear-gradient(#f6e7c4, #e2c891); box-shadow: inset 0 0 0 2px rgba(176, 122, 58, 0.8), 0 3px 0 rgba(90, 50, 20, 0.8); }
+  button.ul-row.set { filter: brightness(0.8) saturate(0.7); box-shadow: inset 0 0 0 3px #7a4f17; }
+  .ul-row.imp { box-shadow: inset 0 0 0 2px #e0644a; }
+  .ul-row .mini { flex: none; width: 36px; height: 36px; } .ul-nm { font-weight: 900; flex: none; max-width: 38%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ul-ch { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; margin-left: auto; }
+  .ul-chip { padding: 2px 8px; border-radius: 999px; font-size: 0.82rem; font-weight: 800; background: rgba(243, 227, 196, 0.18); color: inherit; }
+  button.ul-row .ul-chip { background: rgba(59, 38, 16, 0.15); }
+  .ul-chip.ok { background: rgba(127, 174, 84, 0.9); color: #10250a; } .ul-chip.bad { background: rgba(192, 83, 60, 0.95); color: #fff; } .ul-chip.none { opacity: 0.7; font-style: italic; }
+  .ul-v { flex: none; font-size: 0.85rem; }
+  .ul-theme, .ul-who { text-align: center; font-weight: 800; color: var(--text-main); } .ul-theme b { color: var(--amber-hi); font-size: 1.2rem; } .ul-who b { color: var(--amber-hi); }
+  .tv .ul-t { font-size: 1.8rem; min-height: 90px; } .tv .ul-grid { max-width: 1000px; margin: 0 auto; width: 100%; } .tv .ul-rows { max-width: 1000px; margin: 0 auto; width: 100%; }
+  .tv .ul-row { font-size: 1.5rem; padding: 12px 16px; } .tv .ul-row .mini { width: 52px; height: 52px; } .tv .ul-chip { font-size: 1.3rem; padding: 4px 14px; } .tv .ul-theme, .tv .ul-who { font-size: 1.6rem; }
   .mg-btn { position: relative; min-height: 56px; padding: 10px 16px 10px 56px; border-radius: var(--radius-medium); text-align: left; font-weight: 900; font-size: 1.05rem; color: var(--parchment-ink);
     background: linear-gradient(#f6e7c4, #e2c891); box-shadow: inset 0 0 0 2px rgba(176, 122, 58, 0.8), 0 3px 0 rgba(90, 50, 20, 0.8); }
   .mg-btn .n { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: rgba(59, 38, 16, 0.15); color: var(--parchment-ink); font-family: var(--font-display); }
@@ -2339,6 +2361,7 @@
   .cat-grid { display: flex; flex-wrap: wrap; gap: 6px; overflow-y: auto; min-height: 0; flex: 1 1 auto; padding: 2px; -webkit-overflow-scrolling: touch; }
   .cat-chip { min-height: 36px; padding: 0 12px; border-radius: 999px; font-family: var(--font-body); font-weight: 800; font-size: 0.82rem; color: #f3e3c4; background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px rgba(243, 227, 196, 0.3); text-decoration: line-through; opacity: 0.7; }
   .cat-chip.on { color: #2a1606; background: linear-gradient(180deg, #f0c66e, #c4892f); box-shadow: 0 2px 0 #7a4f17; text-decoration: none; opacity: 1; }
+  .mg-var { flex: none; }
   .cat-hint { min-height: 1.1em; font-family: var(--font-body); font-size: 0.8rem; font-weight: 800; color: #ff9a80; text-align: center; }
   .cat-card .lob-cta:disabled { opacity: 0.5; }
   .len-info { font-family: var(--font-body); font-size: 0.8rem; font-weight: 800; color: #ffe2a6; text-align: center; flex: none; }
@@ -3283,8 +3306,8 @@ __ENGINE__
       case 'betray': case 'loyal': return betraySound(d);
       case 'moment': return AUDIO.play((d.mo && d.mo.snd) || 'stingSmall');
       case 'deal': case 'howto': return AUDIO.play('whoosh');
-      case 'order': case 'hilo': case 'blitz': case 'maj': return AUDIO.play('pop');
-      case 'orderReveal': case 'hiloReveal': case 'blitzReveal': case 'majReveal': return AUDIO.play('correct');
+      case 'order': case 'hilo': case 'blitz': case 'maj': case 'uljez': case 'uljezVote': return AUDIO.play('pop');
+      case 'orderReveal': case 'hiloReveal': case 'blitzReveal': case 'majReveal': case 'uljezReveal': return AUDIO.play('correct');
       case 'duelIntro': return AUDIO.play('stingDuel');
       case 'duelResult': return AUDIO.play(d.du && d.du.w ? 'correct' : 'wrong');
       case 'secret': return AUDIO.play('pop');
@@ -3306,9 +3329,10 @@ __ENGINE__
       case 'betray': case 'loyal': return betraySound(d);
       case 'moment': return AUDIO.play((d.mo && d.mo.snd) || 'stingSmall');
       case 'deal': case 'howto': return AUDIO.play('whoosh');
-      case 'order': case 'hilo': case 'blitz': case 'maj': return AUDIO.play('pop');
+      case 'order': case 'hilo': case 'blitz': case 'maj': case 'uljez': case 'uljezVote': return AUDIO.play('pop');
       case 'orderReveal': case 'hiloReveal': case 'blitzReveal': return AUDIO.play(me.g ? 'correct' : 'wrong');
       case 'majReveal': return AUDIO.play(d.mj && d.mj.win.includes(me.mv) ? 'correct' : 'wrong');
+      case 'uljezReveal': return AUDIO.play(me.g ? 'correct' : 'wrong');
       case 'duelIntro': AUDIO.play('stingDuel'); if (d.du && (d.du.a === me.id || d.du.b === me.id)) HAPTIC.impact(); return;
       case 'duelResult': if (d.du && d.du.w === me.id) { AUDIO.play('correct'); HAPTIC.confirm(); } else if (d.du && (d.du.a === me.id || d.du.b === me.id)) AUDIO.play('wrong'); return;
       case 'secret': case 'secret2': if (d.se && (d.se.p === me.id || d.se.x === me.id)) { AUDIO.play('pop'); HAPTIC.tap(); } return;
@@ -3378,7 +3402,7 @@ __ENGINE__
   if (!(myAv >= 0 && myAv < 10)) myAv = 8 + Math.floor(Math.random() * 2);
 
   function freshLocal(s) {
-    return { s, sent: null, pw: null, fxq: [], fx: null, fxTimer: null, sortI: 0, sortR: [], linkI: 0, linkR: [] };
+    return { s, sent: null, pw: null, fxq: [], fx: null, fxTimer: null, sortI: 0, sortR: [], linkI: 0, linkR: [], ulSel: [] };
   }
 
   // ---------- QR ----------
@@ -3965,7 +3989,7 @@ __ENGINE__
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
       : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
-    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0, d.opt || 0, d.pj || 0]);
+    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.ul, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0, d.opt || 0, d.pj || 0]);
   }
 
   // ---------- efekti moći ----------
@@ -4598,7 +4622,7 @@ __ENGINE__
   // PV = privatno stanje ovog igrača (šalje ga samo domaćin, samo njemu). Javno stanje (d) nikad ne sadrži tuđe paktove.
   const fmtN = (n) => String(Math.round(n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   const LET = ['A', 'B', 'C', 'D'];
-  const PACT_PH = { vote: 1, voteResult: 1, power: 1, cast: 1, question: 1, reveal: 1, bet: 1, howto: 1, order: 1, hilo: 1, blitz: 1, maj: 1, majReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, sortReveal: 1, linkReveal: 1, sort: 1, link: 1, duelIntro: 1, duel: 1, duelResult: 1, secret: 1, secret2: 1, moment: 1, intro: 1 };
+  const PACT_PH = { vote: 1, voteResult: 1, power: 1, cast: 1, question: 1, reveal: 1, bet: 1, howto: 1, order: 1, hilo: 1, blitz: 1, maj: 1, majReveal: 1, uljez: 1, uljezVote: 1, uljezReveal: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, sortReveal: 1, linkReveal: 1, sort: 1, link: 1, duelIntro: 1, duel: 1, duelResult: 1, secret: 1, secret2: 1, moment: 1, intro: 1 };
   // traka pakta ide odmah ispod gornje trake (HUD); ne prekriva pitanje, odgovore ni sat
   function pactHead(d, me, head) {
     if (sfOnPV() && me && d.ph !== 'lobby' && d.ph !== 'final') return sfHead(d, me, head);
@@ -4759,7 +4783,7 @@ __ENGINE__
   // ===================== TAVERN SOCIAL FLOW 2.0: sučelje =====================
   // Tajni kutak (🗝️): jedno mjesto za privatne radnje; Vrijeme za dogovore (faza 'deal'); šapat jednim dodirom.
   // Sve što se vidi dolazi iz PV (privatno, samo ovaj igrač) ili javnog d; domaćin sve provjerava.
-  const SF_BUSY_PH = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, secret: 1, secret2: 1 };
+  const SF_BUSY_PH = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, uljez: 1, uljezVote: 1, secret: 1, secret2: 1 };
   const SF = { open: false, qi: 0, btAsk: false, rules: false, scn: false, seen: new Set(), told: new Set(), wh: true };
   try { SF.wh = localStorage.getItem('mz_sf_wh') !== '0'; } catch (e) {}
   const sfIntroSeen = () => { try { return localStorage.getItem('mz_sf_intro') === '1'; } catch (e) { return true; } };
@@ -5099,7 +5123,7 @@ __ENGINE__
   function pactToasts(d) {
     const out = [];
     // tijekom pitanja ništa ne smije prekriti odgovore: obavijesti čekaju kraj pitanja
-    const busy = d.ph === 'question' || d.ph === 'fq' || d.ph === 'duel' || d.ph === 'rope' || d.ph === 'order' || d.ph === 'hilo' || d.ph === 'blitz' || d.ph === 'sort' || d.ph === 'link' || d.ph === 'maj';
+    const busy = d.ph === 'question' || d.ph === 'fq' || d.ph === 'duel' || d.ph === 'rope' || d.ph === 'order' || d.ph === 'hilo' || d.ph === 'blitz' || d.ph === 'sort' || d.ph === 'link' || d.ph === 'maj' || d.ph === 'uljez' || d.ph === 'uljezVote';
     if (d.news && !toastSeen.has('n' + d.news.id)) { toastSeen.add('n' + d.news.id); out.push([d.news.t, 'pub']); }
     if (PV && PV.note && !toastSeen.has('p' + PV.note.id)) { toastSeen.add('p' + PV.note.id); out.push([PV.note.t, PV.note.k || '']); }
     if (busy) { toastHold.push(...out); return; }
@@ -5490,6 +5514,9 @@ __ENGINE__
       case 'blitzReveal': h = tvTop(d, 'Rezultati') + '<div class="tv-mid"><div class="mg"><div class="mg-t">Munjeviti krug</div>' + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'maj': h = tvTop(d, 'Glasajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Što misli većina?</div><div class="mg-q">' + esc(d.mj.q.q) + '</div><div class="mg-list">' + d.mj.q.o.map((o, i) => '<div class="mg-btn"><span class="n">' + String.fromCharCode(65 + i) + '</span>' + esc(o) + '</div>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
       case 'majReveal': h = tvTop(d, 'Što misli većina?') + '<div class="tv-mid"><div class="mg"><div class="mg-q">' + esc(d.mj.q.q) + '</div>' + majBars(d, -1) + (d.mj.last ? tdLine(d) : '') + '</div></div>' + lineup(d, d.mj.last ? { gain: true } : {}) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'uljez': h = tvTop(d, 'Birajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Jedna osoba ne zna temu. Svi biraju dva pojma koji najbolje paše uz temu.</div><div class="ul-grid">' + d.ul.t.map((w) => '<div class="ul-t">' + esc(w) + '</div>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
+      case 'uljezVote': h = tvTop(d, 'Glasajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Tko je uljez?</div>' + ulRows(d, false) + '</div></div>' + lineup(d, { check: true }); break;
+      case 'uljezReveal': h = tvTop(d, 'Uljez u krčmi') + '<div class="tv-mid"><div class="mg">' + ulReveal(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'duelIntro': h = tvTop(d, 'Dvoboj') + momentHtml(d, duelIntroMo(d)); break;
       case 'duel':
         h = tvTop(d, 'Dvoboj') + timerHtml() + '<div class="tv-mid">' + duelVs(d) + '<div class="q-text">' + esc(d.q.t) + '</div><div class="opts">' +
@@ -5681,7 +5708,7 @@ __ENGINE__
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
     const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
     $app.innerHTML = demoBar +
-      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? '<button class="btn ghost" id="tvSettings" aria-expanded="' + !!L.tvSettings + '">Postavke igre</button>' + (L.tvSettings ? botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
+      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? '<button class="btn ghost" id="tvSettings" aria-expanded="' + !!L.tvSettings + '">Postavke igre</button>' + (L.tvSettings ? botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + mgPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
       '<div class="tvlob-grid">' + slots + '</div>' +
       '<div class="tvlob-act"><button class="btn lob-cta" id="start"' + (on < 1 || catFew(d) ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="home-link" id="quit">Odustani</button></div></div></div>';
     bind('tvSettings', () => lobbyChange('tvSettings', () => { L.tvSettings = !L.tvSettings; render(); }, L.tvSettings ? '.tvlob-act' : '.tvlob-side'));
@@ -5730,12 +5757,12 @@ __ENGINE__
           invite = '<button class="btn ghost lob-toggle" id="lobInv" aria-haspopup="dialog" aria-expanded="' + open + '">Pozovi igrače <span class="lob-chip">Kod <b class="lob-code">' + esc(d.code) + '</b></span></button>' +
             (open ? '<div class="inv-modal" id="invModal" role="dialog" aria-modal="true" aria-label="Pozivnica"><div class="inv-card"><span class="lob-code-l">Kod sobe</span><span class="inv-code">' + esc(d.code) + '</span>' + (qr ? '<div class="lob-qr inv-qr">' + qr + '</div>' : '') +
               '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span><button class="btn lob-cta" id="invClose">Zatvori</button></div></div>' : '');
-          cta = botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 || catFew(d) ? ' disabled' : '') + '>Započni igru</button>' + (catFew(d) ? '<div class="lob-wait">Uključi barem 4 kategorije.</div>' : d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
+          cta = botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + mgPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 || catFew(d) ? ' disabled' : '') + '>Započni igru</button>' + (catFew(d) ? '<div class="lob-wait">Uključi barem 4 kategorije.</div>' : d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
         } else if (mode === 'demo') {
           const nb = d.P.filter((p) => p.b).length;
-          cta = botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + bsToggle(d) + '<button class="btn lob-cta" id="dstart"' + (nb < 1 || catFew(d) ? ' disabled' : '') + '>Započni igru</button><div class="lob-wait">' + (catFew(d) ? 'Uključi barem 4 kategorije.' : nb < 1 ? 'Dodaj barem jednog bota.' : 'Igraš protiv ' + botWord(nb) + '. Bacat će moći i na tebe!') + '</div>';
+          cta = botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + mgPick(d) + bsToggle(d) + '<button class="btn lob-cta" id="dstart"' + (nb < 1 || catFew(d) ? ' disabled' : '') + '>Započni igru</button><div class="lob-wait">' + (catFew(d) ? 'Uključi barem 4 kategorije.' : nb < 1 ? 'Dodaj barem jednog bota.' : 'Igraš protiv ' + botWord(nb) + '. Bacat će moći i na tebe!') + '</div>';
         } else {
-          cta = lenPick(d) + endPick(d) + catPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
+          cta = lenPick(d) + endPick(d) + catPick(d) + mgPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<div class="lob-wait">Soba ' + esc(d.code) + ' · igra počinje kad domaćin pritisne „Započni igru“.</div>';
         }
         const startAt = cta.indexOf('<button class="btn lob-cta"');
         const settingsAt = startAt >= 0 ? startAt : cta.indexOf('<div class="lob-wait"');
@@ -5805,6 +5832,13 @@ __ENGINE__
           '<div class="mg-fb ' + (inW ? 'ok' : 'bad') + '">' + (none ? 'Nema većine – svatko je za sebe!' : inW ? 'S većinom si! +300 za ovo pitanje' : me.mv >= 0 ? 'Ovaj put nisi s većinom.' : 'Nisi glasao.') + '</div></div>' +
           (d.mj.last ? '<div class="result ' + (me.g ? 'ok' : 'none') + '"><div class="p-title">Ukupno</div><div class="pts">+' + (me.g || 0) + '</div></div>' + (d.ntv ? miniBoard(d, true) : rankStat(d, me)) + tdLine(d) : '');
         break;
+      }
+      case 'uljez': h = head + timerHtml() + ulPick(d, me); break;
+      case 'uljezVote': h = head + timerHtml() + ulVote(d, me); break;
+      case 'uljezReveal': {
+        const u = d.ul, iAm = u.imp === PID, voted = (u.vt || {})[PID];
+        const res = iAm ? (u.caught ? 'Ostali su te prozreli' : 'Prošlo je neopaženo!') : voted === u.imp ? 'Pogodak! Uljez je prepoznat' : voted ? 'Ovaj put promašaj' : 'Bez glasa';
+        h = head + chalReveal(d, me, 'Uljez u krčmi', ulReveal(d), res, iAm ? (u.caught ? 'Razotkriven: 0' : 'Neotkriven: 400') : voted === u.imp ? 'Ispravan glas: 250' : '0'); break;
       }
       case 'duelIntro': h = center(head + momentHtml(d, duelIntroMo(d))); break;
       case 'duel': h = head + duelPhone(d, me); break;
@@ -6070,6 +6104,38 @@ __ENGINE__
     if (L.sent || me.ok || st.i >= list.length) return '<div class="mg"><div class="mg-t">Munjeviti krug</div>' + cnt + '<div class="waiting">Gotovo! Čekamo kraj kruga…</div></div>';
     return '<div class="mg"><div class="mg-t">Munjeviti krug</div>' + cnt + '<div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-bz="1">Točno</button><button class="btn ghost" data-bz="0">Netočno</button></div>' + fb + '</div>';
   }
+  function ulRole() {
+    const u = PV && PV.ul;
+    if (!u) return '';
+    return u.imp ? '<div class="ul-role imp">🕵️ Tvoja uloga: uljez<small>Ne znaš temu. Pokušaj se uklopiti!</small></div>' : '<div class="ul-role"><small>Tema</small><b>' + esc(u.th) + '</b></div>';
+  }
+  function ulPick(d, me) {
+    const sent = !!(L.sent || me.ok), sel = L.ulSel || [];
+    return '<div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Odaberi dva pojma koji najbolje paše uz temu.</div>' + ulRole() +
+      '<div class="ul-grid">' + d.ul.t.map((w, i) => '<button class="ul-t' + (sel.includes(i) ? ' on' : '') + '" data-ul="' + i + '"' + (sent ? ' disabled' : '') + '>' + esc(w) + '</button>').join('') + '</div>' +
+      (sent ? '<div class="waiting">Izbor poslan ✔</div>' : '<button class="btn" id="ulOk"' + (sel.length === 2 ? '' : ' disabled') + '>Potvrdi izbor (' + sel.length + '/2)</button>') + '</div>';
+  }
+  function ulChips(u, pk, mark) {
+    if (!pk || !pk.length) return '<span class="ul-chip none">bez izbora</span>';
+    return pk.map((i) => '<span class="ul-chip' + (mark ? (u.ok[i] ? ' ok' : ' bad') : '') + '">' + esc(u.t[i]) + '</span>').join('');
+  }
+  function ulRows(d, vote) {
+    const u = d.ul;
+    return '<div class="ul-rows">' + d.P.filter((p) => p.c && !(vote && p.id === PID)).map((p) => {
+      const inner = '<span class="mini">' + avSvg(p.a) + '</span><span class="ul-nm">' + esc(p.n) + '</span><span class="ul-ch">' + ulChips(u, (u.pk || {})[p.id], false) + '</span>';
+      return vote ? '<button class="ul-row' + (L.sent && L.sent.v === p.id ? ' set' : '') + '" data-ulv="' + esc(p.id) + '"' + (L.sent || (meOf(d) || {}).ok ? ' disabled' : '') + '>' + inner + '</button>' : '<div class="ul-row">' + inner + '</div>';
+    }).join('') + '</div>';
+  }
+  function ulVote(d, me) {
+    const sent = !!(L.sent || me.ok), mine = (d.ul.pk || {})[PID];
+    return '<div class="mg"><div class="mg-t">Tko je uljez?</div><div class="mg-s">Dodirni osobu koju najviše sumnjičiš.</div>' + ulRole() +
+      (mine ? '<div class="mg-s">Tvoj izbor: ' + ulChips(d.ul, mine, false) + '</div>' : '') + ulRows(d, true) + (sent ? '<div class="waiting">Glas poslan ✔</div>' : '') + '</div>';
+  }
+  function ulReveal(d) {
+    const u = d.ul, im = d.P.find((p) => p.id === u.imp);
+    return '<div class="ul-theme">Tema: <b>' + esc(u.th) + '</b></div><div class="ul-who">Uljez: <b>' + esc(im ? im.n : '?') + '</b> · ' + (u.caught ? 'razotkriven' : 'neotkriven') + '</div><div class="ul-rows">' +
+      d.P.map((p) => '<div class="ul-row' + (p.id === u.imp ? ' imp' : '') + '"><span class="mini">' + avSvg(p.a) + '</span><span class="ul-nm">' + esc(p.n) + (p.id === u.imp ? ' 🕵️' : '') + '</span><span class="ul-ch">' + ulChips(u, (u.pk || {})[p.id], true) + '</span><b class="ul-v" title="glasova">🗳️ ' + ((u.cnt || {})[p.id] || 0) + '</b></div>').join('') + '</div>';
+  }
   function majPhone(d, me) {
     const m = d.mj, sent = !!(L.sent || me.ok);
     return '<div class="mg"><div class="mg-t">Što misli većina?</div><div class="mg-s">Pitanje ' + (m.i + 1) + '/' + m.n + ' · pogodi što će većina izabrati</div><div class="mg-q">' + esc(m.q.q) + '</div><div class="mg-list">' +
@@ -6152,6 +6218,60 @@ __ENGINE__
     }
     return '<button class="btn ghost cat-open' + (n < 4 ? ' cat-bad' : '') + '" id="catOpen" aria-haspopup="dialog">🗂️ Kategorije · ' + n + ' od ' + all.length + '</button>';
   }
+  // ---------- odabir mini-igara ----------
+  let mgGame = null, mgTimer = 0;
+  function mgSave(off) { try { localStorage.setItem('tt_mg_off', JSON.stringify(off)); } catch (e) {} }
+  function mgLoad() { try { const v = JSON.parse(localStorage.getItem('tt_mg_off') || '[]'); return Array.isArray(v) ? v.filter((x) => typeof x === 'string') : []; } catch (e) { return []; } }
+  function mgPick(d) {
+    if (!d.opt || !d.opt.mg) return '';
+    const all = d.opt.mg, off = d.opt.mgOff || [], n = all.length - off.length;
+    if (!game) return off.length ? '<div class="len-info">🎲 Mini igre: ' + n + ' od ' + all.length + '</div>' : '';
+    if (mgGame !== game) {
+      mgGame = game; const g = game, saved = mgLoad();
+      if (saved.length) setTimeout(() => { if (game === g && g.view().ph === 'lobby') g.setOpt('mg', saved); }, 0);
+    }
+    return '<button class="btn ghost cat-open" id="mgOpen" aria-haspopup="dialog">🎲 Mini igre · ' + n + ' od ' + all.length + '</button>';
+  }
+  function mgOvClose() { const ov = document.getElementById('mgOv'); if (ov) ov.remove(); clearInterval(mgTimer); mgTimer = 0; }
+  function mgOvSync() {
+    const ov = document.getElementById('mgOv'); if (!ov) return;
+    if (!game || game.view().ph !== 'lobby') return mgOvClose();
+    const o = game.view().opt, off = o.mgOff || [], n = o.mg.length - off.length;
+    ov.querySelectorAll('[data-mg]').forEach((b) => { const on = off.indexOf(b.dataset.mg) < 0; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+    ov.querySelector('.cat-cnt').textContent = n + ' od ' + o.mg.length + ' uključeno';
+  }
+  function mgOvOpen() {
+    if (!game || document.getElementById('mgOv')) return;
+    const o = game.view().opt; if (!o || !o.mg) return;
+    const chip = (m) => '<button class="cat-chip" data-mg="' + esc(m[0]) + '" aria-pressed="true">' + m[1] + ' ' + esc(m[2]) + '</button>';
+    const ov = document.createElement('div'); ov.id = 'mgOv'; ov.className = 'inv-modal cat-ov'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Odabir mini igara');
+    ov.innerHTML = '<div class="inv-card cat-card"><div class="cat-top"><b>Mini igre</b><span class="cat-cnt"></span></div>' +
+      '<div class="cat-bulk"><button class="btn ghost" data-mgall="1">Sve</button></div>' +
+      '<div class="cat-grid">' + o.mg.filter((m) => m[3]).map(chip).join('') + '</div>' +
+      '<div class="cat-top"><b>Posebna pitanja</b></div><div class="cat-grid mg-var">' + o.mg.filter((m) => !m[3]).map(chip).join('') + '</div>' +
+      '<div class="cat-hint" role="status"></div><button class="btn lob-cta" id="mgDone">Gotovo</button></div>';
+    document.body.appendChild(ov); mgOvSync();
+    mgTimer = setInterval(mgOvSync, 1000);
+  }
+  document.addEventListener('click', (e) => {
+    const t = e.target && e.target.closest ? e.target : null; if (!t || !game) return;
+    if (t.closest('#mgOpen')) { AUDIO.play('tap'); return mgOvOpen(); }
+    if (t.closest('#mgDone')) { AUDIO.play('tap'); return mgOvClose(); }
+    if (t.closest('[data-mgall]')) { AUDIO.play('tap'); game.setOpt('mg', []); mgSave([]); return mgOvSync(); }
+    const b = t.closest('#mgOv [data-mg]');
+    if (b) {
+      AUDIO.play('tap'); const o = game.view().opt, off = (o.mgOff || []).slice(), i = off.indexOf(b.dataset.mg);
+      if (i >= 0) off.splice(i, 1);
+      else {
+        const left = o.mg.filter((m) => m[3] && off.indexOf(m[0]) < 0 && m[0] !== b.dataset.mg).length;
+        const isCh = o.mg.some((m) => m[0] === b.dataset.mg && m[3]);
+        if (isCh && !left) { const h = document.querySelector('#mgOv .cat-hint'); if (h) h.textContent = 'Barem jedna mini igra mora ostati uključena.'; return; }
+        off.push(b.dataset.mg);
+      }
+      game.setOpt('mg', off); mgSave(off); const h = document.querySelector('#mgOv .cat-hint'); if (h) h.textContent = ''; mgOvSync();
+    }
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && document.getElementById('mgOv')) mgOvClose(); });
   function catOvClose() { const ov = document.getElementById('catOv'); if (ov) ov.remove(); clearInterval(catTimer); catTimer = 0; }
   function catOvSync() {
     const ov = document.getElementById('catOv'); if (!ov) return;
@@ -6783,6 +6903,13 @@ __ENGINE__
       AUDIO.play(ok ? 'tap' : 'wrong');
       if (st.i >= list.length) sendInput({ r: st.r.slice(), f: 1 }); else { sendPartial({ r: st.r.slice() }); phoneRender(true); }
     }; });
+    $app.querySelectorAll('[data-ul]').forEach((b) => { b.onclick = () => {
+      if (L.sent) return; const i = +b.dataset.ul, a = (L.ulSel || []).slice(), k = a.indexOf(i);
+      if (k >= 0) a.splice(k, 1); else { a.push(i); if (a.length > 2) a.shift(); }
+      L.ulSel = a; phoneRender(true);
+    }; });
+    bind('ulOk', () => { if (!L.sent && (L.ulSel || []).length === 2) sendInput({ v: L.ulSel.slice() }); });
+    $app.querySelectorAll('[data-ulv]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ v: b.dataset.ulv }); }; });
     $app.querySelectorAll('[data-mj]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ v: +b.dataset.mj }); }; });
     $app.querySelectorAll('[data-sx]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ x: b.dataset.sx }); }; });
     $app.querySelectorAll('[data-sy]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ y: +b.dataset.sy }); }; });
