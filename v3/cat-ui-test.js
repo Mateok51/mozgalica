@@ -14,23 +14,23 @@ let fails = 0; const ok = (c, m) => { console.log((c ? '  ✔ ' : '  ✘ ') + m)
       await page.route(/fonts\.googleapis|fonts\.gstatic|jsdelivr/, (r) => r.abort());
       await page.goto('file://' + TMP + '?demotv=1');
       await page.click('#demo'); await page.waitForTimeout(300); await page.click('#lobSettings'); await page.waitForTimeout(200);
-      ok(/48 od 48/.test(await page.$eval('#catOpen', (e) => e.textContent)), W + ': gumb Kategorije prikazuje 48 od 48');
+      ok(/49 od 49/.test(await page.$eval('#catOpen', (e) => e.textContent)), W + ': gumb Kategorije prikazuje 49 od 49');
       await page.click('#catOpen'); await page.waitForTimeout(200);
       const chips = await page.$$eval('#catOv .cat-chip', (x) => x.length);
-      ok(chips === 48, W + ': popis ima 48 kategorija');
+      ok(chips === 49, W + ': popis ima 49 kategorija');
       const fit = await page.evaluate(() => { const r = document.querySelector('#catOv .cat-card').getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight && r.right <= innerWidth; });
       ok(fit, W + ': prozor staje na ekran');
       await page.screenshot({ path: OUT + '/cat-' + W + '.png' });
       await page.click('#catOv [data-cat="Anime"]'); await page.waitForTimeout(100);
       ok(!(await page.$eval('#catOv [data-cat="Anime"]', (e) => e.classList.contains('on'))), W + ': klik isključuje Anime');
-      ok(/47 od 48/.test(await page.$eval('#catOv .cat-cnt', (e) => e.textContent)), W + ': brojač 47');
+      ok(/48 od 49/.test(await page.$eval('#catOv .cat-cnt', (e) => e.textContent)), W + ': brojač 48');
       await page.click('#catOv [data-catall="0"]'); await page.waitForTimeout(100);
       ok(await page.$eval('#catDone', (e) => e.disabled), W + ': Nijedna blokira Gotovo');
       await page.click('#catOv [data-cat="Sport"]'); await page.click('#catOv [data-cat="Film i TV"]'); await page.click('#catOv [data-cat="Glazba"]'); await page.click('#catOv [data-cat="Povijest"]');
       ok(!(await page.$eval('#catDone', (e) => e.disabled)), W + ': s 4 kategorije Gotovo je dostupno');
       await page.click('#catDone'); await page.waitForTimeout(200);
       ok(!(await page.$('#catOv')), W + ': prozor se zatvara');
-      ok(/4 od 48/.test(await page.$eval('#catOpen', (e) => e.textContent)) && !(await page.$eval('#dstart', (e) => e.disabled)), W + ': 4 od 48, Započni igru dostupno');
+      ok(/4 od 49/.test(await page.$eval('#catOpen', (e) => e.textContent)) && !(await page.$eval('#dstart', (e) => e.disabled)), W + ': 4 od 49, Započni igru dostupno');
       if (W === 390) {
         await page.evaluate(() => document.getElementById('dstart').click());
         const seen = await page.evaluate(() => new Promise((res) => { const s = new Set(); const t = setInterval(() => { document.querySelectorAll('.door-name, .door .nm, [class*="door"] [class*="name"]').forEach((e) => s.add(e.textContent.trim())); }, 200); setTimeout(() => { clearInterval(t); res([...s]); }, 12000); }));
