@@ -22,6 +22,7 @@ Ove smjernice vrijede za cijeli projekt. Prije izmjena provjeri aktualno stanje 
 - Kod većih zadataka koristi podagente, ako su dostupni, za neovisne manje cjeline; uskladi njihove izmjene i provjeri rezultat kao cjelinu.
 - Nakon dovršene cjeline sažeto navedi što je promijenjeno, kako je provjereno i što predlažeš dalje. Jasno razlikuj automatizirane provjere od provjere na stvarnom uređaju.
 - Prije objave na GitHub provjeri aktualne korisnikove upute i stanje udaljene grane. Nemoj objavljivati kad je korisnik rekao da se promjene zasad ne objavljuju.
+- Korisnik je trajno dopustio da se promjene nakon slanja na GitHub samostalno spoje u `main` (otvori pull request i spoji ga). Spajaj tek kad je CI zelen na zadnjem commitu i nema sukoba ili otvorenih komentara; crven CI nikad ne zaobilazi. Ne spajaj kad je korisnik rekao da se promjene zasad ne objavljuju. Spajanje u `main` objavljuje igru, pa u sažetku jasno navedi da je spojeno i što još nije provjereno na stvarnim uređajima.
 - Ako korisnik izrazi novu trajnu preferenciju za projekt, ažuriraj ove smjernice tako da budu konkretne i u skladu s njegovim riječima. Ne pretvaraj privremene upute u trajna pravila bez osnove.
 
 ## Provjera
