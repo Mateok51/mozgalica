@@ -1,14 +1,14 @@
 const { chromium } = require('playwright');
 const fs = require('fs'), crypto = require('crypto'), path = require('path');
 const root = path.join(__dirname, '..');
-let html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+let html = require('./page-source.cjs');
 html = html.replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.dogTest={avatar:avSvg};');
 const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x => x[1]).filter(x => x.trim());
 const hashes = html.split('</head>')[0].match(/sha256-[A-Za-z0-9+/=]+/g);
 hashes.forEach((h, i) => html = html.replace(h, 'sha256-' + crypto.createHash('sha256').update(scripts[i]).digest('base64')));
 const poses = ['idle', 'happy', 'sad', 'shocked', 'attack', 'victory'];
 (async () => {
-  const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   try {
     for (const missing of [false, true]) {
       const page = await browser.newPage({ viewport: { width: 390, height: 844 } });

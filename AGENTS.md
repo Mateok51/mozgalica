@@ -27,4 +27,4 @@ Ove smjernice vrijede za cijeli projekt. Prije izmjena provjeri aktualno stanje 
 ## Provjera
 
 - Pokreni provjere primjerene izmjenama. Za promjene prikaza provjeri različite veličine ekrana, prijelaze i prelijevanje; postojanje testova ne znači da obuhvaćaju sve faze ili stvarne uređaje.
-- Ako mijenjaš inline JavaScript, ažuriraj CSP pomoću `python3 scripts/update-csp.py` i provjeri testove.
+- JavaScript drži u zasebnim datotekama (`app.js`, `engine.js`, `sw-register.js`); ugrađene skripte nisu dopuštene jer politika glasi `script-src 'self'` (provjerava `tests/csp.test.cjs`). Nove datoteke koje stranica treba dodaj i u `CORE` popis u `sw.js` te podigni verziju predmemorije.

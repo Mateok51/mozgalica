@@ -13,3 +13,17 @@ jobs:
         with:
           node-version: '22'
       - run: node --test tests/*.test.cjs
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock playwright@1.63.0
+      - run: npx playwright install --with-deps chromium
+      - run: |
+          for t in tests/browser-*.cjs; do
+            echo "== $t"
+            node "$t" || exit 1
+          done

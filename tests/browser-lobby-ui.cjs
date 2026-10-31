@@ -2,11 +2,11 @@ const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 // Test uses the real demo game, switching its rendering to host mode for invitation controls.
-const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
+const html = require('./page-source.cjs')
   .replace(/<meta http-equiv="Content-Security-Policy"[^>]*>/, '')
   .replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.reviewHost=()=>{mode="hostp";phoneRender(true)};');
 (async () => {
-  const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   try {
     for (const [width, height] of [[320,568], [360,640], [390,844]]) {
       const p = await browser.newPage({ viewport: { width, height } });

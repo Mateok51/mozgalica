@@ -2,8 +2,8 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-const html = fs.readFileSync(require('node:path').join(__dirname, '..', 'index.html'), 'utf8');
-const engine = fs.readFileSync(require('node:path').join(__dirname, '..', 'engine.js'), 'utf8');
+const html = require('./page-source.cjs');
+const engine = require('./engine-source.cjs');
 const context = vm.createContext({ setTimeout, clearTimeout, console });
 vm.runInContext(engine + '\nthis.createGame = createGame;', context);
 

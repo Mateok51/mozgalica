@@ -8,7 +8,7 @@ Igra koristi PeerJS za signalizaciju i WebRTC za podatke. Kad izravna veza ne us
 - Iz ključa se (HKDF-SHA-256) izvode ključ za AES-GCM i naziv teme. Posrednik vidi samo šifrirani sadržaj i nasumičnu temu, ne kod sobe, imena ni ključeve igrača.
 - Igrač koji kod upiše ručno nema ključ sobe i koristi samo izravnu vezu.
 - Ključ sobe sprema se u zapis za obnovu partije, pa obnovljena soba zadržava isti ključ.
-- Provjera: `node web/relay-test.js` u izvoru (lokalni MQTT posrednik, igrač bez WebRTC-a, provjera da na posredniku nema otvorenog teksta).
+- Provjera: automatski test lokalnog MQTT posrednika (`web/relay-test.js`) nije u ovom repozitoriju; šifriranje se za sada provjerava ručno.
 
 Ograničenja: dostupnost javnih posrednika nije zajamčena; tko ima poveznicu sa ključem može ući u sobu kao i dosad. TURN (dolje) ostaje mogućnost za još pouzdanije povezivanje.
 

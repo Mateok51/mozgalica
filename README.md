@@ -16,10 +16,10 @@ Nema TV preglednika? Otvori **Otvori igru na TV-u** na jednom mobitelu i zrcali 
 Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj kao aplikaciju* na početnom ekranu igre).
 
 ## Tehnički
-- Statička stranica (`index.html` i `engine.js`), bez poslužitelja. Igru vodi uređaj domaćina.
-- Uređaji se spajaju izravno (WebRTC) preko [PeerJS](https://peerjs.com) i njegovog besplatnog javnog posrednika.
+- Statička stranica bez poslužitelja: `index.html` (kostur), `styles.css`, `app.js` (sučelje i povezivanje), `engine.js` (pravila) i `sw-register.js`. Nema ugrađenih skripti, pa sigurnosna politika dopušta samo `script-src 'self'`. Igru vodi uređaj domaćina.
+- Uređaji se spajaju izravno (WebRTC) preko [PeerJS](https://peerjs.com) (lokalna kopija u `vendor/`) i njegovog besplatnog javnog posrednika.
 - Rezervni put kad izravni WebRTC ne uspije: javni MQTT posrednici, ali sve poruke su šifrirane (AES-GCM) tajnim ključem sobe. Ključ putuje samo u QR kodu i poveznici (`#KOD-ključ`); posrednik vidi samo šifrirani sadržaj i temu izvedenu iz ključa. Igrači koji kod upišu ručno nemaju ključ i koriste samo izravnu vezu. Detalji: [povezivanje](docs/povezivanje.md).
-- Pitanja su u objektu `DATA` u `engine.js`; ondje se nalaze i pravila igre.
+- Pravila igre su u `engine.js`, a pitanja i sadržaj mini igara u `data/questions.js` (objekt `DATA`, jedan zapis po retku). Pitanja učitava samo uređaj domaćina kad otvori sobu ili demo; igrači ih ne preuzimaju. Testovi spajaju oba dijela preko `tests/engine-source.cjs`.
 
 ## Oporavak veze i partije
 - Mobitel nakon ponovnog povezivanja šalje spremljeni odgovor; odgovor za završeno pitanje se odbija.
@@ -27,4 +27,4 @@ Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj k
 - Detalji i provjere: [obnova partije](docs/obnova-partije.md).
 
 ## Razvoj i provjera
-Automatske provjere pokreni naredbom `node --test tests/*.test.cjs` (Node.js 22 ili noviji). Pokreću se i na GitHubu pri svakoj promjeni. Nakon izmjene ugrađenog JavaScripta pokreni `python3 scripts/update-csp.py`, a zatim ponovi testove: sigurnosna politika inače može blokirati pokretanje igre.
+Automatske provjere pokreni naredbom `node --test tests/*.test.cjs` (Node.js 22 ili noviji). Testovi prikaza u pregledniku (`tests/browser-*.cjs`) traže Playwright s Chromiumom; po potrebi postavi `CHROMIUM_PATH`. Oboje se pokreće i na GitHubu pri svakoj promjeni.
