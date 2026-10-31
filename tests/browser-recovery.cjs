@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const fs = require('node:fs');
 const path = require('node:path');
 (async()=>{
-const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']});
+const browser=await chromium.launch({executablePath: process.env.CHROMIUM_PATH || undefined,args:['--no-sandbox']});
 const page=await browser.newPage();
 const errors=[]; page.on('pageerror',e=>errors.push(e.message)); page.on('dialog',d=>d.accept());
 await page.route('**/*',async route=>{
@@ -25,7 +25,7 @@ await page.locator('#dstart').click();
 await page.waitForTimeout(100);
 const saved=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('mz_recovery_v1')));
 if(!saved) throw Error('No saved game');
-await page.reload();await page.waitForTimeout(400);
+await page.reload();await page.waitForFunction(()=>!document.body.innerText.includes('Spajam se…'),null,{timeout:8000}).catch(()=>{});await page.waitForTimeout(200);
 const after=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('mz_recovery_v1')));
 if(after.code!==saved.code) throw Error('Room changed');
 if(!after.journal.events.some(e=>e.method==='addPlayer' && e.args[1]==='Ana')) throw Error('Player missing');

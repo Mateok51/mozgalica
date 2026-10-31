@@ -8,7 +8,7 @@ const hashes = html.split('</head>')[0].match(/sha256-[A-Za-z0-9+/=]+/g);
 hashes.forEach((h, i) => html = html.replace(h, 'sha256-' + crypto.createHash('sha256').update(scripts[i]).digest('base64')));
 const poses = ['idle', 'happy', 'sad', 'shocked', 'attack', 'victory'];
 (async () => {
-  const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   try {
     for (const missing of [false, true]) {
       const page = await browser.newPage({ viewport: { width: 390, height: 844 } });

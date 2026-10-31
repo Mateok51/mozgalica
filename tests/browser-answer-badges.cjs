@@ -12,7 +12,7 @@ const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].
 const hashes = html.split('</head>')[0].match(/sha256-[A-Za-z0-9+/=]+/g);
 hashes.forEach((h, i) => html = html.replace(h, 'sha256-' + crypto.createHash('sha256').update(scripts[i]).digest('base64')));
 (async () => {
-  const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   try {
     for (const [width, height] of [[320, 568], [360, 740], [390, 844]]) for (const reducedMotion of ['reduce', 'no-preference']) {
       const page = await browser.newPage({ viewport: { width, height }, reducedMotion });

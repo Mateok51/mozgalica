@@ -27,4 +27,4 @@ Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj k
 - Detalji i provjere: [obnova partije](docs/obnova-partije.md).
 
 ## Razvoj i provjera
-Automatske provjere pokreni naredbom `node --test tests/*.test.cjs` (Node.js 22 ili noviji). Pokreću se i na GitHubu pri svakoj promjeni. Nakon izmjene ugrađenog JavaScripta pokreni `python3 scripts/update-csp.py`, a zatim ponovi testove: sigurnosna politika inače može blokirati pokretanje igre.
+Automatske provjere pokreni naredbom `node --test tests/*.test.cjs` (Node.js 22 ili noviji). Testovi prikaza u pregledniku (`tests/browser-*.cjs`) traže Playwright s Chromiumom; po potrebi postavi `CHROMIUM_PATH`. Oboje se pokreće i na GitHubu pri svakoj promjeni. Nakon izmjene ugrađenog JavaScripta pokreni `python3 scripts/update-csp.py`, a zatim ponovi testove: sigurnosna politika inače može blokirati pokretanje igre.

@@ -6,7 +6,7 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
   .replace(/<meta http-equiv="Content-Security-Policy"[^>]*>/, '')
   .replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.reviewHost=()=>{mode="hostp";phoneRender(true)};');
 (async () => {
-  const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   try {
     for (const [width, height] of [[320,568], [360,640], [390,844]]) {
       const p = await browser.newPage({ viewport: { width, height } });

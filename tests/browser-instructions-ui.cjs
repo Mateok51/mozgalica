@@ -9,7 +9,7 @@ html = html.replace('  setInterval(tick, 100);', '  setInterval(tick, 100); wind
 const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]).filter(x=>x.trim());
 const hashes = html.split('</head>')[0].match(/sha256-[A-Za-z0-9+/=]+/g);
 hashes.forEach((h,i)=>html=html.replace(h,'sha256-'+crypto.createHash('sha256').update(scripts[i]).digest('base64')));
-(async()=>{ const b=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']});
+(async()=>{ const b=await chromium.launch({executablePath: process.env.CHROMIUM_PATH || undefined,args:['--no-sandbox']});
 try { for (const [w,h] of [[320,568],[390,844]]) { const p=await b.newPage({viewport:{width:w,height:h}});
 await p.addInitScript(()=>localStorage.setItem('mz_pid','one'));
 await p.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname!=='game.test')return r.abort();const f=path.join(root,u.pathname.slice(1));return u.pathname==='/'?r.fulfill({body:html,contentType:'text/html'}):fs.existsSync(f)?r.fulfill({body:fs.readFileSync(f)}):r.abort()});
