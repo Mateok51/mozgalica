@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QpYlaOxMar0SjkZc9z0RF3zYUbKSGyOADVP0LzWNd44=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HGhD4initaaSd9SXpXT3PeOKkmai7R8hHZd2+w2SJPc=' 'sha256-wyvvXqxLAZ3m7/jAoeI3NAIBNFS5G/udmg/sIXlWuQI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com wss://broker.emqx.io:8084 wss://broker.hivemq.com:8884 wss://test.mosquitto.org:8081 https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1433">
@@ -3661,15 +3661,19 @@
   function syncConns() {
     if (game) game.syncPeers([...hostConns.values()].filter((x) => x.pid));
   }
+  // ograničenje učestalosti po vezi (spremnik žetona, 30 poruka + 20 u sekundi): štiti domaćina od zatrpavanja porukama
+  function allowHostMessage(conn, now) {
+    const rl = connRate.get(conn) || { n: 30, t: now };
+    rl.n = Math.min(30, rl.n + Math.max(0, now - rl.t) / 1000 * 20); rl.t = now;
+    connRate.set(conn, rl);
+    if (rl.n < 1) return false;
+    rl.n -= 1;
+    return true;
+  }
   function onHostData(conn, m) {
     const x = hostConns.get(conn);
     if (!x || !m || typeof m !== 'object' || !game) return;
-    // ograničenje učestalosti po vezi (spremnik žetona): štiti domaćina od zatrpavanja porukama
-    const now = Date.now(), rl = connRate.get(conn) || { n: 30, t: now };
-    rl.n = Math.min(30, rl.n + (now - rl.t) / 1000 * 20); rl.t = now;
-    connRate.set(conn, rl);
-    if (rl.n < 1) return;
-    rl.n -= 1;
+    if (!allowHostMessage(conn, Date.now())) return;
     if (m.t === 'hello' && typeof m.pid === 'string' && typeof m.name === 'string') {
       const pid = m.pid.slice(0, 40);
       if (!okKey(m.sk) || (x.pid && x.pid !== pid)) return;           // bez ključa ili zamjena identiteta na istoj vezi
