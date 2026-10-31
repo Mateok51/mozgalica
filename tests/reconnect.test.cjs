@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
-const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const html = require('./page-source.cjs');
 const connect = html.slice(html.indexOf('  function connectHost() {'), html.indexOf('  function retrySoon() {'));
 
 test('signalizacija koja se ponovno spojila ne stvara novu vezu dok je stara otvorena', () => {

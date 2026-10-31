@@ -8,4 +8,4 @@ Podaci ostaju na domaćinovu uređaju. Sadrže imena, radnje i ključeve za povr
 
 Za testove motora pokrenuti `node tests/recovery.test.cjs`. Test simulira cijelu partiju s botovima, više puta obnavlja zapis te uspoređuje prikaz i unutarnje stanje Tavern Directora. `node tests/browser-recovery.cjs` provjerava osvježavanje aktivne partije u Chromiumu uz simuliranu PeerJS signalizaciju (zahtijeva Playwright i Chromium). Taj test ne potvrđuje dostupnost vanjskih poslužitelja ni ponašanje stvarnih mobilnih mreža.
 
-Nakon izmjena inline skripti pokrenuti `python3 scripts/update-csp.py`. Format zapisa je verzioniran; izmjene ponašanja motora koje nisu kompatibilne s ponavljanjem postojećeg zapisa zahtijevaju novu verziju formata.
+Format zapisa je verzioniran; izmjene ponašanja motora koje nisu kompatibilne s ponavljanjem postojećeg zapisa zahtijevaju novu verziju formata.

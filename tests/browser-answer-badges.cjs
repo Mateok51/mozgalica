@@ -2,7 +2,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs'), vm = require('vm'), crypto = require('crypto'), path = require('path');
 const root = path.join(__dirname, '..');
-let html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+let html = require('./page-source.cjs');
 const box = vm.createContext({ setTimeout, clearTimeout });
 vm.runInContext(require('./engine-source.cjs') + '\nthis.game=createGame({code:"TEST"});', box);
 for (let i = 0; i < 6; i++) box.game.addPlayer('p' + i, 'Igrač ' + i, i === 0 ? 7 : i, false);

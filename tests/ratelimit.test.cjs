@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const html = require('./page-source.cjs');
 const start = html.indexOf('  function allowHostMessage(conn, now) {');
 const end = html.indexOf('  function onHostData(conn, m) {');
 assert.ok(start > 0 && end > start, 'allowHostMessage must exist in index.html');

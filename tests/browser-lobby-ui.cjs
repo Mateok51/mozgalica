@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 // Test uses the real demo game, switching its rendering to host mode for invitation controls.
-const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
+const html = require('./page-source.cjs')
   .replace(/<meta http-equiv="Content-Security-Policy"[^>]*>/, '')
   .replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.reviewHost=()=>{mode="hostp";phoneRender(true)};');
 (async () => {

@@ -1,5 +1,5 @@
 const { chromium }=require('playwright');const fs=require('fs'),vm=require('vm'),crypto=require('crypto'),path=require('path');
-const root=path.join(__dirname,'..');let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const root=path.join(__dirname,'..');let html=require('./page-source.cjs');
 const box=vm.createContext({setTimeout,clearTimeout});vm.runInContext(require('./engine-source.cjs')+'\nthis.game=createGame({code:"TEST",noTv:true});',box);
 box.game.addPlayer('one','Igrač',0,false);box.game.addPlayer('two','Suigrač',1,false);
 Object.assign(box.game._G,{so:{a:'Voće',b:'Povrće',items:['Jabuka','Mrkva','Kruška','Kupus'],key:[0,1,0,1]},li:{t:'Spoji',L:['Jedan','Dva','Tri','Četiri'],R:['A','B','C','D'],key:[1,2,3,0]},or:{t:'Poredaj',lo:'Prvi',hi:'Zadnji',items:['Jedan','Dva','Tri','Četiri'],key:[0,1,2,3]},hl:{list:[{q:'Koji?',a:['A','B'],w:0},{q:'Koji?',a:['C','D'],w:0}]},bz:{list:[['Točno?',1]]}});

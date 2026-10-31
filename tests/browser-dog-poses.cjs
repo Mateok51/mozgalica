@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs'), crypto = require('crypto'), path = require('path');
 const root = path.join(__dirname, '..');
-let html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+let html = require('./page-source.cjs');
 html = html.replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.dogTest={avatar:avSvg};');
 const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x => x[1]).filter(x => x.trim());
 const hashes = html.split('</head>')[0].match(/sha256-[A-Za-z0-9+/=]+/g);
