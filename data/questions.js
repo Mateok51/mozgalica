@@ -3668,7 +3668,17 @@ const DATA = {
 {"q": "Kako se zove sezonski vjetar koji u južnoj Aziji donosi obilne kiše?", "o": ["Monsun", "Bura", "Pasat", "Fen"], "a": 0},
 {"q": "Što je smog?", "o": ["Vrsta oblaka", "Oluja s gromovima", "Mješavina dima i magle", "Sloj leda"], "a": 2},
 {"q": "Kako se zove mjerna jedinica kojom se često izražava tlak zraka u prognozi?", "o": ["Kelvin", "Joule", "Newton", "Hektopaskal"], "a": 3},
-{"q": "Koji je kontinent najsuši?", "o": ["Afrika", "Antarktika", "Australija", "Azija"], "a": 1}
+{"q": "Koji je kontinent najsuši?", "o": ["Afrika", "Antarktika", "Australija", "Azija"], "a": 1},
+{"q": "Kako se zovu oblaci poput bijelih pamučnih nakupina, tipični za lijepo vrijeme?", "o": ["Stratus", "Nimbostratus", "Kumulus", "Cirus"], "a": 2},
+{"q": "Koji plin čini otprilike 78 % Zemljine atmosfere?", "o": ["Dušik", "Argon", "Kisik", "Ugljikov dioksid"], "a": 0},
+{"q": "Kako se zovu tropski cikloni u zapadnom Pacifiku?", "o": ["Tajfuni", "Monsuni", "Tornada", "Uragani"], "a": 0},
+{"q": "Kako se zove temperatura pri kojoj se vodena para u zraku počinje kondenzirati?", "o": ["Talište", "Ledište", "Vrelište", "Rosište"], "a": 3},
+{"q": "Koliko stupnjeva Fahrenheita iznosi 0 °C?", "o": ["32 °F", "100 °F", "212 °F", "0 °F"], "a": 0},
+{"q": "Pri kojoj se temperaturi Celzijeva i Fahrenheitova ljestvica podudaraju?", "o": ["−273 °", "−40 °", "0 °", "32 °"], "a": 1},
+{"q": "Koja se pustinja u Čileu smatra najsušim mjestom na Zemlji izvan polarnih područja?", "o": ["Sahara", "Gobi", "Kalahari", "Atacama"], "a": 3},
+{"q": "Koji instrument mjeri tlak zraka?", "o": ["Anemometar", "Higrometar", "Barometar", "Termometar"], "a": 2},
+{"q": "Kako se zove sloj atmosfere iznad stratosfere?", "o": ["Egzosfera", "Mezosfera", "Hidrosfera", "Troposfera"], "a": 1},
+{"q": "Koji oblaci donose dugotrajnu, ravnomjernu kišu i prekrivaju cijelo nebo?", "o": ["Cirus", "Kumulonimbus", "Nimbostratus", "Altokumulus"], "a": 2}
 ],
 "Brendovi i logotipi": [
 {"q": "Koja tvrtka ima logotip nagrižene jabuke?", "o": ["Microsoft", "Apple", "Samsung", "BlackBerry"], "a": 1},
@@ -3905,7 +3915,18 @@ const DATA = {
 {"q": "S kojeg je otoka u Indijskom oceanu izumrla ptica dodo?", "o": ["S Madagaskara", "S Sejšela", "S Mauricijusa", "S Cejlona"], "a": 2},
 {"q": "Koje je geološko doba prethodilo mezozoiku?", "o": ["Kenozoik", "Paleozoik", "Holocen", "Neogen"], "a": 1},
 {"q": "U kojoj se geološkoj epohi nalazimo?", "o": ["U holocenu", "U pleistocenu", "U miocenu", "U eocenu"], "a": 0},
-{"q": "Koja je domaća životinja prema analizi proteina među najbližim živim rođacima T. rexa?", "o": ["Svinja", "Krava", "Pas", "Kokoš"], "a": 3}
+{"q": "Koja je domaća životinja prema analizi proteina među najbližim živim rođacima T. rexa?", "o": ["Svinja", "Krava", "Pas", "Kokoš"], "a": 3},
+{"q": "Što u prijevodu znači riječ dinosaur?", "o": ["Brza noga", "Veliki zmaj", "Strašna gušterica", "Drevna zvijer"], "a": 2},
+{"q": "Koji je biljojed imao zadebljanu koštanu kupolu na lubanji?", "o": ["Triceratops", "Stegosaurus", "Diplodocus", "Pachycephalosaurus"], "a": 3},
+{"q": "Koji je morski gmaz iz doba dinosaura nalikovao dupinu?", "o": ["Ihtiosaur", "Velociraptor", "Brontosaurus", "Pteranodon"], "a": 0},
+{"q": "Prema kojem je razdoblju mezozoika nazvan film Jurski park?", "o": ["Kreda", "Jura", "Tercijar", "Trijas"], "a": 1},
+{"q": "Kako se zove znanost koja proučava fosile i drevni život?", "o": ["Paleontologija", "Geografija", "Antropologija", "Arheologija"], "a": 0},
+{"q": "Koja je vrsta ranih ljudi nazvana „vješti čovjek”?", "o": ["Homo erectus", "Homo sapiens", "Homo habilis", "Homo neanderthalensis"], "a": 2},
+{"q": "Koja je izumrla ljudska vrsta živjela u Europi i nestala prije otprilike 40 000 godina?", "o": ["Homo sapiens", "Australopiteci", "Homo habilis", "Neandertalci"], "a": 3},
+{"q": "Koliko je otprilike star planet Zemlja?", "o": ["4,5 milijuna godina", "450 milijuna godina", "4,5 milijardi godina", "45 milijardi godina"], "a": 2},
+{"q": "Koja je vrsta dinosaura Barney iz istoimene dječje serije?", "o": ["Triceratops", "Brachiosaurus", "Tyrannosaurus rex", "Stegosaurus"], "a": 2},
+{"q": "Kako se zove kućni ljubimac dinosaur obitelji Flintstone?", "o": ["Dino", "Bamm-Bamm", "Rex", "Pebbles"], "a": 0},
+{"q": "Koji glumac glumi Owena Gradyja u filmovima Jurski svijet?", "o": ["Chris Evans", "Chris Hemsworth", "Chris Pratt", "Chris Pine"], "a": 2}
 ],
 "Reklame i slogani": [
 {"q": "Koja tvrtka koristi slogan I'm lovin' it?", "o": ["Burger King", "Wendy's", "KFC", "McDonald's"], "a": 3},
@@ -3964,7 +3985,20 @@ const DATA = {
 {"q": "Koje pivo koristi slogan Good things come to those who wait?", "o": ["Guinness", "Heineken", "Budweiser", "Stella Artois"], "a": 0},
 {"q": "Koji grad koristi kampanju What happens here, stays here?", "o": ["Miami", "New Orleans", "Los Angeles", "Las Vegas"], "a": 3},
 {"q": "Koja je životinja maskota osiguravajuće kuće Geico?", "o": ["Kameleon", "Žaba", "Iguana", "Gekon"], "a": 3},
-{"q": "Koja je životinja maskota čokolade Milka?", "o": ["Ljubičasti zec", "Ljubičasta krava", "Plava ovca", "Ružičasta svinja"], "a": 1}
+{"q": "Koja je životinja maskota čokolade Milka?", "o": ["Ljubičasti zec", "Ljubičasta krava", "Plava ovca", "Ružičasta svinja"], "a": 1},
+{"q": "Koja marka koristi onomatopejski slogan Snap! Crackle! Pop!?", "o": ["Rice Krispies", "Cheerios", "Corn Flakes", "Lucky Charms"], "a": 0},
+{"q": "Koji je gazirani napitak 1984. u reklami s Michaelom Jacksonom koristio slogan The Choice of a New Generation?", "o": ["Pepsi", "Dr Pepper", "7Up", "Coca-Cola"], "a": 0},
+{"q": "Koja je tvrtka 1984. na Super Bowlu emitirala reklamu „1984” koju je režirao Ridley Scott?", "o": ["Atari", "Apple", "IBM", "Microsoft"], "a": 1},
+{"q": "Koja je pivovara 1999. proslavila uzvik Whassup?", "o": ["Heineken", "Budweiser", "Carlsberg", "Corona"], "a": 1},
+{"q": "Što je promovirala viralna kampanja Dumb Ways to Die iz 2012.?", "o": ["Nošenje sigurnosnog pojasa", "Sigurnost na željeznici", "Prestanak pušenja", "Sigurnost na biciklu"], "a": 1},
+{"q": "Koja je marka 2014. pokrenula kampanju #LikeAGirl?", "o": ["Dove", "Nike", "Always", "Pantene"], "a": 2},
+{"q": "Koja se životinja u Coca-Colinim reklamama od 1990-ih pojavljuje kao maskota?", "o": ["Sob", "Pingvin", "Polarni medvjed", "Tuljan"], "a": 2},
+{"q": "Kako se zove klaun-maskota lanca McDonald's?", "o": ["Ronald McDonald", "Krusty", "Bozo", "Clarabell"], "a": 0},
+{"q": "Koja je životinja maskota Energizerovih baterija?", "o": ["Zec", "Pingvin", "Lav", "Medvjed"], "a": 0},
+{"q": "Koja je mitološka figura na zelenom logotipu lanca kavana Starbucks?", "o": ["Nimfa", "Meduza", "Sirena", "Valkira"], "a": 2},
+{"q": "Koji njemački proizvođač automobila koristi slogan Das Auto?", "o": ["BMW", "Opel", "Audi", "Volkswagen"], "a": 3},
+{"q": "Koji je napitak kampanjom Share a Coke dobio boce s osobnim imenima?", "o": ["Sprite", "Coca-Cola", "Pepsi", "Fanta"], "a": 1},
+{"q": "Čije je lice na logotipu lanca KFC?", "o": ["Pukovnika Sandersa", "Ronalda McDonalda", "Djeda Mraza", "Kapetana Birdseyea"], "a": 0}
 ],
 "Kuhinje svijeta": [
 {"q": "Koje je indijsko jelo od riže, začina i mesa pripremljeno u slojevima?", "o": ["Dal", "Korma", "Samosa", "Biryani"], "a": 3},
@@ -4108,7 +4142,19 @@ const DATA = {
 {"q": "Što znači kratica SMH?", "o": ["Sve mi je dobro", "Smijem se do suza", "Tiho se smijem", "Odmahujem glavom"], "a": 3},
 {"q": "Koja je Metina aplikacija 2023. pokrenuta kao konkurencija Twitteru?", "o": ["Bluesky", "Mastodon", "Clubhouse", "Threads"], "a": 3},
 {"q": "Koja tvrtka razvija AI asistenta Claude?", "o": ["OpenAI", "Google", "Mistral", "Anthropic"], "a": 3},
-{"q": "Koja tvrtka razvija umjetnointeligentni model Gemini?", "o": ["Meta", "Google", "Microsoft", "Apple"], "a": 1}
+{"q": "Koja tvrtka razvija umjetnointeligentni model Gemini?", "o": ["Meta", "Google", "Microsoft", "Apple"], "a": 1},
+{"q": "Tko je izumitelj World Wide Weba?", "o": ["Tim Berners-Lee", "Vint Cerf", "Bill Gates", "Steve Jobs"], "a": 0},
+{"q": "Tko je osnivač Facebooka?", "o": ["Evan Spiegel", "Jack Dorsey", "Elon Musk", "Mark Zuckerberg"], "a": 3},
+{"q": "Koja je životinja do 2023. bila logotip Twittera?", "o": ["Mačka", "Sova", "Ptica", "Lisica"], "a": 2},
+{"q": "Kako se zovu osobe s mnogo pratitelja koje preporukama na društvenim mrežama utječu na kupnju?", "o": ["Moderatori", "Trolovi", "Influenceri", "Hakeri"], "a": 2},
+{"q": "Koju je riječ Oxfordov rječnik 2013. proglasio riječju godine?", "o": ["Hashtag", "Vape", "Twerk", "Selfie"], "a": 3},
+{"q": "Koji je izraz 2022. glasanjem javnosti izabran za Oxfordovu riječ godine?", "o": ["Rizz", "Metaverse", "Goblin mode", "Brain rot"], "a": 2},
+{"q": "Kako se zovu lažni videozapisi napravljeni umjetnom inteligencijom u kojima je lice zamijenjeno licem druge osobe?", "o": ["Deepfake", "Clickbait", "Hashtag", "Podcast"], "a": 0},
+{"q": "Koja je društvena aplikacija poznata po fotografijama koje nestaju i logotipu s duhom?", "o": ["Pinterest", "Instagram", "Snapchat", "Telegram"], "a": 2},
+{"q": "Koja je aplikacija za video pozive postala vrlo popularna tijekom pandemije 2020.?", "o": ["Spotify", "Zoom", "Dropbox", "Pinterest"], "a": 1},
+{"q": "Koja se igra iz 2017. oglašava pobjedničkim natpisom Victory Royale?", "o": ["Roblox", "Among Us", "Fortnite", "Minecraft"], "a": 2},
+{"q": "Što znači kratica AFK u igrama i na internetu?", "o": ["Daleko od tipkovnice", "Prije svega kratko", "Pogledaj ovo kasnije", "Za prijatelje i obitelj"], "a": 0},
+{"q": "Što znači kratica TBH u poruci?", "o": ["Iskreno govoreći", "Uskoro se čujemo", "Do sutra", "Hvala na pomoći"], "a": 0}
 ],
 "Božić i blagdani": [
 {"q": "U kojoj je zemlji nastao običaj kićenja božićnog drvca u današnjem obliku?", "o": ["Njemačkoj", "Engleskoj", "Sjedinjenim Državama", "Švedskoj"], "a": 0},
@@ -4173,7 +4219,17 @@ const DATA = {
 {"q": "Koja dobra vještica u Italiji za Bogojavljenje donosi darove djeci?", "o": ["Lucia", "Befana", "Strega", "Madonna"], "a": 1},
 {"q": "Kako se zove prikaz Isusova rođenja s figuricama u staji?", "o": ["Oltar", "Jaslice", "Betlehem-zvijezda", "Kolijevka"], "a": 1},
 {"q": "Koji je svetac 1223. u Greccu postavio prve žive jaslice?", "o": ["Franjo Asiški", "Toma Akvinski", "Antun Padovanski", "Ivan Krstitelj"], "a": 0},
-{"q": "Koliko dana traje židovski blagdan Hanuka?", "o": ["Tri", "Osam", "Sedam", "Dvanaest"], "a": 1}
+{"q": "Koliko dana traje židovski blagdan Hanuka?", "o": ["Tri", "Osam", "Sedam", "Dvanaest"], "a": 1},
+{"q": "Kojeg se datuma u Hrvatskoj slavi blagdan Svih svetih?", "o": ["1. studenoga", "8. prosinca", "31. listopada", "2. studenoga"], "a": 0},
+{"q": "Kojeg se datuma slavi blagdan svetog Nikole?", "o": ["13. prosinca", "25. studenoga", "24. prosinca", "6. prosinca"], "a": 3},
+{"q": "Koji se kolač s nadjevom od oraha tradicionalno peče u Hrvatskoj za Božić?", "o": ["Orahnjača", "Krempita", "Štrudla od jabuka", "Rozata"], "a": 0},
+{"q": "Kako se zovu ukrašena uskršnja jaja?", "o": ["Zdjelice", "Pisanice", "Kolačići", "Lutkice"], "a": 1},
+{"q": "Koja životinja u zapadnoj tradiciji djeci donosi i skriva uskrsna jaja?", "o": ["Pile", "Lisica", "Ovca", "Zec"], "a": 3},
+{"q": "Kako se zove razdoblje od četiri tjedna prije Božića?", "o": ["Korizma", "Pepelnica", "Došašće", "Svijećnica"], "a": 2},
+{"q": "Koji se datum u Hrvatskoj slavi kao Dan državnosti?", "o": ["22. lipnja", "8. listopada", "30. svibnja", "5. kolovoza"], "a": 2},
+{"q": "Čiji se blagdan slavi na Valentinovo, 14. veljače?", "o": ["Svetog Valentina", "Svetog Nikole", "Svetog Jurja", "Svetog Ivana"], "a": 0},
+{"q": "Koja se ptica tradicionalno poslužuje za Dan zahvalnosti u SAD-u?", "o": ["Piletina", "Guska", "Puretina", "Patka"], "a": 2},
+{"q": "Koja zimzelena biljka s crvenim bobicama i bodljikavim lišćem je tradicionalni božićni ukras?", "o": ["Lovor", "Bršljan", "Imela", "Božikovina"], "a": 3}
 ],
 "Slavni parovi i obitelji": [
 {"q": "Kako su mediji nazivali glumački par Brada Pitta i Angeline Jolie?", "o": ["Kimye", "Bennifer", "Brangelina", "TomKat"], "a": 2},
@@ -4239,7 +4295,17 @@ const DATA = {
 {"q": "Koji glumac glumi Spider-Mana i partner je glumice Zendaye?", "o": ["Tom Holland", "Tobey Maguire", "Andrew Garfield", "Timothée Chalamet"], "a": 0},
 {"q": "Koja je bivša novinarka od 2014. španjolska kraljica?", "o": ["Letizia", "Sofía", "Mathilde", "Máxima"], "a": 0},
 {"q": "Iz koje zemlje potječe nizozemska kraljica Máxima?", "o": ["Španjolske", "Argentine", "Brazila", "Čilea"], "a": 1},
-{"q": "Tko je najmlađa od sestara Kardashian–Jenner?", "o": ["Kendall Jenner", "Kylie Jenner", "Khloé Kardashian", "Kourtney Kardashian"], "a": 1}
+{"q": "Tko je najmlađa od sestara Kardashian–Jenner?", "o": ["Kendall Jenner", "Kylie Jenner", "Khloé Kardashian", "Kourtney Kardashian"], "a": 1},
+{"q": "Koja je glumica udana za pjevača Justina Timberlakea?", "o": ["Scarlett Johansson", "Jessica Alba", "Jessica Biel", "Jennifer Lopez"], "a": 2},
+{"q": "Koji je glumac bio suprug Angeline Jolie od 2000. do 2003.?", "o": ["Billy Bob Thornton", "Jude Law", "Johnny Depp", "Colin Farrell"], "a": 0},
+{"q": "S kojom je ženom u legendi Tristan povezan tragičnom ljubavlju?", "o": ["Ofelija", "Izolda", "Julija", "Elaine"], "a": 1},
+{"q": "Kako se zove djevojka Mickeyja Mousea?", "o": ["Clarabelle", "Daisy", "Minnie", "Lola"], "a": 2},
+{"q": "Kako se zove svinja zaljubljena u žabu Kermita?", "o": ["Miss Piggy", "Peppa", "Babe", "Porky"], "a": 0},
+{"q": "Kako se zove Simbina prijateljica iz djetinjstva i buduća kraljica u Kralju lavova?", "o": ["Kiara", "Nala", "Zira", "Sarabi"], "a": 1},
+{"q": "Kako se zove Homerova supruga u Simpsonovima?", "o": ["Lois", "Peggy", "Marge", "Wilma"], "a": 2},
+{"q": "Kako se zove supruga Freda Flintstonea?", "o": ["Wilma", "Pebbles", "Marge", "Betty"], "a": 0},
+{"q": "Koji je pisac u 16. stoljeću bio u braku s Anne Hathaway?", "o": ["William Shakespeare", "Geoffrey Chaucer", "Charles Dickens", "Christopher Marlowe"], "a": 0},
+{"q": "Koji je skladatelj bio u braku s pijanisticom Clarom Wieck?", "o": ["Robert Schumann", "Johannes Brahms", "Frédéric Chopin", "Franz Liszt"], "a": 0}
 ],
 "Anime": [
 {"q": "Koji je redatelj suosnivač Studija Ghibli i autor filma Spirited Away?", "o": ["Makoto Shinkai", "Isao Takahata", "Hayao Miyazaki", "Mamoru Hosoda"], "a": 2},
@@ -4310,7 +4376,19 @@ const DATA = {
 {"q": "Kako se zovu glasovni glumci u animeu?", "o": ["Mangaka", "Cosplayeri", "Seiyuu", "Sensei"], "a": 2},
 {"q": "Kako se zove glavni junak animea Cowboy Bebop?", "o": ["Jet Black", "Faye Valentine", "Vicious", "Spike Spiegel"], "a": 3},
 {"q": "Kako se zove mladi pilot u animeu Neon Genesis Evangelion?", "o": ["Shinji Ikari", "Rei Ayanami", "Misato Katsuragi", "Asuka Langley"], "a": 0},
-{"q": "Koji junak jednim udarcem pobjeđuje svakog protivnika u animeu One Punch Man?", "o": ["Genos", "Garou", "Tatsumaki", "Saitama"], "a": 3}
+{"q": "Koji junak jednim udarcem pobjeđuje svakog protivnika u animeu One Punch Man?", "o": ["Genos", "Garou", "Tatsumaki", "Saitama"], "a": 3},
+{"q": "Kako se zove mlađa sestra u filmu Moj susjed Totoro?", "o": ["Mei", "Chihiro", "Satsuki", "Kiki"], "a": 0},
+{"q": "Kako se zove Narutov učitelj poznat po maski preko pola lica?", "o": ["Sasuke", "Jiraiya", "Itachi", "Kakashi"], "a": 3},
+{"q": "Kako se zove mačevalac s tri mača u Luffyjevoj posadi u animeu One Piece?", "o": ["Sanji", "Zoro", "Nami", "Usopp"], "a": 1},
+{"q": "Kako se zove Gokuov prvi sin u Dragon Ballu?", "o": ["Trunks", "Piccolo", "Vegeta", "Gohan"], "a": 3},
+{"q": "Kako se zove mačka Usagi Tsukino u Sailor Moonu?", "o": ["Mimi", "Diana", "Artemis", "Luna"], "a": 3},
+{"q": "Kako se zove Erenova prijateljica iz djetinjstva u animeu Attack on Titan?", "o": ["Historia", "Sasha", "Annie", "Mikasa"], "a": 3},
+{"q": "Kako se zove genijalni detektiv koji lovi Kiru u animeu Death Note?", "o": ["Mello", "Watari", "L", "Near"], "a": 2},
+{"q": "Kako se zove oblačenje u likove iz animea, mange i igara?", "o": ["Cosplay", "Ikebana", "Karaoke", "Origami"], "a": 0},
+{"q": "U koji se Pokémon prvo razvija Charmander prije nego postane Charizard?", "o": ["Ivysaur", "Pidgeotto", "Wartortle", "Charmeleon"], "a": 3},
+{"q": "Kojeg je tipa Pikachu?", "o": ["Vatrenog", "Vodenog", "Električnog", "Travnatog"], "a": 2},
+{"q": "Kako se zove profesor koji Ashu daje prvog Pokémona?", "o": ["Profesor Rowan", "Profesor Birch", "Profesor Elm", "Profesor Oak"], "a": 3},
+{"q": "Iz kojeg mjesta potječe Ash Ketchum?", "o": ["Viridian City", "Cerulean City", "Pallet Town", "Pewter City"], "a": 2}
 ],
 "Estrada i slavne osobe": [
 {"q": "Koju je zemlju Tajči 1990. predstavljala na Eurosongu pjesmom Hajde da ludujemo?", "o": ["Hrvatsku", "Sloveniju", "Austriju", "Jugoslaviju"], "a": 3},
@@ -4364,7 +4442,25 @@ const DATA = {
 {"q": "Koji je reper izveo hit Old Town Road?", "o": ["Post Malone", "Lil Nas X", "Drake", "Travis Scott"], "a": 1},
 {"q": "Koja je country-pjevačica izvela hit Jolene?", "o": ["Shania Twain", "Loretta Lynn", "Dolly Parton", "Reba McEntire"], "a": 2},
 {"q": "U kojoj je ženskoj grupi Beyoncé započela karijeru?", "o": ["Destiny's Child", "TLC", "En Vogue", "Spice Girls"], "a": 0},
-{"q": "Koji je pjevač poznat po plesnom koraku moonwalk?", "o": ["Michael Jackson", "Prince", "James Brown", "Usher"], "a": 0}
+{"q": "Koji je pjevač poznat po plesnom koraku moonwalk?", "o": ["Michael Jackson", "Prince", "James Brown", "Usher"], "a": 0},
+{"q": "Koji je pjevač poznat pod nadimkom Kralj popa?", "o": ["Elvis Presley", "Prince", "Justin Timberlake", "Michael Jackson"], "a": 3},
+{"q": "Koji je pjevač poznat pod nadimkom Kralj rock and rolla?", "o": ["Little Richard", "Johnny Cash", "Chuck Berry", "Elvis Presley"], "a": 3},
+{"q": "Koja je pjevačica poznata pod nadimkom Kraljica soula?", "o": ["Diana Ross", "Tina Turner", "Whitney Houston", "Aretha Franklin"], "a": 3},
+{"q": "Koji je glumac glumio Jokera u filmu Vitez tame iz 2008. i posmrtno dobio Oscara?", "o": ["Jared Leto", "Joaquin Phoenix", "Jack Nicholson", "Heath Ledger"], "a": 3},
+{"q": "Koja je pjevačica 2011. objavila album 21 s pjesmom Rolling in the Deep?", "o": ["Adele", "Duffy", "Florence Welch", "Amy Winehouse"], "a": 0},
+{"q": "Koja je pjevačica 2023. krenula na turneju The Eras Tour?", "o": ["Olivia Rodrigo", "Beyoncé", "Dua Lipa", "Taylor Swift"], "a": 3},
+{"q": "Koji je britanski pjevač napisao i izveo pjesmu Shape of You?", "o": ["Sam Smith", "Calum Scott", "Ed Sheeran", "Harry Styles"], "a": 2},
+{"q": "Koja je glumica glumila Hermionu Granger u filmovima o Harryju Potteru?", "o": ["Emma Watson", "Emma Stone", "Keira Knightley", "Bonnie Wright"], "a": 0},
+{"q": "Koji je glumac glumio Forresta Gumpa?", "o": ["Tom Hanks", "Kevin Costner", "Tom Cruise", "Bill Murray"], "a": 0},
+{"q": "Koji je glumac glumio Jamesa Bonda od 2006. do 2021.?", "o": ["Pierce Brosnan", "Timothy Dalton", "Daniel Craig", "Roger Moore"], "a": 2},
+{"q": "Kako se zove hrvatski glazbeni duo violončelista Luke Sulića i Stjepana Hausera?", "o": ["2CELLOS", "CelloDuo", "Duo Croatia", "Strings Brothers"], "a": 0},
+{"q": "Koja je pjevačica izvela pjesmu My Heart Will Go On iz filma Titanic?", "o": ["Céline Dion", "Barbra Streisand", "Whitney Houston", "Mariah Carey"], "a": 0},
+{"q": "Koji je južnokorejski pjevač izveo hit Gangnam Style 2012.?", "o": ["Rain", "Jay Park", "Psy", "G-Dragon"], "a": 2},
+{"q": "Koji je američki pjevač poznat pod nadimkom The Boss?", "o": ["Neil Diamond", "Bob Dylan", "Bruce Springsteen", "Billy Joel"], "a": 2},
+{"q": "Koji je glumac poznat po ulozi Mr. Beana?", "o": ["Stephen Fry", "Hugh Laurie", "Hugh Grant", "Rowan Atkinson"], "a": 3},
+{"q": "Koja je glumica glumila Mary Poppins u filmu iz 1964.?", "o": ["Julie Andrews", "Judy Garland", "Emily Blunt", "Audrey Hepburn"], "a": 0},
+{"q": "Koja je glumica glumila Rose u filmu Titanic?", "o": ["Gwyneth Paltrow", "Cate Blanchett", "Kirsten Dunst", "Kate Winslet"], "a": 3},
+{"q": "Koji bend predvodi pjevač Bono?", "o": ["Coldplay", "U2", "Oasis", "Muse"], "a": 1}
 ]
 },
 "sort": [
