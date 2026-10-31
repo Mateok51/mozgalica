@@ -1,7 +1,7 @@
 const {chromium}=require('playwright');const fs=require('fs'),vm=require('vm'),crypto=require('crypto'),path=require('path');
 const root=path.join(__dirname,'..');
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-const box=vm.createContext({setTimeout,clearTimeout});vm.runInContext(fs.readFileSync(path.join(root,'engine.js'),'utf8')+'\nthis.game=createGame({code:"TEST"});',box);
+const box=vm.createContext({setTimeout,clearTimeout});vm.runInContext(require('./engine-source.cjs')+'\nthis.game=createGame({code:"TEST"});',box);
 box.game.addPlayer('one','Igrac',0,false);box.game.addPlayer('two','Suigrac',1,false);box.game._p('one').offers=['led','stit','dupli'];Object.assign(box.game._G,{s:5,q:{c:'Kategorija',t:'Koji je od ponuđenih odgovora točan u ovom pitanju s duljim tekstom?',o:['Kratak odgovor','Nešto dulji ponuđeni odgovor koji se mora moći pročitati u cijelosti','Još jedan mogući odgovor','Posljednji odgovor'],a:1},dur:20000,endsAt:Date.now()+20000,ev:[]});
 Object.assign(box.game._G,{so:{a:'Voće',b:'Povrće',items:['Jabuka','Mrkva','Kruška','Kupus','Banana','Brokula'],key:[0,1,0,1,0,1]},li:{t:'Spoji pojmove i njihova značenja',L:['Prvi pojam','Drugi dulji pojam','Treći pojam','Četvrti pojam'],R:['Prvo značenje','Drugo značenje','Treće dulje značenje','Četvrto značenje'],key:[0,1,2,3]}});
 Object.assign(box.game._G,{or:{t:'Poredaj pojmove',lo:'Prvi',hi:'Posljednji',items:['Prvi pojam','Drugi pojam','Treći pojam','Četvrti pojam'],key:[0,1,2,3]},hl:{list:[{q:'Koji broj je veći?',a:['Deset','Pet'],w:0}]},bz:{list:[['Dva i dva su četiri.',1],['Tri je veće od pet.',0]]}});

@@ -3,7 +3,7 @@ const fs = require('fs'), vm = require('vm'), crypto = require('crypto'), path =
 const root = path.join(__dirname, '..');
 let html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const box = vm.createContext({ setTimeout, clearTimeout });
-vm.runInContext(fs.readFileSync(path.join(root, 'engine.js'), 'utf8') + '\nthis.game=createGame({code:"TEST",noTv:true});', box);
+vm.runInContext(require('./engine-source.cjs') + '\nthis.game=createGame({code:"TEST",noTv:true});', box);
 box.game.addPlayer('one', 'Igrač', 0, false); box.game.addPlayer('two', 'Suigrač', 1, false);
 html = html.replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.testUI=d=>{mode="player";applyState(d)};');
 const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]).filter(x=>x.trim());

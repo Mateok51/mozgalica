@@ -4,7 +4,7 @@ const fs = require('fs'), vm = require('vm'), crypto = require('crypto'), path =
 const root = path.join(__dirname, '..');
 let html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const box = vm.createContext({ setTimeout, clearTimeout });
-vm.runInContext(fs.readFileSync(path.join(root, 'engine.js'), 'utf8') + '\nthis.game=createGame({code:"TEST"});', box);
+vm.runInContext(require('./engine-source.cjs') + '\nthis.game=createGame({code:"TEST"});', box);
 for (let i = 0; i < 6; i++) box.game.addPlayer('p' + i, 'Igrač ' + i, i === 0 ? 7 : i, false);
 Object.assign(box.game._G, { ph: 'question', s: 2, q: { c: 'Kategorija', t: 'Primjer pitanja?', o: ['Prvi', 'Drugi', 'Treći', 'Četvrti'], a: 1 }, dur: 20000, endsAt: Date.now() + 20000, ev: [] });
 html = html.replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.testUI=d=>{mode="player";applyState(d);};');

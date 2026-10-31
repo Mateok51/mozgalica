@@ -2,7 +2,7 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs'), vm = require('node:vm'), path = require('node:path');
 const context = vm.createContext({ setTimeout, clearTimeout, console });
-vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'engine.js'), 'utf8') + '\nthis.createGame = createGame;', context);
+vm.runInContext(require('./engine-source.cjs') + '\nthis.createGame = createGame;', context);
 function resolve({ finale = false, throne = false, shield = false, random = () => 0.5 } = {}) {
   const game = context.createGame({ code: 'TEST', random });
   const ids = ['target', 'a', 'b', 'c', 'd'];

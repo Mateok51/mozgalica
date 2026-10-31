@@ -19,7 +19,7 @@ Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj k
 - Statička stranica (`index.html` i `engine.js`), bez poslužitelja. Igru vodi uređaj domaćina.
 - Uređaji se spajaju izravno (WebRTC) preko [PeerJS](https://peerjs.com) (lokalna kopija u `vendor/`) i njegovog besplatnog javnog posrednika.
 - Rezervni put kad izravni WebRTC ne uspije: javni MQTT posrednici, ali sve poruke su šifrirane (AES-GCM) tajnim ključem sobe. Ključ putuje samo u QR kodu i poveznici (`#KOD-ključ`); posrednik vidi samo šifrirani sadržaj i temu izvedenu iz ključa. Igrači koji kod upišu ručno nemaju ključ i koriste samo izravnu vezu. Detalji: [povezivanje](docs/povezivanje.md).
-- Pitanja su u objektu `DATA` u `engine.js`; ondje se nalaze i pravila igre.
+- Pravila igre su u `engine.js`, a pitanja i sadržaj mini igara u `data/questions.js` (objekt `DATA`, jedan zapis po retku). Pitanja učitava samo uređaj domaćina kad otvori sobu ili demo; igrači ih ne preuzimaju. Testovi spajaju oba dijela preko `tests/engine-source.cjs`.
 
 ## Oporavak veze i partije
 - Mobitel nakon ponovnog povezivanja šalje spremljeni odgovor; odgovor za završeno pitanje se odbija.
