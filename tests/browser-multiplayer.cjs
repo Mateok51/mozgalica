@@ -7,7 +7,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
  try {
  async function makePage(){
   const ctx=await browser.newContext();
-  await ctx.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname!=='game.test')return r.abort();const p=path.join(__dirname,'..',u.pathname==='/'?'index.html':u.pathname.slice(1));return fs.existsSync(p)?r.fulfill({body:fs.readFileSync(p),contentType:p.endsWith('.html')?'text/html':p.endsWith('.js')?'text/javascript':'image/png'}):r.abort();});
+  await ctx.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname!=='game.test'||u.pathname.endsWith('/peerjs.min.js'))return r.abort();const p=path.join(__dirname,'..',u.pathname==='/'?'index.html':u.pathname.slice(1));return fs.existsSync(p)?r.fulfill({body:fs.readFileSync(p),contentType:p.endsWith('.html')?'text/html':p.endsWith('.js')?'text/javascript':'image/png'}):r.abort();});
   const page=await ctx.newPage();page.setDefaultTimeout(10000);page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.accept());
   const deliver=async(p,m)=>{try{await p.evaluate(m=>window.receivePeer?.(m),m);}catch{}};
   await page.exposeBinding('peerBridge',async(_,m)=>{
