@@ -1876,8 +1876,11 @@
     bind('home', reset);
   }
 
+  let homeSeen = false;
   function homeV() {
-    $app.className = 'screen center home-screen';
+    // ulazna koreografija samo pri prvom prikazu; kasnija iscrtavanja (npr. ponuda instalacije) ne ponavljaju je
+    $app.className = 'screen center home-screen' + (homeSeen ? '' : ' home-in');
+    if (!homeSeen) { homeSeen = true; setTimeout(() => { if ($app.classList.contains('home-screen')) $app.classList.remove('home-in'); }, 2600); }
     const standalone = !!(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
     const status = hasPeer() ? '' : '<div class="home-status">Povezivanje uređaja nije dostupno. Igra protiv botova i dalje radi.</div>';
     const install = standalone || !installEvt ? '' : '<button class="home-link" id="install">Instaliraj kao aplikaciju</button>';
@@ -1887,9 +1890,9 @@
         '<div class="home-actions">' +
           '<button class="btn home-cta" id="hostp"><span class="hb-t">Igraj</span><span class="hb-s">Otvori sobu i pozovi društvo</span></button>' +
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
-          '<div class="home-try"><span class="home-sep">Još</span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
+          '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v65</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v66</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
