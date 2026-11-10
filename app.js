@@ -1892,7 +1892,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v66</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v67</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -3805,6 +3805,13 @@
         fqArea.style.maxHeight = '';
         const over = measure(1) - available;
         if (over > 1) fqArea.style.maxHeight = Math.max(112, Math.floor(fqArea.getBoundingClientRect().height - over - 4)) + 'px';
+      }
+      // Početak finala: popis igrača se skrola unutar sebe prije nego što se smanji cijeli ekran (naslov u dva retka na uskim mobitelima).
+      const fsRows = A.querySelector('.fs .fs-rows');
+      if (fsRows) {
+        fsRows.style.maxHeight = '';
+        const over = measure(1) - available;
+        if (over > 1) fsRows.style.maxHeight = Math.max(58, Math.floor(fsRows.getBoundingClientRect().height - over - 4)) + 'px';
       }
       // Dugačak izbor moći ili igrača skrola se unutar popisa, umjesto da smanji cijeli ekran.
       const choices = S && S.ph === 'power' && A.querySelector(L.pw ? '.targets' : '.pw-cards');
