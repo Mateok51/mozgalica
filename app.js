@@ -1324,6 +1324,7 @@
   }
 
   function applyState(d) {
+    syncTitle();
     if (connectionWasLost) { connectionWasLost = false; netNote = ''; connectionNotice(); }
     lastStateAt = Date.now();
     if (d && 'pv' in d) PV = d.pv || null;
@@ -1859,7 +1860,15 @@
   })();
 
   // ---------- glavni prikaz ----------
+  // naslov kartice: kod sobe ispred naziva, da se kartica s igrom lako nađe među ostalima
+  function syncTitle() {
+    let code = '';
+    try { if (mode === 'host' || mode === 'hostp') code = game ? game.view().code : ''; else if (mode === 'player') code = (S && S.code) || pcode || ''; } catch (e) {}
+    const want = (/^[A-Z]{4}$/.test(code) ? code + ' · ' : '') + 'Trivia Tavern';
+    if (document.title !== want) document.title = want;
+  }
   function render() {
+    syncTitle();
     try {
       if (mode === 'home') { tvStep = -1; phoneStep = -1; SCENE.reset(); return homeV(); }
       if (mode === 'join') return joinV();
@@ -1892,7 +1901,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v68</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v69</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });

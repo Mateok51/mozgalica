@@ -49,3 +49,12 @@ test('fonts are bundled with the game and the policy allows no external styles o
     assert.ok(sw.includes("'./" + f + "'"), 'sw.js CORE is missing ' + f);
   }
 });
+
+test('link previews point at an image that ships with the game', () => {
+  const og = (name) => (html.match(new RegExp('<meta property="og:' + name + '" content="([^"]+)"')) || [])[1];
+  assert.ok(og('title') && og('description'), 'og:title and og:description are required');
+  const image = og('image');
+  assert.ok(/^https:\/\/[^/]+\/mozgalica\/og\.jpg$/.test(image), 'og:image must be an absolute https URL to og.jpg');
+  assert.ok(fs.existsSync(path.join(root, 'og.jpg')), 'og.jpg is missing');
+  assert.ok(og('url') && image.startsWith(og('url')), 'og:image should live under og:url');
+});
