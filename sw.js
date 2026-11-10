@@ -1,6 +1,6 @@
 // Mozgalica: uvijek pokušaj mrežu, a bez interneta posluži zadnju spremljenu verziju.
-const CACHE = 'mozgalica-v66';
-const CORE = ['./', './index.html', './styles.css', './app.js', './sw-register.js', './engine.js', './data/questions.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js', './vendor/peerjs.min.js', './ui/challenge-medal.webp', './ui/bomb-effect.webp', './ui/bug-effect.webp', './ui/bot-medal.webp', './ui/pw-utjeha.webp'];
+const CACHE = 'mozgalica-v67';
+const CORE = ['./', './index.html', './styles.css', './fonts/cinzel-800-latin.woff2', './fonts/cinzel-800-latin-ext.woff2', './fonts/nunito-latin.woff2', './fonts/nunito-latin-ext.woff2', './app.js', './sw-register.js', './engine.js', './data/questions.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js', './vendor/peerjs.min.js', './ui/challenge-medal.webp', './ui/bomb-effect.webp', './ui/bug-effect.webp', './ui/bot-medal.webp', './ui/pw-utjeha.webp'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
 });
@@ -13,10 +13,9 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  const cdn = /(^|\.)unpkg\.com$|(^|\.)cdn\.jsdelivr\.net$|^fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
-  if (url.origin !== self.location.origin && !cdn) return;
+  if (url.origin !== self.location.origin) return;   // sve što igra treba je na vlastitom izvoru
   e.respondWith(
-    fetch(req, { cache: url.origin === self.location.origin ? 'no-cache' : 'default' }).then((res) => {
+    fetch(req, { cache: 'no-cache' }).then((res) => {
       if (res.ok || res.type === 'opaque') { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
       return res;
     }).catch(() => caches.match(req).then((r) => r || (req.mode === 'navigate' ? caches.match('./index.html') : undefined)))

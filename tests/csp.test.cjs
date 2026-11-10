@@ -21,7 +21,7 @@ test('every script and stylesheet referenced by the page exists next to it', () 
   const refs = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/gi), ...html.matchAll(/<link[^>]*rel="stylesheet"[^>]*href="([^"]+)"/gi)].map((m) => m[1]);
   assert.ok(refs.length >= 5, 'expected the page to reference its scripts and styles');
   for (const ref of refs) {
-    if (/^https?:/.test(ref)) { assert.ok(/^https:\/\/fonts\.googleapis\.com\//.test(ref), 'unexpected external resource ' + ref); continue; }
+    assert.ok(!/^https?:/.test(ref), 'unexpected external resource ' + ref);
     assert.ok(!ref.startsWith('/') && !ref.includes('..'), 'use a relative path: ' + ref);
     assert.ok(fs.existsSync(path.join(root, ref)), 'missing file ' + ref);
   }
@@ -32,5 +32,20 @@ test('the service worker caches the page parts and bumps its version with them',
   for (const f of ['./index.html', './styles.css', './app.js', './sw-register.js', './engine.js', './data/questions.js', './vendor/qrcode.js', './vendor/peerjs.min.js']) {
     assert.ok(sw.includes("'" + f + "'"), 'sw.js CORE is missing ' + f);
     assert.ok(fs.existsSync(path.join(root, f)), 'missing file ' + f);
+  }
+});
+
+test('fonts are bundled with the game and the policy allows no external styles or fonts', () => {
+  const part = (name) => policy.split(';').map((s) => s.trim()).find((s) => s.startsWith(name + ' '));
+  assert.equal(part('style-src'), "style-src 'self' 'unsafe-inline'");
+  assert.equal(part('font-src'), "font-src 'self' data:");
+  assert.ok(!/fonts\.(googleapis|gstatic)\.com/.test(html), 'the page must not load fonts from Google');
+  const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
+  const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  const fonts = [...css.matchAll(/url\("(fonts\/[^"]+)"\)/g)].map((m) => m[1]);
+  assert.ok(fonts.length >= 4, 'expected bundled font files in styles.css');
+  for (const f of fonts) {
+    assert.ok(fs.existsSync(path.join(root, f)), 'missing font ' + f);
+    assert.ok(sw.includes("'./" + f + "'"), 'sw.js CORE is missing ' + f);
   }
 });
