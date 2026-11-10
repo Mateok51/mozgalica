@@ -1892,7 +1892,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v67</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v68</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -3835,8 +3835,12 @@
             mh = Math.max(minH, Math.floor(mh)); mb.style.maxHeight = mh + 'px'; mb.classList.add('mb-scroll');
             const o2 = measure(1) - available; if (o2 <= 0 || mh <= minH) break; mh -= o2 + 2;
           }
+          // Ako skraćivanje popisa ne oslobađa visinu (npr. visinu određuje lice s pitanjem na istoj kartici), popis ostaje cijel:
+          // inače bi većina igrača bila skrivena bez ikakve koristi, a ekran bi se svejedno smanjio.
+          const helped = over - (measure(1) - available) >= 4;
+          if (!helped) { mb.style.maxHeight = ''; mb.classList.remove('mb-scroll'); }
           // moj red ostaje vidljiv (dok igrač sam ne pomakne popis)
-          if (!mb.__user) { mb.onscroll = () => { if (mb.__auto) { mb.__auto = 0; return; } mb.__user = 1; };
+          if (helped && !mb.__user) { mb.onscroll = () => { if (mb.__auto) { mb.__auto = 0; return; } mb.__user = 1; };
             // poredak se presloži animacijom: moj red (prema stvarnom, vidljivom položaju) ostaje u vidu
             const keep = () => { if (mb.__user || !mb.isConnected) return false; const me = mb.querySelector('.rank-row.me'); if (!me) return false;
               const z = parseFloat(A.style.zoom || '1') || 1, a = mb.getBoundingClientRect(), c = me.getBoundingClientRect();
