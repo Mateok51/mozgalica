@@ -33,6 +33,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
  const code=await host.evaluate(()=>JSON.parse(sessionStorage.getItem('mz_recovery_v1')).code);
  await player.goto('http://game.test/#'+code);await player.locator('#name').fill('Ivo');await player.locator('#form button[type=submit]').click();
  await host.getByText('Ivo',{exact:true}).waitFor();
+ assert.equal(await host.title(),code+' · Trivia Tavern','host tab title shows the room code');assert.equal(await player.title(),code+' · Trivia Tavern','player tab title shows the room code');
  await host.locator('#dstart').click();await host.waitForTimeout(300);
  const before=await host.evaluate(()=>JSON.parse(sessionStorage.getItem('mz_recovery_v1')).journal.events.filter(e=>e.method==='syncPeers').length);
  // Closing the data channel models a real transport disconnect before refreshing the host.
