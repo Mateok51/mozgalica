@@ -21,6 +21,10 @@ Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj k
 - Rezervni put kad izravni WebRTC ne uspije: javni MQTT posrednici, ali sve poruke su šifrirane (AES-GCM) tajnim ključem sobe. Ključ putuje samo u QR kodu i poveznici (`#KOD-ključ`); posrednik vidi samo šifrirani sadržaj i temu izvedenu iz ključa. Igrači koji kod upišu ručno nemaju ključ i koriste samo izravnu vezu. Detalji: [povezivanje](docs/povezivanje.md).
 - Pravila igre su u `engine.js`, a pitanja i sadržaj mini igara u `data/questions.js` (objekt `DATA`, jedan zapis po retku). Pitanja učitava samo uređaj domaćina kad otvori sobu ili demo; igrači ih ne preuzimaju. Testovi spajaju oba dijela preko `tests/engine-source.cjs`.
 
+## Poštenost
+- Mobitel javlja vrijeme odgovora, ali domaćin ga prihvaća samo ako je najviše 3 s kraće od trenutka kad je odgovor stigao (`ansGrace` u `engine.js`). Lažno „0 ms” zato ne donosi puni bonus za brzinu. Posljedica: odgovor poslan nakon duljeg prekida veze vrijedi kao da je dan najviše 3 s prije ponovnog spajanja.
+- Poruke s unosom veće od 4000 znakova (`inMax`) odbacuju se prije obrade; stvarni unosi imaju do nekoliko stotina znakova.
+
 ## Oporavak veze i partije
 - Mobitel nakon ponovnog povezivanja šalje spremljeni odgovor; odgovor za završeno pitanje se odbija.
 - Domaćin u istoj kartici automatski pokušava obnoviti partiju nakon osvježavanja. Zapis ostaje lokalno i briše se nakon završetka ili odustajanja. Ako pohrana preglednika nije dostupna, obnova možda neće biti moguća.

@@ -24,6 +24,9 @@ const CFG = {
   pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: null,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
+  // poštenost: mobitel sam javlja vrijeme odgovora, ali ono smije biti najviše ansGrace ms kraće od trenutka kad je odgovor stigao domaćinu
+  // (pokriva kašnjenje mreže); inMax je najveća veličina jedne poruke s unosom u znakovima
+  ansGrace: 3000, inMax: 4000,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
   // upute: nema odbrojavanja, kreće kad svi potvrde; howtoMax je samo nevidljiva sigurnosna granica (npr. netko ode od mobitela)
   howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, ulj: 18, uljVote: 14, uljReveal: 7, hiloN: 8, blitzN: 24,
@@ -265,6 +268,12 @@ function createGame(o) {
   }
 
   // ----- unosi -----
+  // Vrijeme odgovora: prijavljeno vrijeme vrijedi samo unutar prozora [stiglo − ansGrace, stiglo], pa lažno "0 ms" ne donosi puni bonus za brzinu.
+  function ansTime(inp) {
+    const el = Math.max(0, now() - G.startedAt);
+    const t = Number.isFinite(inp.t) ? inp.t : el;
+    return Math.max(0, el - cfg.ansGrace, Math.min(t, el));
+  }
   function accept(p, inp) {
     if (!inp || typeof inp !== 'object' || inp.s !== G.s || p.done || !p.on) return false;
     switch (G.ph) {
@@ -306,18 +315,14 @@ function createGame(o) {
         const c = inp.c;
         if (!isInt(c) || c < 0 || c >= G.q.o.length) return false;
         if (p.hide && p.hide.includes(c)) return false;
-        const el = now() - G.startedAt;
-        const t = Number.isFinite(inp.t) ? inp.t : el;
-        p.ans = c; p.ansMs = Math.max(0, Math.min(t, el));
+        p.ans = c; p.ansMs = ansTime(inp);
         break;
       }
       case 'duel': {
         if (!G.du || (p.pid !== G.du.a && p.pid !== G.du.b)) return false;
         const c = inp.c;
         if (!isInt(c) || c < 0 || c >= G.q.o.length) return false;
-        const el = now() - G.startedAt;
-        const t = Number.isFinite(inp.t) ? inp.t : el;
-        p.ans = c; p.ansMs = Math.max(0, Math.min(t, el));
+        p.ans = c; p.ansMs = ansTime(inp);
         break;
       }
       case 'secret': {
@@ -410,7 +415,8 @@ function createGame(o) {
         if (G.ph === 'lobby' && x.av !== p.av && avFree(x.av, p.pid, true)) { p.av = x.av; bumpBots(p); changed = true; }
       }
       if (x.in) {
-        const k = JSON.stringify(x.in);
+        let k = ''; try { k = JSON.stringify(x.in); } catch (e) { k = ''; }
+        if (!k || k.length > cfg.inMax) continue;   // prevelik ili neispravan unos se odbacuje prije obrade
         if (k !== p.lastIn) { p.lastIn = k; const r = accept(p, x.in); if (r === 'partial') p.lastIn = k; else if (r) changed = true; }
       }
     }
