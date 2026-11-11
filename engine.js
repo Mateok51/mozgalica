@@ -27,6 +27,9 @@ const CFG = {
   // poštenost: mobitel sam javlja vrijeme odgovora, ali ono smije biti najviše ansGrace ms kraće od trenutka kad je odgovor stigao domaćinu
   // (pokriva kašnjenje mreže); inMax je najveća veličina jedne poruke s unosom u znakovima
   ansGrace: 3000, inMax: 4000,
+  // štit: nikad dva puta zaredom; u piramidi, kad je štit jedina osobna moć (vodeći i tko je pri vrhu ne dobivaju dupli),
+  // nudi se samo s vjerojatnošću pyrShieldTop, inače je ponuda bez osobne moći
+  pyrShieldTop: 0.35,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
   // upute: nema odbrojavanja, kreće kad svi potvrde; howtoMax je samo nevidljiva sigurnosna granica (npr. netko ode od mobitela)
   howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, ulj: 18, uljVote: 14, uljReveal: 7, hiloN: 8, blitzN: 24,
@@ -618,7 +621,7 @@ function createGame(o) {
   }
 
   // Pravedna podjela moći: tko zaostaje češće dobiva štit, dupli i pola-pola, a vodeći ih dobiva rijetko.
-  // Posljednja korištena moć rjeđe se ponavlja, a u finalu dupli ne dobiva vodeći ni tko je blizu vrha.
+  // Posljednja korištena moć rjeđe se ponavlja (štit i dupli nikad zaredom), a u finalu dupli ne dobiva vodeći ni tko je blizu vrha.
   function powerWeight(k, t, p) {
     if (POWERS[k].atk) return 1;
     if (k === 'stit') return 0.3 + 0.9 * t;
@@ -639,7 +642,12 @@ function createGame(o) {
   function offersFor(p, t, multi) {
     // u finalu (točno/netočno) pola-pola i grickalice nemaju smisla
     let pool = (multi ? POWER_KEYS : BUFF_KEYS).filter((k) => !(G.inFinale && (k === 'utjeha' || (G.throne ? k === 'oklada' : k === 'pola' || k === 'grick' || k === 'oklada'))) && !(k === 'oklada' && !multi));
-    const wf = (k) => powerWeight(k, t, p) * (k === p.lastPw ? (k === 'dupli' ? 0 : 0.2) : 1) * (k === 'oklada' && (p.lastOf || []).includes('oklada') ? 0 : 1);
+    // Posljednja korištena moć rjeđe se ponavlja; dupli i štit se nikad ne nude dva puta zaredom.
+    const wf = (k) => powerWeight(k, t, p) * (k === p.lastPw ? (k === 'dupli' || k === 'stit' ? 0 : 0.2) : 1) * (k === 'oklada' && (p.lastOf || []).includes('oklada') ? 0 : 1);
+    // Piramida: vodećem i onome pri vrhu dupli nije dostupan, pa bi im "uvijek jedna osobna moć" značilo štit u svakoj ponudi.
+    // Kad je štit jedina moguća osobna moć, nudi se samo povremeno; ostale ponude su bez obrane, da se vodećeg može sustići.
+    const buffs = pool.filter((k) => !POWERS[k].atk && wf(k) > 0);
+    if (multi && G.inFinale && !G.throne && buffs.length === 1 && buffs[0] === 'stit' && Math.random() >= cfg.pyrShieldTop) pool = pool.filter((k) => k !== 'stit');
     const out = [];
     if (multi) { const a = weightedPick(pool.filter((k) => POWERS[k].atk), wf); if (a) out.push(a); }
     // Uvijek ponudi i osobnu korist ili obranu kad je dostupna.

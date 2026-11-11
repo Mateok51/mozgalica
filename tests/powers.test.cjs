@@ -57,7 +57,8 @@ test('each multiplayer power offer provides both attack and personal choice', ()
           assert.equal(offers.length, 3);
           assert.equal(new Set(offers).size, 3);
           assert.ok(offers.some(k => ['led', 'sluz', 'grick', 'bomba'].includes(k)));
-          assert.ok(offers.some(k => !['led', 'sluz', 'grick', 'bomba'].includes(k)));
+          // u piramidi vodeći (ovdje oba igrača, jer su izjednačeni) ne dobiva osobnu moć u svakoj ponudi; vidi testove štita niže
+          if (!(finale && !throne)) assert.ok(offers.some(k => !['led', 'sluz', 'grick', 'bomba'].includes(k)));
           if (finale) assert.ok(!offers.includes('utjeha'));
         }
       } finally { g.stop(); }
@@ -101,4 +102,66 @@ test('power selection handles solo play and previous offer exclusions', () => {
     assert.ok(offers.every(k => !['led', 'sluz', 'grick', 'bomba', 'oklada'].includes(k)));
     assert.ok(!offers.includes('dupli'));
   } finally { g.stop(); }
+});
+
+// Ponuda moći za tri igrača s jasnim poretkom: lead (vodeći), mid, last.
+function deal({ finale, lastPw = '', random } = {}) {
+  const g = context.createGame(random ? { code: 'TEST', random } : { code: 'TEST' });
+  ['lead', 'mid', 'last'].forEach((id, i) => g.addPlayer(id, id, i, false));
+  Object.assign(g._G, { ph: 'bet', s: 10, bdone: 1, inFinale: !!finale, throne: false, endsAt: Date.now() + 10000 });
+  const steps = { lead: 5, mid: 3, last: 1 }, scores = { lead: 3000, mid: 2000, last: 1000 };
+  for (const id of ['lead', 'mid', 'last']) { const p = g._p(id); p.score = scores[id]; p.lastPw = lastPw; if (finale) { p.fu = steps[id]; p.fstep = steps[id]; } }
+  for (const id of ['lead', 'mid', 'last']) g.setInput(id, { s: 10, b: 0 });
+  const offers = Object.fromEntries(['lead', 'mid', 'last'].map((id) => [id, Array.from(g._p(id).offers)]));
+  g.stop();
+  return offers;
+}
+const realRandom = Math.random;
+
+test('the shield is never offered right after it was used, in rounds or in the pyramid', () => {
+  try {
+    for (const finale of [false, true]) for (let i = 0; i < 300; i++) {
+      Math.random = realRandom;
+      const offers = deal({ finale, lastPw: 'stit' });
+      for (const id of ['lead', 'mid', 'last']) assert.ok(!offers[id].includes('stit'), id + ' was offered the shield twice in a row');
+    }
+  } finally { Math.random = realRandom; }
+});
+
+test('the pyramid leader is offered the shield only sometimes, never in every deal', () => {
+  try {
+    let lead = 0; const n = 2000;
+    for (let i = 0; i < n; i++) { Math.random = realRandom; if (deal({ finale: true }).lead.includes('stit')) lead++; }
+    const rate = lead / n;
+    assert.ok(rate > 0.25 && rate < 0.45, 'leader shield rate ' + rate.toFixed(3) + ' should be near 0.35');
+  } finally { Math.random = realRandom; }
+});
+
+test('a pyramid leader without a personal power still gets three different attacks to choose from', () => {
+  try {
+    const offers = deal({ finale: true, lastPw: 'stit' }).lead;
+    assert.equal(offers.length, 3);
+    assert.equal(new Set(offers).size, 3);
+    assert.ok(offers.every((k) => ['led', 'sluz', 'bomba'].includes(k)), offers.join(','));
+  } finally { Math.random = realRandom; }
+});
+
+test('players behind in the pyramid keep a personal power in every deal unless the shield is cooling down', () => {
+  try {
+    for (let i = 0; i < 300; i++) {
+      Math.random = realRandom;
+      const offers = deal({ finale: true });
+      for (const id of ['mid', 'last']) assert.ok(offers[id].some((k) => k === 'stit' || k === 'dupli'), id + ' got no personal power: ' + offers[id].join(','));
+    }
+  } finally { Math.random = realRandom; }
+});
+
+test('outside the pyramid the leader still always gets a personal power', () => {
+  try {
+    for (let i = 0; i < 300; i++) {
+      Math.random = realRandom;
+      const offers = deal({ finale: false }).lead;
+      assert.ok(offers.some((k) => !['led', 'sluz', 'grick', 'bomba'].includes(k)), offers.join(','));
+    }
+  } finally { Math.random = realRandom; }
 });
