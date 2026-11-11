@@ -12,6 +12,8 @@ Party kviz za 2–6 igrača. TV prikazuje igru, a svi igraju s mobitela: biraju 
 
 Nema TV preglednika? Otvori **Otvori igru na TV-u** na jednom mobitelu i zrcali ga na TV.
 
+Kad igru vodi TV, pitanje se prikazuje samo na TV-u, a na mobitelima su ponuđeni odgovori, pa svi gledaju u isti ekran. Domaćin to može isključiti u „Postavke igre” na TV-u (npr. kad netko ne vidi ekran). U igri koju vodi mobitel pitanje je uvijek i na mobitelima.
+
 ## Instalacija na mobitel
 Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj kao aplikaciju* na početnom ekranu igre).
 

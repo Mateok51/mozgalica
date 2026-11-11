@@ -1545,6 +1545,18 @@
   const avOf = (d, id) => { const p = d.P.find((x) => x.id === id); return p ? p.a : 0; };
   function timerNow() { const ms = Math.max(0, clockEnds - Date.now()); return { ms, fr: clockDur ? Math.max(0, Math.min(1, ms / clockDur)) : 1 }; }
   function timerHtml(urgentAt) { const t = timerNow(), u = urgentAt || 3000; return '<div class="timer' + (clockDur && t.ms <= u ? ' urgent' : '') + '" id="timer" data-u="' + u + '"><div id="tbar" data-lv="' + (t.fr > 0.5 ? 'g' : t.fr > 0.2 ? 'a' : 'r') + '" style="width:' + (t.fr * 100).toFixed(2) + '%"></div></div>'; }
+  // TV dok se čeka: koliko ih je odgovorilo, tko je bio prvi (kako je TV vidio) i na koga se još čeka. Ne otkriva ničiji odgovor.
+  let tvFirst = { s: -1, id: null };
+  function tvWait(d) {
+    const ps = d.P.filter((p) => p.c), done = ps.filter((p) => p.ok), left = ps.filter((p) => !p.ok);
+    if (tvFirst.s !== d.s) tvFirst = { s: d.s, id: null };
+    if (!tvFirst.id && done.length === 1) tvFirst.id = done[0].id;
+    if (ps.length < 2) return '<div class="tv-wait"></div>';
+    const first = tvFirst.id && done.length < ps.length ? '<span class="tw-first">⚡ Prvi: ' + esc(nameOf(d, tvFirst.id)) + '</span>' : '';
+    const rest = !left.length ? '<span class="tw-all">Svi su odgovorili!</span>'
+      : left.length <= 2 && done.length ? '<span class="tw-left">Čeka se: ' + left.map((p) => esc(p.n)).join(' i ') + '</span>' : '';
+    return '<div class="tv-wait" aria-live="polite"><span class="tw-count" data-bk="twc" data-bv="' + done.length + '">Odgovorilo ' + done.length + '/' + ps.length + '</span>' + first + rest + '</div>';
+  }
   function lineup(d, opts) {
     opts = opts || {};
     return '<div class="lineup">' + d.P.map((p) => {
@@ -1901,7 +1913,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v72</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v73</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -2323,6 +2335,11 @@
     bindKr(d);
     bindRope(d);
     bind('sfready', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
+  }
+  // samo na TV-u domaćina: u igri bez TV-a opcije nema (d.opt.tvq === -1), a igrači je ne mogu mijenjati
+  function tvqToggle(d) {
+    if (!d.opt || d.opt.tvq === undefined || d.opt.tvq < 0 || !game) return '';
+    return '<div class="lob-opt"><span class="lob-opt-l">📺 Pitanje samo na TV-u<small>Mobiteli pokazuju samo odgovore, pa svi gledaju u TV. Isključi ako netko ne vidi ekran.</small></span><button class="tgl' + (d.opt.tvq ? '' : ' off') + '" data-tvqopt="' + (d.opt.tvq ? 0 : 1) + '">' + (d.opt.tvq ? 'Uključeno' : 'Isključeno') + '</button></div>';
   }
   function bsToggle(d) {
     if (!d.opt) return '';
@@ -2929,7 +2946,7 @@
           break;
         }
         h = tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + timerHtml() +
-          '<div class="tv-mid">' + qTextHtml(d, true) + '<div class="opts">' + opts + '</div>' + evHtml(d) + '</div>' +
+          '<div class="tv-mid">' + qTextHtml(d, true) + '<div class="opts">' + opts + '</div>' + evHtml(d) + tvWait(d) + '</div>' +
           lineup(d, { check: true, fx: true });
         if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
         break;
@@ -3083,7 +3100,7 @@
     for (let k = d.P.length; k < d.max; k++) slots += '<div class="tvlob-slot empty"><span class="pick-nm">Slobodno mjesto</span></div>';
     const fsBtn = mode !== 'demo' && document.fullscreenEnabled && !document.fullscreenElement ? '<button class="btn ghost" id="fs">Cijeli zaslon</button>' : '';
     $app.innerHTML = demoBar +
-      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? '<button class="btn ghost" id="tvSettings" aria-expanded="' + !!L.tvSettings + '">Postavke igre</button>' + (L.tvSettings ? botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + mgPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
+      '<div class="tvlob"><div class="tvlob-side">' + inv + (game ? '<button class="btn ghost" id="tvSettings" aria-expanded="' + !!L.tvSettings + '">Postavke igre</button>' + (L.tvSettings ? tvqToggle(d) + botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + mgPick(d) + pactToggle(d) + tkToggle(d) + bsToggle(d).replace('class="lob-opt"', 'class="lob-opt bs-tv"') : '') : '') + '</div>' + '<div class="tvlob-cast"><h2>Odaberite likove na mobitelima<span>' + d.P.length + '/' + d.max + '</span></h2>' +
       '<div class="tvlob-grid">' + slots + '</div>' +
       '<div class="tvlob-act"><button class="btn lob-cta" id="start"' + (on < 1 || catFew(d) ? ' disabled' : '') + '>Započni igru</button>' + fsBtn + '<button class="home-link" id="quit">Odustani</button></div></div></div>';
     bind('tvSettings', () => lobbyChange('tvSettings', () => { L.tvSettings = !L.tvSettings; render(); }, L.tvSettings ? '.tvlob-act' : '.tvlob-side'));
@@ -3255,7 +3272,7 @@
         const wasTop = d.crown && (me.top || me.st >= d.steps);
         const note = me.st >= d.steps ? '👑 KRUNA JE TVOJA!' : wasTop ? (mine >= 0 ? 'Kruna izmiče! Ostaješ na vrhu — nova prilika u sljedećem pitanju.' : 'Vrijeme je isteklo · ostaješ na vrhu') :
           ok ? 'Točno! +' + (me.ug || 1) + (me.fb ? ' ' + me.fb.split('').map((c) => ({ f: '⚡', d: '✖2', s: '🔥' })[c] || '').join('') : '') + (me.top ? ' · 👑 na vrhu!' : me.mv ? ' · ⬆ ' + me.st + '. stepenica' : ' · napredak ' + (me.fp || 0) + '/' + (me.fr || 1)) : mine >= 0 ? 'Netočno · napredak ostaje' : 'Vrijeme je isteklo';
-        h = head + '<div class="rv" style="--el:' + el + 'ms"><div class="rv-a"><div class="p-q">' + esc(d.q.t) + '</div>' + tf + '<div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div></div>' +
+        h = head + '<div class="rv" style="--el:' + el + 'ms"><div class="rv-a">' + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + tf + '<div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div></div>' +
           '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' + '<div class="p-sub">' + esc(progTxt(d, me)) + '</div>' : progMeter(d, me)) + tdLine(d) + '</div></div>';
         break;
       }
@@ -3361,10 +3378,10 @@
   }
   function duelPhone(d, me) {
     const du = d.du, mine = me && (me.id === du.a || me.id === du.b);
-    if (!mine) return timerHtml() + '<div class="du-k">Dvoboj u tijeku</div>' + duelVs(d) + '<div class="p-q">' + esc(d.q.t) + '</div><div class="waiting">Gledaš dvoboj. Brži točan odgovor osvaja +' + du.bonus + '.</div>';
+    if (!mine) return timerHtml() + '<div class="du-k">Dvoboj u tijeku</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="waiting">Gledaš dvoboj. Brži točan odgovor osvaja +' + du.bonus + '.</div>';
     const answered = L.sent || me.ok, pick = L.sent ? L.sent.c : -1;
     const opts = d.q.o.map((o, i) => '<button class="p-opt o' + i + (answered ? (pick === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + esc(o) + '</span></button>').join('');
-    return timerHtml() + '<div class="du-k">Dvoboj!</div>' + duelVs(d) + '<div class="p-q">' + esc(d.q.t) + '</div><div class="q-area"><div class="p-opts">' + opts + '</div></div>' +
+    return timerHtml() + '<div class="du-k">Dvoboj!</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="q-area"><div class="p-opts">' + opts + '</div></div>' +
       '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : 'Brži točan odgovor pobjeđuje!') + '</div>';
   }
   function duelResultHtml(d, tv) {
@@ -3375,7 +3392,7 @@
     return '<div class="du-k">Dvoboj</div>' + duelVs(d, pose) +
       '<div class="du-res">' + (w ? 'Pobjeđuje <b>' + esc(w.n) + '</b> · +' + du.bonus : 'Nema pobjednika. Nitko ne gubi bodove.') + '</div>' + (du.o ? '<div class="du-note">' + esc(du.o) + '</div>' : '') +
       (du.ms ? '<div class="du-ms">' + esc((pById(d, du.a) || {}).n || '') + ' ' + sec(du.ms[0]) + ' · ' + esc((pById(d, du.b) || {}).n || '') + ' ' + sec(du.ms[1]) + '</div>' : '') +
-      (tv ? '' : '<div class="p-q">' + esc(d.q.t) + '</div>') + revOpts(d, mine, tv);
+      (tv ? '' : phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>')) + revOpts(d, mine, tv);
   }
   const SE_TXT = {
     target: { k: 'Tajna meta', d: (b) => 'Odaberi igrača. Ako na sljedeće pitanje odgovori <b>netočno ili ne odgovori</b>, dobivaš <b>+' + b + '</b>.' },
@@ -3415,8 +3432,12 @@
     return '';
   }
   // ---------- mini-igre ----------
+  // Pitanje samo na TV-u (odluka domaćina na TV-u): mobitel umjesto teksta pitanja pokazuje kratku uputu, a odgovori ostaju.
+  const tvqNote = () => '<div class="tvq-note"><span aria-hidden="true">📺</span> Pitanje je na TV-u</div>';
+  const phoneQ = (d, html) => (d && d.tvq ? tvqNote() : html);
   function qTextHtml(d, tv) {
     const q = d.q;
+    if (!tv && d.tvq) return tvqNote();
     if (q.k === 'who') {
       const step = Math.round(d.dur / 5), all = d.ph !== 'question';
       return '<div class="whoq' + (all ? ' all' : '') + '"><div class="whoq-k">Tko sam ja? · ' + esc(q.t) + '</div><ol>' +
@@ -3692,6 +3713,7 @@
   }
   function bindOpt() { document.querySelectorAll('#app [data-popt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('pacts', b.dataset.popt === '1'); } }; });
     document.querySelectorAll('#app [data-rcopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('rc', b.dataset.rcopt === '1'); } }; });
+    document.querySelectorAll('#app [data-tvqopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('tvq', b.dataset.tvqopt === '1'); } }; });
     document.querySelectorAll('#app [data-bsopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('bs', b.dataset.bsopt === '1'); } }; });
     document.querySelectorAll('#app [data-tkopt]').forEach((b) => { b.onclick = () => { if (game) { AUDIO.play('tap'); game.setOpt('tk', b.dataset.tkopt === '1'); } }; }); }
   function botStepper(d) {
@@ -4240,7 +4262,7 @@
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';
     return timerHtml(3000) +
       (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!<small>Točan odgovor osvaja krunu</small>' : '👑 Pitanje za krunu: ' + esc(d.P.filter((p) => p.top).map((p) => p.n).join(' i ')) + '<small>Ako pogriješi, utrka se nastavlja</small>') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
-      '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>' + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
+      phoneQ(d, '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>') + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class="waiting">💣 Izbjegni bombe!</div>' : '') +
       (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '');
