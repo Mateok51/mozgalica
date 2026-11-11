@@ -26,6 +26,7 @@ Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj k
 - Pozadinsko spremanje preskače se uz uključenu štednju podataka ili na vrlo sporoj vezi; tada se datoteke spremaju tek kad se prvi put prikažu.
 
 ## Poštenost
+- Štit se nikad ne nudi dva puta zaredom. U piramidi vodeći (i tko je pri vrhu) ne dobiva dupli bodove, pa bi mu štit inače bio u svakoj ponudi; zato mu se nudi samo u oko 35 % ponuda (`pyrShieldTop` u `engine.js`), a ostale su bez osobne moći.
 - Mobitel javlja vrijeme odgovora, ali domaćin ga prihvaća samo ako je najviše 3 s kraće od trenutka kad je odgovor stigao (`ansGrace` u `engine.js`). Lažno „0 ms” zato ne donosi puni bonus za brzinu. Posljedica: odgovor poslan nakon duljeg prekida veze vrijedi kao da je dan najviše 3 s prije ponovnog spajanja.
 - Poruke s unosom veće od 4000 znakova (`inMax`) odbacuju se prije obrade; stvarni unosi imaju do nekoliko stotina znakova.
 
