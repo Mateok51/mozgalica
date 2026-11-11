@@ -10,6 +10,7 @@ Ove smjernice vrijede za cijeli projekt. Prije izmjena provjeri aktualno stanje 
 - Provjeri čitljivost dugih naziva i tekstova, veličinu dodirnih površina te dostupnost svih igrača i kontrola. Ne rješavaj manjak prostora skrivanjem važnih informacija.
 - Posebno provjeri prijelaze pitanja, isteka vremena, otkrivanja odgovora i bodova, uključujući slučaj kad igrač nije odgovorio. Izbjegavaj trzanje, neočekivano smanjivanje i dvostruki prikaz likova.
 - Animacije trebaju biti dosljedne i jasne, bez ometanja igranja; poštuj postavku smanjenog kretanja.
+- Kad igru vodi TV, pitanje je samo na TV-u, a mobiteli pokazuju samo ponuđene odgovore (opcija „Pitanje samo na TV-u”, zadano uključena). O tome odlučuje isključivo domaćin na TV-u: igrači to ne mogu sami mijenjati, a u igri koju vodi mobitel opcija ne postoji. TV mora imati vlastiti sadržaj dok se čeka (tko je odgovorio, na koga se čeka), bez otkrivanja ičijeg odgovora.
 
 ## Sigurnost i pouzdanost
 

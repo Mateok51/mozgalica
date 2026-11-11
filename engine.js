@@ -185,7 +185,7 @@ function createGame(o) {
     intro: null, cats: null, cw: -1, q: null, qn: 0, ev: [], so: null, li: null,
     win: null, finalRank: null, fact: '', inFinale: false, fqn: 0,
     used: { q: new Set(), sort: new Set(), link: new Set(), tf: new Set() },
-    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr', off: [], offMg: [] }, pacts: [], offers: [], btq: [],
+    opt: { pacts: o.pacts !== undefined ? !!o.pacts : true, rc: false, tk: false, bs: o.bs !== undefined ? !!o.bs : false, len: LENS[o.len] ? o.len : 'std', end: o.end === 'throne' ? 'throne' : 'pyr', off: [], offMg: [], tvq: !o.noTv && o.tvq !== false }, pacts: [], offers: [], btq: [],
     rc: { offers: [], act: null, res: null, n: 0, seq: 0 },
     tk: { cur: null, res: null, n: 0, offered: 0, seq: 0, lastBn: -9, got: {}, log: [] },
   };
@@ -2730,7 +2730,9 @@ function createGame(o) {
   }
   function mgOn(k) { return !(G.opt && G.opt.offMg && G.opt.offMg.indexOf(k) >= 0); }
   function enabledCats() { const all = Object.keys(D.cats), off = G.opt && G.opt.off ? G.opt.off : []; const on = all.filter((c) => off.indexOf(c) < 0); return on.length >= 4 ? on : all; }
-  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'mg') { if (!Array.isArray(v)) return; const off = MG_ALL.filter((c) => v.indexOf(c) >= 0); if (!CHALLENGES.some((c) => off.indexOf(c) < 0 && (D[DATA_KEY[c]] || []).length)) return; G.opt.offMg = off; onChange(); return; } if (k === 'cats') { if (!Array.isArray(v)) return; const off = Object.keys(D.cats).filter((c) => v.indexOf(c) >= 0); G.opt.off = off; onChange(); return; } if (k === 'end' && (v === 'pyr' || v === 'throne')) { G.opt.end = v; applyLen(G.opt.len); onChange(); return; } if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; } if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); } }
+  function setOpt(k, v) { if (G.ph !== 'lobby') return; if (k === 'mg') { if (!Array.isArray(v)) return; const off = MG_ALL.filter((c) => v.indexOf(c) >= 0); if (!CHALLENGES.some((c) => off.indexOf(c) < 0 && (D[DATA_KEY[c]] || []).length)) return; G.opt.offMg = off; onChange(); return; } if (k === 'cats') { if (!Array.isArray(v)) return; const off = Object.keys(D.cats).filter((c) => v.indexOf(c) >= 0); G.opt.off = off; onChange(); return; } if (k === 'end' && (v === 'pyr' || v === 'throne')) { G.opt.end = v; applyLen(G.opt.len); onChange(); return; } if (k === 'len' && LENS[v]) { G.opt.len = v; applyLen(v); onChange(); return; } if (k === 'pacts') { G.opt.pacts = !!v; onChange(); } if (k === 'bs') { G.opt.bs = !!v; onChange(); }
+    // pitanje samo na TV-u: odlučuje domaćin, i samo kad igru vodi TV (u igri s mobitela opcija ne postoji)
+    if (k === 'tvq' && !o.noTv) { G.opt.tvq = !!v; onChange(); } }
 
   // ----- botovi -----
   function botDelay() {
@@ -2900,7 +2902,8 @@ function createGame(o) {
     if (ph === 'betray' && G.bt) v.bt = G.bt;
     if (ph === 'loyal' && G.ly) v.ly = G.ly;
     if (G.news && now() - G.news.at < 9000) v.news = { id: G.news.id, t: G.news.t };
-    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, len: G.opt.len, end: G.opt.end, off: G.opt.off.slice(), all: Object.keys(D.cats), mgOff: G.opt.offMg.slice(), mg: MG_ALL.filter((k) => (D[DATA_KEY[k]] || []).length).map((k) => [k, HOWTO[k].i, HOWTO[k].n, CHALLENGES.indexOf(k) >= 0 ? 1 : 0]) };
+    if (!o.noTv && G.opt.tvq) v.tvq = 1;
+    if (G.ph === 'lobby') v.opt = { pacts: G.opt.pacts ? 1 : 0, bs: G.opt.bs ? 1 : 0, tvq: !o.noTv ? (G.opt.tvq ? 1 : 0) : -1, len: G.opt.len, end: G.opt.end, off: G.opt.off.slice(), all: Object.keys(D.cats), mgOff: G.opt.offMg.slice(), mg: MG_ALL.filter((k) => (D[DATA_KEY[k]] || []).length).map((k) => [k, HOWTO[k].i, HOWTO[k].n, CHALLENGES.indexOf(k) >= 0 ? 1 : 0]) };
     if (G.rc && G.rc.act && G.ph !== 'lobby') v.rc = { a: G.rc.act.a, b: G.rc.act.b, st: G.rc.act.stake, rev: G.rc.act.rev };
     if (ph === 'reveal' && G.rc && G.rc.res) v.rcr = G.rc.res;
     if (ph === 'reveal' && G.tk && G.tk.res) v.tkr = G.tk.res;
