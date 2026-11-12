@@ -2838,16 +2838,18 @@
     .screen.phone { gap: 8px; }
     .phone { --question-gap: 10px; }
     .phone .p-opts, .phone .rv-opts { gap: 8px; }
-    .phone .p-opt { min-height: 54px; }
+    /* malo tanji okvir i manje praznine: rezerva od dvadesetak piksela, jer WebKit (Safari) slaže retke nešto više od Chromea */
+    .phone .p-opt { min-height: 54px; padding-top: 3px; padding-bottom: 3px; border-top-width: 13px; border-bottom-width: 13px; }
+    .phone .p-q { padding-top: 9px; padding-bottom: 9px; }
   }
   @media (max-height: 700px) and (orientation: portrait) {
     .screen.phone { gap: 5px; }
     .phone { --question-gap: 5px; }
     .phone .p-top .pill { border-top-width: 8px; border-bottom-width: 8px; }
-    .phone .p-opts, .phone .rv-opts { gap: 6px; }
+    .phone .p-opts, .phone .rv-opts { gap: 5px; }
     /* gumb odgovora: tanji gornji i donji rub okvira i manje praznine; visina ostaje iznad 44 px za dodir */
     .phone .p-opt { min-height: 48px; padding-top: 2px; padding-bottom: 2px; border-top-width: 12px; border-bottom-width: 12px; }
-    .phone .p-q { padding-top: 6px; padding-bottom: 6px; min-height: 0; }
+    .phone .p-q { padding-top: 5px; padding-bottom: 5px; min-height: 0; border-top-width: 12px; border-bottom-width: 12px; }
     .phone .waiting { padding-top: 1px; padding-bottom: 1px; }
     .phone .timer { margin-top: 2px; margin-bottom: 2px; }
   }
