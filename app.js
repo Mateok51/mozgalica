@@ -1913,7 +1913,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v74</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v75</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -2894,21 +2894,21 @@
         break;
       }
       case 'moment': h = tvTop(d, 'Krčma pamti') + momentHtml(d, d.mo); break;
-      case 'betray': h = tvTop(d, 'Krčma je vidjela sve') + betrayHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
-      case 'loyal': h = tvTop(d, 'Prije finala') + loyalHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'betray': h = tvTop(d, 'Krčma je vidjela sve') + betrayHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
+      case 'loyal': h = tvTop(d, 'Prije finala') + loyalHtml(d, true) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
       case 'deal': h = tvTop(d, 'Vrijeme za dogovore') + dealTv(d); break;
-      case 'howto': h = tvTop(d, 'Kako se igra') + howtoHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'howto': h = tvTop(d, 'Kako se igra') + howtoHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
       case 'order': h = tvTop(d, 'Poredajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">' + esc(d.or.t) + '</div><div class="mg-s">od <b>' + esc(d.or.lo) + '</b> do <b>' + esc(d.or.hi) + '</b></div><div class="chips">' + d.or.it.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
-      case 'orderReveal': h = tvTop(d, 'Točan poredak') + '<div class="tv-mid"><div class="mg"><div class="mg-t">' + esc(d.or.t) + '</div>' + orderSolution(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'orderReveal': h = tvTop(d, 'Točan poredak') + '<div class="tv-mid"><div class="mg"><div class="mg-t">' + esc(d.or.t) + '</div>' + orderSolution(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
       case 'hilo': h = tvTop(d, 'Igrajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Više ili manje</div><div class="mg-s">Prva greška prekida niz. Tko će imati najdulji niz?</div></div></div>' + lineup(d, { check: true }); break;
-      case 'hiloReveal': h = tvTop(d, 'Rezultati') + '<div class="tv-mid"><div class="mg"><div class="mg-t">Više ili manje</div><div class="mg-list">' + d.hl.list.slice(0, 4).map((x) => '<div class="mg-q">' + esc(x.q) + ' <b>' + esc(x.a[x.w]) + '</b>' + (x.v ? ' (' + esc(x.v[x.w]) + ')' : '') + '</div>').join('') + '</div>' + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'hiloReveal': h = tvTop(d, 'Rezultati') + '<div class="tv-mid"><div class="mg"><div class="mg-t">Više ili manje</div><div class="mg-list">' + d.hl.list.slice(0, 4).map((x) => '<div class="mg-q">' + esc(x.q) + ' <b>' + esc(x.a[x.w]) + '</b>' + (x.v ? ' (' + esc(x.v[x.w]) + ')' : '') + '</div>').join('') + '</div>' + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
       case 'blitz': h = tvTop(d, 'Igrajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Munjeviti krug</div><div class="mg-s">Točno ili netočno – što brže! Točno +100, netočno −50.</div></div></div>' + lineup(d, { check: true }); break;
-      case 'blitzReveal': h = tvTop(d, 'Rezultati') + '<div class="tv-mid"><div class="mg"><div class="mg-t">Munjeviti krug</div>' + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'blitzReveal': h = tvTop(d, 'Rezultati') + '<div class="tv-mid"><div class="mg"><div class="mg-t">Munjeviti krug</div>' + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
       case 'maj': h = tvTop(d, 'Glasajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Što misli većina?</div><div class="mg-q">' + esc(d.mj.q.q) + '</div><div class="mg-list">' + d.mj.q.o.map((o, i) => '<div class="mg-btn"><span class="n">' + String.fromCharCode(65 + i) + '</span>' + esc(o) + '</div>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
-      case 'majReveal': h = tvTop(d, 'Što misli većina?') + '<div class="tv-mid"><div class="mg"><div class="mg-q">' + esc(d.mj.q.q) + '</div>' + majBars(d, -1) + (d.mj.last ? tdLine(d) : '') + '</div></div>' + lineup(d, d.mj.last ? { gain: true } : {}) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'majReveal': h = tvTop(d, 'Što misli većina?') + '<div class="tv-mid"><div class="mg"><div class="mg-q">' + esc(d.mj.q.q) + '</div>' + majBars(d, -1) + (d.mj.last ? tdLine(d) : '') + '</div></div>' + lineup(d, d.mj.last ? { gain: true } : {}) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
       case 'uljez': h = tvTop(d, 'Birajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Jedna osoba ne zna temu. Svi biraju dva pojma koji najbolje pašu uz temu.</div><div class="ul-grid">' + d.ul.t.map((w) => '<div class="ul-t">' + esc(w) + '</div>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
       case 'uljezVote': h = tvTop(d, 'Glasajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Tko je uljez?</div>' + ulRows(d, false) + '</div></div>' + lineup(d, { check: true }); break;
-      case 'uljezReveal': h = tvTop(d, 'Uljez u krčmi') + '<div class="tv-mid"><div class="mg">' + ulReveal(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
+      case 'uljezReveal': h = tvTop(d, 'Uljez u krčmi') + '<div class="tv-mid"><div class="mg">' + ulReveal(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>'; break;
       case 'duelIntro': h = tvTop(d, 'Dvoboj') + momentHtml(d, duelIntroMo(d)); break;
       case 'duel':
         h = tvTop(d, 'Dvoboj') + timerHtml() + '<div class="tv-mid">' + duelVs(d) + '<div class="q-text">' + esc(d.q.t) + '</div><div class="opts">' +
@@ -2942,13 +2942,13 @@
           h = '<style>' + wheel(d).css + '</style>' + tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + '<div class="tv-mid"><div class="rv wheel" style="--el:' + el + 'ms;--rvo:' + whT(d).end + 'ms;--rvw:' + whT(d).walk + 'ms">' +
             '<div class="rv-a">' + qTextHtml(d, true) + revOpts(d, -1, true) + '</div>' +
             '<div class="rv-b"><div class="rv-title">Poredak</div>' + b.html + (d.pj ? '<div class="pj-cap">🏆 Utrka prema piramidi · 🪜 projekcija prema trenutačnim bodovima</div>' : '') + rcCard(d) + tkCard(d) + (d.mo ? tdLine(d) : !d.rcr && !d.tkr && b.lead ? '<div class="rv-lead">Novo vodstvo: ' + esc(b.lead.n) + '!</div>' : '') + krTv(d) + '</div></div></div>';
-          h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
+          h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>';
           break;
         }
         h = tvTop(d, '<span class="pill">' + esc(d.q.c) + '</span>') + timerHtml() +
           '<div class="tv-mid">' + qTextHtml(d, true) + '<div class="opts">' + opts + '</div>' + evHtml(d) + tvWait(d) + '</div>' +
           lineup(d, { check: true, fx: true });
-        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
+        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>';
         break;
       }
       case 'sort': case 'sortReveal': {
@@ -2960,7 +2960,7 @@
           '<div class="sort-col b"><h3>' + esc(d.so.b) + '</h3><div class="chips">' + col(1) + '</div></div></div>' +
           (rev ? '' : '<div class="chips">' + d.so.it.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div>') + '</div>' +
           lineup(d, rev ? { gain: true } : { check: true }) + (rev ? tdLine(d) : '');
-        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
+        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>';
         break;
       }
       case 'link': case 'linkReveal': {
@@ -2970,16 +2970,16 @@
           '<div class="tv-mid"><div class="tv-title">Izazov: ' + esc(d.li.t) + '</div><div class="pairs card">' + pairs + '</div>' +
           (rev ? '' : '<div class="chips">' + d.li.R.map((x) => '<span class="chip">' + esc(x) + '</span>').join('') + '</div>') + '</div>' +
           lineup(d, rev ? { gain: true } : { check: true }) + (rev ? tdLine(d) : '');
-        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>';
+        if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>';
         break;
       }
-      case 'tstart': h = tvTop(d, 'Svi bodovi ostaju · pobjeđuje najbogatiji') + '<div class="tv-mid" style="justify-content:center"><div class="tv-title">Krčmarovo prijestolje</div>' + throneHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div></div>'; break;
+      case 'tstart': h = tvTop(d, 'Svi bodovi ostaju · pobjeđuje najbogatiji') + '<div class="tv-mid" style="justify-content:center"><div class="tv-title">Krčmarovo prijestolje</div>' + throneHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div></div>'; break;
       case 'trisk': h = tvTop(d, 'Tajni ulog prije zadnjeg pitanja') + riskTv(d); break;
       case 'fstart': {
         h = tvTop(d, 'Bodovi iz kviza određuju početak') +
           '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Tko kreće odakle?</div>' + fsRows(d) +
           '<div class="tie-note">Više bodova = viša početna stepenica. Od 4. stepenice svaka traži 2 točna odgovora. Na vrhu čeka pitanje za krunu.</div>' +
-          '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div></div>' + pyramidHtml(d, false) + '</div>';
+          '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div></div>' + pyramidHtml(d, false) + '</div>';
         break;
       }
       case 'fq': case 'fr': {
@@ -3018,7 +3018,7 @@
     // napredak unutar stepenice (isti izračun kao na domaćinu, iz javnog d.req)
     const req = d.req || [];
     const so = (u) => { let st = 0, acc = 0; while (st < req.length && acc + req[st] <= u) { acc += req[st]; st++; } return { s: st, p: u - acc, r: st < req.length ? req[st] : 0 }; };
-    const BN = { f: '⚡', d: '✖2', s: '🔥' };
+    const BN = { f: '⚡', d: '✖︎2', s: '🔥' };
     let rows = '', idx = 0;
     for (let s = d.steps; s >= 0; s--) {
       const w = s === 0 ? 100 : 100 - (s - 1) * (59 / Math.max(1, d.steps - 1));
@@ -3031,7 +3031,7 @@
         const cd = intro ? fsEnd(d, p) : rev ? base + (idx++) * 90 : 0;
         const mood = intro ? (el > fsEnd(d, p) + 300 && p.st ? 'happy' : 'idle') : rev ? (kind === 'win' ? 'victory' : kind === 'lvl' || kind === 'part' ? 'happy' : 'sad') : p.top ? 'victory' : '';
         const bn = rev && p.fb ? '<span class="bn">' + p.fb.split('').map((c) => BN[c] || '').join('') + '</span>' : '';
-        const badge = !kind ? '' : kind === 'win' ? '<span class="pb pb-win">👑</span>' : kind === 'lvl' ? '<span class="pb pb-lvl">+' + ug + '<i>⬆</i>' + bn + '</span>'
+        const badge = !kind ? '' : kind === 'win' ? '<span class="pb pb-win">👑</span>' : kind === 'lvl' ? '<span class="pb pb-lvl">+' + ug + '<i>⬆︎</i>' + bn + '</span>'
           : kind === 'part' ? '<span class="pb pb-part">+' + ug + bn + '</span>' : kind === 'cmiss' ? '<span class="pb pb-cmiss">👑✗</span>' : '<span class="pb pb-miss">✗</span>';
         // traka napretka do sljedeće stepenice (puni se nakon točnog odgovora)
         const cur = so(p.fu || 0);
@@ -3192,7 +3192,7 @@
         }).join('');
         const resT = 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>';
         h = (rl ? '<style>' + rl.css + '</style>' : '') + head + '<div class="vote-head"><div class="p-title">' + (res ? (rl ? '<span class="rl-pre" style="--rd:' + rl.R + 'ms">Ždrijeb bira…</span><span class="rl-post" style="--rd:' + rl.R + 'ms">' + resT + '</span>' : resT) : 'Odaberi kategoriju') + '</div>' +
-          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za kategoriju: dodirni vrata.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
+          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔︎' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za kategoriju: dodirni vrata.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
           '<div class="door-btns">' + doorBtns + '</div>' + ppBar +
 
           '';
@@ -3271,7 +3271,7 @@
         const tf = '<div class="rv-opts' + (d.crown ? '' : ' two') + '">' + d.q.o.map((o, i) => '<div class="p-opt o' + (d.crown ? i : i === 0 ? 3 : 0) + (i === d.cor ? ' rv-ok' + (mine === i ? ' mine' : '') : mine === i ? ' rv-bad' : ' rv-dim') + '"><span class="otxt">' + esc(o) + '</span></div>').join('') + '</div>';
         const wasTop = d.crown && (me.top || me.st >= d.steps);
         const note = me.st >= d.steps ? '👑 KRUNA JE TVOJA!' : wasTop ? (mine >= 0 ? 'Kruna izmiče! Ostaješ na vrhu — nova prilika u sljedećem pitanju.' : 'Vrijeme je isteklo · ostaješ na vrhu') :
-          ok ? 'Točno! +' + (me.ug || 1) + (me.fb ? ' ' + me.fb.split('').map((c) => ({ f: '⚡', d: '✖2', s: '🔥' })[c] || '').join('') : '') + (me.top ? ' · 👑 na vrhu!' : me.mv ? ' · ⬆ ' + me.st + '. stepenica' : ' · napredak ' + (me.fp || 0) + '/' + (me.fr || 1)) : mine >= 0 ? 'Netočno · napredak ostaje' : 'Vrijeme je isteklo';
+          ok ? 'Točno! +' + (me.ug || 1) + (me.fb ? ' ' + me.fb.split('').map((c) => ({ f: '⚡', d: '✖︎2', s: '🔥' })[c] || '').join('') : '') + (me.top ? ' · 👑 na vrhu!' : me.mv ? ' · ⬆︎ ' + me.st + '. stepenica' : ' · napredak ' + (me.fp || 0) + '/' + (me.fr || 1)) : mine >= 0 ? 'Netočno · napredak ostaje' : 'Vrijeme je isteklo';
         h = head + '<div class="rv" style="--el:' + el + 'ms"><div class="rv-a">' + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + tf + '<div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div></div>' +
           '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' + '<div class="p-sub">' + esc(progTxt(d, me)) + '</div>' : progMeter(d, me)) + tdLine(d) + '</div></div>';
         break;
@@ -3382,7 +3382,7 @@
     const answered = L.sent || me.ok, pick = L.sent ? L.sent.c : -1;
     const opts = d.q.o.map((o, i) => '<button class="p-opt o' + i + (answered ? (pick === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + esc(o) + '</span></button>').join('');
     return timerHtml() + '<div class="du-k">Dvoboj!</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="q-area"><div class="p-opts">' + opts + '</div></div>' +
-      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : 'Brži točan odgovor pobjeđuje!') + '</div>';
+      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔︎' : 'Brži točan odgovor pobjeđuje!') + '</div>';
   }
   function duelResultHtml(d, tv) {
     const du = d.du, w = du.w ? pById(d, du.w) : null;
@@ -3459,7 +3459,7 @@
     const ps = d.P.filter((p) => p.c), ready = ps.filter((p) => p.ok).length;
     const me = phoneShown() ? meOf(d) : null, mine = me && (me.ok || (L && L.sent));
     const count = '<div class="ht-ready" data-bk="htr" data-bv="' + ready + '">Spremno: <b>' + ready + '/' + ps.length + '</b></div>';
-    if (me && !mine) return '<button class="btn win-cta ht-ok" id="htok">✔ Razumijem, idemo!</button>' + count;
+    if (me && !mine) return '<button class="btn win-cta ht-ok" id="htok">✔︎ Razumijem, idemo!</button>' + count;
     if (!me) return '<div class="ht-ready" data-bk="htr" data-bv="' + ready + '">Spremno: <b>' + ready + '/' + ps.length + '</b> · igra kreće kad svi potvrde</div>';
     return '<div class="ht-go">Čekamo ostale…</div>' + count;
   }
@@ -3476,7 +3476,7 @@
       return '<button class="mg-btn' + (pos >= 0 ? ' set' : '') + '" data-or="' + i + '"' + (sent || pos >= 0 ? ' disabled' : '') + '><span class="n">' + (pos >= 0 ? pos + 1 : '') + '</span>' + esc(x) + '</button>';
     };
     return '<div class="mg"><div class="mg-t">' + esc(o.t) + '</div><div class="mg-s">Dodiruj redom: <b>1 = ' + esc(o.lo) + '</b> … <b>4 = ' + esc(o.hi) + '</b></div><div class="mg-list">' + o.it.map(btn).join('') + '</div>' +
-      (sent ? '<div class="waiting">Poslano ✔ Čekamo ostale…</div>' : '<div class="mg-row"><button class="btn ghost" id="ordUndo"' + (picks.length ? '' : ' disabled') + '>Poništi</button></div>') + '</div>';
+      (sent ? '<div class="waiting">Poslano ✔︎ Čekamo ostale…</div>' : '<div class="mg-row"><button class="btn ghost" id="ordUndo"' + (picks.length ? '' : ' disabled') + '>Poništi</button></div>') + '</div>';
   }
   function orderSolution(d) {
     const o = d.or;
@@ -3509,7 +3509,7 @@
     const sent = !!(L.sent || me.ok), sel = L.ulSel || [];
     return '<div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Odaberi dva pojma koji najbolje pašu uz temu.</div>' + ulRole() +
       '<div class="ul-grid">' + d.ul.t.map((w, i) => '<button class="ul-t' + (sel.includes(i) ? ' on' : '') + '" data-ul="' + i + '"' + (sent ? ' disabled' : '') + '>' + esc(w) + '</button>').join('') + '</div>' +
-      (sent ? '<div class="waiting">Izbor poslan ✔</div>' : '<button class="btn" id="ulOk"' + (sel.length === 2 ? '' : ' disabled') + '>Potvrdi izbor (' + sel.length + '/2)</button>') + '</div>';
+      (sent ? '<div class="waiting">Izbor poslan ✔︎</div>' : '<button class="btn" id="ulOk"' + (sel.length === 2 ? '' : ' disabled') + '>Potvrdi izbor (' + sel.length + '/2)</button>') + '</div>';
   }
   function ulChips(u, pk, mark) {
     if (!pk || !pk.length) return '<span class="ul-chip none">bez izbora</span>';
@@ -3525,7 +3525,7 @@
   function ulVote(d, me) {
     const sent = !!(L.sent || me.ok), mine = (d.ul.pk || {})[PID];
     return '<div class="mg"><div class="mg-t">Tko je uljez?</div><div class="mg-s">Dodirni osobu koju najviše sumnjičiš.</div>' + ulRole() +
-      (mine ? '<div class="mg-s">Tvoj izbor: ' + ulChips(d.ul, mine, false) + '</div>' : '') + ulRows(d, true) + (sent ? '<div class="waiting">Glas poslan ✔</div>' : '') + '</div>';
+      (mine ? '<div class="mg-s">Tvoj izbor: ' + ulChips(d.ul, mine, false) + '</div>' : '') + ulRows(d, true) + (sent ? '<div class="waiting">Glas poslan ✔︎</div>' : '') + '</div>';
   }
   function ulReveal(d) {
     const u = d.ul, im = d.P.find((p) => p.id === u.imp);
@@ -3536,7 +3536,7 @@
     const m = d.mj, sent = !!(L.sent || me.ok);
     return '<div class="mg"><div class="mg-t">Što misli većina?</div><div class="mg-s">Pitanje ' + (m.i + 1) + '/' + m.n + ' · pogodi što će većina izabrati</div><div class="mg-q">' + esc(m.q.q) + '</div><div class="mg-list">' +
       m.q.o.map((o, i) => '<button class="mg-btn' + (L.sent && L.sent.v === i ? ' set' : '') + '" data-mj="' + i + '"' + (sent ? ' disabled' : '') + '><span class="n">' + String.fromCharCode(65 + i) + '</span>' + esc(o) + '</button>').join('') + '</div>' +
-      (sent ? '<div class="waiting">Glas poslan ✔</div>' : '') + '</div>';
+      (sent ? '<div class="waiting">Glas poslan ✔︎</div>' : '') + '</div>';
   }
   function majBars(d, meV) {
     const m = d.mj, tot = m.cnt.reduce((a, b) => a + b, 0) || 1;
@@ -3593,7 +3593,7 @@
       return '<button class="risk-c r' + i + (mine === i ? ' on' : '') + (done && mine !== i ? ' dim' : '') + '" data-trk="' + i + '"' + (done ? ' disabled' : '') + '><span class="risk-i" aria-hidden="true">' + u[0] + '</span><span class="risk-t"><b>' + u[1] + '</b><small>' +
         (i === 0 ? u[2] : u[2] + ' ' + fmtN(st) + (st < R[i] ? ' (sve što imaš)' : '')) + '</small></span></button>'; }).join('');
     return '<div class="risk"><div class="p-title">Posljednji rizik</div><div class="p-sub">Tajni ulog na zadnje pitanje. Točno: +ulog · Netočno: −ulog</div>' + throneHtml(d, { mini: 1, noq: 1 }) +
-      '<div class="risk-list">' + cards + '</div><div class="waiting">' + (done ? 'Odluka zaključana ✔ Čekamo ostale…' : 'Bez odabira = Sigurno') + '</div></div>';
+      '<div class="risk-list">' + cards + '</div><div class="waiting">' + (done ? 'Odluka zaključana ✔︎ Čekamo ostale…' : 'Bez odabira = Sigurno') + '</div></div>';
   }
   function riskTv(d) {
     return '<div class="tv-mid" style="justify-content:center"><div class="tv-title">Posljednji rizik</div><div class="tv-sub">Svatko tajno bira ulog za zadnje pitanje (do 3.000 bodova)</div>' + throneHtml(d) + lineup(d, { check: true }) + '</div>';
@@ -3980,7 +3980,7 @@
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +
       qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
-      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Izbjegni bombe!' : 'Brže = više bodova!') + '</div>';
+      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔︎' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Izbjegni bombe!' : 'Brže = više bodova!') + '</div>';
   }
 
   function revOpts(d, mine, tv) {
@@ -4049,14 +4049,14 @@
     const n = d.so.it.length;
     if (!L.sortP || L.sortP.length !== n) { L.sortP = new Array(n).fill(-1); L.srtH = []; L.srtLock = false; L.srtCool = 0; }
     const sent = !!(L.sent || me.ok), cur = srtCur(), got = n - L.sortP.filter((x) => x < 0).length;
-    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔ Čekamo ostale…' : 'Povuci karticu u košaru ili dodirni košaru.') + '</div></div>';
+    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔︎ Čekamo ostale…' : 'Povuci karticu u košaru ili dodirni košaru.') + '</div></div>';
     if (sent) return '<div class="srt sent">' + head + sortZonesHtml(d, L.sortP, null) + '</div>';
     const cnt = (k) => L.sortP.filter((x) => x === k).length;
     const anim = L.srtBack != null ? ' back-' + (L.srtBack ? 'b' : 'a') : (L.srtIn ? ' enter' : '');
     L.srtBack = null; L.srtIn = false;
-    const card = cur >= 0 ? '<div class="swp-card' + anim + '" data-si="' + cur + '" tabindex="0" role="group" aria-label="Pojam: ' + esc(d.so.it[cur]) + '"><span>' + esc(d.so.it[cur]) + '</span></div>' : '<div class="swp-card swp-end"><span>Sve razvrstano ✔</span></div>';
+    const card = cur >= 0 ? '<div class="swp-card' + anim + '" data-si="' + cur + '" tabindex="0" role="group" aria-label="Pojam: ' + esc(d.so.it[cur]) + '"><span>' + esc(d.so.it[cur]) + '</span></div>' : '<div class="swp-card swp-end"><span>Sve razvrstano ✔︎</span></div>';
     const peek = cur >= 0 && cur < n - 1 ? '<div class="swp-card swp-peek" aria-hidden="true"></div>' : '';
-    const side = (k) => '<div class="swp-side ' + (k ? 'b' : 'a') + '" data-z="' + k + '" data-go="' + k + '" role="button" tabindex="0" aria-label="' + esc(k ? d.so.b : d.so.a) + '"><span class="swp-arr">' + (k ? 'udesno ▶' : '◀ ulijevo') + '</span><b>' + esc(k ? d.so.b : d.so.a) + '</b><i>' + cnt(k) + '</i></div>';
+    const side = (k) => '<div class="swp-side ' + (k ? 'b' : 'a') + '" data-z="' + k + '" data-go="' + k + '" role="button" tabindex="0" aria-label="' + esc(k ? d.so.b : d.so.a) + '"><span class="swp-arr">' + (k ? 'udesno ▶︎' : '◀︎ ulijevo') + '</span><b>' + esc(k ? d.so.b : d.so.a) + '</b><i>' + cnt(k) + '</i></div>';
     const stage = '<div class="swp-stage"><div class="swp-mid">' + peek + card + '</div><div class="swp-bins">' + side(0) + side(1) + '</div></div>';
     const prog = '<div class="swp-prog"><span class="swp-pt">' + Math.min(n, got + (cur >= 0 ? 1 : 0)) + '/' + n + ' pojmova</span><span class="swp-bar"><span style="width:' + Math.round(got / n * 100) + '%"></span></span></div>';
     const btns = '<div class="swp-btns"><button class="swp-b undo" id="swpUndo"' + (L.srtH.length ? '' : ' disabled') + '>↶ Poništi zadnje</button></div>';
@@ -4162,7 +4162,7 @@
     const n = d.li.L.length;
     if (!L.linkP || L.linkP.length !== n) L.linkP = new Array(n).fill(-1);
     const sent = !!(L.sent || me.ok), left = L.linkP.filter((x) => x < 0).length;
-    const head = '<div class="srt-head"><div class="p-title">Spoji parove</div><div class="p-sub">' + (sent ? 'Poslano ✔ Čekamo ostale…' : 'Povuci konop od pojma do njegova para (ili dodirni oba).') + '</div>' + (d.li.t ? '<div class="p-sub">' + esc(d.li.t) + '</div>' : '') + '</div>';
+    const head = '<div class="srt-head"><div class="p-title">Spoji parove</div><div class="p-sub">' + (sent ? 'Poslano ✔︎ Čekamo ostale…' : 'Povuci konop od pojma do njegova para (ili dodirni oba).') + '</div>' + (d.li.t ? '<div class="p-sub">' + esc(d.li.t) + '</div>' : '') + '</div>';
     const done = sent ? '' : '<button class="btn ghost" id="lnkDone"' + (left ? ' disabled' : '') + '>' + (left ? 'Spoji još ' + left : 'Gotovo') + '</button>';
     return '<div class="lnk' + (sent ? ' sent' : '') + '">' + head + lnkHtml(d, L.linkP, null, sent) + done + '</div>';
   }
@@ -4265,7 +4265,7 @@
       phoneQ(d, '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>') + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class="waiting">💣 Izbjegni bombe!</div>' : '') +
-      (answered ? '<div class="waiting">Zaprimljeno ✔</div>' : '');
+      (answered ? '<div class="waiting">Zaprimljeno ✔︎</div>' : '');
   }
 
   function bindPhone(d, me) {

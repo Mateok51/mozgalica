@@ -1,8 +1,15 @@
   /* Fontovi su dio igre (fonts/), da izgled ne ovisi o vanjskoj mreži. Cinzel i Nunito: SIL Open Font License 1.1 (fonts/LICENSE.txt). */
+  /* Nunito je jedna promjenjiva datoteka, ali se deklarira kao tri zasebne debljine (600, 800, 900), točno kako ga poslužuje Google Fonts.
+     Tako se tražena debljina 400 ili 700 u svakom pregledniku (Safari, Chrome, Samsung Internet) svodi na istu: 400 → 600, 700 → 800.
+     Jedan raspon "600 900" davao je debljinu 700 tanju nego prije i ostavljao preglednicima različito tumačenje. */
   @font-face { font-family: "Cinzel"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/cinzel-800-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
   @font-face { font-family: "Cinzel"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/cinzel-800-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600 900; font-display: swap; src: url("fonts/nunito-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
-  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600 900; font-display: swap; src: url("fonts/nunito-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/nunito-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/nunito-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 900; font-display: swap; src: url("fonts/nunito-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/nunito-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/nunito-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Nunito"; font-style: normal; font-weight: 900; font-display: swap; src: url("fonts/nunito-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
   /* Smjer: večernja TV emisija. Tamna pozornica s reflektorima i zlatnom piramidom u pozadini,
      staklene ploče, sjajne "slatkiš" pločice odgovora, likovi s 3D sjenčanjem.
      Raspored TV-a: naslovna traka gore, sadržaj u sredini, likovi na podiju dolje. */
@@ -27,6 +34,9 @@
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
+  /* Mobilni preglednici inače sami povećavaju tekst (iPhone u položenom položaju; Chrome i Samsung Internet uz veći sistemski font),
+     što razbija raspored krojen na piksel. Veličinu teksta određuje samo igra. */
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   html, body { height: 100%; }
   body {
     margin: 0;
@@ -2818,4 +2828,46 @@
   @media (max-width: 340px) {
     .pw-card > span:last-child { top: 12%; bottom: 12%; gap: 0.08em; }
     .pw-card span span { font-size: 0.76rem; line-height: 1.15; }
+  }
+
+  /* ---------- v75: stvarne vidljive visine mobitela ---------- */
+  /* U pregledniku s adresnom trakom vidljivo je manje nego cijeli zaslon: iPhone 13–15 u Safariju oko 664 px, Samsung u Chromeu oko 668 px,
+     Xiaomi/Pixel oko 740 px, iPhone SE oko 553 px. Ekran s pitanjem u punoj veličini treba ~780 px, pa se na tim visinama sabijaju razmaci
+     i visine (font ostaje isti), da se cijeli prikaz ne mora smanjivati. Ista pravila vrijede za pitanje i otkrivanje, pa veličine ostaju jednake. */
+  @media (max-height: 780px) and (orientation: portrait) {
+    .screen.phone { gap: 8px; }
+    .phone { --question-gap: 10px; }
+    .phone .p-opts, .phone .rv-opts { gap: 8px; }
+    /* malo tanji okvir i manje praznine: rezerva od dvadesetak piksela, jer WebKit (Safari) slaže retke nešto više od Chromea */
+    .phone .p-opt { min-height: 54px; padding-top: 3px; padding-bottom: 3px; border-top-width: 13px; border-bottom-width: 13px; }
+    .phone .p-q { padding-top: 9px; padding-bottom: 9px; }
+  }
+  @media (max-height: 700px) and (orientation: portrait) {
+    .screen.phone { gap: 5px; }
+    .phone { --question-gap: 5px; }
+    .phone .p-top .pill { border-top-width: 8px; border-bottom-width: 8px; }
+    .phone .p-opts, .phone .rv-opts { gap: 5px; }
+    /* gumb odgovora: tanji gornji i donji rub okvira i manje praznine; visina ostaje iznad 44 px za dodir */
+    .phone .p-opt { min-height: 48px; padding-top: 2px; padding-bottom: 2px; border-top-width: 12px; border-bottom-width: 12px; }
+    .phone .p-q { padding-top: 5px; padding-bottom: 5px; min-height: 0; border-top-width: 12px; border-bottom-width: 12px; }
+    .phone .waiting { padding-top: 1px; padding-bottom: 1px; }
+    .phone .timer { margin-top: 2px; margin-bottom: 2px; }
+  }
+  @media (max-height: 600px) and (orientation: portrait) {
+    .screen.phone { gap: 5px; }
+    .phone .p-opts, .phone .rv-opts { gap: 5px; }
+    .phone .p-opt { min-height: 44px; padding-top: 1px; padding-bottom: 1px; border-top-width: 10px; border-bottom-width: 10px; }
+    .phone .p-q { padding-top: 3px; padding-bottom: 3px; border-top-width: 11px; border-bottom-width: 11px; }
+    .phone .bar-row .bw { width: min(13%, 48px); }
+  }
+  /* glasanje na visokim ekranima: vrata su računala s premalo prostora za naslov, traku vremena i "Power pick", pa se cijeli ekran smanjivao */
+  @media (min-height: 721px) and (orientation: portrait) {
+    .phone .door-btn { width: min(100%, calc((100dvh - 354px) / 2 * 0.67)); }
+  }
+  /* ekran pobjednika na 701–760 px (iPhone Pro Max i Xiaomi u pregledniku): lik pobjednika se prilagođava visini umjesto da se smanji sve */
+  @media (min-height: 701px) and (max-height: 760px) and (orientation: portrait) {
+    .phone .win-hero { max-width: clamp(140px, calc((100dvh - 590px) * 1.26), 330px); }
+  }
+  @media (min-height: 761px) and (max-height: 840px) and (orientation: portrait) {
+    .phone .win-hero { max-width: clamp(200px, calc((100dvh - 528px) * 1.26), 470px); }
   }
