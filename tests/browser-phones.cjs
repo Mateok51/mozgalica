@@ -70,7 +70,8 @@ function state(ph) {
       assert.equal(f.n[700], f.n[800], 'weight 700 renders as 800');
       assert.ok(f.n[900] > f.n[800] && f.n[800] > f.n[600], 'the three weights are distinct');
       assert.equal(f.c[400], f.c[800], 'the display font has one weight');
-      assert.equal(f.tsa, '100%', 'the browser must not inflate text on its own');
+      // WebKit izvan iOS-a ne poznaje text-size-adjust pa ga ne može ni pročitati; da je zapisan u CSS-u čuva tests/phones.test.cjs
+      assert.ok(f.tsa === undefined || f.tsa === '' || f.tsa === '100%', 'the browser must not inflate text on its own (got ' + f.tsa + ')');
       assert.deepEqual(p.__errors, []);
       await p.__close();
     }
