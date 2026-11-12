@@ -2812,3 +2812,10 @@
   .tv-wait .tw-count { font-variant-numeric: tabular-nums; }
   .tv-wait .tw-first { color: #ffd98a; }
   .tv-wait .tw-all { color: #c9e6a0; box-shadow: inset 0 0 0 1px rgba(150, 210, 120, 0.7), 0 4px 10px rgba(0, 0, 0, 0.4); }
+
+  /* ---------- v74: uski mobiteli, kartice moći ---------- */
+  /* opis u dva retka (npr. Novčić utjehe) mora stati u okvir kartice: malo viši okvir teksta i sitniji opis */
+  @media (max-width: 340px) {
+    .pw-card > span:last-child { top: 12%; bottom: 12%; gap: 0.08em; }
+    .pw-card span span { font-size: 0.76rem; line-height: 1.15; }
+  }
