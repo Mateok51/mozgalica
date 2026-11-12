@@ -1158,7 +1158,7 @@
     $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
       '<form class="form" id="hform" autocomplete="off">' + (hostErr ? '<div class="err">' + esc(hostErr) + '</div>' : '') +
       '<div class="p-title" style="font-size:1.5rem">Nova igra</div>' +
-      '<div class="p-sub">Ti otvaraš sobu i igraš kao i ostali. Svatko na svom mobitelu vidi pitanja, glasove, moći, poredak i piramidu.</div>' +
+      '<div class="p-sub">Otvaraš sobu i igraš s ostalima, svatko na svom mobitelu.</div>' +
       '<div><label for="hname">Tvoje ime</label><input id="hname" maxlength="12" value="' + esc(name) + '" placeholder="npr. Mateo" autocomplete="off"></div>' +
       '<button class="btn" type="submit">Otvori sobu</button><button class="btn ghost" type="button" id="back">Natrag</button></form>';
     document.getElementById('hform').onsubmit = (e) => {
@@ -1307,7 +1307,7 @@
   }
 
   const meOf = (d) => d && d.P.find((p) => p.id === PID);
-  const PW_SHORT = { led: 'Protivnik tapkanjem razbija led.', sluz: 'Protivnik mora obrisati sluz.', grick: 'Protivniku nestaje dio slova.', bomba: 'Dodir bombe zaklanja pogled na 2 sekunde.', dupli: 'Točan odgovor vrijedi dvostruko.', pola: 'Ukloni dva netočna odgovora.', stit: 'Odbij sve napade u ovom pitanju.', utjeha: 'Netočno: +250. Bez odgovora: +0.' };
+  const PW_SHORT = { led: 'Zaledi protivniku odgovore.', sluz: 'Zalij protivniku ekran sluzi.', grick: 'Protivniku pojede dio slova.', bomba: 'Bomba zaslijepi na 2 sekunde.', dupli: 'Točan odgovor vrijedi duplo.', pola: 'Makni dva netočna odgovora.', stit: 'Zaštiti se od svih napada.', utjeha: 'Netočno: +250. Bez odgovora: +0.', oklada: 'Oboje točno: i njegovi bodovi.' };
   const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? 'Točan odgovor: dodatni napredak.' : PW_SHORT[k] || POWERS[k].d);
   const stepTxt = (n) => (n ? n + '. stepenice' : 'dna piramide');
   const isLocalHost = () => mode === 'demo' || mode === 'hostp';
@@ -1913,7 +1913,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v73</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v74</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -2068,7 +2068,7 @@
       const pct = Math.max(0, Math.min(100, (o.ms / o.dur) * 100));
       const t = o.rev ? '🔥 ' + esc(f.n) + ' traži osvetu!' : o.riv ? '⚔️ Obračun s rivalom: ' + esc(f.n) + ' te izaziva!' : '⚔️ ' + esc(f.n) + ' te izaziva na rivalski obračun!';
       h += '<div class="pk-inv rc-inv"><div class="pk-inv-h"><span class="mini">' + avSvg(f.a, 'attack') + '</span><b>' + t + '</b></div>' +
-        '<div class="pk-inv-s">Oboje riskirate <b>' + R0.st + ' bodova</b>. Na sljedećem pitanju: tko odgovori točno, a protivnik ne, uzima protivnikov ulog. Oboje točno ili oboje krivo — neriješeno.</div>' +
+        '<div class="pk-inv-s">Ulog: <b>' + R0.st + ' bodova</b>. Tko na sljedećem pitanju jedini odgovori točno, uzima ulog.</div>' +
         '<div class="pk-row"><button class="btn pk-acc" data-rc="rcAccept" data-f="' + esc(o.f) + '">Prihvati izazov</button><button class="btn ghost pk-dec" data-rc="rcDecline" data-f="' + esc(o.f) + '">Odbij</button></div><i class="pk-tm" style="--w:' + pct + '%"></i></div>';
     }
     if (R0.out) h += '<div class="pk-bar out rc-out"><span class="pk-t">⚔️ Izazov poslan: <b>' + rcN(d, R0.out.t) + '</b> · ' + Math.ceil(R0.out.ms / 1000) + ' s</span><button class="pk-b" data-rc="rcCancel">Povuci</button></div>';
@@ -2211,7 +2211,7 @@
     const f = pById(d, x.o.f), o = x.o, st = PV.rc ? PV.rc.st : 200;
     const t = o.rev ? '🔥 ' + sfName(d, o.f) + ' traži osvetu!' : o.riv ? '⚔️ Obračun s rivalom: ' + sfName(d, o.f) + ' te izaziva!' : '⚔️ ' + sfName(d, o.f) + ' te izaziva na rivalski obračun!';
     return '<div class="pk-inv rc-inv sf-card"><div class="pk-inv-h"><span class="mini">' + avSvg(f.a, 'attack') + '</span><b>' + t + '</b></div>' +
-      '<div class="pk-inv-s">Ulog <b>' + st + '</b>. Tko jedini odgovori točno, uzima do iznosa uloga od protivnika; u suprotnom je neriješeno.</div>' +
+      '<div class="pk-inv-s">Ulog <b>' + st + '</b>. Tko jedini odgovori točno, uzima ulog.</div>' +
       '<div class="pk-row"><button class="btn pk-acc" data-rc="rcAccept" data-f="' + esc(o.f) + '">Prihvati</button><button class="btn ghost pk-dec" data-rc="rcDecline" data-f="' + esc(o.f) + '">Odbij</button></div></div>';
   }
   const sfRules = () => '<div class="sf-rules"><div class="sf-h">🍻 Tajni paktovi</div><ol>' +
@@ -2395,7 +2395,7 @@
     if (PV.kp) {
       const o = PV.kp, m = pById(d, o.m);
       if (o.ans == null) return { block: 1, html: '<div class="pk-inv kr-card"><div class="pk-inv-h"><span class="mini">' + (m ? avSvg(m.a, 'happy') : '') + '</span><b>🍺 Krčmar ti nudi tajni pakt s: ' + esc(o.x) + '</b></div>' +
-        '<div class="pk-inv-s">Oboje točno → riznica +100, jedan točno → +40. Odanost donosi podjelu; nakon 2 pitanja moguća je izdaja. Jedan pakt po igri; oboje morate prihvatiti.</div><button class="sf-link" data-pactrules="1">📜 Pravila i posljedice</button>' +
+        '<div class="pk-inv-s">Točni odgovori pune zajedničku riznicu, ali moguća je izdaja. Za pakt oboje morate prihvatiti.</div><button class="sf-link" data-pactrules="1">📜 Pravila i posljedice</button>' +
         '<div class="pk-row"><button class="btn pk-acc" data-krp="1">Prihvati</button><button class="btn ghost pk-dec" data-krp="0">Odbij</button></div></div>' };
       return '<div class="kr-note">🍺 Čekamo odgovor drugog igrača…</div>' + mine;
     }
@@ -2440,7 +2440,7 @@
     document.querySelectorAll('#app [data-pactrules]').forEach((b) => { b.onclick = () => {
       if (document.getElementById('pactRulesModal')) return;
       const modal = document.createElement('div'); modal.id = 'pactRulesModal'; modal.className = 'pact-rules-modal'; modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Pravila tajnog pakta');
-      modal.innerHTML = '<div class="sf-rules"><div class="sf-h">🍻 Pravila tajnog pakta</div><ol><li>Oboje točno: riznica +100; jedan točno: +40.</li><li>Odanost do finala: riznica raste 40 % i dijeli se.</li><li>Nakon 2 pitanja moguća je izdaja: riznica i 8 % partnerovih bodova (najviše 300). Ako oboje izdate, riznica propada.</li><li>U partiji možeš sklopiti jedan pakt. Pakt nastaje tek kad oboje prihvatite.</li></ol><button class="btn ghost" type="button">Zatvori</button></div>';
+      modal.innerHTML = '<div class="sf-rules"><div class="sf-h">🍻 Pravila tajnog pakta</div><ol><li>Kad oboje odgovorite točno, u riznicu ide 100 bodova. Kad samo jedan, 40.</li><li>Ostanete li odani do finala, riznica raste 40 % i dijelite je.</li><li>Nakon 2 pitanja možeš izdati partnera: uzimaš riznicu i dio njegovih bodova (najviše 300). Izdate li oboje, riznica propada.</li><li>Jedan pakt po partiji. Vrijedi tek kad oboje prihvatite.</li></ol><button class="btn ghost" type="button">Zatvori</button></div>';
       document.body.appendChild(modal); const close = () => { modal.remove(); if (b.isConnected) b.focus(); }; modal.querySelector('button').onclick = close; modal.onclick = (e) => { if (e.target === modal) close(); }; modal.onkeydown = (e) => { if (e.key === 'Escape') close(); }; modal.querySelector('button').focus();
     }; });
     document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });
@@ -2906,7 +2906,7 @@
       case 'blitzReveal': h = tvTop(d, 'Rezultati') + '<div class="tv-mid"><div class="mg"><div class="mg-t">Munjeviti krug</div>' + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'maj': h = tvTop(d, 'Glasajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Što misli većina?</div><div class="mg-q">' + esc(d.mj.q.q) + '</div><div class="mg-list">' + d.mj.q.o.map((o, i) => '<div class="mg-btn"><span class="n">' + String.fromCharCode(65 + i) + '</span>' + esc(o) + '</div>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
       case 'majReveal': h = tvTop(d, 'Što misli većina?') + '<div class="tv-mid"><div class="mg"><div class="mg-q">' + esc(d.mj.q.q) + '</div>' + majBars(d, -1) + (d.mj.last ? tdLine(d) : '') + '</div></div>' + lineup(d, d.mj.last ? { gain: true } : {}) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
-      case 'uljez': h = tvTop(d, 'Birajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Jedna osoba ne zna temu. Svi biraju dva pojma koji najbolje paše uz temu.</div><div class="ul-grid">' + d.ul.t.map((w) => '<div class="ul-t">' + esc(w) + '</div>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
+      case 'uljez': h = tvTop(d, 'Birajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Jedna osoba ne zna temu. Svi biraju dva pojma koji najbolje pašu uz temu.</div><div class="ul-grid">' + d.ul.t.map((w) => '<div class="ul-t">' + esc(w) + '</div>').join('') + '</div></div></div>' + lineup(d, { check: true }); break;
       case 'uljezVote': h = tvTop(d, 'Glasajte na mobitelu!') + timerHtml() + '<div class="tv-mid"><div class="mg"><div class="mg-t">Tko je uljez?</div>' + ulRows(d, false) + '</div></div>' + lineup(d, { check: true }); break;
       case 'uljezReveal': h = tvTop(d, 'Uljez u krčmi') + '<div class="tv-mid"><div class="mg">' + ulReveal(d) + tdLine(d) + '</div></div>' + lineup(d, { gain: true }) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div>'; break;
       case 'duelIntro': h = tvTop(d, 'Dvoboj') + momentHtml(d, duelIntroMo(d)); break;
@@ -2978,7 +2978,7 @@
       case 'fstart': {
         h = tvTop(d, 'Bodovi iz kviza određuju početak') +
           '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Tko kreće odakle?</div>' + fsRows(d) +
-          '<div class="tie-note">Start: poredak + razlika u bodovima (najviše 4 koraka napretka). Gore je teže: od 4. stepenice svaka traži 2 točna. Na vrhu čeka pitanje za krunu.</div>' +
+          '<div class="tie-note">Više bodova = viša početna stepenica. Od 4. stepenice svaka traži 2 točna odgovora. Na vrhu čeka pitanje za krunu.</div>' +
           '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶</button></div></div>' + pyramidHtml(d, false) + '</div>';
         break;
       }
@@ -3178,7 +3178,7 @@
         const ppBy = d.P.find((p) => p.pk), ppMe = d.P.find((p) => p.id === PID), ppAvail = !res && !ppBy && mine === -1 && ppMe && ppMe.pa !== 0 && !d.fin, ppShow = !!ppMe && !d.fin;
         if (ppBy && window.__ppS !== d.s) { window.__ppS = d.s; AUDIO.play('pick'); }
         // gumb je uvijek na istom mjestu (ekran se ne pomiče); kad se ne može iskoristiti, siv je i kaže zašto
-        const ppWhy = ppAvail ? (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Odaberi kategoriju bez glasanja · jednom po igri') : ppMe && ppMe.pa === 0 ? 'Već iskorišten u ovoj igri' : ppBy ? 'U ovoj rundi: ' + esc(ppBy.n) : res ? 'Odaberi kategoriju bez glasanja · jednom po igri' : 'Glas je predan';
+        const ppWhy = ppAvail ? (L.ppOn ? 'Sad dodirni vrata koja želiš' : 'Ti biraš kategoriju, bez glasanja · jednom po igri') : ppMe && ppMe.pa === 0 ? 'Već iskorišten u ovoj igri' : ppBy ? 'U ovoj rundi: ' + esc(ppBy.n) : res ? 'Ti biraš kategoriju, bez glasanja · jednom po igri' : 'Glas je predan';
         const ppBar = ppShow ? (ppAvail ? '<button class="pp-bar' + (L.ppOn ? ' on' : '') + '" id="ppBtn" aria-pressed="' + (L.ppOn ? 'true' : 'false') + '">'
           : '<div class="pp-bar off" aria-disabled="true">') + '<span class="pp-med" aria-hidden="true"></span><span class="pp-txt"><b>POWER PICK</b><small>' + ppWhy + '</small></span>' + (ppAvail ? '</button>' : '</div>') : '';
         const doorBtns = d.cats.map((c, i) => {
@@ -3192,7 +3192,7 @@
         }).join('');
         const resT = 'Kategorija: <span style="color:var(--gold)">' + esc(d.cats[d.cw]) + '</span>';
         h = (rl ? '<style>' + rl.css + '</style>' : '') + head + '<div class="vote-head"><div class="p-title">' + (res ? (rl ? '<span class="rl-pre" style="--rd:' + rl.R + 'ms">Ždrijeb bira…</span><span class="rl-post" style="--rd:' + rl.R + 'ms">' + resT + '</span>' : resT) : 'Odaberi kategoriju') + '</div>' +
-          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Dodirni kategoriju za svoj glas.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
+          '<div class="p-sub" data-bk="vwait" data-ba="subIn">' + (res ? (d.tie ? '<span' + (rl ? ' class="rl-post" style="--rd:' + rl.R + 'ms"' : '') + '>Neriješeno! Odlučio je ždrijeb.</span>' : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) : 'Kreće pitanje…') : ppBy ? '⭐ Power pick: ' + esc(ppBy.n) + ' bira kategoriju' : mine !== -1 ? 'Glas zaprimljen ✔' : L.ppOn ? '⭐ Power pick: dodirni vrata koja želiš' : 'Glasaj za kategoriju: dodirni vrata.') + '</div></div>' + (res ? '<div class="timer spent" aria-hidden="true"><div></div></div>' : timerHtml()) +
           '<div class="door-btns">' + doorBtns + '</div>' + ppBar +
 
           '';
@@ -3261,7 +3261,7 @@
       case 'fstart': {
         const el = Math.max(0, d.dur - d.ms);
         h = head + '<div class="fs" style="--el:' + el + 'ms;--fe:' + fsEnd(d, me) + 'ms"><div class="p-title">Tko kreće odakle?</div>' + fsRows(d) +
-          '<div class="fs-me">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class="p-sub fs-rule">Točnim odgovorima napreduješ. Na vrhu te čeka pitanje za krunu.</div><div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div></div>';
+          '<div class="fs-me">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class="p-sub fs-rule">Točni odgovori te penju. Na vrhu čeka pitanje za krunu.</div><div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div></div>';
         break;
       }
       case 'fq': h = head + finalePhone(d, me); break;
@@ -3395,8 +3395,8 @@
       (tv ? '' : phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>')) + revOpts(d, mine, tv);
   }
   const SE_TXT = {
-    target: { k: 'Tajna meta', d: (b) => 'Odaberi igrača. Ako na sljedeće pitanje odgovori <b>netočno ili ne odgovori</b>, dobivaš <b>+' + b + '</b>.' },
-    help: { k: 'Tajna pomoć', d: (b) => 'Odaberi saveznika. Ako oboje točno odgovorite na sljedeće pitanje, oboje dobivate <b>+' + b + '</b>.' },
+    target: { k: 'Tajna meta', d: (b) => 'Odaberi igrača. Ako pogriješi na sljedećem pitanju, dobivaš <b>+' + b + '</b>.' },
+    help: { k: 'Tajna pomoć', d: (b) => 'Odaberi saveznika. Ako oboje odgovorite točno, oboje dobivate <b>+' + b + '</b>.' },
   };
   function secretWait(d) { return '<div class="se-wait"><div class="tm-t">Netko u krčmi nešto planira…</div>' + (d ? '' : '') + '</div>'; }
   function secretPhone(d, me) {
@@ -3410,7 +3410,7 @@
     if (d.ph === 'secret2' && me && se.x === me.id) {
       const by = pById(d, se.by);
       if (L.sent || me.ok) return '<div class="se"><div class="se-k">Tajna pomoć</div><div class="se-d">Odgovor poslan. Pst! 🤫</div></div>';
-      return timerHtml() + '<div class="se"><div class="se-k">Tajna pomoć</div><div class="se-d"><b>' + esc(by ? by.n : '?') + '</b> traži tvoju pomoć. Ako oboje točno odgovorite na sljedeće pitanje, oboje dobivate <b>+' + se.bonus + '</b>. Bez kazne.</div>' +
+      return timerHtml() + '<div class="se"><div class="se-k">Tajna pomoć</div><div class="se-d"><b>' + esc(by ? by.n : '?') + '</b> traži tvoju pomoć. Ako oboje odgovorite točno, oboje dobivate <b>+' + se.bonus + '</b>.</div>' +
         '<div class="se-list"><button class="btn" data-sy="1">Prihvati</button><button class="btn ghost" data-sy="0">Odbij</button></div></div>';
     }
     return secretWait();
@@ -3450,7 +3450,7 @@
   function howtoHtml(d) {
     const h = d.ht;
     return '<div class="ht"><div class="ht-i"><img src="ui/challenge-medal.webp" alt="" aria-hidden="true"></div><div class="ht-k">' + (h.chal ? 'Izazov' : 'Posebna bitka') + '</div><div class="ht-t">' + esc(h.n) + '</div>' +
-      (HT_KICK[h.kd] ? '<div class="ht-kick">' + HT_KICK[h.kd] + '</div>' : '') +
+      (HT_KICK[h.kd] && !(h.first || L.htFull) ? '<div class="ht-kick">' + HT_KICK[h.kd] + '</div>' : '') +
       (h.first || L.htFull ? '<ol>' + h.r.map((r, i) => '<li style="--cd:' + (h.first ? 350 + i * 500 : 0) + 'ms"><b>' + (i + 1) + '</b>' + esc(r) + '</li>').join('') + '</ol>' : '<div class="mg-s">Podsjetnik: ' + esc(h.r[0]) + '</div>' + (phoneShown() ? '<button class="pk-b ht-full" id="htfull">📜 Cijele upute</button>' : '')) +
       howtoReady(d) + '</div>';
   }
@@ -3507,7 +3507,7 @@
   }
   function ulPick(d, me) {
     const sent = !!(L.sent || me.ok), sel = L.ulSel || [];
-    return '<div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Odaberi dva pojma koji najbolje paše uz temu.</div>' + ulRole() +
+    return '<div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Odaberi dva pojma koji najbolje pašu uz temu.</div>' + ulRole() +
       '<div class="ul-grid">' + d.ul.t.map((w, i) => '<button class="ul-t' + (sel.includes(i) ? ' on' : '') + '" data-ul="' + i + '"' + (sent ? ' disabled' : '') + '>' + esc(w) + '</button>').join('') + '</div>' +
       (sent ? '<div class="waiting">Izbor poslan ✔</div>' : '<button class="btn" id="ulOk"' + (sel.length === 2 ? '' : ' disabled') + '>Potvrdi izbor (' + sel.length + '/2)</button>') + '</div>';
   }
@@ -3548,14 +3548,14 @@
   }
   function betPhone(d, me) {
     const cat = d.cats && d.cw >= 0 ? esc(d.cats[d.cw]) : '';
-    const top = '<i hidden data-bk="betss" data-bv="' + (L.sent || me.ok ? 'done' : 'pick') + '" data-ba="subIn" data-bt="app"></i><div class="bet"><div class="bet-t">Kladionica</div><div class="bet-sub">Koliko bodova ulažeš da ćeš <b>točno</b> odgovoriti na sljedeće pitanje' + (cat ? ' (' + cat + ')' : '') + '?</div>' + timerHtml();
+    const top = '<i hidden data-bk="betss" data-bv="' + (L.sent || me.ok ? 'done' : 'pick') + '" data-ba="subIn" data-bt="app"></i><div class="bet"><div class="bet-t">Kladionica</div><div class="bet-sub">Uloži na sljedeće pitanje' + (cat ? ': <b>' + cat + '</b>' : '') + '</div>' + timerHtml();
     if (L.sent || me.ok) {
       const b = me.bt !== undefined ? me.bt : L.sent && L.sent.b === -1 ? me.sc : Math.min(L.sent ? L.sent.b : 0, me.sc);
       return top + '<div class="bet-done">' + (b > 0 ? 'Uložio si <b>' + b + '</b> bodova' : 'Bez uloga ovaj put') + '</div><div class="bet-rule">Čekamo ostale…</div></div>';
     }
     const opt = (v, lab, cls) => { const dis = v > 0 && v > me.sc || (v === -1 && me.sc <= 0); return '<button class="btn ghost' + (cls ? ' ' + cls : '') + '" data-bet="' + v + '"' + (dis ? ' disabled' : '') + '>' + lab + '</button>'; };
     return top + '<div class="bet-have">Imaš <b>' + me.sc + '</b> bodova</div><div class="bet-opts">' + opt(100, '100') + opt(300, '300') + opt(500, '500') + opt(-1, 'Sve<small>' + me.sc + '</small>', 'all') + opt(0, 'Bez uloga', 'none') + '</div>' +
-      '<div class="bet-rule">Točan odgovor: <b>dobivaš ulog</b>. Netočan ili bez odgovora: gubiš ulog.' + (me.bm > 1 ? '<br>Zadnji si: dobitak vrijedi <b>×1.5</b>!' : '') + '</div></div>';
+      '<div class="bet-rule">Točno: <b>+ulog</b> · Netočno: <b>−ulog</b>' + (me.bm > 1 ? '<br>Zadnji si: dobitak <b>×1,5</b>!' : '') + '</div></div>';
   }
   function botWord(n) { return n + (n < 5 ? ' bota' : ' botova'); }
   // samo domaćin (igra je lokalna): − broj +
@@ -3592,7 +3592,7 @@
     const cards = RISK_UI.map((u, i) => { const st = Math.min(me.sc || 0, R[i] || 0);
       return '<button class="risk-c r' + i + (mine === i ? ' on' : '') + (done && mine !== i ? ' dim' : '') + '" data-trk="' + i + '"' + (done ? ' disabled' : '') + '><span class="risk-i" aria-hidden="true">' + u[0] + '</span><span class="risk-t"><b>' + u[1] + '</b><small>' +
         (i === 0 ? u[2] : u[2] + ' ' + fmtN(st) + (st < R[i] ? ' (sve što imaš)' : '')) + '</small></span></button>'; }).join('');
-    return '<div class="risk"><div class="p-title">Posljednji rizik</div><div class="p-sub">Biraš tajno. Točno: +ulog. Netočno ili bez odgovora: −ulog.</div>' + throneHtml(d, { mini: 1, noq: 1 }) +
+    return '<div class="risk"><div class="p-title">Posljednji rizik</div><div class="p-sub">Tajni ulog na zadnje pitanje. Točno: +ulog · Netočno: −ulog</div>' + throneHtml(d, { mini: 1, noq: 1 }) +
       '<div class="risk-list">' + cards + '</div><div class="waiting">' + (done ? 'Odluka zaključana ✔ Čekamo ostale…' : 'Bez odabira = Sigurno') + '</div></div>';
   }
   function riskTv(d) {
@@ -3955,11 +3955,11 @@
     }
     if (L.pw) {
       const others = d.P.filter((p) => p.id !== PID && p.c);
-      return headH(L.pw === 'oklada' ? 'Na koga se kladiš?' : 'Odaberi metu', L.pw === 'oklada' ? 'Ako oboje točno odgovorite, dobivaš i njegove bodove. Nitko neće znati na koga.' : 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
+      return headH(L.pw === 'oklada' ? 'Na koga se kladiš?' : 'Odaberi metu', L.pw === 'oklada' ? 'Ako oboje pogodite, dobivaš i njegove bodove. Ostaje tajna.' : 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
         '<div class="targets pw-step">' + others.map((p) => '<button class="target" data-t="' + esc(p.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + '</span></button>').join('') + '</div>' +
         '<button class="btn ghost" id="pwback">Natrag</button>';
     }
-    return headH('Odaberi moć', 'Odaberi jednu od tri ponuđene moći.') + '<div class="pw-cards">' + offers.map((k) => card(k, '', 'button')).join('') + '</div><button class="btn ghost" id="nopw">Preskoči</button>';
+    return headH('Odaberi moć', 'Napadni protivnika ili pomozi sebi.') + '<div class="pw-cards">' + offers.map((k) => card(k, '', 'button')).join('') + '</div><button class="btn ghost" id="nopw">Preskoči</button>';
   }
 
   function questionPhone(d, me) {

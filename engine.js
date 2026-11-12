@@ -19,10 +19,12 @@ const BUFF_KEYS = POWER_KEYS.filter((k) => !POWERS[k].atk);
 const AV_COUNT = 8;
 
 const CFG = {
-  intro: 3.5, vote: 10, voteShow: 3, roul: 2.6, power: 12, bet: 15, betEvents: [2, 3], cast: 1.25, fpower: 7, fstart: 9.5, startCap: 3, fqCrown: 15,
+  // Vrijeme za odluke: faze završavaju čim svi odaberu, pa dulji rok ne usporava igru; dobiva ga samo tko čita prvi put.
+  // Mjerilo: igrač mora stići pročitati sve na ekranu (oko 2 riječi u sekundi) i još odlučiti.
+  intro: 3.5, vote: 15, voteShow: 3, roul: 2.6, power: 18, bet: 20, betEvents: [2, 3], cast: 1.25, fpower: 12, fstart: 11, startCap: 3, fqCrown: 15,
   // piramida: napredak po stepenicama (gore je teže), početak = 30 % poredak + 70 % omjer bodova, najviše 4 jedinice; vrh = pitanje za krunu
   pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: null,
-  sort: 40, link: 40, chReveal: 8, fq: 10, fr: 4,
+  sort: 40, link: 40, chReveal: 8, fq: 10, fr: 5,
   steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // poštenost: mobitel sam javlja vrijeme odgovora, ali ono smije biti najviše ansGrace ms kraće od trenutka kad je odgovor stigao domaćinu
   // (pokriva kašnjenje mreže); inMax je najveća veličina jedne poruke s unosom u znakovima
@@ -32,7 +34,7 @@ const CFG = {
   pyrShieldTop: 0.35,
   // Tavern Director: trajanje trenutaka, dvoboja i tajnih događaja
   // upute: nema odbrojavanja, kreće kad svi potvrde; howtoMax je samo nevidljiva sigurnosna granica (npr. netko ode od mobitela)
-  howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 10, majReveal: 4, majN: 3, ulj: 18, uljVote: 14, uljReveal: 7, hiloN: 8, blitzN: 24,
+  howto: 7, howtoShort: 3.5, howtoMax: 180, order: 25, hilo: 45, blitz: 30, maj: 14, majReveal: 6, majN: 3, ulj: 25, uljVote: 20, uljReveal: 7, hiloN: 8, blitzN: 24,
   chal: null, chalN: 2, varMax: 2,
   // Smart Game Director (raspored, nikad ishod): udio mini-igara u regularnom dijelu, početak bez posebnih bitaka (udio),
   // najviše posebnih u zadnjih fcLast, broj posebnih bitaka, pomak izazova unutar runde, slabije ponavljanje iste skupine/vrste, težine vrsta
@@ -49,7 +51,7 @@ const CFG = {
   // posljednji poziv: koliko zadnjih običnih pitanja prije piramide prikazuje projekciju početka
   fcLast: 3,
   // Krčmarovo prijestolje: broj pitanja, najveći bodovi po pitanju (zadnje), ulozi, trajanje uvoda / odluke, najviše pitanja za izjednačenje
-  thN: 5, thMax: 1500, thLast: 3000, thRisk: [0, 1000, 3000], tstart: 8, trisk: 12, thTieMax: 3,
+  thN: 5, thMax: 1500, thLast: 3000, thRisk: [0, 1000, 3000], tstart: 8, trisk: 18, thTieMax: 3,
   rcStake: 200, rcAfter: 5, rcMax: 2, rcSends: 2, rcOffer: 20,
   // krčmarove tajne ponude: dobitak / gubitak (točan odgovor vrijedi 500–1000, pa je oklada osjetna, ali ne odlučuje partiju;
   // očekivani dobitak je ≈ 0 kad meta griješi u ~40 % pitanja), od kojeg pitanja (nakon after odigranih), najviše prihvaćenih
@@ -63,12 +65,12 @@ const CFG = {
     // ponude: od kojeg pitanja, vjerojatnost po ploči (kad nema ponude pakta), najviše po partiji; zadatak: dobitak / gubitak
     offFrom: 2, offChance: 0.35, offMax: 4, taskWin: 400, taskLoss: 200,
     // izazov vođi: od kojeg odigranog pitanja, najmanji zaostatak, vrijeme za odluku (s), ulozi, obrana krune, trajanje konopa (s), prednost za pobjedu prije kraja
-    chFrom: 5, chGap: 800, chWait: 12, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 20, ropeWin: 7, ropeN: 40 },
+    chFrom: 5, chGap: 800, chWait: 16, chStakeA: 150, chStakeB: 300, chGuard: 150, rope: 20, ropeWin: 7, ropeN: 40 },
   sf: { on: true, at: [], atBot: [], dur: 20, soloMax: 600, inMax: 2, offerQ: 2,
     // profili botova (samo društvene odluke): prihvaćanje ponude, slanje ponude po fazi, šapat, izdaja po fazi (uz riznicu ≥ btMin)
     prof: { loyal: { acc: 0.85, off: 0.45, wh: 0.8, bt: 0.05 }, sly: { acc: 0.7, off: 0.35, wh: 0.5, bt: 0.4 }, wild: { acc: 0.5, off: 0.4, wh: 0.5, bt: 0.2 } }, btMin: 75 },
   tk: { win: 150, loss: 100, after: 5, perGame: 2, offers: 3, chance: 0.5, gap: 2 },
-  moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 8, secret2: 7, secretBonus: 200, helpBonus: 150,
+  moment: 2.4, duelIntro: 2.6, duel: 10, duelRes: 3.5, duelBonus: 300, secret: 12, secret2: 10, secretBonus: 200, helpBonus: 150,
 };
 
 // Prekidači za nove sustave (mogu se mijenjati i po igri preko createGame({ flags }))
@@ -118,24 +120,29 @@ function makePlan(k) {
 const INPUT_PHASES = { trisk: 1, rope: 1, deal: 1, vote: 1, bet: 1, power: 1, question: 1, sort: 1, link: 1, fq: 1, duel: 1, secret: 1, secret2: 1, order: 1, hilo: 1, blitz: 1, maj: 1, uljez: 1, uljezVote: 1 };
 // Mini-igre: objašnjenje prije prve igre (kratak podsjetnik kad se ponovi)
 const HOWTO = {
-  who: { n: 'Tko sam ja?', i: '🕵️', r: ['Tragovi se otkrivaju jedan po jedan.', 'Što prije pogodiš, to više bodova.', 'Imaš samo jedan pokušaj!'] },
-  emoji: { n: 'Emoji zagonetka', i: '🤔', r: ['Emojiji opisuju film, seriju, bajku ili nešto drugo.', 'Odaberi točan odgovor od četiri ponuđena.', 'Brži točan odgovor nosi više bodova.'] },
-  sort: { n: 'Razvrstavanje', i: '🗂️', r: ['Povuci karticu u košaru ili dodirni košaru.', 'Svaki točno razvrstan pojam donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },
-  link: { n: 'Spajanje parova', i: '🔗', r: ['Povuci konop do para ili dodirni oba pojma.', 'Svaki točan par donosi bodove.', 'Kad si gotov, pritisni „Gotovo“.'] },
-  order: { n: 'Poredaj', i: '🔢', r: ['Dodiruj pojmove redom, od prvog prema zadnjem.', 'Svaki pojam na pravom mjestu donosi bodove.', 'Sve točno = dodatni bonus!'] },
-  hilo: { n: 'Više ili manje', i: '⚖️', r: ['Pročitaj pitanje i odaberi točan odgovor.', 'Svaki točan odgovor produljuje tvoj niz.', 'Prva greška prekida niz!'] },
-  blitz: { n: 'Munjeviti krug', i: '⚡', r: ['Točno ili netočno, što brže možeš.', 'Točan odgovor +100, netočan −50.', 'Imaš 30 sekundi!'] },
-  maj: { n: 'Što misli većina?', i: '🗳️', r: ['Odaberi odgovor koji će većina izabrati.', 'Bodove dobiva tko odabere isto kao većina.', 'Pogodi što misle ostali!'] },
+  // Upute su kratke namjerno: jedan redak što radiš, jedan što donosi bodove. Treći redak samo kad bez njega igra nije jasna.
+  who: { n: 'Tko sam ja?', i: '🕵️', r: ['Tragovi stižu jedan po jedan.', 'Raniji pogodak nosi više bodova. Imaš jedan pokušaj!'] },
+  emoji: { n: 'Emoji zagonetka', i: '🤔', r: ['Emojiji opisuju film, seriju ili bajku.', 'Odaberi što opisuju. Brže = više bodova.'] },
+  sort: { n: 'Razvrstavanje', i: '🗂️', r: ['Povuci karticu u košaru ili dodirni košaru.', 'Svaki točan pojam nosi bodove.'] },
+  link: { n: 'Spajanje parova', i: '🔗', r: ['Povuci konop do para ili dodirni oba pojma.', 'Svaki točan par nosi bodove.'] },
+  order: { n: 'Poredaj', i: '🔢', r: ['Dodiruj pojmove redom, od prvog do zadnjeg.', 'Sve točno = bonus!'] },
+  hilo: { n: 'Više ili manje', i: '⚖️', r: ['Odaberi točan odgovor.', 'Prva greška prekida niz!'] },
+  blitz: { n: 'Munjeviti krug', i: '⚡', r: ['Točno ili netočno, što brže možeš.', 'Točno +100, netočno −50. Imaš 30 sekundi!'] },
+  maj: { n: 'Što misli većina?', i: '🗳️', r: ['Nema točnog odgovora.', 'Bodove dobiva tko odabere isto kao većina.'] },
 };
 const CHALLENGES = ['sort', 'link', 'order', 'hilo', 'blitz', 'maj'];
 // skupine izazova po osjećaju igre (Smart Game Director izmjenjuje skupine)
 const KIND = { who: 'assoc', emoji: 'assoc', order: 'logic', hilo: 'logic', sort: 'logic', link: 'logic', blitz: 'fast', maj: 'social' };
 const DATA_KEY = { who: 'who', emoji: 'emoji', order: 'order', hilo: 'hilo', blitz: 'tf', maj: 'maj', sort: 'sort', link: 'link' };
-HOWTO.uljez = { n: 'Uljez u krčmi', i: '🎭', r: ['Jedna osoba ne zna temu, a ostali znaju.', 'Odaberi dva pojma koji najbolje pašu uz temu.', 'Zatim glasajte tko je uljez.'] };
+HOWTO.uljez = { n: 'Uljez u krčmi', i: '🎭', r: ['Svi znaju temu osim jednoga: uljeza.', 'Odaberi dva pojma koji pašu uz temu.', 'Zatim glasajte tko je uljez.'] };
 KIND.uljez = 'social'; DATA_KEY.uljez = 'ulj'; CHALLENGES.push('uljez');
 const MG_ALL = CHALLENGES.concat(['who', 'emoji']);
 const SKIPPABLE = { betray: 1, loyal: 1, fstart: 1, tstart: 1, intro: 1, voteResult: 1, reveal: 1, sortReveal: 1, linkReveal: 1, fr: 1, moment: 1, duelIntro: 1, duelResult: 1, howto: 1, orderReveal: 1, hiloReveal: 1, blitzReveal: 1, majReveal: 1, uljezReveal: 1 };
 
+// Vrijeme za čitanje: dulji tekst dobiva pola sekunde po riječi iznad osam (najdulja tvrdnja piramide ima 16 riječi → +4 s).
+function readSecs(base, text) {
+  return base + Math.max(0, String(text || '').trim().split(/\s+/).length - 8) * 0.5;
+}
 function shuffle(a) {
   a = a.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -1096,7 +1103,7 @@ function createGame(o) {
     G.q = { c: 'Točno ili netočno?', t: D.tf[i][0], o: ['Točno', 'Netočno'], a: D.tf[i][1] ? 0 : 1 };
     G.fqn += 1;
     for (const p of list()) { p.ans = -1; p.ansMs = 0; p.mv = 0; p.ch = -1; p.hide = null; }
-    setPhase('fq', cfg.fq);
+    setPhase('fq', readSecs(cfg.fq, G.q.t));
   }
   function scoreFinale() {
     const TOP = pyrTop(), crown = new Set(G.crown || []);
