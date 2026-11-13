@@ -13,19 +13,22 @@ const words = (s) => String(s).trim().split(/\s+/).length;
 test('every mini-game is explained in at most three short lines', () => {
   for (const [key, h] of Object.entries(HOWTO)) {
     assert.ok(h.r.length >= 2 && h.r.length <= 3, key + ': ' + h.r.length + ' lines');
-    for (const line of h.r) assert.ok(line.length <= 56 && words(line) <= 9, key + ': line too long: ' + line);
-    assert.ok(h.r.reduce((a, l) => a + words(l), 0) <= 20, key + ': more than 20 words in total');
+    for (const line of h.r) assert.ok(line.length <= 76 && words(line) <= 12, key + ': line too long: ' + line);
+    assert.ok(h.r.reduce((a, l) => a + words(l), 0) <= 30, key + ': more than 30 words in total');
   }
 });
 
-test('each power is described in one short line that fits a card on a small phone', () => {
+test('each power has a concise description with its essential consequence', () => {
   const src = app.match(/const PW_SHORT = (\{[^;]*\});/);
   assert.ok(src, 'PW_SHORT not found in app.js');
   const short = vm.runInNewContext('(' + src[1] + ')');
   for (const key of ['led', 'sluz', 'grick', 'bomba', 'dupli', 'pola', 'stit', 'oklada', 'utjeha']) {
     assert.ok(short[key], key + ' has no short description');
-    assert.ok(short[key].length <= 32, key + ' is ' + short[key].length + ' characters: ' + short[key]);
+    assert.ok(short[key].length <= 72, key + ' is ' + short[key].length + ' characters: ' + short[key]);
   }
+  assert.match(short.bomba, /[Dd]odir/, 'the bomb trigger must be explicit');
+  assert.match(short.stit, /pitanj/, 'shield duration must be explicit');
+  assert.match(short.oklada, /bonus/, 'betting gives a bonus rather than taking another player’s points');
 });
 
 test('decisions give a first-time player enough time to read and choose', () => {
