@@ -7,7 +7,7 @@ const page=await browser.newPage();
 const errors=[]; page.on('pageerror',e=>errors.push(e.message)); page.on('dialog',d=>d.accept());
 await page.route('**/*',async route=>{
  const u=new URL(route.request().url());
- if(u.hostname!=='game.test') return route.abort();
+ if(u.hostname!=='game.test'||u.pathname.endsWith('/peerjs.min.js')) return route.abort();
  const file=path.join(__dirname, '..')+'/'+(u.pathname==='/'?'index.html':u.pathname.slice(1));
  if(!fs.existsSync(file)) return route.abort();
  return route.fulfill({body:fs.readFileSync(file),contentType:file.endsWith('.html')?'text/html':file.endsWith('.js')?'text/javascript':'image/png'});
@@ -18,11 +18,10 @@ await page.addInitScript(()=>{ window.Peer=class {
 });
 await page.goto('http://game.test/');
 await page.locator('#hostp').click(); await page.locator('#hname').fill('Ana'); await page.locator('#hform button[type=submit]').click();
-await page.waitForTimeout(400);
 await page.locator('#lobSettings').click();
 await page.locator('[data-bots="1"]').click();
 await page.locator('#dstart').click();
-await page.waitForTimeout(100);
+await page.waitForFunction(()=>{const raw=sessionStorage.getItem('mz_recovery_v1');return raw&&JSON.parse(raw).journal.events.some(e=>e.method==='start');});
 const saved=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('mz_recovery_v1')));
 if(!saved) throw Error('No saved game');
 await page.reload();await page.waitForFunction(()=>!document.body.innerText.includes('Spajam se…'),null,{timeout:8000}).catch(()=>{});await page.waitForTimeout(200);

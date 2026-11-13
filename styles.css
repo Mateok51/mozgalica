@@ -2871,3 +2871,6 @@
   @media (min-height: 761px) and (max-height: 840px) and (orientation: portrait) {
     .phone .win-hero { max-width: clamp(200px, calc((100dvh - 528px) * 1.26), 470px); }
   }
+
+/* Keep the power's activation step visible in the existing card. */
+.pw-card .pw-action { display: block; font: inherit; opacity: .85; }

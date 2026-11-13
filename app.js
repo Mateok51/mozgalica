@@ -770,6 +770,7 @@
     if (hostPeer) { try { hostPeer.destroy(); } catch (e) {} }
     if (ppeer) { try { ppeer.destroy(); } catch (e) {} }
     stopHostRelay(); stopPlayerRelay();
+    clearTimeout(recoveryTimer); recoveryTimer = null; pendingRecovery = null;
     game = null; hostPeer = null; ppeer = null; pconn = null; S = null; PV = null;
     hostErr = ''; perr = ''; netNote = ''; lastSig = '';
     L = freshLocal(-1);
@@ -806,71 +807,112 @@
     const ctx = { key, t: Array.from(tb, (b) => b.toString(16).padStart(2, '0')).join('') };
     RCTX.set(rs, ctx); return ctx;
   }
+  const NET_LIMIT = Object.freeze({ packet: 1048576, cipher: 700000, queue: 32, decrypt: 64, pendingBytes: 2097152 });
   async function rEnc(ctx, obj) {
     const iv = crypto.getRandomValues(new Uint8Array(12)), pt = enc.encode(typeof obj === 'string' ? obj : JSON.stringify(obj));
+    if (pt.length > 500000) throw new Error('Relay payload too large');
     const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, ctx.key, pt));
     return JSON.stringify({ v: 2, i: b64u(iv), c: b64u(ct) });
   }
   async function rDec(ctx, m) {
-    if (!ctx || !m || m.v !== 2 || typeof m.i !== 'string' || typeof m.c !== 'string') return null;
+    if (!ctx || !m || m.v !== 2 || typeof m.i !== 'string' || typeof m.c !== 'string' || m.i.length !== 16 || !/^[A-Za-z0-9_-]+$/.test(m.i) || m.c.length > NET_LIMIT.cipher) return null;
     try { return JSON.parse(dec.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64u(m.i) }, ctx.key, ub64u(m.c)))); } catch (e) { return null; }
   }
   // šifrirano slanje i primanje uz očuvan redoslijed poruka
-  function rPub(client, ctx, topic, obj) { client.q2 = (client.q2 || Promise.resolve()).then(() => rEnc(ctx, obj)).then((t) => client.publish(topic, t)).catch(() => {}); }
-  function rOn(ctx, fn) { let chain = Promise.resolve(); return (topic, m) => { chain = chain.then(() => rDec(ctx, m)).then((d) => { if (d) fn(topic, d); }).catch(() => {}); }; }
+  function rPub(client, ctx, topic, obj) {
+    if (client.dead || client.relayOverloaded) return;
+    if ((client.pendingEncrypt || 0) >= NET_LIMIT.queue) {
+      client.relayOverloaded = true; if (client.fail) client.fail(); else client.close(); return;
+    }
+    client.pendingEncrypt = (client.pendingEncrypt || 0) + 1;
+    client.q2 = (client.q2 || Promise.resolve()).then(() => client.dead || client.relayOverloaded ? null : rEnc(ctx, obj))
+      .then(t => { if (t && !client.dead && !client.relayOverloaded) client.publish(topic, t); })
+      .catch(() => {}).finally(() => { client.pendingEncrypt--; });
+  }
+  function rOn(ctx, fn) {
+    let chain = Promise.resolve(), pending = 0, bytes = 0;
+    return (topic, m) => {
+      // Bound work before base64 decoding/decryption, rather than after authentication.
+      if (!m || typeof m.c !== 'string' || m.c.length > NET_LIMIT.cipher || pending >= NET_LIMIT.decrypt || bytes + m.c.length > NET_LIMIT.pendingBytes) return;
+      pending++; bytes += m.c.length;
+      chain = chain.then(() => rDec(ctx, m)).then(d => { if (d) fn(topic, d); }).catch(() => {})
+        .finally(() => { pending--; bytes -= m.c.length; });
+    };
+  }
   const enc = new TextEncoder(), dec = new TextDecoder();
   function mqttClient(url, onMsg, onDown) {
-    let ws = null, ready = false, buf = new Uint8Array(0), pid = 1, ping = null, dead = false;
+    let ws = null, ready = false, buf = new Uint8Array(0), pid = 1, ping = null, dead = false, queuedBytes = 0;
     const subs = new Set(), q = [], waiters = [];
     const str = (s) => { const b = enc.encode(s); return [b.length >> 8, b.length & 255, ...b]; };
     const len = (n) => { const o = []; do { let d = n % 128; n = Math.floor(n / 128); if (n > 0) d |= 128; o.push(d); } while (n > 0); return o; };
     const pkt = (h, body) => new Uint8Array([h, ...len(body.length), ...body]);
-    const raw = (u8) => { if (ws && ws.readyState === 1) ws.send(u8); };
+    const raw = (u8) => {
+      if (dead) return;
+      if (u8.length > NET_LIMIT.packet || (ws && ws.bufferedAmount + u8.length > NET_LIMIT.packet)) { down(); return; }
+      if (ws && ws.readyState === 1) { try { ws.send(u8); } catch (e) { down(); } }
+    };
     function publish(topic, obj) {
       const body = [...str(topic)], pl = enc.encode(typeof obj === 'string' ? obj : JSON.stringify(obj));
-      const hdr = [0x30, ...len(body.length + pl.length), ...body], out = new Uint8Array(hdr.length + pl.length);
+      const hdr = [0x30, ...len(body.length + pl.length), ...body];
+      if (dead) return;
+      if (hdr.length + pl.length > NET_LIMIT.packet) { down(); return; }
+      const out = new Uint8Array(hdr.length + pl.length);
       out.set(hdr, 0); out.set(pl, hdr.length);
-      if (ready) raw(out); else q.push(out);
+      if (ready) raw(out); else if (q.length >= NET_LIMIT.queue || queuedBytes + out.length > NET_LIMIT.pendingBytes) down();
+      else { q.push(out); queuedBytes += out.length; }
     }
     function subscribe(topic) { subs.add(topic); if (ready) raw(pkt(0x82, [(pid >> 8) & 255, pid++ & 255, ...str(topic), 0])); }
     function parse() {
+      let packets = 0;
       for (;;) {
         if (buf.length < 2) return;
         let mul = 1, n = 0, i = 1, b;
-        do { if (i >= buf.length) return; b = buf[i++]; n += (b & 127) * mul; mul *= 128; } while (b & 128);
+        do { if (i >= buf.length) return; b = buf[i++]; n += (b & 127) * mul; mul *= 128;
+          if (n > NET_LIMIT.packet || (i === 5 && (b & 128))) { down(); return; }
+        } while (b & 128);
+        if (++packets > 256) { down(); return; }
         if (buf.length < i + n) return;
         const type = buf[0] >> 4, flags = buf[0] & 15, body = buf.subarray(i, i + n);
         buf = buf.slice(i + n);
         if (type === 2) {
           if (body[1] !== 0) { down(); return; }
           ready = true; subs.forEach((t) => raw(pkt(0x82, [(pid >> 8) & 255, pid++ & 255, ...str(t), 0])));
-          q.splice(0).forEach(raw); waiters.splice(0).forEach((f) => f(true));
+          queuedBytes = 0; q.splice(0).forEach(raw); waiters.splice(0).forEach((f) => f(true));
         } else if (type === 3) {
-          const tl = (body[0] << 8) | body[1], topic = dec.decode(body.subarray(2, 2 + tl));
+          if (body.length < 2) { down(); return; }
+          const tl = (body[0] << 8) | body[1];
+          if (tl > body.length - 2) { down(); return; }
+          const topic = dec.decode(body.subarray(2, 2 + tl));
           let off = 2 + tl; if ((flags >> 1) & 3) off += 2;
-          if (n - off <= 700000) { try { onMsg(topic, JSON.parse(dec.decode(body.subarray(off)))); } catch (e) {} }
+          if (off <= n && n - off <= NET_LIMIT.cipher) { try { onMsg(topic, JSON.parse(dec.decode(body.subarray(off)))); } catch (e) {} }
         }
       }
     }
     function down() {
       if (dead) return; dead = true; ready = false; clearInterval(ping);
+      buf = new Uint8Array(0); q.length = 0; queuedBytes = 0;
       try { ws && ws.close(); } catch (e) {}
       waiters.splice(0).forEach((f) => f(false)); if (onDown) onDown();
     }
     try {
       ws = new WebSocket(url, ['mqtt']); ws.binaryType = 'arraybuffer';
       ws.onopen = () => {
+        if (dead) return;
         const cid = 'mz' + Math.random().toString(36).slice(2, 12);
         raw(pkt(0x10, [...str('MQTT'), 4, 0x02, 0, 40, ...str(cid)]));
         ping = setInterval(() => raw(new Uint8Array([0xc0, 0])), 20000);
       };
-      ws.onmessage = (e) => { const d = new Uint8Array(e.data), n = new Uint8Array(buf.length + d.length); n.set(buf); n.set(d, buf.length); buf = n; parse(); };
+      ws.onmessage = (e) => {
+        if (dead) return;
+        if (!(e.data instanceof ArrayBuffer) || e.data.byteLength + buf.length > NET_LIMIT.packet) { down(); return; }
+        const d = new Uint8Array(e.data), n = new Uint8Array(buf.length + d.length); n.set(buf); n.set(d, buf.length); buf = n; parse();
+      };
       ws.onclose = down; ws.onerror = down;
     } catch (e) { setTimeout(down, 0); }
     return {
-      url, publish, subscribe, get ready() { return ready; }, get dead() { return dead; },
+      url, publish, subscribe, fail: down, get ready() { return ready; }, get dead() { return dead; },
       whenReady(ms) { return ready ? Promise.resolve(true) : dead ? Promise.resolve(false) : new Promise((r) => { waiters.push(r); setTimeout(() => r(ready), ms); }); },
-      close() { dead = true; clearInterval(ping); try { raw(new Uint8Array([0xe0, 0])); ws.close(); } catch (e) {} },
+      close() { if (dead) return; try { raw(new Uint8Array([0xe0, 0])); } catch (e) {} dead = true; ready = false; clearInterval(ping); buf = new Uint8Array(0); q.length = 0; queuedBytes = 0; waiters.splice(0).forEach(f => f(false)); try { ws.close(); } catch (e) {} },
     };
   }
   function relayReachable() {
@@ -883,19 +925,40 @@
   const rTopic = (ctx, k) => RELAY_NS + ctx.t + '/' + k;
 
   // domaćin: sluša na svim posrednicima; igrač preko releja dobiva "virtualnu vezu"
-  let hostRelays = [], relaySweep = null;
+  let hostRelays = [], relaySweep = null, relayGeneration = 0;
   const relayConns = new Map();   // pid → lažna veza
   let hostCtx = null;
+  // Each broker has one cancellable retry timer; a failed broker cannot restart the room.
+  function reconnectingRelay(url, ctx, isCurrent) {
+    const slot = { client: null, timer: null, attempt: 0, stopped: false,
+      close() { this.stopped = true; clearTimeout(this.timer); this.timer = null; if (this.client) this.client.close(); } };
+    function connect() {
+      slot.timer = null;
+      if (slot.stopped || !isCurrent()) return;
+      const c = mqttClient(url, rOn(ctx, (topic, m) => {
+        if (!slot.stopped && isCurrent() && slot.client === c) onRelayHost(c, ctx, m);
+      }), () => {
+        if (slot.stopped || !isCurrent() || slot.client !== c || slot.timer !== null) return;
+        const delay = Math.min(30000, 1000 * Math.pow(2, Math.min(slot.attempt++, 5)));
+        slot.timer = setTimeout(connect, delay);
+      });
+      slot.client = c;
+      c.subscribe(rTopic(ctx, 'h'));
+      c.whenReady(6000).then(ok => {
+        if (slot.stopped || !isCurrent() || slot.client !== c) return;
+        if (ok) slot.attempt = 0;
+        else if (!c.dead) c.fail();
+      });
+    }
+    connect(); return slot;
+  }
   async function startHostRelay(code) {
     if (!RELAY_ENABLED || !HOST_RS) return;
     stopHostRelay();
-    const ctx = await relayCtx(HOST_RS); if (!ctx || !game) return;
+    const generation = relayGeneration;
+    const ctx = await relayCtx(HOST_RS); if (!ctx || !game || generation !== relayGeneration) return;
     hostCtx = ctx;
-    hostRelays = RELAY_URLS.map((u) => {
-      const c = mqttClient(u, rOn(ctx, (topic, m) => onRelayHost(c, ctx, m)), () => {});
-      c.subscribe(rTopic(ctx, 'h'));
-      return c;
-    });
+    hostRelays = RELAY_URLS.map(url => reconnectingRelay(url, ctx, () => generation === relayGeneration && hostCtx === ctx && !!game));
     relaySweep = setInterval(() => {
       const now = Date.now(); let changed = false;
       for (const [pid, conn] of relayConns) if (now - conn.last > 12000) { relayConns.delete(pid); hostConns.delete(conn); conn.open = false; changed = true; }
@@ -903,6 +966,7 @@
     }, 3000);
   }
   function stopHostRelay() {
+    relayGeneration++;
     clearInterval(relaySweep); relaySweep = null;
     hostRelays.forEach((c) => c.close()); hostRelays = []; hostCtx = null;
     for (const conn of relayConns.values()) hostConns.delete(conn);
@@ -913,9 +977,10 @@
     const pid = m.pid.slice(0, 40);
     const key = hostKeys.get(pid);
     if (key && key !== m.sk) return;                                   // lažno predstavljanje
-    if (!key) { if (m.t !== 'hello') return; hostKeys.set(pid, m.sk); }
+    if (!key && m.t !== 'hello') return;
     let conn = relayConns.get(pid);
     if (!conn || conn.client !== client) {
+      if (!conn && (relayConns.size >= 24 || hostConns.size >= 24)) return;
       if (conn) hostConns.delete(conn);
       conn = { relay: true, open: true, client, pid, last: Date.now(),
         send(v) { rPub(client, ctx, rTopic(ctx, 'p/' + pid + '/' + m.sk.slice(0, 16)), v); }, close() { this.open = false; } };
@@ -927,6 +992,15 @@
     onHostData(conn, m);
   }
 
+  const directReady = () => !!(pconn && pconn.open && pconn.admitted);
+  function joinReply(d) {
+    if (!d || d.t !== 'joinRejected' || d.code !== pcode) return false;
+    const reason = d.reason === 'full' ? 'Soba je puna: najviše 6 igrača, uključujući domaćina ako igra.'
+      : d.reason === 'started' ? 'Igra je već počela. Novi igrači mogu ući u sljedeću partiju.'
+      : 'Prijava nije uspjela. Provjeri ime i ponovno pokušaj.';
+    failJoin(reason); return true;
+  }
+
   // igrač: spoji se na prvi posrednik koji radi i šalji preko njega
   let prelay = null, prelayPing = null, prelayHello = null;
   async function startPlayerRelay() {
@@ -935,24 +1009,26 @@
     const code = pcode, ctx = await relayCtx(PLAYER_RS);
     if (!ctx) return;   // kod upisan ručno, bez ključa sobe: samo izravna veza
     for (const u of RELAY_URLS) {
-      if (mode !== 'player' || pcode !== code || (pconn && pconn.open)) return;
+      if (mode !== 'player' || pcode !== code || directReady()) return;
       const c = mqttClient(u, rOn(ctx, (topic, d) => {
         if (prelay !== c) return;
+        if (!directReady() && joinReply(d)) return;
         if (d && d.t === 'who') { rPub(c, ctx, rTopic(ctx, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv }); return; }
-        if (d && d.t === 'pv' && d.code === pcode) { if (pconn && pconn.open) return; const ch = JSON.stringify(d.pv) !== JSON.stringify(PV); PV = d.pv; if (ch && S) phoneRender(); return; }
+        if (d && d.t === 'pv' && d.code === pcode) { if (directReady()) return; const ch = JSON.stringify(d.pv) !== JSON.stringify(PV); PV = d.pv; if (ch && S) phoneRender(); return; }
         if (d && d.code === pcode && Array.isArray(d.P) && d.P.length <= 12 && typeof d.ph === 'string') {
-          if (pconn && pconn.open) return;           // izravna veza ima prednost
+          if (directReady()) return;           // izravna veza ima prednost
+          if (!d.P.some(p => p.id === PID)) return;
           clearTimeout(waitTimer);
           if (netNote) { netNote = ''; if (S) phoneRender(true); }
           applyState(d);
         }
-      }), () => { if (prelay === c) { prelay = null; clearInterval(prelayPing); clearInterval(prelayHello); if (mode === 'player' && !(pconn && pconn.open)) setTimeout(startPlayerRelay, 1500); } });
+      }), () => { if (prelay === c) { prelay = null; clearInterval(prelayPing); clearInterval(prelayHello); if (mode === 'player' && !directReady()) setTimeout(startPlayerRelay, 1500); } });
       c.subscribe(rTopic(ctx, 'all')); c.subscribe(rTopic(ctx, 'p/' + PID + '/' + SK.slice(0, 16)));
       prelay = c;
       if (await c.whenReady(5000)) {
-        if (prelay !== c || mode !== 'player' || pcode !== code || (pconn && pconn.open)) { c.close(); return; }
+        if (prelay !== c || mode !== 'player' || pcode !== code || directReady()) { c.close(); return; }
         const hello = () => rPub(c, ctx, rTopic(ctx, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
-        hello(); if (L.sent) rPub(c, ctx, rTopic(ctx, 'h'), { t: 'in', pid: PID, sk: SK, in: L.sent });
+        hello(); if (L.sent || L.partial) rPub(c, ctx, rTopic(ctx, 'h'), { t: 'in', pid: PID, sk: SK, in: L.sent || L.partial });
         clearInterval(prelayHello); prelayHello = setInterval(() => { if (!S) hello(); else clearInterval(prelayHello); }, 2000);
         clearInterval(prelayPing); prelayPing = setInterval(() => rPub(c, ctx, rTopic(ctx, 'h'), { t: 'ping', pid: PID, sk: SK }), 3000);
         c.ctx = ctx;
@@ -968,7 +1044,7 @@
   }
   // jedno mjesto za slanje domaćinu: izravna veza ako je otvorena, inače relej
   function netSend(m) {
-    if (pconn && pconn.open) { try { pconn.send(m); return; } catch (e) {} }
+    if (directReady()) { try { pconn.send(m); return; } catch (e) {} }
     if (prelay && prelay.ctx) rPub(prelay, prelay.ctx, rTopic(prelay.ctx, 'h'), Object.assign({}, m, { pid: PID, sk: SK }));
   }
 
@@ -985,23 +1061,57 @@
     rl.n -= 1;
     return true;
   }
+  function validGamePayload(value) {
+    let nodes = 0, size = 0;
+    function visit(v, depth) {
+      if (++nodes > 256 || depth > 6) return false;
+      if (v == null || typeof v === 'boolean') return true;
+      if (typeof v === 'number') return Number.isFinite(v);
+      if (typeof v === 'string') { size += v.length; return size <= 4000; }
+      if (typeof v !== 'object' || (Array.isArray(v) && v.length > 256)) return false;
+      for (const key in v) if (Object.prototype.hasOwnProperty.call(v, key)) {
+        size += key.length;
+        if (size > 4000 || key === '__proto__' || key === 'constructor' || key === 'prototype' || !visit(v[key], depth + 1)) return false;
+      }
+      return true;
+    }
+    return visit(value, 0);
+  }
   function onHostData(conn, m) {
     const x = hostConns.get(conn);
     if (!x || !m || typeof m !== 'object' || !game) return;
     if (!allowHostMessage(conn, Date.now())) return;
     if (m.t === 'hello' && typeof m.pid === 'string' && typeof m.name === 'string') {
-      const pid = m.pid.slice(0, 40);
+      if (!m.pid || m.pid.length > 40 || !m.name.trim() || m.name.length > 40 || !Number.isInteger(m.av) || m.av < 0 || m.av >= 10) return;
+      const pid = m.pid;
       if (!okKey(m.sk) || (x.pid && x.pid !== pid)) return;           // bez ključa ili zamjena identiteta na istoj vezi
       const k = hostKeys.get(pid); if (k && k !== m.sk) return;        // netko drugi već je taj igrač
-      hostKeys.set(pid, m.sk); x.pid = pid; x.name = m.name.slice(0, 40); x.av = m.av;
+      x.pid = pid; x.name = m.name.slice(0, 40); x.av = m.av;
     }
     else if (!x.pid) return;
-    else if (m.t === 'av') x.av = m.av;
-    else if (m.t === 'in' && m.in && typeof m.in === 'object') x.in = m.in;
-    else if (m.t === 'pa') { if (x.pid && m.a && typeof m.a === 'object') game.pactAction(x.pid, m.a); return; }   // pakt: domaćin sve provjerava
+    else if (m.t === 'av') { if (!Number.isInteger(m.av) || m.av < 0 || m.av >= AV.length || x.av === m.av) return; x.av = m.av; }
+    else if (m.t === 'in' && m.in && typeof m.in === 'object') {
+      if (!validGamePayload(m.in)) return;
+      const player = game._p(x.pid);
+      if (!player || player.done || m.in.s !== game._G.s) return;
+      if (x.in && JSON.stringify(x.in) === JSON.stringify(m.in)) return;
+      x.in = m.in;
+    }
+    else if (m.t === 'pa') { if (x.pid && m.a && typeof m.a === 'object') if (validGamePayload(m.a)) game.pactAction(x.pid, m.a); return; }   // pakt: domaćin sve provjerava
     else return;
     syncConns();
-    if (m.t === 'hello' && conn.open) { try { conn.send(Object.assign(game.view(), { pv: game.priv(x.pid) })); } catch (e) {} }
+    if (m.t === 'hello' && conn.open) {
+      const view = game.view();
+      if (!view.P.some(p => p.id === x.pid)) {
+        try { conn.send({ t: 'joinRejected', code: view.code, reason: view.ph !== 'lobby' ? 'started' : view.P.filter(p => !p.b).length >= view.max ? 'full' : 'invalid' }); } catch (e) {}
+        // A rejected identity must not keep a seat or receive future game state.
+        hostConns.delete(conn);
+        if (conn.relay) relayConns.delete(x.pid);
+        return;
+      }
+      hostKeys.set(x.pid, m.sk);
+      try { conn.send(Object.assign(view, { pv: game.priv(x.pid) })); } catch (e) {}
+    }
   }
   function publish() {
     if (!game) return;
@@ -1103,12 +1213,21 @@
       }
     }
   }
-  function saveRecovery(journal) {
-    if (!game || (mode !== 'host' && mode !== 'hostp')) return;
+  let recoveryTimer = null, pendingRecovery = null;
+  function flushRecovery() {
+    clearTimeout(recoveryTimer); recoveryTimer = null;
+    const pending = pendingRecovery; pendingRecovery = null;
+    if (!pending || pending.game !== game || !game || (mode !== 'host' && mode !== 'hostp')) return;
     try {
       if (game.view().ph === 'final') { sessionStorage.removeItem('mz_recovery_v1'); return; }
-      sessionStorage.setItem('mz_recovery_v1', JSON.stringify({ savedAt: Date.now(), code: game.view().code, noTv: mode === 'hostp', keys: [...hostKeys], rs: HOST_RS, journal }));
-    } catch (e) { /* Storage may be unavailable or full; the live game continues. */ }
+      sessionStorage.setItem('mz_recovery_v1', JSON.stringify({ savedAt: Date.now(), code: game.view().code, noTv: mode === 'hostp', keys: [...hostKeys], rs: HOST_RS, journal: pending.journal }));
+    } catch (e) { /* Storage failure must not stop the live game. */ }
+  }
+  function saveRecovery(journal) {
+    if (!game || (mode !== 'host' && mode !== 'hostp')) return;
+    pendingRecovery = { game, journal };
+    // Coalesce bursts of peer inputs; never serialize full history per packet.
+    if (!recoveryTimer) recoveryTimer = setTimeout(flushRecovery, 1000);
   }
   function openRoom(code, opts) {
     HOST_RS = opts && opts.recovery && okRS(opts.recovery.rs) ? opts.recovery.rs : RELAY_ENABLED ? newRoomSecret() : null;
@@ -1127,7 +1246,7 @@
       if (opts.noTv) applyState(Object.assign(game.view(), { pv: game.priv(PID) }));
     }
     saveRecovery(game.checkpoint());
-    clearInterval(pubTimer); pubTimer = setInterval(() => { publish(); saveRecovery(game.checkpoint()); }, 1000);
+    clearInterval(pubTimer); pubTimer = setInterval(() => { publish(); }, 1000);
     startHostRelay(code);
   }
 
@@ -1217,9 +1336,13 @@
       retrySoon();
     });
     // ako se izravna veza ne otvori brzo, uključi relej (radi i na mobilnim podacima)
-    clearTimeout(relayTimer); relayTimer = setTimeout(() => { if (mode === 'player' && !(pconn && pconn.open)) startPlayerRelay(); }, 4500);
+    clearTimeout(relayTimer); relayTimer = setTimeout(() => { if (mode === 'player' && !directReady()) startPlayerRelay(); }, 4500);
     clearTimeout(waitTimer);
-    waitTimer = setTimeout(() => { if (!S && mode === 'player') failJoin(joinTries >= 4 ? 'Soba ' + pcode + ' nije pronađena. Provjeri kod i je li soba još otvorena kod domaćina.' : 'Spajanje traje predugo. Provjeri kod sobe i internet pa pokušaj ponovno. Domaćin neka drži igru otvorenu na ekranu.'); }, 20000);
+    waitTimer = setTimeout(() => {
+      if (S || mode !== 'player') return;
+      failJoin(!PLAYER_RS ? 'Spajanje nije uspjelo. Skeniraj QR kod domaćina ili otvori njegovu punu poveznicu: tako je dostupno i rezervno povezivanje za različite mreže.'
+        : 'Spajanje nije uspjelo ni nakon ponovnih pokušaja. Provjeri kod sobe i internet. Domaćin neka drži igru otvorenu na ekranu.');
+    }, 20000);
   }
   function failJoin(msg) {
     clearTimeout(waitTimer); clearTimeout(retryTimer); clearTimeout(relayTimer); stopPlayerRelay();
@@ -1240,12 +1363,27 @@
       if (pconn !== conn) return;
       try {
         conn.send({ t: 'hello', pid: PID, sk: SK, name: pname, av: myAv });
-        if (L.sent) conn.send({ t: 'in', in: L.sent });
+        if (L.sent || L.partial) conn.send({ t: 'in', in: L.sent || L.partial });
       } catch (e) {}
       if (netNote) { netNote = ''; if (S) phoneRender(true); }
-      clearTimeout(relayTimer); stopPlayerRelay();
+      // Keep the fallback until an authenticated game state includes this player.
     });
-    conn.on('data', (d) => { if (pconn === conn && d && d.code === pcode && Array.isArray(d.P)) applyState(d); });
+    conn.on('data', (d) => {
+      if (pconn !== conn || !d || d.code !== pcode) return;
+      if (joinReply(d)) return;
+      if (Array.isArray(d.P) && d.P.some(p => p.id === PID)) {
+        conn.admitted = true; clearTimeout(relayTimer); stopPlayerRelay(); applyState(d);
+      }
+    });
+    const admissionTimer = setTimeout(() => {
+      if (pconn !== conn || conn.admitted || mode !== 'player') return;
+      // An open but silent data channel must not suppress relay or retries.
+      pconn = null; try { conn.close(); } catch (e) {}
+      startPlayerRelay();
+      if (joinTries < 5) { joinTries++; clearTimeout(retryTimer); retryTimer = setTimeout(connectHost, 1500); }
+    }, 6500);
+    conn.on('close', () => clearTimeout(admissionTimer));
+    conn.on('error', () => clearTimeout(admissionTimer));
     const lost = () => { clearTimeout(stuck); if (pconn !== conn || mode !== 'player') return; if (S) retrySoon(); else if (joinTries < 5) { joinTries++; clearTimeout(retryTimer); retryTimer = setTimeout(connectHost, 1500); } };
     conn.on('close', lost);
     conn.on('error', lost);
@@ -1286,7 +1424,7 @@
       e.returnValue = '';
     }
   });
-  window.addEventListener('pagehide', () => { if (game && game.checkpoint) saveRecovery(game.checkpoint()); try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
+  window.addEventListener('pagehide', () => { if (game && game.checkpoint) { saveRecovery(game.checkpoint()); flushRecovery(); } try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
 
   function sendInput(inp) {
     AUDIO.play('confirm');
@@ -1307,7 +1445,7 @@
   }
 
   const meOf = (d) => d && d.P.find((p) => p.id === PID);
-  const PW_SHORT = { led: 'Zaledi protivniku odgovore.', sluz: 'Zalij protivniku ekran sluzi.', grick: 'Protivniku pojede dio slova.', bomba: 'Bomba zaslijepi na 2 sekunde.', dupli: 'Točan odgovor vrijedi duplo.', pola: 'Makni dva netočna odgovora.', stit: 'Zaštiti se od svih napada.', utjeha: 'Netočno: +250. Bez odgovora: +0.', oklada: 'Oboje točno: i njegovi bodovi.' };
+  const PW_SHORT = { led: 'Zaledi protivniku odgovore.', sluz: 'Zalij protivniku ekran sluzi.', grick: 'Protivniku pojede dio slova.', bomba: 'Dodir bombe zaklanja ekran na 2 s.', dupli: 'Točan odgovor vrijedi duplo.', pola: 'Makni dva netočna odgovora.', stit: 'Blokira napade u sljedećem pitanju.', utjeha: 'Netočno: +250. Bez odgovora: +0.', oklada: 'Oboje točno: bonus kao taj igrač.' };
   const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? 'Točan odgovor: dodatni napredak.' : PW_SHORT[k] || POWERS[k].d);
   const stepTxt = (n) => (n ? n + '. stepenice' : 'dna piramide');
   const isLocalHost = () => mode === 'demo' || mode === 'hostp';
@@ -1328,6 +1466,7 @@
     if (connectionWasLost) { connectionWasLost = false; netNote = ''; connectionNotice(); }
     lastStateAt = Date.now();
     if (d && 'pv' in d) PV = d.pv || null;
+    if (mode === 'player' && (!d || !Array.isArray(d.P) || !d.P.some(p => p.id === PID))) return;
     clearTimeout(waitTimer);
     const t = Date.now();
     if (!S || d.s !== L.s) {
@@ -1352,8 +1491,8 @@
   function phoneSig(d) {
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
-      : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
-    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.ul, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0, d.opt || 0, d.pj || 0]);
+      : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto', 'fstart', 'tstart'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
+    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.ul, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0, d.readyIntro || false, d.opt || 0, d.pj || 0]);
   }
 
   // ---------- efekti moći ----------
@@ -1913,7 +2052,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v75</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v76</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
@@ -2973,13 +3112,13 @@
         if (rev) h += '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>';
         break;
       }
-      case 'tstart': h = tvTop(d, 'Svi bodovi ostaju · pobjeđuje najbogatiji') + '<div class="tv-mid" style="justify-content:center"><div class="tv-title">Krčmarovo prijestolje</div>' + throneHtml(d) + '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div></div>'; break;
+      case 'tstart': h = tvTop(d, 'Svi bodovi ostaju · pobjeđuje najbogatiji') + '<div class="tv-mid" style="justify-content:center"><div class="tv-title">Krčmarovo prijestolje</div>' + throneHtml(d) + (d.readyIntro ? howtoReady(d) : '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>') + '</div>'; break;
       case 'trisk': h = tvTop(d, 'Tajni ulog prije zadnjeg pitanja') + riskTv(d); break;
       case 'fstart': {
         h = tvTop(d, 'Bodovi iz kviza određuju početak') +
           '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Tko kreće odakle?</div>' + fsRows(d) +
           '<div class="tie-note">Više bodova = viša početna stepenica. Od 4. stepenice svaka traži 2 točna odgovora. Na vrhu čeka pitanje za krunu.</div>' +
-          '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div></div>' + pyramidHtml(d, false) + '</div>';
+          (d.readyIntro ? howtoReady(d) : '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>') + '</div>' + pyramidHtml(d, false) + '</div>';
         break;
       }
       case 'fq': case 'fr': {
@@ -3256,12 +3395,12 @@
         if (!d.ntv) h = center(h);
         break;
       }
-      case 'tstart': h = head + '<div class="th-intro"><div class="p-title">Krčmarovo prijestolje</div><div class="p-sub">Svi bodovi ostaju. ' + ((d.th && d.th.n) || 5) + ' pitanja, zadnje vrijedi dvostruko. Pobjeđuje najbogatiji.</div>' + throneHtml(d) + '</div>'; break;
+      case 'tstart': h = head + '<div class="th-intro"><div class="p-title">Krčmarovo prijestolje</div><div class="p-sub">Svi bodovi ostaju. ' + ((d.th && d.th.n) || 5) + ' pitanja, zadnje vrijedi dvostruko. Pobjeđuje najbogatiji.</div>' + throneHtml(d) + (d.readyIntro ? howtoReady(d) : '') + '</div>'; break;
       case 'trisk': h = head + riskPhone(d, me); break;
       case 'fstart': {
         const el = Math.max(0, d.dur - d.ms);
         h = head + '<div class="fs" style="--el:' + el + 'ms;--fe:' + fsEnd(d, me) + 'ms"><div class="p-title">Tko kreće odakle?</div>' + fsRows(d) +
-          '<div class="fs-me">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class="p-sub fs-rule">Točni odgovori te penju. Na vrhu čeka pitanje za krunu.</div><div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div></div>';
+          '<div class="fs-me">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class="p-sub fs-rule">Točni odgovori te penju. Na vrhu čeka pitanje za krunu.</div><div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div>' + (d.readyIntro ? howtoReady(d) : '') + '</div>';
         break;
       }
       case 'fq': h = head + finalePhone(d, me); break;
@@ -3465,6 +3604,7 @@
   }
   function sendPartial(inp) {
     inp.s = L.s;
+    L.partial = inp;
     if (isLocalHost()) game.setInput(PID, inp);
     else netSend({ t: 'in', in: inp });
   }
@@ -3490,7 +3630,7 @@
       return '<div class="mg"><div class="mg-t">Više ili manje</div>' + fb + '<div class="mg-big">' + n + '</div><div class="mg-s">' + (n === list.length ? 'Savršen niz! Bonus +200' : 'točnih zaredom') + '</div><div class="waiting">Čekamo ostale…</div></div>';
     }
     const x = list[st.i];
-    return '<div class="mg"><div class="mg-t">Više ili manje</div><div class="mg-s">Niz: <b>' + n + '</b> · ' + (st.i + 1) + '/' + list.length + '</div><div class="mg-q">' + esc(x.q) + '</div>' +
+    return '<div class="mg"><div class="mg-t">Više ili manje</div><div class="mg-s">Točni se spremaju · niz: <b>' + n + '</b> · ' + (st.i + 1) + '/' + list.length + '</div><div class="mg-q">' + esc(x.q) + '</div>' +
       '<div class="mg-two">' + x.a.map((a, k) => '<button class="mg-btn" data-hl="' + k + '">' + esc(a) + '</button>').join('') + '</div>' + fb + '</div>';
   }
   function blitzPhone(d, me) {
@@ -3498,7 +3638,7 @@
     const fb = st.fb ? '<div class="mg-fb ' + (st.last ? 'ok' : 'bad') + ' pop">' + esc(st.fb) + '</div>' : '<div class="mg-fb"></div>';
     const cnt = '<div class="mg-s">✓ <b>' + st.ok + '</b> · ✗ <b>' + st.bad + '</b> · bodovi <b>' + Math.max(0, st.ok * 100 - st.bad * 50) + '</b></div>';
     if (L.sent || me.ok || st.i >= list.length) return '<div class="mg"><div class="mg-t">Munjeviti krug</div>' + cnt + '<div class="waiting">Gotovo! Čekamo kraj kruga…</div></div>';
-    return '<div class="mg"><div class="mg-t">Munjeviti krug</div>' + cnt + '<div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-bz="1">Točno</button><button class="btn ghost" data-bz="0">Netočno</button></div>' + fb + '</div>';
+    return '<div class="mg"><div class="mg-t">Munjeviti krug</div><div class="mg-s">Što više odgovora u 30 sekundi.</div>' + cnt + '<div class="mg-q">' + esc(list[st.i][0]) + '</div><div class="mg-tf"><button class="btn" data-bz="1">Točno</button><button class="btn ghost" data-bz="0">Netočno</button></div>' + fb + '</div>';
   }
   function ulRole() {
     const u = PV && PV.ul;
@@ -3507,7 +3647,7 @@
   }
   function ulPick(d, me) {
     const sent = !!(L.sent || me.ok), sel = L.ulSel || [];
-    return '<div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">Odaberi dva pojma koji najbolje pašu uz temu.</div>' + ulRole() +
+    return '<div class="mg"><div class="mg-t">Uljez u krčmi</div><div class="mg-s">' + (PV && PV.ul && PV.ul.imp ? 'Ne znaš temu. Odaberi dva pojma da te ne otkriju.' : 'Odaberi dva pojma uz temu. Ostali će vidjeti tvoj izbor.') + '</div>' + ulRole() +
       '<div class="ul-grid">' + d.ul.t.map((w, i) => '<button class="ul-t' + (sel.includes(i) ? ' on' : '') + '" data-ul="' + i + '"' + (sent ? ' disabled' : '') + '>' + esc(w) + '</button>').join('') + '</div>' +
       (sent ? '<div class="waiting">Izbor poslan ✔︎</div>' : '<button class="btn" id="ulOk"' + (sel.length === 2 ? '' : ' disabled') + '>Potvrdi izbor (' + sel.length + '/2)</button>') + '</div>';
   }
@@ -3524,7 +3664,7 @@
   }
   function ulVote(d, me) {
     const sent = !!(L.sent || me.ok), mine = (d.ul.pk || {})[PID];
-    return '<div class="mg"><div class="mg-t">Tko je uljez?</div><div class="mg-s">Dodirni osobu koju najviše sumnjičiš.</div>' + ulRole() +
+    return '<div class="mg"><div class="mg-t">Tko je uljez?</div><div class="mg-s">' + (PV && PV.ul && PV.ul.imp ? 'Skreni sumnju na drugoga. Neotkriven: +400.' : 'Tko nije znao temu? Točan glas: +250.') + '</div>' + ulRole() +
       (mine ? '<div class="mg-s">Tvoj izbor: ' + ulChips(d.ul, mine, false) + '</div>' : '') + ulRows(d, true) + (sent ? '<div class="waiting">Glas poslan ✔︎</div>' : '') + '</div>';
   }
   function ulReveal(d) {
@@ -3944,7 +4084,7 @@
 
   function powerPhone(d, me) {
     const offers = me.of || [];
-    const card = (k, cls, tag) => '<' + tag + ' class="pw-card ' + (POWERS[k].atk ? 'atk' : 'buff') + (cls || '') + '" data-bk="pw' + k + '" data-bv="' + (cls || '') + '"' + (/sel/.test(cls || '') ? ' data-ba="pickIn"' : /dim/.test(cls || '') ? ' data-ba="dimIn"' : '') + (tag === 'button' ? ' data-p="' + k + '"' : '') + '><span class="pw-ico">' + ICON[k] + '</span><span><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + '</span></span></' + tag + '>';
+    const card = (k, cls, tag) => '<' + tag + ' class="pw-card ' + (POWERS[k].atk ? 'atk' : 'buff') + (cls || '') + '" data-bk="pw' + k + '" data-bv="' + (cls || '') + '"' + (/sel/.test(cls || '') ? ' data-ba="pickIn"' : /dim/.test(cls || '') ? ' data-ba="dimIn"' : '') + (tag === 'button' ? ' data-p="' + k + '"' : '') + '><span class="pw-ico">' + ICON[k] + '</span><span><b>' + POWERS[k].n + '</b><span>' + pwDesc(k, d) + (tag === 'button' ? '<small class="pw-action">' + (POWERS[k].atk || POWERS[k].tg ? 'Zatim odaberi igrača' : 'Aktiviraj za sebe') + '</small>' : '') + '</span></span></' + tag + '>';
     const headH = (t, sub) => '<i hidden data-bk="pwss" data-bv="' + t + '" data-ba="subIn" data-bt="app"></i><div class="pw-head"><div class="p-title">' + t + '</div><div class="p-sub">' + sub + '</div></div>';
     if (L.sent || me.ok) {
       const k = L.sent && L.sent.p;
@@ -3955,11 +4095,11 @@
     }
     if (L.pw) {
       const others = d.P.filter((p) => p.id !== PID && p.c);
-      return headH(L.pw === 'oklada' ? 'Na koga se kladiš?' : 'Odaberi metu', L.pw === 'oklada' ? 'Ako oboje pogodite, dobivaš i njegove bodove. Ostaje tajna.' : 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
+      return headH(L.pw === 'oklada' ? 'Na koga se kladiš?' : 'Odaberi metu', L.pw === 'oklada' ? 'Oboje točno: dobivaš dodatno njegove bodove. On ih ne gubi.' : 'Na koga bacaš ovu moć?') + '<div class="pw-step">' + card(L.pw, ' sel', 'div') + '</div>' +
         '<div class="targets pw-step">' + others.map((p) => '<button class="target" data-t="' + esc(p.id) + '"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + '</span><span class="sc">' + p.sc + '</span></button>').join('') + '</div>' +
         '<button class="btn ghost" id="pwback">Natrag</button>';
     }
-    return headH('Odaberi moć', 'Napadni protivnika ili pomozi sebi.') + '<div class="pw-cards">' + offers.map((k) => card(k, '', 'button')).join('') + '</div><button class="btn ghost" id="nopw">Preskoči</button>';
+    return headH('Odaberi jednu moć', 'Vrijedi za sljedeće pitanje.') + '<div class="pw-cards">' + offers.map((k) => card(k, '', 'button')).join('') + '</div><button class="btn ghost" id="nopw">Preskoči</button>';
   }
 
   function questionPhone(d, me) {
@@ -3980,7 +4120,7 @@
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +
       qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
-      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔︎' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Izbjegni bombe!' : 'Brže = više bodova!') + '</div>';
+      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔︎' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Ne diraj bombe — dodirni odgovor.' : 'Brže = više bodova!') + '</div>';
   }
 
   function revOpts(d, mine, tv) {
@@ -4034,6 +4174,10 @@
   function progress(n, done) { let s = ''; for (let i = 0; i < n; i++) s += '<i class="' + (i < done ? 'done' : '') + '"></i>'; return '<div class="progress">' + s + '</div>'; }
 
   let lastSort = null;
+  function saveSort(d) {
+    lastSort = { k: d.so.it.join('|'), p: L.sortP.slice() };
+    sendPartial({ r: L.sortP.slice(), p: 1 });
+  }
   function srtCard(d, i, key, place) {
     const fb = key ? (place[i] === key[i] ? ' ok' : ' bad') : '';
     return '<div class="srt-card' + fb + (!key && L.srtSel === i ? ' sel' : '') + '" data-si="' + i + '"' + (key ? '' : ' role="button" tabindex="0"') + '>' + (key ? (fb === ' ok' ? '✓ ' : '✕ ') : '') + esc(d.so.it[i]) + (fb === ' bad' ? ' → ' + esc(key[i] ? d.so.b : d.so.a) : '') + '</div>';
@@ -4049,7 +4193,7 @@
     const n = d.so.it.length;
     if (!L.sortP || L.sortP.length !== n) { L.sortP = new Array(n).fill(-1); L.srtH = []; L.srtLock = false; L.srtCool = 0; }
     const sent = !!(L.sent || me.ok), cur = srtCur(), got = n - L.sortP.filter((x) => x < 0).length;
-    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔︎ Čekamo ostale…' : 'Povuci karticu u košaru ili dodirni košaru.') + '</div></div>';
+    const head = '<div class="srt-head"><div class="p-title">Razvrstaj pojmove</div><div class="p-sub">' + (sent ? 'Poslano ✔︎ Čekamo ostale…' : 'Povuci karticu ili dodirni košaru. Riješeno se sprema.') + '</div></div>';
     if (sent) return '<div class="srt sent">' + head + sortZonesHtml(d, L.sortP, null) + '</div>';
     const cnt = (k) => L.sortP.filter((x) => x === k).length;
     const anim = L.srtBack != null ? ' back-' + (L.srtBack ? 'b' : 'a') : (L.srtIn ? ' enter' : '');
@@ -4061,7 +4205,7 @@
     const prog = '<div class="swp-prog"><span class="swp-pt">' + Math.min(n, got + (cur >= 0 ? 1 : 0)) + '/' + n + ' pojmova</span><span class="swp-bar"><span style="width:' + Math.round(got / n * 100) + '%"></span></span></div>';
     const btns = '<div class="swp-btns"><button class="swp-b undo" id="swpUndo"' + (L.srtH.length ? '' : ' disabled') + '>↶ Poništi zadnje</button></div>';
     const left = n - got;
-    const done = '<button class="btn' + (left ? ' ghost' : '') + '" id="srtDone"' + (left ? ' disabled' : '') + '>' + (left ? 'Razvrstaj još ' + left : 'Gotovo') + '</button>';
+    const done = '<button class="btn' + (left ? ' ghost' : '') + '" id="srtDone"' + (!got ? ' disabled' : '') + '>Pošalji rješenje' + '</button>';
     return '<div class="srt swp">' + head + prog + stage + btns + done + '</div>';
   }
   function bindSort(d, me) {
@@ -4080,6 +4224,7 @@
       if (viaBtn && performance.now() < L.srtCool) return;
       const i = srtCur(); if (i < 0) return;
       L.srtLock = true; L.srtCool = performance.now() + SRT_COOL;
+      L.sortP[i] = z; L.srtH.push(i); L.srtIn = true; saveSort(d);
       const dir = z ? 1 : -1, w = width();
       if (card) {
         card.classList.remove('snap'); card.classList.add('fly');
@@ -4089,7 +4234,6 @@
       AUDIO.play('tap');
       setTimeout(() => {
         if (LL !== L) return;
-        if (L.sortP[i] < 0) { L.sortP[i] = z; L.srtH.push(i); L.srtIn = true; }
         L.srtLock = false;
         phoneRender(true);
       }, SRT_FLY);
@@ -4128,16 +4272,20 @@
     root.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => commit(+b.dataset.go, 0, 0, true); });
     bind('swpUndo', () => {
       if (L.srtLock || L.sent || !L.srtH.length) return;
-      const i = L.srtH.pop(); L.srtBack = L.sortP[i]; L.sortP[i] = -1; L.srtCool = performance.now() + 200;
+      const i = L.srtH.pop(); L.srtBack = L.sortP[i]; L.sortP[i] = -1; L.srtCool = performance.now() + 200; saveSort(d);
       phoneRender(true);
     });
     bind('srtDone', () => {
-      if (L.sent || L.srtLock || L.sortP.some((x) => x < 0)) return;
+      if (L.sent || L.srtLock || !L.sortP.some((x) => x >= 0)) return;
       lastSort = { k: d.so.it.join('|'), p: L.sortP.slice() };
       sendInput({ r: L.sortP.slice() });
     });
   }
   let lastLink = null;
+  function saveLink(d) {
+    lastLink = { k: d.li.L.join('|') + '#' + d.li.R.join('|'), p: L.linkP.slice() };
+    sendPartial({ r: L.linkP.slice(), p: 1 });
+  }
   const LNK_COL = ['#e0563c', '#3f93dc', '#e8b532', '#45b35e', '#a866d8', '#e47ab4', '#3fc4c4', '#e08a3c'];
   function lnkBoard(d, pairs, key, sel) {
     const n = d.li.L.length, rows = Math.max(n, d.li.R.length), ofR = {};
@@ -4162,8 +4310,8 @@
     const n = d.li.L.length;
     if (!L.linkP || L.linkP.length !== n) L.linkP = new Array(n).fill(-1);
     const sent = !!(L.sent || me.ok), left = L.linkP.filter((x) => x < 0).length;
-    const head = '<div class="srt-head"><div class="p-title">Spoji parove</div><div class="p-sub">' + (sent ? 'Poslano ✔︎ Čekamo ostale…' : 'Povuci konop od pojma do njegova para (ili dodirni oba).') + '</div>' + (d.li.t ? '<div class="p-sub">' + esc(d.li.t) + '</div>' : '') + '</div>';
-    const done = sent ? '' : '<button class="btn ghost" id="lnkDone"' + (left ? ' disabled' : '') + '>' + (left ? 'Spoji još ' + left : 'Gotovo') + '</button>';
+    const head = '<div class="srt-head"><div class="p-title">Spoji parove</div><div class="p-sub">' + (sent ? 'Poslano ✔︎ Čekamo ostale…' : 'Povuci konop ili dodirni oba pojma. Parovi se spremaju.') + '</div>' + (d.li.t ? '<div class="p-sub">' + esc(d.li.t) + '</div>' : '') + '</div>';
+    const done = sent ? '' : '<button class="btn ghost" id="lnkDone"' + (left === n ? ' disabled' : '') + '>Pošalji rješenje' + '</button>';
     return '<div class="lnk' + (sent ? ' sent' : '') + '">' + head + lnkHtml(d, L.linkP, null, sent) + done + '</div>';
   }
   // SPOJI PAROVE 2: konop se povlači prstom od pojma do para (dodir-dodir i dalje radi); svaki par ima svoju boju
@@ -4197,16 +4345,16 @@
     if (!root || root.classList.contains('sent')) return;
     const board = root.querySelector('.lnk-board'); if (!board) return;
     const re = () => { L.lnkLive = null; phoneRender(true); };
-    const pairWith = (i, j) => { const owner = L.linkP.indexOf(j); if (owner >= 0) L.linkP[owner] = -1; L.linkP[i] = j; L.lnkSel = null; L.lnkSelR = null; AUDIO.play('pop'); HAPTIC.tap(); re(); };
+    const pairWith = (i, j) => { const owner = L.linkP.indexOf(j); if (owner >= 0) L.linkP[owner] = -1; L.linkP[i] = j; L.lnkSel = null; L.lnkSelR = null; saveLink(d); AUDIO.play('pop'); HAPTIC.tap(); re(); };
     const tapL = (i) => {
       if (L.lnkSelR != null) return pairWith(i, L.lnkSelR);
-      if (L.linkP[i] >= 0) { L.linkP[i] = -1; L.lnkSel = i; AUDIO.play('tap'); return re(); }
+      if (L.linkP[i] >= 0) { L.linkP[i] = -1; L.lnkSel = i; saveLink(d); AUDIO.play('tap'); return re(); }
       L.lnkSel = L.lnkSel === i ? null : i; AUDIO.play('tap'); re();
     };
     const tapR = (j) => {
       if (L.lnkSel != null) return pairWith(L.lnkSel, j);
       const owner = L.linkP.indexOf(j);
-      if (owner >= 0) { L.linkP[owner] = -1; L.lnkSelR = j; AUDIO.play('tap'); return re(); }
+      if (owner >= 0) { L.linkP[owner] = -1; L.lnkSelR = j; saveLink(d); AUDIO.play('tap'); return re(); }
       L.lnkSelR = L.lnkSelR === j ? null : j; AUDIO.play('tap'); re();
     };
     if (L.lnkSelR != null) { const c = board.querySelector('[data-lr="' + L.lnkSelR + '"]'); if (c) c.classList.add('sel'); }
@@ -4246,7 +4394,7 @@
     board.onpointercancel = (e) => end(e, true);
     root.querySelectorAll('.lnk-card[tabindex]').forEach((c) => { c.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.dataset.ll !== undefined ? tapL(+c.dataset.ll) : tapR(+c.dataset.lr); } }; });
     bind('lnkDone', () => {
-      if (L.linkP.some((x) => x < 0)) return;
+      if (L.sent || !L.linkP.some((x) => x >= 0)) return;
       lastLink = { k: d.li.L.join('|') + '#' + d.li.R.join('|'), p: L.linkP.slice() };
       sendInput({ r: L.linkP.slice() });
     });
@@ -4264,7 +4412,7 @@
       (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!<small>Točan odgovor osvaja krunu</small>' : '👑 Pitanje za krunu: ' + esc(d.P.filter((p) => p.top).map((p) => p.n).join(' i ')) + '<small>Ako pogriješi, utrka se nastavlja</small>') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
       phoneQ(d, '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>') + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
-      (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class="waiting">💣 Izbjegni bombe!</div>' : '') +
+      (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class="waiting">💣 Ne diraj bombe — dodirni odgovor.</div>' : '') +
       (answered ? '<div class="waiting">Zaprimljeno ✔︎</div>' : '');
   }
 
@@ -4300,16 +4448,17 @@
     $app.querySelectorAll('[data-bet]').forEach((b) => { b.onclick = () => { if (!L.sent) sendInput({ b: +b.dataset.bet }); }; });
     $app.querySelectorAll('[data-or]').forEach((b) => { b.onclick = () => {
       if (L.sent) return; const i = +b.dataset.or; L.ord = (L.ord || []).filter((x) => x !== i).concat(i);
-      if (L.ord.length === 4) sendInput({ r: [0, 1, 2, 3].map((k) => L.ord.indexOf(k)) }); else phoneRender(true);
+      const r = [0, 1, 2, 3].map((k) => L.ord.indexOf(k));
+      if (L.ord.length === 4) sendInput({ r }); else { sendPartial({ r, p: 1 }); phoneRender(true); }
     }; });
-    bind('ordUndo', () => { if (L.ord && L.ord.length) { L.ord.pop(); phoneRender(true); } });
+    bind('ordUndo', () => { if (L.ord && L.ord.length) { L.ord.pop(); sendPartial({ r: [0, 1, 2, 3].map((k) => L.ord.indexOf(k)), p: 1 }); phoneRender(true); } });
     $app.querySelectorAll('[data-hl]').forEach((b) => { b.onclick = () => {
       const st = L.hl, list = d.hl && d.hl.list; if (!st || !list || L.sent || st.i >= list.length) return;
       const k = +b.dataset.hl, x = list[st.i], ok = k === x.w;
       st.r.push(k); st.ok = ok ? 1 : 0; st.i++;
       st.fb = (ok ? '✓ ' : '✗ ') + x.a[x.w] + (x.v ? ' (' + x.v[x.w] + ' : ' + x.v[1 - x.w] + ')' : '');
       AUDIO.play(ok ? 'score' : 'wrong'); if (!ok) HAPTIC.error();
-      if (!ok || st.i >= list.length) sendInput({ r: st.r.slice() }); else phoneRender(true);
+      if (!ok || st.i >= list.length) sendInput({ r: st.r.slice() }); else { sendPartial({ r: st.r.slice(), p: 1 }); phoneRender(true); }
     }; });
     $app.querySelectorAll('[data-bz]').forEach((b) => { b.onclick = () => {
       const st = L.bz, list = d.bz && d.bz.list; if (!st || !list || L.sent || st.i >= list.length) return;
