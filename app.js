@@ -245,12 +245,41 @@
     };
   })();
   const AUDIO = SFX;
-  // ---------- vibracija: jedno mjesto za sve obrasce; tiho ne radi ništa gdje vibracija nije podržana ----------
-  const HAPTIC = (() => {
-    function v(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} }
+  // ---------- optional Android message port: fixed haptics and lifecycle events only ----------
+  // No JavaScript interface, arbitrary native calls, tokens or game data cross this port.
+  const ANDROID = (() => {
+    const kinds = new Set(['tap', 'confirm', 'error', 'impact', 'bomb', 'step', 'victory']);
+    let port = null;
+    window.addEventListener('message', (event) => {
+      if (port || event.data !== 'trivia-native-connect' || (event.source !== null && event.source !== window) ||
+          (event.origin !== '' && event.origin !== 'null' && event.origin !== location.origin) || !event.ports || event.ports.length !== 1) return;
+      const candidate = event.ports[0];
+      if (!candidate || typeof candidate.postMessage !== 'function') return;
+      port = candidate;
+      port.onmessage = (message) => {
+        if (message.data === 'resume') checkConnection();
+        else if (message.data === 'pause' && (mode === 'host' || mode === 'hostp') && game && game.checkpoint) {
+          saveRecovery(game.checkpoint()); flushRecovery();
+        }
+      };
+      if (port.start) port.start();
+    });
     return {
-      tap: () => v(12), confirm: () => v(20), error: () => v([25, 60, 25]), impact: () => v(50),
-      bomb: () => v([80, 40, 120]), step: () => v(15), victory: () => v([30, 70, 30, 70, 110]),
+      haptic(kind) {
+        if (!port || !kinds.has(kind)) return false;
+        try { port.postMessage(kind); return true; } catch (e) { return false; }
+      },
+    };
+  })();
+  // ---------- vibracija: browser fallback remains available without Android ----------
+  const HAPTIC = (() => {
+    function v(kind, pattern) {
+      if (ANDROID.haptic(kind)) return;
+      try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) {}
+    }
+    return {
+      tap: () => v('tap', 12), confirm: () => v('confirm', 20), error: () => v('error', [25, 60, 25]), impact: () => v('impact', 50),
+      bomb: () => v('bomb', [80, 40, 120]), step: () => v('step', 15), victory: () => v('victory', [30, 70, 30, 70, 110]),
     };
   })();
   // ---------- glazba u pozadini (sintetizirana petlja, A-mol: Am F C G) ----------
@@ -2052,7 +2081,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v76</span></div>' +
+        '<div class="home-foot">' + status + '<span class="home-ver">v77</span></div>' +
       '</div>';
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
