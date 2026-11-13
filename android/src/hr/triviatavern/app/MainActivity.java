@@ -43,6 +43,8 @@ public class MainActivity extends Activity {
     private boolean resumed;
     private long lastHaptic;
     private AlertDialog exitDialog;
+    private AlertDialog invitationDialog;
+    private String pendingInvitation;
     private long lastShare;
     private boolean sharing;
 
@@ -105,6 +107,12 @@ public class MainActivity extends Activity {
                 closePort();
             }
             @Override public void onPageFinished(WebView view, String url) {
+                if ("about:blank".equals(url) && pendingInvitation != null) {
+                    String invitation = pendingInvitation;
+                    pendingInvitation = null;
+                    web.loadUrl(invitation);
+                    return;
+                }
                 if (!local(Uri.parse(url)) || nativePort != null) return;
                 WebMessagePort[] channel = web.createWebMessageChannel();
                 nativePort = channel[0];
@@ -123,7 +131,31 @@ public class MainActivity extends Activity {
             getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
                 android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT, this::confirmExit);
         }
-        web.loadUrl(HOME);
+        String invitation = incomingInvitation(getIntent());
+        web.loadUrl(invitation == null ? HOME : invitation);
+    }
+    private String incomingInvitation(Intent intent) {
+        if (intent == null || !Intent.ACTION_VIEW.equals(intent.getAction())) return null;
+        return NativePayloads.incomingInvitation(intent.getDataString());
+    }
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        final String invitation = incomingInvitation(intent);
+        if (invitation == null || web == null || isFinishing()) return;
+        // The page keeps the invitation hash until leaving that room. Do not reload a duplicate.
+        if (invitation.equals(NativePayloads.incomingInvitation(web.getUrl()))) return;
+        if (invitationDialog != null && invitationDialog.isShowing()) return;
+        invitationDialog = new AlertDialog.Builder(this)
+            .setTitle("Otvori pozivnicu")
+            .setMessage("Otvoriti pozivnicu za sobu " + Uri.parse(invitation).getFragment().substring(0, 4)
+                + "? Ako si već u igri, napustit ćeš je.")
+            .setPositiveButton("Otvori", (d, w) -> {
+                setIntent(new Intent(Intent.ACTION_VIEW, Uri.parse(invitation)));
+                // A hash-only navigation would not rerun the game's startup/join parser.
+                pendingInvitation = invitation;
+                web.loadUrl("about:blank");
+            })
+            .setNegativeButton("Ostani ovdje", null).show();
     }
     private WebResourceResponse missing() {
         return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found",
@@ -131,6 +163,15 @@ public class MainActivity extends Activity {
     }
     private void handleMessage(String message) {
         if (message == null || message.length() > 40000) return;
+        if ("haptic-level:off".equals(message) || "haptic-level:mild".equals(message) || "haptic-level:normal".equals(message)) {
+            String level = message.substring("haptic-level:".length());
+            getSharedPreferences("device", MODE_PRIVATE).edit().putString("haptic-level", level).apply();
+            if ("off".equals(level)) {
+                Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                if (vibrator != null) vibrator.cancel();
+            }
+            return;
+        }
         if (!message.startsWith("{")) { haptic(message); return; }
         if (!NativePayloads.boundedJson(message, 40000, 3) || !hasWindowFocus()) return;
         String reply = "share-failed";
@@ -161,15 +202,19 @@ public class MainActivity extends Activity {
     }
     private void haptic(String kind) {
         if (kind == null || kind.length() > 16 || SystemClock.uptimeMillis() - lastHaptic < 60) return;
+        String level = getSharedPreferences("device", MODE_PRIVATE).getString("haptic-level", "mild");
+        if ("off".equals(level)) return;
+        boolean mild = !"normal".equals(level);
         VibrationEffect effect;
         switch (kind) {
-            case "tap": effect = VibrationEffect.createOneShot(20, 200); break;
-            case "step": effect = VibrationEffect.createOneShot(15, 180); break;
-            case "confirm": effect = VibrationEffect.createOneShot(30, 220); break;
-            case "error": effect = VibrationEffect.createWaveform(new long[]{0, 24, 45, 24}, new int[]{0, 210, 0, 210}, -1); break;
-            case "bomb": effect = VibrationEffect.createWaveform(new long[]{0, 35, 35, 55}, new int[]{0, 255, 0, 230}, -1); break;
-            case "impact": effect = VibrationEffect.createOneShot(40, 230); break;
-            case "victory": effect = VibrationEffect.createWaveform(new long[]{0, 20, 45, 20, 45, 45}, new int[]{0, 200, 0, 200, 0, 230}, -1); break;
+            // Frequent interactions should feel like a light touch, not a game event.
+            case "tap": effect = VibrationEffect.createOneShot(mild ? 12 : 20, mild ? 85 : 200); break;
+            case "step": effect = VibrationEffect.createOneShot(mild ? 10 : 15, mild ? 65 : 180); break;
+            case "confirm": effect = VibrationEffect.createOneShot(mild ? 18 : 30, mild ? 120 : 220); break;
+            case "error": effect = VibrationEffect.createWaveform(new long[]{0, 24, 45, 24}, new int[]{0, mild ? 110 : 210, 0, mild ? 110 : 210}, -1); break;
+            case "bomb": effect = VibrationEffect.createWaveform(new long[]{0, 35, 35, 55}, new int[]{0, mild ? 140 : 255, 0, mild ? 125 : 230}, -1); break;
+            case "impact": effect = VibrationEffect.createOneShot(mild ? 25 : 40, mild ? 125 : 230); break;
+            case "victory": effect = VibrationEffect.createWaveform(new long[]{0, 20, 45, 20, 45, 45}, new int[]{0, mild ? 105 : 200, 0, mild ? 105 : 200, 0, mild ? 125 : 230}, -1); break;
             default: return;
         }
         lastHaptic = SystemClock.uptimeMillis();
@@ -227,6 +272,7 @@ public class MainActivity extends Activity {
         if (nativePort != null) { nativePort.close(); nativePort = null; }
     }
     @Override protected void onDestroy() {
+        if (invitationDialog != null) invitationDialog.dismiss();
         closePort(); web.destroy(); super.onDestroy();
     }
 }

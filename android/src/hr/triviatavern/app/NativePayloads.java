@@ -45,6 +45,15 @@ public final class NativePayloads {
                 && u.getRawFragment().matches("[A-Z]{4}(?:-[A-Za-z0-9_-]{22})?");
         } catch (Exception e) { return false; }
     }
+    /** Incoming Android links require the full relay secret; never load an arbitrary Intent URL. */
+    public static String incomingInvitation(String value) {
+        if (!invitation(value)) return null;
+        try {
+            String fragment = new URI(value).getRawFragment();
+            if (!fragment.matches("[A-Z]{4}-[A-Za-z0-9_-]{22}")) return null;
+            return "https://mateok51.github.io/mozgalica/#" + fragment;
+        } catch (Exception e) { return null; }
+    }
     private static void keys(JSONObject obj, String... permitted) throws JSONException {
         Set<String> allowed = new HashSet<>(Arrays.asList(permitted));
         Iterator<String> it = obj.keys();
@@ -56,7 +65,7 @@ public final class NativePayloads {
             JSONObject report = new JSONObject(text);
             keys(report, "format", "webVersion", "environment", "online", "events");
             if (!(report.get("format") instanceof Number) || report.getDouble("format") != 1
-                || !"79".equals(report.get("webVersion"))
+                || !"82".equals(report.get("webVersion"))
                 || !(report.get("online") instanceof Boolean)
                 || !("web".equals(report.get("environment")) || "android".equals(report.get("environment")))) return null;
             JSONArray events = report.getJSONArray("events"), clean = new JSONArray();
@@ -79,7 +88,7 @@ public final class NativePayloads {
                 }
                 clean.put(row);
             }
-            return new JSONObject().put("format", 1).put("webVersion", "79")
+            return new JSONObject().put("format", 1).put("webVersion", "82")
                 .put("environment", report.get("environment")).put("online", report.get("online"))
                 .put("events", clean).toString(2);
         } catch (Exception e) { return null; }

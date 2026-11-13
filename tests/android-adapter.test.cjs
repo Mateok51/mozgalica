@@ -8,17 +8,19 @@ const start = source.indexOf('  const ANDROID =');
 const end = source.indexOf('  // ---------- glazba u pozadini', start);
 assert(start >= 0 && end > start, 'native adapter section must exist');
 
-function fixture() {
+function fixture(preference = 'normal') {
   const listeners = new Map(), vibrations = [], posted = [], calls = { resume: 0, checkpoint: 0, save: 0, flush: 0, reload: 0 };
+  const configs = [], saved = new Map(preference === null ? [] : [['mz_haptic_level', preference]]);
   const window = { addEventListener: (type, fn) => listeners.set(type, fn) };
   const context = vm.createContext({ window, location: { origin: 'https://game.test', reload: () => calls.reload++ },
     navigator: { vibrate: value => vibrations.push(JSON.parse(JSON.stringify(value))) },
+    store: { get: key => saved.get(key), set: (key, value) => saved.set(key, value) },
     diagnostic: () => {}, toolNotice: () => {},
     checkConnection: () => calls.resume++, saveRecovery: () => calls.save++, flushRecovery: () => calls.flush++,
     game: { checkpoint: () => { calls.checkpoint++; return { events: [] }; } }, mode: 'hostp' });
   vm.runInContext(source.slice(start, end) + ';this.haptic=HAPTIC;this.android=ANDROID;', context);
-  const port = { postMessage: value => posted.push(value), start() { this.started = true; } };
-  return { context, window, calls, vibrations, posted, port,
+  const port = { postMessage: value => { if (typeof value === 'string' && value.startsWith('haptic-level:')) configs.push(value); else posted.push(value); }, start() { this.started = true; } };
+  return { context, window, calls, vibrations, posted, configs, saved, port,
     connect(overrides = {}) { listeners.get('message')({ data: 'trivia-native-connect', source: null, origin: '', ports: [port], ...overrides }); },
     lifecycle(data) { port.onmessage({ data }); } };
 }
@@ -75,4 +77,23 @@ test('a closed native port falls back safely and missing browser vibration is ha
   assert.equal(f.context.android.command('export-diagnostics','x'.repeat(32769)),false);
   assert.equal(f.context.android.command('export-diagnostics',{}),false);
   assert.equal(f.context.android.command('open-file','/private/file'),false);
+});
+
+
+test('fresh installs default to mild and sync that setting on native handshake', () => {
+  const f = fixture(null); assert.equal(f.context.haptic.level, 'mild');
+  f.context.haptic.tap(); assert.deepEqual(f.vibrations, [8]);
+  f.connect(); assert.deepEqual(f.configs, ['haptic-level:mild']);
+});
+test('vibration setting persists, validates input, and off suppresses all effects', () => {
+  const f = fixture(); f.connect();
+  assert.equal(f.context.haptic.setLevel('off'), true);
+  assert.equal(f.saved.get('mz_haptic_level'), 'off');
+  for (const kind of Object.keys(patterns)) f.context.haptic[kind]();
+  assert.deepEqual(f.posted, []); assert.deepEqual(f.vibrations, [0]);
+  assert.equal(f.context.haptic.setLevel('very-strong'), false);
+  assert.equal(f.context.haptic.level, 'off');
+  f.context.haptic.setLevel('mild'); f.context.haptic.confirm();
+  assert.deepEqual(f.configs, ['haptic-level:normal', 'haptic-level:off', 'haptic-level:mild']);
+  assert.deepEqual(f.posted, ['confirm']);
 });

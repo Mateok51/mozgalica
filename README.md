@@ -3,7 +3,14 @@
 Party kviz za 2–6 igrača. TV prikazuje igru, a svi igraju s mobitela: biraju lika, glasaju za kategoriju,
 šalju moći protivnicima (led, sluz, grickalice, bomba), rješavaju izazove i utrkuju se do vrha piramide.
 
-**Igraj:** https://mateok51.github.io/mozgalica/
+**Postojeća verzija:** https://mateok51.github.io/mozgalica/
+
+**Nova Cloudflare verzija:** pripremljena za objavu, još nema potvrđenu javnu adresu.
+`npm run build` priprema stranicu i serversku igru za Workers + SQLite Durable Objects.
+U tom načinu partiju vodi server, a ne domaćinov uređaj. Koraci za besplatni račun,
+GitHub povezivanje i prvu objavu: [Cloudflare postavljanje](docs/CLOUDFLARE.md).
+Izvorni `runtime-config.js` zadržava stari način rada; cloud build uključuje novi.
+Postojeći APK treba zasebno ažurirati nakon dobivanja stvarne Cloudflare adrese.
 
 ## Kako igrati
 1. Na TV-u (ili računalu) u pregledniku otvori adresu i odaberi **Otvori igru na TV-u**.
@@ -18,6 +25,10 @@ Kad igru vodi TV, pitanje se prikazuje samo na TV-u, a na mobitelima su ponuđen
 Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj kao aplikaciju* na početnom ekranu igre).
 
 ## Tehnički
+
+Sljedeće opisuje postojeći GitHub/P2P način. Cloudflare način koristi HTTP/WebSocket
+vezu prema vlastitom Workeru i serversko spremanje sobe, bez PeerJS/MQTT posrednika.
+
 - Statička stranica bez poslužitelja: `index.html` (kostur), `styles.css`, `app.js` (sučelje i povezivanje), `engine.js` (pravila) i `sw-register.js`. Nema ugrađenih skripti, pa sigurnosna politika dopušta samo `script-src 'self'`. Fontovi (Cinzel i Nunito, SIL OFL) su u mapi `fonts/`, pa stranica ne šalje zahtjeve prema Google Fontsu. Igru vodi uređaj domaćina.
 - Uređaji se spajaju izravno (WebRTC) preko [PeerJS](https://peerjs.com) (lokalna kopija u `vendor/`) i njegovog besplatnog javnog posrednika.
 - Rezervni put kad izravni WebRTC ne uspije: javni MQTT posrednici, ali sve poruke su šifrirane (AES-GCM) tajnim ključem sobe. Ključ putuje samo u QR kodu i poveznici (`#KOD-ključ`); posrednik vidi samo šifrirani sadržaj i temu izvedenu iz ključa. Igrači koji kod upišu ručno nemaju ključ i koriste samo izravnu vezu. Detalji: [povezivanje](docs/povezivanje.md).

@@ -38,3 +38,29 @@ jobs:
       - run: npm install --no-save --no-package-lock playwright@1.63.0
       - run: npx playwright install --with-deps webkit
       - run: BROWSER=webkit node tests/browser-phones.cjs
+
+  cloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:server
+      - run: npx wrangler deploy --dry-run
+        env:
+          WRANGLER_SEND_METRICS: 'false'
+      - run: npm install --no-save --no-package-lock playwright@1.63.0
+      - run: npx playwright install --with-deps chromium
+      - name: Check real server with six browser players
+        run: |
+          npx wrangler dev --local --port 8787 --ip 127.0.0.1 > /tmp/trivia-runtime.log 2>&1 &
+          trivia_runtime_pid=$!
+          trap 'kill "$trivia_runtime_pid" 2>/dev/null || true' EXIT
+          node -e 'async function wait(){for(let i=0;i<60;i++){try{if((await fetch("http://127.0.0.1:8787/api/health")).ok)return;}catch{}await new Promise(r=>setTimeout(r,1000));}throw Error("Runtime did not start");}wait().catch(e=>{console.error(e);process.exit(1)});'
+          npm run test:cloud-browser
+        env:
+          WRANGLER_SEND_METRICS: 'false'

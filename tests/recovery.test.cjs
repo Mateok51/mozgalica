@@ -52,3 +52,16 @@ test('invalid and out of order journals are rejected', () => {
  assert.throws(()=>ctx.recover({code:'TEST'},{version:1,seed:1,created:10,time:20,events:[{at:21,method:'start',args:[]}]}));
  assert.throws(()=>ctx.recover({code:'TEST'},{version:1,seed:1,created:10,time:20,events:[{at:12,method:'__proto__',args:[]}]}));
 });
+
+test('server journal rejects invalid guest inputs without growth and still restores valid state', () => {
+ const game = ctx.recover({code:'SAFE',discardRejected:true}); let restored;
+ try {
+  game.addPlayer('one','Ana',0,false,true);
+  const count=game.checkpoint().events.length;
+  for(let i=0;i<2000;i++) {assert.equal(game.setInput('one',{s:game.view().s,c:-1,garbage:String(i)}),false);assert.equal(game.pactAction('one',{k:'invalid'+i}),false);}
+  assert.equal(game.checkpoint().events.length,count);
+  game.setBots(2);game.start();
+  restored=ctx.recover({code:'SAFE',discardRejected:true},JSON.parse(JSON.stringify(game.checkpoint())));
+  const a=JSON.parse(JSON.stringify(game.view())),b=JSON.parse(JSON.stringify(restored.view()));delete a.ms;delete b.ms;assert.deepEqual(b,a);
+ } finally {game.stop();if(restored)restored.stop();}
+});

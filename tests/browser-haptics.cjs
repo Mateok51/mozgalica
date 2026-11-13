@@ -12,7 +12,7 @@ html.split('</head>')[0].match(/sha256-[A-Za-z0-9+/=]+/g).forEach((h,i)=>html=ht
  await page.addInitScript(()=>localStorage.setItem('mz_pid','one'));
  await page.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname!=='game.test')return r.abort();const f=path.join(root,u.pathname.slice(1));return u.pathname==='/'?r.fulfill({body:html,contentType:'text/html'}):fs.existsSync(f)?r.fulfill({body:fs.readFileSync(f)}):r.abort();});
  await page.goto('http://game.test/');
- await page.evaluate(()=>{window.nativeEvents=[];const c=new MessageChannel();window.testPort=c.port2;c.port2.onmessage=e=>nativeEvents.push(e.data);window.postMessage('trivia-native-connect',location.origin,[c.port1]);});
+ await page.evaluate(()=>{window.nativeEvents=[];const c=new MessageChannel();window.testPort=c.port2;c.port2.onmessage=e=>{if(!String(e.data).startsWith('haptic-level:'))nativeEvents.push(e.data);};window.postMessage('trivia-native-connect',location.origin,[c.port1]);});
  await page.waitForTimeout(50);await page.locator('#join').click();await page.waitForFunction(()=>nativeEvents.length===1);assert.deepEqual(await page.evaluate(()=>nativeEvents),['tap']);
  await page.locator('#back').click();await page.waitForFunction(()=>nativeEvents.length===2);assert.deepEqual(await page.evaluate(()=>nativeEvents),['tap','tap']);
  const box=vm.createContext({setTimeout,clearTimeout});vm.runInContext(require('./engine-source.cjs')+';this.g=createGame({code:"TEST",noTv:true});',box);box.g.addPlayer('one','Player',0,false,true);box.g.addPlayer('two','Other',1,false);

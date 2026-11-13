@@ -3007,8 +3007,14 @@ function createRecoverableGame(options, saved) {
     // Keep refresh in the replay whitelist so older journals remain valid.
     if (method === 'refresh' && engine._G.offers.length === 0 && engine._G.rc.offers.length === 0) return engine.refresh();
     const copy = JSON.parse(JSON.stringify(args));
-    events.push({ method, args: copy, at: time() });
-    const result = engine[method](...args); checkpoint(); return result;
+    const event = { method, args: copy, at: time() };
+    events.push(event);
+    const result = engine[method](...args);
+    if (options.discardRejected && (method === 'setInput' || method === 'pactAction') && result === false) {
+      const index = events.indexOf(event); if (index >= 0) events.splice(index, 1);
+      return result;
+    }
+    checkpoint(); return result;
   };
   api.checkpoint = () => ({ version: 1, seed, created, time: time(), events: JSON.parse(JSON.stringify(events)) });
   return api;

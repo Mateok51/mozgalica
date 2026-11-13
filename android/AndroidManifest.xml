@@ -1,8 +1,15 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="hr.triviatavern.app" android:versionCode="79" android:versionName="79.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="hr.triviatavern.app" android:versionCode="82" android:versionName="82.0">
 <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/>
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.VIBRATE"/>
 <application android:label="Trivia Tavern" android:icon="@drawable/icon" android:theme="@android:style/Theme.Material.NoActionBar" android:allowBackup="false" android:usesCleartextTraffic="false">
-<activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="adjustResize">
+<activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="adjustResize">
 <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+<intent-filter android:autoVerify="false">
+<action android:name="android.intent.action.VIEW"/>
+<category android:name="android.intent.category.DEFAULT"/>
+<category android:name="android.intent.category.BROWSABLE"/>
+<data android:scheme="https" android:host="mateok51.github.io" android:path="/mozgalica/"/>
+<data android:scheme="https" android:host="mateok51.github.io" android:path="/mozgalica/index.html"/>
+</intent-filter>
 </activity></application></manifest>

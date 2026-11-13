@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const app=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
 const validation=app.slice(app.indexOf('  function validGamePayload('),app.indexOf('  function onHostData('));
-const recovery=app.slice(app.indexOf('  let recoveryTimer ='),app.indexOf('  function openRoom('));
+const recovery=app.slice(app.indexOf('  const NATIVE_RECOVERY_KEY ='),app.indexOf('  function openRoom('));
 assert(validation.includes('function validGamePayload'));assert(recovery.includes('function flushRecovery'));
 
 function harness(){

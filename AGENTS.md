@@ -4,6 +4,8 @@ Ove smjernice vrijede za cijeli projekt. Prije izmjena provjeri aktualno stanje 
 
 ## Igračko iskustvo i prikaz
 
+- Korisnik je odustao od 3D likova. Zadrži izvorne 2D likove i vizualni identitet; ne generiraj nove ilustracije bez novog zahtjeva. Nemoj rastezati ili deformirati cijele slike radi simulacije disanja ili animacije. Koristi postojeće naslikane poze i zasebne efekte oko lika.
+
 - Cijela stranica tijekom igre mora stati na ekran i ne smije zahtijevati skrolanje. Uzimaj u obzir male mobitele, sigurne rubove ekrana i kontrole zvuka.
 - Skrolanje unutar pojedinog elementa dopušteno je kada bi sadržaj inače zauzeo previše prostora (primjerice dug popis igrača). Ostale važne kontrole trebaju ostati vidljive i dostupne.
 - Ponavljajući jednaki elementi trebaju zadržati jednaku vidljivu veličinu između ekrana. Teži i stabilnom položaju kako promjena faze ne bi izgledala kao promjena rezolucije. Prilagodba sadržaja ne smije nepotrebno smanjiti cijeli prikaz.

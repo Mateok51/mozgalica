@@ -8,14 +8,19 @@ public class NativePayloadsTest {
         String invite = "https://mateok51.github.io/mozgalica/#ABCD-abcdefghijklmnopqrstuv";
         check(NativePayloads.invitation(invite));
         check(NativePayloads.invitation("https://mateok51.github.io/mozgalica/index.html#ABCD"));
+        check(invite.equals(NativePayloads.incomingInvitation(invite)));
+        check(invite.equals(NativePayloads.incomingInvitation("https://mateok51.github.io:443/mozgalica/index.html#ABCD-abcdefghijklmnopqrstuv")));
+        check(NativePayloads.incomingInvitation("https://mateok51.github.io/mozgalica/#ABCD") == null);
+        check(NativePayloads.incomingInvitation(null) == null);
         for (String bad : new String[]{"https://evil.test/#ABCD", "javascript:alert(1)",
             "https://mateok51.github.io/mozgalica/?secret=foo#ABCD",
             "https://evil@mateok51.github.io/mozgalica/#ABCD",
             "https://mateok51.github.io/mozgalica/../other/#ABCD", invite + "-extra",
             "https://mateok51.github.io:444/mozgalica/#ABCD", "https://mateok51.github.io/mozgalica/#%41BCD"}) {
             check(!NativePayloads.invitation(bad));
+            check(NativePayloads.incomingInvitation(bad) == null);
         }
-        JSONObject report = new JSONObject().put("format", 1).put("webVersion", "79")
+        JSONObject report = new JSONObject().put("format", 1).put("webVersion", "82")
             .put("environment", "android").put("online", true).put("events", new JSONArray()
                 .put(new JSONObject().put("elapsedMs", 1).put("type", "answer_sent").put("phase", "question")));
         check(!NativePayloads.boundedJson("[[[[[[[[[[0]]]]]]]]]]", 40000, 3));

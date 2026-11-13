@@ -41,7 +41,7 @@
     try { if (typeof navigator.onLine === 'boolean') online = navigator.onLine; } catch (e) {}
     return {
       format: 1,
-      webVersion: '79',
+      webVersion: '82',
       environment: android ? 'android' : 'web',
       online,
       events: events.map(event => Object.assign({}, event)),

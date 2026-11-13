@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');
+(async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH || undefined,args:['--no-sandbox']});const pages=[];const errors=[];try{
+const make=async()=>{const p=await browser.newPage({viewport:{width:390,height:844}});p.on('pageerror',e=>errors.push(e.message));pages.push(p);return p;};
+const host=await make();await host.goto('http://127.0.0.1:8787/');await host.locator('#hostp').click();await host.locator('#hname').fill('Ana');await host.locator('#hform button[type=submit]').click();await host.locator('#dstart').waitFor();
+const saved=await host.evaluate(()=>JSON.parse(localStorage.getItem('mz_cloud_resume_v1')));if(!saved)throw Error('Cloud record missing');
+for(let i=1;i<=5;i++){const guest=await make();await guest.goto('http://127.0.0.1:8787/#'+saved.code+'-'+saved.secret);await guest.locator('#name').fill('Igrac'+i);await guest.locator('#form button[type=submit]').click();await guest.locator('.lob-row').nth(i).waitFor();}
+await host.locator('.lob-row').nth(5).waitFor();if(await host.locator('.lob-row').count()!==6)throw Error('Six players missing');console.log('Actual Workers runtime: six isolated browser players admitted');await host.screenshot({path:'/tmp/trivia-cloud-six-players.png'});
+const seventh=await make();await seventh.goto('http://127.0.0.1:8787/#'+saved.code+'-'+saved.secret);await seventh.locator('#name').fill('Sedmi');await seventh.locator('#form button[type=submit]').click();await seventh.locator('.err').filter({hasText:'Soba je puna'}).waitFor();console.log('Seventh player rejected with explicit full message');await seventh.close();
+await host.locator('#dstart:not([disabled])').click();await pages[1].waitForFunction(()=>document.documentElement.dataset.ph==='intro');await host.close();await pages[1].waitForFunction(()=>document.documentElement.dataset.ph==='vote',{},{timeout:12000});console.log('Server advanced intro to vote after host browser was closed');
+const guest=pages[1];const pid=await guest.evaluate(()=>localStorage.getItem('mz_pid'));await guest.reload();await guest.waitForFunction(()=>document.documentElement.dataset.ph==='vote');if(await guest.evaluate(()=>localStorage.getItem('mz_pid'))!==pid)throw Error('Guest identity changed');console.log('Guest reload rejoined active room with same identity');
+if(errors.length)throw Error(errors.join(';'));console.log('No browser script errors; real HTTP/WebSocket server, not fake Peer transport');
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1});
