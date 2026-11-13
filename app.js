@@ -1581,7 +1581,7 @@
     if (nativeRecoveryEnabled) return;
     nativeRecoveryEnabled = true;
     if (typeof cloudEnabled === 'function' && cloudEnabled()) { saveCloudRecovery(); restoreCloudRecovery(); return; }
-    if (game && (mode === 'host' || mode === 'hostp')) {
+    if (game && typeof game.checkpoint === 'function' && (mode === 'host' || mode === 'hostp')) {
       saveRecovery(game.checkpoint()); flushRecovery(); return;
     }
     if (mode === 'player' && S) { saveGuestRecovery(true); return; }

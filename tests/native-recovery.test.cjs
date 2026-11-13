@@ -22,3 +22,5 @@ test('valid host snapshot resumes room instead of creating a new one',()=>{const
 test('resume retries closed guest connection immediately',()=>{const f=fixture(null,{mode:'player',S:{ph:'question'}});f.c.resume();assert.deepEqual(f.calls,[['check'],['retry']]);});
 
 test('same previously admitted guest invitation resumes after Activity recreation',()=>{const r=guest();const f=fixture(r,{mode:'join',location:{hash:'#ABCD-'+r.saved.rs}});f.c.ready();assert.equal(f.calls[1][0],'join');});
+
+test('native capability handshake tolerates a host without local checkpoint support',()=>{const f=fixture(null,{mode:'hostp',game:{view:()=>({ph:'lobby'})}});assert.doesNotThrow(()=>f.c.ready());assert.equal(f.data.size,0);});
