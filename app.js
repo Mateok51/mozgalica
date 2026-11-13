@@ -245,8 +245,8 @@
     };
   })();
   const AUDIO = SFX;
-  // ---------- optional Android message port: fixed haptics and lifecycle events only ----------
-  // No JavaScript interface, arbitrary native calls, tokens or game data cross this port.
+  // ---------- optional Android capabilities: haptics, lifecycle and explicit sharing ----------
+  // Invitations and anonymous reports are shared only on request; no arbitrary native/file calls.
   const ANDROID = (() => {
     const kinds = new Set(['tap', 'confirm', 'error', 'impact', 'bomb', 'step', 'victory']);
     let port = null;
@@ -256,15 +256,29 @@
       const candidate = event.ports[0];
       if (!candidate || typeof candidate.postMessage !== 'function') return;
       port = candidate;
+      if (typeof TAVERN_DIAGNOSTICS !== 'undefined') TAVERN_DIAGNOSTICS.setNative();
       port.onmessage = (message) => {
-        if (message.data === 'resume') checkConnection();
-        else if (message.data === 'pause' && (mode === 'host' || mode === 'hostp') && game && game.checkpoint) {
+        if (message.data === 'resume') { diagnostic('app_resume'); checkConnection(); }
+        else if (message.data === 'pause') {
+          diagnostic('app_pause');
+          if ((mode === 'host' || mode === 'hostp') && game && game.checkpoint) {
           saveRecovery(game.checkpoint()); flushRecovery();
-        }
+          }
+        } else if (message.data === 'share-opened') toolNotice('Pozivnica je spremna za dijeljenje.');
+        else if (message.data === 'share-failed') toolNotice('Dijeljenje nije uspjelo. Pokušaj ponovno.');
+        else if (message.data === 'diagnostics-opened') toolNotice('Izvještaj je spreman za dijeljenje.');
+        else if (message.data === 'diagnostics-failed') toolNotice('Izvoz nije uspio. Pokušaj ponovno.');
       };
       if (port.start) port.start();
     });
     return {
+      command(type, payload) {
+        if (!port || !['share-invite', 'export-diagnostics'].includes(type) || typeof payload !== 'string') return false;
+        if (type === 'share-invite' && (payload.length > 256 || !/^https:\/\/mateok51\.github\.io\/mozgalica\/(?:index\.html)?#[A-Z]{4}(?:-[A-Za-z0-9_-]{22})?$/.test(payload))) return false;
+        if (type === 'export-diagnostics' && payload.length > 32768) return false;
+        const command = type === 'share-invite' ? { type, url: payload } : { type, report: payload };
+        try { port.postMessage(JSON.stringify(command)); return true; } catch (e) { return false; }
+      },
       haptic(kind) {
         if (!port || !kinds.has(kind)) return false;
         try { port.postMessage(kind); return true; } catch (e) { return false; }
@@ -740,6 +754,74 @@
   let joinTries = 0, relayTimer = null;
   let ppeer = null, pconn = null, waitTimer = null, retryTimer = null, perr = '', pcode = '', pname = '', netNote = '';
   let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;
+  function diagnostic(type) {
+    if (typeof TAVERN_DIAGNOSTICS !== 'undefined') TAVERN_DIAGNOSTICS.add(type, S && S.ph);
+  }
+  function toolNotice(text) {
+    const el = document.getElementById('diagNotice') || document.getElementById('shareNotice');
+    if (el) el.textContent = text;
+  }
+  async function shareInvitation() {
+    if (!game) return;
+    const url = appUrl() + joinHash(game.view().code);
+    if (ANDROID.command('share-invite', url)) return;
+    try {
+      if (navigator.share) { await navigator.share({ title: 'Trivia Tavern — pridruži se igri', url }); toolNotice('Pozivnica je podijeljena.'); }
+      else if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(url); toolNotice('Poveznica je kopirana. Pošalji je prijateljima.'); }
+      else {
+        const field = document.getElementById('inviteLink');
+        if (field) { field.hidden = false; field.value = url; field.focus(); field.select(); toolNotice('Kopiraj označenu poveznicu i pošalji je prijateljima.'); }
+      }
+    } catch (e) {
+      if (e && e.name === 'AbortError') { toolNotice('Dijeljenje je otkazano.'); return; }
+      const field = document.getElementById('inviteLink');
+      if (field) { field.hidden = false; field.value = url; field.focus(); field.select(); toolNotice('Kopiraj označenu poveznicu i pošalji je prijateljima.'); }
+      else toolNotice('Dijeljenje nije uspjelo. Pokušaj ponovno.');
+    }
+  }
+  let diagnosticsReturnFocus = null;
+  function closeDiagnostics() {
+    const modal = document.getElementById('diagModal'); if (modal) modal.remove();
+    if (diagnosticsReturnFocus && diagnosticsReturnFocus.isConnected) diagnosticsReturnFocus.focus();
+    diagnosticsReturnFocus = null;
+  }
+  function openDiagnostics() {
+    if (document.getElementById('diagModal')) return;
+    diagnosticsReturnFocus = document.activeElement;
+    const modal = document.createElement('div'); modal.id = 'diagModal'; modal.className = 'inv-modal';
+    modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Pomoć s vezom');
+    modal.innerHTML = '<div class="inv-card diag-card"><h2>Pomoć s vezom</h2><p>Izvezi kratak izvještaj ako se igra ne povezuje ili zastane.</p><p>Bez imena, koda sobe, ključeva i odgovora. Ništa se ne šalje automatski.</p><button class="btn" id="diagExport">Izvezi izvještaj</button><span class="p-sub" role="status" id="diagNotice"></span><button class="btn ghost" id="diagClose">Zatvori</button></div>';
+    document.body.appendChild(modal);
+    modal.querySelector('#diagClose').onclick = closeDiagnostics;
+    modal.onkeydown = (e) => {
+      if (e.key === 'Escape') closeDiagnostics();
+      if (e.key === 'Tab') { const first = modal.querySelector('#diagExport'), last = modal.querySelector('#diagClose'); if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } }
+    };
+    modal.querySelector('#diagExport').onclick = () => {
+      if (typeof TAVERN_DIAGNOSTICS === 'undefined') { toolNotice('Izvještaj nije dostupan u ovoj verziji.'); return; }
+      const report = TAVERN_DIAGNOSTICS.exportText();
+      if (ANDROID.command('export-diagnostics', report)) return;
+      const url = URL.createObjectURL(new Blob([report], { type: 'application/json' }));
+      const a = document.createElement('a'); a.href = url; a.download = 'trivia-tavern-dijagnostika.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      toolNotice('Izvještaj je pripremljen za preuzimanje.');
+    };
+    modal.querySelector('#diagExport').focus();
+  }
+  function answerReceipt(me) {
+    if (me && me.ok) return 'Odgovor zaprimljen ✔︎';
+    return Date.now() - (L.sentAt || Date.now()) >= 3000 ? 'Odgovor još nije potvrđen.' : 'Šaljem odgovor…';
+  }
+  function receiptTick() {
+    if (!S || !L.sent || !Number.isInteger(L.sent.c) || S.s !== L.s || !['question', 'fq', 'duel'].includes(S.ph)) return;
+    const me = meOf(S), el = document.getElementById('answerReceipt');
+    const text = answerReceipt(me);
+    if (el && el.textContent !== text) el.textContent = text;
+    if (mode === 'player' && !(me && me.ok) && Date.now() - (L.lastRetryAt || L.sentAt || Date.now()) >= 3000 && (L.receiptRetries || 0) < 2) {
+      L.lastRetryAt = Date.now(); L.receiptRetries = (L.receiptRetries || 0) + 1;
+      netSend({ t: 'in', in: L.sent }); checkConnection();
+    }
+  }
+
   let L = freshLocal(-1);
   let clockEnds = 0, clockDur = 0;
   let installEvt = null;
@@ -791,6 +873,7 @@
 
   // ---------- navigacija ----------
   function reset() {
+    closeDiagnostics();
     try { sessionStorage.removeItem('mz_recovery_v1'); } catch (e) {}
     if (game) game.stop();
     clearInterval(pubTimer); clearInterval(hostWatch); clearTimeout(hostRetryTimer); clearTimeout(relayTimer); clearTimeout(waitTimer); clearTimeout(retryTimer); stopFxTimer(); hostOff = false;
@@ -1344,6 +1427,7 @@
 
   // ---------- igrač (mobitel) ----------
   function joinGame(code, name) {
+    diagnostic('join_started');
     pcode = code; pname = name; perr = ''; netNote = ''; S = null; lastSig = ''; L = freshLocal(-1);
     PLAYER_RS = recallRS(code);
     store.set('mz_name', name);
@@ -1374,6 +1458,7 @@
     }, 20000);
   }
   function failJoin(msg) {
+    diagnostic('join_failed');
     clearTimeout(waitTimer); clearTimeout(retryTimer); clearTimeout(relayTimer); stopPlayerRelay();
     if (ppeer) { try { ppeer.destroy(); } catch (e) {} }
     ppeer = null; pconn = null; perr = msg; mode = 'join';
@@ -1421,8 +1506,9 @@
     if (mode !== 'player' || !S) return;
     if (prelay && prelay.ready) return;            // relej i dalje radi
     startPlayerRelay();
+    if (!connectionWasLost) diagnostic('connection_lost');
     connectionWasLost = true;
-    if (!netNote) { netNote = 'Veza je prekinuta. Spajam ponovno…'; phoneRender(true); }
+    if (!netNote) { netNote = 'Čekam podatke iz igre. Ponovno se povezujem…'; phoneRender(true); }
     clearTimeout(retryTimer);
     retryTimer = setTimeout(() => {
       if (mode !== 'player') return;
@@ -1443,6 +1529,12 @@
     }
   }
   window.addEventListener('online', checkConnection);
+  window.addEventListener('offline', () => {
+    if (!['player', 'hostp', 'host'].includes(mode)) return;
+    diagnostic('connection_lost'); connectionWasLost = true;
+    netNote = 'Nema internetske veze. Čekam povratak mreže…';
+    if (phoneShown()) phoneRender(true); else render();
+  });
   setInterval(checkConnection, 3000);
 
   // zatvaranje kartice odmah javi domaćinu (umjesto da čeka da veza istekne)
@@ -1458,7 +1550,8 @@
   function sendInput(inp) {
     AUDIO.play('confirm');
     inp.s = L.s;
-    L.sent = inp;
+    L.sent = inp; L.sentAt = Date.now(); L.lastRetryAt = L.sentAt; L.receiptRetries = 0;
+    if (Number.isInteger(inp.c)) diagnostic('answer_sent');
     if (isLocalHost()) game.setInput(PID, inp);
     else netSend({ t: 'in', in: inp });
     phoneRender(true);
@@ -1492,7 +1585,10 @@
 
   function applyState(d) {
     syncTitle();
-    if (connectionWasLost) { connectionWasLost = false; netNote = ''; connectionNotice(); }
+    if (mode === 'player' && (!d || !Array.isArray(d.P) || !d.P.some(p => p.id === PID))) return;
+    if (!S && mode === 'player') diagnostic('joined');
+    if (connectionWasLost) { diagnostic('connection_restored'); connectionWasLost = false; netNote = ''; connectionNotice(); }
+    if (L.sent && Number.isInteger(L.sent.c) && d.s === L.s && d.P.some(p => p.id === PID && p.ok) && !L.receiptConfirmed) { diagnostic('answer_confirmed'); L.receiptConfirmed = true; }
     lastStateAt = Date.now();
     if (d && 'pv' in d) PV = d.pv || null;
     if (mode === 'player' && (!d || !Array.isArray(d.P) || !d.P.some(p => p.id === PID))) return;
@@ -2081,8 +2177,9 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<span class="home-ver">v77</span></div>' +
+        '<div class="home-foot">' + status + '<button class="home-link" id="homeDiagnostics">Pomoć s vezom</button>' + '<span class="home-ver">v78</span></div>' +
       '</div>';
+    bind('homeDiagnostics', openDiagnostics);
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);
     bind('hostp', () => { hostErr = ''; mode = 'hostform'; render(); });
     bind('install', async () => {
@@ -3295,7 +3392,7 @@
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem"><span class="lt">Trivia</span><span class="lt">Tavern</span></div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
     const demoBar = (mode === 'demo' && /demotv/.test(location.search) ? '<div class="demo-bar"><button class="btn ghost" id="toTv">TV</button></div>' : '') +
-      (netNote ? '<div class="err net-reconnecting" role="status" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="btn ghost" id="leave2">Izađi</button></div>' : '');
+      (netNote ? '<div class="err net-reconnecting" role="status" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="home-link" id="connectionDiagnostics">Pomoć</button><button class="btn ghost" id="leave2">Izađi</button></div>' : '');
     const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + avSvg(me.a, d.ph === 'question' && me.fx ? 'shocked' : '') + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && ((me.g || 0) + (me.ub || 0)) > 0 ? ' data-ck="hud" data-cu="' + (me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
@@ -3316,7 +3413,7 @@
           const open = !!L.inv, qr = open ? qrSvg(appUrl() + joinHash(d.code)) : '';
           invite = '<button class="btn ghost lob-toggle" id="lobInv" aria-haspopup="dialog" aria-expanded="' + open + '">Pozovi igrače <span class="lob-chip">Kod <b class="lob-code">' + esc(d.code) + '</b></span></button>' +
             (open ? '<div class="inv-modal" id="invModal" role="dialog" aria-modal="true" aria-label="Pozivnica"><div class="inv-card"><span class="lob-code-l">Kod sobe</span><span class="inv-code">' + esc(d.code) + '</span>' + (qr ? '<div class="lob-qr inv-qr">' + qr + '</div>' : '') +
-              '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span><button class="btn lob-cta" id="invClose">Zatvori</button></div></div>' : '');
+              '<span class="lob-addr">Skeniraj QR ili otvori ' + esc(location.host + location.pathname.replace(/index\.html$/, '')) + ' i upiši kod.</span><button class="btn" id="shareInvite">Podijeli pozivnicu</button><input id="inviteLink" class="invite-link" readonly hidden aria-label="Poveznica za pridruživanje"><span class="p-sub" id="shareNotice" role="status"></span><button class="btn lob-cta" id="invClose">Zatvori</button></div></div>' : '');
           cta = botStepper(d) + lenPick(d) + endPick(d) + catPick(d) + mgPick(d) + pactToggle(d) + rcToggle(d) + tkToggle(d) + bsToggle(d) + '<button class="btn lob-cta" id="dstart"' + (d.P.length < 2 || catFew(d) ? ' disabled' : '') + '>Započni igru</button>' + (catFew(d) ? '<div class="lob-wait">Uključi barem 4 kategorije.</div>' : d.P.length < 2 ? '<div class="lob-wait">Čekamo barem još jednog igrača ili dodaj bota.</div>' : '');
         } else if (mode === 'demo') {
           const nb = d.P.filter((p) => p.b).length;
@@ -3333,7 +3430,7 @@
           '<div class="lob-tools"><button class="btn ghost" id="lobAvatar" aria-expanded="' + (L.lobPanel === 'avatar') + '">Promijeni lika</button>' +
           (settings ? '<button class="btn ghost" id="lobSettings" aria-expanded="' + (L.lobPanel === 'settings') + '">Postavke igre</button>' : '') + '</div>' +
           (L.lobPanel === 'avatar' ? '<div class="av-grid">' + grid + '</div>' : '') +
-          (L.lobPanel === 'settings' ? '<div class="lob-settings">' + settings + '</div>' : '') +
+          (L.lobPanel === 'settings' ? '<div class="lob-settings">' + settings + '<button class="home-link" id="lobbyDiagnostics">Pomoć s vezom</button></div>' : '') +
           actions + '<button class="home-link" id="leave">Izađi</button></div>';
         break;
       }
@@ -3550,7 +3647,7 @@
     const answered = L.sent || me.ok, pick = L.sent ? L.sent.c : -1;
     const opts = d.q.o.map((o, i) => '<button class="p-opt o' + i + (answered ? (pick === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + esc(o) + '</span></button>').join('');
     return timerHtml() + '<div class="du-k">Dvoboj!</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="q-area"><div class="p-opts">' + opts + '</div></div>' +
-      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔︎' : 'Brži točan odgovor pobjeđuje!') + '</div>';
+      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : 'Brži točan odgovor pobjeđuje!') + '</div>';
   }
   function duelResultHtml(d, tv) {
     const du = d.du, w = du.w ? pById(d, du.w) : null;
@@ -4149,7 +4246,7 @@
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +
       qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
-      '<div class="waiting" data-bk="qwait" data-ba="subIn">' + (answered ? 'Odgovor zaprimljen ✔︎' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Ne diraj bombe — dodirni odgovor.' : 'Brže = više bodova!') + '</div>';
+      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Ne diraj bombe — dodirni odgovor.' : 'Brže = više bodova!') + '</div>';
   }
 
   function revOpts(d, mine, tv) {
@@ -4442,7 +4539,7 @@
       phoneQ(d, '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>') + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
       '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
       (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class="waiting">💣 Ne diraj bombe — dodirni odgovor.</div>' : '') +
-      (answered ? '<div class="waiting">Zaprimljeno ✔︎</div>' : '');
+      (answered ? '<div class="waiting" id="answerReceipt" role="status">' + answerReceipt(me) + '</div>' : '');
   }
 
   function bindPhone(d, me) {
@@ -4460,6 +4557,9 @@
     bindLeg(d);
     $app.querySelectorAll('[data-av]').forEach((b) => { b.onclick = () => { L.popAv = +b.dataset.av; chooseAvatar(+b.dataset.av); }; });
     bind('lobInv', () => lobbyChange('lobInv', () => { L.inv = true; phoneRender(true); }, '.inv-card'));
+    bind('shareInvite', shareInvitation);
+    bind('connectionDiagnostics', openDiagnostics);
+    bind('lobbyDiagnostics', openDiagnostics);
     bind('invClose', () => { L.inv = false; phoneRender(true); });
     { const m = document.getElementById('invModal'); if (m) m.onclick = (e) => { if (e.target === m) { L.inv = false; phoneRender(true); } }; }
     // predvorje: popis igrača se pomiče sam za sebe; pamti položaj i pokaži da ima još redova
@@ -4529,6 +4629,7 @@
 
   // ---------- odbrojavanje ----------
   function tick() {
+    receiptTick();
     const ms = Math.max(0, clockEnds - Date.now());
     const bar = document.getElementById('tbar'), num = document.getElementById('tnum'), wrap = document.getElementById('timer');
     if (bar && clockDur) { const fr = ms / clockDur; bar.style.width = (fr * 100) + '%'; bar.dataset.lv = fr > 0.5 ? 'g' : fr > 0.2 ? 'a' : 'r'; }

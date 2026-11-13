@@ -21,7 +21,7 @@ def main():
     ap.add_argument('--ecj', required=True, type=Path)
     ap.add_argument('--keystore', required=True, type=Path)
     ap.add_argument('--password-env', default='TRIVIA_SIGNING_PASSWORD')
-    ap.add_argument('--out', type=Path, default=Path(__file__).parent / 'build/Trivia-Tavern-v77.apk')
+    ap.add_argument('--out', type=Path, default=Path(__file__).parent / 'build/Trivia-Tavern-v78.apk')
     args = ap.parse_args()
     if not os.environ.get(args.password_env):
         ap.error('Signing password must be supplied through the named environment variable')
@@ -35,7 +35,7 @@ def main():
         work = Path(tmp)
         for name in ['classes', 'dex', 'assets/game', 'res/drawable']:
             (work / name).mkdir(parents=True)
-        files = ['app.js', 'engine.js', 'index.html', 'styles.css', 'manifest.webmanifest',
+        files = ['diagnostics.js', 'app.js', 'engine.js', 'index.html', 'styles.css', 'manifest.webmanifest',
                  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'icon.svg', 'og.jpg',
                  'audio', 'chars', 'data', 'fonts', 'src', 'ui', 'vendor']
         for name in files:

@@ -2874,3 +2874,12 @@
 
 /* Keep the power's activation step visible in the existing card. */
 .pw-card .pw-action { display: block; font: inherit; opacity: .85; }
+
+/* Optional connection tools reuse the existing invitation panels and buttons. */
+.diag-card { max-height: calc(100dvh - 48px); overflow-y: auto; }
+.diag-card p { margin: 4px 0 10px; font: 600 .9rem/1.4 var(--font-body); }
+.invite-link { width: 100%; min-width: 0; box-sizing: border-box; padding: 8px; font: 600 .85rem var(--font-body); }
+.home-foot .home-link { font-size: .75rem; }
+.diag-card { box-sizing: border-box; }
+#invModal .inv-card { box-sizing: border-box; max-height: calc(100dvh - 40px); overflow-y: auto; gap: 8px; }
+#invModal .inv-qr { width: min(66vw, 230px, 33dvh); flex-shrink: 0; }

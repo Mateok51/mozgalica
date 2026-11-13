@@ -28,6 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Locale;
+import org.json.JSONObject;
 
 public class MainActivity extends Activity {
     private static final String HOME = "https://mateok51.github.io/mozgalica/";
@@ -37,6 +38,8 @@ public class MainActivity extends Activity {
     private boolean resumed;
     private long lastHaptic;
     private AlertDialog exitDialog;
+    private long lastShare;
+    private boolean sharing;
 
     private boolean local(Uri u) {
         return "https".equals(u.getScheme()) && "mateok51.github.io".equals(u.getHost())
@@ -103,7 +106,7 @@ public class MainActivity extends Activity {
                 nativePort.setWebMessageCallback(new WebMessagePort.WebMessageCallback() {
                     @Override public void onMessage(WebMessagePort port, WebMessage message) {
                         if (port != nativePort || !resumed) return;
-                        haptic(message.getData());
+                        handleMessage(message.getData());
                     }
                 });
                 // Transfer a capability with a fixed vocabulary, never a general Java bridge.
@@ -120,6 +123,36 @@ public class MainActivity extends Activity {
     private WebResourceResponse missing() {
         return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found",
             Collections.emptyMap(), new ByteArrayInputStream(new byte[0]));
+    }
+    private void handleMessage(String message) {
+        if (message == null || message.length() > 40000) return;
+        if (!message.startsWith("{")) { haptic(message); return; }
+        if (!NativePayloads.boundedJson(message, 40000, 3) || !hasWindowFocus()) return;
+        String reply = "share-failed";
+        try {
+            JSONObject action = new JSONObject(message);
+            String type = action.getString("type"), text, subject;
+            if ("share-invite".equals(type)) {
+                text = action.getString("url");
+                if (!NativePayloads.invitation(text)) { notifyPage(reply); return; }
+                subject = "Trivia Tavern — pozivnica";
+            } else if ("export-diagnostics".equals(type)) {
+                reply = "diagnostics-failed";
+                text = NativePayloads.diagnostics(action.getString("report"));
+                if (text == null) { notifyPage(reply); return; }
+                subject = "Trivia Tavern — dijagnostika";
+            } else { return; }
+            if (sharing || SystemClock.uptimeMillis() - lastShare < 1000) { notifyPage(reply); return; }
+            Intent send = new Intent(Intent.ACTION_SEND).setType("text/plain")
+                .putExtra(Intent.EXTRA_SUBJECT, subject).putExtra(Intent.EXTRA_TEXT, text);
+            lastShare = SystemClock.uptimeMillis(); sharing = true;
+            startActivityForResult(Intent.createChooser(send, subject), 78);
+            notifyPage("export-diagnostics".equals(type) ? "diagnostics-opened" : "share-opened");
+        } catch (Exception ignored) { sharing = false; notifyPage(reply); }
+    }
+    @Override protected void onActivityResult(int request, int result, Intent data) {
+        super.onActivityResult(request, result, data);
+        if (request == 78) sharing = false;
     }
     private void haptic(String kind) {
         if (kind == null || kind.length() > 16 || SystemClock.uptimeMillis() - lastHaptic < 60) return;

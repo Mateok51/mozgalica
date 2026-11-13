@@ -1,6 +1,6 @@
 // Mozgalica: uvijek pokušaj mrežu, a bez interneta posluži zadnju spremljenu verziju.
-const CACHE = 'mozgalica-v77';
-const CORE = ['./', './index.html', './styles.css', './fonts/cinzel-800-latin.woff2', './fonts/cinzel-800-latin-ext.woff2', './fonts/nunito-latin.woff2', './fonts/nunito-latin-ext.woff2', './app.js', './sw-register.js', './engine.js', './data/questions.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js', './vendor/peerjs.min.js', './ui/challenge-medal.webp', './ui/bomb-effect.webp', './ui/bug-effect.webp', './ui/bot-medal.webp', './ui/pw-utjeha.webp'];
+const CACHE = 'mozgalica-v78';
+const CORE = ['./', './index.html', './styles.css', './fonts/cinzel-800-latin.woff2', './fonts/cinzel-800-latin-ext.woff2', './fonts/nunito-latin.woff2', './fonts/nunito-latin-ext.woff2', './diagnostics.js', './app.js', './sw-register.js', './engine.js', './data/questions.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js', './vendor/peerjs.min.js', './ui/challenge-medal.webp', './ui/bomb-effect.webp', './ui/bug-effect.webp', './ui/bot-medal.webp', './ui/pw-utjeha.webp'];
 // Ostale datoteke igre (likovi, grafika, zvukovi): ne blokiraju instalaciju, nego se spremaju u pozadini kad stranica to zatraži,
 // da instalirana igra radi i bez mreže. Popis mora sadržavati sve iz chars/, ui/ i audio/ (provjerava tests/offline.test.cjs).
 const EXTRA = [

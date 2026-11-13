@@ -13,6 +13,7 @@ function fixture() {
   const window = { addEventListener: (type, fn) => listeners.set(type, fn) };
   const context = vm.createContext({ window, location: { origin: 'https://game.test', reload: () => calls.reload++ },
     navigator: { vibrate: value => vibrations.push(JSON.parse(JSON.stringify(value))) },
+    diagnostic: () => {}, toolNotice: () => {},
     checkConnection: () => calls.resume++, saveRecovery: () => calls.save++, flushRecovery: () => calls.flush++,
     game: { checkpoint: () => { calls.checkpoint++; return { events: [] }; } }, mode: 'hostp' });
   vm.runInContext(source.slice(start, end) + ';this.haptic=HAPTIC;this.android=ANDROID;', context);
@@ -63,4 +64,15 @@ test('a closed native port falls back safely and missing browser vibration is ha
   const f = fixture(); f.connect(); f.port.postMessage = () => { throw Error('closed'); }; f.context.haptic.error();
   assert.deepEqual(f.vibrations, [[25, 60, 25]]);
   delete f.context.navigator.vibrate; assert.doesNotThrow(() => f.context.haptic.tap());
+});
+
+ test('native commands are explicit, bounded and do not expose arbitrary native methods', () => {
+  const f=fixture(); f.connect();
+  assert.equal(f.context.android.command('share-invite','https://mateok51.github.io/mozgalica/#ABCD-'+'a'.repeat(22)),true);
+  assert.equal(JSON.parse(f.posted[0]).type,'share-invite');
+  assert.equal(f.context.android.command('share-invite','https://evil.test/#ABCD'),false);
+  assert.equal(f.context.android.command('export-diagnostics',JSON.stringify({format:1,events:[]})),true);
+  assert.equal(f.context.android.command('export-diagnostics','x'.repeat(32769)),false);
+  assert.equal(f.context.android.command('export-diagnostics',{}),false);
+  assert.equal(f.context.android.command('open-file','/private/file'),false);
 });
