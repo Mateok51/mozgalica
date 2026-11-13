@@ -21,7 +21,7 @@ def main():
     ap.add_argument('--ecj', required=True, type=Path)
     ap.add_argument('--keystore', required=True, type=Path)
     ap.add_argument('--password-env', default='TRIVIA_SIGNING_PASSWORD')
-    ap.add_argument('--out', type=Path, default=Path(__file__).parent / 'build/Trivia-Tavern-v78.apk')
+    ap.add_argument('--out', type=Path, default=Path(__file__).parent / 'build/Trivia-Tavern-v79.apk')
     args = ap.parse_args()
     if not os.environ.get(args.password_env):
         ap.error('Signing password must be supplied through the named environment variable')

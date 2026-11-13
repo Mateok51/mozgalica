@@ -3,3 +3,6 @@ Nunito — Copyright 2014 The Nunito Project Authors (https://github.com/googlef
 
 Both fonts are licensed under the SIL Open Font License, Version 1.1.
 The license text is available at https://openfontlicense.org
+
+The bundled Latin-ext Cinzel face is a modified derivative, internally named Tavern Cinzel.
+Only the Đ/đ crossbar placement is corrected; see PATCHES.md and OFL-Cinzel.txt.

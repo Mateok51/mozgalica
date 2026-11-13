@@ -10,6 +10,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
+import android.os.VibrationAttributes;
+import android.media.AudioAttributes;
+import android.provider.Settings;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.WindowInsets;
@@ -156,16 +161,30 @@ public class MainActivity extends Activity {
     }
     private void haptic(String kind) {
         if (kind == null || kind.length() > 16 || SystemClock.uptimeMillis() - lastHaptic < 60) return;
-        int effect;
+        VibrationEffect effect;
         switch (kind) {
-            case "tap": case "step": effect = HapticFeedbackConstants.CLOCK_TICK; break;
-            case "confirm": effect = Build.VERSION.SDK_INT >= 30 ? HapticFeedbackConstants.CONFIRM : HapticFeedbackConstants.KEYBOARD_TAP; break;
-            case "error": case "bomb": effect = Build.VERSION.SDK_INT >= 30 ? HapticFeedbackConstants.REJECT : HapticFeedbackConstants.LONG_PRESS; break;
-            case "impact": case "victory": effect = HapticFeedbackConstants.LONG_PRESS; break;
+            case "tap": effect = VibrationEffect.createOneShot(20, 200); break;
+            case "step": effect = VibrationEffect.createOneShot(15, 180); break;
+            case "confirm": effect = VibrationEffect.createOneShot(30, 220); break;
+            case "error": effect = VibrationEffect.createWaveform(new long[]{0, 24, 45, 24}, new int[]{0, 210, 0, 210}, -1); break;
+            case "bomb": effect = VibrationEffect.createWaveform(new long[]{0, 35, 35, 55}, new int[]{0, 255, 0, 230}, -1); break;
+            case "impact": effect = VibrationEffect.createOneShot(40, 230); break;
+            case "victory": effect = VibrationEffect.createWaveform(new long[]{0, 20, 45, 20, 45, 45}, new int[]{0, 200, 0, 200, 0, 230}, -1); break;
             default: return;
         }
         lastHaptic = SystemClock.uptimeMillis();
-        web.performHapticFeedback(effect); // Honors system feedback settings; no VIBRATE permission.
+        // Respect the user's touch-feedback preference instead of forcing vibration on.
+        if (Settings.System.getInt(getContentResolver(), Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) == 0) return;
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        try {
+            if (vibrator != null && vibrator.hasVibrator()) {
+                if (Build.VERSION.SDK_INT >= 33) {
+                    vibrator.vibrate(effect, new VibrationAttributes.Builder().setUsage(VibrationAttributes.USAGE_TOUCH).build());
+                } else {
+                    vibrator.vibrate(effect, new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).build());
+                }
+            } else web.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+        } catch (SecurityException ignored) { web.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP); }
     }
     private void notifyPage(String event) {
         if (nativePort != null) try { nativePort.postMessage(new WebMessage(event)); }

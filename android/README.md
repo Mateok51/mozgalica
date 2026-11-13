@@ -1,10 +1,11 @@
-# Trivia Tavern Android shell v78
+# Trivia Tavern Android shell v79
 
 The APK packages the shared web game and adds Android system-bar/inset handling,
 platform haptic feedback, predictive/legacy Back confirmation, and an origin-targeted
 WebMessagePort for pause/resume hints. The port accepts seven haptic names and two narrowly validated sharing commands.
-There is no general JavaScript interface or filesystem/native method access. Only the
-Internet permission is requested. Haptics honor Android's system feedback setting.
+There is no general JavaScript interface or filesystem/native method access. The APK requests Internet and the normal Android VIBRATE permission. It does not
+request camera, microphone or storage access. Haptics honor Android's touch-feedback
+setting and use touch-usage vibration attributes on Android 13+.
 
 Game protocol/rules are unchanged from web v76. Browser clients have no Android
 port and retain their existing behavior. QR invitations still use the existing
@@ -37,7 +38,7 @@ python3 android/build.py \
   --keystore /private/path/trivia-test.p12
 ```
 
-The default output is `android/build/Trivia-Tavern-v78.apk` (ignored by Git).
+The default output is `android/build/Trivia-Tavern-v79.apk` (ignored by Git).
 Keep a secure, durable backup of the original keystore. Never commit it or its
 password. A different signer cannot update an installed copy in place.
 
@@ -47,7 +48,7 @@ The Java source compiles against SDK 35. Node tests cover native adapters, anony
 and game behavior. A mixed-version browser scenario using a shared v77 host
 and original v76 web guest joins, starts and reconnects after host refresh with
 simulated Peer transport; this is not Android/carrier-network verification. APK signing identity, version, alignment,
-embedded assets and Internet-only permission are checked locally. JavaScript VM
+embedded assets and the Internet/VIBRATE permission allowlist are checked locally. JavaScript VM
 regressions cover browser fallback, port origin/shape checks, haptic whitelist,
 closed-port fallback, pause checkpoint and resume without reload. These checks do
 not run Android lifecycle dispatch, the vibrator or the actual screen compositor.
@@ -92,3 +93,19 @@ try again, join from a browser, interrupt networking briefly after an answer,
 verify confirmation only after host receipt, export a report and inspect it for
 privacy, then return from the chooser without losing the active party. Android
 chooser/lifecycle behavior still requires actual-device testing.
+
+## v79 feedback and Croatian glyph correction
+
+Ordinary enabled buttons now produce a touch effect on actual user activation.
+The generic effect waits until click handlers finish and is skipped when an
+explicit confirm/impact effect already ran. Android uses bounded one-shot/waveform
+vibration effects rather than relying only on a subtle platform clock tick.
+Patterns do not repeat; native requests are throttled and respect the user's
+system touch-feedback preference. VIBRATE is a normal permission, not a runtime
+permission prompt or access to personal data. Physical strength still depends on
+hardware and Samsung's system vibration settings and needs phone acceptance.
+
+Croatian display-font changes are documented with the font license. The artwork,
+other glyphs and gameplay are preserved. Check “Uđi u igru” and č/ć/đ/š/ž on the
+phone. If touch feedback remains absent, check Android Settings → Sounds and
+vibration → System vibration, and its touch-interaction setting/intensity.

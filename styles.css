@@ -1,3 +1,4 @@
+  /* Latin-ext uses the OFL-licensed Tavern Cinzel derivative: only Đ/đ crossbar placement differs; see fonts/PATCHES.md. */
   /* Fontovi su dio igre (fonts/), da izgled ne ovisi o vanjskoj mreži. Cinzel i Nunito: SIL Open Font License 1.1 (fonts/LICENSE.txt). */
   /* Nunito je jedna promjenjiva datoteka, ali se deklarira kao tri zasebne debljine (600, 800, 900), točno kako ga poslužuje Google Fonts.
      Tako se tražena debljina 400 ili 700 u svakom pregledniku (Safari, Chrome, Samsung Internet) svodi na istu: 400 → 600, 700 → 800.

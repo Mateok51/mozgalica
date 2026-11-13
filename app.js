@@ -287,11 +287,14 @@
   })();
   // ---------- vibracija: browser fallback remains available without Android ----------
   const HAPTIC = (() => {
+    let serial = 0;
     function v(kind, pattern) {
+      serial++;
       if (ANDROID.haptic(kind)) return;
       try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) {}
     }
     return {
+      get serial() { return serial; },
       tap: () => v('tap', 12), confirm: () => v('confirm', 20), error: () => v('error', [25, 60, 25]), impact: () => v('impact', 50),
       bomb: () => v('bomb', [80, 40, 120]), step: () => v('step', 15), victory: () => v('victory', [30, 70, 30, 70, 110]),
     };
@@ -375,6 +378,14 @@
   document.addEventListener('pointerdown', (e) => {
     SFX.unlock();
     if (e.target && e.target.closest && e.target.closest('button') && !e.target.closest('#fx')) SFX.play('tap');
+  }, true);
+
+  // Defer generic button feedback until its handler has had a chance to emit a richer effect.
+  document.addEventListener('click', (event) => {
+    const button = event.target && event.target.closest && event.target.closest('button');
+    if (!event.isTrusted || !button || button.disabled || button.getAttribute('aria-disabled') === 'true') return;
+    const serial = HAPTIC.serial;
+    setTimeout(() => { if (HAPTIC.serial === serial) HAPTIC.tap(); }, 0);
   }, true);
 
   // ---------- konfete ----------
@@ -2177,7 +2188,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<button class="home-link" id="homeDiagnostics">Pomoć s vezom</button>' + '<span class="home-ver">v78</span></div>' +
+        '<div class="home-foot">' + status + '<button class="home-link" id="homeDiagnostics">Pomoć s vezom</button>' + '<span class="home-ver">v79</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('host', startHost); bind('join', () => { mode = 'join'; render(); }); bind('demo', startDemo);

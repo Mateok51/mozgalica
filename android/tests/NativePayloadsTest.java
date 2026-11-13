@@ -15,7 +15,7 @@ public class NativePayloadsTest {
             "https://mateok51.github.io:444/mozgalica/#ABCD", "https://mateok51.github.io/mozgalica/#%41BCD"}) {
             check(!NativePayloads.invitation(bad));
         }
-        JSONObject report = new JSONObject().put("format", 1).put("webVersion", "78")
+        JSONObject report = new JSONObject().put("format", 1).put("webVersion", "79")
             .put("environment", "android").put("online", true).put("events", new JSONArray()
                 .put(new JSONObject().put("elapsedMs", 1).put("type", "answer_sent").put("phase", "question")));
         check(!NativePayloads.boundedJson("[[[[[[[[[[0]]]]]]]]]]", 40000, 3));
