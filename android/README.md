@@ -69,6 +69,21 @@ The default output is `android/build/Trivia-Tavern-v83.apk` (ignored by Git).
 Keep a secure, durable backup of the original keystore. Never commit it or its
 password. A different signer cannot update an installed copy in place.
 
+### Separate Cloud edition
+
+When the original signing key is unavailable, use `--variant cloud` with the
+separate Cloud signing keystore. This builds `Trivia-Tavern-Cloud-v83.apk` as
+`hr.triviatavern.cloud`, labeled **Trivia Tavern Cloud**. It installs beside
+`hr.triviatavern.app`; the original application and its data remain intact. The
+Cloud edition has its own Android private storage, so saved identities and settings
+start fresh. Both editions use the same shared Java source; the Cloud manifest
+explicitly names `hr.triviatavern.app.MainActivity`.
+
+`cloud-signing-certificate.sha256` pins the separate public certificate. The
+original certificate pin remains unchanged. Future Cloud updates must use this
+same Cloud keystore. Keep its keystore, alias and password in a private durable
+backup outside Git; this workspace alone is not a permanent key backup.
+
 ## Validation and phone checks
 
 The Java source compiles against SDK 35. Node tests cover native adapters, anonymous diagnostic reports, input/queue limits
