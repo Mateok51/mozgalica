@@ -335,7 +335,7 @@
       },
       command(type, payload) {
         if (!port || !['share-invite', 'export-diagnostics'].includes(type) || typeof payload !== 'string') return false;
-        if (type === 'share-invite' && (payload.length > 256 || !/^https:\/\/mateok51\.github\.io\/mozgalica\/(?:index\.html)?#[A-Z]{4}(?:-[A-Za-z0-9_-]{22})?$/.test(payload))) return false;
+        if (type === 'share-invite' && (payload.length > 256 || !/^https:\/\/(?:mateok51\.github\.io\/mozgalica|trivia-tavern\.chaos-ballad\.workers\.dev)\/(?:index\.html)?#[A-Z]{4}(?:-[A-Za-z0-9_-]{22})?$/.test(payload))) return false;
         if (type === 'export-diagnostics' && payload.length > 32768) return false;
         const command = type === 'share-invite' ? { type, url: payload } : { type, report: payload };
         try { port.postMessage(JSON.stringify(command)); return true; } catch (e) { return false; }
@@ -901,7 +901,7 @@
       onError(error) {
         const terminal = ['auth', 'full', 'started', 'not_found', 'expired', 'identity', 'invalid', 'unavailable'].includes(error.reason);
         const message = error.reason === 'full' ? 'Soba je puna: najviše 6 igrača, uključujući domaćina ako igra.'
-          : error.reason === 'auth' ? 'Otvori punu pozivnicu ili skeniraj QR kod domaćina.'
+          : error.reason === 'auth' ? 'Prijava nije uspjela. Provjeri kod sobe ili pozivnicu domaćina.'
           : error.reason === 'started' ? 'Igra je već počela. Novi igrači mogu ući u sljedeću partiju.'
           : error.reason === 'identity' ? 'Ovaj igrač je već prijavljen s drugog uređaja.'
           : error.reason === 'expired' || error.reason === 'not_found' ? 'Soba je završila ili više nije dostupna.'
@@ -938,9 +938,10 @@
     try {
       const raw = localStorage.getItem(CLOUD_RECOVERY_KEY); if (!raw) return;
       if (raw.length > 2048) throw Error('size');
-      const r = JSON.parse(raw), hash = '#' + r.code + '-' + r.secret;
+      const r = JSON.parse(raw), hash = '#' + r.code + (r.secret ? '-' + r.secret : '');
       if (r.version !== 1 || r.pid !== PID || !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000 ||
-          !/^[A-Z]{4}$/.test(r.code) || !okRS(r.secret) || !['host', 'player'].includes(r.role) || typeof r.noTv !== 'boolean' ||
+          !/^[A-Z]{4}$/.test(r.code) || !['host', 'player'].includes(r.role) ||
+          (r.secret != null && !okRS(r.secret)) || (r.role === 'host' && !okRS(r.secret)) || typeof r.noTv !== 'boolean' ||
           typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12) throw Error('record');
       if (location.hash && (r.role !== 'player' || location.hash !== hash)) return;
       connectCloud({ code: r.code, secret: r.secret, role: r.role, name: r.name }, r.noTv);
@@ -1723,8 +1724,10 @@
   // ---------- igrač (mobitel) ----------
   function joinGame(code, name) {
     if (cloudEnabled()) {
-      const secret = recallRS(code);
-      if (!secret) { pcode = code; pname = name; perr = 'Otvori punu pozivnicu ili skeniraj QR kod domaćina.'; mode = 'join'; render(); return; }
+      // A typed code must not reuse an old invite secret when room codes recycle.
+      // Only the current full invitation supplies a secret; recovery has its own record.
+      const invite = (location.hash || '').match(/^#([A-Za-z]{4})-([A-Za-z0-9_-]{22})$/);
+      const secret = invite && invite[1].toUpperCase() === code ? invite[2] : null;
       store.set('mz_name', name); S = null; PV = null; game = null; lastSig = ''; L = freshLocal(-1);
       diagnostic('join_started');
       return connectCloud({ code, secret, role: 'player', name }, true);
@@ -2493,7 +2496,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v82</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v83</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);

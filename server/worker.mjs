@@ -191,8 +191,12 @@ export class GameRoom {
     },5000);
   }
   async hello(ws,info,message) {
-    if(!validIdentity(message)||!validSecret(message.secret)||message.secret!==this.meta.secret||!['host','player'].includes(message.role))
-      return this.error(ws,'auth','Otvori punu pozivnicu domaćina.',true);
+    // Sharing the short code admits players. Never disclose the invitation secret;
+    // an explicit secret must still match, and host access always requires it.
+    const hasSecret=validSecret(message.secret)&&message.secret===this.meta.secret;
+    if(!validIdentity(message)||!['host','player'].includes(message.role)||
+      (message.secret!=null&&!hasSecret)||(message.role==='host'&&!hasSecret))
+      return this.error(ws,'auth','Provjeri kod sobe ili pozivnicu domaćina.',true);
     const owner=message.pid===this.meta.owner.pid;
     if((this.keys.has(message.pid)&&this.keys.get(message.pid)!==message.sk)||(message.role==='host'&&!owner))
       return this.error(ws,'auth','Prijava nije dopuštena.',true);

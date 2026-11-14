@@ -5,12 +5,14 @@ Party kviz za 2–6 igrača. TV prikazuje igru, a svi igraju s mobitela: biraju 
 
 **Postojeća verzija:** https://mateok51.github.io/mozgalica/
 
-**Nova Cloudflare verzija:** pripremljena za objavu, još nema potvrđenu javnu adresu.
+**Cloudflare igra:** https://trivia-tavern.chaos-ballad.workers.dev/
 `npm run build` priprema stranicu i serversku igru za Workers + SQLite Durable Objects.
 U tom načinu partiju vodi server, a ne domaćinov uređaj. Koraci za besplatni račun,
 GitHub povezivanje i prvu objavu: [Cloudflare postavljanje](docs/CLOUDFLARE.md).
 Izvorni `runtime-config.js` zadržava stari način rada; cloud build uključuje novi.
-Postojeći APK treba zasebno ažurirati nakon dobivanja stvarne Cloudflare adrese.
+APK v83 pakira istu igru s fiksnom Cloudflare adresom. Igrač unosi četveroslovni
+kod i ime izravno u APK-u; puna poveznica/QR također rade. Nadogradnja postojećeg
+APK-a zahtijeva izvorni ključ za potpisivanje (vidi [Android](android/README.md)).
 
 ## Kako igrati
 1. Na TV-u (ili računalu) u pregledniku otvori adresu i odaberi **Otvori igru na TV-u**.

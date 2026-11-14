@@ -4,6 +4,7 @@
   "main": "server/worker.mjs",
   "compatibility_date": "2026-11-01",
   "workers_dev": true,
+  "vars": { "ALLOWED_ORIGINS": "https://mateok51.github.io" },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

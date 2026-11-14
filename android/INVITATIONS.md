@@ -1,11 +1,14 @@
 # Incoming Android invitations
 
-The APK registers only HTTPS links at `mateok51.github.io/mozgalica/` and
-`mateok51.github.io/mozgalica/index.html`. The Activity validates incoming ACTION_VIEW
+The APK registers only HTTPS links at `mateok51.github.io/mozgalica/`,
+`mateok51.github.io/mozgalica/index.html`, `trivia-tavern.chaos-ballad.workers.dev/`
+and `trivia-tavern.chaos-ballad.workers.dev/index.html`. The Activity validates incoming ACTION_VIEW
 URLs again before loading bundled game assets. A usable incoming invitation must
 contain `#ABCD-<22-character-room-secret>`; usernames, queries, encoded fragments,
 nonstandard ports, other origins/paths and incomplete code-only links are rejected.
-The URL is canonicalized to the bundled game's home path. Links and secrets are
+Both origins are canonicalized to the bundled game's existing GitHub home path,
+whose bundled runtime config connects to the Cloudflare service. No browser is
+needed to type a room code inside the APK. Links and secrets are
 never added to diagnostic logs.
 
 On a fresh Activity, a valid invitation opens the existing join screen with its

@@ -38,14 +38,17 @@ public final class NativePayloads {
         if (value == null || value.length() > 160) return false;
         try {
             URI u = new URI(value);
-            return "https".equals(u.getScheme()) && "mateok51.github.io".equals(u.getHost())
+            boolean legacy = "mateok51.github.io".equals(u.getHost())
+                && ("/mozgalica/".equals(u.getRawPath()) || "/mozgalica/index.html".equals(u.getRawPath()));
+            boolean cloud = "trivia-tavern.chaos-ballad.workers.dev".equals(u.getHost())
+                && ("/".equals(u.getRawPath()) || "/index.html".equals(u.getRawPath()));
+            return "https".equals(u.getScheme()) && (legacy || cloud)
                 && u.getUserInfo() == null && (u.getPort() == -1 || u.getPort() == 443)
-                && ("/mozgalica/".equals(u.getRawPath()) || "/mozgalica/index.html".equals(u.getRawPath()))
                 && u.getRawQuery() == null && u.getRawFragment() != null
                 && u.getRawFragment().matches("[A-Z]{4}(?:-[A-Za-z0-9_-]{22})?");
         } catch (Exception e) { return false; }
     }
-    /** Incoming Android links require the full relay secret; never load an arbitrary Intent URL. */
+    /** Validated invitations open bundled assets, never an arbitrary Intent URL. */
     public static String incomingInvitation(String value) {
         if (!invitation(value)) return null;
         try {
@@ -65,7 +68,7 @@ public final class NativePayloads {
             JSONObject report = new JSONObject(text);
             keys(report, "format", "webVersion", "environment", "online", "events");
             if (!(report.get("format") instanceof Number) || report.getDouble("format") != 1
-                || !"82".equals(report.get("webVersion"))
+                || !"83".equals(report.get("webVersion"))
                 || !(report.get("online") instanceof Boolean)
                 || !("web".equals(report.get("environment")) || "android".equals(report.get("environment")))) return null;
             JSONArray events = report.getJSONArray("events"), clean = new JSONArray();
@@ -88,7 +91,7 @@ public final class NativePayloads {
                 }
                 clean.put(row);
             }
-            return new JSONObject().put("format", 1).put("webVersion", "82")
+            return new JSONObject().put("format", 1).put("webVersion", "83")
                 .put("environment", report.get("environment")).put("online", report.get("online"))
                 .put("events", clean).toString(2);
         } catch (Exception e) { return null; }

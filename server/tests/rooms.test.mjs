@@ -43,6 +43,62 @@ test('authoritative six-player room survives owner disconnect and restores persi
  mf=runtime(persist);const rejoined=await connect(mf,room,identity(1));all.push(rejoined);const state=await rejoined.wait(x=>x.P);assert.equal(state.code,room.code);assert.equal(state.len,'brza');assert.notEqual(state.ph,'lobby');assert.equal(state.cloud.owner,true);
  } finally {for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
 });
+test('code-only players join without exposing the invitation secret or weakening identity and host authentication',async()=>{
+ const persist=await mkdtemp(join(tmpdir(),'trivia-server-code-auth-')),mf=runtime(persist),all=[];
+ const add=async(...args)=>{const client=await connect(mf,...args);all.push(client);return client;};
+ const rejected=async(id,role,secret,expected='auth')=>{
+  const client=await add(room,id,role,secret);
+  assert.equal((await client.wait(x=>x.t==='error')).reason,expected);
+  assert(!client.messages.some(x=>x.P),'Rejected clients must not receive game state');
+ };
+ let room;
+ try {
+  room=await create(mf,false,60);
+  await rejected(identity(60),'host',null);
+  const missingHostSecret=await add({code:room.code},identity(60),'host');
+  assert.equal((await missingHostSecret.wait(x=>x.t==='error')).reason,'auth');
+  const owner=await add(room,identity(60),'host');await owner.wait(x=>x.P);
+  // A room object containing only the code makes the helper omit secret entirely.
+  const omitted=await add({code:room.code},identity(61));
+  const first=await omitted.wait(x=>x.P?.some(p=>p.id==='p61'));
+  assert.equal(first.cloud.owner,false);
+  const nullable=await add(room,identity(62),'player',null);
+  const state=await nullable.wait(x=>x.P?.length===2);
+  assert(!JSON.stringify(state).includes(room.secret));
+  for(const n of [60,61,62])assert(!JSON.stringify(state).includes(identity(n).sk));
+  for(const secret of ['',42,'bad','b'.repeat(22)])await rejected(identity(63),'player',secret);
+  await rejected({...identity(61),sk:'f'.repeat(32)},'player',null);
+  await rejected({...identity(60),sk:'f'.repeat(32)},'player',null);
+  await rejected({...identity(60),sk:'f'.repeat(32)},'host',room.secret);
+  await rejected(identity(61),'host',room.secret);
+  omitted.send({t:'control',method:'start',args:[]});
+  assert.equal((await omitted.wait(x=>x.reason==='forbidden')).reason,'forbidden');
+  owner.send({t:'control',method:'setOpt',args:['len','brza']});
+  await nullable.wait(x=>x.len==='brza');
+ }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
+});
+test('code-only admission keeps seat and start limits while an existing identity can reconnect',async()=>{
+ const persist=await mkdtemp(join(tmpdir(),'trivia-server-code-rejoin-')),mf=runtime(persist),all=[];
+ const add=async(...args)=>{const client=await connect(mf,...args);all.push(client);return client;};
+ try {
+  const room=await create(mf,true,70),owner=await add(room,identity(70));await owner.wait(x=>x.P);
+  for(let n=71;n<=75;n++){
+   const guest=await add(room,identity(n),'player',null);
+   await guest.wait(x=>x.P?.some(p=>p.id==='p'+n));
+  }
+  const full=await add(room,identity(76),'player',null);
+  assert.equal((await full.wait(x=>x.t==='error')).reason,'full');
+  owner.send({t:'control',method:'start',args:[]});await owner.wait(x=>x.ph==='intro');
+  const late=await add({code:room.code},identity(77));
+  assert.equal((await late.wait(x=>x.t==='error')).reason,'started');
+  const returning=await add({code:room.code},identity(71));
+  const state=await returning.wait(x=>x.P?.some(p=>p.id==='p71')&&x.ph!=='lobby');
+  assert.equal(state.P.length,6);
+  assert.equal(state.P.filter(p=>p.id==='p71').length,1);
+  assert.equal(state.cloud.owner,false);
+  assert(!JSON.stringify(state).includes(room.secret));
+ }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
+});
 test('TV owner is spectator and guests retain six seats; input and packet policies reject malformed traffic',async()=>{
  const persist=await mkdtemp(join(tmpdir(),'trivia-server-tv-')),mf=runtime(persist),all=[];
  try {const room=await create(mf,false,9);const owner=await connect(mf,room,identity(9),'host');all.push(owner);const view=await owner.wait(x=>x.P);assert.equal(view.P.length,0);assert.equal(view.pv,null);

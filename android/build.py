@@ -14,6 +14,27 @@ def run(*args, **kwargs):
     return subprocess.run([str(a) for a in args], check=True, **kwargs)
 
 
+def prepare_assets(root, game):
+    """Keep the WebView origin/storage, but connect bundled assets to the cloud."""
+    game.mkdir(parents=True, exist_ok=True)
+    files = ['cloud-transport.js', 'diagnostics.js', 'app.js', 'engine.js', 'index.html', 'styles.css', 'manifest.webmanifest',
+             'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'icon.svg', 'og.jpg',
+             'audio', 'chars', 'data', 'fonts', 'src', 'ui', 'vendor']
+    for name in files:
+        src, dst = root / name, game / name
+        if src.is_dir():
+            shutil.copytree(src, dst)
+        else:
+            shutil.copy2(src, dst)
+    shutil.copy2(root / 'android/runtime-config.js', game / 'runtime-config.js')
+    index = (game / 'index.html').read_text()
+    index = index.replace('<script src="vendor/peerjs.min.js"></script>', '')
+    index = re.sub(r'connect-src [^;]+;',
+                   "connect-src 'self' https://trivia-tavern.chaos-ballad.workers.dev wss://trivia-tavern.chaos-ballad.workers.dev;", index)
+    (game / 'index.html').write_text(index)
+    (game / 'sw-register.js').write_text('// Game assets are bundled in the Android application.\n')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--android-jar', required=True, type=Path)
@@ -21,7 +42,7 @@ def main():
     ap.add_argument('--ecj', required=True, type=Path)
     ap.add_argument('--keystore', required=True, type=Path)
     ap.add_argument('--password-env', default='TRIVIA_SIGNING_PASSWORD')
-    ap.add_argument('--out', type=Path, default=Path(__file__).parent / 'build/Trivia-Tavern-v82.apk')
+    ap.add_argument('--out', type=Path, default=Path(__file__).parent / 'build/Trivia-Tavern-v83.apk')
     args = ap.parse_args()
     if not os.environ.get(args.password_env):
         ap.error('Signing password must be supplied through the named environment variable')
@@ -35,16 +56,7 @@ def main():
         work = Path(tmp)
         for name in ['classes', 'dex', 'assets/game', 'res/drawable']:
             (work / name).mkdir(parents=True)
-        files = ['runtime-config.js', 'cloud-transport.js', 'diagnostics.js', 'app.js', 'engine.js', 'index.html', 'styles.css', 'manifest.webmanifest',
-                 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'icon.svg', 'og.jpg',
-                 'audio', 'chars', 'data', 'fonts', 'src', 'ui', 'vendor']
-        for name in files:
-            src, dst = root / name, work / 'assets/game' / name
-            if src.is_dir():
-                shutil.copytree(src, dst)
-            else:
-                shutil.copy2(src, dst)
-        (work / 'assets/game/sw-register.js').write_text('// Game assets are bundled in the Android application.\n')
+        prepare_assets(root, work / 'assets/game')
         shutil.copy2(root / 'icon-192.png', work / 'res/drawable/icon.png')
         sources = sorted((root / 'android/src').rglob('*.java'))
         run('java', '-jar', args.ecj.resolve(), '-8', '-proc:none', '-classpath',
