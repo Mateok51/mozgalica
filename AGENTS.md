@@ -4,6 +4,8 @@ Ove smjernice vrijede za cijeli projekt. Prije izmjena provjeri aktualno stanje 
 
 ## Igračko iskustvo i prikaz
 
+- Zadrži piramidu kao završnicu. Bodovne razlike trebaju biti vidljive u početnom rasporedu; za najviše šest igrača različiti bodovi daju različite početne stepenice, a jednaki bodovi isti položaj. Pravila uspona drži jednostavnima: jedan točan odgovor jedna stepenica, dupli dvije, netočno bez pomaka; bez skrivenih dodatnih pomaka za brzinu ili niz. Veća piramida mora ostati cijela vidljiva na mobitelu.
+
 - Korisnik je odustao od 3D likova. Zadrži izvorne 2D likove i vizualni identitet; ne generiraj nove ilustracije bez novog zahtjeva. Nemoj rastezati ili deformirati cijele slike radi simulacije disanja ili animacije. Koristi postojeće naslikane poze i zasebne efekte oko lika.
 
 - Cijela stranica tijekom igre mora stati na ekran i ne smije zahtijevati skrolanje. Uzimaj u obzir male mobitele, sigurne rubove ekrana i kontrole zvuka.

@@ -22,10 +22,10 @@ const CFG = {
   // Vrijeme za odluke: faze završavaju čim svi odaberu, pa dulji rok ne usporava igru; dobiva ga samo tko čita prvi put.
   // Mjerilo: igrač mora stići pročitati sve na ekranu (oko 2 riječi u sekundi) i još odlučiti.
   intro: 3.5, vote: 15, voteShow: 3, roul: 2.6, power: 18, bet: 20, betEvents: [2, 3], cast: 1.25, fpower: 18, fstart: 11, startCap: 3, fqCrown: 20,
-  // piramida: napredak po stepenicama (gore je teže), početak = 30 % poredak + 70 % omjer bodova, najviše 4 jedinice; vrh = pitanje za krunu
-  pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3, pyrFxCap: 2, q: 20, reveal: null,
+  // piramida: 12 jednakih stepenica, točan +1 (dupli +2); različiti bodovi daju različite početke do 6. stepenice.
+  pyrReq: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], pyrMaxStart: 6, pyrFxCap: 2, q: 20, reveal: null,
   sort: 40, link: 40, chReveal: 8, fq: 10, fr: 5,
-  steps: 8, finaleMax: 20, maxPlayers: 6, nameMax: 12,
+  steps: 13, finaleMax: 20, maxPlayers: 6, nameMax: 12,
   // poštenost: mobitel sam javlja vrijeme odgovora, ali ono smije biti najviše ansGrace ms kraće od trenutka kad je odgovor stigao domaćinu
   // (pokriva kašnjenje mreže); inMax je najveća veličina jedne poruke s unosom u znakovima
   ansGrace: 3000, inMax: 4000,
@@ -166,7 +166,11 @@ function createGame(o) {
   const Math = Object.create(globalThis.Math);
   if (o.random) Math.random = o.random;
   const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-  const cfg = Object.assign({}, CFG, o.cfg || {});
+  // Saved v1 journals used the original uneven pyramid and speed/streak bonuses.
+  // Keep their replay deterministic; new rooms use the larger, uniform pyramid.
+  const pyramidRules = o.pyramidRules === 1 ? 1 : 2;
+  const legacyPyramid = pyramidRules === 1;
+  const cfg = Object.assign({}, CFG, legacyPyramid ? { pyrReq: [1, 1, 1, 2, 2, 2, 2], pyrMaxStart: 4, pyrRankW: 0.3, pyrStreak: 3 } : {}, o.cfg || {});
   cfg.steps = cfg.pyrReq.length + 1;   // zadnji red piramide je kruna (pobjeda)
   const F = Object.assign({}, FLAGS, o.flags || {});
   const planBase = (o.plan || PLAN).slice(), plan = planBase.slice();
@@ -1077,9 +1081,21 @@ function createGame(o) {
   const pyrTop = () => cfg.pyrReq.reduce((a, b) => a + b, 0);
   // jedinice napretka → stepenica, napredak unutar nje i koliko treba za sljedeću
   function stepOf(u) { let st = 0, acc = 0; while (st < cfg.pyrReq.length && acc + cfg.pyrReq[st] <= u) { acc += cfg.pyrReq[st]; st++; } return { s: st, p: u - acc, r: st < cfg.pyrReq.length ? cfg.pyrReq[st] : 0 }; }
-  // početni napredak: poredak (izjednačeni dijele isti) + stvarna bodovna razlika; sve unaprijed izračunato, bez slučajnosti
+  // Početni položaj koristi poredak i bodovne razlike; izjednačeni dijele isti.
+  // Nova pravila ostavljaju barem jednu cijelu stepenicu između različitih rezultata.
   // bodovi svih igrača → početne jedinice napretka (isti redoslijed); koristi je i projekcija "Posljednjeg poziva"
   function pyrUnitsOf(sc) {
+    if (!legacyPyramid) {
+      const scores = sc.map(x => Number.isFinite(x) ? Math.max(0, x) : 0);
+      const top = Math.max(0, ...scores);
+      if (!top) return scores.map(() => 0);
+      const distinct = [...new Set(scores)].sort((a, b) => a - b), max = Math.max(0, Math.floor(cfg.pyrMaxStart));
+      const extra = max - (distinct.length - 1);
+      // Reserve one step per distinct score, then use remaining space for score
+      // proportions. With six seats and starts 0–6, unequal scores never collapse.
+      return scores.map(x => extra >= 0 ? distinct.indexOf(x) + Math.round(x / top * extra)
+        : Math.round(distinct.indexOf(x) / Math.max(1, distinct.length - 1) * max));
+    }
     const n = sc.length, top = Math.max(0, ...sc);
     return sc.map((x) => {
       const better = sc.filter((y) => y > x).length, same = sc.filter((y) => y === x).length;
@@ -1135,19 +1151,20 @@ function createGame(o) {
   }
   function scoreFinale() {
     const TOP = pyrTop(), crown = new Set(G.crown || []);
-    // penjači: točan +1, najbrži točan +1 (ne u pitanju za krunu), dupli +1, svaki 3. točan zaredom +1; netočno = ostaje
+    // Svaka nova stepenica traži jedan točan odgovor; dupli daje još jednu.
+    // Stari zapisi zadržavaju izvorne bonuse radi točne obnove partije.
     const right = list().filter((p) => !crown.has(p.pid) && p.ans === G.q.a);
-    const fastest = G.q.crown ? null : right.slice().sort((a, b) => a.ansMs - b.ansMs)[0];
+    const fastest = !legacyPyramid || G.q.crown ? null : right.slice().sort((a, b) => a.ansMs - b.ansMs)[0];
     for (const p of list()) {
       p.ch = p.ans; p.mv = 0; p.ug = 0; p.sk = 0; p.fb = '';
       if (crown.has(p.pid)) { if (p.ans !== G.q.a) { p.cf++; p.fstr = 0; } continue; }
       if (p.ans !== G.q.a) { p.fstr = 0; continue; }
       p.fstr++;
       let g = 1 + (p === fastest ? 1 : 0) + (p.dbl ? 1 : 0);
-      if (p.fstr % cfg.pyrStreak === 0) { g++; p.sk = 1; }
+      if (legacyPyramid && p.fstr % cfg.pyrStreak === 0) { g++; p.sk = 1; }
       p.fb = (p === fastest ? 'f' : '') + (p.dbl ? 'd' : '') + (p.sk ? 's' : '');   // samo za prikaz: odakle je bonus
-      const before = p.fstep;
-      p.fu = Math.min(TOP, p.fu + g); p.ug = g;
+      const before = p.fstep, beforeUnits = p.fu;
+      p.fu = Math.min(TOP, p.fu + g); p.ug = legacyPyramid ? g : p.fu - beforeUnits;
       p.fstep = stepOf(p.fu).s; p.mv = p.fstep - before;
     }
     // kruna: tko je bio na vrhu i točno odgovori, pobjeđuje; ako ih je više, brži (vlastito vrijeme odgovora), pa više bodova
@@ -2926,7 +2943,7 @@ function createGame(o) {
     if (ph === 'majReveal') { v.mj.cnt = G.mj.cnt; v.mj.win = G.mj.win; v.mj.last = G.mj.last ? 1 : 0; }
     if (ph === 'cast' || ph === 'question' || ph === 'reveal' || ph === 'fq') v.ev = G.ev;
     if (G.throne) v.th = { n: cfg.thN, q: G.tq || 0, lead: G.tLead || null, last: G.tq >= cfg.thN ? 1 : 0, tie: G.tieP ? G.tieP.slice() : null, tw: G.tieWin || null, risk: cfg.thRisk, ch: G.tChg || null, t0: G.tq0 || null };
-    if (G.inFinale && !G.throne) { v.fin = 1; v.ftop = pyrTop(); v.req = cfg.pyrReq; if ((ph === 'fq' || ph === 'fr') ? (G.q && G.q.crown) : (ph === 'power' || ph === 'cast') && list().some((p) => (p.fu || 0) >= pyrTop())) v.crown = 1; }
+    if (G.inFinale && !G.throne) { v.fin = 1; v.pyrRules = pyramidRules; v.ftop = pyrTop(); v.req = cfg.pyrReq; if ((ph === 'fq' || ph === 'fr') ? (G.q && G.q.crown) : (ph === 'power' || ph === 'cast') && list().some((p) => (p.fu || 0) >= pyrTop())) v.crown = 1; }
     if (ph === 'reveal' || ph === 'fr') { v.cor = G.q.a; if (G.q.cnt) v.cnt = G.q.cnt; }
     if (ph === 'reveal' && G.pace && cfg.pace && cfg.pace[G.pace]) { const pc = cfg.pace[G.pace]; v.pc = G.pace; v.tl = [pc.w, pc.s]; }
     if (ph === 'sort' || ph === 'sortReveal') v.so = { a: G.so.a, b: G.so.b, it: G.so.items };
@@ -2968,7 +2985,8 @@ function createGame(o) {
 }
 // Versioned local journal: replay restores closures, timers and seeded random choices.
 function createRecoverableGame(options, saved) {
-  if (saved && (saved.version !== 1 || !Number.isInteger(saved.seed) || !Number.isFinite(saved.created) || !Number.isFinite(saved.time) || saved.time < saved.created || !Array.isArray(saved.events) || saved.events.length > 100000)) throw new Error('Neispravan zapis partije');
+  if (saved && (saved.version !== 1 || (saved.pyramidRules !== undefined && ![1, 2].includes(saved.pyramidRules)) || !Number.isInteger(saved.seed) || !Number.isFinite(saved.created) || !Number.isFinite(saved.time) || saved.time < saved.created || !Array.isArray(saved.events) || saved.events.length > 100000)) throw new Error('Neispravan zapis partije');
+  const pyramidRules = saved ? (saved.pyramidRules === undefined ? 1 : saved.pyramidRules) : options.pyramidRules === 1 ? 1 : 2;
   const seed = saved ? saved.seed : crypto.getRandomValues(new Uint32Array(1))[0];
   let randomState = seed, replaying = !!saved, logical = saved ? saved.created : Date.now();
   let offset = Date.now() - logical, seq = 0, engine;
@@ -2976,7 +2994,7 @@ function createRecoverableGame(options, saved) {
   const created = logical;
   const random = () => { randomState = (Math.imul(randomState, 1664525) + 1013904223) >>> 0; return randomState / 4294967296; };
   const time = () => replaying ? logical : Date.now() - offset;
-  const checkpoint = () => { if (!replaying && options.onCheckpoint) options.onCheckpoint({ version: 1, seed, created, time: time(), events }); };
+  const checkpoint = () => { if (!replaying && options.onCheckpoint) options.onCheckpoint({ version: 1, pyramidRules, seed, created, time: time(), events }); };
   const arm = (id, task) => { task.handle = setTimeout(() => {
     if (!pending.has(id)) return;
     pending.delete(id); logical = time(); events.push({ timer: id, at: logical });
@@ -2984,7 +3002,7 @@ function createRecoverableGame(options, saved) {
   }, Math.max(0, task.at - time())); };
   const schedule = (fn, ms) => { const id = ++seq, task = { fn, at: time() + Math.max(0, ms), handle: null }; pending.set(id, task); if (!replaying) arm(id, task); return id; };
   const cancel = (id) => { const task = pending.get(id); if (task) clearTimeout(task.handle); pending.delete(id); };
-  engine = createGame(Object.assign({}, options, { random, now: time, schedule, cancel, onChange: () => { if (!replaying && options.onChange) options.onChange(); } }));
+  engine = createGame(Object.assign({}, options, { pyramidRules, random, now: time, schedule, cancel, onChange: () => { if (!replaying && options.onChange) options.onChange(); } }));
   const calls = ['refresh', 'addPlayer', 'addBot', 'setBots', 'setAvatar', 'setInput', 'syncPeers', 'start', 'skip', 'restart', 'setOpt', 'pactAction', 'sfScenario'];
   if (saved) {
     for (const event of events) {
@@ -3016,7 +3034,7 @@ function createRecoverableGame(options, saved) {
     }
     checkpoint(); return result;
   };
-  api.checkpoint = () => ({ version: 1, seed, created, time: time(), events: JSON.parse(JSON.stringify(events)) });
+  api.checkpoint = () => ({ version: 1, pyramidRules, seed, created, time: time(), events: JSON.parse(JSON.stringify(events)) });
   return api;
 }
 

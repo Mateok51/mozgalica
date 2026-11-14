@@ -12,8 +12,8 @@ import xml.etree.ElementTree as ET
 
 ANDROID_NS = 'http://schemas.android.com/apk/res/android'
 VARIANTS = {
-    'existing': ('signing-certificate.sha256', 'Trivia-Tavern-v83.apk'),
-    'cloud': ('cloud-signing-certificate.sha256', 'Trivia-Tavern-Cloud-v83.apk'),
+    'existing': ('signing-certificate.sha256', 'Trivia-Tavern-v84.apk'),
+    'cloud': ('cloud-signing-certificate.sha256', 'Trivia-Tavern-Cloud-v84.apk'),
 }
 
 

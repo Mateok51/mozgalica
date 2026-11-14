@@ -38,6 +38,7 @@ jobs:
       - run: npm install --no-save --no-package-lock playwright@1.63.0
       - run: npx playwright install --with-deps webkit
       - run: BROWSER=webkit node tests/browser-phones.cjs
+      - run: BROWSER=webkit node tests/browser-pyramid-layout.cjs
 
   cloud:
     runs-on: ubuntu-latest
