@@ -29,10 +29,10 @@ Mobitel domaćina šalje administratorske naredbe; njegov izlazak ne zaustavlja 
    potrebni vanjski MQTT, PeerJS, baza, tajne ni plaćeni servisi.
 7. Kopiraj HTTPS adresu iz završenog deploymenta, oblika
    `https://trivia-tavern.TVOJ-PODDOMEN.workers.dev/`.
-8. Otvori adresu u pregledniku, napravi sobu i podijeli cijelu pozivnicu. Zatim
+8. Otvori adresu u pregledniku, napravi sobu i podijeli kod ili cijelu pozivnicu. Zatim
    testiraj pridruživanje s drugog mobitela, zaključavanje domaćinova ekrana i
-   ponovno povezivanje. Manualni četveroslovni kod bez tajnog dijela pozivnice
-   nije dovoljan za cloud sobu; koristi cijelu poveznicu/QR.
+   ponovno povezivanje. Od v83 igrač može ući četveroslovnim kodom i imenom;
+   puna poveznica/QR i dalje rade.
 
 Promjene na odabranoj produkcijskoj Git grani mogu pokretati nove Cloudflare
 izgradnje. Ako želiš pregled prije objave, produkciju veži uz `main`, a izmjene
@@ -41,11 +41,23 @@ objavljeno; konačan uspjeh potvrđuje završeni Cloudflare deploy i provjera u�
 
 ## APK i stare pozivnice
 
-Postojeći APK v81 sadrži lokalni web sadržaj i stare GitHub/P2P adrese. Ne prelazi
-sam na novi server. Nakon dobivanja stvarne Cloudflare adrese treba pripremiti
-novi APK s točno tom dopuštenom adresom za mrežu, pozivnice i Android linkove.
-Stare i nove sobe nisu ista mreža. Za početnu provjeru svi koriste novu web adresu;
-potom novi APK i preglednik mogu koristiti isti server i iste sobe.
+Javna adresa je `https://trivia-tavern.chaos-ballad.workers.dev/`. APK v83 koristi
+tu fiksnu adresu za HTTP/WebSocket, dijeljenje pozivnica i dolazne Android linkove.
+WebView zadržava postojeći lokalni origin i pohranu, a igru učitava iz paketa;
+unos koda ne otvara preglednik. CSP paketa dopušta vlastiti origin i točan
+Cloudflare servis. Worker dopušta dodatni origin `https://mateok51.github.io`
+za zahtjeve iz zapakiranog WebViewa. To ne daje administratorska prava.
+
+Za igrača je dijeljenje koda dovoljno za ulazak; server ne vraća tajnu sobe na
+temelju koda. Izričito poslana pogrešna tajna odbija se, a postojeći identitet
+i prava domaćina uvijek zahtijevaju spremljeni ključ igrača. TV prijava domaćina
+zahtijeva i tajnu sobe. Ograničenja broja igrača, početka partije i roka sobe
+vrijede za oba načina ulaska. Kod dijeli samo s pozvanim igračima.
+
+Stari GitHub/P2P APK-i ne prelaze sami na server; stara P2P soba i cloud soba nisu
+ista mreža. Potrebna je potpisana nadogradnja APK-a istim izvornim ključem.
+Prije uporabe v83 APK-a objavi i serverski popravak: stari Worker odbija kod bez
+tajne, a već instalirani APK ne dobiva nove zapakirane datoteke objavom servera.
 
 ## Lokalni razvoj i provjera
 

@@ -79,8 +79,10 @@
     }
     function connect(value) {
       close();
-      if (!value || !/^[A-Z]{4}$/.test(value.code) || !/^[A-Za-z0-9_-]{22}$/.test(value.secret) ||
-          !['host', 'player'].includes(value.role)) throw Error('Otvori punu pozivnicu ili skeniraj QR kod domaćina.');
+      const hasSecret = value && /^[A-Za-z0-9_-]{22}$/.test(value.secret);
+      if (!value || !/^[A-Z]{4}$/.test(value.code) || !['host', 'player'].includes(value.role) ||
+          (value.secret != null && !hasSecret) || (value.role === 'host' && !hasSecret))
+        throw Error('Provjeri kod sobe ili pozivnicu domaćina.');
       credentials = { ...value }; stopped = false; retries = 0;
       const expected = generation;
       admission = setTimeout(() => {

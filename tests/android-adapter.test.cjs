@@ -72,6 +72,8 @@ test('a closed native port falls back safely and missing browser vibration is ha
   const f=fixture(); f.connect();
   assert.equal(f.context.android.command('share-invite','https://mateok51.github.io/mozgalica/#ABCD-'+'a'.repeat(22)),true);
   assert.equal(JSON.parse(f.posted[0]).type,'share-invite');
+  assert.equal(f.context.android.command('share-invite','https://trivia-tavern.chaos-ballad.workers.dev/#ABCD-'+'a'.repeat(22)),true);
+  for(const url of ['https://other.workers.dev/#ABCD','https://trivia-tavern.chaos-ballad.workers.dev.evil.test/#ABCD','https://trivia-tavern.chaos-ballad.workers.dev/?next=evil#ABCD']) assert.equal(f.context.android.command('share-invite',url),false);
   assert.equal(f.context.android.command('share-invite','https://evil.test/#ABCD'),false);
   assert.equal(f.context.android.command('export-diagnostics',JSON.stringify({format:1,events:[]})),true);
   assert.equal(f.context.android.command('export-diagnostics','x'.repeat(32769)),false);

@@ -1,4 +1,31 @@
-# Trivia Tavern Android shell v81
+# Trivia Tavern Android shell v83
+
+## v83 cloud room codes
+
+The builder packages `android/runtime-config.js`, targeting only
+`https://trivia-tavern.chaos-ballad.workers.dev`. The document and local storage
+keep the existing GitHub WebView origin. Game assets remain bundled; joining does
+not navigate to a browser. The packaged CSP permits this exact HTTPS/WSS service,
+and the Worker allows the existing WebView origin through `ALLOWED_ORIGINS`.
+
+Players enter the four-letter code and their name without a prior invitation.
+The server admits them without returning the room secret. Existing identity keys,
+host permissions, lobby/seat limits and room expiry still apply. Full invitations
+and QR links continue to work; native sharing and incoming intents allow only the
+legacy URL or the exact configured Worker URL. Code-only players can resume with
+their stored identity after WebView recreation, without saving a room secret.
+
+Deploy the matching Worker update before distributing v83. Existing APK assets
+are not updated by a server deployment. Build with the original keystore so the
+APK can update installed copies; do not replace the signing key.
+
+Automated checks cover real Workers admission, mixed code/link players, denied
+identity/host takeover, six-seat/start limits and code-only reconnection. A Chromium
+WebView simulation uses the builder's actual packaged assets, original document
+origin, CSP, HTTP CORS, native resume message and durable player recovery. It does
+not run Android itself; physical phone/lifecycle acceptance is still required.
+
+## Shell capabilities and earlier changes
 
 The APK packages the shared web game and adds Android system-bar/inset handling,
 platform haptic feedback, predictive/legacy Back confirmation, and an origin-targeted
@@ -7,9 +34,9 @@ There is no general JavaScript interface or filesystem/native method access. The
 request camera, microphone or storage access. Haptics honor Android's touch-feedback
 setting and use touch-usage vibration attributes on Android 13+.
 
-Game protocol/rules are unchanged from web v76. Browser clients have no Android
-port and retain their existing behavior. QR invitations still use the existing
-GitHub Pages URL. Native invitation sharing opens the Android chooser with a validated full invitation
+Game rules are shared with the web game; cloud rooms are authoritative on the
+Worker. Browser clients have no Android port. QR invitations use the configured
+Cloudflare URL. Native invitation sharing opens the Android chooser with a validated full invitation
 URL. Anonymous diagnostics export opens the chooser with JSON text; there is no
 automatic upload or filesystem permission. The chooser is user controlled and
 opening it does not prove anything was sent. Invitation URLs include the room
@@ -38,7 +65,7 @@ python3 android/build.py \
   --keystore /private/path/trivia-test.p12
 ```
 
-The default output is `android/build/Trivia-Tavern-v81.apk` (ignored by Git).
+The default output is `android/build/Trivia-Tavern-v83.apk` (ignored by Git).
 Keep a secure, durable backup of the original keystore. Never commit it or its
 password. A different signer cannot update an installed copy in place.
 

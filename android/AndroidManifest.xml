@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="hr.triviatavern.app" android:versionCode="82" android:versionName="82.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="hr.triviatavern.app" android:versionCode="83" android:versionName="83.0">
 <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/>
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.VIBRATE"/>
@@ -11,5 +11,12 @@
 <category android:name="android.intent.category.BROWSABLE"/>
 <data android:scheme="https" android:host="mateok51.github.io" android:path="/mozgalica/"/>
 <data android:scheme="https" android:host="mateok51.github.io" android:path="/mozgalica/index.html"/>
+</intent-filter>
+<intent-filter android:autoVerify="false">
+<action android:name="android.intent.action.VIEW"/>
+<category android:name="android.intent.category.DEFAULT"/>
+<category android:name="android.intent.category.BROWSABLE"/>
+<data android:scheme="https" android:host="trivia-tavern.chaos-ballad.workers.dev" android:path="/"/>
+<data android:scheme="https" android:host="trivia-tavern.chaos-ballad.workers.dev" android:path="/index.html"/>
 </intent-filter>
 </activity></application></manifest>
