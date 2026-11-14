@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a same-identity Android APK using official SDK tools and an external key."""
+"""Build the original APK or its separate Cloud edition with a pinned signing key."""
 import argparse
 import os
 from pathlib import Path
@@ -8,10 +8,38 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
+import xml.etree.ElementTree as ET
+
+ANDROID_NS = 'http://schemas.android.com/apk/res/android'
+VARIANTS = {
+    'existing': ('signing-certificate.sha256', 'Trivia-Tavern-v83.apk'),
+    'cloud': ('cloud-signing-certificate.sha256', 'Trivia-Tavern-Cloud-v83.apk'),
+}
 
 
 def run(*args, **kwargs):
     return subprocess.run([str(a) for a in args], check=True, **kwargs)
+
+
+def prepare_manifest(root, work, variant):
+    original = root / 'android/AndroidManifest.xml'
+    if variant == 'existing':
+        return original
+    if variant != 'cloud':
+        raise ValueError('Unknown APK variant')
+    ET.register_namespace('android', ANDROID_NS)
+    tree = ET.parse(original)
+    manifest = tree.getroot()
+    application = manifest.find('application')
+    activity = application.find('activity')
+    name = activity.get('{' + ANDROID_NS + '}name')
+    if name.startswith('.'):
+        activity.set('{' + ANDROID_NS + '}name', manifest.get('package') + name)
+    manifest.set('package', 'hr.triviatavern.cloud')
+    application.set('{' + ANDROID_NS + '}label', 'Trivia Tavern Cloud')
+    result = work / 'AndroidManifest.xml'
+    tree.write(result, encoding='utf-8', xml_declaration=True)
+    return result
 
 
 def prepare_assets(root, game):
@@ -42,18 +70,20 @@ def main():
     ap.add_argument('--ecj', required=True, type=Path)
     ap.add_argument('--keystore', required=True, type=Path)
     ap.add_argument('--password-env', default='TRIVIA_SIGNING_PASSWORD')
-    ap.add_argument('--out', type=Path, default=Path(__file__).parent / 'build/Trivia-Tavern-v83.apk')
+    ap.add_argument('--variant', choices=VARIANTS, default='existing')
+    ap.add_argument('--out', type=Path)
     args = ap.parse_args()
     if not os.environ.get(args.password_env):
         ap.error('Signing password must be supplied through the named environment variable')
     root = Path(__file__).resolve().parents[1]
-    manifest = root / 'android/AndroidManifest.xml'
     bt = args.build_tools.resolve()
-    args.out = args.out.resolve()
+    certificate, filename = VARIANTS[args.variant]
+    args.out = (args.out or root / 'android/build' / filename).resolve()
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    expected = (root / 'android/signing-certificate.sha256').read_text().strip()
+    expected = (root / 'android' / certificate).read_text().strip()
     with tempfile.TemporaryDirectory(prefix='trivia-apk-') as tmp:
         work = Path(tmp)
+        manifest = prepare_manifest(root, work, args.variant)
         for name in ['classes', 'dex', 'assets/game', 'res/drawable']:
             (work / name).mkdir(parents=True)
         prepare_assets(root, work / 'assets/game')
