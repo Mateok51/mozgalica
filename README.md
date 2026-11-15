@@ -23,6 +23,19 @@ Nema TV preglednika? Otvori **Otvori igru na TV-u** na jednom mobitelu i zrcali 
 
 Kad igru vodi TV, pitanje se prikazuje samo na TV-u, a na mobitelima su ponuđeni odgovori, pa svi gledaju u isti ekran. Domaćin to može isključiti u „Postavke igre” na TV-u (npr. kad netko ne vidi ekran). U igri koju vodi mobitel pitanje je uvijek i na mobitelima.
 
+## Piramida od v84
+
+Piramida ima 12 stepenica do vrha i zasebno pitanje za krunu. Početni raspored je
+između podnožja i 6. stepenice. Za najviše šest igrača različiti bodovi daju različite
+početne stepenice, a izjednačeni bodovi isto mjesto. Poredak osigurava razmak;
+udio bodova prema vodećem daje dodatnu prednost unutar početnog raspona.
+
+Točan odgovor penje jednu stepenicu, dupli dvije, a netočan ili neodgovoren ne
+pomiče igrača. Nema dodatnih pomaka za brzinu ili niz točnih odgovora. Dolazak na
+vrh ne preskače pitanje za krunu; pri više točnih na vrhu ostaje postojeća prednost
+bržeg odgovora. Obnovljene stare sobe zadržavaju stara pravila; nova pravila vrijede
+kad se otvori nova soba.
+
 ## Instalacija na mobitel
 Chrome → izbornik ⋮ → **Dodaj na početni zaslon** (ili gumb *Instaliraj kao aplikaciju* na početnom ekranu igre).
 

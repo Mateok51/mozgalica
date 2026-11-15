@@ -1,4 +1,14 @@
-# Trivia Tavern Android shell v83
+# Trivia Tavern Android shell v84
+
+## v84 expanded, simpler pyramid
+
+New parties use 12 equal climb steps plus the crown question. Distinct scores have
+distinct starting steps for up to six players; equal scores share a step. Correct
+answers move one step, Double moves two, and wrong/missing answers leave the player
+in place. Speed and streak bonuses no longer change climb distance. The result
+shows the actual steps moved and the new numbered step. Legacy recovery journals
+retain their original pyramid rules until a new room is opened. Install the Cloud edition over Cloud v83
+with its same pinned Cloud signing key; the original application stays separate.
 
 ## v83 cloud room codes
 
@@ -65,9 +75,24 @@ python3 android/build.py \
   --keystore /private/path/trivia-test.p12
 ```
 
-The default output is `android/build/Trivia-Tavern-v83.apk` (ignored by Git).
+The default output is `android/build/Trivia-Tavern-v84.apk` (ignored by Git).
 Keep a secure, durable backup of the original keystore. Never commit it or its
 password. A different signer cannot update an installed copy in place.
+
+### Separate Cloud edition
+
+When the original signing key is unavailable, use `--variant cloud` with the
+separate Cloud signing keystore. This builds `Trivia-Tavern-Cloud-v84.apk` as
+`hr.triviatavern.cloud`, labeled **Trivia Tavern Cloud**. It installs beside
+`hr.triviatavern.app`; the original application and its data remain intact. The
+Cloud edition has its own Android private storage, so saved identities and settings
+start fresh. Both editions use the same shared Java source; the Cloud manifest
+explicitly names `hr.triviatavern.app.MainActivity`.
+
+`cloud-signing-certificate.sha256` pins the separate public certificate. The
+original certificate pin remains unchanged. Future Cloud updates must use this
+same Cloud keystore. Keep its keystore, alias and password in a private durable
+backup outside Git; this workspace alone is not a permanent key backup.
 
 ## Validation and phone checks
 

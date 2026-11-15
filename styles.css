@@ -2877,3 +2877,57 @@
 @media (prefers-reduced-motion: reduce) {
   .character-frame[data-effect]:not([data-effect="none"])::after { animation: none; opacity: .22; box-shadow: none; }
 }
+
+/* Dvanaest jednakih stepenica: zbijamo kamen, a likovi i tekst ostaju čitljivi. */
+.pyramid.expanded { --ov: calc(var(--H) * .6); --climber: 40px; padding-top: calc(var(--H) * 1.4); }
+.pyramid.expanded .pstep { flex: none; }
+.pyramid.expanded .pstep .lv { font-size: max(10px, calc(var(--H) * .3)); color: #ffe4b8; }
+.pyramid.expanded .here { gap: 2px; }
+.pyramid.expanded .pstep .climber { width: var(--climber); }
+.pyramid.expanded .here .climber + .climber { margin-left: 0; }
+/* Susjedne zauzete stepenice imaju odvojene staze; penjanje ostaje okomito. */
+.pyramid.expanded .pstep:nth-child(4n + 1):has(.climber:only-child) .here { left: -39%; right: 39%; }
+.pyramid.expanded .pstep:nth-child(4n + 2):has(.climber:only-child) .here { left: -13%; right: 13%; }
+.pyramid.expanded .pstep:nth-child(4n + 3):has(.climber:only-child) .here { left: 13%; right: -13%; }
+.pyramid.expanded .pstep:nth-child(4n):has(.climber:only-child) .here { left: 39%; right: -39%; }
+.phone .phone-pyr.big .pyramid.expanded { --H: 26px; }
+.phone .fs:has(.pyramid.expanded) { gap: 4px; }
+.phone .fs:has(.pyramid.expanded) .fs-rows { max-height: 92px; }
+.phone .fs:has(.pyramid.expanded) .fs-rule { line-height: 1.2; }
+.phone .fs:has(.pyramid.expanded) .fs-row .nm { white-space: nowrap; text-overflow: ellipsis; }
+.phone .fs .phone-pyr.big .pyramid.expanded { --H: 26px; }
+.tv .pyramid.expanded { --H: clamp(38px, 6vh, 64px); --climber: clamp(40px, 5.5vh, 60px); }
+.tv:has(.pyramid.expanded) > .tv-top { flex-wrap: nowrap; }
+.tv:has(.pyramid.expanded) > .tv-top .tv-sub { min-width: 0; }
+.tv .finale-q:has(.pyramid.expanded) .tv-mid { gap: 6px; }
+.tv .finale-q:has(.pyramid.expanded) .fs-row { padding-block: 2px; }
+.tv .finale-q:has(.pyramid.expanded) .ht-ready { margin-top: 2px; }
+.tv .finale-q:has(.pyramid.expanded) .lineup { flex-wrap: nowrap; gap: 12px; }
+@media (max-height: 650px) {
+  .tv:has(.pyramid.expanded) { gap: 2px; }
+  .tv:has(.pyramid.expanded) > .timer { --h: 20px; margin-block: 0; }
+  .phone .fs:has(.pyramid.expanded) { gap: 0; }
+  .phone .fs:has(.pyramid.expanded) .ht-ready { margin-top: 2px; }
+  .phone .fs:has(.pyramid.expanded) .fs-rows { max-height: 44px; }
+  .phone .fs .phone-pyr.big .pyramid.expanded { --H: 24px; }
+  .phone .phone-pyr.big .pyramid.expanded { --H: 24px; }
+  .phone .pyramid.expanded { --climber: 38px; }
+  .tv .finale-q:has(.pyramid.expanded) .tv-mid { gap: 2px; }
+  .tv .finale-q:has(.pyramid.expanded) .fs-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tv .finale-q:has(.pyramid.expanded) .fs-row { grid-template-columns: 32px minmax(0, 1fr) auto; gap: 2px 6px; padding: 4px 8px; }
+  .tv .finale-q:has(.pyramid.expanded) .fs-row .mini { grid-row: 1 / 3; width: 32px; height: 32px; }
+  .tv .finale-q:has(.pyramid.expanded) .fs-row .nm { grid-column: 2 / -1; }
+  .tv .finale-q:has(.pyramid.expanded) .fs-row .fs-sc { grid-column: 2; text-align: left; }
+  .tv .finale-q:has(.pyramid.expanded) .fs-row .fs-go { grid-column: 3; text-align: right; }
+}
+@media (max-height: 850px) {
+  .tv .finale-q.crownq:has(.pyramid.expanded) .q-text { min-height: 88px; padding: 4px 8px; border-width: 8px 16px; border-image-width: 8px 16px; }
+  .tv .finale-q.crownq:has(.pyramid.expanded) .opt { min-height: 66px; border-width: 8px 24px; border-image-width: 8px 24px; }
+  .tv .finale-q:has(.pyramid.expanded) .powers-legend { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+  .tv .finale-q:has(.pyramid.expanded) .pw-mini { min-height: 108px; aspect-ratio: auto; }
+  .tv .finale-q:has(.pyramid.expanded) .pw-mini > div { top: 4%; bottom: 4%; }
+  .tv .finale-q:has(.pyramid.expanded) .lineup { flex-wrap: nowrap; gap: 6px; padding-top: 2px; }
+  .tv .finale-q:has(.pyramid.expanded) .who { width: min(14%, 60px); gap: 2px; }
+  .tv .finale-q:has(.pyramid.expanded) .who .fxrow:empty { display: none; }
+  .tv .finale-q:has(.pyramid.expanded) .who .bob { max-width: 40px; }
+}

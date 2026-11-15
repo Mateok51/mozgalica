@@ -68,7 +68,7 @@ public final class NativePayloads {
             JSONObject report = new JSONObject(text);
             keys(report, "format", "webVersion", "environment", "online", "events");
             if (!(report.get("format") instanceof Number) || report.getDouble("format") != 1
-                || !"83".equals(report.get("webVersion"))
+                || !"84".equals(report.get("webVersion"))
                 || !(report.get("online") instanceof Boolean)
                 || !("web".equals(report.get("environment")) || "android".equals(report.get("environment")))) return null;
             JSONArray events = report.getJSONArray("events"), clean = new JSONArray();
@@ -91,7 +91,7 @@ public final class NativePayloads {
                 }
                 clean.put(row);
             }
-            return new JSONObject().put("format", 1).put("webVersion", "83")
+            return new JSONObject().put("format", 1).put("webVersion", "84")
                 .put("environment", report.get("environment")).put("online", report.get("online"))
                 .put("events", clean).toString(2);
         } catch (Exception e) { return null; }

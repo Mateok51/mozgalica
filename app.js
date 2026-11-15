@@ -1876,7 +1876,7 @@
 
   const meOf = (d) => d && d.P.find((p) => p.id === PID);
   const PW_SHORT = { led: 'Zaledi protivniku odgovore.', sluz: 'Zalij protivniku ekran sluzi.', grick: 'Protivniku pojede dio slova.', bomba: 'Dodir bombe zaklanja ekran na 2 s.', dupli: 'Točan odgovor vrijedi duplo.', pola: 'Makni dva netočna odgovora.', stit: 'Blokira napade u sljedećem pitanju.', utjeha: 'Netočno: +250. Bez odgovora: +0.', oklada: 'Oboje točno: bonus kao taj igrač.' };
-  const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? 'Točan odgovor: dodatni napredak.' : PW_SHORT[k] || POWERS[k].d);
+  const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? (d.pyrRules === 2 ? 'Točan odgovor: +2 stepenice.' : 'Točan odgovor: dodatni napredak.') : PW_SHORT[k] || POWERS[k].d);
   const stepTxt = (n) => (n ? n + '. stepenice' : 'dna piramide');
   const isLocalHost = () => mode === 'demo' || (mode === 'hostp' && !cloudSession);
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
@@ -2496,7 +2496,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v83</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v84</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
@@ -3164,12 +3164,22 @@
     return 1100 + order.findIndex((x) => x.id === p.id) * 650;
   }
   const fsLabel = (p) => (p.st ? p.st + '. stepenica' : 'podnožje') + (p.fr > 1 && p.fp ? ' · ' + p.fp + '/' + p.fr : '');
+  function pyramidRule(d) {
+    return d.pyrRules === 2
+      ? 'Točno +1 stepenica · dupli +2 · netočno ostaješ'
+      : 'Točan = napredak, najbrži +1, svaki 3. zaredom +1';
+  }
+  function pyramidIntro(d) {
+    return d.pyrRules === 2
+      ? 'Različiti bodovi daju različite početne stepenice. Točno +1, dupli +2; netočno ostaješ. Na vrhu čeka pitanje za krunu.'
+      : 'Više bodova = viša početna stepenica. Od 4. stepenice svaka traži 2 točna odgovora. Na vrhu čeka pitanje za krunu.';
+  }
   function fsRows(d) {
     const el = Math.max(0, d.dur - d.ms);
     return '<div class="fs-rows" style="--el:' + el + 'ms">' + d.P.slice().sort((a, b) => (b.fsc || 0) - (a.fsc || 0) || (a.n < b.n ? -1 : 1)).map((p) => {
       const end = fsEnd(d, p);
       return '<div class="fs-row' + (p.id === PID ? ' me' : '') + '" style="--fe:' + end + 'ms"><span class="mini">' + avSvg(p.a, 'idle') + '</span><span class="nm">' + esc(p.n) + '</span>' +
-        '<span class="fs-sc" data-ck="fs' + esc(p.id) + '" data-cu="0" data-to="' + (p.fsc || 0) + '" data-cud="' + Math.round(150 - el) + '" data-cdur="' + (end - 150) + '">' + (p.fsc || 0) + '</span><span class="fs-go">→ ' + esc(fsLabel(p)) + '</span></div>';
+        '<span class="fs-sc" data-ck="fs' + esc(p.id) + '" data-cu="0" data-to="' + (p.fsc || 0) + '" data-cud="' + Math.round(150 - el) + '" data-cdur="' + (end - 150) + '">' + (p.fsc || 0) + '</span><span class="fs-go" aria-label="Početak: ' + esc(fsLabel(p)) + '">→ ' + esc(d.pyrRules === 2 ? (p.st || 0) + '.' : fsLabel(p)) + '</span></div>';
     }).join('') + '</div>';
   }
   let fsSoundKey = '';
@@ -3184,6 +3194,7 @@
   function progTxt(d, me) {
     if (me.st >= d.steps) return '👑 Kruna je tvoja!';
     if (me.top) return '👑 Na vrhu si! Točan odgovor na pitanje za krunu = pobjeda.';
+    if (d.pyrRules === 2) return 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1) + ' · točno +' + (me.d ? 2 : 1);
     const need = (me.fr || 1) - (me.fp || 0);
     return 'Napredak ' + (me.fp || 0) + '/' + (me.fr || 1) + ' · još ' + need + (need === 1 ? ' točan' : ' točna') + ' do ' + ((me.st || 0) + 1 === d.steps - 1 ? 'vrha' : ((me.st || 0) + 1) + '. stepenice');
   }
@@ -3563,7 +3574,7 @@
       case 'fstart': {
         h = tvTop(d, 'Bodovi iz kviza određuju početak') +
           '<div class="finale-q"><div class="tv-mid" style="justify-content:center"><div class="tv-title">Tko kreće odakle?</div>' + fsRows(d) +
-          '<div class="tie-note">Više bodova = viša početna stepenica. Od 4. stepenice svaka traži 2 točna odgovora. Na vrhu čeka pitanje za krunu.</div>' +
+          '<div class="tie-note">' + esc(pyramidIntro(d)) + '</div>' +
           (d.readyIntro ? howtoReady(d) : '<div class="actions"><button class="btn ghost" id="skip">Dalje ▶︎</button></div>') + '</div>' + pyramidHtml(d, false) + '</div>';
         break;
       }
@@ -3572,7 +3583,10 @@
         const cr = !!d.crown;
         const tf = d.q.o.map((o, i) => '<div class="opt o' + (cr ? i : i === 0 ? 3 : 0) + (rev ? (i === d.cor ? ' correct' : ' dim') : '') + '"' + (cr ? '' : ' style="justify-content:center"') + '>' + (cr ? '<span class="shape">' + SHAPES[i] + '</span>' : '') + '<span class="txt"' + (cr ? '' : ' style="text-align:center"') + '>' + esc(o) + '</span></div>').join('');
         const tops = d.P.filter((p) => p.top).map((p) => p.n);
-        h = tvTop(d, cr ? '👑 Pitanje za krunu! ' + esc(tops.join(' i ')) + (tops.length > 1 ? ' — točan i brži pobjeđuje' : ' — točan odgovor = pobjeda') : 'Točno ili netočno? Točan = napredak, najbrži +1, svaki 3. zaredom +1') + (rev ? '' : timerHtml(3000)) +
+        const crownTitle = d.pyrRules === 2
+          ? (tops.length > 1 ? '👑 Kruna · točan i brži pobjeđuje' : '👑 Kruna · točan odgovor donosi pobjedu')
+          : '👑 Pitanje za krunu! ' + esc(tops.join(' i ')) + (tops.length > 1 ? ' — točan i brži pobjeđuje' : ' — točan odgovor = pobjeda');
+        h = tvTop(d, cr ? crownTitle : pyramidRule(d)) + (rev ? '' : timerHtml(3000)) +
           '<div class="finale-q' + (cr ? ' crownq' : '') + '"><div class="tv-mid" style="justify-content:center">' + (cr ? '<div class="crown-k">' + esc(d.q.c) + '</div>' : '') + '<div class="q-text">' + esc(d.q.t) + '</div><div class="' + (cr ? 'opts' : 'tf-row') + '">' + tf + '</div>' + (rev ? tdLine(d) : evHtml(d)) + '</div>' +
           pyramidHtml(d, rev, { delay: 1000 }) + '</div>';
         break;
@@ -3607,7 +3621,7 @@
     const BN = { f: '⚡', d: '✖︎2', s: '🔥' };
     let rows = '', idx = 0;
     for (let s = d.steps; s >= 0; s--) {
-      const w = s === 0 ? 100 : 100 - (s - 1) * (59 / Math.max(1, d.steps - 1));
+      const w = s === 0 ? 100 : 100 - (s - 1) * ((d.steps > 8 ? 39 : 59) / Math.max(1, d.steps - 1));
       const here = d.P.filter((p) => (p.st || 0) === s).map((p) => {
         // uvod: svi kreću iz podnožja i penju se stepenicu po stepenicu kad im završi brojanje bodova
         const mv = intro ? (p.st || 0) : (p.mv || 0), go = (rev || intro) && mv > 0;
@@ -3627,13 +3641,13 @@
           bar = '<span class="pbar' + (kind === 'part' || (kind === 'lvl' && cur.p) ? ' fill' : '') + '" style="--a:' + (from / cur.r).toFixed(3) + ';--b:' + (cur.p / cur.r).toFixed(3) + '"><i></i><b>' + cur.p + '/' + cur.r + '</b></span>';
         }
         const cls = 'climber' + (go ? ' go' + (intro ? ' walk' : mv > 1 ? ' multi m' + Math.min(mv, 8) : '') : '') + (kind ? ' k-' + kind : '') + (p.top ? ' ontop' : '') + (p.id === PID ? ' me' : '');
-        return '<span class="' + cls + '" style="--mv:' + (mv || 0) + ';--cd:' + cd + 'ms;--el:' + (rev || intro ? el : 0) + 'ms">' +
+        return '<span class="' + cls + '" data-player-id="' + esc(p.id) + '" style="--mv:' + (mv || 0) + ';--cd:' + cd + 'ms;--el:' + (rev || intro ? el : 0) + 'ms">' +
           badge + (o.you && p.id === PID && !kind ? '<span class="tag-you">Ti</span>' : '') +
           avSvg(p.a, mood) + bar + '<span class="cn">' + esc(p.n) + '</span></span>';
       }).join('');
-      rows += '<div class="pstep' + (s === 0 ? ' base' : '') + (s === d.steps ? ' top crown' : '') + (s === d.steps - 1 ? ' summit' : '') + '" style="width:' + w.toFixed(1) + '%"><span class="lv">' + (s === d.steps ? '👑' : s) + '</span><span class="here">' + here + '</span></div>';
+      rows += '<div class="pstep' + (s === 0 ? ' base' : '') + (s === d.steps ? ' top crown' : '') + (s === d.steps - 1 ? ' summit' : '') + '" data-level="' + s + '" style="width:' + w.toFixed(1) + '%"><span class="lv">' + (s === d.steps ? '👑' : s) + '</span><span class="here">' + here + '</span></div>';
     }
-    return '<div class="pyramid' + (intro ? ' intro' : '') + (rev && !intro ? ' res' : '') + '">' + rows + '</div>';
+    return '<div class="pyramid' + (d.steps > 8 ? ' expanded' : '') + (intro ? ' intro' : '') + (rev && !intro ? ' res' : '') + '" style="--levels:' + (d.steps + 1) + '">' + rows + '</div>';
   }
 
   let lastLobbyFeedback = null;
@@ -3714,7 +3728,7 @@
     const me = meOf(d);
     const demoBar = (mode === 'demo' && /demotv/.test(location.search) ? '<div class="demo-bar"><button class="btn ghost" id="toTv">TV</button></div>' : '') +
       (netNote ? '<div class="err net-reconnecting" role="status" style="display:flex;justify-content:space-between;align-items:center;gap:8px">' + esc(netNote) + '<button class="home-link" id="connectionDiagnostics">Pomoć</button><button class="btn ghost" id="leave2">Izađi</button></div>' : '');
-    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + characterFrame(d, me) + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && ((me.g || 0) + (me.ub || 0)) > 0 ? ' data-ck="hud" data-cu="' + (me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
+    const head = pactHead(d, me, me ? '<div class="p-top"><span class="p-me"><span class="mini">' + characterFrame(d, me) + '</span><span>Ti</span></span><span>' + esc(hudRound(d.rl, d.nr)) + '</span><span data-bk="hud"' + (d.ph === 'reveal' && ((me.g || 0) + (me.ub || 0)) > 0 ? ' data-ck="hud" data-cu="' + (me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0)) + '" data-to="' + me.sc + '" data-suf=" b" data-cud="' + (2150 + whT(d).end) + '" data-cdur="500"' : '') + '>' + (d.fin ? (me.st >= d.steps ? '👑 Kruna' : me.top ? '👑 Vrh' : 'Stepenica ' + (me.st || 0) + '/' + (d.steps - 1)) : me.sc + ' b') + '</span></div>' : '');
     const center = (inner) => { $app.className = 'screen phone center' + (freshP ? ' fresh' : ''); return inner; };
     let h = '';
     if (!me) {
@@ -3846,8 +3860,8 @@
       case 'trisk': h = head + riskPhone(d, me); break;
       case 'fstart': {
         const el = Math.max(0, d.dur - d.ms);
-        h = head + '<div class="fs" style="--el:' + el + 'ms;--fe:' + fsEnd(d, me) + 'ms"><div class="p-title">Tko kreće odakle?</div>' + fsRows(d) +
-          '<div class="fs-me">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class="p-sub fs-rule">Točni odgovori te penju. Na vrhu čeka pitanje za krunu.</div><div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div>' + (d.readyIntro ? howtoReady(d) : '') + '</div>';
+        h = head + '<div class="fs" style="--el:' + el + 'ms;--fe:' + fsEnd(d, me) + 'ms"><div class="p-title">' + (d.pyrRules === 2 ? 'Početak uspona' : 'Tko kreće odakle?') + '</div>' + fsRows(d) +
+          '<div class="fs-me">Krećeš s: <b>' + esc(fsLabel(me)) + '</b></div><div class="p-sub fs-rule">' + esc(d.pyrRules === 2 ? 'Točno +1, dupli +2, netočno 0. Na vrhu: pitanje za krunu.' : 'Točni odgovori te penju. Na vrhu čeka pitanje za krunu.') + '</div><div class="phone-pyr big">' + pyramidHtml(d, false, { you: true }) + '</div>' + (d.readyIntro ? howtoReady(d) : '') + '</div>';
         break;
       }
       case 'fq': h = head + finalePhone(d, me); break;
@@ -3857,7 +3871,10 @@
         const tf = '<div class="rv-opts' + (d.crown ? '' : ' two') + '">' + d.q.o.map((o, i) => '<div class="p-opt o' + (d.crown ? i : i === 0 ? 3 : 0) + (i === d.cor ? ' rv-ok' + (mine === i ? ' mine' : '') : mine === i ? ' rv-bad' : ' rv-dim') + '"><span class="otxt">' + esc(o) + '</span></div>').join('') + '</div>';
         const wasTop = d.crown && (me.top || me.st >= d.steps);
         const note = me.st >= d.steps ? '👑 KRUNA JE TVOJA!' : wasTop ? (mine >= 0 ? 'Kruna izmiče! Ostaješ na vrhu — nova prilika u sljedećem pitanju.' : 'Vrijeme je isteklo · ostaješ na vrhu') :
-          ok ? 'Točno! +' + (me.ug || 1) + (me.fb ? ' ' + me.fb.split('').map((c) => ({ f: '⚡', d: '✖︎2', s: '🔥' })[c] || '').join('') : '') + (me.top ? ' · 👑 na vrhu!' : me.mv ? ' · ⬆︎ ' + me.st + '. stepenica' : ' · napredak ' + (me.fp || 0) + '/' + (me.fr || 1)) : mine >= 0 ? 'Netočno · napredak ostaje' : 'Vrijeme je isteklo';
+          ok ? d.pyrRules === 2
+            ? 'Točno! +' + (me.ug || 1) + ((me.ug || 1) === 1 ? ' stepenica' : ' stepenice') + (me.fb === 'd' ? ' · dupli' : '') + (me.top ? ' · 👑 na vrhu!' : ' · sada ' + me.st + '. stepenica')
+            : 'Točno! +' + (me.ug || 1) + (me.fb ? ' ' + me.fb.split('').map((c) => ({ f: '⚡', d: '✖︎2', s: '🔥' })[c] || '').join('') : '') + (me.top ? ' · 👑 na vrhu!' : me.mv ? ' · ⬆︎ ' + me.st + '. stepenica' : ' · napredak ' + (me.fp || 0) + '/' + (me.fr || 1))
+          : mine >= 0 ? 'Netočno · ostaješ na ' + me.st + '. stepenici' : 'Vrijeme je isteklo · ostaješ na ' + me.st + '. stepenici';
         h = head + '<div class="rv" style="--el:' + el + 'ms"><div class="rv-a">' + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + tf + '<div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div></div>' +
           '<div class="rv-b"><div class="fin-note' + (ok ? '' : ' zero') + '">' + note + '</div>' + (d.ntv ? '<div class="phone-pyr big">' + pyramidHtml(d, true, { delay: 2000, you: true }) + '</div>' + '<div class="p-sub">' + esc(progTxt(d, me)) + '</div>' : progMeter(d, me)) + tdLine(d) + '</div></div>';
         break;
@@ -4429,7 +4446,7 @@
       if (fsRows) {
         fsRows.style.maxHeight = '';
         const over = measure(1) - available;
-        if (over > 1) fsRows.style.maxHeight = Math.max(58, Math.floor(fsRows.getBoundingClientRect().height - over - 4)) + 'px';
+        if (over > 1) fsRows.style.maxHeight = Math.max(A.querySelector('.pyramid.expanded') ? 38 : 58, Math.floor(fsRows.getBoundingClientRect().height - over - 4)) + 'px';
       }
       // Dugačak izbor moći ili igrača skrola se unutar popisa, umjesto da smanji cijeli ekran.
       const choices = S && S.ph === 'power' && A.querySelector(L.pw ? '.targets' : '.pw-cards');
@@ -4853,7 +4870,7 @@
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
     const cr = !!d.crown;
     const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (cr ? i : i === 0 ? 3 : 0) + (locked ? ' locked' : '') + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '>' + (cr ? '<span class="shape">' + SHAPES[i] + '</span>' : '') + '<span class="otxt">' + optText(o, i) + '</span></button>').join('');
-    const buffs = (me.uc ? '<span class="tag">Novčić utjehe</span>' : '') + (me.d ? '<span class="tag">×2 Dodatni napredak</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
+    const buffs = (me.uc ? '<span class="tag">Novčić utjehe</span>' : '') + (me.d ? '<span class="tag">' + (d.pyrRules === 2 ? 'Dupli: točan odgovor +2 stepenice' : '×2 Dodatni napredak') + '</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';
     return timerHtml(3000) +

@@ -28,7 +28,7 @@ public class NativePayloadsTest {
             check(!NativePayloads.invitation(bad));
             check(NativePayloads.incomingInvitation(bad) == null);
         }
-        JSONObject report = new JSONObject().put("format", 1).put("webVersion", "83")
+        JSONObject report = new JSONObject().put("format", 1).put("webVersion", "84")
             .put("environment", "android").put("online", true).put("events", new JSONArray()
                 .put(new JSONObject().put("elapsedMs", 1).put("type", "answer_sent").put("phase", "question")));
         check(!NativePayloads.boundedJson("[[[[[[[[[[0]]]]]]]]]]", 40000, 3));

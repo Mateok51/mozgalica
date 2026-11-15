@@ -15,8 +15,11 @@ const assert = require('node:assert/strict');
   for (const item of first) assert.equal(item.animation,'none',item.name+' must not animate the complete illustration');
   await page.waitForTimeout(350);
   assert.deepEqual(await inspect(),first,'artwork size and transforms remain fixed while surrounding aura animates');
-  await page.waitForTimeout(650);
-  assert.equal(await page.locator('.character-frame').first().evaluate(e=>getComputedStyle(e,'::after').opacity),'0','cue expires instead of looping');
+  const aura=await page.locator('.character-frame').first().evaluate(e=>({name:getComputedStyle(e,'::after').animationName,iterations:getComputedStyle(e,'::after').animationIterationCount}));
+  assert.equal(aura.name,'characterAura','the surrounding cue is present');
+  assert.equal(aura.iterations,'1','the cue runs once');
+  // CI may apply the animation after image decode or a delayed compositor frame.
+  await page.waitForFunction(()=>getComputedStyle(document.querySelector('.character-frame'),'::after').opacity==='0',{},{timeout:2500});
   await page.emulateMedia({reducedMotion:'reduce'});
   assert.equal(await page.locator('.character-frame').first().evaluate(e=>getComputedStyle(e,'::after').animationName),'none');
   assert.equal(await page.locator('.character-frame').first().evaluate(e=>getComputedStyle(e,'::after').opacity),'0.22');
