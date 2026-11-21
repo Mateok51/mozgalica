@@ -39,6 +39,9 @@ jobs:
       - run: npx playwright install --with-deps webkit
       - run: BROWSER=webkit node tests/browser-phones.cjs
       - run: BROWSER=webkit node tests/browser-pyramid-layout.cjs
+      - run: BROWSER=webkit node tests/browser-safari-effects.cjs
+      - run: BROWSER=webkit node tests/browser-safari-viewport.cjs
+      - run: BROWSER=webkit node tests/browser-safari-cloud-recovery.cjs
 
   cloud:
     runs-on: ubuntu-latest
