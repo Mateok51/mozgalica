@@ -23,6 +23,31 @@ Nema TV preglednika? Otvori **Otvori igru na TV-u** na jednom mobitelu i zrcali 
 
 Kad igru vodi TV, pitanje se prikazuje samo na TV-u, a na mobitelima su ponuđeni odgovori, pa svi gledaju u isti ekran. Domaćin to može isključiti u „Postavke igre” na TV-u (npr. kad netko ne vidi ekran). U igri koju vodi mobitel pitanje je uvijek i na mobitelima.
 
+## Safari pouzdanost od v85
+
+Sluz provjerava je li njezin sloj još aktivan prije obrade poteza. Zamjena prikaza
+tijekom brisanja više ne računa beskonačan broj koraka na uklonjenom elementu;
+capture se čisti pri završetku, promjeni faze i odlasku u pozadinu. Nakon lokalnog
+isteka pitanja nestaju slojevi koji hvataju dodire, a odgovori ostaju zaključani
+do serverskog rezultata. Povratak iste faze usklađuje preostalo vrijeme i prikaz.
+
+Mjerilo uključuje stvarno dostupnu visinu i `visualViewport`, pa se privremeno
+smanjenje zbog Safari kontrola ne zadržava u istoj fazi. Fokusirani unos i pinch
+ne mijenjaju trajno mjerilo. Postojeće ilustracije, CSS i pravila Piramide ostaju.
+
+Svaki pokušaj WebSocket povezivanja ima rok i prije `onopen`. Povratak u karticu
+provjerava i prividno otvorenu vezu; mrežni timeout čuva prethodno potvrđenu
+sesiju, a povratak mreže nastavlja s istim ključem igrača. Stvarno odbijena ili
+istekla prijava i dalje se odbacuje. Tajna pozivnice ostaje osjetljiva na veličinu
+slova; normalizira se samo četveroslovni kod sobe.
+
+Automatizirani testovi u Chromiumu i WebKitu pokrivaju sluz, viewport, QR ulazak,
+prekid i povratak iste sesije bez duplikata igrača. CI pokreće i postojeće mobilne
+rasporede i proširenu Piramidu. Stvarni iPhone još treba provjeriti: Camera → QR →
+Safari, potez kroz sluz tijekom odgovora drugih igrača, tipkovnica/adresna traka,
+rotacija te zaključavanje i otključavanje telefona. Sintetski lifecycle događaji
+i WebKit na računalu nisu potvrda stvarnog iOS suspendiranja ili BFCachea.
+
 ## Piramida od v84
 
 Piramida ima 12 stepenica do vrha i zasebno pitanje za krunu. Početni raspored je

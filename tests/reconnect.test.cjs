@@ -34,7 +34,7 @@ test('after reconnect the player identifies itself and resends its saved answer'
 });
 test('a silent broken connection is closed and a reconnect is requested', () => {
  let closed=0, retries=0;
- const watchdog=html.slice(html.indexOf('  function checkConnection() {'),html.indexOf("  window.addEventListener('online', checkConnection)"));
+ const watchdog=html.slice(html.indexOf('  function checkConnection() {'),html.indexOf("  window.addEventListener('online',"));
  const ctx=vm.createContext({hostPeer:null,mode:'player',S:{},document:{visibilityState:'visible'},lastStateAt:1,pconn:{close(){closed++;}},retrySoon(){retries++;},Date:{now(){return 20000;}}});
  vm.runInContext(watchdog+'\ncheckConnection();',ctx);
  assert.equal(closed,1);assert.equal(retries,1);assert.equal(ctx.pconn,null);

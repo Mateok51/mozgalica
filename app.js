@@ -843,7 +843,7 @@
   let ppeer = null, pconn = null, waitTimer = null, retryTimer = null, perr = '', pcode = '', pname = '', netNote = '';
   let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;
   // The server owns room state; this page only renders views and sends commands.
-  let cloudSession = null, cloudCredentials = null, cloudAttempt = 0, cloudView = null, cloudTvSig = '', cloudResend = false;
+  let cloudSession = null, cloudCredentials = null, cloudAttempt = 0, cloudView = null, cloudTvSig = '', cloudResend = false, cloudRetry = null;
   const CLOUD_RECOVERY_KEY = 'mz_cloud_resume_v1';
   function clearCloudRecovery() { try { localStorage.removeItem(CLOUD_RECOVERY_KEY); } catch (e) {} }
   function saveCloudRecovery() {
@@ -857,6 +857,7 @@
     cloudAttempt++;
     if (cloudSession) cloudSession.close();
     cloudSession = null; cloudCredentials = null; cloudView = null; cloudTvSig = ''; cloudResend = false;
+    cloudRetry = null;
   }
   function cloudProxy() {
     const control = (method, args) => { if (cloudSession) cloudSession.send({ t: 'control', method, args }); };
@@ -865,8 +866,9 @@
       setBots: n => control('setBots', [n]), setOpt: (k, v) => control('setOpt', [k, v]),
     };
   }
-  function connectCloud(credentials, noTv) {
+  function connectCloud(credentials, noTv, restoring = false) {
     closeCloud();
+    let confirmed = restoring;
     cloudCredentials = { ...credentials, pid: PID, sk: SK, av: myAv };
     pcode = credentials.code; pname = credentials.name;
     if (credentials.role === 'host') { HOST_RS = credentials.secret; mode = noTv ? 'hostp' : 'host'; }
@@ -880,9 +882,11 @@
           if (!d.cloud.owner) return;
           game = game || cloudProxy();
         }
-        const pending = cloudResend && (L.sent || L.partial), previousStep = L.s;
+        confirmed = true;
+        const resuming = cloudResend;
+        const pending = resuming && (L.sent || L.partial), previousStep = L.s;
         cloudResend = false;
-        applyState(d);
+        applyState(d, resuming);
         // Re-send only against the same authoritative phase after reconnect.
         if (pending && previousStep === d.s && !((meOf(d) || {}).ok)) cloudSession.send({ t: 'in', in: pending });
         if (mode === 'host') {
@@ -909,7 +913,13 @@
           : 'Server trenutačno ne može obraditi zahtjev. Pokušaj ponovno.';
         if (!terminal) { toolNotice(message); return; }
         const owner = credentials.role === 'host';
-        closeCloud(); clearCloudRecovery(); game = null;
+        closeCloud();
+        if (owner && confirmed && error.reason === 'unavailable') {
+          cloudRetry = { code: credentials.code, secret: credentials.secret, noTv: !!noTv };
+        }
+        // A network timeout does not revoke an already confirmed player session.
+        if (error.reason !== 'unavailable') clearCloudRecovery();
+        game = null;
         if (owner) { hostErr = message; mode = noTv ? 'hostform' : 'host'; render(); }
         else failJoin(message);
       },
@@ -934,7 +944,9 @@
     }
   }
   function restoreCloudRecovery() {
-    if (!cloudEnabled() || cloudSession || !['home', 'join'].includes(mode)) return;
+    if (!cloudEnabled() || cloudSession) return;
+    const retryOwner = !['home', 'join'].includes(mode);
+    if (retryOwner && (!cloudRetry || !['host', 'hostform'].includes(mode))) return;
     try {
       const raw = localStorage.getItem(CLOUD_RECOVERY_KEY); if (!raw) return;
       if (raw.length > 2048) throw Error('size');
@@ -943,8 +955,14 @@
           !/^[A-Z]{4}$/.test(r.code) || !['host', 'player'].includes(r.role) ||
           (r.secret != null && !okRS(r.secret)) || (r.role === 'host' && !okRS(r.secret)) || typeof r.noTv !== 'boolean' ||
           typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12) throw Error('record');
-      if (location.hash && (r.role !== 'player' || location.hash !== hash)) return;
-      connectCloud({ code: r.code, secret: r.secret, role: r.role, name: r.name }, r.noTv);
+      // Only the failed confirmed owner may resume from its error screen.
+      // A deliberate new-room action clears this marker through closeCloud().
+      if (retryOwner && (r.role !== 'host' || r.code !== cloudRetry.code ||
+          r.secret !== cloudRetry.secret || r.noTv !== cloudRetry.noTv)) return;
+      const invitation = (location.hash || '').match(/^#([A-Za-z]{4})(?:-([A-Za-z0-9_-]{22}))?$/);
+      const currentHash = invitation ? '#' + invitation[1].toUpperCase() + (invitation[2] ? '-' + invitation[2] : '') : location.hash;
+      if (location.hash && (r.role !== 'player' || currentHash !== hash)) return;
+      connectCloud({ code: r.code, secret: r.secret, role: r.role, name: r.name }, r.noTv, true);
     } catch (e) { clearCloudRecovery(); }
   }
   function diagnostic(type) {
@@ -1096,6 +1114,7 @@
 
   // ---------- navigacija ----------
   function reset() {
+    clearFxBinding();
     closeDiagnostics();
     closeCloud(); clearCloudRecovery();
     clearTimeout(characterReactionTimer); characterReactionTimer = null;
@@ -1613,7 +1632,13 @@
   }
   // Resume immediately checks a closed channel; no reload or new player identity.
   function resumeConnection() {
+    if (document.hidden) return;
+    // A suspended gesture can lose its up/cancel event. Rebind the same local
+    // effect progress instead of leaving its old captured pointer in charge.
+    clearFxBinding();
+    if (S && phoneShown()) phoneRender(true);
     if (typeof cloudSession !== 'undefined' && cloudSession) { cloudSession.check(true); return; }
+    if (cloudEnabled()) { restoreCloudRecovery(); return; }
     checkConnection();
     if ((typeof cloudSession === 'undefined' || !cloudSession) && mode === 'player' && S && !directReady()) retrySoon();
   }
@@ -1668,8 +1693,8 @@
     if (peer.disconnected) { try { peer.reconnect(); } catch (e) {} } else if (hostOff) hostOffline(false);
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState !== 'visible') return;
-    if (hostPeer) hostKeepAlive(hostPeer);
+    if (document.visibilityState !== 'visible') { clearFxBinding(); return; }
+    resumeConnection();
     if (mode === 'player' && ppeer && !ppeer.destroyed) {
       if (ppeer.disconnected) { try { ppeer.reconnect(); } catch (e) {} }
       if (S && (!pconn || !pconn.open)) retrySoon();
@@ -1835,7 +1860,7 @@
       retrySoon();
     }
   }
-  window.addEventListener('online', checkConnection);
+  window.addEventListener('online', resumeConnection);
   window.addEventListener('offline', () => {
     if (!['player', 'hostp', 'host'].includes(mode)) return;
     diagnostic('connection_lost'); connectionWasLost = true;
@@ -1853,7 +1878,7 @@
     }
   });
   window.addEventListener('pageshow', resumeConnection);
-  window.addEventListener('pagehide', () => { saveGuestRecovery(true); if (game && game.checkpoint) { saveRecovery(game.checkpoint()); flushRecovery(); } try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
+  window.addEventListener('pagehide', () => { clearFxBinding(); saveGuestRecovery(true); if (game && game.checkpoint) { saveRecovery(game.checkpoint()); flushRecovery(); } try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
 
   function sendInput(inp) {
     AUDIO.play('confirm');
@@ -1891,7 +1916,7 @@
     return '<div class="p-sub" style="margin-top:4px">Moći u ovom pitanju</div>' + evHtml(d);
   }
 
-  function applyState(d) {
+  function applyState(d, resuming = false) {
     syncTitle();
     if (mode === 'player' && (!d || !Array.isArray(d.P) || !d.P.some(p => p.id === PID))) return;
     if (!S && mode === 'player') diagnostic('joined');
@@ -1902,7 +1927,12 @@
     if (mode === 'player' && (!d || !Array.isArray(d.P) || !d.P.some(p => p.id === PID))) return;
     clearTimeout(waitTimer);
     const t = Date.now();
+    if (resuming && S && d.s === L.s) {
+      clockEnds = t + d.ms; clockDur = d.dur;
+      L.expiredPresentation = false;
+    }
     if (!S || d.s !== L.s) {
+      clearFxBinding();
       stopFxTimer();
       L = freshLocal(d.s);
       clockEnds = t + d.ms; clockDur = d.dur;
@@ -1918,7 +1948,7 @@
     S = d; saveGuestRecovery(false); document.documentElement.dataset.ph = d.ph;
     if (phoneShown()) {
       const sig = phoneSig(d);
-      if (sig !== lastSig) { lastSig = sig; phoneRender(false); } else krLive(d);
+      if (sig !== lastSig || resuming) { lastSig = sig; phoneRender(false); } else krLive(d);
     }
   }
   function phoneSig(d) {
@@ -1938,7 +1968,18 @@
     return null;
   }
   function stopFxTimer() { if (L && L.fxTimer) { clearInterval(L.fxTimer); L.fxTimer = null; } }
-  function fxDone() {
+  let fxCleanup = null;
+  function clearFxBinding() {
+    const cleanup = fxCleanup; fxCleanup = null;
+    if (cleanup) cleanup();
+  }
+  function questionExpired() {
+    return S && ['question', 'fq'].includes(S.ph) && clockDur > 0 && Date.now() >= clockEnds;
+  }
+  function fxDone(expected = L.fx, local = L) {
+    // Queued pointer events can outlive a replaced surface or even this round.
+    if (!expected || L !== local || L.fx !== expected) return;
+    clearFxBinding();
     stopFxTimer();
     L.fxq.shift();
     L.fx = makeFx(L.fxq[0]);
@@ -1946,7 +1987,7 @@
     // odgovori ostaju zaključani kratko vrijeme da se zadnji dodir ne pretvori u odgovor
     L.lockUntil = Date.now() + 400;
     const s0 = L.s;
-    setTimeout(() => { if (L.s === s0) phoneRender(true); }, 420);
+    setTimeout(() => { if (L === local && L.s === s0) phoneRender(true); }, 420);
     phoneRender(true);
   }
   const FX_LABEL = { led: 'Zaleđen si! Tapkaj da razbiješ led', sluz: 'Sluz! Obriši je prstom' };
@@ -1975,6 +2016,7 @@
     layer.querySelectorAll('[data-bi]').forEach((b) => {
       b.onpointerdown = (e) => {
         e.preventDefault(); e.stopPropagation();
+        if (questionExpired()) return;
         const bomb = L.bombs[+b.dataset.bi]; if (!bomb || !bomb.on) return;
         bomb.on = false; L.boomUntil = Date.now() + 2000;
         AUDIO.play('powerBomb'); HAPTIC.bomb();
@@ -2030,16 +2072,31 @@
     return '';
   }
   function bindFx() {
+    clearFxBinding();
     const el = document.getElementById('fx');
     const fx = L.fx;
     if (!el || !fx) return;
+    const local = L;
+    let disposed = false, pointerId = null;
+    const active = () => !disposed && L === local && L.fx === fx && el.isConnected && !questionExpired();
+    const release = () => {
+      const id = pointerId; pointerId = null;
+      if (id !== null) { try { if (el.hasPointerCapture(id)) el.releasePointerCapture(id); } catch (e) {} }
+    };
+    fxCleanup = () => {
+      disposed = true;
+      el.onpointerdown = el.onpointermove = el.onpointerup = el.onpointercancel = el.onlostpointercapture = null;
+      el.querySelectorAll('button').forEach(b => { b.onpointerdown = null; });
+      release();
+    };
     if (fx.k === 'led') {
       el.onpointerdown = (e) => {
+        if (!active()) return;
         e.preventDefault();
         fx.hits++;
         SFX.play('crack');
         HAPTIC.tap();
-        if (fx.hits >= fx.need) return fxDone();
+        if (fx.hits >= fx.need) return fxDone(fx, local);
         el.outerHTML = fxHtml(fx); bindFx();
         const n = document.getElementById('fx'); if (n) n.classList.add('shake');
       };
@@ -2056,24 +2113,35 @@
         }
       };
       const wipe = (e) => {
+        if (!active()) return;
         const r = el.getBoundingClientRect();
-        const px = ((e.clientX - r.left) / r.width) * 6, py = ((e.clientY - r.top) / r.height) * 8;
+        if (!(r.width > 0 && r.height > 0) || !Number.isFinite(e.clientX) || !Number.isFinite(e.clientY)) return;
+        const px = Math.max(0, Math.min(5.999, ((e.clientX - r.left) / r.width) * 6));
+        const py = Math.max(0, Math.min(7.999, ((e.clientY - r.top) / r.height) * 8));
+        if (!Number.isFinite(px) || !Number.isFinite(py)) return;
         if (lx === null) hit(px, py);
-        else { const n = Math.max(1, Math.ceil(Math.hypot(px - lx, py - ly) / 0.5)); for (let k = 1; k <= n; k++) hit(lx + (px - lx) * k / n, ly + (py - ly) * k / n); }
+        else { const n = Math.min(32, Math.max(1, Math.ceil(Math.hypot(px - lx, py - ly) / 0.5))); for (let k = 1; k <= n; k++) hit(lx + (px - lx) * k / n, ly + (py - ly) * k / n); }
         lx = px; ly = py;
-        if (fx.left <= 10) { fx.cells.fill(0); fx.left = 0; cells.forEach((c) => c.classList.add('gone')); fxDone(); }
+        if (fx.left <= 10) { fx.cells.fill(0); fx.left = 0; cells.forEach((c) => c.classList.add('gone')); fxDone(fx, local); }
       };
-      let down = false;
-      el.onpointerdown = (e) => { e.preventDefault(); down = true; lx = ly = null; try { el.setPointerCapture(e.pointerId); } catch (er) {} wipe(e); };
-      el.onpointermove = (e) => { if (down) wipe(e); };
-      el.onpointerup = el.onpointercancel = () => { down = false; lx = ly = null; };
+      el.onpointerdown = (e) => {
+        if (!active() || pointerId !== null || e.button > 0) return;
+        e.preventDefault(); pointerId = e.pointerId; lx = ly = null;
+        try { el.setPointerCapture(pointerId); } catch (er) {}
+        wipe(e);
+      };
+      el.onpointermove = (e) => { if (e.pointerId === pointerId) wipe(e); };
+      const end = (e) => { if (e.pointerId === pointerId) { release(); lx = ly = null; } };
+      el.onpointerup = el.onpointercancel = end;
+      el.onlostpointercapture = (e) => { if (e.pointerId === pointerId) { pointerId = null; lx = ly = null; } };
     } else if (fx.k === 'grick') {
       el.querySelectorAll('.bug').forEach((b) => {
         b.onpointerdown = (e) => {
+          if (!active()) return;
           e.preventDefault(); e.stopPropagation();
           fx.bugs[+b.dataset.b].on = false; b.remove(); SFX.play('squish');
           HAPTIC.confirm();
-          if (!fx.bugs.some((x) => x.on)) fxDone();
+          if (!fx.bugs.some((x) => x.on)) fxDone(fx, local);
         };
       });
       el.onpointerdown = (e) => e.preventDefault();
@@ -2090,9 +2158,10 @@
       el.onpointerdown = (e) => e.preventDefault();
       const btn = document.getElementById('bomb');
       if (btn) btn.onpointerdown = (e) => {
+        if (!active()) return;
         e.preventDefault(); e.stopPropagation();
         fx.taps++;
-        if (fx.taps >= fx.need) { fx.boom = false; return fxDone(); }
+        if (fx.taps >= fx.need) { fx.boom = false; return fxDone(fx, local); }
         btn.style.transform = 'scale(' + (1 - fx.taps * 0.12) + ') rotate(' + (fx.taps * 25) + 'deg)';
       };
       if (!L.fxTimer) L.fxTimer = setInterval(() => {
@@ -2104,7 +2173,7 @@
           f.boom = true; stopFxTimer(); AUDIO.play('powerBomb');
           HAPTIC.bomb();
           phoneRender(true);
-          setTimeout(() => { if (L.fx === f) fxDone(); }, 900);
+          setTimeout(() => { if (L.fx === f && L === local) fxDone(f, local); }, 900);
         }
       }, 150);
     }
@@ -2463,6 +2532,7 @@
     if (document.title !== want) document.title = want;
   }
   function render() {
+    clearFxBinding();
     syncTitle();
     try {
       if (mode === 'home') { tvStep = -1; phoneStep = -1; SCENE.reset(); return homeV(); }
@@ -2496,7 +2566,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v84</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v85</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
@@ -3723,6 +3793,7 @@
     const d = S && typeof S.ms === 'number' && lastStateAt ? Object.assign({}, S, { ms: Math.max(0, S.ms - (Date.now() - lastStateAt)) }) : S;
     const freshP = !!d && L.s !== phoneStep;
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
+    clearFxBinding();
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem"><span class="lt">Trivia</span><span class="lt">Tavern</span></div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
@@ -4378,6 +4449,12 @@
   function fitScreen() {
     const A = $app;
     if (!A || !A.firstElementChild) return;
+    // Safari changes the visible viewport independently of the layout viewport.
+    // Do not fit an intermediate keyboard/pinch frame into a lasting game scale.
+    const viewport = window.visualViewport;
+    const focused = document.activeElement;
+    if (document.hidden || (viewport && Math.abs(viewport.scale - 1) > 0.01) ||
+        (focused && (focused.isContentEditable || focused.matches('input, textarea, select')))) return;
 
     A.style.zoom = ''; A.style.removeProperty('--fitz');
     A.style.width = '';
@@ -4385,11 +4462,13 @@
     const phone = A.classList.contains('phone');
     if (!phone && !A.classList.contains('tv')) return;
     const bodyStyle = getComputedStyle(document.body);
-    const width = innerWidth - parseFloat(bodyStyle.paddingLeft) - parseFloat(bodyStyle.paddingRight);
+    const visibleWidth = viewport && viewport.width > 0 ? Math.min(innerWidth, viewport.width) : innerWidth;
+    const width = visibleWidth - parseFloat(bodyStyle.paddingLeft) - parseFloat(bodyStyle.paddingRight);
     A.style.width = Math.min(phone ? 520 : 1600, width) + 'px';
     const top = A.getBoundingClientRect().top;
     const controls = document.querySelector('#mute').getBoundingClientRect();
-    const available = Math.max(1, controls.top - top - 8);
+    const visibleBottom = viewport && viewport.height > 0 ? viewport.offsetTop + viewport.height : innerHeight;
+    const available = Math.max(1, Math.min(controls.top, visibleBottom) - top - 8);
     const targetWidth = Math.min(phone ? 520 : 1600, width);
     A.style.maxWidth = 'none';
     const measure = (scale) => {
@@ -4398,8 +4477,9 @@
       // Izvanjski likovi i animacijske putanje ne mijenjaju veličinu rasporeda.
       return A.getBoundingClientRect().height;
     };
-    const key = phone && S && S.q ? [S.code, S.q.n, innerWidth, innerHeight].join(':') : null;
-    const pk = S ? [S.s, S.ph, S.ph === 'power' ? (L.pw || '') : S.ph === 'lobby' ? (L.lobPanel || '') : '', innerWidth, innerHeight].join(':') : null;
+    const geometry = [innerWidth, innerHeight, Math.round(width), Math.round(available)].join(':');
+    const key = phone && S && S.q ? [S.code, S.q.n, geometry].join(':') : null;
+    const pk = S ? [S.s, S.ph, S.ph === 'power' ? (L.pw || '') : S.ph === 'lobby' ? (L.lobPanel || '') : '', geometry].join(':') : null;
     const finish = (scale) => {
       // ista faza: ne raste natrag, a sitna razlika (do 3 %) ne mijenja mjerilo; jače smanjenje samo ako sadržaj stvarno ne stane
       if (phaseFit && phaseFit.key === pk) scale = scale >= phaseFit.scale * 0.97 ? phaseFit.scale : scale;
@@ -4493,7 +4573,24 @@
     }
     finish(low);
   }
-  let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(() => { fitScreen(); const area = $app.querySelector('.final-question .q-area'); if (area) area.dispatchEvent(new Event('scroll')); }, 120); });
+  let fitT = 0, fitSettleT = 0;
+  function scheduleFit() {
+    const fit = () => { fitScreen(); const area = $app.querySelector('.final-question .q-area'); if (area) area.dispatchEvent(new Event('scroll')); };
+    clearTimeout(fitT); clearTimeout(fitSettleT);
+    fitT = setTimeout(fit, 120);
+    // Keyboard and toolbar closing can finish after the first resize/focusout.
+    fitSettleT = setTimeout(fit, 480);
+  }
+  function resetViewportFit() { questionFit = phaseFit = null; scheduleFit(); }
+  addEventListener('resize', scheduleFit);
+  addEventListener('orientationchange', resetViewportFit);
+  addEventListener('pageshow', resetViewportFit);
+  document.addEventListener('focusout', resetViewportFit);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) resetViewportFit(); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', scheduleFit);
+    window.visualViewport.addEventListener('scroll', scheduleFit);
+  }
   // kolo sreće za otkrivanje odgovora: vrijeme šetnje, okretanja i otkrivanja (ms od početka faze)
   const WH = { walk: 1300, spin: 2300 };
   WH.end = WH.walk + WH.spin;
@@ -4569,6 +4666,8 @@
 
   function questionPhone(d, me) {
     const answered = L.sent || me.ok;
+    const expired = d.ms <= 0;
+    L.expiredPresentation = expired;
     const mine = L.sent ? L.sent.c : -1;
     const hide = me.h || [];
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
@@ -4578,14 +4677,14 @@
       let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
       if (answered && !gone) cls += mine === i ? ' picked' : ' dim';
       const st = answered && !gone ? (mine === i ? 'picked' : 'dim') : '';
-      return '<button class="' + cls + '" data-c="' + i + '" data-bk="op' + i + '" data-bv="' + st + '"' + (st ? ' data-ba="' + (st === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (answered || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span>' + sfOptX(d, i, answered, gone) + '</button>';
+      return '<button class="' + cls + '" data-c="' + i + '" data-bk="op' + i + '" data-bv="' + st + '"' + (st ? ' data-ba="' + (st === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (answered || expired || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span>' + sfOptX(d, i, answered, gone) + '</button>';
     }).join('');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';
     return timerHtml() + '<div class="p-top"><span class="pill">' + esc(d.q.c) + '</span><span id="tnum">' + (clockDur ? Math.ceil(timerNow().ms / 1000) : '') + '</span></div>' +
       qTextHtml(d, false) + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
-      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Ne diraj bombe — dodirni odgovor.' : 'Brže = više bodova!') + '</div>';
+      '<div class="q-area"><div class="p-opts">' + opts + '</div>' + (answered || expired ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + (expired ? '' : boomCover()) +
+      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : expired ? 'Vrijeme je isteklo. Čekamo rezultat…' : L.fx ? '' : locked ? 'Očišćeno! Odgovori se otključavaju…' : L.bombs && L.bombs.some((b) => b.on) ? '💣 Ne diraj bombe — dodirni odgovor.' : 'Brže = više bodova!') + '</div>';
   }
 
   function revOpts(d, mine, tv) {
@@ -4866,18 +4965,20 @@
   }
   function finalePhone(d, me) {
     const answered = L.sent || me.ok;
+    const expired = d.ms <= 0;
+    L.expiredPresentation = expired;
     const mine = L.sent ? L.sent.c : -1;
     const locked = !answered && !L.fx && Date.now() < (L.lockUntil || 0);
     const cr = !!d.crown;
-    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (cr ? i : i === 0 ? 3 : 0) + (locked ? ' locked' : '') + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '>' + (cr ? '<span class="shape">' + SHAPES[i] + '</span>' : '') + '<span class="otxt">' + optText(o, i) + '</span></button>').join('');
+    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + (cr ? i : i === 0 ? 3 : 0) + (locked ? ' locked' : '') + (answered ? (mine === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered || expired ? ' disabled' : '') + '>' + (cr ? '<span class="shape">' + SHAPES[i] + '</span>' : '') + '<span class="otxt">' + optText(o, i) + '</span></button>').join('');
     const buffs = (me.uc ? '<span class="tag">Novčić utjehe</span>' : '') + (me.d ? '<span class="tag">' + (d.pyrRules === 2 ? 'Dupli: točan odgovor +2 stepenice' : '×2 Dodatni napredak') + '</span>' : '') + (me.sh ? '<span class="tag">🛡️ Štit</span>' : '');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';
     return timerHtml(3000) +
       (cr ? '<div class="crown-k">' + (me.top ? '👑 Tvoje pitanje za krunu!<small>Točan odgovor osvaja krunu</small>' : '👑 Pitanje za krunu: ' + esc(d.P.filter((p) => p.top).map((p) => p.n).join(' i ')) + '<small>Ako pogriješi, utrka se nastavlja</small>') + '</div>' : '<div class="fin-prog">' + esc(progTxt(d, me)) + '</div>') +
       phoneQ(d, '<div class="p-q" style="' + (cr ? '' : 'font-size:1.6rem;') + 'text-align:center">' + esc(d.q.t) + '</div>') + (buffs ? '<div class="buffs">' + buffs + '</div>' : '') + hit +
-      '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + boomCover() +
-      (!answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class="waiting">💣 Ne diraj bombe — dodirni odgovor.</div>' : '') +
+      '<div class="q-area"><div class="p-opts' + (cr ? '' : ' two') + '">' + opts + '</div>' + (answered || expired ? '' : fxHtml(L.fx) + bombLayer()) + '</div>' + (expired ? '' : boomCover()) +
+      (!answered && expired ? '<div class="waiting">Vrijeme je isteklo. Čekamo rezultat…</div>' : !answered && locked ? '<div class="waiting">Očišćeno! Odgovori se otključavaju…</div>' : !answered && !L.fx && L.bombs && L.bombs.some((b) => b.on) ? '<div class="waiting">💣 Ne diraj bombe — dodirni odgovor.</div>' : '') +
       (answered ? '<div class="waiting" id="answerReceipt" role="status">' + answerReceipt(me) + '</div>' : '');
   }
 
@@ -4950,9 +5051,9 @@
     bind('nopw', () => sendInput({ p: '' }));
     $app.querySelectorAll('[data-c]').forEach((b) => {
       // odgovor vrijedi samo ako je dodir i počeo na tom gumbu, nakon što je efekt uklonjen
-      b.onpointerdown = () => { b.dataset.ok = (!L.fx && Date.now() >= (L.lockUntil || 0)) ? '1' : ''; };
+      b.onpointerdown = () => { b.dataset.ok = (!L.fx && !questionExpired() && Date.now() >= (L.lockUntil || 0)) ? '1' : ''; };
       b.onclick = (e) => {
-        if (L.sent || L.fx) return;
+        if (L.sent || L.fx || questionExpired()) return;
         if (Date.now() < (L.lockUntil || 0) || Date.now() < (L.boomUntil || 0)) return;
         if (e && e.detail !== 0 && b.dataset.ok !== '1') return;
         HAPTIC.confirm();
@@ -4963,14 +5064,22 @@
     if (d.ph === 'sort') bindSort(d, me);
     if (d.ph === 'link') bindLink(d, me);
     if (d.ph === 'trisk') bindRisk();
-    if ((d.ph === 'question' || d.ph === 'fq') && L.fx && !(L.sent || (me && me.ok))) bindFx();
-    if ((d.ph === 'question' || d.ph === 'fq') && !(L.sent || (me && me.ok))) bindBombs();
+    if ((d.ph === 'question' || d.ph === 'fq') && !questionExpired() && L.fx && !(L.sent || (me && me.ok))) bindFx();
+    if ((d.ph === 'question' || d.ph === 'fq') && !questionExpired() && !(L.sent || (me && me.ok))) bindBombs();
   }
 
   // ---------- odbrojavanje ----------
   function tick() {
     receiptTick();
     const ms = Math.max(0, clockEnds - Date.now());
+    // Expiry only changes presentation; only the server advances the phase.
+    if (phoneShown() && questionExpired() && !L.expiredPresentation) {
+      L.expiredPresentation = true;
+      clearFxBinding(); stopFxTimer();
+      if (L.bombRaf) cancelAnimationFrame(L.bombRaf);
+      L.bombRaf = 0;
+      phoneRender(true);
+    }
     const bar = document.getElementById('tbar'), num = document.getElementById('tnum'), wrap = document.getElementById('timer');
     if (bar && clockDur) { const fr = ms / clockDur; bar.style.width = (fr * 100) + '%'; bar.dataset.lv = fr > 0.5 ? 'g' : fr > 0.2 ? 'a' : 'r'; }
     const ring = document.getElementById('tring'), arc = document.getElementById('tarc');

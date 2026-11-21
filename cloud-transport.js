@@ -12,12 +12,12 @@
   function create(options) {
     const base = origin(options.apiOrigin);
     if (!base) throw Error('Neispravna adresa servera.');
-    let socket = null, credentials = null, generation = 0, retry = null, heartbeat = null, login = null, admission = null;
-    let retries = 0, stopped = true, admitted = false, received = 0;
+    let socket = null, credentials = null, generation = 0, retry = null, heartbeat = null, login = null, admission = null, probe = null;
+    let retries = 0, stopped = true, admitted = false, received = 0, attemptAt = 0, loseCurrent = null;
     const status = value => { if (options.onStatus) options.onStatus(value); };
-    function timers() { clearTimeout(retry); clearTimeout(login); clearTimeout(admission); clearInterval(heartbeat); retry = login = heartbeat = admission = null; }
+    function timers() { clearTimeout(retry); clearTimeout(login); clearTimeout(admission); clearTimeout(probe); clearInterval(heartbeat); retry = login = heartbeat = admission = probe = null; }
     function close() {
-      stopped = true; generation++; timers(); admitted = false; credentials = null;
+      stopped = true; generation++; timers(); admitted = false; credentials = null; loseCurrent = null;
       const old = socket; socket = null;
       if (old) try { old.close(1000); } catch (_) {}
     }
@@ -30,19 +30,27 @@
       let ws;
       try { ws = new WebSocket(base.replace(/^http/, 'ws') + '/api/rooms/' + credentials.code); }
       catch (_) { schedule(expected); return; }
-      socket = ws; admitted = false;
+      socket = ws; admitted = false; attemptAt = Date.now();
       const current = () => !stopped && expected === generation && socket === ws;
       const lose = () => {
         if (!current()) return;
-        socket = null; admitted = false; clearTimeout(login); clearInterval(heartbeat);
+        socket = null; admitted = false; clearTimeout(login); clearTimeout(probe); clearInterval(heartbeat);
+        login = probe = heartbeat = null; loseCurrent = null;
         try { ws.close(); } catch (_) {}
         schedule(expected);
       };
+      loseCurrent = lose;
+      // A suspended Safari socket can stay CONNECTING without ever firing
+      // onopen/onerror. Bound every upgrade, including post-admission retries.
+      login = setTimeout(lose, 12000);
       ws.onopen = () => {
         if (!current()) return;
         received = Date.now();
-        ws.send(JSON.stringify({ t: 'hello', pid: credentials.pid, sk: credentials.sk, name: credentials.name,
-          av: credentials.av, secret: credentials.secret, role: credentials.role }));
+        try {
+          ws.send(JSON.stringify({ t: 'hello', pid: credentials.pid, sk: credentials.sk, name: credentials.name,
+            av: credentials.av, secret: credentials.secret, role: credentials.role }));
+        } catch (_) { lose(); return; }
+        clearTimeout(login);
         login = setTimeout(lose, 12000);
         heartbeat = setInterval(() => {
           if (!current()) return;
@@ -55,6 +63,7 @@
         let value; try { value = JSON.parse(event.data); } catch (_) { return; }
         if (!value || typeof value !== 'object') return;
         received = Date.now();
+        clearTimeout(probe); probe = null;
         if (value.t === 'error') {
           if (['auth', 'full', 'started', 'not_found', 'expired', 'identity', 'invalid'].includes(value.reason)) {
             close(); if (options.onError) options.onError(value); return;
@@ -107,11 +116,26 @@
     return { createRoom, connect, send, close,
       get connected() { return admitted; },
       check(force = false) {
-        if (stopped || (socket && socket.readyState === 0) || (retry && !force)) return;
-        if (socket && socket.readyState === 1 && Date.now() - received <= 25000) { try { socket.send('{"t":"ping"}'); } catch (_) {} return; }
+        if (stopped || (retry && !force)) return;
+        // Resume can run before overdue browser timers are dispatched.
+        if (socket && socket.readyState === 0 && Date.now() >= attemptAt && Date.now() - attemptAt < 12000) return;
+        if (socket && socket.readyState === 1 && Date.now() - received <= 25000) {
+          if (!admitted) return;
+          try { socket.send('{"t":"ping"}'); } catch (_) { if (loseCurrent) loseCurrent(); return; }
+          // OPEN is only a local flag after background/network changes. Require
+          // a server reply before trusting the retained channel again.
+          if (force && !probe) {
+            const ws = socket, expected = generation, lose = loseCurrent;
+            probe = setTimeout(() => {
+              if (!stopped && generation === expected && socket === ws && lose) lose();
+            }, 4000);
+          }
+          return;
+        }
         if (retry) { clearTimeout(retry); retry = null; }
         const old = socket; socket = null; if (old) try { old.close(); } catch (_) {}
-        clearTimeout(login); clearInterval(heartbeat); open(generation);
+        clearTimeout(login); clearTimeout(probe); clearInterval(heartbeat); login = probe = heartbeat = null;
+        status('reconnecting'); open(generation);
       },
     };
   }
