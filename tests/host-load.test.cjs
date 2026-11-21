@@ -14,7 +14,7 @@ function harness(){
   setTimeout(fn,ms){const key=++id;jobs.set(key,{fn,at:clock+ms});return key;},clearTimeout(key){jobs.delete(key);},
   sessionStorage:{setItem(k,v){if(broken)throw Error('quota');writes.push([k,JSON.parse(v)]);},removeItem(k){removals.push(k);}},
   window:{addEventListener(name,fn){listeners.set(name,fn);}},
-  clearFxBinding(){},
+  clearInputBindings(){},
  });
  vm.runInContext(`let game={view:()=>({ph:'question',code:'TEST'}),checkpoint:()=>({events:[{method:'pagehide-latest'}]})};let mode='hostp';const hostKeys=new Map([['one','test-key']]);const HOST_RS='room-key';const pconn=null;function stopPlayerRelay(){}\n`+validation+recovery+`\nthis.save=saveRecovery;this.flush=flushRecovery;this.valid=validGamePayload;this.replaceGame=()=>{game={view:()=>({ph:'lobby',code:'NEW'})}};this.setMode=x=>{mode=x};this.endGame=()=>{game.view=()=>({ph:'final',code:'TEST'})};`,ctx);
  const pagehide=app.split('\n').find(line=>line.includes("window.addEventListener('pagehide'"));assert(pagehide);vm.runInContext(pagehide,ctx);

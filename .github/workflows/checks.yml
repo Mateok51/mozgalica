@@ -42,6 +42,9 @@ jobs:
       - run: BROWSER=webkit node tests/browser-safari-effects.cjs
       - run: BROWSER=webkit node tests/browser-safari-viewport.cjs
       - run: BROWSER=webkit node tests/browser-safari-cloud-recovery.cjs
+      - run: BROWSER=webkit node tests/browser-ios-gestures.cjs
+      - run: BROWSER=webkit node tests/browser-ios-invitation-navigation.cjs
+      - run: BROWSER=webkit node tests/browser-ios-recovery-followup.cjs
 
   cloud:
     runs-on: ubuntu-latest

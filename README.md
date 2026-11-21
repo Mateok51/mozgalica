@@ -48,6 +48,24 @@ Safari, potez kroz sluz tijekom odgovora drugih igrača, tipkovnica/adresna trak
 rotacija te zaključavanje i otključavanje telefona. Sintetski lifecycle događaji
 i WebKit na računalu nisu potvrda stvarnog iOS suspendiranja ili BFCachea.
 
+Od v86 razvrstavanje i spajanje prate jedan prst te poništavaju gestu pri
+gubitku capturea, zamjeni ploče i odlasku u pozadinu. Zaostali callback ne može
+zapisati odgovor u novu ploču ili rundu. Otvaranje druge valjane pozivnice u
+istoj kartici osvježava kod i tajnu sobe, uz uredno zatvaranje stare veze.
+
+Nakon ponovnog učitavanja vraćaju se prihvaćeni djelomični odgovori u
+razvrstavanju, spajanju, poretku, višem/manjem, munjevitom krugu i konopu.
+Poslužitelj ih šalje privatno samo tom igraču; noviji lokalni odgovor ne
+prepisuje se zakašnjelim stanjem. Potvrde napretka ne prekidaju animaciju karte.
+Audio pokušava obnoviti i Safari `interrupted` kontekst, a synth preskače
+propuštene note nakon pauze umjesto da ih sve rasporedi odjednom.
+
+Nove regresije provjeravaju stvarne handlere u Chromiumu i WebKitu, uključujući
+nastavak šest mini-igara s autentificiranim serverskim fixtureom. Višeprstni i
+lifecycle događaji te audio sat/stanje kontrolirano su simulirani. Na fizičkom
+iPhoneu još treba provjeriti povlačenje s dva prsta, zaključavanje usred geste,
+povratak iz druge aplikacije i zvuk nakon prekida ili poziva.
+
 ## Piramida od v84
 
 Piramida ima 12 stepenica do vrha i zasebno pitanje za krunu. Početni raspored je
