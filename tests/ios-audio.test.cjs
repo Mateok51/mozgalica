@@ -79,4 +79,3 @@ test('music resumes from the current audio clock instead of replaying the entire
   clock.currentTime = 600.4; interval();
   assert.ok(nodes <= 64 && starts.every(t => t >= 600.4 && t < 600.65), 'A shorter scheduling delay remains bounded and never starts missed notes');
 });
-
