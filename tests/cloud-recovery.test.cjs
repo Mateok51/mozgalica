@@ -47,7 +47,7 @@ function reconnectFixture(record=saved('player',secret)){
   hostPeer:null,ppeer:null,pconn:null,CLOUD_RECOVERY_KEY:'resume',TAVERN_CLOUD:{apiOrigin:'https://cloud.test'},
   location:{hash:record.role==='host'?'':'#ABCD-'+secret},localStorage:{getItem:key=>data.get(key),removeItem:key=>data.delete(key)},
   cloudEnabled:()=>true,okRS:value=>typeof value==='string'&&/^[A-Za-z0-9_-]{22}$/.test(value),
-  rememberRS:()=>{},render:()=>{},keepAwake:()=>{},clearFxBinding:()=>{},phoneShown:()=>false,checkConnection:()=>{},retrySoon:()=>{},directReady:()=>false,
+  rememberRS:()=>{},render:()=>{},keepAwake:()=>{},clearInputBindings:()=>{},phoneShown:()=>false,checkConnection:()=>{},retrySoon:()=>{},directReady:()=>false,
   failJoin:()=>{c.mode='join';},toolNotice:()=>{},clearTimeout:()=>{},
   window:{addEventListener:(event,callback)=>events.set(event,callback)},
   document:{visibilityState:'visible',addEventListener:(event,callback)=>documentEvents.set(event,callback)},

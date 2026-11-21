@@ -211,7 +211,7 @@
     let muted = store.get('mz_mute') === '1';
     function ac() {
       if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch (e) { return null; } }
-      if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+      if (ctx.state === 'suspended' || ctx.state === 'interrupted') ctx.resume().catch(() => {});
       return ctx;
     }
     function tone(f, t0, dur, type, vol, f2) {
@@ -405,8 +405,15 @@
       src.connect(f); f.connect(g); g.connect(out(c)); src.start(t); src.stop(t + dur);
     }
     function schedule() {
-      const c = SFX.ctx(); if (!c) return;
-      while (next < c.currentTime + 0.25) {
+      const c = SFX.ctx(); if (!c || c.state !== 'running') return;
+      const now = c.currentTime;
+      // Browser timers may pause while the audio clock keeps running. Skip the
+      // missed beats instead of creating every past sound in one resume burst.
+      if (next < now) {
+        const missed = Math.ceil((now - next) / S16);
+        next += missed * S16; step += missed;
+      }
+      while (next < now + 0.25) {
         const bar = Math.floor(step / 16) % 4, st = step % 16, t = next, ch = CH[bar];
         if (st === 0) ch.forEach((m) => note(c, mf(m), t, S16 * 15, 'triangle', 0.035));
         if (st === 0 || st === 6 || st === 8 || st === 14) note(c, mf(BASS[bar]), t, S16 * 1.8, 'sine', 0.16);
@@ -1114,7 +1121,7 @@
 
   // ---------- navigacija ----------
   function reset() {
-    clearFxBinding();
+    clearInputBindings();
     closeDiagnostics();
     closeCloud(); clearCloudRecovery();
     clearTimeout(characterReactionTimer); characterReactionTimer = null;
@@ -1371,7 +1378,7 @@
         if (prelay !== c) return;
         if (!directReady() && joinReply(d)) return;
         if (d && d.t === 'who') { rPub(c, ctx, rTopic(ctx, 'h'), { t: 'hello', pid: PID, sk: SK, name: pname, av: myAv }); return; }
-        if (d && d.t === 'pv' && d.code === pcode) { if (directReady()) return; const ch = JSON.stringify(d.pv) !== JSON.stringify(PV); PV = d.pv; if (ch && S) phoneRender(); return; }
+        if (d && d.t === 'pv' && d.code === pcode) { if (directReady()) return; const ch = privateViewSig(d.pv) !== privateViewSig(PV); PV = d.pv; if (S) { const restored = restorePartialProgress(S); if (ch || restored) phoneRender(); } return; }
         if (d && d.code === pcode && Array.isArray(d.P) && d.P.length <= 12 && typeof d.ph === 'string') {
           if (directReady()) return;           // izravna veza ima prednost
           if (!d.P.some(p => p.id === PID)) return;
@@ -1635,7 +1642,7 @@
     if (document.hidden) return;
     // A suspended gesture can lose its up/cancel event. Rebind the same local
     // effect progress instead of leaving its old captured pointer in charge.
-    clearFxBinding();
+    clearInputBindings();
     if (S && phoneShown()) phoneRender(true);
     if (typeof cloudSession !== 'undefined' && cloudSession) { cloudSession.check(true); return; }
     if (cloudEnabled()) { restoreCloudRecovery(); return; }
@@ -1693,7 +1700,7 @@
     if (peer.disconnected) { try { peer.reconnect(); } catch (e) {} } else if (hostOff) hostOffline(false);
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState !== 'visible') { clearFxBinding(); return; }
+    if (document.visibilityState !== 'visible') { clearInputBindings(); return; }
     resumeConnection();
     if (mode === 'player' && ppeer && !ppeer.destroyed) {
       if (ppeer.disconnected) { try { ppeer.reconnect(); } catch (e) {} }
@@ -1878,7 +1885,7 @@
     }
   });
   window.addEventListener('pageshow', resumeConnection);
-  window.addEventListener('pagehide', () => { clearFxBinding(); saveGuestRecovery(true); if (game && game.checkpoint) { saveRecovery(game.checkpoint()); flushRecovery(); } try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
+  window.addEventListener('pagehide', () => { clearInputBindings(); saveGuestRecovery(true); if (game && game.checkpoint) { saveRecovery(game.checkpoint()); flushRecovery(); } try { if (pconn) pconn.close(); } catch (e) {} if (mode === 'player') stopPlayerRelay(); });
 
   function sendInput(inp) {
     AUDIO.play('confirm');
@@ -1932,9 +1939,10 @@
       L.expiredPresentation = false;
     }
     if (!S || d.s !== L.s) {
-      clearFxBinding();
+      clearInputBindings();
       stopFxTimer();
       L = freshLocal(d.s);
+      restorePartialProgress(d);
       clockEnds = t + d.ms; clockDur = d.dur;
       L.start = t - (d.dur - d.ms);
       const me = meOf(d);
@@ -1951,11 +1959,41 @@
       if (sig !== lastSig || resuming) { lastSig = sig; phoneRender(false); } else krLive(d);
     }
   }
+  function restorePartialProgress(d) {
+    const progress = PV && PV.progress;
+    if (!progress || progress.s !== d.s || progress.ph !== d.ph || L.s !== d.s || L.sent || L.partial || L.progressRestored) return;
+    const r = progress.r;
+    if (!Array.isArray(r)) return;
+    const binary = () => r.every(x => x === 0 || x === 1);
+    if (d.ph === 'sort') {
+      if (!d.so || r.length !== d.so.it.length || !r.every(x => x === -1 || x === 0 || x === 1)) return;
+      L.sortP = r.slice(); L.srtH = []; L.srtLock = false; L.srtCool = 0;
+    } else if (d.ph === 'link') {
+      if (!d.li || r.length !== d.li.L.length || !r.every(x => Number.isInteger(x) && x >= -1 && x < d.li.R.length)) return;
+      L.linkP = r.slice();
+    } else if (d.ph === 'order') {
+      if (r.length !== 4 || !r.every(x => Number.isInteger(x) && x >= -1 && x < 4)) return;
+      const used = r.filter(x => x >= 0).sort((a, b) => a - b);
+      if (!used.every((x, i) => x === i)) return;
+      L.ord = used.map(x => r.indexOf(x));
+    } else if (['hilo', 'blitz', 'rope'].includes(d.ph)) {
+      const kind = { hilo: 'hl', blitz: 'bz', rope: 'rp' }[d.ph], list = d[kind] && d[kind].list;
+      if (!list || r.length > list.length || !binary()) return;
+      const ok = r.filter((v, i) => v === (kind === 'hl' ? list[i].w : list[i][1])).length;
+      L[kind] = { i: r.length, r: r.slice(), fb: '', ok: kind === 'hl' ? 1 : ok, bad: r.length - ok, last: 1 };
+    } else return;
+    L.progressRestored = true;
+    return true;
+  }
+  function privateViewSig(pv) {
+    // Accepted-input acknowledgements do not replace a card mid-animation.
+    return JSON.stringify(pv, (k, v) => k === 'progress' ? undefined : k === 'ms' ? Math.ceil(v / 1000) : v);
+  }
   function phoneSig(d) {
     const me = meOf(d) || null;
     const roster = (d.ph === 'lobby' || d.ph === 'power' || d.ph === 'final') ? d.P.map((p) => [p.id, p.n, p.a, p.c])
       : (d.ph === 'vote' || d.ph === 'voteResult') ? d.P.map((p) => [p.id, p.a, p.vt]) : ['duel', 'question', 'fq', 'howto', 'fstart', 'tstart'].includes(d.ph) ? d.P.map((p) => [p.id, p.a, p.ok, p.c]) : null;
-    return JSON.stringify([PV ? JSON.stringify(PV, (k, v) => (k === 'ms' ? Math.ceil(v / 1000) : v)) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.ul, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0, d.readyIntro || false, d.opt || 0, d.pj || 0]);
+    return JSON.stringify([PV ? privateViewSig(PV) : 0, d.news ? d.news.id : 0, d.bt ? d.bt.id : 0, d.ph, d.s, me, d.cats, d.cw, d.q, d.so, d.li, d.cor, d.win, d.it, d.ev, roster, d.mo, d.du, d.se, d.sxr, d.ht, d.or, d.hl ? 1 : 0, d.bz ? 1 : 0, d.mj, d.ul, d.rc || 0, d.rcr ? d.rcr.id : 0, d.tkr ? d.tkr.id : 0, d.rw || 0, d.lc || 0, d.rp ? [d.rp.pa, d.rp.pb] : 0, d.readyIntro || false, d.opt || 0, d.pj || 0]);
   }
 
   // ---------- efekti moći ----------
@@ -1969,6 +2007,12 @@
   }
   function stopFxTimer() { if (L && L.fxTimer) { clearInterval(L.fxTimer); L.fxTimer = null; } }
   let fxCleanup = null;
+  let gestureCleanup = null;
+  function clearInputBindings() {
+    const cleanup = gestureCleanup; gestureCleanup = null;
+    if (cleanup) cleanup();
+    clearFxBinding();
+  }
   function clearFxBinding() {
     const cleanup = fxCleanup; fxCleanup = null;
     if (cleanup) cleanup();
@@ -2532,7 +2576,7 @@
     if (document.title !== want) document.title = want;
   }
   function render() {
-    clearFxBinding();
+    clearInputBindings();
     syncTitle();
     try {
       if (mode === 'home') { tvStep = -1; phoneStep = -1; SCENE.reset(); return homeV(); }
@@ -2566,7 +2610,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v85</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v86</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
@@ -3793,7 +3837,7 @@
     const d = S && typeof S.ms === 'number' && lastStateAt ? Object.assign({}, S, { ms: Math.max(0, S.ms - (Date.now() - lastStateAt)) }) : S;
     const freshP = !!d && L.s !== phoneStep;
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
-    clearFxBinding();
+    clearInputBindings();
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');
     if (!d) { $app.className = 'screen phone center'; $app.innerHTML = '<div class="logo" style="font-size:2.4rem"><span class="lt">Trivia</span><span class="lt">Tavern</span></div><div class="p-title">Spajam se…</div><div class="p-sub">Soba ' + esc(pcode) + '</div>'; return; }
     const me = meOf(d);
@@ -4777,6 +4821,9 @@
     if (!root || root.classList.contains('sent')) return;
     const LL = L, stage = root.querySelector('.swp-stage'), sides = root.querySelectorAll('.swp-side');
     const card = root.querySelector('.swp-card[data-si]');
+    let active = true;
+    const valid = () => active && LL === L && L.s === d.s && root.isConnected && !L.sent && !me.ok;
+    gestureCleanup = () => { active = false; };
     const width = () => (stage && stage.clientWidth) || 320;
     const pointerScale = () => stage && stage.clientWidth ? stage.getBoundingClientRect().width / stage.clientWidth : 1;
     const thr = () => Math.max(64, width() * 0.2);
@@ -4784,7 +4831,7 @@
     const glow = (dx) => { const k = Math.min(1, Math.abs(dx) / thr()); sides[0].style.setProperty('--k', dx < 0 ? k : 0); sides[1].style.setProperty('--k', dx > 0 ? k : 0); if (card) card.dataset.dir = k > 0.4 ? (dx < 0 ? 'a' : 'b') : ''; };
     // jedini put zapisa odgovora: zaključavanje sprječava preskakanje i dvostruko bilježenje
     const commit = (z, dx, dy, viaBtn) => {
-      if (LL !== L || L.sent || me.ok || L.srtLock || z !== 0 && z !== 1) return;
+      if (!valid() || L.srtLock || z !== 0 && z !== 1) return;
       if (viaBtn && performance.now() < L.srtCool) return;
       const i = srtCur(); if (i < 0) return;
       L.srtLock = true; L.srtCool = performance.now() + SRT_COOL;
@@ -4804,15 +4851,22 @@
     };
     if (card) {
       let id = null, x0 = 0, y0 = 0, t0 = 0, dx = 0, dy = 0, moved = false;
+      const release = () => {
+        const previous = id; id = null;
+        if (previous !== null) try { card.releasePointerCapture(previous); } catch (er) {}
+        card.classList.remove('drag');
+      };
+      gestureCleanup = () => { active = false; release(); card.style.transform = ''; glow(0); };
       card.onpointerdown = (e) => {
-        if (L.srtLock || e.button > 0 || id !== null) return;
+        if (!valid() || L.srtLock || e.button > 0 || id !== null) return;
         id = e.pointerId; x0 = e.clientX; y0 = e.clientY; t0 = performance.now(); dx = dy = 0; moved = false;
         try { card.setPointerCapture(id); } catch (er) {}
         card.classList.remove('snap'); card.classList.add('drag');
       };
       card.onpointermove = (e) => {
-        if (e.pointerId !== id) return;
+        if (!valid() || id === null || e.pointerId !== id) return;
         const scale = pointerScale();
+        if (!Number.isFinite(scale) || scale <= 0) return;
         dx = (e.clientX - x0) / scale; dy = (e.clientY - y0) / scale;
         if (!moved && Math.hypot(dx, dy) < 5) return;
         moved = true;
@@ -4820,9 +4874,8 @@
         glow(dx);
       };
       const end = (e, cancel) => {
-        if (e.pointerId !== id) return;
-        id = null; try { card.releasePointerCapture(e.pointerId); } catch (er) {}
-        card.classList.remove('drag');
+        if (!valid() || id === null || e.pointerId !== id) return;
+        release();
         const bin = [...sides].find((side) => { const r = side.getBoundingClientRect(); return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom; });
         if (!cancel && moved && bin) return commit(+bin.dataset.go, dx, dy);
         const v = Math.abs(dx) / Math.max(1, performance.now() - t0);
@@ -4831,16 +4884,17 @@
       };
       card.onpointerup = (e) => end(e, false);
       card.onpointercancel = (e) => end(e, true);
+      card.onlostpointercapture = (e) => end(e, true);
       card.onkeydown = (e) => { if (e.key === 'ArrowLeft') { e.preventDefault(); commit(0, 0, 0, true); } else if (e.key === 'ArrowRight') { e.preventDefault(); commit(1, 0, 0, true); } };
     }
     root.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => commit(+b.dataset.go, 0, 0, true); });
     bind('swpUndo', () => {
-      if (L.srtLock || L.sent || !L.srtH.length) return;
+      if (!valid() || L.srtLock || !L.srtH.length) return;
       const i = L.srtH.pop(); L.srtBack = L.sortP[i]; L.sortP[i] = -1; L.srtCool = performance.now() + 200; saveSort(d);
       phoneRender(true);
     });
     bind('srtDone', () => {
-      if (L.sent || L.srtLock || !L.sortP.some((x) => x >= 0)) return;
+      if (!valid() || L.srtLock || !L.sortP.some((x) => x >= 0)) return;
       lastSort = { k: d.so.it.join('|'), p: L.sortP.slice() };
       sendInput({ r: L.sortP.slice() });
     });
@@ -4908,14 +4962,19 @@
     const root = $app.querySelector('.lnk');
     if (!root || root.classList.contains('sent')) return;
     const board = root.querySelector('.lnk-board'); if (!board) return;
+    const LL = L;
+    let active = true;
+    const valid = () => active && LL === L && L.s === d.s && root.isConnected && !L.sent && !me.ok;
     const re = () => { L.lnkLive = null; phoneRender(true); };
-    const pairWith = (i, j) => { const owner = L.linkP.indexOf(j); if (owner >= 0) L.linkP[owner] = -1; L.linkP[i] = j; L.lnkSel = null; L.lnkSelR = null; saveLink(d); AUDIO.play('pop'); HAPTIC.tap(); re(); };
+    const pairWith = (i, j) => { if (!valid()) return; const owner = L.linkP.indexOf(j); if (owner >= 0) L.linkP[owner] = -1; L.linkP[i] = j; L.lnkSel = null; L.lnkSelR = null; saveLink(d); AUDIO.play('pop'); HAPTIC.tap(); re(); };
     const tapL = (i) => {
+      if (!valid()) return;
       if (L.lnkSelR != null) return pairWith(i, L.lnkSelR);
       if (L.linkP[i] >= 0) { L.linkP[i] = -1; L.lnkSel = i; saveLink(d); AUDIO.play('tap'); return re(); }
       L.lnkSel = L.lnkSel === i ? null : i; AUDIO.play('tap'); re();
     };
     const tapR = (j) => {
+      if (!valid()) return;
       if (L.lnkSel != null) return pairWith(L.lnkSel, j);
       const owner = L.linkP.indexOf(j);
       if (owner >= 0) { L.linkP[owner] = -1; L.lnkSelR = j; saveLink(d); AUDIO.play('tap'); return re(); }
@@ -4924,21 +4983,34 @@
     if (L.lnkSelR != null) { const c = board.querySelector('[data-lr="' + L.lnkSelR + '"]'); if (c) c.classList.add('sel'); }
     const cardOf = (el) => el && el.closest && el.closest('.lnk-card');
     let drag = null;
+    const release = () => {
+      const g = drag; drag = null;
+      if (g) {
+        try { board.releasePointerCapture(g.id); } catch (er) {}
+        g.c.classList.remove('drag'); if (g.hov) g.hov.classList.remove('hov');
+      }
+      board.classList.remove('dragging'); LL.lnkLive = null;
+      return g;
+    };
+    gestureCleanup = () => { active = false; release(); };
     board.onpointerdown = (e) => {
+      if (!valid() || drag) return;
       const c = cardOf(e.target); if (!c || (e.button != null && e.button > 0)) return;
+      if (!board.contains(c)) return;
       const left = c.dataset.ll !== undefined, idx = +(left ? c.dataset.ll : c.dataset.lr);
       const br = board.getBoundingClientRect(), r = c.getBoundingClientRect();
-      drag = { left, idx, c, x0: e.clientX, y0: e.clientY, on: false, br, ax: (left ? r.right : r.left) - br.left, ay: r.top + r.height / 2 - br.top, hov: null,
+      if (!(br.width > 0 && br.height > 0)) return;
+      drag = { id: e.pointerId, left, idx, c, x0: e.clientX, y0: e.clientY, on: false, br, ax: (left ? r.right : r.left) - br.left, ay: r.top + r.height / 2 - br.top, hov: null,
         col: LNK_COL[(left ? idx : Math.max(0, L.linkP.indexOf(idx) >= 0 ? L.linkP.indexOf(idx) : L.linkP.filter((x) => x >= 0).length)) % LNK_COL.length] };
       try { board.setPointerCapture(e.pointerId); } catch (er) {}
     };
     board.onpointermove = (e) => {
-      if (!drag) return;
+      if (!valid() || !drag || drag.id !== e.pointerId) return;
       if (!drag.on && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 8) return;
       if (!drag.on) { drag.on = true; drag.c.classList.add('drag'); board.classList.add('dragging'); }
       e.preventDefault();
       const under = cardOf(document.elementFromPoint(e.clientX, e.clientY));
-      const ok = under && (drag.left ? under.dataset.lr !== undefined : under.dataset.ll !== undefined) ? under : null;
+      const ok = under && board.contains(under) && (drag.left ? under.dataset.lr !== undefined : under.dataset.ll !== undefined) ? under : null;
       if (drag.hov !== ok) { if (drag.hov) drag.hov.classList.remove('hov'); if (ok) ok.classList.add('hov'); drag.hov = ok; }
       let x2 = e.clientX - drag.br.left, y2 = e.clientY - drag.br.top;
       if (ok) { const r = ok.getBoundingClientRect(); x2 = (drag.left ? r.left : r.right) - drag.br.left; y2 = r.top + r.height / 2 - drag.br.top; }
@@ -4946,9 +5018,8 @@
       drawLinks();
     };
     const end = (e, cancel) => {
-      if (!drag) return;
-      const g = drag; drag = null;
-      board.classList.remove('dragging'); g.c.classList.remove('drag'); if (g.hov) g.hov.classList.remove('hov');
+      if (!valid() || !drag || drag.id !== e.pointerId) return;
+      const g = release();
       if (!g.on) { if (!cancel) (g.left ? tapL : tapR)(g.idx); return; }
       L.lnkLive = null;
       if (!cancel && g.hov) return g.left ? pairWith(g.idx, +g.hov.dataset.lr) : pairWith(+g.hov.dataset.ll, g.idx);
@@ -4956,9 +5027,10 @@
     };
     board.onpointerup = (e) => end(e, false);
     board.onpointercancel = (e) => end(e, true);
+    board.onlostpointercapture = (e) => end(e, true);
     root.querySelectorAll('.lnk-card[tabindex]').forEach((c) => { c.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.dataset.ll !== undefined ? tapL(+c.dataset.ll) : tapR(+c.dataset.lr); } }; });
     bind('lnkDone', () => {
-      if (L.sent || !L.linkP.some((x) => x >= 0)) return;
+      if (!valid() || !L.linkP.some((x) => x >= 0)) return;
       lastLink = { k: d.li.L.join('|') + '#' + d.li.R.join('|'), p: L.linkP.slice() };
       sendInput({ r: L.linkP.slice() });
     });
@@ -5075,7 +5147,7 @@
     // Expiry only changes presentation; only the server advances the phase.
     if (phoneShown() && questionExpired() && !L.expiredPresentation) {
       L.expiredPresentation = true;
-      clearFxBinding(); stopFxTimer();
+      clearInputBindings(); stopFxTimer();
       if (L.bombRaf) cancelAnimationFrame(L.bombRaf);
       L.bombRaf = 0;
       phoneRender(true);
@@ -5101,6 +5173,31 @@
   }
   setInterval(tick, 100);
 
+  function followInvitationNavigation(event) {
+    const parse = hash => {
+      const m = (hash || '').match(/^#([A-Za-z]{4})(?:-([A-Za-z0-9_-]{22}))?$/);
+      return m ? { code: m[1].toUpperCase(), secret: m[2] || null, hash: '#' + m[1].toUpperCase() + (m[2] ? '-' + m[2] : '') } : null;
+    };
+    const next = parse(location.hash);
+    if (!next) return;
+    // Fragment navigation retains the document in Safari. Room-code case alone
+    // must not replace an established identity or interrupt its current round.
+    try {
+      const previous = event && event.oldURL && parse(new URL(event.oldURL).hash);
+      if (previous && previous.hash === next.hash) return;
+    } catch (e) {}
+    const currentCode = cloudCredentials ? cloudCredentials.code : S ? S.code : game ? game.view().code : null;
+    const currentSecret = cloudCredentials ? cloudCredentials.secret : (mode === 'host' || mode === 'hostp') ? HOST_RS : PLAYER_RS;
+    if (currentCode === next.code && (!next.secret || next.secret === currentSecret)) return;
+    // A different explicit invitation leaves the previous session through the
+    // normal cleanup path, then presents its own room and secret together.
+    reset();
+    try { history.replaceState(null, '', location.pathname + location.search + next.hash); } catch (e) {}
+    pcode = next.code; PLAYER_RS = next.secret; HOST_RS = null;
+    if (next.secret) rememberRS(next.code, next.secret);
+    mode = 'join'; render();
+  }
+  window.addEventListener('hashchange', followInvitationNavigation);
   { const hm = (location.hash || '').match(/^#?([A-Za-z]{4})(?:-([A-Za-z0-9_-]{22}))?$/); if (hm) { mode = 'join'; if (hm[2]) rememberRS(hm[1].toUpperCase(), hm[2]); } }
   render();
   try {

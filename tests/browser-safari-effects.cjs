@@ -108,7 +108,10 @@ function state(ph='fq',effects=['sluz']){
    // Local expiry clears presentation blockers without fabricating a receipt
    // or dropping unfinished effect state. A fresh authoritative same-phase
    // snapshot after resume can restore the remaining interaction time.
-   const expiry=state('fq',['sluz']);expiry.ms=120;await show(expiry);await page.waitForTimeout(300);
+   const expiry=state('fq',['sluz']);expiry.ms=120;await show(expiry);
+   // Wait for the presentation tick, rather than assuming a 300ms wall-clock
+   // sleep guarantees timer delivery while other browser suites use the CPU.
+   await page.waitForFunction(()=>document.querySelectorAll('#app #fx,#app .boom-cover,#app #bombs').length===0,{},{timeout:3000});
    assert.equal(await page.locator('#app #fx,#app .boom-cover,#app #bombs').count(),0,'A local deadline removes touch-blocking presentation');
    assert(await page.locator('#app [data-c]').evaluateAll(es=>es.every(el=>el.disabled)),'Expired answers stay disabled');
    const expired=await page.evaluate(()=>effectUI.local());assert.equal(expired.s,expiry.s);assert.equal(expired.sent,null,'Expiry cannot fabricate an answer receipt');assert.equal(expired.fx,'sluz','Expiry preserves unfinished effect state until an authoritative update');

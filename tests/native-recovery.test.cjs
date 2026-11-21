@@ -8,7 +8,7 @@ function fixture(record,overrides={}) {
  const data=new Map(record?[['mz_native_resume_v1',typeof record==='string'?record:JSON.stringify(record)]]:[]),calls=[];
  const c=vm.createContext({PID:'pid',localStorage:{getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)},mode:'home',location:{hash:''},game:null,S:null,pcode:'ABCD',pname:'Ana',PLAYER_RS:'a'.repeat(22),
   okRS:x=>typeof x==='string'&&/^[A-Za-z0-9_-]{22}$/.test(x),okKey:x=>/^[a-f0-9]{32}$/.test(x),hasPeer:()=>true,
-  rememberRS:(...a)=>calls.push(['secret',...a]),joinGame:(...a)=>calls.push(['join',...a]),openHostPeer:(...a)=>calls.push(['host',...a]),render:()=>{},keepAwake:()=>{},saveRecovery:()=>{},flushRecovery:()=>{},document:{hidden:false},clearFxBinding:()=>{},phoneShown:()=>false,cloudEnabled:()=>false,checkConnection:()=>calls.push(['check']),directReady:()=>false,retrySoon:()=>calls.push(['retry']),...overrides});
+  rememberRS:(...a)=>calls.push(['secret',...a]),joinGame:(...a)=>calls.push(['join',...a]),openHostPeer:(...a)=>calls.push(['host',...a]),render:()=>{},keepAwake:()=>{},saveRecovery:()=>{},flushRecovery:()=>{},document:{hidden:false},clearInputBindings:()=>{},phoneShown:()=>false,cloudEnabled:()=>false,checkConnection:()=>calls.push(['check']),directReady:()=>false,retrySoon:()=>calls.push(['retry']),...overrides});
  vm.runInContext(source.slice(start,end)+';this.ready=nativeRecoveryReady;this.pause=nativeRecoveryPause;this.clear=clearNativeRecovery;this.resume=resumeConnection;this.save=saveGuestRecovery;',c);
  return {c,data,calls};
 }

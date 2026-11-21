@@ -2722,7 +2722,12 @@ function createGame(o) {
   // privatno stanje: samo za tog igrača
   function priv(pid) {
     const pr0 = privBase(pid), p0 = R.get(pid), ul = ulPriv(pid);
-    const pr = ul ? Object.assign(pr0 || { can: false, used: false, inv: [], out: null, note: p0.note }, { ul }) : pr0;
+    let pr = ul ? Object.assign(pr0 || { can: false, used: false, inv: [], out: null, note: p0.note }, { ul }) : pr0;
+    // Only the authenticated player's accepted input, never an answer key or
+    // another player's choices. A discarded/reloaded tab resumes this step.
+    const fields = { sort: 'sortA', link: 'linkA', order: 'ordA', hilo: 'hlA', blitz: 'bzA', rope: 'rpA' };
+    const answers = p0 && !p0.bot && fields[G.ph] && p0[fields[G.ph]];
+    if (Array.isArray(answers)) pr = Object.assign(pr || { can: false, used: false, inv: [], out: null, note: p0.note }, { progress: { s: G.s, ph: G.ph, r: answers.slice() } });
     if (p0 && G.throne && G.ph === 'trisk') return Object.assign(pr || { can: false, used: false, inv: [], out: null, note: p0.note }, { trk: p0.trk || 0 });
     return pr;
   }
