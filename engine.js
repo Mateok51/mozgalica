@@ -964,10 +964,11 @@ function createGame(o) {
   }
   // ----- Uljez u krčmi: jedna osoba ne zna temu; svi biraju dva pojma, zatim glasaju tko je uljez -----
   function startUljez() {
+    const act = active();
+    if (!act.length) return next();
     const set = G.used.uljez || (G.used.uljez = new Set());
     const it = D.ulj[unusedIndex(D.ulj, set)];
     const terms = shuffle(it.y.map((w) => ({ w, ok: 1 })).concat(it.n.map((w) => ({ w, ok: 0 }))));
-    const act = active();
     G.ul = { th: it.t, terms, imp: act[rnd(act.length)].pid, cnt: {}, caught: false };
     for (const p of list()) { p.gained = 0; p.ulP = null; p.ulV = null; }
     setPhase('uljez', cfg.ulj);
@@ -2599,6 +2600,12 @@ function createGame(o) {
   function pactAction(pid, a) {
     const p = R.get(pid);
     if (!p || (p.bot && !(botCall && bsOn())) || !a || typeof a !== 'object' || typeof a.k !== 'string') return false;
+    // New clients bind each decision to the offer they saw. Keep untagged
+    // legacy clients compatible; a supplied ID must never target a later offer.
+    if (['krPact', 'krOff', 'krCh'].includes(a.k) && Object.prototype.hasOwnProperty.call(a, 'id')) {
+      const offer = a.k === 'krPact' ? G.kp : a.k === 'krOff' ? p.ko : G.lc;
+      if (!Number.isSafeInteger(a.id) || !offer || a.id !== offer.id) return false;
+    }
     if (sfOn() && sfBusy(p) && a.k !== 'whisper' && a.k.slice(0, 2) !== 'tk') return false;   // nitko ne odlučuje dok odgovara
     if (a.k === 'krCh') { const r = krChallengeAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }
     if (a.k === 'krOff') { const r = krOfferAnswer(p, !!a.yes); if (r) { if (krReady()) endPhase(); else onChange(); } return r; }

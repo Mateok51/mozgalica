@@ -851,20 +851,46 @@
   let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;
   // The server owns room state; this page only renders views and sends commands.
   let cloudSession = null, cloudCredentials = null, cloudAttempt = 0, cloudView = null, cloudTvSig = '', cloudResend = false, cloudRetry = null;
+  let cloudTakeover = null, cloudRecoveryDismissed = false;
   const CLOUD_RECOVERY_KEY = 'mz_cloud_resume_v1';
-  function clearCloudRecovery() { try { localStorage.removeItem(CLOUD_RECOVERY_KEY); } catch (e) {} }
+  function clearCloudRecovery(credentials = cloudCredentials) {
+    cloudRecoveryDismissed = true;
+    // The tab owns its recovery target. Leaving/finalising room A must not
+    // erase the cross-tab fallback most recently saved by room B.
+    try {
+      const raw = sessionStorage.getItem(CLOUD_RECOVERY_KEY);
+      if (!credentials && raw) credentials = JSON.parse(raw);
+    } catch (e) {}
+    try { sessionStorage.setItem(CLOUD_RECOVERY_KEY, JSON.stringify({ version: 1, pid: PID, cleared: true })); }
+    catch (e) { try { sessionStorage.removeItem(CLOUD_RECOVERY_KEY); } catch (_) {} }
+    if (!credentials) return;
+    try {
+      const raw = localStorage.getItem(CLOUD_RECOVERY_KEY), r = raw && JSON.parse(raw);
+      if (r && r.pid === PID && r.code === credentials.code && (r.secret || null) === (credentials.secret || null))
+        localStorage.removeItem(CLOUD_RECOVERY_KEY);
+    } catch (e) {}
+  }
+  function writeCloudRecovery(credentials, noTv) {
+    cloudRecoveryDismissed = false;
+    const raw = JSON.stringify({ version: 1, savedAt: Date.now(), pid: PID,
+      code: credentials.code, secret: credentials.secret, role: credentials.role,
+      name: credentials.name, noTv: !!noTv });
+    // Reload restores this tab's room even if another room's heartbeat writes
+    // the shared fallback. Keep that fallback for newly opened QR tabs.
+    try { sessionStorage.setItem(CLOUD_RECOVERY_KEY, raw); } catch (e) {}
+    try { localStorage.setItem(CLOUD_RECOVERY_KEY, raw); } catch (e) {}
+  }
   function saveCloudRecovery() {
     if (!cloudSession || !cloudCredentials || !cloudView) return;
     if (cloudView.ph === 'final') { clearCloudRecovery(); return; }
-    try { localStorage.setItem(CLOUD_RECOVERY_KEY, JSON.stringify({ version: 1, savedAt: Date.now(), pid: PID,
-      code: cloudCredentials.code, secret: cloudCredentials.secret, role: cloudCredentials.role,
-      name: cloudCredentials.name, noTv: !!cloudView.cloud.noTv })); } catch (e) {}
+    writeCloudRecovery(cloudCredentials, cloudView.cloud.noTv);
   }
   function closeCloud() {
     cloudAttempt++;
     if (cloudSession) cloudSession.close();
     cloudSession = null; cloudCredentials = null; cloudView = null; cloudTvSig = ''; cloudResend = false;
     cloudRetry = null;
+    cloudTakeover = null;
   }
   function cloudProxy() {
     const control = (method, args) => { if (cloudSession) cloudSession.send({ t: 'control', method, args }); };
@@ -873,12 +899,12 @@
       setBots: n => control('setBots', [n]), setOpt: (k, v) => control('setOpt', [k, v]),
     };
   }
-  function connectCloud(credentials, noTv, restoring = false) {
+  function connectCloud(credentials, noTv, previouslyConfirmed = false) {
     closeCloud();
-    let confirmed = restoring;
+    let confirmed = previouslyConfirmed;
     cloudCredentials = { ...credentials, pid: PID, sk: SK, av: myAv };
     pcode = credentials.code; pname = credentials.name;
-    if (credentials.role === 'host') { HOST_RS = credentials.secret; mode = noTv ? 'hostp' : 'host'; }
+    if (credentials.role === 'host') { hostErr = ''; HOST_RS = credentials.secret; mode = noTv ? 'hostp' : 'host'; }
     else { PLAYER_RS = credentials.secret; mode = 'player'; }
     rememberRS(pcode, credentials.secret);
     cloudSession = TAVERN_CLOUD_TRANSPORT.create({ apiOrigin: TAVERN_CLOUD.apiOrigin,
@@ -910,11 +936,19 @@
         if (S && phoneShown()) phoneRender(true);
       },
       onError(error) {
-        const terminal = ['auth', 'full', 'started', 'not_found', 'expired', 'identity', 'invalid', 'unavailable'].includes(error.reason);
+        if (error.reason === 'identity') {
+          // Another tab deliberately opened this same identity. Stay quiet until
+          // the user explicitly takes it back, preserving their shared record.
+          closeCloud(); clearInputBindings(); stopFxTimer();
+          game = null; S = null; PV = null; lastSig = ''; L = freshLocal(-1);
+          cloudTakeover = { credentials: { ...credentials }, noTv: !!noTv };
+          mode = 'superseded'; document.documentElement.dataset.ph = 'superseded';
+          render(); return;
+        }
+        const terminal = ['auth', 'full', 'started', 'not_found', 'expired', 'invalid', 'unavailable'].includes(error.reason);
         const message = error.reason === 'full' ? 'Soba je puna: najviše 6 igrača, uključujući domaćina ako igra.'
           : error.reason === 'auth' ? 'Prijava nije uspjela. Provjeri kod sobe ili pozivnicu domaćina.'
           : error.reason === 'started' ? 'Igra je već počela. Novi igrači mogu ući u sljedeću partiju.'
-          : error.reason === 'identity' ? 'Ovaj igrač je već prijavljen s drugog uređaja.'
           : error.reason === 'expired' || error.reason === 'not_found' ? 'Soba je završila ili više nije dostupna.'
           : error.reason === 'unavailable' ? 'Ne mogu se spojiti na sobu. Provjeri internet i je li pozivnica još važeća.'
           : 'Server trenutačno ne može obraditi zahtjev. Pokušaj ponovno.';
@@ -922,10 +956,10 @@
         const owner = credentials.role === 'host';
         closeCloud();
         if (owner && confirmed && error.reason === 'unavailable') {
-          cloudRetry = { code: credentials.code, secret: credentials.secret, noTv: !!noTv };
+          cloudRetry = { code: credentials.code, secret: credentials.secret, noTv: !!noTv, name: credentials.name, savedAt: Date.now() };
         }
         // A network timeout does not revoke an already confirmed player session.
-        if (error.reason !== 'unavailable') clearCloudRecovery();
+        if (error.reason !== 'unavailable') clearCloudRecovery(credentials);
         game = null;
         if (owner) { hostErr = message; mode = noTv ? 'hostform' : 'host'; render(); }
         else failJoin(message);
@@ -943,7 +977,11 @@
       const client = TAVERN_CLOUD_TRANSPORT.create({ apiOrigin: TAVERN_CLOUD.apiOrigin });
       const room = await client.createRoom({ pid: PID, sk: SK, name, av: myAv, noTv });
       if (attempt !== cloudAttempt || mode !== (noTv ? 'hostp' : 'host')) return;
-      connectCloud({ code: room.code, secret: room.secret, role: 'host', name }, noTv);
+      // The successful POST already confirms this owner's room. Preserve its
+      // receipt before the first WebSocket frame, including across a tab reload.
+      const credentials = { code: room.code, secret: room.secret, role: 'host', name };
+      writeCloudRecovery(credentials, noTv);
+      connectCloud(credentials, noTv, true);
     } catch (e) {
       if (attempt !== cloudAttempt) return;
       hostErr = 'Ne mogu otvoriti sobu na serveru. Provjeri internet i pokušaj ponovno.';
@@ -951,26 +989,81 @@
     }
   }
   function restoreCloudRecovery() {
-    if (!cloudEnabled() || cloudSession) return;
+    if (!cloudEnabled() || cloudSession || cloudRecoveryDismissed) return;
     const retryOwner = !['home', 'join'].includes(mode);
     if (retryOwner && (!cloudRetry || !['host', 'hostform'].includes(mode))) return;
+    let raw, tab = false;
+    try { raw = sessionStorage.getItem(CLOUD_RECOVERY_KEY); tab = !!raw; } catch (e) {}
+    if (!raw) {
+      try { raw = localStorage.getItem(CLOUD_RECOVERY_KEY); }
+      catch (e) { if (retryOwner) restoreMemoryOwner(); return; }
+    }
+    if (!raw) { if (retryOwner) restoreMemoryOwner(); return; }
     try {
-      const raw = localStorage.getItem(CLOUD_RECOVERY_KEY); if (!raw) return;
-      if (raw.length > 2048) throw Error('size');
-      const r = JSON.parse(raw), hash = '#' + r.code + (r.secret ? '-' + r.secret : '');
-      if (r.version !== 1 || r.pid !== PID || !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000 ||
-          !/^[A-Z]{4}$/.test(r.code) || !['host', 'player'].includes(r.role) ||
-          (r.secret != null && !okRS(r.secret)) || (r.role === 'host' && !okRS(r.secret)) || typeof r.noTv !== 'boolean' ||
-          typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12) throw Error('record');
-      // Only the failed confirmed owner may resume from its error screen.
-      // A deliberate new-room action clears this marker through closeCloud().
-      if (retryOwner && (r.role !== 'host' || r.code !== cloudRetry.code ||
-          r.secret !== cloudRetry.secret || r.noTv !== cloudRetry.noTv)) return;
+      const decode = text => {
+        if (!text || text.length > 2048) throw Error('size');
+        const r = JSON.parse(text);
+        if (r && r.version === 1 && r.pid === PID && r.cleared === true) return r;
+        if (!r || r.version !== 1 || r.pid !== PID || !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000 ||
+            !/^[A-Z]{4}$/.test(r.code) || !['host', 'player'].includes(r.role) ||
+            (r.secret != null && !okRS(r.secret)) || (r.role === 'host' && !okRS(r.secret)) || typeof r.noTv !== 'boolean' ||
+            typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12) throw Error('record');
+        return r;
+      };
+      let r = decode(raw);
       const invitation = (location.hash || '').match(/^#([A-Za-z]{4})(?:-([A-Za-z0-9_-]{22}))?$/);
       const currentHash = invitation ? '#' + invitation[1].toUpperCase() + (invitation[2] ? '-' + invitation[2] : '') : location.hash;
-      if (location.hash && (r.role !== 'player' || currentHash !== hash)) return;
+      const matches = value => !value.cleared && currentHash === '#' + value.code + (value.secret ? '-' + value.secret : '') &&
+        !(value.role === 'host' && !value.noTv);
+      // A copied tab may inherit another room's sessionStorage. Only an exact
+      // explicit invitation may select its matching shared fallback instead.
+      if (r.cleared || (location.hash && !matches(r))) {
+        if (r.cleared && !location.hash) cloudRecoveryDismissed = true;
+        if (!tab || !location.hash) return;
+        let other;
+        try { other = decode(localStorage.getItem(CLOUD_RECOVERY_KEY)); } catch (_) { return; }
+        if (!matches(other)) return;
+        r = other;
+      }
+      // Only the failed confirmed owner may resume from its error screen.
+      if (retryOwner && (r.role !== 'host' || r.code !== cloudRetry.code ||
+          r.secret !== cloudRetry.secret || r.noTv !== cloudRetry.noTv)) return;
       connectCloud({ code: r.code, secret: r.secret, role: r.role, name: r.name }, r.noTv, true);
-    } catch (e) { clearCloudRecovery(); }
+    } catch (e) {
+      // Discard only the rejected source, never another tab's valid room.
+      try {
+        const storage = tab ? sessionStorage : localStorage;
+        if (storage.getItem(CLOUD_RECOVERY_KEY) === raw) storage.removeItem(CLOUD_RECOVERY_KEY);
+      } catch (_) {}
+    }
+  }
+  function restoreMemoryOwner() {
+    // Only a previously confirmed owner in this live tab may use this receipt.
+    // Automatic recovery never falls through from malformed/different disk
+    // data. The explicit retry button uses this tab's confirmed room directly.
+    const r = cloudRetry;
+    if (!r || !['host', 'hostform'].includes(mode) || !/^[A-Z]{4}$/.test(r.code) || !okRS(r.secret) ||
+        typeof r.noTv !== 'boolean' || typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12 ||
+        !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000) return;
+    connectCloud({ code: r.code, secret: r.secret, role: 'host', name: r.name }, r.noTv, true);
+  }
+  function cloudRetryV() {
+    if (!cloudRetry || !hostErr) return false;
+    const retry = cloudRetry;
+    $app.className = 'screen center';
+    $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
+      '<div class="p-title">Soba ' + esc(cloudRetry.code) + '</div><div class="err">' + esc(hostErr) + '</div>' +
+      '<button class="btn" id="retryRoom">Pokušaj ponovno</button><button class="btn ghost" id="retryNew">Nova igra</button>';
+    // This explicit button names the confirmed room held by this tab. It must
+    // not depend on a successful storage write or target another saved room.
+    bind('retryRoom', () => { if (cloudRetry === retry) restoreMemoryOwner(); });
+    bind('retryNew', () => {
+      if (cloudRetry !== retry) return;
+      const noTv = retry.noTv;
+      clearCloudRecovery(retry); closeCloud(); hostErr = '';
+      if (noTv) { mode = 'hostform'; render(); } else startHost();
+    });
+    return true;
   }
   function diagnostic(type) {
     if (typeof TAVERN_DIAGNOSTICS !== 'undefined') TAVERN_DIAGNOSTICS.add(type, S && S.ph);
@@ -1025,10 +1118,29 @@
     };
     modal.querySelector('#diagExport').focus();
   }
+  function closeHapticSettings(restoreFocus = true, expected = null) {
+    const modal = document.getElementById('hapticModal');
+    if (!modal || (expected && modal !== expected)) return;
+    const previous = modal.__returnFocus; modal.remove();
+    if (restoreFocus && previous && previous.isConnected) previous.focus();
+  }
+  function closePactRules(restoreFocus = true, expected = null) {
+    const modal = document.getElementById('pactRulesModal');
+    if (!modal || (expected && modal !== expected)) return;
+    const previous = modal.__returnFocus; modal.remove();
+    if (restoreFocus && previous && previous.isConnected && $app.contains(previous)) previous.focus();
+  }
+  function closeStalePactRules(d) {
+    const modal = document.getElementById('pactRulesModal');
+    if (!modal) return;
+    const context = modal.__context;
+    if (!d || !context || context.code !== d.code || context.step !== d.s || context.offer !== (PV && PV.kp && PV.kp.id)) closePactRules(false);
+  }
   function openHapticSettings() {
     if (document.getElementById('hapticModal')) return;
     const previous = document.activeElement;
     const modal = document.createElement('div'); modal.id = 'hapticModal'; modal.className = 'inv-modal';
+    modal.__returnFocus = previous;
     modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Vibracija');
     modal.innerHTML = '<div class="inv-card diag-card"><h2>Vibracija</h2><p>Odaberi koliko želiš osjetiti dodire i događaje u igri.</p><div class="haptic-options" role="group" aria-label="Jačina vibracije">' +
       [['off', 'Isključeno'], ['mild', 'Blago'], ['normal', 'Normalno']].map(([value, label]) => '<button class="btn ghost" type="button" data-haptic-level="' + value + '" aria-pressed="' + (HAPTIC.level === value) + '">' + label + '</button>').join('') +
@@ -1040,7 +1152,7 @@
       modal.querySelector('#hapticTest').disabled = HAPTIC.level === 'off';
       notice.textContent = HAPTIC.level === 'off' ? 'Vibracija je isključena.' : !ANDROID.available && !navigator.vibrate ? 'Ovaj preglednik ne podržava vibraciju.' : 'Jačina ovisi i o postavkama vibracije na mobitelu.';
     }
-    const close = () => { modal.remove(); if (previous && previous.isConnected) previous.focus(); };
+    const close = () => closeHapticSettings(true, modal);
     modal.querySelectorAll('[data-haptic-level]').forEach(b => { b.onclick = () => { HAPTIC.setLevel(b.dataset.hapticLevel); update(); }; });
     modal.querySelector('#hapticTest').onclick = () => { HAPTIC.tap(); notice.textContent = 'Poslan je probni dodir. Ako ga ne osjetiš, provjeri vibraciju dodira u postavkama mobitela.'; };
     modal.querySelector('#hapticClose').onclick = close;
@@ -1106,24 +1218,39 @@
   }
 
   // ---------- ekran ne smije zaspati tijekom igre ----------
-  let wake = null;
+  let wake = null, wakePending = null, wakeEpoch = 0;
+  const wakeWanted = () => document.visibilityState === 'visible' && ['host', 'hostp', 'player', 'demo'].includes(mode);
+  function releaseWake() {
+    wakeEpoch++; wakePending = null;
+    const old = wake; wake = null;
+    if (old) try { Promise.resolve(old.release()).catch(() => {}); } catch (e) {}
+  }
   async function keepAwake() {
+    if (!wakeWanted() || wake || wakePending || !navigator.wakeLock) return;
+    const epoch = wakeEpoch;
+    let pending;
     try {
-      if (navigator.wakeLock && !wake) {
-        wake = await navigator.wakeLock.request('screen');
-        wake.addEventListener('release', () => { wake = null; });
+      pending = navigator.wakeLock.request('screen'); wakePending = pending;
+      const lock = await pending;
+      if (epoch !== wakeEpoch || !wakeWanted()) {
+        try { Promise.resolve(lock.release()).catch(() => {}); } catch (e) {}
+        return;
       }
-    } catch (e) {}
+      wake = lock;
+      lock.addEventListener('release', () => { if (wake === lock) wake = null; });
+    } catch (e) {} finally { if (wakePending === pending) wakePending = null; }
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && (mode === 'host' || mode === 'hostp' || mode === 'player' || mode === 'demo')) keepAwake();
+    if (wakeWanted()) keepAwake(); else releaseWake();
   });
 
   // ---------- navigacija ----------
   function reset() {
     clearInputBindings();
     closeDiagnostics();
-    closeCloud(); clearCloudRecovery();
+    closeHapticSettings(false);
+    closePactRules(false);
+    clearCloudRecovery(); closeCloud();
     clearTimeout(characterReactionTimer); characterReactionTimer = null;
     clearNativeRecovery();
     try { sessionStorage.removeItem('mz_recovery_v1'); } catch (e) {}
@@ -1710,6 +1837,7 @@
 
   // ---------- igra bez TV-a: domaćin igra s mobitela ----------
   function hostFormV() {
+    if (cloudRetryV()) return;
     $app.className = 'screen phone';
     const name = store.get('mz_name') || '';
     $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
@@ -1739,7 +1867,7 @@
 
   // ---------- demo: ti + botovi na jednom uređaju ----------
   function startDemo() {
-    closeCloud(); clearCloudRecovery();
+    clearCloudRecovery(); closeCloud();
     mode = 'demo'; demoView = 'phone'; S = null; lastSig = ''; L = freshLocal(-1);
     keepAwake();
     ensureData().then(startDemoNow, () => { mode = 'home'; render(); });
@@ -2008,7 +2136,9 @@
   function stopFxTimer() { if (L && L.fxTimer) { clearInterval(L.fxTimer); L.fxTimer = null; } }
   let fxCleanup = null;
   let gestureCleanup = null;
+  let phoneInputEpoch = 0;
   function clearInputBindings() {
+    phoneInputEpoch++;
     const cleanup = gestureCleanup; gestureCleanup = null;
     if (cleanup) cleanup();
     clearFxBinding();
@@ -2018,7 +2148,7 @@
     if (cleanup) cleanup();
   }
   function questionExpired() {
-    return S && ['question', 'fq'].includes(S.ph) && clockDur > 0 && Date.now() >= clockEnds;
+    return S && ['question', 'fq', 'duel'].includes(S.ph) && clockDur > 0 && Date.now() >= clockEnds;
   }
   function fxDone(expected = L.fx, local = L) {
     // Queued pointer events can outlive a replaced surface or even this round.
@@ -2577,8 +2707,11 @@
   }
   function render() {
     clearInputBindings();
+    if (!phoneShown()) closePactRules(false);
+    if (!wakeWanted()) releaseWake();
     syncTitle();
     try {
+      if (mode === 'superseded') return supersededV();
       if (mode === 'home') { tvStep = -1; phoneStep = -1; SCENE.reset(); return homeV(); }
       if (mode === 'join') return joinV();
       if (mode === 'player') return phoneRender(true);
@@ -2587,6 +2720,13 @@
       if (mode === 'hostform') return hostFormV();
       return hostV();
     } catch (e) { crash(e); }
+  }
+  function supersededV() {
+    $app.className = 'screen center';
+    $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
+      '<div class="p-title">Igra je otvorena u drugoj kartici.</div><div class="p-sub">Ondje možeš nastaviti igrati ili prebaciti igru ovamo.</div>' +
+      '<button class="btn" id="resumeHere">Nastavi ovdje</button>';
+    bind('resumeHere', () => { const retry = cloudTakeover; if (retry) connectCloud(retry.credentials, retry.noTv, true); });
   }
   function crash(e) {
     $app.className = 'screen center';
@@ -2610,7 +2750,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v86</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v92</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
@@ -2647,6 +2787,7 @@
   }
 
   function hostV() {
+    if (cloudRetryV()) return;
     if (hostErr) {
       $app.className = 'screen center';
       $app.innerHTML = '<div class="err">' + esc(hostErr) + '</div><button class="btn" id="home">Natrag</button>';
@@ -3136,14 +3277,16 @@
     return krChallenge(d, null) + (n ? '<div class="kr-wait tv" data-bk="krr" data-bv="' + r + '">Spremno <b>' + r + '/' + n + '</b></div>' : '');
   }
   function bindKr(d) {
+    const offerId = PV && PV.ko && PV.ko.id, pactId = PV && PV.kp && PV.kp.id;
     document.querySelectorAll('#app [data-pactrules]').forEach((b) => { b.onclick = () => {
       if (document.getElementById('pactRulesModal')) return;
       const modal = document.createElement('div'); modal.id = 'pactRulesModal'; modal.className = 'pact-rules-modal'; modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Pravila tajnog pakta');
+      modal.__returnFocus = b; modal.__context = { code: d.code, step: d.s, offer: pactId };
       modal.innerHTML = '<div class="sf-rules"><div class="sf-h">🍻 Pravila tajnog pakta</div><ol><li>Kad oboje odgovorite točno, u riznicu ide 100 bodova. Kad samo jedan, 40.</li><li>Ostanete li odani do finala, riznica raste 40 % i dijelite je.</li><li>Nakon 2 pitanja možeš izdati partnera: uzimaš riznicu i dio njegovih bodova (najviše 300). Izdate li oboje, riznica propada.</li><li>Jedan pakt po partiji. Vrijedi tek kad oboje prihvatite.</li></ol><button class="btn ghost" type="button">Zatvori</button></div>';
-      document.body.appendChild(modal); const close = () => { modal.remove(); if (b.isConnected) b.focus(); }; modal.querySelector('button').onclick = close; modal.onclick = (e) => { if (e.target === modal) close(); }; modal.onkeydown = (e) => { if (e.key === 'Escape') close(); }; modal.querySelector('button').focus();
+      document.body.appendChild(modal); const close = () => closePactRules(true, modal); modal.querySelector('button').onclick = close; modal.onclick = (e) => { if (e.target === modal) close(); }; modal.onkeydown = (e) => { if (e.key === 'Escape') close(); }; modal.querySelector('button').focus();
     }; });
-    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', yes: b.dataset.kro === '1' }); }; });
-    document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); krSend({ k: 'krPact', yes: b.dataset.krp === '1' }); }; });
+    document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { if (!Number.isSafeInteger(offerId)) return; AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', id: offerId, yes: b.dataset.kro === '1' }); }; });
+    document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { if (!Number.isSafeInteger(pactId)) return; AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); krSend({ k: 'krPact', id: pactId, yes: b.dataset.krp === '1' }); }; });
     bind('krok', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
   }
   // ----- izazov vođi: javni prijedlog na ploči -----
@@ -3180,7 +3323,8 @@
     return '<div class="du-k">⚔️ Nadvlačenje konopa</div>' + duelVs(d, pose) + '<div class="du-res">' + res + '</div><div class="du-ms">' + (rr.pa || 0) + ' : ' + (rr.pb || 0) + '</div>' + (du.o ? '<div class="du-note">' + esc(du.o) + '</div>' : '');
   }
   function bindRope(d) {
-    document.querySelectorAll('#app [data-krc]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.krc === '1' ? 'confirm' : 'tap'); krSend({ k: 'krCh', yes: b.dataset.krc === '1' }); }; });
+    const challengeId = d.lc && d.lc.id;
+    document.querySelectorAll('#app [data-krc]').forEach((b) => { b.onclick = () => { if (!Number.isSafeInteger(challengeId)) return; AUDIO.play(b.dataset.krc === '1' ? 'confirm' : 'tap'); krSend({ k: 'krCh', id: challengeId, yes: b.dataset.krc === '1' }); }; });
     document.querySelectorAll('#app [data-rpv]').forEach((b) => { b.onclick = () => {
       const st = L.rp, list = d.rp && d.rp.list; if (!st || !list || st.i >= list.length) return;
       const v = +b.dataset.rpv, ok = v === list[st.i][1];
@@ -3836,6 +3980,7 @@
   function phoneV() {
     const d = S && typeof S.ms === 'number' && lastStateAt ? Object.assign({}, S, { ms: Math.max(0, S.ms - (Date.now() - lastStateAt)) }) : S;
     const freshP = !!d && L.s !== phoneStep;
+    closeStalePactRules(d);
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
     clearInputBindings();
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');
@@ -4097,10 +4242,11 @@
   function duelPhone(d, me) {
     const du = d.du, mine = me && (me.id === du.a || me.id === du.b);
     if (!mine) return timerHtml() + '<div class="du-k">Dvoboj u tijeku</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="waiting">Gledaš dvoboj. Brži točan odgovor osvaja +' + du.bonus + '.</div>';
-    const answered = L.sent || me.ok, pick = L.sent ? L.sent.c : -1;
-    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + i + (answered ? (pick === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + esc(o) + '</span></button>').join('');
+    const answered = L.sent || me.ok, pick = L.sent ? L.sent.c : -1, expired = d.ms <= 0;
+    L.expiredPresentation = expired;
+    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + i + (answered ? (pick === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered || expired ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + esc(o) + '</span></button>').join('');
     return timerHtml() + '<div class="du-k">Dvoboj!</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="q-area"><div class="p-opts">' + opts + '</div></div>' +
-      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : 'Brži točan odgovor pobjeđuje!') + '</div>';
+      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : expired ? 'Vrijeme je isteklo. Čekamo rezultat…' : 'Brži točan odgovor pobjeđuje!') + '</div>';
   }
   function duelResultHtml(d, tv) {
     const du = d.du, w = du.w ? pById(d, du.w) : null;
@@ -5138,6 +5284,22 @@
     if (d.ph === 'trisk') bindRisk();
     if ((d.ph === 'question' || d.ph === 'fq') && !questionExpired() && L.fx && !(L.sent || (me && me.ok))) bindFx();
     if ((d.ph === 'question' || d.ph === 'fq') && !questionExpired() && !(L.sent || (me && me.ok))) bindBombs();
+    guardPhoneActions();
+  }
+
+  function guardPhoneActions() {
+    const local = L, step = L.s, epoch = phoneInputEpoch;
+    // Outgoing animation ghosts remain connected outside #app. Their queued
+    // callbacks must not write to a later render, subquestion or round.
+    $app.querySelectorAll('button, [role="button"]').forEach(el => {
+      for (const property of ['onclick', 'onkeydown', 'onpointerdown', 'onpointercancel']) {
+        const handler = el[property]; if (typeof handler !== 'function') continue;
+        el[property] = function (event) {
+          if (epoch !== phoneInputEpoch || local !== L || step !== L.s || !el.isConnected || !$app.contains(el)) return;
+          return handler.call(this, event);
+        };
+      }
+    });
   }
 
   // ---------- odbrojavanje ----------

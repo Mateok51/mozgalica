@@ -66,6 +66,85 @@ lifecycle događaji te audio sat/stanje kontrolirano su simulirani. Na fizičkom
 iPhoneu još treba provjeriti povlačenje s dva prsta, zaključavanje usred geste,
 povratak iz druge aplikacije i zvuk nakon prekida ili poziva.
 
+Od v90 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
+serverskog rezultata i mogućnost nastavka nakon autoritativne obnove iste faze.
+Handleri odlazećih scena ne mogu odgovoriti na novu tvrdnju ili zaključati novo
+pitanje; namjerni brzi dodiri novih kontrola i dalje rade bez dodatnog čekanja.
+Neuspjelo slanje preko prividno otvorenog WebSocketa pokreće obnovu veze i
+postojeće ponovno slanje odgovora za isti korak.
+
+Otvaranje iste sesije u drugoj kartici zaustavlja automatsko ponovno povezivanje
+prethodne kartice. Ona čuva zajednički zapis sesije i nudi „Nastavi ovdje” za
+namjerni prijenos natrag. Za terminalnu obavijest poslužitelj koristi postojeći
+protokol koji razumiju i stariji klijenti. Regresije uključuju stvarne browser
+WebSockete, produkcijske metode prijave i Workers provjeru prijenosa domaćina;
+jednokratna pogreška slanja kontrolirano je injektirana. Ponašanje fizičkog
+iPhonea pri gubitku mreže i suspendiranju i dalje zahtijeva provjeru na uređaju.
+
+Otvaranje nove pozivnice zatvara i prethodni dijalog vibracije bez vraćanja
+fokusa na stari ekran. Uobičajeno zatvaranje dijaloga i dalje vraća fokus.
+Wake Lock ima jedan zahtjev po aktivnom prikazu; odlazak iz igre i skrivanje
+kartice oslobađaju zaključavanje, a zakašnjeli rezultat prethodnog zahtjeva
+ne zamjenjuje novo zaključavanje. API i njegov raspored događaja simulirani su
+u regresijama; stvarno uspavljivanje iPhonea nije mjereno.
+
+Nove odluke o paktu, zadatku i izazovu vođi šalju ID prikazane ponude.
+Zakašnjelo prihvaćanje druge ponude odbija se. Stariji APK protokol bez ID-a
+ostaje kompatibilan i zadržava izvorno ponašanje; zaštita vezivanjem ID-a
+vrijedi za ažurirane klijente. Pravila bodovanja i rokovi ponuda ostaju isti.
+
+Potvrda uspješnog HTTP stvaranja sobe sprema se prije prve WebSocket poruke.
+Reload i početni timeout nastavljaju tu istu sobu; ekran greške nudi „Pokušaj
+ponovno”, a „Nova igra” izričito napušta prethodnu. Neuspjeli ili otkazani zahtjev
+ne stvara zapis obnove, a odbijena autentikacija i dalje ga uklanja. Pri obnovi
+TV domaćina briše se i prethodna greška kako ne bi zaklonila obnovljenu sobu.
+
+Potpuno ista QR pozivnica potvrđenog domaćina bez TV-a u drugoj kartici čuva
+njegove kontrole. Druge pozivnice zadržavaju prednost, a gosti se ne promiču.
+Pravila pakta pripadaju konkretnoj ponudi i koraku: ostaju otvorena pri običnom
+osvježavanju istog konteksta, a zatvaraju se na novu pozivnicu, reset i novu
+fazu kako ne bi blokirala dodire. Provjere koriste stvarne browser handlere,
+mrežni adapter i metode prijave; kontrolirano uskraćena početna poruka nije
+mjerenje stvarnog iOS gubitka veze.
+
+Kad pohrana nije dostupna ili nije uspjela spremiti potvrdu, otvorena kartica
+može ponovno povezati potvrđenog domaćina iz vlastite memorije. Ručni retry
+cilja prikazanu sobu; automatski oporavak ne preskače zapis druge sobe niti
+neispravan zapis. Otkazivanje, odbijena prijava i istek ukidaju tu mogućnost.
+Bez dostupne pohrane ovaj oporavak ne preživljava potpuno ponovno učitavanje.
+
+
+Od v91 svaka kartica čuva svoj cilj oporavka u `sessionStorage`; zajednički
+`localStorage` ostaje rezervni zapis za novu karticu i istu QR pozivnicu.
+Poruka iz druge aktivne sobe zato ne preusmjerava obnovu postojeće kartice ako
+preglednik ponovo stvori dokument bez završnog `pagehide` spremanja. Završetak,
+odlazak i odbijena prijava jedne sobe ne brišu zajednički zapis druge sobe.
+Odjava kartice ostaje zapamćena, pa je povratak mreže ne uvodi u tuđu sobu.
+Kopirana kartica može obnoviti drugu sobu samo uz točno podudaranje izričite
+QR pozivnice i potvrđenog zajedničkog zapisa. Ako je `sessionStorage` nedostupan,
+ostaje prethodni zajednički fallback; živa kartica pamti svoj namjerni izlazak.
+Kontrolirani test izostavlja `pagehide`; stvarno iOS gašenje procesa i očuvanje
+pohrane ostaju za provjeru na iPhoneu.
+
+Poslužitelj odbija i neispravnu vršnu JSON vrijednost WebSocket poruke
+(`null`, broj, niz) urednom greškom i zatvara samo taj kanal. Prijavljeni
+`null` ranije je izazivao neobrađeni `TypeError` u handleru; nema dokaza da je
+rušio cijelu sobu. Valjane poruke i prijava starijih APK-ova ostaju kompatibilne.
+
+
+Od v92 soba koju vodi mobitel čuva jedno od šest mjesta za svog domaćina i
+prije njegove prve WebSocket prijave te dok je privremeno odspojen u predvorju.
+Najviše pet gostiju može zauzeti ostala mjesta; TV domaćin ostaje promatrač i
+zadržava šest mjesta za goste. Serverski test reproducira raniji ulazak šestog
+gosta i odbijanje vlasnika kao da je soba puna, zatim provjerava povratak,
+promjenu postavki i pokretanje igre nakon zakrpe.
+
+Ako svi igrači napuste upute za Uljeza prije sigurnosnog isteka, prazna runda
+preskače se bez dodjele bodova. Ranije je odabir uljeza iz praznog popisa bacao
+grešku i ostavljao fazu bez daljnjeg timera. Regresije koriste javni API i
+kontrolirani sat, uključujući checkpoint/replay i povratak igrača. Uspješne
+runde i prethodni zapisi partija zadržavaju postojeće ponašanje.
+
 ## Piramida od v84
 
 Piramida ima 12 stepenica do vrha i zasebno pitanje za krunu. Početni raspored je

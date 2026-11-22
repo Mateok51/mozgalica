@@ -202,10 +202,14 @@ export class GameRoom {
       return this.error(ws,'auth','Prijava nije dopuštena.',true);
     const player=this.game._p(message.pid),view=this.game.view();
     if(message.role==='player'&&!player&&view.ph!=='lobby')return this.error(ws,'started','Igra je već počela. Pričekaj sljedeću partiju.',true);
-    if(message.role==='player'&&!player&&view.P.filter(p=>!p.b).length>=6)return this.error(ws,'full','Soba je puna: najviše 6 igrača.',true);
+    // A phone owner is one of the six players, including before its first
+    // hello or while disconnected in the lobby. Guests cannot take that seat.
+    const ownerSeat=this.meta.owner.noTv&&!owner&&!view.P.some(p=>p.id===this.meta.owner.pid)?1:0;
+    if(message.role==='player'&&!player&&view.P.filter(p=>!p.b).length+ownerSeat>=6)return this.error(ws,'full','Soba je puna: najviše 6 igrača, uključujući domaćina ako igra.',true);
     if(!this.keys.has(message.pid)&&this.keys.size>=24)return this.error(ws,'capacity','Dosegnut je broj prijava u ovoj sobi.',true);
     // One authenticated socket per identity. A stale connection cannot displace another player.
-    for(const [previous,data] of this.sockets)if(previous!==ws&&data.authenticated&&data.pid===message.pid)this.disconnect(previous,1000,'Ponovno povezivanje');
+    // Existing clients already treat identity replacement as terminal too.
+    for(const [previous,data] of this.sockets)if(previous!==ws&&data.authenticated&&data.pid===message.pid)this.error(previous,'identity','Igra je otvorena u drugoj kartici.',true);
     Object.assign(info,{authenticated:true,pid:message.pid,name:message.name,av:message.av,role:message.role});
     ws.serializeAttachment({authenticated:true,pid:info.pid,name:info.name,av:info.av,role:info.role});
     this.keys.set(message.pid,message.sk);this.meta.idleSince=null;
@@ -222,7 +226,7 @@ export class GameRoom {
     info.tokens=Math.min(40,(info.tokens??40)+(Date.now()-(info.tokenAt||Date.now()))/1000);info.tokenAt=Date.now();
     if(++info.count>30 || (info.bytes+=raw.length)>32768 || (info.tokens-=1)<0)return this.error(ws,'rate','Previše poruka. Ponovno se poveži.',true);
     let m;try{m=JSON.parse(raw);}catch{return this.error(ws,'invalid','Neispravna poruka.',true);}
-    if(!bounded(m))return this.error(ws,'invalid','Neispravna poruka.',true);
+    if(!m||typeof m!=='object'||Array.isArray(m)||!bounded(m))return this.error(ws,'invalid','Neispravna poruka.',true);
     if(!info.authenticated)return m?.t==='hello'?this.hello(ws,info,m):this.error(ws,'auth','Potrebna je prijava.',true);
     if(m.t==='ping'){this.sendState(ws,info);return;}
     if(m.t==='hello')return this.sendState(ws,info);

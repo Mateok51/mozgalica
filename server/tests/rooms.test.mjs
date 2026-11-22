@@ -99,6 +99,30 @@ test('code-only admission keeps seat and start limits while an existing identity
   assert(!JSON.stringify(state).includes(room.secret));
  }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
 });
+test('a phone owner retains a lobby seat before first admission and after disconnect',async()=>{
+ for(const admitted of [false,true]) {
+  const persist=await mkdtemp(join(tmpdir(),'trivia-server-owner-seat-')),mf=runtime(persist),all=[];
+  const add=async(...args)=>{const client=await connect(mf,...args);all.push(client);return client;};
+  try {
+   const room=await create(mf,true,90);
+   const observer=await add(room,identity(91),'player',null);await observer.wait(x=>x.P?.some(p=>p.id==='p91'));
+   if(admitted) {
+    const owner=await add(room,identity(90));await owner.wait(x=>x.P?.some(p=>p.id==='p90'));
+    const beforeClose=observer.messages.length;owner.close();
+    await observer.wait(x=>observer.messages.indexOf(x)>=beforeClose&&x.P?.length===1&&!x.P.some(p=>p.id==='p90'));
+   }
+   for(let n=92;n<=95;n++){const guest=await add(room,identity(n),'player',null);await guest.wait(x=>x.P?.some(p=>p.id==='p'+n));}
+   const extra=await add(room,identity(96),'player',null);
+   const result=await extra.wait(x=>x.P||x.t==='error');
+   const returned=await add(room,identity(90));const state=await returned.wait(x=>x.P||x.t==='error');
+   assert.equal(result.reason,'full',"A sixth guest cannot take the absent phone owner's sixth seat; owner admission="+state.reason);
+   assert.equal(state.cloud.owner,true);assert.equal(state.P.length,6);assert(state.P.some(p=>p.id==='p90'));
+   assert(!returned.messages.some(x=>x.t==='error'));
+   returned.send({t:'control',method:'setOpt',args:['len','brza']});await returned.wait(x=>x.len==='brza');
+   returned.send({t:'control',method:'start',args:[]});await returned.wait(x=>x.ph==='intro');
+  }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
+ }
+});
 test('TV owner is spectator and guests retain six seats; input and packet policies reject malformed traffic',async()=>{
  const persist=await mkdtemp(join(tmpdir(),'trivia-server-tv-')),mf=runtime(persist),all=[];
  try {const room=await create(mf,false,9);const owner=await connect(mf,room,identity(9),'host');all.push(owner);const view=await owner.wait(x=>x.P);assert.equal(view.P.length,0);assert.equal(view.pv,null);
@@ -106,6 +130,26 @@ test('TV owner is spectator and guests retain six seats; input and packet polici
  const guest=all[1];guest.send({t:'control',method:'setBots',args:[6]});assert.equal((await guest.wait(x=>x.t==='error')).reason,'forbidden');
  guest.send({t:'in',in:{s:0,c:0,text:'x'.repeat(9000)}});assert.equal((await guest.wait(x=>x.reason==='invalid')).reason,'invalid');
  const others=all.at(-1);others.send({t:'ping'});assert.equal((await others.wait(x=>x.P?.length===6)).P.length,6);
+ }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
+});
+test('a replacement tab terminates only the same authenticated identity and preserves owner controls',async()=>{
+ const persist=await mkdtemp(join(tmpdir(),'trivia-server-tab-')),mf=runtime(persist),all=[];
+ const add=async(...args)=>{const client=await connect(mf,...args);all.push(client);return client;};
+ try {
+  const room=await create(mf,false,80),first=await add(room,identity(80),'host');await first.wait(x=>x.P);
+  const guest=await add(room,identity(81));await guest.wait(x=>x.P?.length===1);
+  const second=await add(room,identity(80),'host');
+  assert.equal((await first.wait(x=>x.t==='error')).reason,'identity','Replacement must stop the previous client reconnect loop using the compatible terminal reason');
+  assert.equal((await second.wait(x=>x.P)).cloud.owner,true);
+  assert(!guest.messages.some(x=>x.t==='error'),'Another player must keep its connection');
+  const bad=await add(room,{...identity(80),sk:'f'.repeat(32)},'host');
+  assert.equal((await bad.wait(x=>x.t==='error')).reason,'auth');
+  assert(!second.messages.some(x=>x.reason==='identity'),'A wrong key cannot displace the authenticated owner');
+  second.send({t:'control',method:'setOpt',args:['len','brza']});await guest.wait(x=>x.len==='brza');
+  const returned=await add(room,identity(80),'host');
+  await returned.wait(x=>x.cloud?.owner);await second.wait(x=>x.reason==='identity');
+  returned.send({t:'control',method:'setOpt',args:['len','duga']});await guest.wait(x=>x.len==='duga');
+  assert.equal(guest.messages.at(-1).P.filter(p=>p.id==='p81').length,1);
  }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
 });
 test('rolling free-tier room cap persists and lifetime is bounded',async()=>{
