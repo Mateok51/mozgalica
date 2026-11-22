@@ -22,7 +22,7 @@ function fixture(storage = new Map(), options = {}) {
     setTimeout: (fn, ms) => { const id = ++sequence; jobs.set(id, { fn, ms }); return id; }, clearTimeout: id => jobs.delete(id),
     setInterval: (fn, ms) => { const id = ++sequence; jobs.set(id, { fn, ms }); return id; }, clearInterval: id => jobs.delete(id),
     PID: 'ana', SK: 'f'.repeat(32), myAv: 0, mode: 'home', S: null, PV: null, L: { s: -1 },
-    cloudSession: null, cloudCredentials: null, cloudView: null, cloudAttempt: 0, cloudTvSig: '', cloudResend: false, cloudRetry: null, cloudTakeover: null,
+    cloudRecoveryDismissed: false, cloudSession: null, cloudCredentials: null, cloudView: null, cloudAttempt: 0, cloudTvSig: '', cloudResend: false, cloudRetry: null, cloudTakeover: null,
     pcode: '', pname: '', netNote: '', connectionWasLost: false, game: null, HOST_RS: null, PLAYER_RS: null, lastSig: '', hostErr: '',
     ppeer: null, pconn: null, TAVERN_CLOUD: { apiOrigin: 'https://game.test' }, CLOUD_RECOVERY_KEY: key,
     localStorage: {
@@ -30,6 +30,11 @@ function fixture(storage = new Map(), options = {}) {
       setItem: (name, value) => { if (options.blockWrite) throw Error('QuotaExceededError: localStorage write denied'); storage.set(name, value); },
       removeItem: name => storage.delete(name),
     },
+    ...(options.tabStorage ? { sessionStorage: {
+      getItem: name => { if (options.blockTabRead) throw Error('SecurityError: sessionStorage read denied'); return options.tabStorage.get(name) || null; },
+      setItem: (name, value) => { if (options.blockTabWrite) throw Error('QuotaExceededError: sessionStorage write denied'); options.tabStorage.set(name, value); },
+      removeItem: name => options.tabStorage.delete(name),
+    } } : {}),
     location: { hash: '' }, document: { hidden: false, documentElement: { dataset: {} }, getElementById: name => elements.get(name) },
     $app: screen, bind: (name, callback) => bindings.set(name, callback), esc: String,
     store: { get: name => name === 'mz_name' ? 'Ana' : storage.get(name), set: (name, value) => storage.set(name, value) },
@@ -39,7 +44,7 @@ function fixture(storage = new Map(), options = {}) {
     clearInputBindings() {}, stopFxTimer() {}, checkConnection() {}, directReady: () => false, retrySoon() {}, toolNotice() {},
     failJoin() { context.mode = 'join'; }, applyState(d) { context.S = d; context.L.s = d.s; }, meOf: d => d.P.find(p => p.id === 'ana'),
   });
-  const cloud = app.slice(app.indexOf('  function clearCloudRecovery()'), app.indexOf('  function diagnostic('));
+  const cloud = app.slice(app.indexOf('  function clearCloudRecovery('), app.indexOf('  function diagnostic('));
   const resume = app.slice(app.indexOf('  function resumeConnection()'), app.indexOf('  let recoveryTimer ='));
   const hostStart = app.slice(app.indexOf('  function startHost()'), app.indexOf('  // Pitanja (data/questions.js)'));
   const phoneForm = app.slice(app.indexOf('  function hostFormV()'), app.indexOf('  // ---------- demo:'));
@@ -265,4 +270,111 @@ test('a malformed disk record is discarded without attempting in-memory fallback
   assert.equal(f.sockets.length, 1, 'Malformed persistent data must not be treated as missing data in the same restore call');
   assert.equal(storage.has(key), false);
   assert.equal(f.requests.length, 1);
+});
+
+
+test("reload restores each tab's confirmed room despite another room overwriting the shared fallback", async () => {
+  const shared = new Map(), tabA = new Map(), tabB = new Map();
+  const a = fixture(shared, { tabStorage: tabA }); await a.context.startCloudRoom(true, 'Ana');
+  const b = fixture(shared, { tabStorage: tabB, response: { code: 'WXYZ', secret: 'b'.repeat(22) } }); await b.context.startCloudRoom(true, 'Ana');
+  a.context.writeCloudRecovery(a.context.cloudCredentials, true);
+  assert.equal(JSON.parse(shared.get(key)).code, 'ABCD', 'Another live room just wrote its heartbeat recovery');
+  for (const [tabStorage, code] of [[tabA, 'ABCD'], [tabB, 'WXYZ']]) {
+    const reload = fixture(shared, { tabStorage }); reload.context.restoreCloudRecovery();
+    assert.equal(reload.requests.length, 0);
+    assert.equal(reload.sockets.length, 1);
+    assert.equal(reload.sockets[0].url, 'wss://game.test/api/rooms/' + code);
+    reload.sockets[0].open();
+    assert.equal(reload.sockets[0].sent[0].pid, 'ana');
+    assert.equal(reload.sockets[0].sent[0].role, 'player');
+  }
+});
+test("final, auth rejection and leaving one tab preserve a different room's shared recovery", async () => {
+  for (const action of ['final', 'auth', 'leave']) {
+    const shared = new Map(), tabA = new Map(), tabB = new Map();
+    const a = fixture(shared, { tabStorage: tabA }); await a.context.startCloudRoom(true, 'Ana');
+    const b = fixture(shared, { tabStorage: tabB, response: { code: 'WXYZ', secret: 'b'.repeat(22) } }); await b.context.startCloudRoom(true, 'Ana');
+    const before = shared.get(key);
+    if (action === 'final') { a.context.cloudView = { ph: 'final' }; a.context.saveCloudRecovery(); }
+    else if (action === 'auth') { a.sockets[0].open(); a.sockets[0].onmessage({ data: JSON.stringify({ t: 'error', reason: 'auth' }) }); }
+    else { a.context.clearCloudRecovery(); a.context.closeCloud(); }
+    assert.equal(JSON.parse(tabA.get(key)).cleared, true, action + ' dismisses its own tab');
+    assert.equal(shared.get(key), before, action + ' cannot delete the other room');
+    assert.equal(tabB.get(key), before);
+  }
+});
+test('a malformed tab record is discarded without selecting or deleting another room', async () => {
+  const shared = new Map(), tab = new Map([[key, '{bad']]);
+  const other = fixture(shared); await other.context.startCloudRoom(true, 'Ana');
+  const before = shared.get(key), reload = fixture(shared, { tabStorage: tab });
+  reload.context.restoreCloudRecovery();
+  assert.equal(reload.sockets.length, 0, 'Do not silently switch rooms after rejecting the tab target');
+  assert.equal(tab.has(key), false);
+  assert.equal(shared.get(key), before);
+});
+test('sessionStorage writes still preserve the room when localStorage is blocked', async () => {
+  const tab = new Map(), first = fixture(new Map(), { tabStorage: tab, blockRead: true, blockWrite: true });
+  await first.context.startCloudRoom(true, 'Ana');
+  const reload = fixture(new Map(), { tabStorage: tab, blockRead: true, blockWrite: true });
+  reload.context.restoreCloudRecovery();
+  assert.equal(reload.sockets.length, 1); assert.equal(reload.requests.length, 0);
+  assert.equal(reload.sockets[0].url, 'wss://game.test/api/rooms/ABCD');
+});
+test('blocked sessionStorage falls back independently to a valid localStorage receipt', async () => {
+  const shared = new Map(), tab = new Map();
+  const first = fixture(shared, { tabStorage: tab, blockTabRead: true, blockTabWrite: true });
+  await first.context.startCloudRoom(true, 'Ana');
+  const reload = fixture(shared, { tabStorage: tab, blockTabRead: true, blockTabWrite: true });
+  reload.context.restoreCloudRecovery();
+  assert.equal(reload.sockets.length, 1); assert.equal(reload.requests.length, 0);
+  assert.equal(reload.sockets[0].url, 'wss://game.test/api/rooms/ABCD');
+});
+test('an explicit different invitation still takes precedence over a valid tab record', async () => {
+  const shared = new Map(), tab = new Map(), first = fixture(shared, { tabStorage: tab });
+  await first.context.startCloudRoom(true, 'Ana');
+  const reload = fixture(shared, { tabStorage: tab }); reload.context.mode = 'join'; reload.context.location.hash = '#WXYZ-' + 'b'.repeat(22);
+  reload.context.restoreCloudRecovery();
+  assert.equal(reload.sockets.length, 0);
+  assert.equal(JSON.parse(tab.get(key)).code, 'ABCD');
+});
+
+test('leaving a room suppresses cross-room fallback on lifecycle events and reload', async () => {
+  for (const blocked of [false, true]) {
+    const shared = new Map(), tab = new Map();
+    const a = fixture(shared, { tabStorage: tab, blockTabRead: blocked, blockTabWrite: blocked });
+    await a.context.startCloudRoom(true, 'Ana');
+    const b = fixture(shared, { response: { code: 'WXYZ', secret: 'b'.repeat(22) } }); await b.context.startCloudRoom(true, 'Ana');
+    a.context.clearCloudRecovery(); a.context.closeCloud(); a.context.mode = 'home';
+    a.context.resumeConnection(); a.context.restoreCloudRecovery();
+    assert.equal(a.sockets.length, 1, 'Live dismissed tab cannot silently enter the other room');
+    assert.equal(JSON.parse(shared.get(key)).code, 'WXYZ');
+    if (!blocked) {
+      const reload = fixture(shared, { tabStorage: tab }); reload.context.restoreCloudRecovery();
+      assert.equal(reload.sockets.length, 0, 'The persisted dismissal also guards a new document');
+    }
+    await a.context.startCloudRoom(true, 'Ana');
+    assert.equal(a.context.cloudRecoveryDismissed, false, 'A deliberate successful new creation can be resumed again');
+    assert.equal(a.sockets.length, 2);
+  }
+});
+test('a copied tab target yields only to an exact confirmed shared invitation', async () => {
+  for (const hash of ['#WXYZ-' + 'b'.repeat(22), '#wxyz-' + 'b'.repeat(22), '#WXYZ-' + 'c'.repeat(22), '#WXYZ', '#ZZZZ-' + 'b'.repeat(22)]) {
+    const shared = new Map(), tab = new Map();
+    const a = fixture(shared, { tabStorage: tab }); await a.context.startCloudRoom(true, 'Ana');
+    const b = fixture(shared, { response: { code: 'WXYZ', secret: 'b'.repeat(22) } }); await b.context.startCloudRoom(true, 'Ana');
+    const copied = fixture(shared, { tabStorage: new Map(tab) }); copied.context.location.hash = hash; copied.context.mode = 'join';
+    copied.context.restoreCloudRecovery();
+    if (hash.toUpperCase().startsWith('#WXYZ-') && hash.endsWith('b'.repeat(22))) {
+      assert.equal(copied.sockets.length, 1); assert.equal(copied.sockets[0].url, 'wss://game.test/api/rooms/WXYZ');
+      copied.sockets[0].open(); assert.equal(copied.sockets[0].sent[0].secret, 'b'.repeat(22));
+      assert.equal(copied.context.cloudCredentials.role, 'host', 'Matching confirmed owner keeps its controls');
+    } else assert.equal(copied.sockets.length, 0, 'Another code/secret cannot select a fallback');
+  }
+});
+test('an invalid shared invitation fallback leaves the valid copied tab record intact', async () => {
+  const shared = new Map(), tab = new Map(), a = fixture(shared, { tabStorage: tab });
+  await a.context.startCloudRoom(true, 'Ana'); const before = tab.get(key);
+  shared.set(key, '{bad'); const copied = fixture(shared, { tabStorage: tab });
+  copied.context.location.hash = '#WXYZ-' + 'b'.repeat(22); copied.context.mode = 'join'; copied.context.restoreCloudRecovery();
+  assert.equal(copied.sockets.length, 0); assert.equal(tab.get(key), before);
 });

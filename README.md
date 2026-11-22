@@ -111,7 +111,25 @@ Kad pohrana nije dostupna ili nije uspjela spremiti potvrdu, otvorena kartica
 može ponovno povezati potvrđenog domaćina iz vlastite memorije. Ručni retry
 cilja prikazanu sobu; automatski oporavak ne preskače zapis druge sobe niti
 neispravan zapis. Otkazivanje, odbijena prijava i istek ukidaju tu mogućnost.
-Bez trajne pohrane ovaj oporavak ne preživljava potpuno ponovno učitavanje.
+Bez dostupne pohrane ovaj oporavak ne preživljava potpuno ponovno učitavanje.
+
+
+Od v91 svaka kartica čuva svoj cilj oporavka u `sessionStorage`; zajednički
+`localStorage` ostaje rezervni zapis za novu karticu i istu QR pozivnicu.
+Poruka iz druge aktivne sobe zato ne preusmjerava obnovu postojeće kartice ako
+preglednik ponovo stvori dokument bez završnog `pagehide` spremanja. Završetak,
+odlazak i odbijena prijava jedne sobe ne brišu zajednički zapis druge sobe.
+Odjava kartice ostaje zapamćena, pa je povratak mreže ne uvodi u tuđu sobu.
+Kopirana kartica može obnoviti drugu sobu samo uz točno podudaranje izričite
+QR pozivnice i potvrđenog zajedničkog zapisa. Ako je `sessionStorage` nedostupan,
+ostaje prethodni zajednički fallback; živa kartica pamti svoj namjerni izlazak.
+Kontrolirani test izostavlja `pagehide`; stvarno iOS gašenje procesa i očuvanje
+pohrane ostaju za provjeru na iPhoneu.
+
+Poslužitelj odbija i neispravnu vršnu JSON vrijednost WebSocket poruke
+(`null`, broj, niz) urednom greškom i zatvara samo taj kanal. Prijavljeni
+`null` ranije je izazivao neobrađeni `TypeError` u handleru; nema dokaza da je
+rušio cijelu sobu. Valjane poruke i prijava starijih APK-ova ostaju kompatibilne.
 
 ## Piramida od v84
 

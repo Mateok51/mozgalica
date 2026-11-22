@@ -223,7 +223,7 @@ export class GameRoom {
     info.tokens=Math.min(40,(info.tokens??40)+(Date.now()-(info.tokenAt||Date.now()))/1000);info.tokenAt=Date.now();
     if(++info.count>30 || (info.bytes+=raw.length)>32768 || (info.tokens-=1)<0)return this.error(ws,'rate','Previše poruka. Ponovno se poveži.',true);
     let m;try{m=JSON.parse(raw);}catch{return this.error(ws,'invalid','Neispravna poruka.',true);}
-    if(!bounded(m))return this.error(ws,'invalid','Neispravna poruka.',true);
+    if(!m||typeof m!=='object'||Array.isArray(m)||!bounded(m))return this.error(ws,'invalid','Neispravna poruka.',true);
     if(!info.authenticated)return m?.t==='hello'?this.hello(ws,info,m):this.error(ws,'auth','Potrebna je prijava.',true);
     if(m.t==='ping'){this.sendState(ws,info);return;}
     if(m.t==='hello')return this.sendState(ws,info);

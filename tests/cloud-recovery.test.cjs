@@ -6,8 +6,8 @@ const secret='a'.repeat(22);
 const saved=(role='player',value=null)=>({version:1,pid:'one',savedAt:Date.now()-100,code:'ABCD',secret:value,role,name:'Ana',noTv:true});
 function restore(record,hash=''){
  const calls=[],data=new Map([['resume',JSON.stringify(record)]]);
- const c=vm.createContext({Date,PID:'one',cloudSession:null,mode:hash?'join':'home',CLOUD_RECOVERY_KEY:'resume',
-  location:{hash},localStorage:{getItem:key=>data.get(key)},cloudEnabled:()=>true,
+ const c=vm.createContext({Date,PID:'one',cloudRecoveryDismissed:false,cloudSession:null,mode:hash?'join':'home',CLOUD_RECOVERY_KEY:'resume',
+  location:{hash},localStorage:{getItem:key=>data.get(key),removeItem:key=>data.delete(key)},cloudEnabled:()=>true,
   okRS:value=>typeof value==='string'&&/^[A-Za-z0-9_-]{22}$/.test(value),
   clearCloudRecovery:()=>data.clear(),connectCloud:(value,noTv)=>calls.push({value:JSON.parse(JSON.stringify(value)),noTv})});
  vm.runInContext(source+';restoreCloudRecovery();',c);return{calls,data};
@@ -42,7 +42,7 @@ test('returning QR invitations canonicalize only room-code case',()=>{
 function reconnectFixture(record=saved('player',secret)){
  const data=new Map([['resume',JSON.stringify(record)]]),sessions=[],events=new Map(),documentEvents=new Map();
  const c=vm.createContext({Date,PID:'one',SK:'f'.repeat(32),myAv:0,mode:'join',S:null,PV:null,L:{s:1},
-  cloudSession:null,cloudCredentials:null,cloudView:null,cloudAttempt:0,cloudTvSig:'',cloudResend:false,cloudRetry:null,
+  cloudRecoveryDismissed:false,cloudSession:null,cloudCredentials:null,cloudView:null,cloudAttempt:0,cloudTvSig:'',cloudResend:false,cloudRetry:null,
   pcode:'',pname:'',netNote:'',connectionWasLost:false,game:null,HOST_RS:null,PLAYER_RS:null,
   hostPeer:null,ppeer:null,pconn:null,CLOUD_RECOVERY_KEY:'resume',TAVERN_CLOUD:{apiOrigin:'https://cloud.test'},
   location:{hash:record.role==='host'?'':'#ABCD-'+secret},localStorage:{getItem:key=>data.get(key),removeItem:key=>data.delete(key)},
@@ -53,7 +53,7 @@ function reconnectFixture(record=saved('player',secret)){
   document:{visibilityState:'visible',addEventListener:(event,callback)=>documentEvents.set(event,callback)},
   TAVERN_CLOUD_TRANSPORT:{create(options){const session={options,credentials:null,closed:false,connect(value){this.credentials=JSON.parse(JSON.stringify(value));},close(){this.closed=true;},check(){}};sessions.push(session);return session;}}
  });
- const clear=app.slice(app.indexOf('  function clearCloudRecovery()'),app.indexOf('  function saveCloudRecovery()'));
+ const clear=app.slice(app.indexOf('  function clearCloudRecovery('),app.indexOf('  function saveCloudRecovery()'));
  const close=app.slice(app.indexOf('  function closeCloud()'),app.indexOf('  function cloudProxy()'));
  const connect=app.slice(app.indexOf('  function connectCloud('),app.indexOf('  async function startCloudRoom('));
  const resume=app.slice(app.indexOf('  function resumeConnection()'),app.indexOf('  let recoveryTimer ='));

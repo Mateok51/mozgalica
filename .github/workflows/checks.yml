@@ -51,6 +51,7 @@ jobs:
       - run: BROWSER=webkit node tests/browser-ios-dialogs.cjs
       - run: BROWSER=webkit node tests/browser-ios-pact-dialog.cjs
       - run: BROWSER=webkit node tests/browser-ios-host-invitation.cjs
+      - run: BROWSER=webkit node tests/browser-ios-multiroom-recovery.cjs
 
   cloud:
     runs-on: ubuntu-latest

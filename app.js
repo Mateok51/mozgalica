@@ -851,13 +851,34 @@
   let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;
   // The server owns room state; this page only renders views and sends commands.
   let cloudSession = null, cloudCredentials = null, cloudAttempt = 0, cloudView = null, cloudTvSig = '', cloudResend = false, cloudRetry = null;
-  let cloudTakeover = null;
+  let cloudTakeover = null, cloudRecoveryDismissed = false;
   const CLOUD_RECOVERY_KEY = 'mz_cloud_resume_v1';
-  function clearCloudRecovery() { try { localStorage.removeItem(CLOUD_RECOVERY_KEY); } catch (e) {} }
+  function clearCloudRecovery(credentials = cloudCredentials) {
+    cloudRecoveryDismissed = true;
+    // The tab owns its recovery target. Leaving/finalising room A must not
+    // erase the cross-tab fallback most recently saved by room B.
+    try {
+      const raw = sessionStorage.getItem(CLOUD_RECOVERY_KEY);
+      if (!credentials && raw) credentials = JSON.parse(raw);
+    } catch (e) {}
+    try { sessionStorage.setItem(CLOUD_RECOVERY_KEY, JSON.stringify({ version: 1, pid: PID, cleared: true })); }
+    catch (e) { try { sessionStorage.removeItem(CLOUD_RECOVERY_KEY); } catch (_) {} }
+    if (!credentials) return;
+    try {
+      const raw = localStorage.getItem(CLOUD_RECOVERY_KEY), r = raw && JSON.parse(raw);
+      if (r && r.pid === PID && r.code === credentials.code && (r.secret || null) === (credentials.secret || null))
+        localStorage.removeItem(CLOUD_RECOVERY_KEY);
+    } catch (e) {}
+  }
   function writeCloudRecovery(credentials, noTv) {
-    try { localStorage.setItem(CLOUD_RECOVERY_KEY, JSON.stringify({ version: 1, savedAt: Date.now(), pid: PID,
+    cloudRecoveryDismissed = false;
+    const raw = JSON.stringify({ version: 1, savedAt: Date.now(), pid: PID,
       code: credentials.code, secret: credentials.secret, role: credentials.role,
-      name: credentials.name, noTv: !!noTv })); } catch (e) {}
+      name: credentials.name, noTv: !!noTv });
+    // Reload restores this tab's room even if another room's heartbeat writes
+    // the shared fallback. Keep that fallback for newly opened QR tabs.
+    try { sessionStorage.setItem(CLOUD_RECOVERY_KEY, raw); } catch (e) {}
+    try { localStorage.setItem(CLOUD_RECOVERY_KEY, raw); } catch (e) {}
   }
   function saveCloudRecovery() {
     if (!cloudSession || !cloudCredentials || !cloudView) return;
@@ -938,7 +959,7 @@
           cloudRetry = { code: credentials.code, secret: credentials.secret, noTv: !!noTv, name: credentials.name, savedAt: Date.now() };
         }
         // A network timeout does not revoke an already confirmed player session.
-        if (error.reason !== 'unavailable') clearCloudRecovery();
+        if (error.reason !== 'unavailable') clearCloudRecovery(credentials);
         game = null;
         if (owner) { hostErr = message; mode = noTv ? 'hostform' : 'host'; render(); }
         else failJoin(message);
@@ -968,31 +989,53 @@
     }
   }
   function restoreCloudRecovery() {
-    if (!cloudEnabled() || cloudSession) return;
+    if (!cloudEnabled() || cloudSession || cloudRecoveryDismissed) return;
     const retryOwner = !['home', 'join'].includes(mode);
     if (retryOwner && (!cloudRetry || !['host', 'hostform'].includes(mode))) return;
-    let raw;
-    try { raw = localStorage.getItem(CLOUD_RECOVERY_KEY); }
-    catch (e) { if (retryOwner) restoreMemoryOwner(); return; }
+    let raw, tab = false;
+    try { raw = sessionStorage.getItem(CLOUD_RECOVERY_KEY); tab = !!raw; } catch (e) {}
+    if (!raw) {
+      try { raw = localStorage.getItem(CLOUD_RECOVERY_KEY); }
+      catch (e) { if (retryOwner) restoreMemoryOwner(); return; }
+    }
     if (!raw) { if (retryOwner) restoreMemoryOwner(); return; }
     try {
-      if (raw.length > 2048) throw Error('size');
-      const r = JSON.parse(raw), hash = '#' + r.code + (r.secret ? '-' + r.secret : '');
-      if (r.version !== 1 || r.pid !== PID || !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000 ||
-          !/^[A-Z]{4}$/.test(r.code) || !['host', 'player'].includes(r.role) ||
-          (r.secret != null && !okRS(r.secret)) || (r.role === 'host' && !okRS(r.secret)) || typeof r.noTv !== 'boolean' ||
-          typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12) throw Error('record');
-      // Only the failed confirmed owner may resume from its error screen.
-      // A deliberate new-room action clears this marker through closeCloud().
-      if (retryOwner && (r.role !== 'host' || r.code !== cloudRetry.code ||
-          r.secret !== cloudRetry.secret || r.noTv !== cloudRetry.noTv)) return;
+      const decode = text => {
+        if (!text || text.length > 2048) throw Error('size');
+        const r = JSON.parse(text);
+        if (r && r.version === 1 && r.pid === PID && r.cleared === true) return r;
+        if (!r || r.version !== 1 || r.pid !== PID || !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000 ||
+            !/^[A-Z]{4}$/.test(r.code) || !['host', 'player'].includes(r.role) ||
+            (r.secret != null && !okRS(r.secret)) || (r.role === 'host' && !okRS(r.secret)) || typeof r.noTv !== 'boolean' ||
+            typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12) throw Error('record');
+        return r;
+      };
+      let r = decode(raw);
       const invitation = (location.hash || '').match(/^#([A-Za-z]{4})(?:-([A-Za-z0-9_-]{22}))?$/);
       const currentHash = invitation ? '#' + invitation[1].toUpperCase() + (invitation[2] ? '-' + invitation[2] : '') : location.hash;
-      // A matching full QR in another tab must keep a confirmed phone owner's
-      // role. A different invitation, or a TV spectator, keeps the join flow.
-      if (location.hash && (currentHash !== hash || (r.role === 'host' && !r.noTv))) return;
+      const matches = value => !value.cleared && currentHash === '#' + value.code + (value.secret ? '-' + value.secret : '') &&
+        !(value.role === 'host' && !value.noTv);
+      // A copied tab may inherit another room's sessionStorage. Only an exact
+      // explicit invitation may select its matching shared fallback instead.
+      if (r.cleared || (location.hash && !matches(r))) {
+        if (r.cleared && !location.hash) cloudRecoveryDismissed = true;
+        if (!tab || !location.hash) return;
+        let other;
+        try { other = decode(localStorage.getItem(CLOUD_RECOVERY_KEY)); } catch (_) { return; }
+        if (!matches(other)) return;
+        r = other;
+      }
+      // Only the failed confirmed owner may resume from its error screen.
+      if (retryOwner && (r.role !== 'host' || r.code !== cloudRetry.code ||
+          r.secret !== cloudRetry.secret || r.noTv !== cloudRetry.noTv)) return;
       connectCloud({ code: r.code, secret: r.secret, role: r.role, name: r.name }, r.noTv, true);
-    } catch (e) { clearCloudRecovery(); }
+    } catch (e) {
+      // Discard only the rejected source, never another tab's valid room.
+      try {
+        const storage = tab ? sessionStorage : localStorage;
+        if (storage.getItem(CLOUD_RECOVERY_KEY) === raw) storage.removeItem(CLOUD_RECOVERY_KEY);
+      } catch (_) {}
+    }
   }
   function restoreMemoryOwner() {
     // Only a previously confirmed owner in this live tab may use this receipt.
@@ -1017,7 +1060,7 @@
     bind('retryNew', () => {
       if (cloudRetry !== retry) return;
       const noTv = retry.noTv;
-      closeCloud(); clearCloudRecovery(); hostErr = '';
+      clearCloudRecovery(retry); closeCloud(); hostErr = '';
       if (noTv) { mode = 'hostform'; render(); } else startHost();
     });
     return true;
@@ -1207,7 +1250,7 @@
     closeDiagnostics();
     closeHapticSettings(false);
     closePactRules(false);
-    closeCloud(); clearCloudRecovery();
+    clearCloudRecovery(); closeCloud();
     clearTimeout(characterReactionTimer); characterReactionTimer = null;
     clearNativeRecovery();
     try { sessionStorage.removeItem('mz_recovery_v1'); } catch (e) {}
@@ -1824,7 +1867,7 @@
 
   // ---------- demo: ti + botovi na jednom uređaju ----------
   function startDemo() {
-    closeCloud(); clearCloudRecovery();
+    clearCloudRecovery(); closeCloud();
     mode = 'demo'; demoView = 'phone'; S = null; lastSig = ''; L = freshLocal(-1);
     keepAwake();
     ensureData().then(startDemoNow, () => { mode = 'home'; render(); });
@@ -2707,7 +2750,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v90</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v91</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
