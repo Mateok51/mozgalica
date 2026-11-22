@@ -116,7 +116,10 @@ function state(ph='fq',effects=['sluz']){
    assert(await page.locator('#app [data-c]').evaluateAll(es=>es.every(el=>el.disabled)),'Expired answers stay disabled');
    const expired=await page.evaluate(()=>effectUI.local());assert.equal(expired.s,expiry.s);assert.equal(expired.sent,null,'Expiry cannot fabricate an answer receipt');assert.equal(expired.fx,'sluz','Expiry preserves unfinished effect state until an authoritative update');
    const resumed=JSON.parse(JSON.stringify(expiry));resumed.ms=5000;
-   await page.evaluate(d=>effectUI.apply(d,true),resumed);await page.waitForTimeout(80);
+   await page.evaluate(d=>effectUI.apply(d,true),resumed);
+   // Wait for the restored surface instead of a fixed sleep: under load the
+   // render can land after 80ms (this failed once on a loaded CI WebKit run).
+   await page.waitForFunction(()=>document.querySelectorAll('#app #fx.fx-sluz').length===1,{},{timeout:3000}).catch(()=>{});
    assert.equal(await page.locator('#app #fx.fx-sluz').count(),1,'Authoritative same-step resume restores the effect with remaining time');
    assert(await page.locator('#app [data-c]').evaluateAll(es=>es.every(el=>!el.disabled)),'Restored questions must not retain the expired disabled state');
    const restored=await page.evaluate(()=>{const el=document.querySelector('#app #fx'),r=el.getBoundingClientRect();el.dispatchEvent(new PointerEvent('pointerdown',{pointerId:21,pointerType:'touch',clientX:r.left+r.width*.2,clientY:r.top+r.height*.2,bubbles:true,cancelable:true}));el.dispatchEvent(new PointerEvent('pointerup',{pointerId:21,pointerType:'touch',bubbles:true,cancelable:true}));return effectUI.local();});assert(restored.left<48,'Restored slime remains interactive');assert.equal(restored.sent,null);
