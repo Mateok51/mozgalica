@@ -851,6 +851,7 @@
   let S = null, lastSig = '', lastStateAt = 0, connectionWasLost = false;
   // The server owns room state; this page only renders views and sends commands.
   let cloudSession = null, cloudCredentials = null, cloudAttempt = 0, cloudView = null, cloudTvSig = '', cloudResend = false, cloudRetry = null;
+  let cloudTakeover = null;
   const CLOUD_RECOVERY_KEY = 'mz_cloud_resume_v1';
   function clearCloudRecovery() { try { localStorage.removeItem(CLOUD_RECOVERY_KEY); } catch (e) {} }
   function saveCloudRecovery() {
@@ -865,6 +866,7 @@
     if (cloudSession) cloudSession.close();
     cloudSession = null; cloudCredentials = null; cloudView = null; cloudTvSig = ''; cloudResend = false;
     cloudRetry = null;
+    cloudTakeover = null;
   }
   function cloudProxy() {
     const control = (method, args) => { if (cloudSession) cloudSession.send({ t: 'control', method, args }); };
@@ -910,11 +912,19 @@
         if (S && phoneShown()) phoneRender(true);
       },
       onError(error) {
-        const terminal = ['auth', 'full', 'started', 'not_found', 'expired', 'identity', 'invalid', 'unavailable'].includes(error.reason);
+        if (error.reason === 'identity') {
+          // Another tab deliberately opened this same identity. Stay quiet until
+          // the user explicitly takes it back, preserving their shared record.
+          closeCloud(); clearInputBindings(); stopFxTimer();
+          game = null; S = null; PV = null; lastSig = ''; L = freshLocal(-1);
+          cloudTakeover = { credentials: { ...credentials }, noTv: !!noTv };
+          mode = 'superseded'; document.documentElement.dataset.ph = 'superseded';
+          render(); return;
+        }
+        const terminal = ['auth', 'full', 'started', 'not_found', 'expired', 'invalid', 'unavailable'].includes(error.reason);
         const message = error.reason === 'full' ? 'Soba je puna: najviše 6 igrača, uključujući domaćina ako igra.'
           : error.reason === 'auth' ? 'Prijava nije uspjela. Provjeri kod sobe ili pozivnicu domaćina.'
           : error.reason === 'started' ? 'Igra je već počela. Novi igrači mogu ući u sljedeću partiju.'
-          : error.reason === 'identity' ? 'Ovaj igrač je već prijavljen s drugog uređaja.'
           : error.reason === 'expired' || error.reason === 'not_found' ? 'Soba je završila ili više nije dostupna.'
           : error.reason === 'unavailable' ? 'Ne mogu se spojiti na sobu. Provjeri internet i je li pozivnica još važeća.'
           : 'Server trenutačno ne može obraditi zahtjev. Pokušaj ponovno.';
@@ -2008,7 +2018,9 @@
   function stopFxTimer() { if (L && L.fxTimer) { clearInterval(L.fxTimer); L.fxTimer = null; } }
   let fxCleanup = null;
   let gestureCleanup = null;
+  let phoneInputEpoch = 0;
   function clearInputBindings() {
+    phoneInputEpoch++;
     const cleanup = gestureCleanup; gestureCleanup = null;
     if (cleanup) cleanup();
     clearFxBinding();
@@ -2018,7 +2030,7 @@
     if (cleanup) cleanup();
   }
   function questionExpired() {
-    return S && ['question', 'fq'].includes(S.ph) && clockDur > 0 && Date.now() >= clockEnds;
+    return S && ['question', 'fq', 'duel'].includes(S.ph) && clockDur > 0 && Date.now() >= clockEnds;
   }
   function fxDone(expected = L.fx, local = L) {
     // Queued pointer events can outlive a replaced surface or even this round.
@@ -2579,6 +2591,7 @@
     clearInputBindings();
     syncTitle();
     try {
+      if (mode === 'superseded') return supersededV();
       if (mode === 'home') { tvStep = -1; phoneStep = -1; SCENE.reset(); return homeV(); }
       if (mode === 'join') return joinV();
       if (mode === 'player') return phoneRender(true);
@@ -2587,6 +2600,13 @@
       if (mode === 'hostform') return hostFormV();
       return hostV();
     } catch (e) { crash(e); }
+  }
+  function supersededV() {
+    $app.className = 'screen center';
+    $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
+      '<div class="p-title">Igra je otvorena u drugoj kartici.</div><div class="p-sub">Ondje možeš nastaviti igrati ili prebaciti igru ovamo.</div>' +
+      '<button class="btn" id="resumeHere">Nastavi ovdje</button>';
+    bind('resumeHere', () => { const retry = cloudTakeover; if (retry) connectCloud(retry.credentials, retry.noTv, true); });
   }
   function crash(e) {
     $app.className = 'screen center';
@@ -2610,7 +2630,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v86</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v87</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
@@ -4097,10 +4117,11 @@
   function duelPhone(d, me) {
     const du = d.du, mine = me && (me.id === du.a || me.id === du.b);
     if (!mine) return timerHtml() + '<div class="du-k">Dvoboj u tijeku</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="waiting">Gledaš dvoboj. Brži točan odgovor osvaja +' + du.bonus + '.</div>';
-    const answered = L.sent || me.ok, pick = L.sent ? L.sent.c : -1;
-    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + i + (answered ? (pick === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + esc(o) + '</span></button>').join('');
+    const answered = L.sent || me.ok, pick = L.sent ? L.sent.c : -1, expired = d.ms <= 0;
+    L.expiredPresentation = expired;
+    const opts = d.q.o.map((o, i) => '<button class="p-opt o' + i + (answered ? (pick === i ? ' picked' : ' dim') : '') + '" data-c="' + i + '"' + (answered || expired ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + esc(o) + '</span></button>').join('');
     return timerHtml() + '<div class="du-k">Dvoboj!</div>' + duelVs(d) + phoneQ(d, '<div class="p-q">' + esc(d.q.t) + '</div>') + '<div class="q-area"><div class="p-opts">' + opts + '</div></div>' +
-      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : 'Brži točan odgovor pobjeđuje!') + '</div>';
+      '<div class="waiting"' + (answered ? ' id="answerReceipt" role="status"' : '') + ' data-bk="qwait" data-ba="subIn">' + (answered ? answerReceipt(me) : expired ? 'Vrijeme je isteklo. Čekamo rezultat…' : 'Brži točan odgovor pobjeđuje!') + '</div>';
   }
   function duelResultHtml(d, tv) {
     const du = d.du, w = du.w ? pById(d, du.w) : null;
@@ -5138,6 +5159,22 @@
     if (d.ph === 'trisk') bindRisk();
     if ((d.ph === 'question' || d.ph === 'fq') && !questionExpired() && L.fx && !(L.sent || (me && me.ok))) bindFx();
     if ((d.ph === 'question' || d.ph === 'fq') && !questionExpired() && !(L.sent || (me && me.ok))) bindBombs();
+    guardPhoneActions();
+  }
+
+  function guardPhoneActions() {
+    const local = L, step = L.s, epoch = phoneInputEpoch;
+    // Outgoing animation ghosts remain connected outside #app. Their queued
+    // callbacks must not write to a later render, subquestion or round.
+    $app.querySelectorAll('button, [role="button"]').forEach(el => {
+      for (const property of ['onclick', 'onkeydown', 'onpointerdown', 'onpointercancel']) {
+        const handler = el[property]; if (typeof handler !== 'function') continue;
+        el[property] = function (event) {
+          if (epoch !== phoneInputEpoch || local !== L || step !== L.s || !el.isConnected || !$app.contains(el)) return;
+          return handler.call(this, event);
+        };
+      }
+    });
   }
 
   // ---------- odbrojavanje ----------

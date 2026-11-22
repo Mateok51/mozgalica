@@ -23,7 +23,16 @@
     }
     function send(message) {
       if (!admitted || !socket || socket.readyState !== 1) return false;
-      try { const text = JSON.stringify(message); if (text.length > 8192) return false; socket.send(text); return true; } catch (_) { return false; }
+      let text;
+      try { text = JSON.stringify(message); } catch (_) { return false; }
+      if (typeof text !== 'string' || text.length > 8192) return false;
+      try { socket.send(text); return true; }
+      catch (_) {
+        // An OPEN socket can fail on the next write after iOS suspension.
+        // Recover the channel so the existing same-step pending input is resent.
+        if (loseCurrent) loseCurrent();
+        return false;
+      }
     }
     function open(expected) {
       if (stopped || expected !== generation) return;

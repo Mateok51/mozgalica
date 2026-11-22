@@ -45,6 +45,9 @@ jobs:
       - run: BROWSER=webkit node tests/browser-ios-gestures.cjs
       - run: BROWSER=webkit node tests/browser-ios-invitation-navigation.cjs
       - run: BROWSER=webkit node tests/browser-ios-recovery-followup.cjs
+      - run: BROWSER=webkit node tests/browser-ios-duel-expiry.cjs
+      - run: BROWSER=webkit node tests/browser-ios-input-lifecycle.cjs
+      - run: BROWSER=webkit node tests/browser-ios-answer-recovery.cjs
 
   cloud:
     runs-on: ubuntu-latest

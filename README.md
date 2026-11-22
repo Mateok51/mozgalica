@@ -66,6 +66,21 @@ lifecycle događaji te audio sat/stanje kontrolirano su simulirani. Na fizičkom
 iPhoneu još treba provjeriti povlačenje s dva prsta, zaključavanje usred geste,
 povratak iz druge aplikacije i zvuk nakon prekida ili poziva.
 
+Od v87 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
+serverskog rezultata i mogućnost nastavka nakon autoritativne obnove iste faze.
+Handleri odlazećih scena ne mogu odgovoriti na novu tvrdnju ili zaključati novo
+pitanje; namjerni brzi dodiri novih kontrola i dalje rade bez dodatnog čekanja.
+Neuspjelo slanje preko prividno otvorenog WebSocketa pokreće obnovu veze i
+postojeće ponovno slanje odgovora za isti korak.
+
+Otvaranje iste sesije u drugoj kartici zaustavlja automatsko ponovno povezivanje
+prethodne kartice. Ona čuva zajednički zapis sesije i nudi „Nastavi ovdje” za
+namjerni prijenos natrag. Za terminalnu obavijest poslužitelj koristi postojeći
+protokol koji razumiju i stariji klijenti. Regresije uključuju stvarne browser
+WebSockete, produkcijske metode prijave i Workers provjeru prijenosa domaćina;
+jednokratna pogreška slanja kontrolirano je injektirana. Ponašanje fizičkog
+iPhonea pri gubitku mreže i suspendiranju i dalje zahtijeva provjeru na uređaju.
+
 ## Piramida od v84
 
 Piramida ima 12 stepenica do vrha i zasebno pitanje za krunu. Početni raspored je

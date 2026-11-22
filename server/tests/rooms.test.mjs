@@ -108,6 +108,26 @@ test('TV owner is spectator and guests retain six seats; input and packet polici
  const others=all.at(-1);others.send({t:'ping'});assert.equal((await others.wait(x=>x.P?.length===6)).P.length,6);
  }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
 });
+test('a replacement tab terminates only the same authenticated identity and preserves owner controls',async()=>{
+ const persist=await mkdtemp(join(tmpdir(),'trivia-server-tab-')),mf=runtime(persist),all=[];
+ const add=async(...args)=>{const client=await connect(mf,...args);all.push(client);return client;};
+ try {
+  const room=await create(mf,false,80),first=await add(room,identity(80),'host');await first.wait(x=>x.P);
+  const guest=await add(room,identity(81));await guest.wait(x=>x.P?.length===1);
+  const second=await add(room,identity(80),'host');
+  assert.equal((await first.wait(x=>x.t==='error')).reason,'identity','Replacement must stop the previous client reconnect loop using the compatible terminal reason');
+  assert.equal((await second.wait(x=>x.P)).cloud.owner,true);
+  assert(!guest.messages.some(x=>x.t==='error'),'Another player must keep its connection');
+  const bad=await add(room,{...identity(80),sk:'f'.repeat(32)},'host');
+  assert.equal((await bad.wait(x=>x.t==='error')).reason,'auth');
+  assert(!second.messages.some(x=>x.reason==='identity'),'A wrong key cannot displace the authenticated owner');
+  second.send({t:'control',method:'setOpt',args:['len','brza']});await guest.wait(x=>x.len==='brza');
+  const returned=await add(room,identity(80),'host');
+  await returned.wait(x=>x.cloud?.owner);await second.wait(x=>x.reason==='identity');
+  returned.send({t:'control',method:'setOpt',args:['len','duga']});await guest.wait(x=>x.len==='duga');
+  assert.equal(guest.messages.at(-1).P.filter(p=>p.id==='p81').length,1);
+ }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
+});
 test('rolling free-tier room cap persists and lifetime is bounded',async()=>{
  const persist=await mkdtemp(join(tmpdir(),'trivia-server-cap-'));let mf=runtime(persist);
  try{assert.equal(ROOM_TTL,2*60*60*1000);for(let i=0;i<12;i++)await create(mf,true,20+i);await mf.dispose();mf=runtime(persist);

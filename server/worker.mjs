@@ -205,7 +205,8 @@ export class GameRoom {
     if(message.role==='player'&&!player&&view.P.filter(p=>!p.b).length>=6)return this.error(ws,'full','Soba je puna: najviše 6 igrača.',true);
     if(!this.keys.has(message.pid)&&this.keys.size>=24)return this.error(ws,'capacity','Dosegnut je broj prijava u ovoj sobi.',true);
     // One authenticated socket per identity. A stale connection cannot displace another player.
-    for(const [previous,data] of this.sockets)if(previous!==ws&&data.authenticated&&data.pid===message.pid)this.disconnect(previous,1000,'Ponovno povezivanje');
+    // Existing clients already treat identity replacement as terminal too.
+    for(const [previous,data] of this.sockets)if(previous!==ws&&data.authenticated&&data.pid===message.pid)this.error(previous,'identity','Igra je otvorena u drugoj kartici.',true);
     Object.assign(info,{authenticated:true,pid:message.pid,name:message.name,av:message.av,role:message.role});
     ws.serializeAttachment({authenticated:true,pid:info.pid,name:info.name,av:info.av,role:info.role});
     this.keys.set(message.pid,message.sk);this.meta.idleSince=null;
