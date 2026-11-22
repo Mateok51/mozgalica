@@ -26,6 +26,7 @@ Prije izmjena provjeri stanje repozitorija i korisnikove najnovije upute; izrič
 - Nakon završene cjeline sažeto navedi što je promijenjeno, kako je provjereno i što predlažeš dalje. Jasno razlikuj automatske provjere od provjere na stvarnom uređaju.
 - Prije objave provjeri korisnikove upute i stanje udaljene grane. Ne objavljuj kad korisnik kaže da se promjene zasad ne objavljuju.
 - Korisnik je trajno dopustio samostalno spajanje u `main` (otvori PR i spoji ga) kad je CI zelen na zadnjem commitu, bez sukoba i otvorenih komentara. Crven CI nikad ne zaobilazi. Spajanje u `main` je produkcijska objava (GitHub Pages i Cloudflare objavljuju automatski); postupak i provjere vidi u `CLAUDE.md`.
+- Sitne izmjene grupiraj: skupljaj ih na jednoj grani i otvori jedan PR kad se nakupi smislena cjelina ili kad korisnik traži objavu. Tijekom rada pokreći samo testove vezane uz izmjenu, a cijeli skup jednom prije PR-a. Svako spajanje je produkcijska objava i pun CI, pa ne otvaraj PR za svaku sitnicu. Iznimka su hitni ispravci grešaka koje pogađaju igrače.
 - Ako korisnik izrazi novu trajnu preferenciju za projekt, ažuriraj ove smjernice u skladu s time, konkretno i bez privremenih pravila.
 
 ## Provjera
