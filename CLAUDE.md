@@ -39,6 +39,6 @@ Dopunjuje `AGENTS.md`. Provjereno 22. 11. 2026. (v92) Wranglerom prijavljenim ka
 - Ne mijenjaj `migrations` ni `durable_objects` u `wrangler.jsonc` bez izričitog zahtjeva: pogrešna migracija može obrisati klase i sobe.
 - Vjerodajnice se ne spremaju u Git, a ni u dokumentaciju.
 
-## Do daljnjeg (privremena uputa korisnika)
+## Odluka korisnika o samostalnom spajanju (22. 11. 2026.)
 
-Ne objavljuj promjene igre dok korisnik to izričito ne zatraži. Budući da spajanje u `main` sada objavljuje, to znači i: ne spajaj u `main` bez izričitog zahtjeva. Ukloni ovaj odlomak kad korisnik kaže da opet smiješ spajati samostalno.
+Korisnik je potvrdio da sesija i dalje smije sama spajati u `main` kad je CI zelen (pravilo u `AGENTS.md`), znajući da svako spajanje objavljuje produkciju, uključujući promjene samo dokumentacije (nova verzija Workera s istim sadržajem igre). Nakon svakog spajanja provjeri objavu (koraci 6 i 7) i u sažetku jasno navedi da je objavljeno. Spajanje i objava mogu prekinuti partiju koja je u tijeku, a to se ne može unaprijed provjeriti.
