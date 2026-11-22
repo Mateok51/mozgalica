@@ -42,3 +42,16 @@ Dopunjuje `AGENTS.md`. Provjereno 22. 11. 2026. (v92) Wranglerom prijavljenim ka
 ## Odluka korisnika o samostalnom spajanju (22. 11. 2026.)
 
 Korisnik je potvrdio da sesija i dalje smije sama spajati u `main` kad je CI zelen (pravilo u `AGENTS.md`), znajući da svako spajanje objavljuje produkciju, uključujući promjene samo dokumentacije (nova verzija Workera s istim sadržajem igre). Nakon svakog spajanja provjeri objavu (koraci 6 i 7) i u sažetku jasno navedi da je objavljeno. Spajanje i objava mogu prekinuti partiju koja je u tijeku, a to se ne može unaprijed provjeriti.
+
+## Koji model za koji posao (štedi tokene)
+
+Pokreni sesiju s modelom koji odgovara zadatku (`/model` u Claude Code-u). Prije početka posla Claude kaže koji model preporučuje.
+
+| Posao | Model |
+|---|---|
+| Čitanje CI rezultata, spajanje zelenih PR-ova, opisi PR-ova, podizanje oznake verzije, pregled logova | Haiku |
+| Redovita izmjena s testom (tekst, ekran, CSS, stavka u popisu pitanja) | Sonnet |
+| Pravila igre, ravnoteža, poštenost, server, Cloudflare objava, protokol | Opus ili Fable |
+| Vizualni pregled na više veličina mobitela | Sonnet ili jači |
+
+Velike datoteke ne čitaj cijele: `app.js` (~4400 redaka), `styles.css` (~2800), `engine.js`, `data/questions.js` (709 KB). Traži `grep`-om i čitaj raspone. `dist/` i `node_modules/` su isključeni čitanju (`.claude/settings.json`). Browser testove pokreći po dijelovima tijekom rada, a cijeli skup prije PR-a. Nakon završenog zadatka pokreni novu sesiju (`/clear`) umjesto da nastavljaš dugi razgovor.
