@@ -7,6 +7,9 @@
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
   };
+  // iPhone, iPod i iPad (svi iOS preglednici koriste WebKit). iPadOS se predstavlja kao Mac, pa ga prepoznajemo po dodiru.
+  const IS_IOS = (() => { try { const n = navigator; return /iPad|iPhone|iPod/.test(n.userAgent || '') || (n.platform === 'MacIntel' && n.maxTouchPoints > 1); } catch (e) { return false; } })();
+  if (IS_IOS) { try { document.documentElement.classList.add('ios'); } catch (e) {} }
 
   // ---------- likovi (originalni, sjenčani) ----------
   const AV = [
@@ -209,8 +212,10 @@
   const SFX = (() => {
     let ctx = null;
     let muted = store.get('mz_mute') === '1';
+    // iOS: Web Audio inače šuti kad je bočni prekidač na "tiho"; 'playback' ga svrstava među medije. Isključivanje zvuka u igri i dalje vrijedi.
+    function playbackSession() { try { const s = typeof navigator !== 'undefined' && navigator.audioSession; if (s && s.type !== 'playback') s.type = 'playback'; } catch (e) {} }
     function ac() {
-      if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch (e) { return null; } }
+      if (!ctx) { playbackSession(); const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch (e) { return null; } }
       if (ctx.state === 'suspended' || ctx.state === 'interrupted') ctx.resume().catch(() => {});
       return ctx;
     }
@@ -2745,7 +2750,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v92</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v93</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
