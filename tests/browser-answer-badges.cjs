@@ -6,7 +6,7 @@ let html = require('./page-source.cjs');
 const box = vm.createContext({ setTimeout, clearTimeout });
 vm.runInContext(require('./engine-source.cjs') + '\nthis.game=createGame({code:"TEST",tvq:false});', box);
 for (let i = 0; i < 6; i++) box.game.addPlayer('p' + i, 'Igrač ' + i, i === 0 ? 7 : i, false);
-Object.assign(box.game._G, { ph: 'question', s: 2, q: { c: 'Kategorija', t: 'Primjer pitanja?', o: ['Prvi', 'Drugi', 'Treći', 'Četvrti'], a: 1 }, dur: 20000, endsAt: Date.now() + 20000, ev: [] });
+Object.assign(box.game._G, { ph: 'question', s: 2, q: { c: 'Kategorija', t: 'Primjer pitanja?', o: ['Prvi', 'Drugi', 'Treći', 'Četvrti'], a: 1 }, dur: 120000, endsAt: Date.now() + 120000, ev: [] });
 html = html.replace('  setInterval(tick, 100);', '  setInterval(tick, 100); window.testUI=d=>{mode="player";applyState(d);};');
 const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x => x[1]).filter(x => x.trim());
 const hashes = html.split('</head>')[0].match(/sha256-[A-Za-z0-9+/=]+/g);
