@@ -69,6 +69,10 @@ function state(ph){
      Object.defineProperty(document,'hidden',{configurable:true,value:false});Object.defineProperty(document,'visibilityState',{configurable:true,value:'visible'});document.dispatchEvent(new Event('visibilitychange'));
      const before=inputUI.local();document.querySelector('[data-c="0"]').dispatchEvent(new MouseEvent('click',{detail:1,bubbles:true,cancelable:true}));return{before,after:inputUI.local()};
     });assert.deepEqual(r.after,r.before,'A press from before suspension must not authorize an answer after resuming');
+    // resumeConnection() -> retrySoon() starts a 1500ms reconnect timer that re-renders the real app state.
+    // On a fast machine the next checks finish before it fires; on a loaded CI runner it fired mid-check and
+    // removed the injected scene (tap timeout, 6/14 failures on one throttled core). Let it settle first.
+    await page.waitForTimeout(2500);
    });
    await check('order two current controls preserve rapid intended ranking',async()=>{await show('order');await page.locator('[data-or="0"]').tap();await page.locator('[data-or="1"]').tap();assert.deepEqual((await page.evaluate(()=>inputUI.local())).ord,[0,1]);});
    await check('uljez two current controls preserve rapid intended selection',async()=>{await show('uljez');await page.locator('[data-ul="0"]').tap();await page.locator('[data-ul="1"]').tap();assert.deepEqual((await page.evaluate(()=>inputUI.local())).ul,[0,1]);});
