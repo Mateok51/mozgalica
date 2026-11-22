@@ -172,7 +172,7 @@ vezu prema vlastitom Workeru i serversko spremanje sobe, bez PeerJS/MQTT posredn
 - Pravila igre su u `engine.js`, a pitanja i sadržaj mini igara u `data/questions.js` (objekt `DATA`, jedan zapis po retku). Pitanja učitava samo uređaj domaćina kad otvori sobu ili demo; igrači ih ne preuzimaju. Testovi spajaju oba dijela preko `tests/engine-source.cjs`.
 
 ## Rad bez mreže
-- Service worker pri instalaciji sprema ono što je nužno za pokretanje (`CORE` u `sw.js`), a nakon učitavanja stranice u pozadini i sve likove, grafiku i zvukove (`EXTRA`, oko 6,7 MB). Nakon toga demo protiv botova radi i bez interneta; za igru s drugima i dalje treba mreža.
+- Service worker pri instalaciji sprema ono što je nužno za pokretanje (`CORE` u `sw.js`), a nakon učitavanja stranice u pozadini i sve likove, grafiku i zvukove (`EXTRA`, oko 6,3 MB). Pitanja (`LAZY`, 705 KB) treba samo uređaj koji vodi igru ili demo, pa se ne preuzimaju za goste; spremaju se pri prvom pokretanju demoa ili vođenja igre. Nakon toga demo protiv botova radi i bez interneta (prije toga demo traži mrežu); za igru s drugima i dalje treba mreža. Slike, zvukovi i fontovi poslužuju se iz predmemorije odmah, a tiho se osvježavaju u pozadini; kod igre uvijek ide preko mreže.
 - Pozadinsko spremanje preskače se uz uključenu štednju podataka ili na vrlo sporoj vezi; tada se datoteke spremaju tek kad se prvi put prikažu.
 
 ## Poštenost
