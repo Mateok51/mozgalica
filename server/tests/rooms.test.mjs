@@ -99,6 +99,30 @@ test('code-only admission keeps seat and start limits while an existing identity
   assert(!JSON.stringify(state).includes(room.secret));
  }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
 });
+test('a phone owner retains a lobby seat before first admission and after disconnect',async()=>{
+ for(const admitted of [false,true]) {
+  const persist=await mkdtemp(join(tmpdir(),'trivia-server-owner-seat-')),mf=runtime(persist),all=[];
+  const add=async(...args)=>{const client=await connect(mf,...args);all.push(client);return client;};
+  try {
+   const room=await create(mf,true,90);
+   const observer=await add(room,identity(91),'player',null);await observer.wait(x=>x.P?.some(p=>p.id==='p91'));
+   if(admitted) {
+    const owner=await add(room,identity(90));await owner.wait(x=>x.P?.some(p=>p.id==='p90'));
+    const beforeClose=observer.messages.length;owner.close();
+    await observer.wait(x=>observer.messages.indexOf(x)>=beforeClose&&x.P?.length===1&&!x.P.some(p=>p.id==='p90'));
+   }
+   for(let n=92;n<=95;n++){const guest=await add(room,identity(n),'player',null);await guest.wait(x=>x.P?.some(p=>p.id==='p'+n));}
+   const extra=await add(room,identity(96),'player',null);
+   const result=await extra.wait(x=>x.P||x.t==='error');
+   const returned=await add(room,identity(90));const state=await returned.wait(x=>x.P||x.t==='error');
+   assert.equal(result.reason,'full',"A sixth guest cannot take the absent phone owner's sixth seat; owner admission="+state.reason);
+   assert.equal(state.cloud.owner,true);assert.equal(state.P.length,6);assert(state.P.some(p=>p.id==='p90'));
+   assert(!returned.messages.some(x=>x.t==='error'));
+   returned.send({t:'control',method:'setOpt',args:['len','brza']});await returned.wait(x=>x.len==='brza');
+   returned.send({t:'control',method:'start',args:[]});await returned.wait(x=>x.ph==='intro');
+  }finally{for(const c of all)c.close();await mf.dispose();await rm(persist,{recursive:true,force:true});}
+ }
+});
 test('TV owner is spectator and guests retain six seats; input and packet policies reject malformed traffic',async()=>{
  const persist=await mkdtemp(join(tmpdir(),'trivia-server-tv-')),mf=runtime(persist),all=[];
  try {const room=await create(mf,false,9);const owner=await connect(mf,room,identity(9),'host');all.push(owner);const view=await owner.wait(x=>x.P);assert.equal(view.P.length,0);assert.equal(view.pv,null);

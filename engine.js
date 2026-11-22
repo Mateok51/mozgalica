@@ -964,10 +964,11 @@ function createGame(o) {
   }
   // ----- Uljez u krčmi: jedna osoba ne zna temu; svi biraju dva pojma, zatim glasaju tko je uljez -----
   function startUljez() {
+    const act = active();
+    if (!act.length) return next();
     const set = G.used.uljez || (G.used.uljez = new Set());
     const it = D.ulj[unusedIndex(D.ulj, set)];
     const terms = shuffle(it.y.map((w) => ({ w, ok: 1 })).concat(it.n.map((w) => ({ w, ok: 0 }))));
-    const act = active();
     G.ul = { th: it.t, terms, imp: act[rnd(act.length)].pid, cnt: {}, caught: false };
     for (const p of list()) { p.gained = 0; p.ulP = null; p.ulV = null; }
     setPhase('uljez', cfg.ulj);

@@ -1,6 +1,6 @@
 {
   "name": "trivia-tavern",
-  "version": "91.0.0",
+  "version": "92.0.0",
   "private": true,
   "engines": {
     "node": ">=22.12.0"

@@ -202,7 +202,10 @@ export class GameRoom {
       return this.error(ws,'auth','Prijava nije dopuštena.',true);
     const player=this.game._p(message.pid),view=this.game.view();
     if(message.role==='player'&&!player&&view.ph!=='lobby')return this.error(ws,'started','Igra je već počela. Pričekaj sljedeću partiju.',true);
-    if(message.role==='player'&&!player&&view.P.filter(p=>!p.b).length>=6)return this.error(ws,'full','Soba je puna: najviše 6 igrača.',true);
+    // A phone owner is one of the six players, including before its first
+    // hello or while disconnected in the lobby. Guests cannot take that seat.
+    const ownerSeat=this.meta.owner.noTv&&!owner&&!view.P.some(p=>p.id===this.meta.owner.pid)?1:0;
+    if(message.role==='player'&&!player&&view.P.filter(p=>!p.b).length+ownerSeat>=6)return this.error(ws,'full','Soba je puna: najviše 6 igrača, uključujući domaćina ako igra.',true);
     if(!this.keys.has(message.pid)&&this.keys.size>=24)return this.error(ws,'capacity','Dosegnut je broj prijava u ovoj sobi.',true);
     // One authenticated socket per identity. A stale connection cannot displace another player.
     // Existing clients already treat identity replacement as terminal too.

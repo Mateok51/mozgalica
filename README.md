@@ -131,6 +131,20 @@ Poslužitelj odbija i neispravnu vršnu JSON vrijednost WebSocket poruke
 `null` ranije je izazivao neobrađeni `TypeError` u handleru; nema dokaza da je
 rušio cijelu sobu. Valjane poruke i prijava starijih APK-ova ostaju kompatibilne.
 
+
+Od v92 soba koju vodi mobitel čuva jedno od šest mjesta za svog domaćina i
+prije njegove prve WebSocket prijave te dok je privremeno odspojen u predvorju.
+Najviše pet gostiju može zauzeti ostala mjesta; TV domaćin ostaje promatrač i
+zadržava šest mjesta za goste. Serverski test reproducira raniji ulazak šestog
+gosta i odbijanje vlasnika kao da je soba puna, zatim provjerava povratak,
+promjenu postavki i pokretanje igre nakon zakrpe.
+
+Ako svi igrači napuste upute za Uljeza prije sigurnosnog isteka, prazna runda
+preskače se bez dodjele bodova. Ranije je odabir uljeza iz praznog popisa bacao
+grešku i ostavljao fazu bez daljnjeg timera. Regresije koriste javni API i
+kontrolirani sat, uključujući checkpoint/replay i povratak igrača. Uspješne
+runde i prethodni zapisi partija zadržavaju postojeće ponašanje.
+
 ## Piramida od v84
 
 Piramida ima 12 stepenica do vrha i zasebno pitanje za krunu. Početni raspored je
