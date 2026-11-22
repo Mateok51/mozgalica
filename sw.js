@@ -1,6 +1,10 @@
-// Mozgalica: uvijek pokušaj mrežu, a bez interneta posluži zadnju spremljenu verziju.
-const CACHE = 'mozgalica-v93';
-const CORE = ['./', './index.html', './styles.css', './fonts/cinzel-800-latin.woff2', './fonts/cinzel-800-latin-ext.woff2', './fonts/nunito-latin.woff2', './fonts/nunito-latin-ext.woff2', './runtime-config.js', './cloud-transport.js', './diagnostics.js', './app.js', './sw-register.js', './engine.js', './data/questions.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js', './vendor/peerjs.min.js', './ui/challenge-medal.webp', './ui/bomb-effect.webp', './ui/bug-effect.webp', './ui/bot-medal.webp', './ui/pw-utjeha.webp'];
+// Mozgalica: kod igre (HTML, JS, CSS) uvijek ide preko mreže, a bez interneta se poslužuje zadnja spremljena verzija.
+// Slike, zvukovi i fontovi poslužuju se iz predmemorije odmah, a u pozadini se osvježavaju (brže otvaranje na slaboj mreži).
+const CACHE = 'mozgalica-v94';
+const CORE = ['./', './index.html', './styles.css', './fonts/cinzel-800-latin.woff2', './fonts/cinzel-800-latin-ext.woff2', './fonts/nunito-latin.woff2', './fonts/nunito-latin-ext.woff2', './runtime-config.js', './cloud-transport.js', './diagnostics.js', './app.js', './sw-register.js', './engine.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon.svg', './vendor/qrcode.js', './vendor/peerjs.min.js', './ui/challenge-medal.webp', './ui/bomb-effect.webp', './ui/bug-effect.webp', './ui/bot-medal.webp', './ui/pw-utjeha.webp'];
+// Pitanja (705 KB) treba samo uređaj koji vodi igru ili demo, pa se ne preuzimaju pri instalaciji ni u pozadini za goste.
+// Kad domaćin prvi put otvori sobu, spremi ih fetch rukovatelj ispod i dalje rade bez mreže. Popis provjerava tests/offline.test.cjs.
+const LAZY = ['./data/questions.js'];
 // Ostale datoteke igre (likovi, grafika, zvukovi): ne blokiraju instalaciju, nego se spremaju u pozadini kad stranica to zatraži,
 // da instalirana igra radi i bez mreže. Popis mora sadržavati sve iz chars/, ui/ i audio/ (provjerava tests/offline.test.cjs).
 const EXTRA = [
@@ -34,11 +38,28 @@ self.addEventListener('activate', (e) => {
     .then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
+// Slike, zvukovi i fontovi mijenjaju se rijetko i velike su: prvo predmemorija (odmah), pa tiho osvježavanje u pozadini.
+// Verzija predmemorije (CACHE) mijenja se pri svakoj objavi, pa nova objava uvijek kreće s čistom predmemorijom.
+const MEDIA = /\.(?:webp|png|jpe?g|mp3|woff2)$/i;
+function refresh(req) {
+  return fetch(req, { cache: 'no-cache' }).then((res) => {
+    if (res.ok && res.status === 200) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); }
+    return res;
+  });
+}
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;   // sve što igra treba je na vlastitom izvoru
+  if (MEDIA.test(url.pathname)) {
+    if (req.headers && req.headers.has('range')) return;   // djelomični zahtjevi (mp3 premotavanje) idu izravno na mrežu
+    e.respondWith(caches.match(req).then((hit) => {
+      if (hit) { e.waitUntil(refresh(req).catch(() => {})); return hit; }
+      return refresh(req).catch(() => undefined);
+    }));
+    return;
+  }
   e.respondWith(
     fetch(req, { cache: 'no-cache' }).then((res) => {
       if (res.ok || res.type === 'opaque') { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }

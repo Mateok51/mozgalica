@@ -33,4 +33,4 @@ Prije izmjena provjeri stanje repozitorija i korisnikove najnovije upute; izrič
 
 - Pokreni provjere primjerene izmjeni. Za promjene prikaza provjeri različite veličine ekrana, prijelaze i prelijevanje; testovi ne pokrivaju sve faze ni stvarne uređaje.
 - JavaScript drži u zasebnim datotekama (`app.js`, `engine.js`, `sw-register.js`); ugrađene skripte nisu dopuštene (`script-src 'self'`, provjerava `tests/csp.test.cjs`).
-- Nove datoteke koje stranica treba dodaj u `sw.js`: u `CORE` ako su nužne za pokretanje, inače u `EXTRA` (provjerava `tests/offline.test.cjs`). Podigni verziju u `sw.js` i oznaku `home-ver` u `app.js` (`tests/version.test.cjs`).
+- Nove datoteke koje stranica treba dodaj u `sw.js`: u `CORE` ako su nužne za pokretanje, inače u `EXTRA` (ili u `LAZY` ako ih treba samo domaćin, kao pitanja) (provjerava `tests/offline.test.cjs`). Podigni verziju u `sw.js` i oznaku `home-ver` u `app.js` (`tests/version.test.cjs`).

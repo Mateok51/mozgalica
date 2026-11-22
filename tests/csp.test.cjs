@@ -30,7 +30,7 @@ test('every script and stylesheet referenced by the page exists next to it', () 
 test('the service worker caches the page parts and bumps its version with them', () => {
   const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
   for (const f of ['./index.html', './styles.css', './app.js', './sw-register.js', './engine.js', './data/questions.js', './vendor/qrcode.js', './vendor/peerjs.min.js']) {
-    assert.ok(sw.includes("'" + f + "'"), 'sw.js CORE is missing ' + f);
+    assert.ok(sw.includes("'" + f + "'"), 'sw.js (CORE, EXTRA or LAZY) is missing ' + f);
     assert.ok(fs.existsSync(path.join(root, f)), 'missing file ' + f);
   }
 });
