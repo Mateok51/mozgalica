@@ -4,7 +4,13 @@ on:
   # Bez ovoga svaki push na granu PR-a pokreće cijeli skup dvaput.
   push:
     branches: [main]
+    paths-ignore: ['**.md', '.claude/**']
   pull_request:
+    paths-ignore: ['**.md', '.claude/**']
+# Novi push na istu granu otkazuje provedbu koja je već zastarjela.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
