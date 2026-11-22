@@ -157,11 +157,6 @@ function makeCode() {
   for (let i = 0; i < 4; i++) s += CODE_LETTERS[Math.floor(Math.random() * CODE_LETTERS.length)];
   return s;
 }
-function rankBy(players, key) {
-  return players.slice().sort((a, b) =>
-    key === 'st' ? ((b.st || 0) - (a.st || 0) || b.sc - a.sc) : (b.sc - a.sc));
-}
-
 function createGame(o) {
   const Math = Object.create(globalThis.Math);
   if (o.random) Math.random = o.random;
@@ -1909,10 +1904,6 @@ function createGame(o) {
     return { reset, onPact, onTk, onVote, onPower, afterQuestion, afterScores, afterFinale, secretPick, onBetray, onLoyal, onShowdown, duelNote, duelOut, get state() { return T; } };
   })();
 
-  function showMoment() {
-    G.mo = G.pend.mo; G.pend = null;
-    setPhase('moment', cfg.moment);
-  }
   // trenutci se prikazuju na ekranu s poretkom (v.mo); poseban ekran ima samo dvoboj
   function afterReveal() {
     const pd = G.pend;
@@ -2556,7 +2547,6 @@ function createGame(o) {
     news(pickLine('rumor')); TD.onPact(A.pid, B.pid);
   }
   const krReady = () => G.ph === 'reveal' && G.revMin && now() >= G.revMin && allDone();
-  const humansIn = () => list().filter((p) => !p.bot);
   const pactOf = (p) => (p && p.pact ? G.pacts.find((x) => x.id === p.pact && x.on) : null);
   const partnerOf = (p) => { const k = pactOf(p); return k ? R.get(k.a === p.pid ? k.b : k.a) : null; };
   // može li igrač sudjelovati u novom paktu

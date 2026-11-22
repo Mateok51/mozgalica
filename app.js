@@ -2037,7 +2037,6 @@
   const meOf = (d) => d && d.P.find((p) => p.id === PID);
   const PW_SHORT = { led: 'Zaledi protivniku odgovore.', sluz: 'Zalij protivniku ekran sluzi.', grick: 'Protivniku pojede dio slova.', bomba: 'Dodir bombe zaklanja ekran na 2 s.', dupli: 'Točan odgovor vrijedi duplo.', pola: 'Makni dva netočna odgovora.', stit: 'Blokira napade u sljedećem pitanju.', utjeha: 'Netočno: +250. Bez odgovora: +0.', oklada: 'Oboje točno: bonus kao taj igrač.' };
   const pwDesc = (k, d) => (d && d.fin && k === 'dupli' ? (d.pyrRules === 2 ? 'Točan odgovor: +2 stepenice.' : 'Točan odgovor: dodatni napredak.') : PW_SHORT[k] || POWERS[k].d);
-  const stepTxt = (n) => (n ? n + '. stepenice' : 'dna piramide');
   const isLocalHost = () => mode === 'demo' || (mode === 'hostp' && !cloudSession);
   const phoneShown = () => mode === 'player' || mode === 'hostp' || (mode === 'demo' && demoView === 'phone');
   function miniBoard(d, gain) {
@@ -2045,10 +2044,6 @@
     const before = gain ? d.P.slice().sort((a, b) => (b.sc - (b.g || 0) - (b.ub || 0) - (b.br || 0) - (b.xb || 0) - (b.rx || 0) - (b.tb || 0) - (b.kb || 0) - (b.ob || 0)) - (a.sc - (a.g || 0) - (a.ub || 0) - (a.br || 0) - (a.xb || 0) - (a.rx || 0) - (a.tb || 0) - (a.kb || 0) - (a.ob || 0))).map((p) => p.id) : [];
     return '<div class="mboard' + (gain ? '' : ' wide') + '">' + r.map((p, i) => '<div class="rank-row' + (p.id === PID ? ' me' : '') + '" data-id="' + esc(p.id) + '" data-prev="' + (gain ? before.indexOf(p.id) : i) + '"><span class="pos">' + (i + 1) + '.</span><span class="mini">' + (gain ? characterFrame(d, p) : avSvg(p.a, 'idle')) + '</span><span class="nm">' + esc(p.n) + (p.id === PID ? '<span class="you">Ti</span>' : '') + pjBadge(d, p.id) + (gain && p.ub ? '<span class="betb">Utjeha +' + p.ub + '</span>' : '') + (gain && p.ob ? '<span class="betb krb">🎲 +' + p.ob + '</span>' : '') + (gain && p.oq < 0 ? '<span class="betb krb neg">🎲 promašaj</span>' : '') + (gain && p.kb ? '<span class="betb krb' + (p.kb < 0 ? ' neg' : '') + '">📜 ' + (p.kb > 0 ? '+' : '−') + Math.abs(p.kb) + '</span>' : '') + (gain && p.tb ? '<span class="betb tkb' + (p.tb < 0 ? ' neg' : '') + '">🍺 ' + (p.tb > 0 ? '+' : '−') + Math.abs(p.tb) + '</span>' : '') + (gain && p.rx ? '<span class="betb rcb' + (p.rx < 0 ? ' neg' : '') + '">⚔️ ' + (p.rx > 0 ? '+' : '−') + Math.abs(p.rx) + '</span>' : '') + (gain && p.br ? '<span class="betb' + (p.br < 0 ? ' neg' : '') + '">ulog ' + (p.br > 0 ? '+' : '−') + Math.abs(p.br) + '</span>' : '') + '</span>' +
       (gain ? '<span class="gain' + ((p.g || p.ub) ? '' : ' zero') + '">+' + ((p.g || 0) + (p.ub || 0)) + '</span>' : '') + '<span class="sc"' + (gain ? ' data-ck="mb' + esc(p.id) + '" data-cu="' + (p.sc - (p.g || 0) - (p.ub || 0) - (p.br || 0) - (p.xb || 0) - (p.rx || 0) - (p.tb || 0) - (p.kb || 0) - (p.ob || 0)) + '" data-to="' + p.sc + '" data-cud="' + (gain === true ? 450 : gain) + '" data-cdur="900"' : '') + '>' + p.sc + '</span></div>').join('') + '</div>';
-  }
-  function phoneEvents(d) {
-    if (!d.ev || !d.ev.length) return '';
-    return '<div class="p-sub" style="margin-top:4px">Moći u ovom pitanju</div>' + evHtml(d);
   }
 
   function applyState(d, resuming = false) {
@@ -3010,7 +3005,6 @@
   // Sve što se vidi dolazi iz PV (privatno, samo ovaj igrač) ili javnog d; domaćin sve provjerava.
   const SF_BUSY_PH = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, uljez: 1, uljezVote: 1, secret: 1, secret2: 1 };
   const SF = { open: false, qi: 0, btAsk: false, rules: false, scn: false, seen: new Set(), told: new Set() };
-  const sfIntroSeen = () => { try { return localStorage.getItem('mz_sf_intro') === '1'; } catch (e) { return true; } };
   const sfOnPV = () => !!(PV && PV.sf);
   const sfName = (d, id) => { const p = pById(d, id); return p ? esc(p.n) + (p.b ? ' <img class="tavern-bot" src="ui/bot-medal.webp" alt="" aria-hidden="true">' : '') : '?'; };
   // odluke koje čekaju (najvažnije prvo): krčmarova ponuda se zaključava najranije, zatim pakt, zatim obračun
@@ -4794,11 +4788,6 @@
     const pos = byScore(d.P).findIndex((p) => p.id === PID) + 1;
     const from = me.sc - (me.g || 0) - (me.ub || 0) - (me.br || 0) - (me.xb || 0) - (me.rx || 0) - (me.tb || 0) - (me.kb || 0) - (me.ob || 0);
     return '<div class="statline"><div class="stat"><b data-bk="pos" data-bv="' + pos + '">' + pos + '.</b><span>mjesto</span></div><div class="stat"><b data-ck="mysc" data-cu="' + from + '" data-to="' + me.sc + '" data-cud="500" data-cdur="900">' + me.sc + '</b><span>bodova</span></div></div>';
-  }
-  function stepMeter(d, me) {
-    let bars = '';
-    for (let s = 1; s <= d.steps; s++) bars += '<i class="' + ((me.st || 0) >= s ? 'on' : '') + '" style="width:' + (40 + (d.steps - s) * 18) + 'px"></i>';
-    return '<div class="step-meter" aria-label="Stepenica ' + (me.st || 0) + ' od ' + d.steps + '">' + bars + '</div><div class="p-sub">Stepenica ' + (me.st || 0) + ' od ' + d.steps + '</div>';
   }
 
   function powerPhone(d, me) {
