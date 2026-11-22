@@ -2874,12 +2874,10 @@
       const m = pById(d, PV.k.m), k = PV.k;
       let act = '';
       if (q && k.can) {
-        if (L.whOpen && !k.wsent) act = '<span class="pk-wh-pick">' + d.q.o.map((_, i) => '<button class="pk-l" data-wh="' + i + '">' + LET[i] + '</button>').join('') + '<button class="pk-l x" data-whx="1" aria-label="Zatvori">✕</button></span>';
-        else act = (k.wsent ? '<span class="pk-sent">🔮 Šapnuto</span>' : '<button class="pk-b" data-whopen="1">🔮 Šapni</button>') +
-          (k.bt ? '<button class="pk-b bt on" data-bt="0">🗡️ Odustani</button>' : '<button class="pk-b bt" data-bt="1" aria-label="Pripremi izdaju">🗡️</button>');
+        act = (k.bt ? '<button class="pk-b bt on" data-bt="0">🗡️ Odustani</button>' : '<button class="pk-b bt" data-bt="1" aria-label="Pripremi izdaju">🗡️</button>');
       }
       h += '<div class="pk-bar' + (k.bt && q ? ' armed' : '') + '"><span class="mini">' + (m ? avSvg(m.a, 'idle') : '') + '</span><span class="pk-t"><b>🍻 ' + esc(m ? m.n : '?') + '</b><span class="pk-tre" data-bk="pktre" data-bv="' + k.tre + '">💰 ' + fmtN(k.tre) + '</span></span>' +
-        (k.wh !== undefined && q ? '<span class="pk-whin" data-bk="pkwh" data-bv="' + k.wh + '">🔮 ' + esc(m ? m.n : '') + ': <b>' + LET[k.wh] + '</b></span>' : '') + act + '</div>';
+        act + '</div>';
       if (q && k.bt) h += '<div class="pk-note">🗡️ Izdaja je pripremljena. Ako ne odustaneš, na kraju pitanja pokušat ćeš ukrasti zajedničku riznicu i ' + Math.round(PACT_STEAL * 100) + ' % partnerovih bodova.</div>';
       else if (!q && (d.ph === 'reveal' || d.ph === 'vote' || d.ph === 'power')) h += '<div class="pk-card-s">Zajednička riznica: <b>' + fmtN(k.tre) + ' bodova</b></div>';
     } else if (PV.out && !q) {
@@ -3011,8 +3009,7 @@
   // Tajni kutak (🗝️): jedno mjesto za privatne radnje; Vrijeme za dogovore (faza 'deal'); šapat jednim dodirom.
   // Sve što se vidi dolazi iz PV (privatno, samo ovaj igrač) ili javnog d; domaćin sve provjerava.
   const SF_BUSY_PH = { question: 1, fq: 1, duel: 1, sort: 1, link: 1, order: 1, hilo: 1, blitz: 1, maj: 1, uljez: 1, uljezVote: 1, secret: 1, secret2: 1 };
-  const SF = { open: false, qi: 0, btAsk: false, rules: false, scn: false, seen: new Set(), told: new Set(), wh: true };
-  try { SF.wh = localStorage.getItem('mz_sf_wh') !== '0'; } catch (e) {}
+  const SF = { open: false, qi: 0, btAsk: false, rules: false, scn: false, seen: new Set(), told: new Set() };
   const sfIntroSeen = () => { try { return localStorage.getItem('mz_sf_intro') === '1'; } catch (e) { return true; } };
   const sfOnPV = () => !!(PV && PV.sf);
   const sfName = (d, id) => { const p = pById(d, id); return p ? esc(p.n) + (p.b ? ' <img class="tavern-bot" src="ui/bot-medal.webp" alt="" aria-hidden="true">' : '') : '?'; };
@@ -3132,14 +3129,6 @@
     return '<div class="sf-deal tv"><div class="sf-dt">🍻 VRIJEME ZA DOGOVORE</div><div class="sf-dl">' + esc(dl.t || '') + '</div><div class="sf-ds">Igrači sklapaju dogovore na mobitelima…</div>' +
       '<div class="ht-ready" data-bk="sfr" data-bv="' + ready + '">Spremno: <b>' + ready + '/' + ps.length + '</b></div></div>';
   }
-  // tijekom pitanja: samo saveznik, riznica, šapat (jedan dodir uz odgovor) i primljeni šapat
-  function sfQuestionBar(d, me) {
-    if (!PV || !PV.k || d.ph !== 'question') return '';
-    const k = PV.k, m = pById(d, k.m);
-    const act = k.wsent ? '<span class="pk-sent">🔮 Šapnuto</span>' : '<button class="pk-b sf-whtg' + (SF.wh ? ' on' : '') + '" data-sfwh="1" aria-pressed="' + SF.wh + '">' + (SF.wh ? '🔮 Odgovori i šapni' : '🔮 Bez šapata') + '</button>';
-    return '<div class="pk-bar sf-qbar"><span class="mini">' + (m ? avSvg(m.a, 'idle') : '') + '</span><span class="pk-t"><b>🍻 ' + sfName(d, k.m) + '</b><span class="pk-tre" data-bk="pktre" data-bv="' + k.tre + '">💰 ' + fmtN(k.tre) + '</span></span>' +
-      (k.wh !== undefined ? '<span class="pk-whin" data-bk="pkwh" data-bv="' + k.wh + '">🔮 <b>' + LET[k.wh] + '</b></span>' : '') + act + '</div>';
-  }
   function sfHead(d, me, head) {
     const act = d.rc, mine = act && me && (act.a === me.id || act.b === me.id);
     let tags = '';
@@ -3162,7 +3151,6 @@
     q('[data-sfrules]').forEach((b) => { b.onclick = () => { SF.rules = true; phoneRender(true); }; });
     q('[data-sfbt]').forEach((b) => { b.onclick = () => { SF.btAsk = b.dataset.sfbt === '1'; AUDIO.play('tap'); phoneRender(true); }; });
     q('[data-sfdev]').forEach((b) => { b.onclick = () => { SF.devN = (SF.devN || 0) + 1; if (SF.devN >= 5) { SF.dev = true; try { sessionStorage.setItem('mz_dev', '1'); } catch (e) {} phoneRender(true); } }; });
-    q('[data-sfwh]').forEach((b) => { b.onclick = () => { SF.wh = !SF.wh; try { localStorage.setItem('mz_sf_wh', SF.wh ? '1' : '0'); } catch (e) {} AUDIO.play('tap'); phoneRender(true); }; });
     q('[data-sfscnopen]').forEach((b) => { b.onclick = () => { SF.scn = !SF.scn; phoneRender(true); }; });
     q('[data-scn]').forEach((b) => { b.onclick = () => { if (!game || !game.sfScenario) return; const r = game.sfScenario(PID, b.dataset.scn); toastHold.push([(r.ok ? '🤖 ' : '⚠️ ') + r.msg, r.ok ? 'pact' : 'no']); AUDIO.play(r.ok ? 'confirm' : 'tap'); SF.scn = false; phoneRender(true); pactToasts(S); }; });
     q('[data-bt]').forEach((b) => { const f = b.onclick; b.onclick = () => { SF.btAsk = false; if (f) f(); }; });
@@ -3171,7 +3159,6 @@
     document.querySelectorAll('#sfbox [data-rc]').forEach((b) => { b.onclick = () => { const k = b.dataset.rc; AUDIO.play(k === 'rcDecline' || k === 'rcCancel' ? 'tap' : 'confirm'); krSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
     document.querySelectorAll('#sfbox [data-tk]').forEach((b) => { b.onclick = () => { const k = b.dataset.tk; AUDIO.play(k === 'tkDecline' ? 'tap' : 'confirm'); krSend({ k, id: +b.dataset.id }); }; });
     document.querySelectorAll('#sfbox [data-bt]').forEach((b) => { b.onclick = () => { SF.btAsk = false; AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); krSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
-    bindWhi();
     bindKr(d);
     bindRope(d);
     bind('sfready', () => { if (L.sent) return; L.sent = { ok: 1 }; sendInput({ ok: 1 }); phoneRender(false); });
@@ -3185,23 +3172,6 @@
     if (!d.opt) return '';
     if (!game) return d.opt.bs ? '<div class="lob-info"><img class="tavern-bot" src="ui/bot-medal.webp" alt="" aria-hidden="true"> Testiranje društvenih mehanika s botovima je uključeno</div>' : '';
     return '<div class="lob-opt"><span class="lob-opt-l"><img class="tavern-bot" src="ui/bot-medal.webp" alt="" aria-hidden="true"> Paktovi s botovima<small>Botovi mogu sklapati paktove i pokušati izdaju.</small></span><button class="tgl' + (d.opt.bs ? '' : ' off') + '" data-bsopt="' + (d.opt.bs ? 0 : 1) + '">' + (d.opt.bs ? 'Uključeno' : 'Isključeno') + '</button></div>';
-  }
-  // šapat na kartici odgovora: 🔮 šalje to slovo savezniku (vlastiti odgovor se NE zaključava); primljeni šapat = mali avatar saveznika
-  function sfOptX(d, i, answered, gone) {
-    return '';   // šaputanje je uklonjeno
-    if (!PV || !PV.sf || !PV.k || d.ph !== 'question') return '';
-    const k = PV.k, m = pById(d, k.m);
-    let h = '';
-    if (k.wh === i && m) h += '<span class="sf-whav" title="Šapat saveznika">' + avSvg(m.a, 'happy') + '</span>';
-    if (k.wc === i) h += '<span class="sf-whi sent" aria-label="Šapnuto">🔮</span>';
-    else if (!answered && !gone && !k.wsent) h += '<span class="sf-whi" data-whi="' + i + '" role="button" aria-label="Šapni ' + LET[i] + ' savezniku">🔮</span>';
-    return h;
-  }
-  function bindWhi() {
-    document.querySelectorAll('#app [data-whi]').forEach((x) => {
-      x.onpointerdown = (e) => { e.stopPropagation(); };
-      x.onclick = (e) => { e.stopPropagation(); e.preventDefault(); AUDIO.play('whoosh'); krSend({ k: 'whisper', c: +x.dataset.whi }); };
-    });
   }
   // slanje akcija domaćinu (web: pactSend iz mrežnog sloja; samostalni demo: izravno u igru)
   const krSend = (a) => (typeof pactSend === 'function' ? pactSend(a) : game && game.pactAction(PID, a));
@@ -3347,9 +3317,6 @@
     q('[data-pk]').forEach((b) => { b.onclick = () => { const k = b.dataset.pk; AUDIO.play(k === 'decline' ? 'tap' : 'confirm'); L.pkOpen = false; krSend({ k, from: b.dataset.f, to: b.dataset.to }); }; });
     q('[data-pkopen]').forEach((b) => { b.onclick = () => { L.pkOpen = true; phoneRender(true); }; });
     q('[data-pkx]').forEach((b) => { b.onclick = () => { L.pkOpen = false; phoneRender(true); }; });
-    q('[data-whopen]').forEach((b) => { b.onclick = () => { L.whOpen = true; phoneRender(true); }; });
-    q('[data-whx]').forEach((b) => { b.onclick = () => { L.whOpen = false; phoneRender(true); }; });
-    q('[data-wh]').forEach((b) => { b.onclick = () => { L.whOpen = false; AUDIO.play('whoosh'); krSend({ k: 'whisper', c: +b.dataset.wh }); }; });
     q('[data-bt]').forEach((b) => { b.onclick = () => { AUDIO.play(b.dataset.bt === '1' ? 'zap' : 'tap'); krSend({ k: 'betray', on: b.dataset.bt === '1' }); }; });
     bindSf(d);
   }
@@ -4867,7 +4834,7 @@
       let cls = 'p-opt o' + i + (gone ? ' gone' : '') + (locked ? ' locked' : '');
       if (answered && !gone) cls += mine === i ? ' picked' : ' dim';
       const st = answered && !gone ? (mine === i ? 'picked' : 'dim') : '';
-      return '<button class="' + cls + '" data-c="' + i + '" data-bk="op' + i + '" data-bv="' + st + '"' + (st ? ' data-ba="' + (st === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (answered || expired || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span>' + sfOptX(d, i, answered, gone) + '</button>';
+      return '<button class="' + cls + '" data-c="' + i + '" data-bk="op' + i + '" data-bv="' + st + '"' + (st ? ' data-ba="' + (st === 'picked' ? 'pickIn' : 'dimIn') + '"' : '') + (answered || expired || gone ? ' disabled' : '') + '><span class="shape">' + SHAPES[i] + '</span><span class="otxt">' + optText(o, i) + '</span>' + '</button>';
     }).join('');
     const attackers = (d.ev || []).filter((e) => e.t === PID);
     const hit = attackers.length ? '<div class="p-sub">' + attackers.map((e) => esc(nameOf(d, e.f)) + ' ' + ICON[e.p] + (e.cap ? ' (limit napada)' : e.b ? ' (odbijeno štitom)' : '')).join(' · ') + '</div>' : '';

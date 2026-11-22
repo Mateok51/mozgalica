@@ -1872,13 +1872,6 @@
   .pk-b.no { background: rgba(255, 255, 255, 0.12); color: #f3e3c4; box-shadow: inset 0 0 0 1px rgba(243, 227, 196, 0.4); }
   .pk-b.bt { background: linear-gradient(180deg, #6b2a22, #3e1610); color: #ffd9c9; box-shadow: inset 0 0 0 1px rgba(224, 120, 90, 0.7); }
   .pk-b.bt.on { background: linear-gradient(180deg, #c8442e, #8a2414); color: #fff; }
-  .pk-sent { flex: none; font-size: 0.8rem; font-weight: 800; color: rgba(243, 227, 196, 0.7); }
-  .pk-whin { flex: none; padding: 4px 8px; border-radius: 8px; font-size: 0.86rem; font-weight: 800; color: #e9d8ff; background: rgba(120, 70, 190, 0.45); box-shadow: inset 0 0 0 1px rgba(190, 150, 255, 0.7); animation: pkGlow 1.6s ease-in-out infinite; }
-  .pk-whin b { font-size: 1.05rem; color: #fff; }
-  @keyframes pkGlow { 50% { box-shadow: inset 0 0 0 1px rgba(210, 180, 255, 1), 0 0 12px rgba(170, 120, 255, 0.7); } }
-  .pk-wh-pick { display: flex; gap: 6px; flex: none; }
-  .pk-l { width: 38px; height: 34px; border-radius: 8px; font-weight: 900; color: #2a1606; background: linear-gradient(180deg, #e9d8ff, #b394e8); box-shadow: 0 2px 0 #5d3f94; }
-  .pk-l.x { width: 30px; background: rgba(255, 255, 255, 0.12); color: #f3e3c4; box-shadow: none; }
   .pk-note, .pk-card-s { font-family: var(--font-body); font-size: 0.8rem; font-weight: 700; line-height: 1.3; color: #ffcbb8; text-align: center; padding: 0 6px; }
   .pk-card-s { color: rgba(243, 227, 196, 0.85); } .pk-card-s b { color: #f0c66e; }
   .pk-tm { position: absolute; left: 0; bottom: 0; height: 3px; width: var(--w); background: #f0c66e; transition: width 1s linear; }
@@ -2161,8 +2154,6 @@
   .sf-dl { font-weight: 800; font-size: 0.95rem; color: #f3e3c4; }
   .sf-ds { font-size: 0.85rem; color: rgba(243, 227, 196, 0.8); }
   .sf-deal.tv { margin: 4vh auto; max-width: 900px; gap: 1.4vh; } .tv .sf-dt { font-size: clamp(2.2rem, 4vw, 3.6rem); } .tv .sf-dl { font-size: clamp(1.2rem, 2vw, 1.8rem); } .tv .sf-ds { font-size: clamp(1rem, 1.5vw, 1.4rem); } .tv .sf-deal .ht-ready { font-size: 1.4rem; }
-  .sf-qbar .sf-whtg { opacity: 0.85; } .sf-qbar .sf-whtg.on { opacity: 1; box-shadow: 0 2px 0 #7a4f17, 0 0 10px rgba(240, 198, 110, 0.6); }
-  .sf-qbar .sf-whtg:not(.on) { background: rgba(255, 255, 255, 0.12); color: #f3e3c4; box-shadow: inset 0 0 0 1px rgba(214, 150, 90, 0.5); }
   .sf-go { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 4px auto 6px; width: 100%; max-width: 480px; }
   .sf-go .sf-ok { width: 100%; min-height: 54px; }
   .sf-inline { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
@@ -2173,15 +2164,6 @@
   .tvlob-side .tvlob-inv { gap: 0.8vh; padding: 1.6vh 2vw; } .tvlob-inv .lob-code { font-size: clamp(2.6rem, 5vw, 5rem); }
   .sf-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .sf-btask { align-self: flex-start; }
-  /* šapat na kartici odgovora */
-  .p-opt .sf-whi { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); z-index: 2; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 1.2rem;
-    background: rgba(30, 14, 40, 0.55); box-shadow: inset 0 0 0 1.5px rgba(214, 170, 255, 0.7); text-shadow: none; }
-  .p-opt .sf-whi.sent { background: rgba(120, 70, 160, 0.85); box-shadow: inset 0 0 0 2px #f0c66e, 0 0 10px rgba(200, 150, 255, 0.7); }
-  .p-opt .sf-whav { position: absolute; right: 52px; top: 50%; transform: translateY(-50%); z-index: 2; width: 34px; height: 34px; border-radius: 50%; overflow: hidden;
-    box-shadow: 0 0 0 2px #d7aaff, 0 0 12px rgba(200, 150, 255, 0.8); background: rgba(40, 20, 50, 0.6); }
-  .p-opt .sf-whav > * { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale(1.2) translateY(6%); animation: none; }
-  .p-opt:has(.sf-whi) .otxt { padding-right: 46px; }
-  .p-opt > span.sf-whi, .p-opt > span.sf-whav { position: absolute; }
   /* Krčmar 2.0: ploča bodova s Nastavi */
   .kr-box { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; max-width: 480px; margin: 6px auto 0; padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
   .kr-go { width: 100%; min-height: 54px; }
