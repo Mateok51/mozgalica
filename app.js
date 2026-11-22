@@ -935,7 +935,7 @@
         const owner = credentials.role === 'host';
         closeCloud();
         if (owner && confirmed && error.reason === 'unavailable') {
-          cloudRetry = { code: credentials.code, secret: credentials.secret, noTv: !!noTv };
+          cloudRetry = { code: credentials.code, secret: credentials.secret, noTv: !!noTv, name: credentials.name, savedAt: Date.now() };
         }
         // A network timeout does not revoke an already confirmed player session.
         if (error.reason !== 'unavailable') clearCloudRecovery();
@@ -971,8 +971,11 @@
     if (!cloudEnabled() || cloudSession) return;
     const retryOwner = !['home', 'join'].includes(mode);
     if (retryOwner && (!cloudRetry || !['host', 'hostform'].includes(mode))) return;
+    let raw;
+    try { raw = localStorage.getItem(CLOUD_RECOVERY_KEY); }
+    catch (e) { if (retryOwner) restoreMemoryOwner(); return; }
+    if (!raw) { if (retryOwner) restoreMemoryOwner(); return; }
     try {
-      const raw = localStorage.getItem(CLOUD_RECOVERY_KEY); if (!raw) return;
       if (raw.length > 2048) throw Error('size');
       const r = JSON.parse(raw), hash = '#' + r.code + (r.secret ? '-' + r.secret : '');
       if (r.version !== 1 || r.pid !== PID || !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000 ||
@@ -991,6 +994,16 @@
       connectCloud({ code: r.code, secret: r.secret, role: r.role, name: r.name }, r.noTv, true);
     } catch (e) { clearCloudRecovery(); }
   }
+  function restoreMemoryOwner() {
+    // Only a previously confirmed owner in this live tab may use this receipt.
+    // Automatic recovery never falls through from malformed/different disk
+    // data. The explicit retry button uses this tab's confirmed room directly.
+    const r = cloudRetry;
+    if (!r || !['host', 'hostform'].includes(mode) || !/^[A-Z]{4}$/.test(r.code) || !okRS(r.secret) ||
+        typeof r.noTv !== 'boolean' || typeof r.name !== 'string' || !r.name.trim() || r.name.length > 12 ||
+        !Number.isFinite(r.savedAt) || r.savedAt > Date.now() || Date.now() - r.savedAt >= 21600000) return;
+    connectCloud({ code: r.code, secret: r.secret, role: 'host', name: r.name }, r.noTv, true);
+  }
   function cloudRetryV() {
     if (!cloudRetry || !hostErr) return false;
     const retry = cloudRetry;
@@ -998,7 +1011,9 @@
     $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
       '<div class="p-title">Soba ' + esc(cloudRetry.code) + '</div><div class="err">' + esc(hostErr) + '</div>' +
       '<button class="btn" id="retryRoom">Pokušaj ponovno</button><button class="btn ghost" id="retryNew">Nova igra</button>';
-    bind('retryRoom', () => { if (cloudRetry === retry) restoreCloudRecovery(); });
+    // This explicit button names the confirmed room held by this tab. It must
+    // not depend on a successful storage write or target another saved room.
+    bind('retryRoom', () => { if (cloudRetry === retry) restoreMemoryOwner(); });
     bind('retryNew', () => {
       if (cloudRetry !== retry) return;
       const noTv = retry.noTv;
@@ -2692,7 +2707,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v89</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v90</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);

@@ -25,7 +25,11 @@ function fixture(storage = new Map(), options = {}) {
     cloudSession: null, cloudCredentials: null, cloudView: null, cloudAttempt: 0, cloudTvSig: '', cloudResend: false, cloudRetry: null, cloudTakeover: null,
     pcode: '', pname: '', netNote: '', connectionWasLost: false, game: null, HOST_RS: null, PLAYER_RS: null, lastSig: '', hostErr: '',
     ppeer: null, pconn: null, TAVERN_CLOUD: { apiOrigin: 'https://game.test' }, CLOUD_RECOVERY_KEY: key,
-    localStorage: { getItem: name => storage.get(name) || null, setItem: (name, value) => storage.set(name, value), removeItem: name => storage.delete(name) },
+    localStorage: {
+      getItem: name => { if (options.blockRead) throw Error('SecurityError: localStorage read denied'); return storage.get(name) || null; },
+      setItem: (name, value) => { if (options.blockWrite) throw Error('QuotaExceededError: localStorage write denied'); storage.set(name, value); },
+      removeItem: name => storage.delete(name),
+    },
     location: { hash: '' }, document: { hidden: false, documentElement: { dataset: {} }, getElementById: name => elements.get(name) },
     $app: screen, bind: (name, callback) => bindings.set(name, callback), esc: String,
     store: { get: name => name === 'mz_name' ? 'Ana' : storage.get(name), set: (name, value) => storage.set(name, value) },
@@ -162,4 +166,103 @@ test('only the separate new-game action discards the failed receipt and allows a
     assert.equal(f.sockets.length, 2);
     assert.equal(JSON.parse(f.storage.get(key)).code, 'WXYZ', 'Stale controls cannot erase the new room receipt');
   }
+});
+for (const [label, options] of [['quota-blocked writes', { blockWrite: true }], ['security-blocked reads', { blockRead: true }], ['unavailable storage', { blockRead: true, blockWrite: true }]]) {
+  for (const noTv of [true, false]) test(`confirmed ${noTv ? 'phone' : 'TV'} owner can retry with ${label} using its in-memory receipt`, async () => {
+    const f = fixture(new Map(), options); await f.context.startCloudRoom(noTv, 'Ana');
+    assert.equal(f.requests.length, 1);
+    assert.equal(f.sockets.length, 1, 'Storage failure must not prevent initial admission');
+    [...f.jobs.values()].find(job => job.ms === 30000).fn();
+    assert(f.context.cloudRetry, 'The successful HTTP response confirms a live owner retry independently of storage');
+    if (noTv) f.context.hostFormV(); else f.context.hostV();
+    assert(f.bindings.has('retryRoom'));
+    f.bindings.get('retryRoom')();
+    assert.equal(f.requests.length, 1, 'Retry must reuse the confirmed room without a new POST');
+    assert.equal(f.sockets.length, 2, 'The visible retry button cannot silently do nothing when storage is unavailable');
+    assert.equal(f.sockets[1].url, 'wss://game.test/api/rooms/ABCD');
+    f.sockets[1].open();
+    assert.equal(f.sockets[1].sent[0].secret, secret);
+    assert.equal(f.sockets[1].sent[0].pid, 'ana');
+    assert.equal(f.sockets[1].sent[0].name, 'Ana');
+    assert.equal(f.sockets[1].sent[0].role, noTv ? 'player' : 'host');
+  });
+}
+test('unverified manual hosts cannot acquire an in-memory retry merely because storage is blocked', () => {
+  for (const noTv of [true, false]) {
+    const f = fixture(new Map(), { blockRead: true, blockWrite: true });
+    f.context.connectCloud({ code: 'ABCD', secret, role: 'host', name: 'Ana' }, noTv);
+    [...f.jobs.values()].find(job => job.ms === 30000).fn();
+    assert.equal(f.context.cloudRetry, null, 'A manual credential attempt has no server confirmation');
+    assert.equal(f.context.cloudRetryV(), false);
+    f.context.restoreCloudRecovery(); f.context.resumeConnection();
+    assert.equal(f.requests.length, 0);
+    assert.equal(f.sockets.length, 1, 'Storage failure cannot grant retry authority to unverified credentials');
+  }
+});
+test('a definitive auth rejection after an in-memory retry revokes its authority', async () => {
+  for (const noTv of [true, false]) {
+    const f = fixture(new Map(), { blockRead: true, blockWrite: true });
+    await f.context.startCloudRoom(noTv, 'Ana');
+    [...f.jobs.values()].find(job => job.ms === 30000).fn();
+    if (noTv) f.context.hostFormV(); else f.context.hostV();
+    const retry = f.bindings.get('retryRoom'); retry();
+    assert.equal(f.sockets.length, 2);
+    f.sockets[1].open(); f.sockets[1].onmessage({ data: JSON.stringify({ t: 'error', reason: 'auth' }) });
+    assert.equal(f.context.cloudRetry, null);
+    retry(); f.context.resumeConnection();
+    assert.equal(f.sockets.length, 2, 'A retained old UI callback cannot resurrect rejected owner credentials');
+    assert.equal(f.requests.length, 1);
+  }
+});
+test('deliberate new-game selection invalidates the blocked-storage owner retry', async () => {
+  const f = fixture(new Map(), { blockRead: true, blockWrite: true });
+  await f.context.startCloudRoom(true, 'Ana');
+  [...f.jobs.values()].find(job => job.ms === 30000).fn(); f.context.hostFormV();
+  const retry = f.bindings.get('retryRoom'); f.bindings.get('retryNew')();
+  assert.equal(f.context.cloudRetry, null); retry(); f.context.resumeConnection();
+  assert.equal(f.sockets.length, 1, 'A deliberate fresh-game action must cancel the RAM-only room recovery');
+  assert.equal(f.requests.length, 1);
+});
+test('expired or malformed in-memory receipts cannot reconnect an owner without storage', async () => {
+  const invalid = [
+    { savedAt: Date.now() - 21600001 }, { savedAt: Date.now() + 60000 }, { savedAt: NaN },
+    { name: '' }, { name: '   ' }, { name: 'x'.repeat(13) }, { name: null },
+    { code: 'bad' }, { secret: 'bad' }, { noTv: 'true' },
+  ];
+  for (const noTv of [true, false]) for (const patch of invalid) {
+    const f = fixture(new Map(), { blockWrite: true }); await f.context.startCloudRoom(noTv, 'Ana');
+    [...f.jobs.values()].find(job => job.ms === 30000).fn();
+    if (noTv) f.context.hostFormV(); else f.context.hostV();
+    Object.assign(f.context.cloudRetry, patch);
+    f.bindings.get('retryRoom')();
+    assert.equal(f.sockets.length, 1, 'Malformed/expired RAM receipt cannot create a new authenticated connection: ' + JSON.stringify(patch));
+    assert.equal(f.requests.length, 1);
+  }
+});
+test('a different valid disk recovery target never falls through to the in-memory retry', async () => {
+  for (const noTv of [true, false]) {
+    const other = JSON.stringify({ version: 1, savedAt: Date.now(), pid: 'ana', code: 'WXYZ', secret: 'b'.repeat(22), role: 'host', noTv, name: 'Ana' });
+    const storage = new Map([[key, other]]), f = fixture(storage, { blockWrite: true });
+    await f.context.startCloudRoom(noTv, 'Ana');
+    [...f.jobs.values()].find(job => job.ms === 30000).fn();
+    assert.equal(f.context.cloudRetry.code, 'ABCD');
+    if (noTv) f.context.hostFormV(); else f.context.hostV();
+    f.context.resumeConnection();
+    assert.equal(f.sockets.length, 1, 'A different stored target must not reconnect either itself or the RAM target through fallback');
+    assert.equal(f.requests.length, 1);
+    assert.equal(storage.get(key), other, 'The other room’s valid stored identity must be preserved');
+    f.bindings.get('retryRoom')();
+    assert.equal(f.sockets.length, 2, 'An explicit retry may reconnect only the confirmed room shown by this tab');
+    assert.equal(f.sockets[1].url, 'wss://game.test/api/rooms/ABCD');
+    assert.equal(storage.get(key), other);
+  }
+});
+test('a malformed disk record is discarded without attempting in-memory fallback in that call', async () => {
+  const storage = new Map([[key, '{broken']]), f = fixture(storage, { blockWrite: true });
+  await f.context.startCloudRoom(true, 'Ana');
+  [...f.jobs.values()].find(job => job.ms === 30000).fn(); f.context.hostFormV();
+  f.context.resumeConnection();
+  assert.equal(f.sockets.length, 1, 'Malformed persistent data must not be treated as missing data in the same restore call');
+  assert.equal(storage.has(key), false);
+  assert.equal(f.requests.length, 1);
 });

@@ -66,7 +66,7 @@ lifecycle događaji te audio sat/stanje kontrolirano su simulirani. Na fizičkom
 iPhoneu još treba provjeriti povlačenje s dva prsta, zaključavanje usred geste,
 povratak iz druge aplikacije i zvuk nakon prekida ili poziva.
 
-Od v89 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
+Od v90 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
 serverskog rezultata i mogućnost nastavka nakon autoritativne obnove iste faze.
 Handleri odlazećih scena ne mogu odgovoriti na novu tvrdnju ili zaključati novo
 pitanje; namjerni brzi dodiri novih kontrola i dalje rade bez dodatnog čekanja.
@@ -106,6 +106,12 @@ osvježavanju istog konteksta, a zatvaraju se na novu pozivnicu, reset i novu
 fazu kako ne bi blokirala dodire. Provjere koriste stvarne browser handlere,
 mrežni adapter i metode prijave; kontrolirano uskraćena početna poruka nije
 mjerenje stvarnog iOS gubitka veze.
+
+Kad pohrana nije dostupna ili nije uspjela spremiti potvrdu, otvorena kartica
+može ponovno povezati potvrđenog domaćina iz vlastite memorije. Ručni retry
+cilja prikazanu sobu; automatski oporavak ne preskače zapis druge sobe niti
+neispravan zapis. Otkazivanje, odbijena prijava i istek ukidaju tu mogućnost.
+Bez trajne pohrane ovaj oporavak ne preživljava potpuno ponovno učitavanje.
 
 ## Piramida od v84
 

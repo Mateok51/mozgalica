@@ -68,7 +68,18 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     browser = await pw[browserName].launch(browserName === 'chromium' ? { executablePath: process.env.CHROMIUM_PATH, args: ['--no-sandbox'] } : {});
     const makeContext = () => browser.newContext({ viewport: { width: 390, height: 664 }, hasTouch: true, serviceWorkers: 'block' });
     const context = await makeContext(), guestContext = await makeContext();
-    const makePage = async context => { const page = await context.newPage(); page.on('pageerror', error => errors.push(error.message)); return page; };
+    const makePage = async context => {
+      const page = await context.newPage(); page.on('pageerror', error => errors.push(error.message));
+      await page.addInitScript(() => {
+        const save = Storage.prototype.setItem;
+        Storage.prototype.setItem = function (key, value) {
+          const result = save.call(this, key, value);
+          if (this === localStorage && key === 'mz_cloud_resume_v1') window.__ownRecoveryWrite = JSON.parse(value);
+          return result;
+        };
+      });
+      return page;
+    };
     const host = await makePage(context);
     await host.goto(origin); await host.locator('#hostp').click(); await host.locator('#hname').fill('Ana');
     await host.locator('#hform button[type=submit]').click(); await host.locator('#dstart').waitFor();
@@ -121,7 +132,9 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     await different.locator('#name').fill('Ana'); await different.locator('#form button[type=submit]').click();
     await different.locator('.lob-row').nth(1).waitFor();
     assert.equal(await different.locator('#dstart').count(), 0, 'The owner of the previous room is only a guest in another room');
-    const otherRecord = await different.evaluate(() => JSON.parse(localStorage.getItem('mz_cloud_resume_v1')));
+    // Other active rooms share this origin's single recovery key. Verify what
+    // this authenticated tab writes, rather than racing another room's heartbeat.
+    const otherRecord = await different.evaluate(() => window.__ownRecoveryWrite);
     assert.equal(otherRecord.code, other.code); assert.equal(otherRecord.role, 'player');
     assert.equal(errors.length, 0, errors.join('; '));
     console.log(`${browserName}: matching full QR preserves the confirmed phone host, working start control and one identity; different room/secret wins, guests retain no host privileges.`);
