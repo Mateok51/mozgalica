@@ -2371,8 +2371,6 @@ function createGame(o) {
         G.scn = { k, pid }; return { ok: 1, msg: 'Sada u Tajnom kutku ponudi pakt botu — ' + (k === 'accept' ? 'prihvatit će ga.' : 'odbit će ga.') };
       case 'whisper':
         return { ok: 0, msg: 'Šaputanje je uklonjeno iz igre.' };
-        if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (Tajni kutak → ponudi savez).' };
-        G.scn = { k, pid }; return { ok: 1, msg: mate.name + ' će ti šapnuti svoj odgovor na sljedećem pitanju.' };
       case 'double': case 'loyal':
         if (!botMate) return { ok: 0, msg: 'Prvo sklopi pakt s botom (Tajni kutak → ponudi savez).' };
         if (k === 'loyal') { mate.sfLoyal = 1; mate.betray = false; return { ok: 1, msg: mate.name + ' ostaje odan do kraja (osim ako ti izdaš).' }; }
@@ -2648,9 +2646,6 @@ function createGame(o) {
       }
       case 'whisper': {
         break;   // šaputanje je uklonjeno
-        const mate = partnerOf(p);
-        if (!mate || G.ph !== 'question' || p.whS === G.s || !isInt(a.c) || !G.q || a.c < 0 || a.c >= G.q.o.length) break;
-        p.whS = G.s; mate.wh = { from: pid, c: a.c, s: G.s }; ok = true; break;
       }
       case 'betray': {
         if (!pactOf(p) || (a.on && (pactOf(p).n || 0) < (cfg.pactMinQ || 0)) || (sfOn() ? sfBusy(p) || G.inFinale || G.ph === 'lobby' || G.ph === 'final' : G.ph !== 'question')) break;
