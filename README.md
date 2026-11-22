@@ -66,7 +66,7 @@ lifecycle događaji te audio sat/stanje kontrolirano su simulirani. Na fizičkom
 iPhoneu još treba provjeriti povlačenje s dva prsta, zaključavanje usred geste,
 povratak iz druge aplikacije i zvuk nakon prekida ili poziva.
 
-Od v87 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
+Od v88 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
 serverskog rezultata i mogućnost nastavka nakon autoritativne obnove iste faze.
 Handleri odlazećih scena ne mogu odgovoriti na novu tvrdnju ili zaključati novo
 pitanje; namjerni brzi dodiri novih kontrola i dalje rade bez dodatnog čekanja.
@@ -80,6 +80,18 @@ protokol koji razumiju i stariji klijenti. Regresije uključuju stvarne browser
 WebSockete, produkcijske metode prijave i Workers provjeru prijenosa domaćina;
 jednokratna pogreška slanja kontrolirano je injektirana. Ponašanje fizičkog
 iPhonea pri gubitku mreže i suspendiranju i dalje zahtijeva provjeru na uređaju.
+
+Otvaranje nove pozivnice zatvara i prethodni dijalog vibracije bez vraćanja
+fokusa na stari ekran. Uobičajeno zatvaranje dijaloga i dalje vraća fokus.
+Wake Lock ima jedan zahtjev po aktivnom prikazu; odlazak iz igre i skrivanje
+kartice oslobađaju zaključavanje, a zakašnjeli rezultat prethodnog zahtjeva
+ne zamjenjuje novo zaključavanje. API i njegov raspored događaja simulirani su
+u regresijama; stvarno uspavljivanje iPhonea nije mjereno.
+
+Nove odluke o paktu, zadatku i izazovu vođi šalju ID prikazane ponude.
+Zakašnjelo prihvaćanje druge ponude odbija se. Stariji APK protokol bez ID-a
+ostaje kompatibilan i zadržava izvorno ponašanje; zaštita vezivanjem ID-a
+vrijedi za ažurirane klijente. Pravila bodovanja i rokovi ponuda ostaju isti.
 
 ## Piramida od v84
 
