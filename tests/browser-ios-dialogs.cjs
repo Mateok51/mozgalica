@@ -55,6 +55,12 @@ const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].ma
     await page.waitForFunction(()=>window.__wakeStats.releases===1);
     assert.equal(await page.evaluate(()=>window.__wakeStats.requests),1,'A single visible game must acquire only one lock');
    });
+   await check('a queued old close cannot dismiss a newly opened haptic dialog',async()=>{
+    await page.locator('#homeHaptics').tap();await page.evaluate(()=>window.oldHapticClose=document.querySelector('#hapticClose').onclick);
+    await page.locator('#hapticClose').click();await page.locator('#homeHaptics').tap();
+    await page.evaluate(()=>oldHapticClose());assert.equal(await page.locator('#hapticModal').count(),1);
+    await page.locator('#hapticClose').click();assert.equal(await page.locator('#hapticModal').count(),0);
+   });
    assert.deepEqual(errors,[],'No browser page errors');await context.close();
   }
   if(failures.length)throw Error(failures.join('\n'));

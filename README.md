@@ -66,7 +66,7 @@ lifecycle događaji te audio sat/stanje kontrolirano su simulirani. Na fizičkom
 iPhoneu još treba provjeriti povlačenje s dva prsta, zaključavanje usred geste,
 povratak iz druge aplikacije i zvuk nakon prekida ili poziva.
 
-Od v88 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
+Od v89 i dvoboj zatvara odgovore nakon lokalnog isteka vremena, uz čekanje
 serverskog rezultata i mogućnost nastavka nakon autoritativne obnove iste faze.
 Handleri odlazećih scena ne mogu odgovoriti na novu tvrdnju ili zaključati novo
 pitanje; namjerni brzi dodiri novih kontrola i dalje rade bez dodatnog čekanja.
@@ -92,6 +92,20 @@ Nove odluke o paktu, zadatku i izazovu vođi šalju ID prikazane ponude.
 Zakašnjelo prihvaćanje druge ponude odbija se. Stariji APK protokol bez ID-a
 ostaje kompatibilan i zadržava izvorno ponašanje; zaštita vezivanjem ID-a
 vrijedi za ažurirane klijente. Pravila bodovanja i rokovi ponuda ostaju isti.
+
+Potvrda uspješnog HTTP stvaranja sobe sprema se prije prve WebSocket poruke.
+Reload i početni timeout nastavljaju tu istu sobu; ekran greške nudi „Pokušaj
+ponovno”, a „Nova igra” izričito napušta prethodnu. Neuspjeli ili otkazani zahtjev
+ne stvara zapis obnove, a odbijena autentikacija i dalje ga uklanja. Pri obnovi
+TV domaćina briše se i prethodna greška kako ne bi zaklonila obnovljenu sobu.
+
+Potpuno ista QR pozivnica potvrđenog domaćina bez TV-a u drugoj kartici čuva
+njegove kontrole. Druge pozivnice zadržavaju prednost, a gosti se ne promiču.
+Pravila pakta pripadaju konkretnoj ponudi i koraku: ostaju otvorena pri običnom
+osvježavanju istog konteksta, a zatvaraju se na novu pozivnicu, reset i novu
+fazu kako ne bi blokirala dodire. Provjere koriste stvarne browser handlere,
+mrežni adapter i metode prijave; kontrolirano uskraćena početna poruka nije
+mjerenje stvarnog iOS gubitka veze.
 
 ## Piramida od v84
 

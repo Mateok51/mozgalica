@@ -854,12 +854,15 @@
   let cloudTakeover = null;
   const CLOUD_RECOVERY_KEY = 'mz_cloud_resume_v1';
   function clearCloudRecovery() { try { localStorage.removeItem(CLOUD_RECOVERY_KEY); } catch (e) {} }
+  function writeCloudRecovery(credentials, noTv) {
+    try { localStorage.setItem(CLOUD_RECOVERY_KEY, JSON.stringify({ version: 1, savedAt: Date.now(), pid: PID,
+      code: credentials.code, secret: credentials.secret, role: credentials.role,
+      name: credentials.name, noTv: !!noTv })); } catch (e) {}
+  }
   function saveCloudRecovery() {
     if (!cloudSession || !cloudCredentials || !cloudView) return;
     if (cloudView.ph === 'final') { clearCloudRecovery(); return; }
-    try { localStorage.setItem(CLOUD_RECOVERY_KEY, JSON.stringify({ version: 1, savedAt: Date.now(), pid: PID,
-      code: cloudCredentials.code, secret: cloudCredentials.secret, role: cloudCredentials.role,
-      name: cloudCredentials.name, noTv: !!cloudView.cloud.noTv })); } catch (e) {}
+    writeCloudRecovery(cloudCredentials, cloudView.cloud.noTv);
   }
   function closeCloud() {
     cloudAttempt++;
@@ -875,12 +878,12 @@
       setBots: n => control('setBots', [n]), setOpt: (k, v) => control('setOpt', [k, v]),
     };
   }
-  function connectCloud(credentials, noTv, restoring = false) {
+  function connectCloud(credentials, noTv, previouslyConfirmed = false) {
     closeCloud();
-    let confirmed = restoring;
+    let confirmed = previouslyConfirmed;
     cloudCredentials = { ...credentials, pid: PID, sk: SK, av: myAv };
     pcode = credentials.code; pname = credentials.name;
-    if (credentials.role === 'host') { HOST_RS = credentials.secret; mode = noTv ? 'hostp' : 'host'; }
+    if (credentials.role === 'host') { hostErr = ''; HOST_RS = credentials.secret; mode = noTv ? 'hostp' : 'host'; }
     else { PLAYER_RS = credentials.secret; mode = 'player'; }
     rememberRS(pcode, credentials.secret);
     cloudSession = TAVERN_CLOUD_TRANSPORT.create({ apiOrigin: TAVERN_CLOUD.apiOrigin,
@@ -953,7 +956,11 @@
       const client = TAVERN_CLOUD_TRANSPORT.create({ apiOrigin: TAVERN_CLOUD.apiOrigin });
       const room = await client.createRoom({ pid: PID, sk: SK, name, av: myAv, noTv });
       if (attempt !== cloudAttempt || mode !== (noTv ? 'hostp' : 'host')) return;
-      connectCloud({ code: room.code, secret: room.secret, role: 'host', name }, noTv);
+      // The successful POST already confirms this owner's room. Preserve its
+      // receipt before the first WebSocket frame, including across a tab reload.
+      const credentials = { code: room.code, secret: room.secret, role: 'host', name };
+      writeCloudRecovery(credentials, noTv);
+      connectCloud(credentials, noTv, true);
     } catch (e) {
       if (attempt !== cloudAttempt) return;
       hostErr = 'Ne mogu otvoriti sobu na serveru. Provjeri internet i pokušaj ponovno.';
@@ -978,9 +985,27 @@
           r.secret !== cloudRetry.secret || r.noTv !== cloudRetry.noTv)) return;
       const invitation = (location.hash || '').match(/^#([A-Za-z]{4})(?:-([A-Za-z0-9_-]{22}))?$/);
       const currentHash = invitation ? '#' + invitation[1].toUpperCase() + (invitation[2] ? '-' + invitation[2] : '') : location.hash;
-      if (location.hash && (r.role !== 'player' || currentHash !== hash)) return;
+      // A matching full QR in another tab must keep a confirmed phone owner's
+      // role. A different invitation, or a TV spectator, keeps the join flow.
+      if (location.hash && (currentHash !== hash || (r.role === 'host' && !r.noTv))) return;
       connectCloud({ code: r.code, secret: r.secret, role: r.role, name: r.name }, r.noTv, true);
     } catch (e) { clearCloudRecovery(); }
+  }
+  function cloudRetryV() {
+    if (!cloudRetry || !hostErr) return false;
+    const retry = cloudRetry;
+    $app.className = 'screen center';
+    $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
+      '<div class="p-title">Soba ' + esc(cloudRetry.code) + '</div><div class="err">' + esc(hostErr) + '</div>' +
+      '<button class="btn" id="retryRoom">Pokušaj ponovno</button><button class="btn ghost" id="retryNew">Nova igra</button>';
+    bind('retryRoom', () => { if (cloudRetry === retry) restoreCloudRecovery(); });
+    bind('retryNew', () => {
+      if (cloudRetry !== retry) return;
+      const noTv = retry.noTv;
+      closeCloud(); clearCloudRecovery(); hostErr = '';
+      if (noTv) { mode = 'hostform'; render(); } else startHost();
+    });
+    return true;
   }
   function diagnostic(type) {
     if (typeof TAVERN_DIAGNOSTICS !== 'undefined') TAVERN_DIAGNOSTICS.add(type, S && S.ph);
@@ -1035,11 +1060,23 @@
     };
     modal.querySelector('#diagExport').focus();
   }
-  function closeHapticSettings(restoreFocus = true) {
+  function closeHapticSettings(restoreFocus = true, expected = null) {
     const modal = document.getElementById('hapticModal');
-    if (!modal) return;
+    if (!modal || (expected && modal !== expected)) return;
     const previous = modal.__returnFocus; modal.remove();
     if (restoreFocus && previous && previous.isConnected) previous.focus();
+  }
+  function closePactRules(restoreFocus = true, expected = null) {
+    const modal = document.getElementById('pactRulesModal');
+    if (!modal || (expected && modal !== expected)) return;
+    const previous = modal.__returnFocus; modal.remove();
+    if (restoreFocus && previous && previous.isConnected && $app.contains(previous)) previous.focus();
+  }
+  function closeStalePactRules(d) {
+    const modal = document.getElementById('pactRulesModal');
+    if (!modal) return;
+    const context = modal.__context;
+    if (!d || !context || context.code !== d.code || context.step !== d.s || context.offer !== (PV && PV.kp && PV.kp.id)) closePactRules(false);
   }
   function openHapticSettings() {
     if (document.getElementById('hapticModal')) return;
@@ -1057,7 +1094,7 @@
       modal.querySelector('#hapticTest').disabled = HAPTIC.level === 'off';
       notice.textContent = HAPTIC.level === 'off' ? 'Vibracija je isključena.' : !ANDROID.available && !navigator.vibrate ? 'Ovaj preglednik ne podržava vibraciju.' : 'Jačina ovisi i o postavkama vibracije na mobitelu.';
     }
-    const close = () => closeHapticSettings();
+    const close = () => closeHapticSettings(true, modal);
     modal.querySelectorAll('[data-haptic-level]').forEach(b => { b.onclick = () => { HAPTIC.setLevel(b.dataset.hapticLevel); update(); }; });
     modal.querySelector('#hapticTest').onclick = () => { HAPTIC.tap(); notice.textContent = 'Poslan je probni dodir. Ako ga ne osjetiš, provjeri vibraciju dodira u postavkama mobitela.'; };
     modal.querySelector('#hapticClose').onclick = close;
@@ -1154,6 +1191,7 @@
     clearInputBindings();
     closeDiagnostics();
     closeHapticSettings(false);
+    closePactRules(false);
     closeCloud(); clearCloudRecovery();
     clearTimeout(characterReactionTimer); characterReactionTimer = null;
     clearNativeRecovery();
@@ -1741,6 +1779,7 @@
 
   // ---------- igra bez TV-a: domaćin igra s mobitela ----------
   function hostFormV() {
+    if (cloudRetryV()) return;
     $app.className = 'screen phone';
     const name = store.get('mz_name') || '';
     $app.innerHTML = '<div class="logo"><span class="lt">Trivia</span><span class="lt">Tavern</span></div>' +
@@ -2610,6 +2649,7 @@
   }
   function render() {
     clearInputBindings();
+    if (!phoneShown()) closePactRules(false);
     if (!wakeWanted()) releaseWake();
     syncTitle();
     try {
@@ -2652,7 +2692,7 @@
           '<div class="home-sec"><button class="btn ghost" id="join">Pridruži se igri</button></div>' +
           '<div class="home-try"><span class="home-sep" aria-hidden="true"></span><button class="home-link" id="demo">Igraj protiv botova</button><button class="home-link" id="host">Prikaži igru na TV-u</button>' + install + '</div>' +
         '</div>' +
-        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v88</span></div>' +
+        '<div class="home-foot">' + status + '<div class="home-tools"><button class="home-link" id="homeDiagnostics">Pomoć s vezom</button><button class="home-link" id="homeHaptics">Vibracija</button></div>' + '<span class="home-ver">v89</span></div>' +
       '</div>';
     bind('homeDiagnostics', openDiagnostics);
     bind('homeHaptics', openHapticSettings);
@@ -2689,6 +2729,7 @@
   }
 
   function hostV() {
+    if (cloudRetryV()) return;
     if (hostErr) {
       $app.className = 'screen center';
       $app.innerHTML = '<div class="err">' + esc(hostErr) + '</div><button class="btn" id="home">Natrag</button>';
@@ -3182,8 +3223,9 @@
     document.querySelectorAll('#app [data-pactrules]').forEach((b) => { b.onclick = () => {
       if (document.getElementById('pactRulesModal')) return;
       const modal = document.createElement('div'); modal.id = 'pactRulesModal'; modal.className = 'pact-rules-modal'; modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Pravila tajnog pakta');
+      modal.__returnFocus = b; modal.__context = { code: d.code, step: d.s, offer: pactId };
       modal.innerHTML = '<div class="sf-rules"><div class="sf-h">🍻 Pravila tajnog pakta</div><ol><li>Kad oboje odgovorite točno, u riznicu ide 100 bodova. Kad samo jedan, 40.</li><li>Ostanete li odani do finala, riznica raste 40 % i dijelite je.</li><li>Nakon 2 pitanja možeš izdati partnera: uzimaš riznicu i dio njegovih bodova (najviše 300). Izdate li oboje, riznica propada.</li><li>Jedan pakt po partiji. Vrijedi tek kad oboje prihvatite.</li></ol><button class="btn ghost" type="button">Zatvori</button></div>';
-      document.body.appendChild(modal); const close = () => { modal.remove(); if (b.isConnected) b.focus(); }; modal.querySelector('button').onclick = close; modal.onclick = (e) => { if (e.target === modal) close(); }; modal.onkeydown = (e) => { if (e.key === 'Escape') close(); }; modal.querySelector('button').focus();
+      document.body.appendChild(modal); const close = () => closePactRules(true, modal); modal.querySelector('button').onclick = close; modal.onclick = (e) => { if (e.target === modal) close(); }; modal.onkeydown = (e) => { if (e.key === 'Escape') close(); }; modal.querySelector('button').focus();
     }; });
     document.querySelectorAll('#app [data-kro]').forEach((b) => { b.onclick = () => { if (!Number.isSafeInteger(offerId)) return; AUDIO.play(b.dataset.kro === '1' ? 'confirm' : 'tap'); krSend({ k: 'krOff', id: offerId, yes: b.dataset.kro === '1' }); }; });
     document.querySelectorAll('#app [data-krp]').forEach((b) => { b.onclick = () => { if (!Number.isSafeInteger(pactId)) return; AUDIO.play(b.dataset.krp === '1' ? 'confirm' : 'tap'); krSend({ k: 'krPact', id: pactId, yes: b.dataset.krp === '1' }); }; });
@@ -3880,6 +3922,7 @@
   function phoneV() {
     const d = S && typeof S.ms === 'number' && lastStateAt ? Object.assign({}, S, { ms: Math.max(0, S.ms - (Date.now() - lastStateAt)) }) : S;
     const freshP = !!d && L.s !== phoneStep;
+    closeStalePactRules(d);
     if (d && d.ph === 'cast' && d.ntv && !freshP && document.getElementById('castStage')) return;
     clearInputBindings();
     $app.className = 'screen phone' + (freshP ? ' fresh' : '');

@@ -49,6 +49,8 @@ jobs:
       - run: BROWSER=webkit node tests/browser-ios-input-lifecycle.cjs
       - run: BROWSER=webkit node tests/browser-ios-answer-recovery.cjs
       - run: BROWSER=webkit node tests/browser-ios-dialogs.cjs
+      - run: BROWSER=webkit node tests/browser-ios-pact-dialog.cjs
+      - run: BROWSER=webkit node tests/browser-ios-host-invitation.cjs
 
   cloud:
     runs-on: ubuntu-latest
