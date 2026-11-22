@@ -33,6 +33,14 @@ Dopunjuje `AGENTS.md`. Provjereno 22. 11. 2026. (v92) Wranglerom prijavljenim ka
 7. **Potvrdi aktivnu verziju:** `curl https://trivia-tavern.chaos-ballad.workers.dev/api/health`, zatim `home-ver` u `app.js` i `mozgalica-v` u `sw.js` na toj adresi i na GitHub Pages. Sve mora biti nova verzija; Pages može kasniti nekoliko minuta.
 8. **Sažetak:** što je spojeno, što je objavljeno i gdje, koje provjere prolaze i što nije provjereno na stvarnim uređajima.
 
+## CI, testovi i predmemorija (stanje v94)
+
+- **CI** (`.github/workflows/checks.yml`, oko 3 min): `pull_request` pokreće sve; `push` samo na `main`; promjene samo `*.md` i `.claude/**` ne pokreću GitHub Actions; novi push otkazuje zastarjelu provedbu. `browser` ide u 4 dijela (`browser-shards`, skripte po rednom broju), `webkit` u 2 (`webkit-shards`; **nova WebKit skripta mora u matricu**). Zbirni poslovi `browser` i `webkit` zadržavaju imena provjera.
+- **Spajanje:** `expectedHeadSha` mora biti pun SHA (`git rev-parse HEAD`), skraćeni ili izmišljeni se odbijaju. Jedan upit `wrangler deployments list` po objavi; češći daju ograničenje (kod 971, čekaj Retry-After).
+- **Nestabilan test:** dosad je uzrok bio fiksni `waitForTimeout` uz odgođeni mjerač u aplikaciji (npr. `retrySoon` od 1500 ms nakon `visibilitychange`). Prije nego kriviš svoju izmjenu: pokreni test 14× s `taskset -c 0`, istodobno s istim testom iz `git worktree` na `origin/main`; jednak broj padova znači staru nestabilnost. Ne ponavljaj CI bez uzroka.
+- **WebKit lokalno** (motor Safarija, ne pravi iOS): `PLAYWRIGHT_BROWSERS_PATH=<scratchpad>/pw-webkit npx playwright install webkit`, zatim `npx playwright install-deps webkit` (apt, root); pokretanje `BROWSER=webkit node tests/<skripta>.cjs`. Chromium: `CHROMIUM_PATH=/opt/pw-browsers/chromium`. Instalacija nestaje s kontejnerom. Naredbe koje čitaju `dist/` odbijaju se (`.claude/settings.json`).
+- **Service worker** (`sw.js`): kod (HTML, JS, CSS) mreža-prvo; slike, zvukovi i fontovi predmemorija-prvo uz osvježavanje u pozadini; `data/questions.js` je u `LAZY` (samo domaćin ga treba). Predmemoriju osvježava podizanje `CACHE` i `home-ver`.
+
 ## Ograničenja
 
 - Ne stvaraj novi Worker, ne mijenjaj hosting, ne briši Durable Objects ni spremljene sobe.
