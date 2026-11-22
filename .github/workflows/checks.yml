@@ -1,6 +1,9 @@
 name: Provjera igre
 on:
+  # PR-ovi se provjeravaju jednom (pull_request); push samo na main kao provjera nakon spajanja.
+  # Bez ovoga svaki push na granu PR-a pokreće cijeli skup dvaput.
   push:
+    branches: [main]
   pull_request:
 permissions:
   contents: read
